@@ -8,7 +8,7 @@ const CONTACTS = [
   { name: 'Emma Page', phone: '555-444-333', email: 'emma1page@gmail.com' }
 ];
 
-export async function seed(knex, Promise) {
+export async function seed(knex) {
   await truncateTables(knex, Promise, ['report']);
   for (let i of CONTACTS) {
     await returnId(knex('report')).insert({

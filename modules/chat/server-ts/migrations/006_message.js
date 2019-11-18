@@ -1,4 +1,4 @@
-export async function up(knex, Promise) {
+export async function up(knex) {
   return Promise.all([
     knex.schema
       .createTable('message', table => {
@@ -27,6 +27,6 @@ export async function up(knex, Promise) {
   ]);
 }
 
-export async function down(knex, Promise) {
+export async function down(knex) {
   return Promise.all([knex.schema.dropTable('attachment'), knex.schema.dropTable('message')]);
 }

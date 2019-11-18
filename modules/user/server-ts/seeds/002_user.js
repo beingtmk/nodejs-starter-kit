@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 
-export async function seed(knex, Promise) {
+export async function seed(knex) {
   await truncateTables(knex, Promise, [
     'user',
     'user_profile',
