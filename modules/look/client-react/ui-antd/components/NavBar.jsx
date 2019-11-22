@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter, NavLink } from "react-router-dom";
-import { Menu, Row, Col, Dropdown, Icon } from "antd";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter, NavLink } from 'react-router-dom';
+import { Drawer, Menu, Row, Col, Dropdown, Icon } from 'antd';
 
-import settings from "@gqlapp/config";
+import settings from '@gqlapp/config';
 
-import MenuItem from "./MenuItem";
+import MenuItem from './MenuItem';
 
 const ref = { modules: null };
 
@@ -13,7 +13,7 @@ export const onAppCreate = async modules => (ref.modules = modules);
 
 class NavBar extends React.Component {
   state = {
-    current: "/"
+    current: '/'
   };
 
   handleClick = e => {
@@ -22,16 +22,28 @@ class NavBar extends React.Component {
     });
   };
 
+  showDrawer = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false
+    });
+  };
+
   render() {
     return (
       <Row gutter={0}>
-        <Col span={14}>
+        <Col md={14} xs={20} sm={20}>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.props.location.pathname]}
             mode="horizontal"
             theme="dark"
-            style={{ lineHeight: "64px" }}
+            style={{ lineHeight: '64px' }}
           >
             <MenuItem key="/">
               <NavLink to="/" className="nav-link">
@@ -46,7 +58,7 @@ class NavBar extends React.Component {
             )}
           </Menu>
         </Col>
-        <Col span={10} align="right">
+        <Col md={10} xs={0} sm={0} align="right">
           <Dropdown
             overlay={
               <Menu
@@ -54,18 +66,28 @@ class NavBar extends React.Component {
                 selectedKeys={[this.props.location.pathname]}
                 mode="horizontal"
                 theme="dark"
-                style={{ lineHeight: "64px" }}
+                style={{ lineHeight: '64px' }}
               >
                 {ref.modules.navItemsRight}
               </Menu>
             }
-            trigger={["click"]}
+            trigger={['click']}
           >
             <a className="ant-dropdown-link" href="#">
               Click me <Icon type="down" />
             </a>
           </Dropdown>
         </Col>
+        <Col md={0} sm={4} xs={4} align="right">
+          <div onClick={this.showDrawer}>
+            <Icon type="menu" style={{ color: 'white' }} />
+          </div>
+        </Col>
+        <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
+          <Menu mode="inline" selectedKeys={[this.props.location.pathname]}>
+            {ref.modules.navItemsRight}
+          </Menu>
+        </Drawer>
       </Row>
     );
   }
