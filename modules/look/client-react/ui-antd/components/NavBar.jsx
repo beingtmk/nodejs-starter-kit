@@ -60,28 +60,38 @@ class NavBar extends React.Component {
           </Menu>
         </Col>
         <Col md={10} xs={0} sm={0} align="right">
-          <Dropdown
-            overlay={
-              <Menu
-                onClick={this.handleClick}
-                selectedKeys={[this.props.location.pathname]}
-                mode="horizontal"
-                theme="dark"
-                style={{ lineHeight: '64px' }}
-              >
-                {ref.modules.navItemsUser}
-              </Menu>
-            }
-            trigger={['hover']}
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.props.location.pathname]}
+            mode="horizontal"
+            theme="dark"
+            style={{ lineHeight: '64px' }}
           >
-            <a className="ant-dropdown-link" href="#">
-              <UserAvatar />
-            </a>
-          </Dropdown>
+            {ref.modules.navItemsRight}
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItemsUser}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <UserAvatar />
+                </a>
+              </Dropdown>
+            </MenuItem>
+          </Menu>
         </Col>
         <Col md={0} sm={4} xs={4} align="right">
           <div onClick={this.showDrawer}>
-            <Icon type="menu" style={{ color: 'white' }} />
+            <Icon type="menu" style={{ color: 'white', fontSize: '20px' }} />
           </div>
         </Col>
         <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
