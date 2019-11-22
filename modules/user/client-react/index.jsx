@@ -114,7 +114,8 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
-  navItemRight: [
+
+  navItemUser: [
     <IfLoggedIn key="/profile">
       <MenuItem>
         <NavLink to="/profile" className="nav-link" activeClassName="active">

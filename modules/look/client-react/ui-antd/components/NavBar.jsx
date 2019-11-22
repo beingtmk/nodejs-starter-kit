@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Row, Col, Dropdown, Icon } from 'antd';
+import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 
 import settings from '@gqlapp/config';
 
@@ -68,13 +69,13 @@ class NavBar extends React.Component {
                 theme="dark"
                 style={{ lineHeight: '64px' }}
               >
-                {ref.modules.navItemsRight}
+                {ref.modules.navItemsUser}
               </Menu>
             }
-            trigger={['click']}
+            trigger={['hover']}
           >
             <a className="ant-dropdown-link" href="#">
-              Click me <Icon type="down" />
+              <UserAvatar />
             </a>
           </Dropdown>
         </Col>
@@ -85,7 +86,7 @@ class NavBar extends React.Component {
         </Col>
         <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
           <Menu mode="inline" selectedKeys={[this.props.location.pathname]}>
-            {ref.modules.navItemsRight}
+            {ref.modules.navItemsUser}
           </Menu>
         </Drawer>
       </Row>
