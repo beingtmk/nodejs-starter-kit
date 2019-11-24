@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 
 import NavBar from './NavBar';
-import Footer from './Footer';
+
 import styles from '../styles/styles.less';
 
 const { Header, Content } = Layout;
@@ -28,7 +28,6 @@ class PageLayout extends React.Component {
         <Content id="content" style={{ background: '#fff', padding: 24 }}>
           {children}
         </Content>
-        <Footer />
       </Layout>
     );
   }
