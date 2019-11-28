@@ -51,12 +51,30 @@ class NavBar extends React.Component {
                 {settings.app.name}
               </NavLink>
             </MenuItem>
-            {ref.modules.navItems}
-            {__DEV__ && (
-              <MenuItem>
-                <a href="/graphiql">GraphiQL</a>
-              </MenuItem>
-            )}
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItems}
+                    {__DEV__ && (
+                      <MenuItem>
+                        <a href="/graphiql">GraphiQL</a>
+                      </MenuItem>
+                    )}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <Icon type="branches" />
+                </a>
+              </Dropdown>
+            </MenuItem>
           </Menu>
         </Col>
         <Col md={10} xs={0} sm={0} align="right">
