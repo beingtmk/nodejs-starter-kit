@@ -17,7 +17,7 @@ const NavLinkWithI18n = translate('upload')(({ t }) => (
 export default new ClientModule({
   context: { upload: true },
   route: [<Route exact path="/upload" component={Upload} />],
-  navItem: [
+  navItemTest: [
     <MenuItem key="/upload">
       <NavLinkWithI18n />
     </MenuItem>

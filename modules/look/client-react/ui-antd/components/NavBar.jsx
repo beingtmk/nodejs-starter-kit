@@ -51,6 +51,7 @@ class NavBar extends React.Component {
                 {settings.app.name}
               </NavLink>
             </MenuItem>
+
             <MenuItem>
               <Dropdown
                 overlay={
@@ -60,7 +61,7 @@ class NavBar extends React.Component {
                     mode="verticle"
                     theme="dark"
                   >
-                    {ref.modules.navItems}
+                    {ref.modules.navItemsTest}
                     {__DEV__ && (
                       <MenuItem>
                         <a href="/graphiql">GraphiQL</a>
@@ -71,7 +72,26 @@ class NavBar extends React.Component {
                 trigger={['hover']}
               >
                 <a className="ant-dropdown-link" href="#">
-                  <Icon type="branches" />
+                  <Icon type="deployment-unit" />
+                </a>
+              </Dropdown>
+            </MenuItem>
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItemsAdmin}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <Icon type="safety-certificate" />
                 </a>
               </Dropdown>
             </MenuItem>

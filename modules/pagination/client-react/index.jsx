@@ -21,7 +21,7 @@ export default new ClientModule({
       component={loadable(() => import('./containers/PaginationDemo').then(c => c.default))}
     />
   ],
-  navItem: [
+  navItemTest: [
     <MenuItem key="/pagination">
       <NavLinkWithI18n />
     </MenuItem>

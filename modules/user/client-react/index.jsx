@@ -107,7 +107,7 @@ export default new ClientModule({
       component={loadable(() => import('./containers/ResetPassword').then(c => c.default))}
     />
   ],
-  navItem: [
+  navItemAdmin: [
     <IfLoggedIn key="/users" role="admin">
       <MenuItem>
         <NavLinkUsersWithI18n />
