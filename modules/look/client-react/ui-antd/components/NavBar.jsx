@@ -8,6 +8,8 @@ import settings from '@gqlapp/config';
 
 import MenuItem from './MenuItem';
 
+const { SubMenu } = Menu;
+
 const ref = { modules: null };
 
 export const onAppCreate = async modules => (ref.modules = modules);
@@ -52,30 +54,31 @@ class NavBar extends React.Component {
               </NavLink>
             </MenuItem>
 
-            <MenuItem>
-              <Dropdown
-                overlay={
-                  <Menu
-                    onClick={this.handleClick}
-                    selectedKeys={[this.props.location.pathname]}
-                    mode="verticle"
-                    theme="dark"
-                  >
-                    {ref.modules.navItemsTest}
-                    {__DEV__ && (
+            {__DEV__ && (
+              <MenuItem>
+                <Dropdown
+                  overlay={
+                    <Menu
+                      onClick={this.handleClick}
+                      selectedKeys={[this.props.location.pathname]}
+                      mode="verticle"
+                      theme="dark"
+                    >
+                      {ref.modules.navItemsTest}
+
                       <MenuItem>
                         <a href="/graphiql">GraphiQL</a>
                       </MenuItem>
-                    )}
-                  </Menu>
-                }
-                trigger={['hover']}
-              >
-                <a className="ant-dropdown-link" href="#">
-                  <Icon type="deployment-unit" />
-                </a>
-              </Dropdown>
-            </MenuItem>
+                    </Menu>
+                  }
+                  trigger={['hover']}
+                >
+                  <a className="ant-dropdown-link" href="#">
+                    <Icon type="deployment-unit" />
+                  </a>
+                </Dropdown>
+              </MenuItem>
+            )}
             <MenuItem>
               <Dropdown
                 overlay={
@@ -135,6 +138,33 @@ class NavBar extends React.Component {
         <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
           <Menu mode="inline" selectedKeys={[this.props.location.pathname]}>
             {ref.modules.navItemsUser}
+            {__DEV__ && (
+              <SubMenu
+                key="dev"
+                title={
+                  <span>
+                    <Icon type="deployment-unit" />
+                    <span>Dev Tools</span>
+                  </span>
+                }
+              >
+                {ref.modules.navItemsTest}
+                <MenuItem>
+                  <a href="/graphiql">GraphiQL</a>
+                </MenuItem>
+              </SubMenu>
+            )}
+            <SubMenu
+              key="admin"
+              title={
+                <span>
+                  <Icon type="safety-certificate" />
+                  <span>Admin</span>
+                </span>
+              }
+            >
+              {ref.modules.navItemsAdmin}
+            </SubMenu>
           </Menu>
         </Drawer>
       </Row>
