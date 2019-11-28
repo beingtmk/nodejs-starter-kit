@@ -4,23 +4,17 @@ import { I18nextProvider } from 'react-i18next';
 
 import ClientModule from '@gqlapp/module-client-react';
 import commonI18n from '@gqlapp/i18n-common-react';
-import { MenuItem, LanguagePicker } from '@gqlapp/look-client-react';
+import { LanguagePicker } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const I18nProvider = ({ i18n, children }: any) => {
   return <I18nextProvider i18n={i18n}>{children}</I18nextProvider>;
 };
 
-const LangPickerNav = () => (
-  <MenuItem key="languagePicker" >
-    <LanguagePicker i18n={i18next} />
-  </MenuItem>
-);
-
 const langPicker =
   settings.i18n.enabled && settings.i18n.langPickerRender
     ? new ClientModule({
-        navItemRight: [<LangPickerNav />]
+        navItemRight: [<LanguagePicker i18n={i18next} />]
       })
     : undefined;
 

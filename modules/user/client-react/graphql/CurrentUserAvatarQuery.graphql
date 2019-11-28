@@ -1,0 +1,11 @@
+#import "./User.graphql"
+
+query currentUser {
+  currentUser {
+    id
+    profile {
+      firstName
+      lastName
+    }
+  }
+}
