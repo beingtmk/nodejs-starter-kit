@@ -1,11 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter, NavLink } from "react-router-dom";
-import { Menu, Row, Col, Dropdown, Icon } from "antd";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter, NavLink } from 'react-router-dom';
+import { Drawer, Menu, Row, Col, Dropdown, Icon } from 'antd';
+import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 
-import settings from "@gqlapp/config";
+import settings from '@gqlapp/config';
 
-import MenuItem from "./MenuItem";
+import MenuItem from './MenuItem';
 
 const ref = { modules: null };
 
@@ -13,7 +14,7 @@ export const onAppCreate = async modules => (ref.modules = modules);
 
 class NavBar extends React.Component {
   state = {
-    current: "/"
+    current: '/'
   };
 
   handleClick = e => {
@@ -22,50 +23,120 @@ class NavBar extends React.Component {
     });
   };
 
+  showDrawer = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false
+    });
+  };
+
   render() {
     return (
       <Row gutter={0}>
-        <Col span={14}>
+        <Col md={14} xs={20} sm={20}>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.props.location.pathname]}
             mode="horizontal"
             theme="dark"
-            style={{ lineHeight: "64px" }}
+            style={{ lineHeight: '64px' }}
           >
             <MenuItem key="/">
               <NavLink to="/" className="nav-link">
                 {settings.app.name}
               </NavLink>
             </MenuItem>
-            {ref.modules.navItems}
-            {__DEV__ && (
-              <MenuItem>
-                <a href="/graphiql">GraphiQL</a>
-              </MenuItem>
-            )}
+
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItemsTest}
+                    {__DEV__ && (
+                      <MenuItem>
+                        <a href="/graphiql">GraphiQL</a>
+                      </MenuItem>
+                    )}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <Icon type="deployment-unit" />
+                </a>
+              </Dropdown>
+            </MenuItem>
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItemsAdmin}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <Icon type="safety-certificate" />
+                </a>
+              </Dropdown>
+            </MenuItem>
           </Menu>
         </Col>
-        <Col span={10} align="right">
-          <Dropdown
-            overlay={
-              <Menu
-                onClick={this.handleClick}
-                selectedKeys={[this.props.location.pathname]}
-                mode="horizontal"
-                theme="dark"
-                style={{ lineHeight: "64px" }}
-              >
-                {ref.modules.navItemsRight}
-              </Menu>
-            }
-            trigger={["click"]}
+        <Col md={10} xs={0} sm={0} align="right">
+          <Menu
+            onClick={this.handleClick}
+            selectedKeys={[this.props.location.pathname]}
+            mode="horizontal"
+            theme="dark"
+            style={{ lineHeight: '64px' }}
           >
-            <a className="ant-dropdown-link" href="#">
-              Click me <Icon type="down" />
-            </a>
-          </Dropdown>
+            {ref.modules.navItemsRight}
+            <MenuItem>
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={[this.props.location.pathname]}
+                    mode="verticle"
+                    theme="dark"
+                  >
+                    {ref.modules.navItemsUser}
+                  </Menu>
+                }
+                trigger={['hover']}
+              >
+                <a className="ant-dropdown-link" href="#">
+                  <UserAvatar />
+                </a>
+              </Dropdown>
+            </MenuItem>
+          </Menu>
         </Col>
+        <Col md={0} sm={4} xs={4} align="right">
+          <div onClick={this.showDrawer}>
+            <Icon type="menu" style={{ color: 'white', fontSize: '20px' }} />
+          </div>
+        </Col>
+        <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
+          <Menu mode="inline" selectedKeys={[this.props.location.pathname]}>
+            {ref.modules.navItemsUser}
+          </Menu>
+        </Drawer>
       </Row>
     );
   }

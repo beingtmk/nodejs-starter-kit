@@ -18,7 +18,7 @@ export default new ClientModule(reports, {
   route: [
     <Route exact path="/report" component={loadable(() => import('./containers/Report').then(c => c.default))} />
   ],
-  navItem: [
+  navItemTest: [
     <MenuItem key="/report">
       <NavLinkWithI18n />
     </MenuItem>

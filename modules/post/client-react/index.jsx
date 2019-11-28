@@ -20,7 +20,7 @@ export default new ClientModule({
     <Route exact path="/post/new" component={loadable(() => import('./containers/PostAdd').then(c => c.default))} />,
     <Route path="/post/:id" component={loadable(() => import('./containers/PostEdit').then(c => c.default))} />
   ],
-  navItem: [
+  navItemTest: [
     <MenuItem key="/posts">
       <NavLinkWithI18n />
     </MenuItem>

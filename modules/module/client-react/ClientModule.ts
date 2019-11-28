@@ -11,6 +11,14 @@ export interface ClientModuleShape extends BaseModuleShape {
   navItem?: Array<React.ReactElement<any>>;
   // Top right navigation links
   navItemRight?: Array<React.ReactElement<any>>;
+  // Development tools
+  navItemTest?: Array<React.ReactElement<any>>;
+  // User specific
+  navItemUser?: Array<React.ReactElement<any>>;
+  // Admin specific
+  navItemAdmin?: Array<React.ReactElement<any>>;
+  // Acount specific
+  navItemAccount?: Array<React.ReactElement<any>>;
 }
 
 interface ClientModule extends ClientModuleShape {}
@@ -43,24 +51,66 @@ class ClientModule extends BaseModule {
    * @returns client-side top left navbar link component list
    */
   get navItems() {
-    return (this.navItem || []).map(
-      (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-        React.cloneElement(component, {
-          key: component.key || idx + items.length
-        })
-    );
+    return this.navItem
+      ? this.navItem.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          React.cloneElement(component, {
+            key: component.key || idx + items.length
+          })
+        )
+      : null;
   }
 
-  /**
-   * @returns client-side top right navbar link component list
-   */
   get navItemsRight() {
-    return (this.navItemRight || []).map(
-      (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-        React.cloneElement(component, {
-          key: component.key || idx + items.length
-        })
-    );
+    return this.navItemRight
+      ? this.navItemRight.map(
+          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length
+            })
+        )
+      : false;
+  }
+
+  get navItemsTest() {
+    return this.navItemTest
+      ? this.navItemTest.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          React.cloneElement(component, {
+            key: component.key || idx + items.length
+          })
+        )
+      : false;
+  }
+
+  get navItemsUser() {
+    return this.navItemUser
+      ? this.navItemUser.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          React.cloneElement(component, {
+            key: component.key || idx + items.length
+          })
+        )
+      : false;
+  }
+
+  get navItemsAdmin() {
+    return this.navItemAdmin
+      ? this.navItemAdmin.map(
+          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length
+            })
+        )
+      : false;
+  }
+
+  get navItemsAccount() {
+    return this.navItemAccount
+      ? this.navItemAccount.map(
+          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length
+            })
+        )
+      : null;
   }
 }
 

@@ -3,12 +3,11 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Layout } from 'antd';
 
-import settings from '@gqlapp/config';
-
 import NavBar from './NavBar';
+
 import styles from '../styles/styles.less';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 class PageLayout extends React.Component {
   render() {
@@ -29,9 +28,6 @@ class PageLayout extends React.Component {
         <Content id="content" style={{ background: '#fff', padding: 24 }}>
           {children}
         </Content>
-        <Footer className="no-print" style={{ textAlign: 'center' }}>
-          &copy; {new Date().getFullYear()}. {settings.app.name}.
-        </Footer>
       </Layout>
     );
   }
