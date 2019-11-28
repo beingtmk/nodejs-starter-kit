@@ -12,7 +12,7 @@ const I18nProvider = ({ i18n, children }: any) => {
 };
 
 const LangPickerNav = () => (
-  <MenuItem key="languagePicker" className="menu-center">
+  <MenuItem key="languagePicker" >
     <LanguagePicker i18n={i18next} />
   </MenuItem>
 );
