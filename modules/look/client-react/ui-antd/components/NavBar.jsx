@@ -48,7 +48,7 @@ class NavBar extends React.Component {
             selectedKeys={[this.props.location.pathname]}
             mode="horizontal"
             theme="dark"
-            style={{ lineHeight: '64px' }}
+            style={{ lineHeight: '50px' }}
           >
             <MenuItem key="/">
               <NavLink to="/" className="nav-link">
@@ -63,7 +63,7 @@ class NavBar extends React.Component {
             selectedKeys={[this.props.location.pathname]}
             mode="horizontal"
             theme="dark"
-            style={{ lineHeight: '64px' }}
+            style={{ lineHeight: '50px' }}
           >
             {__DEV__ && (
               <MenuItem>
@@ -81,8 +81,6 @@ class NavBar extends React.Component {
                 <DropDown type="safety-certificate">{ref.modules.navItemsAdmin}</DropDown>
               </MenuItem>
             </LoggedIn>
-
-            {ref.modules.navItems}
           </Menu>
         </Col>
         <Col lg={10} md={10} xs={0} sm={0} align="right">
@@ -91,8 +89,9 @@ class NavBar extends React.Component {
             selectedKeys={[this.props.location.pathname]}
             mode="horizontal"
             theme="dark"
-            style={{ lineHeight: '64px' }}
+            style={{ lineHeight: '50px' }}
           >
+            {ref.modules.navItems}
             {ref.modules.navItemsRight}
 
             <LoggedIn>
@@ -105,15 +104,18 @@ class NavBar extends React.Component {
           </Menu>
         </Col>
         <Col md={0} sm={10} xs={10} align="right">
-          <div onClick={this.showDrawer}>
-            <Icon type="menu" style={{ color: 'white', fontSize: '20px' }} />
+          <div onClick={this.showDrawer} style={{ height: '50px' }}>
+            <Icon
+              type="menu"
+              style={{ color: 'white', fontSize: '20px', position: 'absolute', top: '15px', right: '0' }}
+            />
           </div>
         </Col>
         <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
-          <Menu mode="inline" selectedKeys={[this.props.location.pathname]} theme="dark" style={{ lineHeight: '64px' }}>
+          <Menu mode="inline" selectedKeys={[this.props.location.pathname]} theme="dark" style={{ lineHeight: '50px' }}>
             {ref.modules.navItemsRight}
             <LoggedIn>
-              <div style={{ height: '100px' }} align="left">
+              <div style={{ height: '100px' }} align="center">
                 <UserAvatar shape="square" size={100} />
               </div>
             </LoggedIn>
