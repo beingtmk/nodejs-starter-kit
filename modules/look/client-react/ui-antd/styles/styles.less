@@ -23,11 +23,19 @@
 }
 
 //----Navbar----//
+.ant-layout-header{
+  height: 50px !important;
+}
+
 
 @media only screen and (max-width: 600px) {
   .ant-layout-header{
     padding:0 10px !important;
   }
+}
+
+.ant-menu-item{
+  height:fit-content !important;
 }
 
 
@@ -37,19 +45,7 @@
 .language-picker-nav{
   width:100px !important;
 }
-//Overriding antd css 
 
-.nav-translator > .ant-menu-vertical .ant-menu-item,
-.ant-menu-vertical-left .ant-menu-item,
-.ant-menu-vertical-right .ant-menu-item,
-.ant-menu-inline .ant-menu-item,
-.ant-menu-vertical .ant-menu-submenu-title,
-.ant-menu-vertical-left .ant-menu-submenu-title,
-.ant-menu-vertical-right .ant-menu-submenu-title,
-.ant-menu-inline .ant-menu-submenu-title {
-  margin: 0px !important;
-  height: 32px !important;
-}
 
 .ant-menu-vertical.ant-menu-sub, .ant-menu-vertical-left.ant-menu-sub, .ant-menu-vertical-right.ant-menu-sub{
   min-width: fit-content !important;

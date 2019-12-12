@@ -13,12 +13,14 @@ const UserAvatar = props => {
 
   console.log(userAvatarUrl);
 
-  return <Avatar src={profile && profile.avatar} icon="user" />;
+  return <Avatar size={props.size} shape={props.shape} src={profile && profile.avatar} icon="user" />;
 };
 
 UserAvatar.propTypes = {
   loading: PropTypes.boolean,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  size: PropTypes.number,
+  shape: PropTypes.string
 };
 
 export default compose(
