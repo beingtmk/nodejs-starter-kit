@@ -83,7 +83,7 @@ class NavBar extends React.Component {
             </LoggedIn>
           </Menu>
         </Col>
-        <Col lg={10} md={10} xs={0} sm={0} align="right">
+        <Col lg={10} md={0} xs={0} sm={0} align="right">
           <Menu
             onClick={this.handleClick}
             selectedKeys={[this.props.location.pathname]}
@@ -103,7 +103,7 @@ class NavBar extends React.Component {
             </LoggedIn>
           </Menu>
         </Col>
-        <Col md={0} sm={10} xs={10} align="right">
+        <Col md={10} sm={10} xs={10} align="right">
           <div onClick={this.showDrawer} style={{ height: '50px' }}>
             <Icon
               type="menu"
