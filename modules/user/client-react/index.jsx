@@ -59,6 +59,7 @@ export default new ClientModule({
       redirect="/login"
       component={loadable(() => import('./containers/Profile').then(c => c.default))}
     />,
+    <AuthRoute exact path="/flex" component={loadable(() => import('./components/Flex').then(c => c.default))} />,
     <AuthRoute
       exact
       path="/users"
@@ -127,7 +128,9 @@ export default new ClientModule({
       <MenuItem>
         <LogoutLink />
       </MenuItem>
-    </IfLoggedIn>,
+    </IfLoggedIn>
+  ],
+  navItemRight: [
     <IfNotLoggedIn key="/login">
       <MenuItem>
         <NavLinkLoginWithI18n />

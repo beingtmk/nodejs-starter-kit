@@ -75,6 +75,7 @@
         "graphql-iso-date": "^3.5.0",
         "graphql-tag": "^2.6.0",
         "grommet": "^2.8.1",
+        "hedron": "^1.0.0-beta.12",
         "history": "^4.7.2",
         "i18next": "^11.2.3",
         "immutability-helper": "^2.6.2",
