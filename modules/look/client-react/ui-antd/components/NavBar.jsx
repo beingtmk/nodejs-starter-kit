@@ -42,7 +42,11 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Grid.Provider debug padding="0px" breakpoints={{ mobile: '-500', tablet: '501-768', wide: '+769' }}>
+      <Grid.Provider
+        //  debug
+        padding="0px"
+        breakpoints={{ mobile: '-500', tablet: '501-768', wide: '+769' }}
+      >
         <Grid.Bounds direction="horizontal">
           <Grid.Box shiftLeft>
             <Menu
