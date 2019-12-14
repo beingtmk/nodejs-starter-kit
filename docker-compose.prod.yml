@@ -7,7 +7,7 @@ services:
         APP_DIR: ${APP_DIR}
     environment:
       - NODE_ENV=production
-    container_name: apollo_universal_starter
+    container_name: nodejs-starter-kit
     tty: true
     stdin_open: true
     volumes:
