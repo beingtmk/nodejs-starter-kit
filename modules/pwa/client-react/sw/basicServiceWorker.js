@@ -1,4 +1,6 @@
-/*global self*/
+/*global self, caches*/
+/*eslint no-undef: "error"*/
+
 const CACHE_NAME = 'ausk-v1';
 // let assetsToCache = [
 //   '/',
@@ -8,7 +10,7 @@ const CACHE_NAME = 'ausk-v1';
 // self.addEventListener('install', event => {
 //   // Perform install steps
 //   event.waitUntil(
-//     window.caches.open(CACHE_NAME)
+//     caches.open(CACHE_NAME)
 //       .then(cache => {
 //         console.log('Opened cache');
 //         cache.addAll(assetsToCache);
@@ -24,12 +26,12 @@ self.addEventListener('fetch', event => {
     fetch(event.request)
       .then(res => {
         const resClone = res.clone();
-        window.caches.open(CACHE_NAME).then(cache => {
+        caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, resClone);
         });
         return res;
       })
-      .catch(() => window.caches.match(event.request).then(res => res))
+      .catch(() => caches.match(event.request).then(res => res))
   );
 });
 
@@ -37,11 +39,11 @@ self.addEventListener('fetch', event => {
 self.addEventListener('activate', event => {
   let cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    window.caches.keys().then(cacheNames => {
+    caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return window.caches.delete(cacheName);
+            return caches.delete(cacheName);
           }
         })
       );
