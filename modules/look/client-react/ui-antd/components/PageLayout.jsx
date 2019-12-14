@@ -25,7 +25,7 @@ class PageLayout extends React.Component {
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
-        <Content id="content" style={{ background: '#fff', padding: 24 }}>
+        <Content id="content" style={{ background: '#fff', padding: 0 }}>
           {children}
         </Content>
       </Layout>
