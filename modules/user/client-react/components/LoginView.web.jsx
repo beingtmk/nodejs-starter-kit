@@ -35,48 +35,37 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
     </Card>
   );
 
+  const renderContent = () => (
+    <>
+      {isRegistered ? (
+        renderConfirmationModal()
+      ) : (
+        <React.Fragment>
+          <h1 className="text-center">{t('login.form.title')}</h1>
+          <LoginForm onSubmit={onSubmit} />
+          <hr />
+          <Card>
+            <CardGroup>
+              <CardTitle>{t('login.cardTitle')}:</CardTitle>
+              <CardText>admin@example.com:admin123</CardText>
+              <CardText>user@example.com:user1234</CardText>
+            </CardGroup>
+          </Card>
+        </React.Fragment>
+      )}
+    </>
+  );
+
   return (
     <PageLayout>
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}
           <Grid.Box sm={{ hidden: true }}>
-            <LayoutCenter>
-              {isRegistered ? (
-                renderConfirmationModal()
-              ) : (
-                <React.Fragment>
-                  <h1 className="text-center">{t('login.form.title')}</h1>
-                  <LoginForm onSubmit={onSubmit} />
-                  <hr />
-                  <Card>
-                    <CardGroup>
-                      <CardTitle>{t('login.cardTitle')}:</CardTitle>
-                      <CardText>admin@example.com:admin123</CardText>
-                      <CardText>user@example.com:user1234</CardText>
-                    </CardGroup>
-                  </Card>
-                </React.Fragment>
-              )}
-            </LayoutCenter>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
           </Grid.Box>
           <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
-            {isRegistered ? (
-              renderConfirmationModal()
-            ) : (
-              <React.Fragment>
-                <h1 className="text-center">{t('login.form.title')}</h1>
-                <LoginForm onSubmit={onSubmit} />
-                <hr />
-                <Card>
-                  <CardGroup>
-                    <CardTitle>{t('login.cardTitle')}:</CardTitle>
-                    <CardText>admin@example.com:admin123</CardText>
-                    <CardText>user@example.com:user1234</CardText>
-                  </CardGroup>
-                </Card>
-              </React.Fragment>
-            )}
+            {renderContent()}
           </Grid.Box>
         </Grid.Bounds>
       </Grid.Provider>

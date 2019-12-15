@@ -31,28 +31,27 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
     </Card>
   );
 
+  const renderContent = () => (
+    <>
+      <h1 className="text-center">{t('reg.form.title')}</h1>
+      {isRegistered && settings.auth.password.requireEmailConfirmation ? (
+        renderConfirmationModal()
+      ) : (
+        <RegisterForm onSubmit={onSubmit} />
+      )}
+    </>
+  );
+
   return (
     <PageLayout>
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData(t)}
           <Grid.Box sm={{ hidden: true }}>
-            <LayoutCenter>
-              <h1 className="text-center">{t('reg.form.title')}</h1>
-              {isRegistered && settings.auth.password.requireEmailConfirmation ? (
-                renderConfirmationModal()
-              ) : (
-                <RegisterForm onSubmit={onSubmit} />
-              )}
-            </LayoutCenter>
+            <LayoutCenter>{renderContent()} </LayoutCenter>
           </Grid.Box>
           <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
-            <h1 className="text-center">{t('reg.form.title')}</h1>
-            {isRegistered && settings.auth.password.requireEmailConfirmation ? (
-              renderConfirmationModal()
-            ) : (
-              <RegisterForm onSubmit={onSubmit} />
-            )}
+            {renderContent()}
           </Grid.Box>
         </Grid.Bounds>
       </Grid.Provider>
