@@ -1,3 +1,4 @@
+import blog from '@gqlapp/blog-server-ts';
 import core from '@gqlapp/core-server-ts';
 import i18n from '@gqlapp/i18n-server-ts';
 import validation from '@gqlapp/validation-common-react';
@@ -20,6 +21,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  blog,
   authentication,
   cookies,
   i18n,

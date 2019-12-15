@@ -1,3 +1,4 @@
+import blog from '@gqlapp/blog-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import core from '@gqlapp/core-client-react';
 import look from '@gqlapp/look-client-react';
@@ -20,6 +21,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  blog,
   pwa,
   look,
   validation,
