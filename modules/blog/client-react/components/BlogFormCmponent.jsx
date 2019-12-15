@@ -4,12 +4,7 @@ import { withFormik } from 'formik';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import {
-  Form,
-  RenderField,
-  Button
-  // RenderContentField
-} from '@gqlapp/look-client-react';
+import { Form, RenderField, Button, RenderContentField } from '@gqlapp/look-client-react';
 
 // import { createEditorState } from "medium-draft";
 
@@ -21,10 +16,20 @@ const BlogFormSchema = {
 class BlogForm extends React.Component {
   render() {
     const { values, handleSubmit, submitting } = this.props;
+
+    const DataUpdate = data => (values.content = data);
+
     return (
       <Form name="BlogForm" onSubmit={handleSubmit}>
         <Field name="title" component={RenderField} type="text" label={'Title'} value={values.title} />
-        <Field name="content" component={RenderField} type="text" label={'Content'} value={values.content} />
+        <Field
+          name="content"
+          component={RenderContentField}
+          type="text"
+          label={'Content'}
+          DataUpdate={DataUpdate}
+          value={values.content}
+        />
         <Button color="primary" type="submit" disabled={submitting}>
           {'Submit'}
         </Button>

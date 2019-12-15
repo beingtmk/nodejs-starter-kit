@@ -177,8 +177,10 @@
         "whatwg-fetch": "^2.0.4"
     },
     "dependencies": {
+        "draft-convert": "^2.1.8",
         "inquirer": "^6.2.2",
         "lodash": "^4.17.11",
+        "medium-draft": "^0.5.18",
         "opencollective": "^1.0.3"
     },
     "resolutions": {

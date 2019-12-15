@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Loading } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import BlogFormCmponent from './BlogFormCmponent';
 import settings from '@gqlapp/config';
@@ -18,10 +18,14 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const NewBlogView = ({ t }: NewBlogViewProps) => {
+  const [flag, setflag] = useState(false);
+  useEffect(() => {
+    setflag(true);
+  }, []);
   return (
     <PageLayout>
       {renderMetaData(t)}
-      <BlogFormCmponent />
+      {flag ? <BlogFormCmponent /> : <Loading />}
     </PageLayout>
   );
 };
