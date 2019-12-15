@@ -5,12 +5,37 @@ import { Form } from 'antd';
 
 import { convertToRaw } from 'draft-js';
 // if using webpack
-import { Editor, createEditorState } from 'medium-draft';
+import { ImageSideButton, Block, addNewBlock, Editor, createEditorState } from 'medium-draft';
 import mediumDraftExporter from 'medium-draft/lib/exporter';
 import mediumDraftImporter from 'medium-draft/lib/importer';
 import 'medium-draft/lib/index.css';
-
+// import "isomorphic-fetch";
 const FormItem = Form.Item;
+
+class CustomImageSideButton extends ImageSideButton {
+  onChange = async e => {
+    const convertTobase64 = file => {
+      return new Promise((resolve, reject) => {
+        const reader = new window.FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function() {
+          resolve(reader.result);
+        };
+        reader.onerror = function() {
+          reject('Error');
+        };
+      });
+    };
+    convertTobase64(e.target.files[0]).then(res => {
+      return this.props.setEditorState(
+        addNewBlock(this.props.getEditorState(), Block.IMAGE, {
+          src: res
+        })
+      );
+    });
+    this.props.close();
+  };
+}
 
 export default class RenderContentField extends React.Component {
   constructor(props) {
@@ -21,6 +46,13 @@ export default class RenderContentField extends React.Component {
         ? createEditorState(convertToRaw(mediumDraftImporter(this.props.value)))
         : createEditorState() // for empty content
     };
+
+    this.sideButtons = [
+      {
+        title: 'Image',
+        component: CustomImageSideButton
+      }
+    ];
 
     this.onChange = editorState => {
       this.setState({ editorState });
@@ -52,6 +84,7 @@ export default class RenderContentField extends React.Component {
             ref={this.refsEditor}
             editorState={editorState}
             placeholder={placeholder || label}
+            sideButtons={this.sideButtons}
             onChange={this.onChange}
           />
         </div>
