@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
 
-import { PageLayout, Loading } from '@gqlapp/look-client-react';
+import { PageLayout, Loading, Card } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import BlogFormCmponent from './BlogFormCmponent';
 import settings from '@gqlapp/config';
@@ -25,7 +25,13 @@ const NewBlogView = ({ t }: NewBlogViewProps) => {
   return (
     <PageLayout>
       {renderMetaData(t)}
-      {flag ? <BlogFormCmponent /> : <Loading />}
+      {flag ? (
+        <Card title="Add Blog">
+          <BlogFormCmponent />
+        </Card>
+      ) : (
+        <Loading />
+      )}
     </PageLayout>
   );
 };
