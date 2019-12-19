@@ -76,7 +76,7 @@ export default class HomeView extends React.Component {
       <Footer0 id="Footer0_0" key="Footer0_0" dataSource={Footer00DataSource} isMobile={this.state.isMobile} />
     ];
     return (
-      <PageLayout>
+      <PageLayout type='home'>
         {renderMetaData(this.props.t)}
         <div
           className="templates-wrapper"

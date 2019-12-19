@@ -103,11 +103,11 @@ class NavBar extends React.Component {
             </LoggedIn>
           </Menu>
         </Col>
-        <Col md={10} sm={10} xs={10} align="right">
+        <Col lg={0} md={10} sm={10} xs={10} align="right">
           <div onClick={this.showDrawer} style={{ height: '50px' }}>
             <Icon
               type="menu"
-              style={{ color: 'white', fontSize: '20px', position: 'absolute', top: '15px', right: '0' }}
+              style={{ color: 'white', fontSize: '20px', position: 'absolute', top: '15px', right: '10px' }}
             />
           </div>
         </Col>
