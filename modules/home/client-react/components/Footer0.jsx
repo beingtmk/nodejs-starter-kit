@@ -11,11 +11,7 @@ class Footer extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <OverPack {...dataSource.OverPack}>
-          <TweenOne
-            animation={{ y: '+=30', opacity: 0, type: 'from' }}
-            key="footer"
-            {...dataSource.copyright}
-          >
+          <TweenOne animation={{ y: '+=30', opacity: 0, type: 'from' }} key="footer" {...dataSource.copyright}>
             {dataSource.copyright.children}
           </TweenOne>
         </OverPack>

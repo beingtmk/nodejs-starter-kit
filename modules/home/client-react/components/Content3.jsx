@@ -21,7 +21,7 @@ class Content3 extends React.PureComponent {
         opacity: 0,
         type: 'from',
         ease: 'easeOutQuad',
-        delay,
+        delay
       };
       const childrenAnim = { ...liAnim, x: '+=10', delay: delay + 100 };
       clearFloatNum += item.md;
@@ -33,18 +33,14 @@ class Content3 extends React.PureComponent {
           key={item.name}
           {...item}
           componentProps={{ md: item.md, xs: item.xs }}
-          className={
-            !clearFloatNum
-              ? `${item.className || ''} clear-both`.trim()
-              : item.className
-          }
+          className={!clearFloatNum ? `${item.className || ''} clear-both`.trim() : item.className}
         >
           <TweenOne
             animation={{
               x: '-=10',
               opacity: 0,
               type: 'from',
-              ease: 'easeOutQuad',
+              ease: 'easeOutQuad'
             }}
             key="img"
             {...childObj.icon}
@@ -52,20 +48,10 @@ class Content3 extends React.PureComponent {
             <img src={childObj.icon.children} width="100%" alt="img" />
           </TweenOne>
           <div {...childObj.textWrapper}>
-            <TweenOne
-              key="h2"
-              animation={childrenAnim}
-              component="h2"
-              {...childObj.title}
-            >
+            <TweenOne key="h2" animation={childrenAnim} component="h2" {...childObj.title}>
               {childObj.title.children}
             </TweenOne>
-            <TweenOne
-              key="p"
-              animation={{ ...childrenAnim, delay: delay + 200 }}
-              component="div"
-              {...childObj.content}
-            >
+            <TweenOne key="p" animation={{ ...childrenAnim, delay: delay + 200 }} component="div" {...childObj.content}>
               {childObj.content.children}
             </TweenOne>
           </div>
@@ -75,9 +61,7 @@ class Content3 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {dataSource.titleWrapper.children.map(getChildrenToRender)}
-          </div>
+          <div {...dataSource.titleWrapper}>{dataSource.titleWrapper.children.map(getChildrenToRender)}</div>
           <OverPack {...dataSource.OverPack}>
             <QueueAnim key="u" type="bottom">
               <Row key="row" {...dataSource.block}>
