@@ -10,6 +10,8 @@ export { default as Option } from './Option';
 export { default as RenderField } from './RenderField';
 export { default as RenderSelect } from './RenderSelect';
 export { default as RenderCheckBox } from './RenderCheckBox';
+export { default as RenderUpload } from './RenderUpload';
+export { default as RenderUploadMultiple } from './RenderUploadMultiple';
 export { default as Alert } from './Alert';
 export { default as Container } from './Container';
 export { default as Row } from './Row';
