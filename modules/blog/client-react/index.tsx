@@ -16,7 +16,7 @@ const NavLinkWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
 
 export default new ClientModule({
   route: [
-    <Route exact path="/blog/new" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
+    <Route exact path="/blog/new" component={loadable(() => import('./containers/NewBlog').then(c => c.default))} />
   ],
   navItem: [
     <MenuItem key="/blog/new">
