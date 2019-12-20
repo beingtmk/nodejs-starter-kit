@@ -1,10 +1,10 @@
 import React from 'react';
-// import Grid from 'hedron';
+import Grid from 'hedron';
 import PropTypes from 'prop-types';
 // import styled, { css } from 'styled-components';
 import { RenderField } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Row, Col, Icon, Button, Form, Modal, Popconfirm, message } from 'antd';
+import { Icon, Button, Form, Modal, Popconfirm, message } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -170,8 +170,8 @@ class RenderAddress extends React.Component {
                 <h4>{address.pinCode && address.pinCode + ','}</h4>
               </div>
 
-              <Row className="margBot8">
-                <Col span={12} align="left">
+              <Grid.Bounds direction="horizontal">
+                <Grid.Box>
                   <Button
                     className="addEditbtn"
                     shape="circle"
@@ -193,8 +193,8 @@ class RenderAddress extends React.Component {
                       <FormItem>{formItems[indexa]}</FormItem>
                     </div>
                   </Modal>
-                </Col>
-                <Col span={12} align="right">
+                </Grid.Box>
+                <Grid.Box shiftRight>
                   <Popconfirm
                     title="Are you sure to delete this address?"
                     onConfirm={() => arrayHelpers.remove(indexa)}
@@ -206,8 +206,8 @@ class RenderAddress extends React.Component {
                       <Icon type="delete" />
                     </Button>
                   </Popconfirm>
-                </Col>
-              </Row>
+                </Grid.Box>
+              </Grid.Bounds>
             </>
           ))
         )
@@ -216,45 +216,55 @@ class RenderAddress extends React.Component {
 
     return (
       <>
-        <Row>
-          <Col span={24}>
-            <h3 className="Addresses">Addresses</h3>
-            <br />
-          </Col>
-          <Col>
-            <Row>
-              <Col span={24} className="PadB30">
-                {isSelectable
-                  ? addresses.map((address, indexas) => (
-                      <div
-                        key={indexas}
-                        onClick={() => this.renderCondition(indexas)}
-                        className={this.classNamesgroup(indexas) + ' addis-Sel'}
-                      >
-                        {addressCard[indexas]}
-                      </div>
-                    ))
-                  : addresses.map((address, indexas) => (
-                      <div className="HomeAddress addnot-Sel" key={indexas}>
-                        {addressCard[indexas]}
-                      </div>
-                    ))}
-              </Col>
-              <Col span={24} className="PadB30">
-                <div
-                  className="AddNewAddressBlock"
-                  onClick={this.handleAddAddress}
-                  style={{ marginTop: !isSelectable ? '15px' : null }}
-                >
-                  <div className="AddNewAddress">
-                    <Icon type="plus" />
+        <Grid.Provider
+          // debug
+          padding="0px"
+          breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}
+        >
+          <Grid.Bounds direction="vertical" halign="center">
+            <Grid.Box shiftLeft>
+              <h3 className="Addresses">Addresses</h3>
+              <br />
+            </Grid.Box>
+            <Grid.Box>
+              <Grid.Bounds direction="vertical">
+                <Grid.Box className="PadB30">
+                  {isSelectable
+                    ? addresses.map((address, indexas) => (
+                        <Grid.Box>
+                          <div
+                            key={indexas}
+                            onClick={() => this.renderCondition(indexas)}
+                            className={this.classNamesgroup(indexas) + ' addis-Sel'}
+                          >
+                            {addressCard[indexas]}
+                          </div>
+                        </Grid.Box>
+                      ))
+                    : addresses.map((address, indexas) => (
+                        <Grid.Box>
+                          <div className="HomeAddress addnot-Sel" key={indexas}>
+                            {addressCard[indexas]}
+                          </div>
+                        </Grid.Box>
+                      ))}
+                </Grid.Box>
+                <Grid.Box className="PadB30">
+                  <div
+                    className="AddNewAddressBlock"
+                    onClick={this.handleAddAddress}
+                    style={{ marginTop: !isSelectable ? '15px' : null }}
+                  >
+                    <div className="AddNewAddress">
+                      <Icon type="plus" />
+                    </div>
+                    <h4 style={{ position: 'relative', top: '30px' }}>Add a new address</h4>
                   </div>
-                  <h4 style={{ position: 'relative', top: '30px' }}>Add a new address</h4>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+                </Grid.Box>
+              </Grid.Bounds>
+            </Grid.Box>
+          </Grid.Bounds>
+        </Grid.Provider>
       </>
     );
   }
