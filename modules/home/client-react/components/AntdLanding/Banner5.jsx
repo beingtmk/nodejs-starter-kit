@@ -15,8 +15,8 @@ class Banner5 extends React.PureComponent {
         y: '+=30',
         opacity: 0,
         type: 'from',
-        ease: 'easeOutQuad',
-      },
+        ease: 'easeOutQuad'
+      }
     };
     return (
       <div {...tagProps} {...dataSource.wrapper}>
@@ -29,7 +29,7 @@ class Banner5 extends React.PureComponent {
             {...dataSource.childWrapper}
             componentProps={{
               md: dataSource.childWrapper.md,
-              xs: dataSource.childWrapper.xs,
+              xs: dataSource.childWrapper.xs
             }}
           >
             {dataSource.childWrapper.children.map(getChildrenToRender)}

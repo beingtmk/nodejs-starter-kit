@@ -1,5 +1,7 @@
 import React from 'react';
 import TweenOne from 'rc-tween-one';
+import PropTypes from 'prop-types';
+
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
@@ -16,7 +18,7 @@ class Content8 extends React.PureComponent {
       opacity: 0,
       type: 'from',
       ease: 'easeOutQuad',
-      delay,
+      delay
     };
     return (
       <TweenOne component={Col} animation={liAnim} key={i.toString()} {...item}>
@@ -40,9 +42,7 @@ class Content8 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {dataSource.titleWrapper.children.map(getChildrenToRender)}
-          </div>
+          <div {...dataSource.titleWrapper}>{dataSource.titleWrapper.children.map(getChildrenToRender)}</div>
           <OverPack {...dataSource.OverPack}>
             <QueueAnim type="bottom" key="img">
               <Row {...dataSource.block} key="img">
@@ -55,5 +55,9 @@ class Content8 extends React.PureComponent {
     );
   }
 }
+
+Content8.propTypes = {
+  isMobile: PropTypes.bool.isRequired
+};
 
 export default Content8;

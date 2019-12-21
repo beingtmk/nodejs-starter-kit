@@ -6,11 +6,11 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { getChildrenToRender } from './utils';
 
 class Content7 extends React.Component {
-  getBlockChildren = (data) =>
-    data.map(($item) => {
+  getBlockChildren = data =>
+    data.map($item => {
       const { ...item } = $item;
       const { title, img, content } = item;
-      ['title', 'img', 'content'].forEach((key) => delete item[key]);
+      ['title', 'img', 'content'].forEach(key => delete item[key]);
       return (
         <li key={item.name} {...item}>
           <span {...img}>
@@ -35,13 +35,13 @@ class Content7 extends React.Component {
           opacity: 0,
           delay: 600,
           type: 'from',
-          ease: 'easeOutQuad',
+          ease: 'easeOutQuad'
         }
       : {
           x: 30,
           opacity: 0,
           type: 'from',
-          ease: 'easeOutQuad',
+          ease: 'easeOutQuad'
         };
     return (
       <div {...props} {...dataSource.wrapper}>
@@ -57,23 +57,11 @@ class Content7 extends React.Component {
             <div key="title" {...dataSource.titleWrapper}>
               {dataSource.titleWrapper.children.map(getChildrenToRender)}
             </div>
-            <QueueAnim
-              component="ul"
-              key="ul"
-              type={queue}
-              ease="easeOutQuad"
-              {...dataSource.block}
-            >
+            <QueueAnim component="ul" key="ul" type={queue} ease="easeOutQuad" {...dataSource.block}>
               {ulChildren}
             </QueueAnim>
           </QueueAnim>
-          <TweenOne
-            key="img"
-            animation={imgAnim}
-            resetStyle
-            {...dataSource.img}
-            component={Col}
-          >
+          <TweenOne key="img" animation={imgAnim} resetStyle {...dataSource.img} component={Col}>
             <img src={dataSource.img.children} width="100%" alt="img" />
           </TweenOne>
         </OverPack>

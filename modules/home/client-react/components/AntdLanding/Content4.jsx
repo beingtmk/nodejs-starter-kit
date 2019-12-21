@@ -13,7 +13,7 @@ function Content4(props) {
     y: '+=30',
     opacity: 0,
     type: 'from',
-    ease: 'easeOutQuad',
+    ease: 'easeOutQuad'
   };
   const videoChildren = dataSource.video.children.video;
   const videoNameArray = videoChildren.split('.');
@@ -25,22 +25,14 @@ function Content4(props) {
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </div>
         <OverPack {...dataSource.OverPack}>
-          <TweenOne
-            key="video"
-            animation={{ ...animation, delay: 300 }}
-            {...dataSource.video}
-          >
+          <TweenOne key="video" animation={{ ...animation, delay: 300 }} {...dataSource.video}>
             {isMobile ? (
               <video width="100%" loop poster={dataSource.video.children.image}>
                 <source src={videoChildren} type={`video/${type}`} />
                 <track kind="captions" />
               </video>
             ) : (
-              <VideoPlay
-                loop
-                width="100%"
-                poster={dataSource.video.children.image}
-              >
+              <VideoPlay loop width="100%" poster={dataSource.video.children.image}>
                 <source src={videoChildren} type={`video/${type}`} />
               </VideoPlay>
             )}

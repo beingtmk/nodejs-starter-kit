@@ -11,13 +11,7 @@ class Content13 extends React.PureComponent {
     delete props.isMobile;
     return (
       <OverPack {...props} {...dataSource.OverPack}>
-        <QueueAnim
-          type="bottom"
-          leaveReverse
-          key="page"
-          delay={[0, 100]}
-          {...dataSource.titleWrapper}
-        >
+        <QueueAnim type="bottom" leaveReverse key="page" delay={[0, 100]} {...dataSource.titleWrapper}>
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </QueueAnim>
       </OverPack>

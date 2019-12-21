@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
@@ -10,26 +12,15 @@ function Feature7(props) {
   const { blockWrapper, titleWrapper } = dataSource;
   const childrenToRender = blockWrapper.children.map((item, i) => (
     <Col {...item} key={i.toString()}>
-      <a {...item.children}>
-        {item.children.children.map(getChildrenToRender)}
-      </a>
+      <a {...item.children}>{item.children.children.map(getChildrenToRender)}</a>
     </Col>
   ));
   return (
     <div {...tagProps} {...dataSource.wrapper}>
       <div {...dataSource.page}>
-        <div {...dataSource.titleWrapper}>
-          {titleWrapper.children.map(getChildrenToRender)}
-        </div>
+        <div {...dataSource.titleWrapper}>{titleWrapper.children.map(getChildrenToRender)}</div>
         <OverPack {...dataSource.OverPack}>
-          <QueueAnim
-            key="queue"
-            type="bottom"
-            leaveReverse
-            interval={50}
-            component={Row}
-            {...blockWrapper}
-          >
+          <QueueAnim key="queue" type="bottom" leaveReverse interval={50} component={Row} {...blockWrapper}>
             {childrenToRender}
           </QueueAnim>
         </OverPack>
@@ -37,5 +28,20 @@ function Feature7(props) {
     </div>
   );
 }
+
+Feature7.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  dataSource: PropTypes.shape({
+    wrapper: PropTypes.object,
+    page: PropTypes.object,
+    titleWrapper: PropTypes.shape({
+      children: PropTypes.object
+    }),
+    blockWrapper: PropTypes.shape({
+      children: PropTypes.object
+    }),
+    OverPack: PropTypes.object
+  })
+};
 
 export default Feature7;

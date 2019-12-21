@@ -10,7 +10,7 @@ class Banner extends React.PureComponent {
     const { dataSource } = currentProps;
     delete currentProps.dataSource;
     delete currentProps.isMobile;
-    const children = dataSource.textWrapper.children.map((item) => {
+    const children = dataSource.textWrapper.children.map(item => {
       const { name, texty, ...$item } = item;
       if (name.match('button')) {
         return (
@@ -22,22 +22,13 @@ class Banner extends React.PureComponent {
 
       return (
         <div key={name} {...$item}>
-          {texty ? (
-            <Texty type="mask-bottom">{item.children}</Texty>
-          ) : (
-            item.children
-          )}
+          {texty ? <Texty type="mask-bottom">{item.children}</Texty> : item.children}
         </div>
       );
     });
     return (
       <div {...currentProps} {...dataSource.wrapper}>
-        <QueueAnim
-          key="QueueAnim"
-          type={['bottom', 'top']}
-          delay={200}
-          {...dataSource.textWrapper}
-        >
+        <QueueAnim key="QueueAnim" type={['bottom', 'top']} delay={200} {...dataSource.textWrapper}>
           {children}
         </QueueAnim>
       </div>

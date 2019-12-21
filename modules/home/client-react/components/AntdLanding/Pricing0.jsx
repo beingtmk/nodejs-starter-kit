@@ -17,14 +17,14 @@ function Pricing0(props) {
           scaleY: '+=0.3',
           opacity: 0,
           type: 'from',
-          ease: 'easeOutQuad',
+          ease: 'easeOutQuad'
         }
       : {
           x: '-=30',
           opacity: 0,
           type: 'from',
-          ease: 'easeOutQuad',
-        },
+          ease: 'easeOutQuad'
+        }
   };
   return (
     <div {...tagProps} {...dataSource.wrapper}>
@@ -37,7 +37,7 @@ function Pricing0(props) {
           component={Col}
           componentProps={{
             md: dataSource.imgWrapper.md,
-            xs: dataSource.imgWrapper.xs,
+            xs: dataSource.imgWrapper.xs
           }}
         >
           <span {...dataSource.img}>
@@ -53,7 +53,7 @@ function Pricing0(props) {
           component={Col}
           componentProps={{
             md: dataSource.childWrapper.md,
-            xs: dataSource.childWrapper.xs,
+            xs: dataSource.childWrapper.xs
           }}
         >
           {dataSource.childWrapper.children.map(getChildrenToRender)}

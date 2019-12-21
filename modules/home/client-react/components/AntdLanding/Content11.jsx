@@ -13,13 +13,7 @@ class Content11 extends React.PureComponent {
     delete props.isMobile;
     return (
       <OverPack {...props} {...dataSource.OverPack}>
-        <QueueAnim
-          type="bottom"
-          leaveReverse
-          key="page"
-          delay={[0, 100]}
-          {...dataSource.titleWrapper}
-        >
+        <QueueAnim type="bottom" leaveReverse key="page" delay={[0, 100]} {...dataSource.titleWrapper}>
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </QueueAnim>
         <TweenOne
@@ -28,9 +22,7 @@ class Content11 extends React.PureComponent {
           {...dataSource.button}
           animation={{ y: 30, opacity: 0, type: 'from', delay: 300 }}
         >
-          <Button {...dataSource.button.children.a}>
-            {dataSource.button.children.a.children}
-          </Button>
+          <Button {...dataSource.button.children.a}>{dataSource.button.children.a.children}</Button>
         </TweenOne>
       </OverPack>
     );

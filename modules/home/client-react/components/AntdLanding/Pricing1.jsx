@@ -5,16 +5,8 @@ import { Row, Col, Button } from 'antd';
 import { getChildrenToRender } from './utils';
 
 class Pricing1 extends React.PureComponent {
-  getChildrenToRender = (item) => {
-    const {
-      wrapper,
-      topWrapper,
-      name,
-      buttonWrapper,
-      line,
-      content,
-      money,
-    } = item.children;
+  getChildrenToRender = item => {
+    const { wrapper, topWrapper, name, buttonWrapper, line, content, money } = item.children;
     return (
       <Col key={item.name} {...item}>
         <QueueAnim type="bottom" {...wrapper}>
@@ -52,13 +44,7 @@ class Pricing1 extends React.PureComponent {
             {dataSource.titleWrapper.children.map(getChildrenToRender)}
           </div>
           <OverPack {...dataSource.OverPack}>
-            <QueueAnim
-              type="bottom"
-              component={Row}
-              leaveReverse
-              ease={['easeOutQuad', 'easeInOutQuad']}
-              key="content"
-            >
+            <QueueAnim type="bottom" component={Row} leaveReverse ease={['easeOutQuad', 'easeInOutQuad']} key="content">
               {childrenToRender}
             </QueueAnim>
           </OverPack>

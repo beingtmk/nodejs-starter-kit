@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Carousel as AntCarousel, Row, Col } from 'antd';
@@ -9,7 +11,7 @@ class Feature8 extends React.PureComponent {
     super(props);
     this.carouselRef = React.createRef();
     this.state = {
-      current: 0,
+      current: 0
     };
   }
 
@@ -20,25 +22,17 @@ class Feature8 extends React.PureComponent {
 
   onBeforeChange = (_, newIndex) => {
     this.setState({
-      current: newIndex,
+      current: newIndex
     });
   };
 
-  getChildrenToRender = (dataSource) => {
+  getChildrenToRender = dataSource => {
     const { current } = this.state;
     const { Carousel, childWrapper: buttonWrapper } = dataSource;
     const { children: carouselChild, wrapper, ...carouselProps } = Carousel;
-    const {
-      titleWrapper,
-      children: childWrapper,
-      ...childrenProps
-    } = carouselChild;
+    const { titleWrapper, children: childWrapper, ...childrenProps } = carouselChild;
 
-    const {
-      barWrapper,
-      title: titleChild,
-      ...titleWrapperProps
-    } = titleWrapper;
+    const { barWrapper, title: titleChild, ...titleWrapperProps } = titleWrapper;
     const titleToRender = [];
 
     const childrenToRender = childWrapper.map((item, ii) => {
@@ -48,14 +42,10 @@ class Feature8 extends React.PureComponent {
           <div
             {...title}
             key={ii.toString()}
-            onClick={(e) => {
+            onClick={e => {
               this.onTitleClick(e, ii);
             }}
-            className={
-              ii === current
-                ? `${title.className || ''} active`
-                : title.className
-            }
+            className={ii === current ? `${title.className || ''} active` : title.className}
           >
             {title.children}
           </div>
@@ -66,9 +56,7 @@ class Feature8 extends React.PureComponent {
         const { ...childProps } = colChild;
         return (
           <Col {...colProps} key={i.toString()}>
-            <div {...childProps}>
-              {colChild.children.map(getChildrenToRender)}
-            </div>
+            <div {...childProps}>{colChild.children.map(getChildrenToRender)}</div>
             {arrow && (
               <div {...arrow}>
                 <img src={arrow.children} alt="img" />
@@ -80,12 +68,7 @@ class Feature8 extends React.PureComponent {
 
       return (
         <div key={ii.toString()}>
-          <QueueAnim
-            component={Row}
-            type="bottom"
-            componentProps={{ type: 'flex' }}
-            {...rowProps}
-          >
+          <QueueAnim component={Row} type="bottom" componentProps={{ type: 'flex' }} {...rowProps}>
             {childrenItem}
           </QueueAnim>
         </div>
@@ -93,23 +76,13 @@ class Feature8 extends React.PureComponent {
     });
 
     return (
-      <QueueAnim
-        key="queue"
-        type="bottom"
-        ref={this.carouselRef}
-        {...childrenProps}
-      >
+      <QueueAnim key="queue" type="bottom" ref={this.carouselRef} {...childrenProps}>
         {childWrapper.length > 1 && (
           <div {...titleWrapperProps} key="title">
             <div {...titleChild}>{titleToRender}</div>
           </div>
         )}
-        <AntCarousel
-          key="carousel"
-          {...carouselProps}
-          infinite={false}
-          beforeChange={this.onBeforeChange}
-        >
+        <AntCarousel key="carousel" {...carouselProps} infinite={false} beforeChange={this.onBeforeChange}>
           {childrenToRender}
         </AntCarousel>
         <div key="button" {...buttonWrapper}>
@@ -125,15 +98,24 @@ class Feature8 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {titleWrapper.children.map(getChildrenToRender)}
-          </div>
-          <OverPack {...dataSource.OverPack}>
-            {this.getChildrenToRender(dataSource)}
-          </OverPack>
+          <div {...dataSource.titleWrapper}>{titleWrapper.children.map(getChildrenToRender)}</div>
+          <OverPack {...dataSource.OverPack}>{this.getChildrenToRender(dataSource)}</OverPack>
         </div>
       </div>
     );
   }
 }
+
+Feature8.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  dataSource: PropTypes.shape({
+    wrapper: PropTypes.object,
+    page: PropTypes.object,
+    titleWrapper: PropTypes.shape({
+      children: PropTypes.object
+    }),
+    OverPack: PropTypes.object
+  })
+};
+
 export default Feature8;

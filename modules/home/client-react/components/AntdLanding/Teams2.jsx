@@ -2,10 +2,10 @@ import React from 'react';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { getChildrenToRender, isImg } from './utils';
+import { getChildrenToRender } from './utils';
 
 class Teams2 extends React.PureComponent {
-  getBlockChildren = (data) =>
+  getBlockChildren = data =>
     data.map((item, i) => {
       const { titleWrapper, image, ...$item } = item;
       return (
@@ -35,17 +35,10 @@ class Teams2 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {dataSource.titleWrapper.children.map(getChildrenToRender)}
-          </div>
+          <div {...dataSource.titleWrapper}>{dataSource.titleWrapper.children.map(getChildrenToRender)}</div>
           <OverPack {...dataSource.OverPack}>
             <QueueAnim type="bottom" key="tween" leaveReverse>
-              <QueueAnim
-                type="bottom"
-                key="block"
-                {...dataSource.block}
-                component={Row}
-              >
+              <QueueAnim type="bottom" key="block" {...dataSource.block} component={Row}>
                 {listChildren}
               </QueueAnim>
             </QueueAnim>

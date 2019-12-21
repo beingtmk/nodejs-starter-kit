@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import QueueAnim from 'rc-queue-anim';
 
 class Content10 extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showInfo: props.isMobile,
+      showInfo: props.isMobile
     };
   }
 
@@ -15,13 +17,13 @@ class Content10 extends React.PureComponent {
 
   markerEnter = () => {
     this.setState({
-      showInfo: true,
+      showInfo: true
     });
   };
 
   markerLeave = () => {
     this.setState({
-      showInfo: false,
+      showInfo: false
     });
   };
 
@@ -43,10 +45,7 @@ class Content10 extends React.PureComponent {
             <img src={dataSource.Content.children.icon.children} alt="img" />
           </div>
           <div {...dataSource.Content.children.iconShadow}>
-            <img
-              src={dataSource.Content.children.iconShadow.children}
-              alt="img"
-            />
+            <img src={dataSource.Content.children.iconShadow.children} alt="img" />
           </div>
         </div>
         <QueueAnim type="scale">
@@ -61,5 +60,18 @@ class Content10 extends React.PureComponent {
     );
   }
 }
+
+Content10.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  dataSource: PropTypes.shape({
+    Content: PropTypes.shape({
+      children: PropTypes.shape({
+        url: PropTypes.shape({
+          children: PropTypes.object
+        })
+      })
+    })
+  })
+};
 
 export default Content10;

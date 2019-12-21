@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Carousel as AntCarousel, Row, Col } from 'antd';
@@ -12,7 +14,7 @@ class Feature6 extends React.PureComponent {
     super(props);
     this.carouselRef = React.createRef();
     this.state = {
-      current: 0,
+      current: 0
     };
   }
 
@@ -23,25 +25,16 @@ class Feature6 extends React.PureComponent {
 
   onBeforeChange = (_, newIndex) => {
     this.setState({
-      current: newIndex,
+      current: newIndex
     });
   };
 
-  getChildrenToRender = (dataSource) => {
+  getChildrenToRender = dataSource => {
     const { current } = this.state;
     const { Carousel } = dataSource;
-    const {
-      titleWrapper,
-      children: childWrapper,
-      wrapper,
-      ...carouselProps
-    } = Carousel;
+    const { titleWrapper, children: childWrapper, wrapper, ...carouselProps } = Carousel;
 
-    const {
-      barWrapper,
-      title: titleChild,
-      ...titleWrapperProps
-    } = titleWrapper;
+    const { barWrapper, title: titleChild, ...titleWrapperProps } = titleWrapper;
     const titleToRender = [];
 
     const childrenToRender = childWrapper.map((item, ii) => {
@@ -50,12 +43,10 @@ class Feature6 extends React.PureComponent {
         <div
           {...title}
           key={ii.toString()}
-          onClick={(e) => {
+          onClick={e => {
             this.onTitleClick(e, ii);
           }}
-          className={
-            ii === current ? `${title.className || ''} active` : title.className
-          }
+          className={ii === current ? `${title.className || ''} active` : title.className}
         >
           {title.children}
         </div>
@@ -71,17 +62,12 @@ class Feature6 extends React.PureComponent {
               animation={{
                 Children: {
                   value: parseFloat(numberChild),
-                  floatLength:
-                    parseFloat(numberChild) -
-                      Math.floor(parseFloat(numberChild)) >
-                    0
-                      ? 2
-                      : 0,
-                  formatMoney: true,
+                  floatLength: parseFloat(numberChild) - Math.floor(parseFloat(numberChild)) > 0 ? 2 : 0,
+                  formatMoney: true
                 },
                 duration: 1000,
                 delay: 300,
-                ease: 'easeInOutCirc',
+                ease: 'easeInOutCirc'
               }}
               component="span"
             >
@@ -93,12 +79,7 @@ class Feature6 extends React.PureComponent {
         );
       });
       return (
-        <QueueAnim
-          type="bottom"
-          component={Row}
-          {...itemProps}
-          key={ii.toString()}
-        >
+        <QueueAnim type="bottom" component={Row} {...itemProps} key={ii.toString()}>
           {childrenItem}
         </QueueAnim>
       );
@@ -106,14 +87,7 @@ class Feature6 extends React.PureComponent {
 
     const width = 100 / childrenToRender.length;
     return (
-      <QueueAnim
-        key="queue"
-        leaveReverse
-        type="bottom"
-        delay={[0, 100]}
-        {...wrapper}
-        ref={this.carouselRef}
-      >
+      <QueueAnim key="queue" leaveReverse type="bottom" delay={[0, 100]} {...wrapper} ref={this.carouselRef}>
         <div {...titleWrapperProps} key="title">
           <div {...titleChild}>
             {titleToRender}
@@ -121,19 +95,14 @@ class Feature6 extends React.PureComponent {
               {...barWrapper}
               style={{
                 width: `${width}%`,
-                left: `${width * current}%`,
+                left: `${width * current}%`
               }}
             >
               <em {...barWrapper.children} />
             </div>
           </div>
         </div>
-        <AntCarousel
-          {...carouselProps}
-          key="carousel"
-          infinite={false}
-          beforeChange={this.onBeforeChange}
-        >
+        <AntCarousel {...carouselProps} key="carousel" infinite={false} beforeChange={this.onBeforeChange}>
           {childrenToRender}
         </AntCarousel>
       </QueueAnim>
@@ -145,12 +114,19 @@ class Feature6 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div>
-          <OverPack {...dataSource.OverPack}>
-            {this.getChildrenToRender(dataSource)}
-          </OverPack>
+          <OverPack {...dataSource.OverPack}>{this.getChildrenToRender(dataSource)}</OverPack>
         </div>
       </div>
     );
   }
 }
+
+Feature6.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+  dataSource: PropTypes.shape({
+    wrapper: PropTypes.object,
+    OverPack: PropTypes.object
+  })
+};
+
 export default Feature6;

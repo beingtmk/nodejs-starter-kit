@@ -16,14 +16,14 @@ function Content2(props) {
           scaleY: '+=0.3',
           opacity: 0,
           type: 'from',
-          ease: 'easeOutQuad',
+          ease: 'easeOutQuad'
         }
       : {
           x: '+=30',
           opacity: 0,
           type: 'from',
-          ease: 'easeOutQuad',
-        },
+          ease: 'easeOutQuad'
+        }
   };
   const img = (
     <TweenOne
@@ -34,7 +34,7 @@ function Content2(props) {
       component={Col}
       componentProps={{
         md: dataSource.imgWrapper.md,
-        xs: dataSource.imgWrapper.xs,
+        xs: dataSource.imgWrapper.xs
       }}
     >
       <span {...dataSource.img}>
@@ -55,7 +55,7 @@ function Content2(props) {
           component={Col}
           componentProps={{
             md: dataSource.textWrapper.md,
-            xs: dataSource.textWrapper.xs,
+            xs: dataSource.textWrapper.xs
           }}
         >
           <h2 key="h1" {...dataSource.title}>

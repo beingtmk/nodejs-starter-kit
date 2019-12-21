@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { getChildrenToRender } from './utils';
@@ -8,12 +10,7 @@ class Content9 extends React.PureComponent {
     const { isMobile } = this.props;
     const item = block.children;
     const textWrapper = (
-      <QueueAnim
-        key="text"
-        leaveReverse
-        delay={isMobile ? [0, 100] : 0}
-        {...item.textWrapper}
-      >
+      <QueueAnim key="text" leaveReverse delay={isMobile ? [0, 100] : 0} {...item.textWrapper}>
         <div key="time" {...item.time}>
           {item.time.children}
         </div>
@@ -66,14 +63,16 @@ class Content9 extends React.PureComponent {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {dataSource.titleWrapper.children.map(getChildrenToRender)}
-          </div>
+          <div {...dataSource.titleWrapper}>{dataSource.titleWrapper.children.map(getChildrenToRender)}</div>
           <div {...dataSource.block}>{children}</div>
         </div>
       </div>
     );
   }
 }
+
+Content9.propTypes = {
+  isMobile: PropTypes.bool.isRequired
+};
 
 export default Content9;

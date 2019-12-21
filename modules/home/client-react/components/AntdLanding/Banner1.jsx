@@ -21,15 +21,9 @@ class Banner extends React.PureComponent {
       return (
         <Element key={i.toString()} {...elem} prefixCls={elemClassName}>
           <BgElement key="bg" {...bg} />
-          <QueueAnim
-            type={['bottom', 'top']}
-            delay={200}
-            key="text"
-            {...textWrapper}
-          >
+          <QueueAnim type={['bottom', 'top']} delay={200} key="text" {...textWrapper}>
             <div key="logo" {...title}>
-              {typeof title.children === 'string' &&
-              title.children.match(isImg) ? (
+              {typeof title.children === 'string' && title.children.match(isImg) ? (
                 <img src={title.children} width="100%" alt="img" />
               ) : (
                 title.children
@@ -47,12 +41,7 @@ class Banner extends React.PureComponent {
     });
     return (
       <div {...props} {...dataSource.wrapper}>
-        <TweenOneGroup
-          key="bannerGroup"
-          enter={{ opacity: 0, type: 'from' }}
-          leave={{ opacity: 0 }}
-          component=""
-        >
+        <TweenOneGroup key="bannerGroup" enter={{ opacity: 0, type: 'from' }} leave={{ opacity: 0 }} component="">
           <div className="banner1-wrapper" key="wrapper">
             <BannerAnim key="BannerAnim" {...dataSource.BannerAnim}>
               {childrenToRender}
@@ -64,7 +53,7 @@ class Banner extends React.PureComponent {
             y: '-=20',
             yoyo: true,
             repeat: -1,
-            duration: 1000,
+            duration: 1000
           }}
           className="banner1-icon"
           style={{ bottom: 40 }}

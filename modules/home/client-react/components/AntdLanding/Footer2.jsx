@@ -21,11 +21,7 @@ class Footer2 extends React.PureComponent {
               );
             })}
           </TweenOne>
-          <TweenOne
-            animation={{ x: '+=30', opacity: 0, type: 'from' }}
-            key="copyright"
-            {...dataSource.copyright}
-          >
+          <TweenOne animation={{ x: '+=30', opacity: 0, type: 'from' }} key="copyright" {...dataSource.copyright}>
             {dataSource.copyright.children.map((item, i) =>
               React.createElement(
                 item.name.indexOf('title') === 0 ? 'h1' : 'div',
@@ -33,7 +29,7 @@ class Footer2 extends React.PureComponent {
                 typeof item.children === 'string' && item.children.match(isImg)
                   ? React.createElement('img', {
                       src: item.children,
-                      alt: 'img',
+                      alt: 'img'
                     })
                   : item.children
               )

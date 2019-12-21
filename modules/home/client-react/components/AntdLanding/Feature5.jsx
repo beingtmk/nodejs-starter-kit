@@ -10,11 +10,11 @@ class Content7 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 1,
+      current: 1
     };
   }
 
-  onChange = (key) => {
+  onChange = key => {
     this.setState({ current: parseFloat(key) });
   };
 
@@ -42,17 +42,13 @@ class Content7 extends React.Component {
             delay: 300,
             opacity: 0,
             type: 'from',
-            ease: 'easeOutQuad',
+            ease: 'easeOutQuad'
           }}
           leave={null}
           component=""
         >
           {this.state.current === i + 1 && (
-            <Row
-              key="content"
-              className={content.className}
-              gutter={content.gutter}
-            >
+            <Row key="content" className={content.className} gutter={content.gutter}>
               <Col className={text.className} xs={text.xs} md={text.md}>
                 {textChildren}
               </Col>
@@ -75,9 +71,7 @@ class Content7 extends React.Component {
     return (
       <div {...props} {...dataSource.wrapper}>
         <div {...dataSource.page}>
-          <div {...dataSource.titleWrapper}>
-            {dataSource.titleWrapper.children.map(getChildrenToRender)}
-          </div>
+          <div {...dataSource.titleWrapper}>{dataSource.titleWrapper.children.map(getChildrenToRender)}</div>
 
           <OverPack {...dataSource.OverPack}>
             <TweenOne.TweenOneGroup
@@ -86,17 +80,12 @@ class Content7 extends React.Component {
                 y: 30,
                 opacity: 0,
                 delay: 200,
-                type: 'from',
+                type: 'from'
               }}
               leave={{ y: 30, opacity: 0 }}
               {...dataSource.tabsWrapper}
             >
-              <Tabs
-                key="tabs"
-                onChange={this.onChange}
-                activeKey={`${this.state.current}`}
-                {...dataSource.block}
-              >
+              <Tabs key="tabs" onChange={this.onChange} activeKey={`${this.state.current}`} {...dataSource.block}>
                 {tabsChildren}
               </Tabs>
             </TweenOne.TweenOneGroup>
