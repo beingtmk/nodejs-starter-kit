@@ -22,9 +22,11 @@ const Report = ({ t }: ReportProps) => (
         }
       ]}
     />
-    {reports.reportComponent.map((component: any, idx: number, items: any) =>
-      React.cloneElement(component, { key: idx + items.length })
-    )}
+    <div style={{ overflowX: 'auto' }}>
+      {reports.reportComponent.map((component: any, idx: number, items: any) =>
+        React.cloneElement(component, { key: idx + items.length })
+      )}
+    </div>
   </PageLayout>
 );
 

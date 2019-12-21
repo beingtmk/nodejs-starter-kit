@@ -1,10 +1,11 @@
 import React from 'react';
+import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
 
-import { PageLayout, Row, Col, Table, Button, Alert } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Button, Alert } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile, t }) => {
@@ -51,7 +52,7 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
 
   return (
     <PageLayout>
-      {renderMetaData()}
+      {/* {renderMetaData()}
       <div className="text-center">
         <Row>
           <Col xs={4}>
@@ -65,7 +66,23 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
             {files && <Table dataSource={files} columns={columns} />}
           </Col>
         </Row>
-      </div>
+      </div> */}
+
+      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+        <Grid.Bounds direction="horizontal" valign="center" sm={{ direction: 'vertical' }} md={{ padding: '20px' }}>
+          {renderMetaData()}
+          <Grid.Box>
+            <Dropzone onDrop={handleUploadFiles}>
+              <p style={{ padding: '10px' }}>{t('message')}</p>
+            </Dropzone>
+          </Grid.Box>
+          <Grid.Box md={{ fill: true }} lg={{ fill: true }}>
+            {loading && <span>Loading...</span>}
+            {error && <Alert color="error">{error}</Alert>}
+            {files && <Table dataSource={files} columns={columns} />}
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
     </PageLayout>
   );
 };
