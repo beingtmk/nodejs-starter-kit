@@ -1,6 +1,7 @@
 import React from 'react';
+import Grid from 'hedron';
 import PropTypes from 'prop-types';
-import { Table, Pagination } from '@gqlapp/look-client-react';
+import { Table, Pagination, LayoutCenter } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 
 const PaginationDemoView = ({ items, handlePageChange, pagination, t }) => {
@@ -14,9 +15,21 @@ const PaginationDemoView = ({ items, handlePageChange, pagination, t }) => {
       render: renderFunc
     }
   ];
+
+  const renderContent = () => <Table dataSource={items.edges.map(({ node }) => node)} columns={columns} />;
+
   return (
     <div>
-      <Table dataSource={items.edges.map(({ node }) => node)} columns={columns} />
+      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+        <Grid.Bounds direction="vertical">
+          <Grid.Box sm={{ hidden: 'true' }}>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
+          </Grid.Box>
+          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
+            {renderContent()}
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
       <Pagination
         itemsPerPage={items.edges.length}
         handlePageChange={handlePageChange}

@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
@@ -20,13 +21,26 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
     />
   );
 
+  const renderContent = () => (
+    <>
+      <h1 className="text-center">{t('forgotPass.form.title')}</h1>
+      <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
+    </>
+  );
+
   return (
     <PageLayout>
-      {renderMetaData()}
-      <LayoutCenter>
-        <h1 className="text-center">{t('forgotPass.form.title')}</h1>
-        <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
-      </LayoutCenter>
+      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+        <Grid.Bounds direction="vertical">
+          {renderMetaData()}
+          <Grid.Box sm={{ hidden: 'true' }}>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
+          </Grid.Box>
+          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
+            {renderContent()}
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
     </PageLayout>
   );
 };

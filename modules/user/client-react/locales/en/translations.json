@@ -61,7 +61,15 @@
         "name": "User Name",
         "email": "Email",
         "role": "Role",
-        "full": "Full Name"
+        "full": "Full Name",
+        "addresses": {
+          "title": "Addresses",
+          "subTitle": "Address",
+          "city": "City",
+          "pinCode": "Pin Code",
+          "state": "State",
+          "streetAddress": "Street Address"
+        }
       },
       "fldEmail": "Email",
       "btnSubmit": "Send instructions"

@@ -59,7 +59,6 @@ export default new ClientModule({
       redirect="/login"
       component={loadable(() => import('./containers/Profile').then(c => c.default))}
     />,
-    <AuthRoute exact path="/flex" component={loadable(() => import('./components/Flex').then(c => c.default))} />,
     <AuthRoute
       exact
       path="/users"

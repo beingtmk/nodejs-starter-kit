@@ -13,13 +13,11 @@ const commentFormSchema = {
 const PostCommentForm = ({ values, handleSubmit, comment, t }) => {
   return (
     <Form name="comment" onSubmit={handleSubmit}>
-      <Row>
-        <Col xs={2}>
+      <Row gutter="16">
+        <Col xs={8}>
           <Label>
             {t(`comment.label.${comment.id ? 'edit' : 'add'}`)} {t('comment.label.comment')}
           </Label>
-        </Col>
-        <Col xs={8}>
           <Field
             name="content"
             component={RenderField}
@@ -29,6 +27,7 @@ const PostCommentForm = ({ values, handleSubmit, comment, t }) => {
           />
         </Col>
         <Col xs={2}>
+          <br />
           <Button color="primary" type="submit" className="float-right">
             {t('comment.btn.submit')}
           </Button>
@@ -50,7 +49,9 @@ PostCommentForm.propTypes = {
 };
 
 const PostCommentFormWithFormik = withFormik({
-  mapPropsToValues: props => ({ content: props.comment && props.comment.content }),
+  mapPropsToValues: props => ({
+    content: props.comment && props.comment.content
+  }),
   async handleSubmit(
     values,
     {

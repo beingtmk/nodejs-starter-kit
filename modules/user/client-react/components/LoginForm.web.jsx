@@ -18,7 +18,14 @@ const { github, facebook, linkedin, google } = settings.auth.social;
 
 const renderSocialButtons = (buttonsLength, t) => {
   return buttonsLength > 2 ? (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minWidth: 200 }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        minWidth: 200
+      }}
+    >
       {facebook.enabled && (
         <div className="text-center">
           <FacebookButton text={t('login.fbBtn')} type={'icon'} />
@@ -86,9 +93,16 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
         value={values.password}
       />
       <div className="text-center">{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
         <div className="text-center">
-          <Button size="lg" style={{ minWidth: '320px' }} color="primary" type="submit" disabled={submitting}>
+          <Button size="lg" style={{ width: 'fit-content' }} color="primary" type="submit" disabled={submitting}>
             {t('login.form.btnSubmit')}
           </Button>
         </div>

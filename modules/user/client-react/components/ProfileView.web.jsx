@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -23,6 +24,38 @@ const renderMetaData = t => {
 };
 
 const ProfileView = ({ currentUserLoading, currentUser, t }) => {
+  const renderContent = () => (
+    <>
+      <h1 className="text-center">{t('profile.card.title')}</h1>
+      <Card>
+        <CardGroup>
+          <CardTitle>{t('profile.card.group.name')}:</CardTitle>
+          <CardText>{currentUser.username}</CardText>
+        </CardGroup>
+        <CardGroup>
+          <CardTitle>{t('profile.card.group.email')}:</CardTitle>
+          <CardText>{currentUser.email}</CardText>
+        </CardGroup>
+        <CardGroup>
+          <CardTitle>{t('profile.card.group.role')}:</CardTitle>
+          <CardText>{currentUser.role}</CardText>
+        </CardGroup>
+        {currentUser.profile && currentUser.profile.fullName && (
+          <CardGroup>
+            <CardTitle>{t('profile.card.group.full')}:</CardTitle>
+            <CardText>{currentUser.profile.fullName}</CardText>
+          </CardGroup>
+        )}
+        {/* Credit card info (Stripe subscription module)*/}
+        {settings.stripe.subscription.enabled &&
+          settings.stripe.subscription.publicKey &&
+          currentUser.role === 'user' && <StripeSubscriptionProfile />}
+      </Card>
+      <Link className="mt-2 btn user-link" to={`/users/${currentUser.id}`}>
+        {t('profile.editProfileText')}
+      </Link>
+    </>
+  );
   if (currentUserLoading && !currentUser) {
     return (
       <PageLayout>
@@ -33,37 +66,17 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
   } else if (currentUser) {
     return (
       <PageLayout>
-        {renderMetaData(t)}
-        <LayoutCenter>
-          <h1 className="text-center">{t('profile.card.title')}</h1>
-          <Card>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.name')}:</CardTitle>
-              <CardText>{currentUser.username}</CardText>
-            </CardGroup>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.email')}:</CardTitle>
-              <CardText>{currentUser.email}</CardText>
-            </CardGroup>
-            <CardGroup>
-              <CardTitle>{t('profile.card.group.role')}:</CardTitle>
-              <CardText>{currentUser.role}</CardText>
-            </CardGroup>
-            {currentUser.profile && currentUser.profile.fullName && (
-              <CardGroup>
-                <CardTitle>{t('profile.card.group.full')}:</CardTitle>
-                <CardText>{currentUser.profile.fullName}</CardText>
-              </CardGroup>
-            )}
-            {/* Credit card info (Stripe subscription module)*/}
-            {settings.stripe.subscription.enabled &&
-              settings.stripe.subscription.publicKey &&
-              currentUser.role === 'user' && <StripeSubscriptionProfile />}
-          </Card>
-          <Link className="mt-2 btn user-link" to={`/users/${currentUser.id}`}>
-            {t('profile.editProfileText')}
-          </Link>
-        </LayoutCenter>
+        <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+          <Grid.Bounds direction="vertical">
+            {renderMetaData(t)}
+            <Grid.Box sm={{ hidden: true }}>
+              <LayoutCenter>{renderContent()}</LayoutCenter>
+            </Grid.Box>
+            <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
+              {renderContent()}
+            </Grid.Box>
+          </Grid.Bounds>
+        </Grid.Provider>
       </PageLayout>
     );
   } else {
