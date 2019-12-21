@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row } from '@gqlapp/look-client-react';
 
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, Button, Divider } from 'antd';
 
 const { Meta } = Card;
 
-const BlogComponent = ({ blog }) => {
+const BlogComponent = ({ setClap, blog }) => {
   return (
     <Row>
       <Col
@@ -33,6 +33,19 @@ const BlogComponent = ({ blog }) => {
           />
           <br />
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <Divider />
+          <span>
+            <Button
+              type={blog.clapFlag ? 'primary' : 'secondary'}
+              shape="circle"
+              icon="like"
+              size="large"
+              ghost={blog.clapFlag ? true : false}
+              onClick={() => setClap()}
+              style={{ marginRight: '10px' }}
+            />
+            <strong>{`${blog.claps}`}</strong>
+          </span>
         </Card>
       </Col>
     </Row>
@@ -40,8 +53,9 @@ const BlogComponent = ({ blog }) => {
 };
 
 BlogComponent.propTypes = {
-  blog: PropTypes.object
-  // t: PropTypes.func
+  blog: PropTypes.object,
+  setClap: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate('blog')(BlogComponent);

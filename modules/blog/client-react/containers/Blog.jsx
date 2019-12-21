@@ -17,11 +17,17 @@ class NewBlog extends React.Component {
     },
     createdAt: '2009-12-10',
     readTime: '5 min',
-    claps: 125
+    claps: 125,
+    clapFlag: true
   };
 
+  setClap = () => {
+    let val = !this.state.clapFlag;
+    let clap = this.state.claps + (val ? 1 : -1);
+    this.setState({ clapFlag: val, claps: clap });
+  };
   render() {
-    return <BlogView {...this.props} blog={this.state} />;
+    return <BlogView setClap={this.setClap} {...this.props} blog={this.state} />;
   }
 }
 
