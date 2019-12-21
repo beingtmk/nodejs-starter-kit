@@ -1,10 +1,10 @@
-@header0: header0;
+@header3: header3;
 
-.@{header0} {
-  background: @template-nav-bg-color;
+.@{header3} {
+  background: #fff;
   width: 100%;
   z-index: 1;
-  box-shadow: 0 5px 8px fade(#000, 15);
+  box-shadow: 0 4px 6px fade(#000, 5);
   position: relative;
   top: 0;
 
@@ -30,10 +30,13 @@
 
   &-menu {
     float: right;
-
+    .ant-menu-horizontal {
+      border-bottom: none;
+    }
     .ant-menu {
       line-height: 62px;
       height: 64px;
+      background: transparent;
 
       a {
         display: block;
@@ -77,13 +80,13 @@
 
       &-title {
         font-size: 14px;
-        color: #fff;
+        color: @text-color;
         margin-left: 46px;
       }
 
       &-content {
         font-size: 12px;
-        color: fade(#fff, 75);
+        color: fade(@text-color, 75);
         margin-left: 46px;
       }
     }
@@ -91,7 +94,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .@{header0} {
+  .@{header3} {
     &-logo {
       z-index: 101;
     }
@@ -108,6 +111,7 @@
       width: ~"calc(100% + 48px)";
       opacity: 0;
       transition: opacity .3s @ease-in-out;
+      background: #fff;
 
       & li {
         padding: 0 24px;
@@ -136,7 +140,7 @@
         display: block;
         width: 100%;
         height: 2px;
-        background: #fff;
+        background: @template-nav-bg-color;
         margin-top: 4px;
         transition: transform .3s @ease-in-out, opacity .3s @ease-in-out;
       }
@@ -158,7 +162,7 @@
     & .open {
       height: auto;
 
-      .@{header0}-mobile-menu {
+      .@{header3}-mobile-menu {
         em {
           &:nth-child(1) {
             transform: translateY(6px) rotate(45deg);
@@ -174,7 +178,7 @@
         }
       }
 
-      >.@{header0}-menu {
+      >.@{header3}-menu {
         opacity: 1;
         pointer-events: auto;
       }

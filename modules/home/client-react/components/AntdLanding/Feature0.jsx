@@ -7,18 +7,34 @@ import { getChildrenToRender } from './utils';
 class Content extends React.PureComponent {
   render() {
     const { dataSource, isMobile, ...props } = this.props;
-    const { wrapper, titleWrapper, page, OverPack: overPackData, childWrapper } = dataSource;
+    const {
+      wrapper,
+      titleWrapper,
+      page,
+      OverPack: overPackData,
+      childWrapper,
+    } = dataSource;
     return (
       <div {...props} {...wrapper}>
         <div {...page}>
-          <div {...titleWrapper}>{titleWrapper.children.map(getChildrenToRender)}</div>
+          <div {...titleWrapper}>
+            {titleWrapper.children.map(getChildrenToRender)}
+          </div>
           <OverPack {...overPackData}>
-            <QueueAnim type="bottom" key="block" leaveReverse component={Row} componentProps={childWrapper}>
+            <QueueAnim
+              type="bottom"
+              key="block"
+              leaveReverse
+              component={Row}
+              componentProps={childWrapper}
+            >
               {childWrapper.children.map((block, i) => {
                 const { children: item, ...blockProps } = block;
                 return (
                   <Col key={i.toString()} {...blockProps}>
-                    <div {...item}>{item.children.map(getChildrenToRender)}</div>
+                    <div {...item}>
+                      {item.children.map(getChildrenToRender)}
+                    </div>
                   </Col>
                 );
               })}

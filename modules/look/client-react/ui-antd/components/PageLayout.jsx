@@ -12,7 +12,7 @@ const { Header, Content } = Layout;
 class PageLayout extends React.Component {
   render() {
     const { children, navBar, type } = this.props;
-    const style = type === 'home' ? {  padding: 0, marginTop: '-50px' } : {  padding: '24px', margin: 0 };
+    const style = type === 'home' ? { padding: 0, marginTop: '-50px' } : { padding: '24px', margin: 0 };
     return (
       <Layout>
         {navBar !== false && (
