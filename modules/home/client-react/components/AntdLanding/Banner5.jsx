@@ -3,11 +3,45 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import { getChildrenToRender } from './utils';
 
+const Banner50DataSource = {
+  wrapper: { className: 'home-page-wrapper banner5' },
+  page: { className: 'home-page banner5-page' },
+  childWrapper: {
+    className: 'banner5-title-wrapper',
+    children: [
+      { name: 'title', children: '产品名', className: 'banner5-title' },
+      {
+        name: 'explain',
+        className: 'banner5-explain',
+        children: '产品标语介绍'
+      },
+      {
+        name: 'content',
+        className: 'banner5-content',
+        children: '产品的详细说明，如是什么东西之类的文字'
+      },
+      {
+        name: 'button',
+        className: 'banner5-button-wrapper',
+        children: {
+          href: '#',
+          className: 'banner5-button',
+          type: 'primary',
+          children: '开始使用'
+        }
+      }
+    ]
+  },
+  image: {
+    className: 'banner5-image',
+    children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ'
+  }
+};
+
 class Banner5 extends React.PureComponent {
   render() {
     const { ...tagProps } = this.props;
-    const { dataSource } = tagProps;
-    delete tagProps.dataSource;
+    const dataSource = Banner50DataSource;
     delete tagProps.isMobile;
     const animType = {
       queue: 'bottom',

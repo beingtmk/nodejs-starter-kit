@@ -39,10 +39,6 @@ import Footer1 from './AntdLanding/Footer1';
 import Footer2 from './AntdLanding/Footer2';
 
 import {
-  Banner40DataSource,
-  Banner30DataSource,
-  Banner20DataSource,
-  Banner50DataSource,
   Content40DataSource,
   Content50DataSource,
   Content90DataSource,
@@ -114,10 +110,10 @@ export default class HomeView extends React.Component {
     // );
     const children = [
       <Banner1 id="Banner1_0" key="Banner1_0" isMobile={this.state.isMobile} />,
-      <Banner4 id="Banner4_0" key="Banner4_0" dataSource={Banner40DataSource} isMobile={this.state.isMobile} />,
-      <Banner3 id="Banner3_0" key="Banner3_0" dataSource={Banner30DataSource} isMobile={this.state.isMobile} />,
-      <Banner2 id="Banner2_0" key="Banner2_0" dataSource={Banner20DataSource} isMobile={this.state.isMobile} />,
-      <Banner5 id="Banner5_0" key="Banner5_0" dataSource={Banner50DataSource} isMobile={this.state.isMobile} />,
+      <Banner4 id="Banner4_0" key="Banner4_0" isMobile={this.state.isMobile} />,
+      <Banner3 id="Banner3_0" key="Banner3_0" isMobile={this.state.isMobile} />,
+      <Banner2 id="Banner2_0" key="Banner2_0" isMobile={this.state.isMobile} />,
+      <Banner5 id="Banner5_0" key="Banner5_0" isMobile={this.state.isMobile} />,
       <Content4 id="Content4_0" key="Content4_0" dataSource={Content40DataSource} isMobile={this.state.isMobile} />,
       <Content5 id="Content5_0" key="Content5_0" dataSource={Content50DataSource} isMobile={this.state.isMobile} />,
       <Content9 id="Content9_0" key="Content9_0" dataSource={Content90DataSource} isMobile={this.state.isMobile} />,
