@@ -7,11 +7,64 @@ import { isImg } from './utils';
 import 'rc-banner-anim/assets/index.css';
 
 const { BgElement } = Element;
+
+const Banner10DataSource = {
+  wrapper: { className: 'banner1' },
+  BannerAnim: {
+    children: [
+      {
+        name: 'elem0',
+        BannerElement: { className: 'banner-user-elem' },
+        textWrapper: { className: 'banner1-text-wrapper' },
+        bg: { className: 'bg bg0' },
+        title: {
+          className: 'banner1-title',
+          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+        },
+        content: {
+          className: 'banner1-content',
+          children: '一个高效的页面动画解决方案'
+        },
+        button: { className: 'banner1-button', children: 'Learn More' }
+      },
+      {
+        name: 'elem1',
+        BannerElement: { className: 'banner-user-elem' },
+        textWrapper: { className: 'banner1-text-wrapper' },
+        bg: { className: 'bg bg1' },
+        title: {
+          className: 'banner1-title',
+          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+        },
+        content: {
+          className: 'banner1-content',
+          children: '一个高效的页面动画解决方案'
+        },
+        button: { className: 'banner1-button', children: 'Learn More' }
+      },
+      {
+        name: 'elem2',
+        BannerElement: { className: 'banner-user-elem' },
+        textWrapper: { className: 'banner1-text-wrapper' },
+        bg: { className: 'bg bg1' },
+        title: {
+          className: 'banner1-title',
+          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+        },
+        content: {
+          className: 'banner1-content',
+          children: '一个高效的页面动画解决方案'
+        },
+        button: { className: 'banner1-button', children: 'Learn More' }
+      }
+    ]
+  }
+};
+
 class Banner extends React.PureComponent {
   render() {
     const { ...props } = this.props;
-    const { dataSource } = props;
-    delete props.dataSource;
+    const dataSource = Banner10DataSource;
     delete props.isMobile;
     const childrenToRender = dataSource.BannerAnim.children.map((item, i) => {
       const elem = item.BannerElement;

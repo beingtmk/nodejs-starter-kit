@@ -39,7 +39,6 @@ import Footer1 from './AntdLanding/Footer1';
 import Footer2 from './AntdLanding/Footer2';
 
 import {
-  Banner10DataSource,
   Banner40DataSource,
   Banner30DataSource,
   Banner20DataSource,
@@ -114,7 +113,7 @@ export default class HomeView extends React.Component {
     //   />
     // );
     const children = [
-      <Banner1 id="Banner1_0" key="Banner1_0" dataSource={Banner10DataSource} isMobile={this.state.isMobile} />,
+      <Banner1 id="Banner1_0" key="Banner1_0" isMobile={this.state.isMobile} />,
       <Banner4 id="Banner4_0" key="Banner4_0" dataSource={Banner40DataSource} isMobile={this.state.isMobile} />,
       <Banner3 id="Banner3_0" key="Banner3_0" dataSource={Banner30DataSource} isMobile={this.state.isMobile} />,
       <Banner2 id="Banner2_0" key="Banner2_0" dataSource={Banner20DataSource} isMobile={this.state.isMobile} />,
