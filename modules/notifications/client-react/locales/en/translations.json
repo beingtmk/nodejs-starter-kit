@@ -1,0 +1,20 @@
+{
+  "navLink": "Notifications",
+  "list": {
+    "title": {
+      "standard": "Standard notifications",
+      "relay": "Relay notifications",
+      "scroll": "Scroll-based notifications"
+    },
+    "btn": {
+      "more": "Load more..."
+    },
+    "column": {
+      "title": "Name"
+    },
+    "select": {
+      "ok": "Select",
+      "dismiss": "Cancel"
+    }
+  }
+}
