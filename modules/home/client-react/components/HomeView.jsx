@@ -6,6 +6,7 @@ import { PageLayout } from '@gqlapp/look-client-react';
 // import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
 
+import Banner0 from './AntdLanding/Banner0';
 import Banner1 from './AntdLanding/Banner1';
 import Banner4 from './AntdLanding/Banner4';
 import Banner3 from './AntdLanding/Banner3';
@@ -39,15 +40,6 @@ import Footer1 from './AntdLanding/Footer1';
 import Footer2 from './AntdLanding/Footer2';
 
 import {
-  Content40DataSource,
-  Content50DataSource,
-  Content90DataSource,
-  Content130DataSource,
-  Content91DataSource,
-  Content131DataSource,
-  Content110DataSource,
-  Content120DataSource,
-  Contact00DataSource,
   Feature10DataSource,
   Feature20DataSource,
   Feature60DataSource,
@@ -80,7 +72,7 @@ export default class HomeView extends React.Component {
     super(props);
     this.state = {
       isMobile,
-      show: true //!location.port, ToDo - find a better approach for below statement
+      show: true //!location.port, ToDo - find a better approach this
     };
   }
 
@@ -109,20 +101,19 @@ export default class HomeView extends React.Component {
     //   />
     // );
     const children = [
+      <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       <Banner1 id="Banner1_0" key="Banner1_0" isMobile={this.state.isMobile} />,
       <Banner4 id="Banner4_0" key="Banner4_0" isMobile={this.state.isMobile} />,
       <Banner3 id="Banner3_0" key="Banner3_0" isMobile={this.state.isMobile} />,
       <Banner2 id="Banner2_0" key="Banner2_0" isMobile={this.state.isMobile} />,
       <Banner5 id="Banner5_0" key="Banner5_0" isMobile={this.state.isMobile} />,
-      <Content4 id="Content4_0" key="Content4_0" dataSource={Content40DataSource} isMobile={this.state.isMobile} />,
-      <Content5 id="Content5_0" key="Content5_0" dataSource={Content50DataSource} isMobile={this.state.isMobile} />,
-      <Content9 id="Content9_0" key="Content9_0" dataSource={Content90DataSource} isMobile={this.state.isMobile} />,
-      <Content13 id="Content13_0" key="Content13_0" dataSource={Content130DataSource} isMobile={this.state.isMobile} />,
-      <Content9 id="Content9_1" key="Content9_1" dataSource={Content91DataSource} isMobile={this.state.isMobile} />,
-      <Content13 id="Content13_1" key="Content13_1" dataSource={Content131DataSource} isMobile={this.state.isMobile} />,
-      <Content11 id="Content11_0" key="Content11_0" dataSource={Content110DataSource} isMobile={this.state.isMobile} />,
-      <Content12 id="Content12_0" key="Content12_0" dataSource={Content120DataSource} isMobile={this.state.isMobile} />,
-      <Contact0 id="Contact0_0" key="Contact0_0" dataSource={Contact00DataSource} isMobile={this.state.isMobile} />,
+      <Content4 id="Content4_0" key="Content4_0" isMobile={this.state.isMobile} />,
+      <Content5 id="Content5_0" key="Content5_0" isMobile={this.state.isMobile} />,
+      <Content9 id="Content9_0" key="Content9_0" isMobile={this.state.isMobile} />,
+      <Content13 id="Content13_0" key="Content13_0" isMobile={this.state.isMobile} />,
+      <Content11 id="Content11_0" key="Content11_0" isMobile={this.state.isMobile} />,
+      <Content12 id="Content12_0" key="Content12_0" isMobile={this.state.isMobile} />,
+      <Contact0 id="Contact0_0" key="Contact0_0" isMobile={this.state.isMobile} />,
       <Feature1 id="Feature1_0" key="Feature1_0" dataSource={Feature10DataSource} isMobile={this.state.isMobile} />,
       <Feature2 id="Feature2_0" key="Feature2_0" dataSource={Feature20DataSource} isMobile={this.state.isMobile} />,
       <Feature6 id="Feature6_0" key="Feature6_0" dataSource={Feature60DataSource} isMobile={this.state.isMobile} />,
