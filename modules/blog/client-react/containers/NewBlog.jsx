@@ -3,7 +3,6 @@ import React from 'react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { message } from 'antd';
 import NewBlogView from '../components/NewBlogView';
-import BlogComponent from '../components/BlogComponent';
 
 class NewBlog extends React.Component {
   state = {
@@ -40,12 +39,7 @@ class NewBlog extends React.Component {
   };
 
   render() {
-    return (
-      <>
-        <NewBlogView onSubmit={this.onSubmit} {...this.props} />
-        {this.state.flag && <BlogComponent {...this.props} blog={this.state} />}
-      </>
-    );
+    return <NewBlogView onSubmit={this.onSubmit} {...this.props} />;
   }
 }
 

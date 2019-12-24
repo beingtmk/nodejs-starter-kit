@@ -8,7 +8,7 @@ import { convertToRaw } from 'draft-js';
 import { ImageSideButton, Block, addNewBlock, Editor, createEditorState } from 'medium-draft';
 import mediumDraftExporter from 'medium-draft/lib/exporter';
 import mediumDraftImporter from 'medium-draft/lib/importer';
-import 'medium-draft/lib/index.css';
+
 // import "isomorphic-fetch";
 const FormItem = Form.Item;
 
