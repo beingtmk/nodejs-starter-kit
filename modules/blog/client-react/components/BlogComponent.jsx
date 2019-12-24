@@ -4,11 +4,12 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row } from '@gqlapp/look-client-react';
 
 import { Card, Avatar, Button, Divider, Tag } from 'antd';
-import BlogRefCard from './BlogRefCard';
+import BlogRefCardComponent from './BlogRefCardComponent';
+import MiniBlogsCardComponent from './MiniBlogsCardComponent';
 
 const { Meta } = Card;
 
-const BlogComponent = ({ setClap, blog }) => {
+const BlogComponent = ({ setClap, blog, moreBlogs }) => {
   return (
     <Row>
       <Col
@@ -42,9 +43,6 @@ const BlogComponent = ({ setClap, blog }) => {
           />
           <br />
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-          {/* <Divider /> */}
-          {/* <hr></hr> */}
-          {/* <Divider /> */}
           <Divider />
           {blog.tags.map((item, idx) => (
             <Tag color="#2db7f5" key={idx}>
@@ -65,8 +63,27 @@ const BlogComponent = ({ setClap, blog }) => {
             <strong>{`${blog.claps}`}</strong>
           </span>
         </Card>
-        <BlogRefCard user={blog.author} />
-        <BlogRefCard model={blog.model} />
+        <BlogRefCardComponent user={blog.author} />
+        <BlogRefCardComponent model={blog.model} />
+      </Col>
+
+      <Col
+        xs={{ span: 22, offset: 1 }}
+        sm={{ span: 22, offset: 1 }}
+        md={{ span: 22, offset: 1 }}
+        lg={{ span: 20, offset: 2 }}
+      >
+        <h1>
+          <br />
+          <br />
+          <strong>More From DemoBlog</strong>
+          <br /> <Divider />
+        </h1>
+        <Row gutter={32}>
+          {moreBlogs.map(item => (
+            <MiniBlogsCardComponent key={item.id} blog={item} />
+          ))}
+        </Row>
       </Col>
     </Row>
   );
@@ -74,6 +91,7 @@ const BlogComponent = ({ setClap, blog }) => {
 
 BlogComponent.propTypes = {
   blog: PropTypes.object,
+  moreBlogs: PropTypes.array,
   setClap: PropTypes.func,
   t: PropTypes.func
 };

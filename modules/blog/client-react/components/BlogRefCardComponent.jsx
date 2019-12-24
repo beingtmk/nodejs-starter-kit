@@ -5,7 +5,7 @@ import { Col, Row } from '@gqlapp/look-client-react';
 
 import { Card, Avatar, Button } from 'antd';
 
-const BlogRefCard = ({ user, model }) => {
+const BlogRefCardComponent = ({ user, model }) => {
   return (
     <Card>
       <Row>
@@ -39,11 +39,11 @@ const BlogRefCard = ({ user, model }) => {
   );
 };
 
-BlogRefCard.propTypes = {
+BlogRefCardComponent.propTypes = {
   model: PropTypes.object,
   user: PropTypes.object,
   //   setClap: PropTypes.func,
   t: PropTypes.func
 };
 
-export default translate('blog')(BlogRefCard);
+export default translate('blog')(BlogRefCardComponent);

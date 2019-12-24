@@ -4,12 +4,24 @@ import { withFormik } from 'formik';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Button, RenderUpload, Col, Row, Card, RenderContentField } from '@gqlapp/look-client-react';
+import {
+  Form,
+  RenderField,
+  Button,
+  RenderUpload,
+  Col,
+  Row,
+  Card,
+  RenderContentField,
+  RenderSelect
+} from '@gqlapp/look-client-react';
+import { Select } from 'antd';
 
 const BlogFormSchema = {
   title: [required],
   image: [required],
-  content: [required]
+  content: [required],
+  modelId: [required]
 };
 const BlogForm = ({ values, handleSubmit, submitting, cardTitle }) => {
   const DataUpdate = data => (values.content = data);
@@ -25,6 +37,26 @@ const BlogForm = ({ values, handleSubmit, submitting, cardTitle }) => {
           }
         >
           <Form name="BlogForm" onSubmit={handleSubmit}>
+            <Field
+              name="modelId"
+              component={RenderSelect}
+              type="text"
+              label={'Select the model'}
+              value={values.modelId}
+              // onChange={this.handleGearCategoryChange}
+            >
+              <Select.Option value="jack">Jack</Select.Option>
+              <Select.Option value="rok">Rok</Select.Option>
+              <Select.Option value="lucy">Lucy</Select.Option>
+              <Select.Option value="tom">Tom</Select.Option>
+              {/* {this.state.listingCategories.gearCategory.map(
+                (category, idx) => (
+                  <Select.Option key={idx} value={category}>
+                    {category}
+                  </Select.Option>
+                )
+              )} */}
+            </Field>
             <Field name="title" component={RenderField} type="text" label={'Title'} value={values.title} />
             <Field
               name="image"
@@ -66,7 +98,8 @@ const BlogFormWithFormik = withFormik({
   mapPropsToValues: props => ({
     title: props.blog && props.blog.title,
     image: props.blog && props.blog.image,
-    content: props.blog && props.blog.content
+    content: props.blog && props.blog.content,
+    modelId: props.blog && props.blog.model ? props.blog.model.id : null
   }),
   validate: values => validate(values, BlogFormSchema),
   handleSubmit(
