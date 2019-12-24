@@ -235,11 +235,7 @@ class Feature6 extends React.PureComponent {
 }
 
 Feature6.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-  dataSource: PropTypes.shape({
-    wrapper: PropTypes.object,
-    OverPack: PropTypes.object
-  })
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default Feature6;

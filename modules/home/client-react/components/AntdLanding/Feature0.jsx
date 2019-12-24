@@ -121,18 +121,7 @@ class Content extends React.PureComponent {
 }
 
 Content.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-  dataSource: PropTypes.shape({
-    wrapper: PropTypes.object,
-    page: PropTypes.object,
-    OverPack: PropTypes.object,
-    titleWrapper: PropTypes.shape({
-      children: PropTypes.object
-    }),
-    childWrapper: PropTypes.shape({
-      children: PropTypes.object
-    })
-  })
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default Content;

@@ -411,15 +411,7 @@ class Feature8 extends React.PureComponent {
 }
 
 Feature8.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-  dataSource: PropTypes.shape({
-    wrapper: PropTypes.object,
-    page: PropTypes.object,
-    titleWrapper: PropTypes.shape({
-      children: PropTypes.object
-    }),
-    OverPack: PropTypes.object
-  })
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default Feature8;
