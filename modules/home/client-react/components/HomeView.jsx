@@ -39,18 +39,6 @@ import Teams4 from './AntdLanding/Teams4';
 import Footer1 from './AntdLanding/Footer1';
 import Footer2 from './AntdLanding/Footer2';
 
-import {
-  Pricing00DataSource,
-  Pricing10DataSource,
-  Pricing20DataSource,
-  Teams00DataSource,
-  Teams20DataSource,
-  Teams10DataSource,
-  Teams30DataSource,
-  Teams41DataSource,
-  Footer10DataSource,
-  Footer20DataSource
-} from './AntdLanding/data.source';
 import './AntdLanding/less/antMotionStyle.less';
 
 let isMobile;
@@ -114,16 +102,16 @@ export default class HomeView extends React.Component {
       <Feature4 id="Feature4_0" key="Feature4_0" isMobile={this.state.isMobile} />,
       <Feature5 id="Feature5_0" key="Feature5_0" isMobile={this.state.isMobile} />,
       <Feature8 id="Feature8_0" key="Feature8_0" isMobile={this.state.isMobile} />,
-      <Pricing0 id="Pricing0_0" key="Pricing0_0" dataSource={Pricing00DataSource} isMobile={this.state.isMobile} />,
-      <Pricing1 id="Pricing1_0" key="Pricing1_0" dataSource={Pricing10DataSource} isMobile={this.state.isMobile} />,
-      <Pricing2 id="Pricing2_0" key="Pricing2_0" dataSource={Pricing20DataSource} isMobile={this.state.isMobile} />,
-      <Teams0 id="Teams0_0" key="Teams0_0" dataSource={Teams00DataSource} isMobile={this.state.isMobile} />,
-      <Teams2 id="Teams2_0" key="Teams2_0" dataSource={Teams20DataSource} isMobile={this.state.isMobile} />,
-      <Teams1 id="Teams1_0" key="Teams1_0" dataSource={Teams10DataSource} isMobile={this.state.isMobile} />,
-      <Teams3 id="Teams3_0" key="Teams3_0" dataSource={Teams30DataSource} isMobile={this.state.isMobile} />,
-      <Teams4 id="Teams4_1" key="Teams4_1" dataSource={Teams41DataSource} isMobile={this.state.isMobile} />,
-      <Footer1 id="Footer1_0" key="Footer1_0" dataSource={Footer10DataSource} isMobile={this.state.isMobile} />,
-      <Footer2 id="Footer2_0" key="Footer2_0" dataSource={Footer20DataSource} isMobile={this.state.isMobile} />
+      <Pricing0 id="Pricing0_0" key="Pricing0_0" isMobile={this.state.isMobile} />,
+      <Pricing1 id="Pricing1_0" key="Pricing1_0" isMobile={this.state.isMobile} />,
+      <Pricing2 id="Pricing2_0" key="Pricing2_0" isMobile={this.state.isMobile} />,
+      <Teams0 id="Teams0_0" key="Teams0_0" isMobile={this.state.isMobile} />,
+      <Teams2 id="Teams2_0" key="Teams2_0" isMobile={this.state.isMobile} />,
+      <Teams1 id="Teams1_0" key="Teams1_0" isMobile={this.state.isMobile} />,
+      <Teams3 id="Teams3_0" key="Teams3_0" isMobile={this.state.isMobile} />,
+      <Teams4 id="Teams4_1" key="Teams4_1" isMobile={this.state.isMobile} />,
+      <Footer1 id="Footer1_0" key="Footer1_0" isMobile={this.state.isMobile} />,
+      <Footer2 id="Footer2_0" key="Footer2_0" isMobile={this.state.isMobile} />
     ];
     return (
       <PageLayout type="home">
