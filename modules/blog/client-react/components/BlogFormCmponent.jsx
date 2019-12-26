@@ -18,9 +18,12 @@ import {
 } from '@gqlapp/look-client-react';
 import { Select } from 'antd';
 
+import { statusForm } from '../constants';
+
 const BlogFormSchema = {
   title: [required],
   image: [required],
+  status: [required],
   content: [required],
   modelId: [required]
 };
@@ -64,6 +67,13 @@ const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
               value={values.content}
             />
             <RenderTagsField label={'Select tags'} tagVal={values.tags} handleTags={handleTags} />
+            <Field name="status" component={RenderSelect} label="Status" value={values.status}>
+              {statusForm.map((item, idx) => (
+                <Select.Option key={idx} value={item.key}>
+                  {item.text}
+                </Select.Option>
+              ))}
+            </Field>
             <Button color="primary" type="submit" disabled={load || submitting}>
               {'Submit'}
             </Button>
@@ -88,6 +98,7 @@ BlogForm.propTypes = {
 const BlogFormWithFormik = withFormik({
   mapPropsToValues: props => ({
     title: props.blog && props.blog.title,
+    status: props.blog && props.blog.status,
     image: props.blog && props.blog.image,
     content: props.blog && props.blog.content,
     tags: props.blog && props.blog.tags.length > 1 ? props.blog.tags : [],
