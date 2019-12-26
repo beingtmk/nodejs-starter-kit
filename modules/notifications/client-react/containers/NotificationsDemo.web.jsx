@@ -7,7 +7,7 @@ import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
-import NotificationsDemoView from '../components/NotificationsDemoView.web';
+import Notifications from '../components/Notifications';
 
 const PaginationDemo = ({ t }) => {
   const renderMetaData = () => {
@@ -25,7 +25,7 @@ const PaginationDemo = ({ t }) => {
   };
 
   const renderContent = () => {
-    return <NotificationsDemoView />;
+    return <Notifications />;
   };
 
   return (
@@ -40,6 +40,7 @@ const PaginationDemo = ({ t }) => {
             {renderContent()}
           </Grid.Box>
         </Grid.Bounds>
+        {/* {renderContent()} */}
       </Grid.Provider>
     </PageLayout>
   );

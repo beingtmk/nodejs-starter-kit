@@ -4,12 +4,14 @@ import Grid from 'hedron';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Icon } from 'antd';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
+import Notifications from '@gqlapp/notifications-client-react/components/Notifications.web';
 
 import settings from '@gqlapp/config';
 
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
 import DropDown from './Dropdown';
+// import Notification from './Notification';
 
 const { SubMenu } = Menu;
 
@@ -100,6 +102,12 @@ class NavBar extends React.Component {
               {ref.modules.navItems}
               {ref.modules.navItemsRight}
 
+              <LoggedIn>
+                <MenuItem>
+                  {/* <Notification /> */}
+                  <Notifications />
+                </MenuItem>
+              </LoggedIn>
               <LoggedIn>
                 <MenuItem>
                   <DropDown content={<UserAvatar />} noicon>
