@@ -13,6 +13,7 @@ export { default as RenderAddress } from './RenderAddress';
 export { default as RenderCheckBox } from './RenderCheckBox';
 export { default as RenderUpload } from './RenderUpload';
 export { default as RenderUploadMultiple } from './RenderUploadMultiple';
+export { default as RenderTagsField } from './RenderTagsField';
 export { default as Alert } from './Alert';
 export { default as Container } from './Container';
 export { default as Row } from './Row';

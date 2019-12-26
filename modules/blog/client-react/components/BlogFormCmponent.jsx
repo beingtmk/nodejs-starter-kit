@@ -13,7 +13,8 @@ import {
   Row,
   Card,
   RenderContentField,
-  RenderSelect
+  RenderSelect,
+  RenderTagsField
 } from '@gqlapp/look-client-react';
 import { Select } from 'antd';
 
@@ -25,6 +26,7 @@ const BlogFormSchema = {
 };
 const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
   const DataUpdate = data => (values.content = data);
+  const handleTags = data => (values.tags = data);
   const [load, setload] = useState(false);
   return (
     <Row>
@@ -61,6 +63,7 @@ const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
               DataUpdate={DataUpdate}
               value={values.content}
             />
+            <RenderTagsField label={'Select tags'} tagVal={values.tags} handleTags={handleTags} />
             <Button color="primary" type="submit" disabled={load || submitting}>
               {'Submit'}
             </Button>
@@ -87,6 +90,7 @@ const BlogFormWithFormik = withFormik({
     title: props.blog && props.blog.title,
     image: props.blog && props.blog.image,
     content: props.blog && props.blog.content,
+    tags: props.blog && props.blog.tags.length > 1 ? props.blog.tags : [],
     modelId: props.blog && props.blog.model ? props.blog.model.id : null
   }),
   validate: values => validate(values, BlogFormSchema),
