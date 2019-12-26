@@ -3,6 +3,7 @@ import React from 'react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { message } from 'antd';
 import NewBlogView from '../components/NewBlogView';
+import { model } from '../demoData';
 
 class NewBlog extends React.Component {
   state = {
@@ -39,7 +40,7 @@ class NewBlog extends React.Component {
   };
 
   render() {
-    return <NewBlogView onSubmit={this.onSubmit} {...this.props} />;
+    return <NewBlogView onSubmit={this.onSubmit} model={model} {...this.props} />;
   }
 }
 

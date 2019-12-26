@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'formik';
 import { get as getPath } from 'lodash';
-import { isString } from 'util';
+import { isString, isNumber } from 'util';
 import { PLATFORM } from '../../../packages/common/utils';
 
 class FieldAdapter extends Component {
@@ -39,6 +39,8 @@ class FieldAdapter extends Component {
       this.props.formik.setFieldValue(this.props.name, secondArg);
     } else if (isString(e)) {
       // for Option Field
+      this.props.formik.setFieldValue(this.props.name, e);
+    } else if (isNumber(e)) {
       this.props.formik.setFieldValue(this.props.name, e);
     } else if (e.target.type == 'radio') {
       this.props.formik.setFieldValue(e.target.name, e.target.value);

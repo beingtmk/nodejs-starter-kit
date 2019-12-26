@@ -23,7 +23,7 @@ const BlogFormSchema = {
   content: [required],
   modelId: [required]
 };
-const BlogForm = ({ values, handleSubmit, submitting, cardTitle }) => {
+const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
   const DataUpdate = data => (values.content = data);
   const [load, setload] = useState(false);
   return (
@@ -37,25 +37,12 @@ const BlogForm = ({ values, handleSubmit, submitting, cardTitle }) => {
           }
         >
           <Form name="BlogForm" onSubmit={handleSubmit}>
-            <Field
-              name="modelId"
-              component={RenderSelect}
-              type="text"
-              label={'Select the model'}
-              value={values.modelId}
-              // onChange={this.handleGearCategoryChange}
-            >
-              <Select.Option value="jack">Jack</Select.Option>
-              <Select.Option value="rok">Rok</Select.Option>
-              <Select.Option value="lucy">Lucy</Select.Option>
-              <Select.Option value="tom">Tom</Select.Option>
-              {/* {this.state.listingCategories.gearCategory.map(
-                (category, idx) => (
-                  <Select.Option key={idx} value={category}>
-                    {category}
-                  </Select.Option>
-                )
-              )} */}
+            <Field name="modelId" component={RenderSelect} label="Select the model" value={values.modelId}>
+              {model.map((item, idx) => (
+                <Select.Option key={idx} value={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
             </Field>
             <Field name="title" component={RenderField} type="text" label={'Title'} value={values.title} />
             <Field
@@ -89,6 +76,7 @@ BlogForm.propTypes = {
   onSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   values: PropTypes.object,
+  model: PropTypes.array,
   blog: PropTypes.object,
   cardTitle: PropTypes.string
   // t: PropTypes.func
@@ -103,12 +91,13 @@ const BlogFormWithFormik = withFormik({
   }),
   validate: values => validate(values, BlogFormSchema),
   handleSubmit(
-    values,
-    {
-      props: { onSubmit }
-    }
+    values
+    // {
+    //   props: { onSubmit }
+    // }
   ) {
-    onSubmit(values);
+    // onSubmit(values);
+    console.log(values);
   },
   enableReinitialize: true,
   displayName: 'BlogForm' // helps with React DevTools
