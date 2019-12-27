@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from 'hedron';
 // import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components'; // , { css }
+import styled, { css } from 'styled-components';
 import {
   Icon,
   List
@@ -11,10 +11,7 @@ import {
 import { translate } from '@gqlapp/i18n-client-react';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 
-// import Notification from './Notification';
-
 const NotifAttr = css`
-  width: 430px;
   background: #fff;
   border: 1px solid rgba(100, 100, 100, 0.4);
   border-radius: 0 0 2px 2px;
@@ -30,9 +27,9 @@ const ScrollBar = css`
       background: #f1f1f1;
       border-radius: 5px;
 
-      // &-piece {
-      //   background: ;
-      // }
+      /* &-piece {
+        background: ;
+      } */
     }
 
     &-thumb {
@@ -41,21 +38,22 @@ const ScrollBar = css`
 
       &:hover {
         background: #00152a;
-        // width: 7px;
-        // display: initial;
+        /* width: 7px;
+        display: initial; */
       }
     }
   }
 `;
 
 const Notif = styled.div`
+  ${ScrollBar}
+
+  ${NotifAttr}
+  width: 430px;
   height: 430px;
   display: ${props => props.visible};
 
   overflow-x: auto;
-  ${ScrollBar}
-
-  ${NotifAttr}
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 
   position: absolute;
@@ -64,9 +62,9 @@ const Notif = styled.div`
 `;
 
 const NotifHeader = styled(Grid.Bounds)`
-  width: 428px;
-
   ${NotifAttr}
+
+  width: 428px;
 
   padding: 0px 0px 0px 5px;
   border-bottom: 1px solid #aaa;
@@ -81,9 +79,9 @@ const NotifHeaders = styled(Grid.Box)`
 `;
 
 const NotifFooter = styled(Grid.Bounds)`
-  width: 428px;
-
   ${NotifAttr}
+
+  width: 428px;
 
   border-top: 1px solid #aaa;
   z-index: 2;
@@ -123,9 +121,6 @@ const ContentDiv = styled.div`
   margin-right: 25px;
 `;
 
-// .attrs({
-//   className: 'ant-list-items'
-// })
 const NotifBody = styled.div`
   margin-top: 40px;
   margin-bottom: 25px;
@@ -215,7 +210,6 @@ class Notifications extends React.Component {
   };
 
   notifBody = () => {
-    // return <div>hello, world</div>;
     return (
       <NotifBody>
         <List
