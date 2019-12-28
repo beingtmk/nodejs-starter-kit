@@ -13,7 +13,7 @@ const Banner00DataSource = {
   },
   content: {
     className: 'banner0-content',
-    children: '一个高效的页面动画解决方案'
+    children: 'An All JavaScript Solution For Your App Needs'
   },
   button: { className: 'banner0-button', children: 'Learn More' }
 };

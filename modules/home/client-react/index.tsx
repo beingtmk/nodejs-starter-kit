@@ -16,7 +16,7 @@ import resources from './locales';
 
 export default new ClientModule({
   route: [
-    <Route exact path="/home" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
+    <Route exact path="/" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
     <Route exact path="/home1" component={loadable(() => import('./components/HomeView1').then(c => c.default))} />,
     <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
     <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />
