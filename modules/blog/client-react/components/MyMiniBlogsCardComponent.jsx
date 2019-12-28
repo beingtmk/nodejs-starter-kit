@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Col, Row, Card, Button, Tooltip } from 'antd';
+import { Col, Row, Card, Button, Tooltip, Alert } from 'antd';
 import { status } from '../constants';
 
 const MyMiniBlogsCardComponent = ({ blog }) => {
@@ -43,6 +43,12 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
               Delete
             </Button>
           </Col>
+          {blog.status != status[1] && (
+            <Col xs={24} lg={24} sm={22} md={22}>
+              <br />
+              <Alert message={blog.status.charAt(0).toUpperCase() + blog.status.slice(1)} type="warning" />
+            </Col>
+          )}
           <Col xs={24} lg={24} sm={22} md={22}>
             <br />
             <Button
