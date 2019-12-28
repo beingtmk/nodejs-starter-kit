@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Col, Row } from '@gqlapp/look-client-react';
+// import {  } from "@gqlapp/look-client-react";
 
-import { Card, Avatar, Button, Divider, Tooltip } from 'antd';
+import { Menu, Col, Row, Card, Avatar, Button, Divider, Tooltip, Icon, Dropdown } from 'antd';
 
 const { Meta } = Card;
+
 const BlogRefCardComponent = ({ blog }) => {
   const [clap, increClap] = useState(blog.claps);
   const [clapFlag, increclapFlag] = useState(blog.clapFlag);
@@ -13,6 +14,13 @@ const BlogRefCardComponent = ({ blog }) => {
     increClap(clap + (!clapFlag ? 1 : -1));
     increclapFlag(!clapFlag);
   };
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="1">Share the blog</Menu.Item>
+      <Menu.Item key="2">Report the blog</Menu.Item>
+    </Menu>
+  );
 
   const blogData = () => {
     return (
@@ -38,16 +46,35 @@ const BlogRefCardComponent = ({ blog }) => {
         />
         <Divider />
         <span>
-          <Button
-            type={clapFlag ? 'primary' : 'secondary'}
-            shape="circle"
-            icon="like"
-            size="large"
-            ghost={clapFlag ? true : false}
-            onClick={() => setClap()}
-            style={{ marginRight: '10px' }}
-          />
-          <strong>{`${clap}`}</strong>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Button
+                type={clapFlag ? 'primary' : 'secondary'}
+                shape="circle"
+                icon="like"
+                size="large"
+                ghost={clapFlag ? true : false}
+                onClick={() => setClap()}
+                style={{ marginRight: '10px' }}
+              />
+              <strong>{`${clap}`}</strong>
+            </Col>
+            <Col xs={12} lg={12} sm={10} md={10}>
+              <div style={{ float: 'right' }}>
+                <Tooltip placement="bottomLeft" title={clapFlag ? 'Un-bookmark' : 'Bookmark this blog'}>
+                  <Icon
+                    onClick={() => setClap()}
+                    type="safety-certificate"
+                    theme={!clapFlag ? 'outlined' : 'filled'}
+                    style={{ fontSize: '22px', marginTop: '10px' }}
+                  />
+                </Tooltip>
+                <Dropdown overlay={menu} trigger={['click']}>
+                  <Icon type="ellipsis" style={{ fontSize: '25px', marginLeft: '10px' }} />
+                </Dropdown>
+              </div>
+            </Col>
+          </Row>
         </span>
       </>
     );
@@ -55,12 +82,12 @@ const BlogRefCardComponent = ({ blog }) => {
   const blogImage = () => <img style={{ height: '250px', width: '100%' }} alt={blog.title} src={blog.image} />;
   return (
     <div style={{ marginBottom: '20px' }}>
-      <Col xs={0} sm={0} md={0} lg={8}>
+      <Col xs={24} sm={0} md={0} lg={8}>
         <Card hoverable title={`More from ${blog.model.name}`} cover={blogImage()}>
           {blogData()}
         </Card>
       </Col>
-      <Col sm={24} md={24} lg={0} xs={0}>
+      <Col xs={0} sm={24} md={24} lg={0}>
         <Card bodyStyle={{ padding: '0 !important' }}>
           <Row>
             <Col span={12}>
