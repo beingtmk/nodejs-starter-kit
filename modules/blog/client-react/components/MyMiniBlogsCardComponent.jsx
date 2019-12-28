@@ -77,14 +77,14 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
   };
   const blogImage = () => <img style={{ height: '280px', width: '100%' }} alt={blog.title} src={blog.image} />;
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div>
       <Col xs={24} sm={0} md={0} lg={8}>
-        <Card hoverable title={`Category: ${blog.model.name}`} cover={blogImage()}>
-          {blogData()}
+        <Card hoverable title={`Category: ${blog.model.name}`} cover={blogImage()} style={{ marginBottom: '20px' }}>
+          <div style={{ height: '250px', width: '100%' }}>{blogData()}</div>
         </Card>
       </Col>
       <Col xs={0} sm={24} md={24} lg={0}>
-        <Card bodyStyle={{ padding: '0 !important' }}>
+        <Card hoverable style={{ marginBottom: '20px' }}>
           <Row>
             <Col span={12}>
               <h3>{`Category: ${blog.model.name}`}</h3>

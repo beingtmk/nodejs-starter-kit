@@ -81,21 +81,22 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
   };
   const blogImage = () => <img style={{ height: '250px', width: '100%' }} alt={blog.title} src={blog.image} />;
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div>
       <Col xs={24} sm={0} md={0} lg={8}>
         <Card
           hoverable
-          title={`${moreFlag == false ? 'More from' : 'Category:'} ${blog.model.name}`}
+          title={`${moreFlag == true ? 'More from' : 'Category:'} ${blog.model.name}`}
           cover={blogImage()}
+          style={{ marginBottom: '20px' }}
         >
           {blogData()}
         </Card>
       </Col>
       <Col xs={0} sm={24} md={24} lg={0}>
-        <Card bodyStyle={{ padding: '0 !important' }}>
+        <Card hoverable style={{ marginBottom: '20px' }}>
           <Row>
             <Col span={12}>
-              <h3>{`${moreFlag == false ? 'More from' : 'Category:'} ${blog.model.name}`}</h3>
+              <h3>{`${moreFlag == true ? 'More from' : 'Category:'} ${blog.model.name}`}</h3>
               {blogData()}
             </Col>
             <Col style={{ margin: 0 }} span={12}>
