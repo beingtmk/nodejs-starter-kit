@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Layout } from 'antd';
+import { Layout, BackTop, Button, Tooltip } from 'antd';
 
 import NavBar from './NavBar';
 
@@ -28,6 +28,11 @@ class PageLayout extends React.Component {
         <Content id="content" style={{ background: '#fff', padding: 24 }}>
           {children}
         </Content>
+        <BackTop>
+          <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
+            <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />
+          </Tooltip>
+        </BackTop>
       </Layout>
     );
   }
