@@ -7,7 +7,7 @@ import { Menu, Col, Row, Card, Avatar, Button, Divider, Tooltip, Icon, Dropdown 
 
 const { Meta } = Card;
 
-const BlogRefCardComponent = ({ blog }) => {
+const BlogRefCardComponent = ({ blog, moreFlag }) => {
   const [clap, increClap] = useState(blog.claps);
   const [clapFlag, increclapFlag] = useState(blog.clapFlag);
   const setClap = () => {
@@ -83,7 +83,11 @@ const BlogRefCardComponent = ({ blog }) => {
   return (
     <div style={{ marginBottom: '20px' }}>
       <Col xs={24} sm={0} md={0} lg={8}>
-        <Card hoverable title={`More from ${blog.model.name}`} cover={blogImage()}>
+        <Card
+          hoverable
+          title={`${moreFlag == false ? 'More from' : 'Category:'} ${blog.model.name}`}
+          cover={blogImage()}
+        >
           {blogData()}
         </Card>
       </Col>
@@ -91,7 +95,7 @@ const BlogRefCardComponent = ({ blog }) => {
         <Card bodyStyle={{ padding: '0 !important' }}>
           <Row>
             <Col span={12}>
-              <h3>{`More from ${blog.model.name}`}</h3>
+              <h3>{`${moreFlag == false ? 'More from' : 'Category:'} ${blog.model.name}`}</h3>
               {blogData()}
             </Col>
             <Col style={{ margin: 0 }} span={12}>
@@ -106,6 +110,7 @@ const BlogRefCardComponent = ({ blog }) => {
 
 BlogRefCardComponent.propTypes = {
   blog: PropTypes.object,
+  moreFlag: PropTypes.bool,
   t: PropTypes.func
 };
 

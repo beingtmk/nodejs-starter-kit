@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Col, Row } from '@gqlapp/look-client-react';
 
-import { Card, Avatar, Button, Divider, Tag } from 'antd';
+import { Col, Row, Card, Avatar, Button, Divider, Tag } from 'antd';
 import BlogRefCardComponent from './BlogRefCardComponent';
 import MiniBlogsCardComponent from './MiniBlogsCardComponent';
 
@@ -81,7 +80,7 @@ const BlogComponent = ({ setClap, blog, moreBlogs }) => {
         </h1>
         <Row gutter={32}>
           {moreBlogs.map(item => (
-            <MiniBlogsCardComponent key={item.id} blog={item} />
+            <MiniBlogsCardComponent moreFlag={true} key={item.id} blog={item} />
           ))}
         </Row>
       </Col>
