@@ -7,7 +7,7 @@ import { Menu, Col, Row, Card, Avatar, Button, Divider, Tooltip, Icon, Dropdown 
 
 const { Meta } = Card;
 
-const BlogRefCardComponent = ({ blog, moreFlag }) => {
+const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
   const [clap, increClap] = useState(blog.claps);
   const [clapFlag, increclapFlag] = useState(blog.clapFlag);
   const setClap = () => {
@@ -108,10 +108,10 @@ const BlogRefCardComponent = ({ blog, moreFlag }) => {
   );
 };
 
-BlogRefCardComponent.propTypes = {
+MiniBlogsCardComponent.propTypes = {
   blog: PropTypes.object,
   moreFlag: PropTypes.bool,
   t: PropTypes.func
 };
 
-export default translate('blog')(BlogRefCardComponent);
+export default translate('blog')(MiniBlogsCardComponent);

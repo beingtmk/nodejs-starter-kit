@@ -1,3 +1,5 @@
+import { status } from '../constants';
+
 export const blog = {
   id: 1,
   title: 'Boruto',
@@ -49,6 +51,7 @@ export const moreBlogs = [
       lastname: 'Singh',
       username: 'PCTB'
     },
+    status: status[0],
     createdAt: '2013-02-10',
     readTime: '15 min',
     claps: 136,
@@ -69,6 +72,7 @@ export const moreBlogs = [
       lastname: 'Roy',
       username: 'runankaroy'
     },
+    status: status[2],
     createdAt: '2011-11-10',
     readTime: '2 min',
     claps: 15,
@@ -89,6 +93,7 @@ export const moreBlogs = [
       lastname: 'Deka',
       username: 'ananD'
     },
+    status: status[1],
     createdAt: '2019-11-10',
     readTime: '7 min',
     claps: 12,

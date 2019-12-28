@@ -26,7 +26,7 @@ const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunct
 export default new ClientModule({
   route: [
     <Route exact path="/blog/new" component={loadable(() => import('./containers/NewBlog').then(c => c.default))} />,
-    <Route exact path="/my-blogs" component={loadable(() => import('./containers/Myblogs').then(c => c.default))} />,
+    <Route exact path="/my-blogs" component={loadable(() => import('./containers/MyBlogs').then(c => c.default))} />,
     <Route
       exact
       path="/my-bookmarks"

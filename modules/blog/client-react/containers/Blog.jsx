@@ -5,7 +5,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { blog, moreBlogs } from '../demoData';
 import BlogView from '../components/BlogView';
 
-class NewBlog extends React.Component {
+class Blog extends React.Component {
   state = { blog, moreBlogs };
 
   setClap = () => {
@@ -23,4 +23,4 @@ class NewBlog extends React.Component {
   }
 }
 
-export default translate('blog')(NewBlog);
+export default translate('blog')(Blog);
