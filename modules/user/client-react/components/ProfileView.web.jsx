@@ -13,10 +13,10 @@ import {
 } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
 // import UserVerificationsComponent from './verification/UserVerificationsComponent';
-import ProfileHeadComponent from './ProfileHeadComponent';
+import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
 import settings from '../../../../settings';
-import AddressCardComponent from './AddressCardComponent';
+import AddressCardComponent from './components/AddressCardComponent';
 import userCardData from '../helpers/userCardData';
 
 // To Do Abstract Out

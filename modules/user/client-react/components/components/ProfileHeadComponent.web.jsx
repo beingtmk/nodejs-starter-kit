@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // import { CardGroup } from '@gqlapp/look-client-react';
 import { Avatar, Icon, Row, Col, Divider } from 'antd';
-import { ImgUser } from '../constants/DefaultImages';
+import { ImgUser } from '../../constants/DefaultImages';
 
 const ProfileHeadComponent = ({ profile, description }) => {
   return (
