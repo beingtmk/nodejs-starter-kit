@@ -16,76 +16,7 @@ const NotifAttr = css`
   border: 1px solid rgba(100, 100, 100, 0.4);
   border-radius: 0 0 2px 2px;
   color: #1d2129;
-`;
-
-const ScrollBar = css`
-  ::-webkit-scrollbar {
-    &-track {
-      &-piece {
-        &:start {
-          background: transparent;
-          margin-top: 41px;
-        }
-        &:end {
-          background: transparent;
-          margin-bottom: 26px;
-        }
-      }
-    }
-  }
-`;
-
-const Notif = styled.div`
-  ${ScrollBar}
-
-  ${NotifAttr}
   width: 430px;
-  height: 430px;
-  display: ${props => props.visible};
-
-  overflow-x: auto;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-
-  position: absolute;
-  right: 0;
-  z-index: 1;
-`;
-
-const NotifHeader = styled(Grid.Bounds)`
-  ${NotifAttr}
-
-  width: 428px;
-
-  padding: 0px 0px 0px 5px;
-  border-bottom: 1px solid #aaa;
-  height: 40px;
-  position: fixed;
-  z-index: 2;
-`;
-
-const NotifHeaders = styled(Grid.Box)`
-  position: relative;
-  top: -6px;
-`;
-
-const NotifFooter = styled(Grid.Bounds)`
-  ${NotifAttr}
-
-  width: 428px;
-
-  border-top: 1px solid #aaa;
-  z-index: 2;
-  position: fixed;
-  width: 430px;
-  top: 454px;
-`;
-
-const Uonhover = styled.a`
-  cursor: pointer;
-  padding: 0px 10px 0px 0px;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const ArrowUp = styled.div`
@@ -101,19 +32,54 @@ const ArrowUp = styled.div`
   z-index: 3;
 `;
 
-// const AntListItemMeta = styled(List.Item.Meta).attrs({
-//   className: 'ant-list-item-meta-avatar'
-// })`
-//   margin-left: 16px;
-// `;
+const NotifHeader = styled(Grid.Bounds)`
+  ${NotifAttr}
 
-// const ContentDiv = styled.div`
-//   margin-right: 25px;
-// `;
+  padding: 0px 0px 0px 5px;
+  border-bottom: 1px solid #aaa;
+  height: 40px;
+  position: absolute;
+  right: 1px;
+  z-index: 2;
+`;
 
+const NotifHeaders = styled(Grid.Box)`
+  position: relative;
+  top: -6px;
+`;
+
+const Uonhover = styled.a`
+  cursor: pointer;
+  padding: 0px 10px 0px 0px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 const NotifBody = styled.div`
-  margin-top: 40px;
-  margin-bottom: 25px;
+  ${NotifAttr}
+
+  height: 366px;
+  overflow-x: auto;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+
+  position: absolute;
+  top: 89px;
+  right: 1.5px;
+  z-index: 1;
+`;
+
+const NotifFooter = styled(Grid.Bounds)`
+  ${NotifAttr}
+
+  border-top: 1px solid #aaa;
+  z-index: 2;
+  position: absolute;
+  right: 1px;
+  top: 454px;
+`;
+
+const NotifVisible = styled(Grid.Bounds)`
+  display: ${props => props.visible};
 `;
 
 const data = [
@@ -223,15 +189,14 @@ class Notifications extends React.Component {
                 title={<a href="#">{item.title}</a>}
                 time={item.time}
               />
-              {/* <ContentDiv>Content</ContentDiv> */}
             </List.Item>
           )}
         >
           {/* {this.state.loading && this.state.hasMore && (
-          <div className="demo-loading-container">
-            <Spin />
-          </div>
-        )} */}
+            <div className="demo-loading-container">
+              <Spin />
+            </div>
+          )} */}
         </List>
       </NotifBody>
     );
@@ -254,20 +219,17 @@ class Notifications extends React.Component {
       <Grid.Provider
         // debug
         padding="0px"
-        breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}
       >
         <div onMouseEnter={this.handleDisplay} onMouseLeave={this.handleDisplay}>
           <div className="ant-dropdown-link">
             <Icon type="bell" />
             <ArrowUp visible={this.state.visible} />
           </div>
-          <Notif visible={this.state.visible}>
-            <Grid.Bounds direction="vertical">
-              <Grid.Box>{this.notifHeader()}</Grid.Box>
-              <Grid.Box>{this.notifBody()} </Grid.Box>
-              <Grid.Box>{this.notifFooter()} </Grid.Box>
-            </Grid.Bounds>
-          </Notif>
+          <NotifVisible visible={this.state.visible} direction="vertical">
+            <Grid.Box>{this.notifHeader()}</Grid.Box>
+            <Grid.Box>{this.notifBody()}</Grid.Box>
+            <Grid.Box>{this.notifFooter()}</Grid.Box>
+          </NotifVisible>
         </div>
       </Grid.Provider>
     );
