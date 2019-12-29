@@ -9,7 +9,7 @@ import {
 } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
+import Notification from './Notification';
 
 const NotifAttr = css`
   background: #fff;
@@ -21,25 +21,32 @@ const NotifAttr = css`
 const ScrollBar = css`
   ::-webkit-scrollbar {
     width: 5px;
-    display: none;
+    background-color: #f5f5f5;
 
     &-track {
       background: #f1f1f1;
       border-radius: 5px;
+      height: 300px;
 
-      /* &-piece {
-        background: ;
-      } */
+      &-piece {
+        &:start {
+          background: transparent;
+          margin-top: 41px;
+        }
+        &:end {
+          background: transparent;
+          margin-bottom: 26px;
+        }
+      }
     }
 
     &-thumb {
       background: #888;
       border-radius: 5px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 
       &:hover {
-        background: #00152a;
-        /* width: 7px;
-        display: initial; */
+        background-color: #555;
       }
     }
   }
@@ -111,15 +118,15 @@ const ArrowUp = styled.div`
   z-index: 3;
 `;
 
-const AntListItemMeta = styled(List.Item.Meta).attrs({
-  className: 'ant-list-item-meta-avatar'
-})`
-  margin-left: 16px;
-`;
+// const AntListItemMeta = styled(List.Item.Meta).attrs({
+//   className: 'ant-list-item-meta-avatar'
+// })`
+//   margin-left: 16px;
+// `;
 
-const ContentDiv = styled.div`
-  margin-right: 25px;
-`;
+// const ContentDiv = styled.div`
+//   margin-right: 25px;
+// `;
 
 const NotifBody = styled.div`
   margin-top: 40px;
@@ -129,51 +136,63 @@ const NotifBody = styled.div`
 const data = [
   {
     id: 1,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   },
   {
     id: 2,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   },
   {
     id: 3,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   },
   {
     id: 4,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   },
   {
     id: 5,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   },
   {
     id: 6,
-    email: 'coolrpkohale123@gmail.com',
-    name: {
-      first: 'Rishabh',
-      last: 'kohale'
-    }
+    time: '1 hr ago',
+    title: 'This is the title'
+    // ,
+    // name: {
+    //   first: 'Rishabh',
+    //   last: 'kohale'
+    // }
   }
 ];
 
@@ -216,12 +235,12 @@ class Notifications extends React.Component {
           dataSource={this.state.data}
           renderItem={item => (
             <List.Item key={item.id}>
-              <AntListItemMeta
-                avatar={<UserAvatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                title={<a href="#">{item.name.last}</a>}
-                description={item.email}
+              <Notification
+                avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                title={<a href="#">{item.title}</a>}
+                time={item.time}
               />
-              <ContentDiv>Content</ContentDiv>
+              {/* <ContentDiv>Content</ContentDiv> */}
             </List.Item>
           )}
         >
@@ -254,8 +273,8 @@ class Notifications extends React.Component {
         padding="0px"
         breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}
       >
-        <>
-          <div className="ant-dropdown-link" onClick={this.handleDisplay}>
+        <div onMouseEnter={this.handleDisplay} onMouseLeave={this.handleDisplay}>
+          <div className="ant-dropdown-link">
             <Icon type="bell" />
             <ArrowUp visible={this.state.visible} />
           </div>
@@ -266,7 +285,7 @@ class Notifications extends React.Component {
               <Grid.Box>{this.notifFooter()} </Grid.Box>
             </Grid.Bounds>
           </Notif>
-        </>
+        </div>
       </Grid.Provider>
     );
   }
