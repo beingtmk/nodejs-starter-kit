@@ -206,7 +206,7 @@ class Notifications extends React.Component {
     return (
       <NotifFooter halign="center" height="25px">
         <Grid.Box>
-          <a href="#">
+          <a href="/notifications">
             <b style={{ position: 'relative', top: '-14px' }}>See all</b>
           </a>
         </Grid.Box>

@@ -4,7 +4,7 @@ import Grid from 'hedron';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Icon } from 'antd';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
-import Notifications from '@gqlapp/notifications-client-react/components/Notifications.web';
+import Notifications from '@gqlapp/notifications-client-react/components/NotificationsComponent.web';
 
 import settings from '@gqlapp/config';
 
