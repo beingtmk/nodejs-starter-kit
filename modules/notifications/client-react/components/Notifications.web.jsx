@@ -20,14 +20,7 @@ const NotifAttr = css`
 
 const ScrollBar = css`
   ::-webkit-scrollbar {
-    width: 5px;
-    background-color: #f5f5f5;
-
     &-track {
-      background: #f1f1f1;
-      border-radius: 5px;
-      height: 300px;
-
       &-piece {
         &:start {
           background: transparent;
@@ -37,16 +30,6 @@ const ScrollBar = css`
           background: transparent;
           margin-bottom: 26px;
         }
-      }
-    }
-
-    &-thumb {
-      background: #888;
-      border-radius: 5px;
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-
-      &:hover {
-        background-color: #555;
       }
     }
   }
