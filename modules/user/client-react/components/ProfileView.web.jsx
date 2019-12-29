@@ -32,33 +32,34 @@ class ProfileView extends React.Component {
     return id;
   };
 
-  renderMetaData = t => {
-    return (
-      <Helmet
-        title={`${settings.app.name} - ${t('profile.title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('profile.meta')}`
-          }
-        ]}
-      />
-    );
-  };
-
   render() {
+    const renderMetaData = t => {
+      return (
+        <Helmet
+          title={`${settings.app.name} - ${t('profile.title')}`}
+          meta={[
+            {
+              name: 'description',
+              content: `${settings.app.name} - ${t('profile.meta')}`
+            }
+          ]}
+        />
+      );
+    };
     const { t } = this.props;
     const { currentUser, currentUserLoading } = this.props;
 
     if (currentUserLoading && !currentUser) {
       return (
         <PageLayout select="/profile">
+          {renderMetaData(t)}
           <Loader text={t('profile.loadMsg')} />
         </PageLayout>
       );
     } else if (currentUser) {
       return (
         <PageLayout select="/profile">
+          {renderMetaData(t)}
           <h2 style={{ fontSize: '23px', fontWeight: 'bold', height: '61px', marginBottom: '0px' }}>
             <Icon type="user" /> My Profile
           </h2>
@@ -180,6 +181,7 @@ class ProfileView extends React.Component {
     } else {
       return (
         <PageLayout>
+          {renderMetaData(t)}
           <h2>{t('profile.errorMsg')}</h2>
         </PageLayout>
       );

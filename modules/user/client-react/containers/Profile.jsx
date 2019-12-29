@@ -9,8 +9,6 @@ import ProfileView from '../components/ProfileView';
 import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
 
 const Profile = props => {
-  console.log('profile', props);
-
   const { currentUser } = props;
   const { profile } = currentUser;
   const profile_data = {
