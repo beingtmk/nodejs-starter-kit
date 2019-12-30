@@ -114,7 +114,10 @@ const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
                 {error.message}
               </div>
             ))}
-          <Table dataSource={users} columns={columns} />
+          {/* for horizontal table responsive on smaller screens */}
+          <div style={{ overflowX: 'auto' }}>
+            <Table dataSource={users} columns={columns} />
+          </div>
         </>
       )}
     </>

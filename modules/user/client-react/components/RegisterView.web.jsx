@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import Grid from 'hedron';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText } from '@gqlapp/look-client-react';
@@ -30,17 +31,30 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
     </Card>
   );
 
+  const renderContent = () => (
+    <>
+      <h1 className="text-center">{t('reg.form.title')}</h1>
+      {isRegistered && settings.auth.password.requireEmailConfirmation ? (
+        renderConfirmationModal()
+      ) : (
+        <RegisterForm onSubmit={onSubmit} />
+      )}
+    </>
+  );
+
   return (
     <PageLayout>
-      {renderMetaData(t)}
-      <LayoutCenter>
-        <h1 className="text-center">{t('reg.form.title')}</h1>
-        {isRegistered && settings.auth.password.requireEmailConfirmation ? (
-          renderConfirmationModal()
-        ) : (
-          <RegisterForm onSubmit={onSubmit} />
-        )}
-      </LayoutCenter>
+      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+        <Grid.Bounds direction="vertical">
+          {renderMetaData(t)}
+          <Grid.Box sm={{ hidden: true }}>
+            <LayoutCenter>{renderContent()} </LayoutCenter>
+          </Grid.Box>
+          <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
+            {renderContent()}
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
     </PageLayout>
   );
 };
