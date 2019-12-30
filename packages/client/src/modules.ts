@@ -1,4 +1,5 @@
 import pwa from '@gqlapp/pwa-client-react';
+import home from '@gqlapp/home-client-react';
 import core from '@gqlapp/core-client-react';
 import look from '@gqlapp/look-client-react';
 import i18n from '@gqlapp/i18n-client-react';
@@ -21,6 +22,7 @@ const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
   pwa,
+  home,
   look,
   validation,
   defaultRouter,

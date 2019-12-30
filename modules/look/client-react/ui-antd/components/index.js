@@ -12,6 +12,8 @@ export { default as RenderSelect } from './RenderSelect';
 export { default as RenderAddress } from './RenderAddress';
 export { default as RenderCheckBox } from './RenderCheckBox';
 export { default as Alert } from './Alert';
+export { default as NavBar } from './NavBar';
+
 export { default as Container } from './Container';
 export { default as Row } from './Row';
 export { default as Col } from './Col';

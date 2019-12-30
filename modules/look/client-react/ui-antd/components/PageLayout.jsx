@@ -11,8 +11,8 @@ const { Header, Content } = Layout;
 
 class PageLayout extends React.Component {
   render() {
-    const { children, navBar } = this.props;
-
+    const { children, navBar, type } = this.props;
+    const style = type === 'home' ? { padding: 0, marginTop: '-50px' } : { padding: '24px', margin: 0 };
     return (
       <Layout>
         {navBar !== false && (
@@ -25,7 +25,7 @@ class PageLayout extends React.Component {
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
-        <Content id="content" style={{ background: '#fff', padding: 24 }}>
+        <Content id="content" style={style}>
           {children}
         </Content>
         <BackTop>
@@ -40,7 +40,8 @@ class PageLayout extends React.Component {
 
 PageLayout.propTypes = {
   children: PropTypes.node,
-  navBar: PropTypes.bool
+  navBar: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default PageLayout;
