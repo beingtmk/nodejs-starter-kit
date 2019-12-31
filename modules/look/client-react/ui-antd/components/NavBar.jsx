@@ -11,7 +11,6 @@ import settings from '@gqlapp/config';
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
 import DropDown from './Dropdown';
-// import Notification from './Notification';
 
 const { SubMenu } = Menu;
 
@@ -45,7 +44,7 @@ class NavBar extends React.Component {
   render() {
     return (
       <Grid.Provider
-        //  debug
+        // debug
         padding="0px"
         breakpoints={{ mobile: '-500', tablet: '501-768', wide: '+769' }}
       >
@@ -104,7 +103,6 @@ class NavBar extends React.Component {
 
               <LoggedIn>
                 <MenuItem>
-                  {/* <Notification /> */}
                   <Notifications />
                 </MenuItem>
               </LoggedIn>
@@ -118,17 +116,15 @@ class NavBar extends React.Component {
             </Menu>
           </Grid.Box>
           <Grid.Box wide={{ hidden: true }}>
-            <div onClick={this.showDrawer} style={{ height: '50px' }}>
-              <Icon
-                type="menu"
-                style={{
-                  color: 'white',
-                  fontSize: '20px',
-                  position: 'absolute',
-                  top: '15px',
-                  right: '15px'
-                }}
-              />
+            <div style={{ position: 'relative', bottom: '5px', margin: '0px 10px 0px 10px' }}>
+              <a href="/notifications">
+                <Icon type="bell" style={{ color: 'white', fontSize: '20px' }} />
+              </a>
+            </div>
+          </Grid.Box>
+          <Grid.Box wide={{ hidden: true }}>
+            <div onClick={this.showDrawer} style={{ position: 'relative', bottom: '5px', margin: '0px 10px 0px 10px' }}>
+              <Icon type="menu" style={{ color: 'white', fontSize: '20px' }} />
             </div>
           </Grid.Box>
           <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>

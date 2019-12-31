@@ -221,8 +221,8 @@ class Notifications extends React.Component {
         padding="0px"
       >
         <div onMouseEnter={this.handleDisplay} onMouseLeave={this.handleDisplay}>
-          <div className="ant-dropdown-link">
-            <Icon type="bell" />
+          <div>
+            <Icon type="bell" theme={this.state.visible ? 'filled' : 'outlined'} style={{ fontSize: '20px' }} />
             <ArrowUp visible={this.state.visible} />
           </div>
           <NotifVisible visible={this.state.visible} direction="vertical">
@@ -238,4 +238,4 @@ class Notifications extends React.Component {
 
 Notifications.propTypes = {};
 
-export default translate('notification')(Notifications);
+export default translate('notifications')(Notifications);
