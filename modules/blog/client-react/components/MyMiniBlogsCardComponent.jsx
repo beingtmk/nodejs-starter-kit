@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row, Card, Button, Tooltip, Alert } from 'antd';
 import { status } from '../constants';
+import MiniBlogImageComponent from './MiniBlogImageComponent';
 
 const MyMiniBlogsCardComponent = ({ blog }) => {
   const blogData = () => {
@@ -58,8 +59,6 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
               block
               //   onClick={() => setClap()}
             >
-              {console.log(blog.status)}
-              {console.log(status[1])}
               {blog.status != status[1] ? 'Publish' : 'Disable'}
             </Button>
           </Col>
@@ -81,11 +80,16 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
       </>
     );
   };
-  const blogImage = () => <img style={{ height: '280px', width: '100%' }} alt={blog.title} src={blog.image} />;
+
   return (
     <div>
       <Col xs={24} sm={0} md={0} lg={8}>
-        <Card hoverable title={`Category: ${blog.model.name}`} cover={blogImage()} style={{ marginBottom: '20px' }}>
+        <Card
+          hoverable
+          title={`Category: ${blog.model.name}`}
+          cover={<MiniBlogImageComponent height={240} title={blog.title} image={blog.image} />}
+          style={{ marginBottom: '20px' }}
+        >
           <div style={{ height: '250px', width: '100%' }}>{blogData()}</div>
         </Card>
       </Col>
@@ -97,7 +101,7 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
               {blogData()}
             </Col>
             <Col style={{ margin: 0 }} span={12}>
-              {blogImage()}
+              <MiniBlogImageComponent height={280} title={blog.title} image={blog.image} />
             </Col>
           </Row>
         </Card>

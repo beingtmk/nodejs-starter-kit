@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 // import {  } from "@gqlapp/look-client-react";
-
 import { Menu, Col, Row, Card, Avatar, Button, Divider, Tooltip, Icon, Dropdown } from 'antd';
+import MiniBlogImageComponent from './MiniBlogImageComponent';
 
 const { Meta } = Card;
 
@@ -79,14 +79,13 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
       </>
     );
   };
-  const blogImage = () => <img style={{ height: '250px', width: '100%' }} alt={blog.title} src={blog.image} />;
   return (
     <div>
       <Col xs={24} sm={0} md={0} lg={8}>
         <Card
           hoverable
           title={`${moreFlag == true ? 'More from' : 'Category:'} ${blog.model.name}`}
-          cover={blogImage()}
+          cover={<MiniBlogImageComponent height={240} title={blog.title} image={blog.image} />}
           style={{ marginBottom: '20px' }}
         >
           {blogData()}
@@ -100,7 +99,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
               {blogData()}
             </Col>
             <Col style={{ margin: 0 }} span={12}>
-              {blogImage()}
+              <MiniBlogImageComponent height={250} title={blog.title} image={blog.image} />
             </Col>
           </Row>
         </Card>
