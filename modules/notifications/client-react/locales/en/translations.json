@@ -1,20 +1,6 @@
 {
-  "navLink": "Notifications",
-  "list": {
-    "title": {
-      "standard": "Standard notifications",
-      "relay": "Relay notifications",
-      "scroll": "Scroll-based notifications"
-    },
-    "btn": {
-      "more": "Load more..."
-    },
-    "column": {
-      "title": "Name"
-    },
-    "select": {
-      "ok": "Select",
-      "dismiss": "Cancel"
-    }
-  }
+  "title": "Notifications",
+  "navLink": "Notifications nav link",
+  "meta": "Notifications example",
+  "welcomeText": "Hello, This is the Notifications module"
 }

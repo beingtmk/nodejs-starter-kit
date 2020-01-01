@@ -18,7 +18,7 @@ export default new ClientModule({
     <Route
       exact
       path="/notifications"
-      component={loadable(() => import('./containers/Notifications').then(c => c.default))}
+      component={loadable(() => import('./containers/Notifications.web').then(c => c.default))}
     />
   ],
   navItemTest: [
