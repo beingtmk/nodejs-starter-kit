@@ -14,34 +14,39 @@ const NavLinkWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   </NavLink>
 ));
 const NavLinkMyBlogsWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/my-blogs" className="nav-link" activeClassName="active">
+  <NavLink to="/blog/my-blogs" className="nav-link" activeClassName="active">
     {'My Blogs'}
   </NavLink>
 ));
 const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/my-bookmarks" className="nav-link" activeClassName="active">
+  <NavLink to="/blog/bookmarks" className="nav-link" activeClassName="active">
     {'My Bookmarks'}
   </NavLink>
 ));
 export default new ClientModule({
   route: [
     <Route exact path="/blog/new" component={loadable(() => import('./containers/NewBlog').then(c => c.default))} />,
-    <Route exact path="/my-blogs" component={loadable(() => import('./containers/MyBlogs').then(c => c.default))} />,
     <Route
       exact
-      path="/my-bookmarks"
+      path="/blog/my-blogs"
+      component={loadable(() => import('./containers/MyBlogs').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path="/blog/bookmarks"
       component={loadable(() => import('./containers/MyBookmarks').then(c => c.default))}
     />,
-    <Route exact path="/blog/" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
+    <Route exact path="/blog/list" component={loadable(() => import('./containers/BlogList').then(c => c.default))} />,
+    <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
   navItem: [
     <MenuItem key="/blog/new">
       <NavLinkWithI18n />
     </MenuItem>,
-    <MenuItem key="/my-blogs">
+    <MenuItem key="/blog/my-blogs">
       <NavLinkMyBlogsWithI18n />
     </MenuItem>,
-    <MenuItem key="/my-bookmarks">
+    <MenuItem key="/blog/bookmarks">
       <NavLinkMyBookmarksWithI18n />
     </MenuItem>
   ],
