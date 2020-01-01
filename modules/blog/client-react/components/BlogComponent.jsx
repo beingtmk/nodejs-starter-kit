@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { Col, Row, Card, Avatar, Button, Divider, Tag } from 'antd';
+import { Col, Row, Card, Avatar, Divider, Tag } from 'antd';
 import BlogRefCardComponent from './BlogRefCardComponent';
 import MiniBlogsCardComponent from './MiniBlogsCardComponent';
+import BlogActionsComponent from './BlogActionsComponent';
 
 const { Meta } = Card;
 
-const BlogComponent = ({ setClap, blog, moreBlogs }) => {
+const BlogComponent = ({ blog, moreBlogs }) => {
   return (
     <Row>
       <Col
@@ -49,18 +50,7 @@ const BlogComponent = ({ setClap, blog, moreBlogs }) => {
             </Tag>
           ))}
           <Divider />
-          <span>
-            <Button
-              type={blog.clapFlag ? 'primary' : 'secondary'}
-              shape="circle"
-              icon="like"
-              size="large"
-              ghost={blog.clapFlag ? true : false}
-              onClick={() => setClap()}
-              style={{ marginRight: '10px' }}
-            />
-            <strong>{`${blog.claps}`}</strong>
-          </span>
+          <BlogActionsComponent blog={blog} />
         </Card>
         <BlogRefCardComponent user={blog.author} />
         <BlogRefCardComponent model={blog.model} />
@@ -91,10 +81,7 @@ const BlogComponent = ({ setClap, blog, moreBlogs }) => {
 BlogComponent.propTypes = {
   blog: PropTypes.object,
   moreBlogs: PropTypes.array,
-  setClap: PropTypes.func,
   t: PropTypes.func
 };
-
-// PMH 142 CMH 257
 
 export default translate('blog')(BlogComponent);

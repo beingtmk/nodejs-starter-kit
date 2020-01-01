@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { PageLayout, Loading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-// import { message } from 'antd';
 import BlogComponent from './BlogComponent';
 
 const renderMetaData = t => (
