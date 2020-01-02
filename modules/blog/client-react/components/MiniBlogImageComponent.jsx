@@ -2,7 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const MiniBlogImageComponent = props => {
-  return <img style={{ height: `${props.height}px`, width: '100%' }} alt={props.title} src={props.image} />;
+  return (
+    <div
+      style={{
+        overflow: 'hidden',
+        height: `${props.height}px`,
+        background: 'grey'
+      }}
+      align="center"
+    >
+      <img
+        style={{
+          height: '100%'
+        }}
+        alt={props.title}
+        src={props.image}
+      />
+    </div>
+  );
 };
 
 MiniBlogImageComponent.propTypes = {
