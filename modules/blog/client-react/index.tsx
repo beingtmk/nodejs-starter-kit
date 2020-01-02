@@ -42,6 +42,11 @@ export default new ClientModule({
       component={loadable(() => import('./containers/MyBookmarks').then(c => c.default))}
     />,
     <Route exact path="/blog/list" component={loadable(() => import('./containers/BlogList').then(c => c.default))} />,
+    <Route
+      exact
+      path="/blog/@:username"
+      component={loadable(() => import('./containers/UserBlogs').then(c => c.default))}
+    />,
     <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
   navItem: [

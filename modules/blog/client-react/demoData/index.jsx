@@ -35,6 +35,14 @@ export const blog = {
   status: 'Published'
 };
 
+export const user = {
+  image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
+  firstname: 'Bishal',
+  lastname: 'Deb',
+  username: 'Zalophus',
+  desc: 'Just another normal human being here!'
+};
+
 export const moreBlogs = [
   {
     id: 2,
