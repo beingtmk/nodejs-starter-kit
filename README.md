@@ -1,10 +1,10 @@
-<p align="center"><a href="#"><img width="150" src="https://rawgit.com/sysgears/nodejs-starter-kit/master/logo.svg"></a></p>
-
 # Nodejs Starter Kit
 
 ## Official Website
 
 You can test the deployment [demo application].
+
+This Starter Kit is based on [Apollo Starter Kit].
 
 ## Description
 
@@ -275,6 +275,7 @@ Modules
 [nativebase]: https://nativebase.io
 [apollokit.org]: https://apollokit.org
 [demo application]: https://nodejs-starterkit.approxyma.com/
+[Apollo Starter Kit]: https://github.com/sysgears/apollo-universal-starter-kit
 [react native gifted chat]: https://github.com/FaridSafi/react-native-gifted-chat
 
 <!-- [deployed on heroku]: https://nodejs-starter-kit.herokuapp.com -->
