@@ -86,7 +86,7 @@ const AddNewAddressBlock = styled.div`
   width: 275px !important;
 
   &:hover {
-    border: ${props => '3px solid' + props.borderColor || '3px solid rgba(175, 226, 217, 0.81)'};
+    border: 3px solid rgba(175, 226, 217, 0.81);
     width: 275px !important;
   }
 `;
