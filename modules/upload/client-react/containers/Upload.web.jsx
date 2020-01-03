@@ -15,6 +15,7 @@ const Upload = props => {
   const [error, setError] = useState(null);
 
   const handleUploadFiles = async files => {
+    console.log('files', files);
     try {
       await uploadFiles(files);
     } catch (e) {
