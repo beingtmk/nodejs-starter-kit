@@ -24,7 +24,7 @@ const Notification = ({ avatar, title, time }) => {
 
 Notification.propTypes = {
   avatar: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.object,
   time: PropTypes.string
 };
 

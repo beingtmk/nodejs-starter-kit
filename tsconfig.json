@@ -21,7 +21,7 @@
   "include": [
     "**/typings.d.ts",
     "**/*.ts",
-    "**/*.tsx", "modules/notifications/client-react/index.jsx", "modules/notifications/client-react/containers/Notifications.web.jsx", "modules/notifications/client-react/components/NotificationsComponent.web.jsx", "modules/address/client-react/components/AddressView.jsx", "modules/resources/client-react/components/ResourcesView.jsx"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"

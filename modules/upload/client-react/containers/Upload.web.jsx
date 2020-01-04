@@ -16,6 +16,7 @@ const Upload = props => {
 
   const handleUploadFiles = async files => {
     console.log('files', files);
+    console.log('uploadFiles', uploadFiles);
     try {
       await uploadFiles(files);
     } catch (e) {
@@ -30,6 +31,7 @@ const Upload = props => {
       setError({ error: e.message });
     }
   };
+  console.log('props', props);
 
   return (
     <UploadView {...props} error={error} handleRemoveFile={handleRemoveFile} handleUploadFiles={handleUploadFiles} />
