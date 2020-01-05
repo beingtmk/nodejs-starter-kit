@@ -58,6 +58,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@gqlapp/blog-server-ts": "^1.0.0",
+    "@gqlapp/comment-server-ts": "^1.0.0",
     "@gqlapp/core-common": "^0.1.0",
     "@gqlapp/database-server-ts": "^0.1.0",
     "@gqlapp/testing-server-ts": "^0.1.0",
