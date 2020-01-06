@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { withFormik } from 'formik';
 import { PropTypes } from 'prop-types';
-import Dropzone from 'react-dropzone';
+// import Dropzone from 'react-dropzone';
 import {
   Form,
   //  Upload,
@@ -12,7 +12,7 @@ import {
 } from 'antd';
 
 import settings from '@gqlapp/config';
-import { PageLayout, RenderField, Button } from '@gqlapp/look-client-react';
+import { PageLayout, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 
@@ -46,7 +46,16 @@ const renderMetaData = t => (
 //   }
 // };
 
-const AddResourcesView = ({ t, values, handleSubmit, handleUploadFiles }) => {
+const AddResourcesView = ({
+  t,
+  values,
+  handleSubmit
+  // , handleUploadFiles
+}) => {
+  const [
+    // load,
+    setload
+  ] = useState(false);
   return (
     <PageLayout>
       {/* {console.log('props', props)} */}
@@ -83,9 +92,19 @@ const AddResourcesView = ({ t, values, handleSubmit, handleUploadFiles }) => {
             Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
           </p>
         </Dragger> */}
-        <Dropzone onDrop={handleUploadFiles}>
+        {/* <Dropzone onDrop={handleUploadFiles}>
           <p style={{ padding: '10px' }}>{t('message')}</p>
-        </Dropzone>
+        </Dropzone> */}
+        <Field
+          name="upload"
+          component={RenderUpload}
+          placeholder="Upload"
+          type="text"
+          setload={setload}
+          label="Upload"
+          value={values.upload}
+        />
+        {/* {console.log('upload', RenderUpload)} */}
       </div>
     </PageLayout>
   );

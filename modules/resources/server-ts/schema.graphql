@@ -1,16 +1,63 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Resource {
+  id: Int!
+
+  # Resource module
+  user: User
+  title: String
+  uploadedBy: String
+  tags: String
+  description: String
+  resource: [ResourceFiles]
+  createdAt: String!
+  updatedAt: String!
 }
 
-extend type Query {
-  queryName: TypeName
+type ResourceFiles {
+  id: Int!
+  resourceId: Int!
+  resourceUrl: String!
+  createdAt: String!
+  updatedAt: String!
 }
+
+type ResourcesPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+type ResourceEdges {
+  node: Resource
+  cursor: Int
+}
+type Resources {
+  totalCount: Int
+  edges: [ResourceEdges]
+  pageInfo: ResourcesPageInfo
+}
+
+# extend type Query {
+#   resources: Resources
+# }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addResource(input: AddResourceInput!): Resource
 }
 
-extend type Subscription {
-  subscriptionName: TypeName
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }
+
+input AddResourceInput {
+  userId: Int
+  title: String
+  uploadedBy: String
+  tags: String
+  description: String
+  resource: ResourceInput
+}
+
+input ResourceInput {
+  id: Int
+  resourceUrl: String!
 }
