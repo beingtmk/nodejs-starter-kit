@@ -3,7 +3,7 @@ type Resource {
   id: Int!
 
   # Resource module
-  user: User
+  userId: Int!
   title: String
   uploadedBy: String
   tags: String
@@ -36,17 +36,35 @@ type Resources {
   pageInfo: ResourcesPageInfo
 }
 
-# extend type Query {
-#   resources: Resources
-# }
+extend type Query {
+  resources(
+    limit: Int
+    after: Int
+    orderBy: OrderByListInput
+    filter: FilterListInput
+  ): Resources
+  resource(id: Int!): Resource
+}
 
 extend type Mutation {
   addResource(input: AddResourceInput!): Resource
+  deleteResource(id: Int!): Resource
+  editResource(input: EditResourceInput!): Resource
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+input FilterListInput {
+  title: String
+  uploadedBy: String
+  tags: String
+  searchText: String
+}
+
+# Input for ordering
+input OrderByListInput {
+  column: String
+  # asc | desc
+  order: String
+}
 
 input AddResourceInput {
   userId: Int
@@ -54,10 +72,32 @@ input AddResourceInput {
   uploadedBy: String
   tags: String
   description: String
-  resource: ResourceInput
+  resource: [ResourceInput]
 }
 
 input ResourceInput {
   id: Int
   resourceUrl: String!
+}
+
+input EditResourceInput {
+  id: Int!
+
+  # Resource module
+  userId: Int
+  title: String
+  uploadedBy: String
+  tags: String
+  description: String
+  resource: [ResourceInput]
+}
+
+extend type Subscription {
+  resourceUpdated(id: Int!): UpdateResourcePayload
+}
+
+type UpdateResourcePayload {
+  mutation: String!
+  id: Int
+  node: Resource
 }
