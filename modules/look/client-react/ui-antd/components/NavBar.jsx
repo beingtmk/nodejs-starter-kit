@@ -97,6 +97,11 @@ class NavBar extends React.Component {
               theme="dark"
               style={{ lineHeight: '50px' }}
             >
+              {/* BLOG Section */}
+              <MenuItem>
+                <DropDown content="Blog Section">{ref.modules.navItemsBlog}</DropDown>
+              </MenuItem>
+
               {ref.modules.navItems}
               {ref.modules.navItemsRight}
 
@@ -151,6 +156,12 @@ class NavBar extends React.Component {
                   {ref.modules.navItemsAdmin}
                 </SubMenu>
               </LoggedIn>
+
+              {/* BLOG Section */}
+              <SubMenu key="blog" title={<MenuItem>Blog Section</MenuItem>}>
+                {ref.modules.navItemsBlog}
+              </SubMenu>
+
               {ref.modules.navItems}
             </Menu>
           </Drawer>

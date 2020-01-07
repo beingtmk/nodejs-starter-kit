@@ -20,7 +20,7 @@ const NavLinkMyBlogsWithI18n = translate('blog')(({ t }: { t: TranslateFunction 
 ));
 const NavLinkBlogWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/list" className="nav-link" activeClassName="active">
-    {'Blogs'}
+    {'All Blogs'}
   </NavLink>
 ));
 const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
@@ -49,7 +49,7 @@ export default new ClientModule({
     />,
     <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
-  navItem: [
+  navItemsBlog: [
     <MenuItem key="/blog/new">
       <NavLinkWithI18n />
     </MenuItem>,
