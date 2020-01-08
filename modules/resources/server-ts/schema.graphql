@@ -94,6 +94,10 @@ input EditResourceInput {
 
 extend type Subscription {
   resourceUpdated(id: Int!): UpdateResourcePayload
+  resourcesUpdated(
+    endCursor: Int
+    filter: FilterListInput
+  ): UpdateResourcePayload
 }
 
 type UpdateResourcePayload {

@@ -1,6 +1,26 @@
 # GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+query resources {
+  resources(limit: 3, after: 0) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    edges {
+      cursor
+      node {
+        id
+        tags
+        title
+        userId
+        description
+        uploadedBy
+        createdAt
+        resource {
+          id
+          resourceUrl
+        }
+      }
+    }
   }
 }
