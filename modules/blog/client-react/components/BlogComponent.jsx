@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { Col, Row, Card, Avatar, Divider, Tag } from 'antd';
-import CommentData from '@gqlapp/comment-client-react/containers/CommentData';
+import CommentSection from '@gqlapp/comment-client-react/containers/CommentSection';
 import BlogRefCardComponent from './BlogRefCardComponent';
 import MiniBlogsCardComponent from './MiniBlogsCardComponent';
 import BlogActionsComponent from './BlogActionsComponent';
@@ -55,7 +55,9 @@ const BlogComponent = ({ blog, moreBlogs }) => {
         </Card>
         <BlogRefCardComponent user={blog.author} />
         <BlogRefCardComponent model={blog.model} />
-        <CommentData />
+        <br />
+        <br />
+        <CommentSection header="Comments" />
       </Col>
 
       <Col
