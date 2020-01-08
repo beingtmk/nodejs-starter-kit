@@ -1,43 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Comment, Icon, Tooltip, Avatar } from 'antd';
 import moment from 'moment';
 
 export default class CommentDataComponent extends React.Component {
-  state = {
-    likes: 0,
-    dislikes: 0,
-    action: null
-  };
-
-  like = () => {
-    this.setState({
-      likes: 1,
-      dislikes: 0,
-      action: 'liked'
-    });
-  };
-
-  dislike = () => {
-    this.setState({
-      likes: 0,
-      dislikes: 1,
-      action: 'disliked'
-    });
-  };
-
   render() {
-    const { likes, dislikes, action } = this.state;
+    const { likes, dislikes, action, content, time, user } = this.props.comment;
+    const { like, dislike } = this.props;
 
     const actions = [
       <span key="comment-basic-like">
         <Tooltip title="Like">
-          <Icon type="like" theme={action === 'liked' ? 'filled' : 'outlined'} onClick={this.like} />
+          <Icon type="like" theme={action === 'liked' ? 'filled' : 'outlined'} onClick={like} />
         </Tooltip>
         <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
       </span>,
       <span key=' key="comment-basic-dislike"'>
         <Tooltip title="Dislike">
-          <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={this.dislike} />
+          <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={dislike} />
         </Tooltip>
         <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
       </span>,
@@ -47,20 +27,21 @@ export default class CommentDataComponent extends React.Component {
     return (
       <Comment
         actions={actions}
-        author={<a>Han Solo</a>}
-        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />}
-        content={
-          <p>
-            We supply a series of design principles, practical patterns and high quality design resources (Sketch and
-            Axure), to help people create their product prototypes beautifully and efficiently.
-          </p>
-        }
+        author={<a>{user.username}</a>}
+        avatar={<Avatar src={user.image} alt={user.username} />}
+        content={<p>{content}</p>}
         datetime={
-          <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-            <span>{moment().fromNow()}</span>
+          <Tooltip title={time}>
+            <span>{moment(time).fromNow()}</span>
           </Tooltip>
         }
       />
     );
   }
 }
+
+CommentDataComponent.propTypes = {
+  comment: PropTypes.object,
+  like: PropTypes.func,
+  dislike: PropTypes.func
+};
