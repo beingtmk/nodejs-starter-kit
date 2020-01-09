@@ -1,0 +1,5 @@
+mutation deleteResource($id: Int!) {
+  deleteResource(id: $id) {
+    id
+  }
+}

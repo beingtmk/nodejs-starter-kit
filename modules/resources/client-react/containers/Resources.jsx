@@ -1,5 +1,8 @@
 import React from 'react';
+import { message } from 'antd';
 import { graphql } from 'react-apollo';
+import update from 'immutability-helper';
+
 import { PLATFORM, compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
@@ -7,15 +10,35 @@ import settings from '../../../../settings';
 import ResourcesView from '../components/ResourcesView';
 
 import RESOURCES_QUERY from '../graphql/ResourcesQuery.graphql';
-// import DELETE_RESOURCE from '../.graphql/DeleteResource.graphql';
+import DELETE_RESOURCE from '../graphql/DeleteResource.graphql';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 
+const onDeleteResource = (prev, id) => {
+  const index = prev.resources.edges.findIndex(x => x.node.id === id);
+
+  // ignore if not found
+  if (index < 0) {
+    return prev;
+  }
+
+  return update(prev, {
+    resources: {
+      totalCount: {
+        $set: prev.resources.totalCount - 1
+      },
+      edges: {
+        $splice: [[index, 1]]
+      }
+    }
+  });
+};
 class Resources extends React.Component {
   render() {
+    console.log('props', this.props);
     return <ResourcesView {...this.props} t={translate} />;
   }
 }
@@ -58,53 +81,50 @@ export default compose(
       return { loading, resources, subscribeToMore, loadData };
     }
   }),
-  // graphql(DELETE_LISTING, {
-  //   props: ({ mutate }) => ({
-  //     deleteListing: id => {
-  //       mutate({
-  //         variables: { id },
-  //         optimisticResponse: {
-  //           __typename: 'Mutation',
-  //           deleteListing: {
-  //             id: id,
-  //             __typename: 'Listing'
-  //           }
-  //         },
+  graphql(DELETE_RESOURCE, {
+    props: ({ mutate }) => ({
+      deleteResource: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteResource: {
+              id: id,
+              __typename: 'Resource'
+            }
+          },
 
-  //         update: (cache, { data: { deleteListing } }) => {
-  //           // Get previous listings from cache
-  //           const prevListings = cache.readQuery({
-  //             query: LISTINGS_QUERY,
-  //             variables: {
-  //               limit,
-  //               after: 0
-  //             }
-  //           });
+          update: (cache, { data: { deleteResource } }) => {
+            // Get previous resource from cache
+            const prevResource = cache.readQuery({
+              query: RESOURCES_QUERY,
+              variables: {
+                limit,
+                after: 0
+              }
+            });
 
-  //           const newListListings = onDeleteListing(
-  //             prevListings,
-  //             deleteListing.id
-  //           );
+            const newListResource = onDeleteResource(prevResource, deleteResource.id);
 
-  //           // Write listings to cache
-  //           cache.writeQuery({
-  //             query: LISTINGS_QUERY,
-  //             variables: {
-  //               limit,
-  //               after: 0
-  //             },
-  //             data: {
-  //               listings: {
-  //                 ...newListListings.listings,
-  //                 __typename: 'Listings'
-  //               }
-  //             }
-  //           });
-  //         }
-  //       });
-  //       message.warning('Listing deleted.');
-  //     }
-  //   })
-  // }),
+            // Write resource to cache
+            cache.writeQuery({
+              query: RESOURCES_QUERY,
+              variables: {
+                limit,
+                after: 0
+              },
+              data: {
+                resources: {
+                  ...newListResource.resources,
+                  __typename: 'Resources'
+                }
+              }
+            });
+          }
+        });
+        message.warning('Resource deleted.');
+      }
+    })
+  }),
   translate('resources')
 )(Resources);
