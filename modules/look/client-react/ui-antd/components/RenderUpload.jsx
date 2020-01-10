@@ -28,7 +28,7 @@ export default class RenderUpload extends React.Component {
 
   onChangeHandler = ({ file, fileList }) => {
     // console.log(file.status);
-    // console.log(fileList);
+    console.log(fileList);
     // console.log(file.response.secure_url);
     // const arrayHelpers = this.props.arrayHelpers;
 
@@ -75,10 +75,12 @@ export default class RenderUpload extends React.Component {
     // console.log(input);
     // const defaultFileList = this.props.defaultFileList;
 
-    const cloudinary_url = 'https://api.cloudinary.com/v1_1/da0hbv2bq/image/upload';
+    const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
+
+    //  'https://api.cloudinary.com/v1_1/da0hbv2bq/image/upload';
     // { upload_preset: 'nxzf2ip6' }
     // const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    const cloudinary_data = { upload_preset: 'zhuabgyc' };
+    const cloudinary_data = { upload_preset: 'hycdtdxe' };
 
     let validateStatus = '';
     // if (touched && error) {
@@ -105,7 +107,7 @@ export default class RenderUpload extends React.Component {
 
     return (
       <FormItem label={label} validateStatus={validateStatus}>
-        <div className="clearfix">
+        <div>
           <Upload
             action={cloudinary_url}
             data={cloudinary_data}
@@ -119,7 +121,7 @@ export default class RenderUpload extends React.Component {
           <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
             <img alt="image" style={{ width: '100%' }} src={previewImage} />
           </Modal>
-        </div>{' '}
+        </div>
       </FormItem>
     );
   }

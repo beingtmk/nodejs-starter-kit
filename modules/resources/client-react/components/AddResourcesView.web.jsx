@@ -1,65 +1,48 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { withFormik } from 'formik';
+import { withFormik, FieldArray } from 'formik';
 import { PropTypes } from 'prop-types';
-// import Dropzone from 'react-dropzone';
-import {
-  Form,
-  //  Upload,
-  // Icon,
-  // message,
-  Divider
-} from 'antd';
+import Grid from 'hedron';
+import { Form, Divider } from 'antd';
 
 import settings from '@gqlapp/config';
-import { PageLayout, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
+import { PageLayout, LayoutCenter, RenderField, Button, RenderUploadMultiple } from '@gqlapp/look-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 
 const AddResourcesSchema = {
-  title: [required, minLength(5)]
+  title: [required, minLength(5)],
+  tags: [required],
+  resource: [required]
 };
 
-const renderMetaData = t => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
-
-// const { Dragger } = Upload;
-
-// const props = {
-//   name: 'file',
-//   multiple: true,
-//   action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-//   onChange(info) {
-//     const { status } = info.file;
-//     if (status !== 'uploading') {
-//       console.log(info.file, info.fileList);
-//     }
-//     if (status === 'done') {
-//       message.success(`${info.file.name} file uploaded successfully.`);
-//     } else if (status === 'error') {
-//       message.error(`${info.file.name} file upload failed.`);
-//     }
-//   }
-// };
-
-const AddResourcesView = ({
-  t,
-  values,
-  handleSubmit
-  // , handleUploadFiles
-}) => {
+const AddResourcesView = props => {
+  const {
+    t,
+    values,
+    handleSubmit
+    // errors
+    // , handleUploadFiles
+  } = props;
   const [
     // load,
     setload
   ] = useState(false);
-  return (
-    <PageLayout>
-      {/* {console.log('props', props)} */}
-      {renderMetaData(t)}
+
+  const renderMetaData = () => (
+    <Helmet
+      title={`${settings.app.name} - ${t('title')}`}
+      meta={[
+        {
+          name: 'description',
+          content: `${settings.app.name} - ${t('meta')}`
+        }
+      ]}
+    />
+  );
+
+  const renderContent = () => {
+    return (
       <div>
         <Form onSubmit={handleSubmit}>
           <Field
@@ -70,6 +53,7 @@ const AddResourcesView = ({
             label="Title"
             value={values.title}
           />
+
           <Field
             name="description"
             component={RenderField}
@@ -78,34 +62,49 @@ const AddResourcesView = ({
             label="Description"
             value={values.description}
           />
+
           <Field name="tags" component={RenderField} placeholder="Tags" type="text" label="Tags" value={values.tags} />
 
-          <Button type="submit">Submit</Button>
+          <FieldArray
+            name="resource"
+            label="Upload Resources"
+            render={arrayHelpers => (
+              <RenderUploadMultiple
+                setload={setload}
+                arrayHelpers={arrayHelpers}
+                values={values.resource}
+                dictKey="resourceUrl"
+              />
+            )}
+          />
+
+          <Button
+            type="submit"
+            color="primary"
+            // disabled={!errors}
+          >
+            Submit
+          </Button>
         </Form>
         <Divider />
-        {/* <Dragger {...props}>
-          <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-          </p>
-        </Dragger> */}
-        {/* <Dropzone onDrop={handleUploadFiles}>
-          <p style={{ padding: '10px' }}>{t('message')}</p>
-        </Dropzone> */}
-        <Field
-          name="upload"
-          component={RenderUpload}
-          placeholder="Upload"
-          type="text"
-          setload={setload}
-          label="Upload"
-          value={values.upload}
-        />
-        {/* {console.log('upload', RenderUpload)} */}
       </div>
+    );
+  };
+
+  return (
+    <PageLayout>
+      {console.log('props', props)}
+      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
+        <Grid.Bounds direction="vertical">
+          {renderMetaData()}
+          <Grid.Box sm={{ hidden: 'true' }}>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
+          </Grid.Box>
+          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
+            {renderContent()}
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
     </PageLayout>
   );
 };
@@ -122,10 +121,19 @@ const AddResourcesWithFormik = withFormik({
   // mapPropsToValues: () => ({
   //   title: ''
   // }),
-  async handleSubmit(values, props, info) {
-    console.log('values', values);
-    console.log('info', info);
-    console.log('props from handleSubmit', props);
+  async handleSubmit(values, props) {
+    const { title, description, resource, tags, currentUser } = values;
+    // console.log('values', values);
+    // console.log('props from handleSubmit', props);
+    const value = {};
+    value.title = title;
+    value.description = description;
+    value.tags = tags;
+    value.resource = resource;
+    value.userId = currentUser.id;
+    value.uploadedBy = currentUser.username;
+    // console.log('value', value);
+    props.props.addResource(value);
   },
   validate: values => validate(values, AddResourcesSchema),
   displayName: 'AddResourcesForm' // helps with React DevTools

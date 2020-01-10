@@ -1,0 +1,15 @@
+mutation addResource($input: AddResourceInput!) {
+  addResource(input: $input) {
+    id
+    tags
+    title
+    userId
+    description
+    uploadedBy
+    createdAt
+    resource {
+      id
+      resourceUrl
+    }
+  }
+}

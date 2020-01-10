@@ -7,5 +7,9 @@ export * from './look';
 export { default as LayoutCenter } from './LayoutCenter';
 export { default as Loading } from './Loading';
 export { default as RenderUpload } from './ui-antd/components/RenderUpload';
+export { default as RenderUploadMultiple } from './ui-antd/components/RenderUploadMultiple';
 
-export default new ClientModule({ onAppCreate: [onAppCreate], localization: [{ ns: 'user', resources }] });
+export default new ClientModule({
+  onAppCreate: [onAppCreate],
+  localization: [{ ns: 'user', resources }]
+});
