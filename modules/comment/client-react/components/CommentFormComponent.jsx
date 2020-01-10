@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
-import {
-  // isFormError,
-  FieldAdapter as Field
-} from '@gqlapp/forms-client-react';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-// import { message } from 'antd';
+import { message } from 'antd';
 import { Form, RenderField, Button, Alert } from '@gqlapp/look-client-react';
 
 const CommentFormComponentSchema = {
@@ -39,21 +36,14 @@ const CommentFormWithFormik = withFormik({
     content: props.comment && props.comment.content
   }),
   async handleSubmit(
-    values
-    // {
-    //   setErrors,
-    //   props: { onSubmit }
-    // }
+    values,
+    {
+      props: { onSubmit }
+    }
   ) {
-    // message.loading("Please wait...", 0);
+    message.loading('Please wait...', 0);
     console.log(values);
-    // onSubmit(values).catch(e => {
-    //   if (isFormError(e)) {
-    //     setErrors(e.errors);
-    //   } else {
-    //     throw e;
-    //   }
-    // });
+    onSubmit(values);
   },
   validate: values => validate(values, CommentFormComponentSchema),
   displayName: 'CommentForm ' // helps with React DevTools

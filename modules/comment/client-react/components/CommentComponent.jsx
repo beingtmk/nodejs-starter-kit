@@ -5,8 +5,8 @@ import moment from 'moment';
 
 export default class CommentDataComponent extends React.Component {
   render() {
-    const { likes, dislikes, action, content, time, user } = this.props.comment;
-    const { like, dislike, children } = this.props;
+    const { likes, dislikes, action, content, time, user, id } = this.props.comment;
+    const { like, dislike, children, deleteComment } = this.props;
 
     const actions = [
       <span key="comment-basic-like">
@@ -15,13 +15,16 @@ export default class CommentDataComponent extends React.Component {
         </Tooltip>
         <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
       </span>,
-      <span key=' key="comment-basic-dislike"'>
+      <span key="comment-basic-dislike">
         <Tooltip title="Dislike">
           <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={dislike} />
         </Tooltip>
         <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
       </span>,
-      <span key="comment-basic-reply-to">Reply</span>
+      <span key="comment-basic-reply-to">Reply</span>,
+      <span key="comment-basic-reply-to" onClick={() => deleteComment(id)}>
+        Delete
+      </span>
     ];
 
     return (
@@ -46,5 +49,6 @@ CommentDataComponent.propTypes = {
   comment: PropTypes.object,
   children: PropTypes.object,
   like: PropTypes.func,
+  deleteComment: PropTypes.func,
   dislike: PropTypes.func
 };

@@ -13,9 +13,13 @@ const CommentDataComponent = props => {
     <span>
       {flag ? (
         <>
-          <CommentFormComponent />
+          <CommentFormComponent onSubmit={props.addComment} />
           {props.comments.map(item => (
-            <CommentComponent comment={item} {...props} />
+            <CommentComponent comment={item} {...props}>
+              {item.replies.map(reply => (
+                <CommentComponent comment={reply} {...props} />
+              ))}
+            </CommentComponent>
           ))}
         </>
       ) : (
@@ -27,6 +31,7 @@ const CommentDataComponent = props => {
 
 CommentDataComponent.propTypes = {
   t: PropTypes.func,
+  addComment: PropTypes.func,
   comments: PropTypes.array
 };
 
