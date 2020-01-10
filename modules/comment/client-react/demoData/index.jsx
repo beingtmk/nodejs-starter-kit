@@ -11,7 +11,8 @@ export const commentData = {
   time: '2020-01-04 12:33:12',
   likes: 0,
   dislikes: 0,
-  action: null
+  action: null,
+  replies: []
 };
 
 export const user = {

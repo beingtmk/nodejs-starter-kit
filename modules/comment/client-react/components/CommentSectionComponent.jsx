@@ -16,11 +16,7 @@ const CommentSectionComponent = props => {
       {flag ? (
         <Collapse>
           <Panel header={<h1>{props.header}</h1>} key="1">
-            <CommentData {...props}>
-              <CommentData {...props}>
-                <CommentData {...props} />
-              </CommentData>
-            </CommentData>
+            <CommentData {...props} />
           </Panel>
         </Collapse>
       ) : (

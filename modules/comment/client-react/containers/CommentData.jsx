@@ -3,10 +3,12 @@ import React from 'react';
 import { translate } from '@gqlapp/i18n-client-react';
 // import { message } from 'antd';
 import { commentData } from '../demoData';
-import CommentDataView from '../components/CommentDataView';
+import CommentDataComponent from '../components/CommentDataComponent';
 
 class CommentData extends React.Component {
-  state = commentData;
+  state = {
+    comments: [commentData, commentData, commentData, commentData, commentData]
+  };
 
   like = () => {
     this.setState({
@@ -25,7 +27,9 @@ class CommentData extends React.Component {
   };
 
   render() {
-    return <CommentDataView {...this.props} comment={this.state} like={this.like} dislike={this.dislike} />;
+    return (
+      <CommentDataComponent {...this.props} comments={this.state.comments} like={this.like} dislike={this.dislike} />
+    );
   }
 }
 
