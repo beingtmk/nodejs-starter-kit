@@ -14,7 +14,6 @@ const CommentDataComponent = props => {
     <span>
       {flag ? (
         <>
-          {' '}
           <Button color="primary" onClick={() => setModalVisible(true)}>
             Add Comment
           </Button>

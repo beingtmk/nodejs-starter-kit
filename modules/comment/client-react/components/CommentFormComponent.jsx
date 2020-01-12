@@ -42,7 +42,7 @@ CommentFormComponent.propTypes = {
   setModalVisible: PropTypes.func,
   values: PropTypes.object,
   errors: PropTypes.object,
-  comment: PropTypes.object,
+  content: PropTypes.object,
   title: PropTypes.string,
   modalVisible: PropTypes.bool,
   t: PropTypes.func
@@ -51,7 +51,7 @@ CommentFormComponent.propTypes = {
 const CommentFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: props => ({
-    content: props.comment && props.comment.content
+    content: props.content
   }),
   async handleSubmit(
     values,

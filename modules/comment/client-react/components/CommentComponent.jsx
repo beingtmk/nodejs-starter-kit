@@ -1,44 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Comment, Icon, Tooltip, Avatar, Menu, Dropdown } from 'antd';
 import moment from 'moment';
+import CommentFormComponent from './CommentFormComponent';
+import { REPLY, EDIT } from '../constants';
 
-export default class CommentDataComponent extends React.Component {
-  render() {
-    const { likes, dislikes, action, content, time, user, id } = this.props.comment;
-    const { like, dislike, children, deleteComment } = this.props;
+const CommentComponent = ({
+  like,
+  dislike,
+  children,
+  deleteComment,
+  replyComment,
+  editComment,
+  comment: { likes, dislikes, action, content, time, user, id }
+}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [formState, setFormState] = useState(REPLY);
 
-    const menu = (
-      <Menu>
-        <Menu.Item key="1">Edit</Menu.Item>
-        <Menu.Item key="2" onClick={() => deleteComment(id)}>
-          Delete
-        </Menu.Item>
-      </Menu>
-    );
+  const RenderForm = val => {
+    setModalVisible(true);
+    setFormState(val);
+  };
 
-    const actions = [
-      <span key="comment-basic-like">
-        <Tooltip title="Like">
-          <Icon type="like" theme={action === 'liked' ? 'filled' : 'outlined'} onClick={like} />
-        </Tooltip>
-        <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
-      </span>,
-      <span key="comment-basic-dislike">
-        <Tooltip title="Dislike">
-          <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={dislike} />
-        </Tooltip>
-        <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
-      </span>,
-      <span key="comment-basic-reply-to">Reply</span>,
-      <strong>
-        <Dropdown overlay={menu} trigger={['hover', 'click']}>
-          <Icon type="edit" theme="filled" />
-        </Dropdown>
-      </strong>
-    ];
+  const menu = (
+    <Menu>
+      <Menu.Item key="1" onClick={() => RenderForm(EDIT)}>
+        Edit
+      </Menu.Item>
+      <Menu.Item key="2" onClick={() => deleteComment(id)}>
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
 
-    return (
+  const actions = [
+    <span key="comment-basic-like">
+      <Tooltip title="Like">
+        <Icon type="like" theme={action === 'liked' ? 'filled' : 'outlined'} onClick={like} />
+      </Tooltip>
+      <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
+    </span>,
+    <span key="comment-basic-dislike">
+      <Tooltip title="Dislike">
+        <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={dislike} />
+      </Tooltip>
+      <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
+    </span>,
+    <span key="comment-basic-reply-to" onClick={() => RenderForm(REPLY)}>
+      Reply
+    </span>,
+    <strong>
+      <Dropdown overlay={menu} trigger={['hover', 'click']}>
+        <Icon type="edit" theme="filled" />
+      </Dropdown>
+    </strong>
+  ];
+
+  return (
+    <>
+      <CommentFormComponent
+        onSubmit={formState === REPLY ? replyComment : editComment}
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        title={formState}
+        content={formState === REPLY ? `@${user.username}` : content}
+      />
       <Comment
         actions={actions}
         author={<a>{user.username}</a>}
@@ -52,14 +78,18 @@ export default class CommentDataComponent extends React.Component {
       >
         {children}
       </Comment>
-    );
-  }
-}
+    </>
+  );
+};
 
-CommentDataComponent.propTypes = {
+CommentComponent.propTypes = {
   comment: PropTypes.object,
   children: PropTypes.object,
   like: PropTypes.func,
   deleteComment: PropTypes.func,
+  editComment: PropTypes.func,
+  replyComment: PropTypes.func,
   dislike: PropTypes.func
 };
+
+export default CommentComponent;
