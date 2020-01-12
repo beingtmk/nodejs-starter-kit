@@ -28,6 +28,12 @@ class CommentData extends React.Component {
     });
   };
 
+  dataPush = (arr, val) => {
+    let tempArr = arr;
+    tempArr.push(val);
+    return tempArr;
+  };
+
   addComment = val => {
     let commentContent = {
       id: this.state.count + 1,
@@ -40,7 +46,15 @@ class CommentData extends React.Component {
       replies: []
     };
     if (val.id) {
-      console.log('Doing Nothing!');
+      this.setState(prevState => ({
+        comments: prevState.comments.map(obj =>
+          obj.id === val.id
+            ? Object.assign(obj, {
+                replies: this.dataPush(obj.replies, commentContent)
+              })
+            : obj
+        )
+      }));
     } else {
       let tempCom = this.state.comments;
       tempCom.push(commentContent);
@@ -50,11 +64,21 @@ class CommentData extends React.Component {
   };
 
   deleteComment = id => {
-    // if (val.id) {
-    // } else {
     let tempCom = this.state.comments.filter(item => item.id !== id);
     this.setState({ comments: tempCom });
-    // }
+    message.destroy();
+  };
+
+  editComment = val => {
+    this.setState(prevState => ({
+      comments: prevState.comments.map(obj =>
+        obj.id === val.id
+          ? Object.assign(obj, {
+              content: val.content
+            })
+          : obj
+      )
+    }));
     message.destroy();
   };
 
@@ -66,6 +90,7 @@ class CommentData extends React.Component {
         like={this.like}
         dislike={this.dislike}
         addComment={this.addComment}
+        editComment={this.editComment}
         deleteComment={this.deleteComment}
       />
     );

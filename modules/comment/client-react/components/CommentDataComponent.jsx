@@ -24,9 +24,9 @@ const CommentDataComponent = props => {
             title="Add a comment"
           />
           {props.comments.map(item => (
-            <CommentComponent comment={item} {...props}>
+            <CommentComponent refId={item.id} comment={item} {...props}>
               {item.replies.map(reply => (
-                <CommentComponent comment={reply} {...props} />
+                <CommentComponent refId={item.id} comment={reply} {...props} />
               ))}
             </CommentComponent>
           ))}

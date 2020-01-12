@@ -10,8 +10,9 @@ const CommentComponent = ({
   dislike,
   children,
   deleteComment,
-  replyComment,
+  addComment,
   editComment,
+  refId,
   comment: { likes, dislikes, action, content, time, user, id }
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,16 @@ const CommentComponent = ({
   const RenderForm = val => {
     setModalVisible(true);
     setFormState(val);
+  };
+
+  const replyComment = val => {
+    val['id'] = refId;
+    addComment(val);
+  };
+
+  const EditComment = val => {
+    val['id'] = id;
+    editComment(val);
   };
 
   const menu = (
@@ -59,11 +70,11 @@ const CommentComponent = ({
   return (
     <>
       <CommentFormComponent
-        onSubmit={formState === REPLY ? replyComment : editComment}
+        onSubmit={formState === REPLY ? replyComment : EditComment}
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
         title={formState}
-        content={formState === REPLY ? `@${user.username}` : content}
+        content={formState === REPLY ? `@${user.username} ` : content}
       />
       <Comment
         actions={actions}
@@ -85,10 +96,11 @@ const CommentComponent = ({
 CommentComponent.propTypes = {
   comment: PropTypes.object,
   children: PropTypes.object,
+  refId: PropTypes.number,
   like: PropTypes.func,
   deleteComment: PropTypes.func,
   editComment: PropTypes.func,
-  replyComment: PropTypes.func,
+  addComment: PropTypes.func,
   dislike: PropTypes.func
 };
 
