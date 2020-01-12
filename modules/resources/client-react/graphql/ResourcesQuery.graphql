@@ -1,6 +1,11 @@
 # GraphQL queries
-query resources {
-  resources(limit: 3, after: 0) {
+query resources(
+  $limit: Int!
+  $after: Int
+  $orderBy: OrderByListInput
+  $filter: FilterListInput
+) {
+  resources(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {
     totalCount
     pageInfo {
       endCursor

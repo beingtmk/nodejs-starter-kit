@@ -88,7 +88,7 @@ const ResourcesView = props => {
               })}
             <Divider type="vertical" />
 
-            <Button color="primary" size="sm" onClick={() => handleDeleteUser(record && record.node && record.node.id)}>
+            <Button color="primary" onClick={() => handleDeleteUser(record && record.node && record.node.id)}>
               {'Delete'}
             </Button>
           </span>
@@ -96,33 +96,6 @@ const ResourcesView = props => {
       }
     }
   ];
-
-  // const data = [
-  //   {
-  //     key: '1',
-  //     title: 'bleh.png',
-  //     description: 'This is an image',
-  //     uploadedAt: '12:30 p.m',
-  //     uploadedBy: 'John Brown',
-  //     tags: ['nice', 'developer']
-  //   },
-  //   {
-  //     key: '2',
-  //     title: 'bleh.png',
-  //     description: 'This is an image',
-  //     uploadedAt: '12:30 p.m',
-  //     uploadedBy: 'John Brown',
-  //     tags: ['loser']
-  //   },
-  //   {
-  //     key: '3',
-  //     title: 'bleh.png',
-  //     description: 'This is an image',
-  //     uploadedAt: '12:30 p.m',
-  //     uploadedBy: 'John Brown',
-  //     tags: ['cool', 'teacher']
-  //   }
-  // ];
 
   const renderMetaData = t => (
     <Helmet
@@ -146,13 +119,10 @@ const ResourcesView = props => {
   };
 
   const edges = props.resources && props.resources.edges;
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <PageLayout>
       {renderMetaData(props.t)}
-      <div className="text-center">
-        <p>{props.t('welcomeText')}</p>
-      </div>
       <a href="/add-resources">Add a file</a>
       {!props.loading && <Table columns={columns} dataSource={edges} />}
     </PageLayout>
@@ -162,7 +132,7 @@ const ResourcesView = props => {
 ResourcesView.propTypes = {
   t: PropTypes.func,
   deleteResource: PropTypes.func,
-  resources: PropTypes.array,
+  resources: PropTypes.object,
   loading: PropTypes.bool,
   edges: PropTypes.array
 };

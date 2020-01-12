@@ -24,10 +24,8 @@ const AddResourcesView = props => {
     // errors
     // , handleUploadFiles
   } = props;
-  const [
-    // load,
-    setload
-  ] = useState(false);
+  const [load, setload] = useState(false);
+  console.log('load', load);
 
   const renderMetaData = () => (
     <Helmet

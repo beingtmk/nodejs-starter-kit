@@ -1,0 +1,18 @@
+subscription onResourcesUpdated($endCursor: Int, $filter: FilterListInput) {
+  resourcesUpdated(endCursor: $endCursor, filter: $filter) {
+    mutation
+    node {
+      id
+      tags
+      title
+      userId
+      description
+      uploadedBy
+      createdAt
+      resource {
+        id
+        resourceUrl
+      }
+    }
+  }
+}
