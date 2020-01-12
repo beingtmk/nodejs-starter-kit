@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from '@gqlapp/look-client-react';
+import { Loading, Button } from '@gqlapp/look-client-react';
 import CommentComponent from './CommentComponent';
 import CommentFormComponent from './CommentFormComponent';
 
 const CommentDataComponent = props => {
   const [flag, setflag] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     setflag(true);
   }, []);
@@ -13,7 +14,16 @@ const CommentDataComponent = props => {
     <span>
       {flag ? (
         <>
-          <CommentFormComponent onSubmit={props.addComment} />
+          {' '}
+          <Button color="primary" onClick={() => setModalVisible(true)}>
+            Add Comment
+          </Button>
+          <CommentFormComponent
+            onSubmit={props.addComment}
+            setModalVisible={setModalVisible}
+            modalVisible={modalVisible}
+            title="Add a comment"
+          />
           {props.comments.map(item => (
             <CommentComponent comment={item} {...props}>
               {item.replies.map(reply => (

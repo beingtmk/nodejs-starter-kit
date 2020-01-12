@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Comment, Icon, Tooltip, Avatar } from 'antd';
+import { Comment, Icon, Tooltip, Avatar, Menu, Dropdown } from 'antd';
 import moment from 'moment';
 
 export default class CommentDataComponent extends React.Component {
   render() {
     const { likes, dislikes, action, content, time, user, id } = this.props.comment;
     const { like, dislike, children, deleteComment } = this.props;
+
+    const menu = (
+      <Menu>
+        <Menu.Item key="1">Edit</Menu.Item>
+        <Menu.Item key="2" onClick={() => deleteComment(id)}>
+          Delete
+        </Menu.Item>
+      </Menu>
+    );
 
     const actions = [
       <span key="comment-basic-like">
@@ -22,9 +31,11 @@ export default class CommentDataComponent extends React.Component {
         <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
       </span>,
       <span key="comment-basic-reply-to">Reply</span>,
-      <span key="comment-basic-reply-to" onClick={() => deleteComment(id)}>
-        Delete
-      </span>
+      <strong>
+        <Dropdown overlay={menu} trigger={['hover', 'click']}>
+          <Icon type="edit" theme="filled" />
+        </Dropdown>
+      </strong>
     ];
 
     return (
