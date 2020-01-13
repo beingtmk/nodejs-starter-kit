@@ -1,0 +1,15 @@
+mutation editResource($input: EditResourceInput!) {
+  editResource(input: $input) {
+    id
+    tags
+    title
+    userId
+    description
+    uploadedBy
+    createdAt
+    resource {
+      id
+      resourceUrl
+    }
+  }
+}

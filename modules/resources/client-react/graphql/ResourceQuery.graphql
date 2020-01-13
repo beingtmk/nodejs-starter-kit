@@ -1,0 +1,15 @@
+query resource($id: Int!) {
+  resource(id: $id) {
+    id
+    tags
+    title
+    userId
+    description
+    uploadedBy
+    createdAt
+    resource {
+      id
+      resourceUrl
+    }
+  }
+}

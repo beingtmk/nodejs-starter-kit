@@ -55,8 +55,8 @@ export default class RenderUpload extends React.Component {
         uid: index,
         name: 'link',
         status: 'done',
-        url: img.imageUrl,
-        thumbUrl: img.imageUrl
+        url: img.imageUrl || img.resourceUrl,
+        thumbUrl: img.imageUrl || img.resourceUrl
       }));
     }
 

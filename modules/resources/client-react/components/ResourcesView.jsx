@@ -81,7 +81,7 @@ const ResourcesView = props => {
             {record &&
               record.node &&
               record.node.resource.map((r, k) => {
-                // console.log('r', r, 'k', k);
+                console.log('r', r, 'k', k);
                 <a href={r.resourceUrl}>
                   <p>{k}</p>
                 </a>;

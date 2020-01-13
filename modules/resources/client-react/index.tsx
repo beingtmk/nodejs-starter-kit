@@ -18,6 +18,11 @@ export default new ClientModule({
   route: [
     <Route
       exact
+      path="/edit-resource/:id"
+      component={loadable(() => import('./containers/EditResource').then(c => c.default))}
+    />,
+    <Route
+      exact
       path="/add-resources"
       component={loadable(() => import('./containers/AddResources').then(c => c.default))}
     />,
