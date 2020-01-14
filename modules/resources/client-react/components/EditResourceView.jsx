@@ -13,7 +13,7 @@ import ResourceFormComponent from './ResourceFormComponent.web';
 const EditResourcesSchema = {
   title: [required, minLength(5)],
   tags: [required],
-  resource: [required]
+  resource: [required, minLength(1)]
 };
 
 const EditResourcesView = props => {
@@ -45,7 +45,7 @@ const EditResourcesView = props => {
 
   return (
     <PageLayout>
-      {console.log('props', props)}
+      {/* {console.log('props', props)} */}
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}
@@ -82,8 +82,7 @@ const EditResourcesWithFormik = withFormik({
       editResource,
       resource: { userId, id, uploadedBy }
     } = props.props;
-    console.log('values', values);
-    console.log('props from handleSubmit', props);
+
     const value = {};
     value.id = id;
     value.title = title;
@@ -92,7 +91,6 @@ const EditResourcesWithFormik = withFormik({
     value.resource = resource;
     value.userId = userId;
     value.uploadedBy = uploadedBy;
-    console.log('value', value);
     editResource(value);
   },
   validate: values => validate(values, EditResourcesSchema),

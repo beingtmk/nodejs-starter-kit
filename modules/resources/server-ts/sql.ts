@@ -12,8 +12,6 @@ interface ResourceFiles {
 }
 
 export interface Resource {
-  id: number;
-
   //  Resource module;
   userId: number;
   title: string;

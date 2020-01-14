@@ -42,9 +42,12 @@ export default compose(
         message.destroy();
         message.loading('Please wait...', 0);
         try {
+          const input = removeTypename(values);
+          // removeTypename converts array into object which should not happen so we do the below to convert it back.
+          input.resource = Object.values(input.resource);
           await mutate({
             variables: {
-              input: removeTypename(values)
+              input: input
             }
           });
           message.destroy();
