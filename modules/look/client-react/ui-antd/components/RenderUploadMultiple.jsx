@@ -7,6 +7,7 @@ const FormItem = Form.Item;
 
 export default class RenderUpload extends React.Component {
   onChangeHandler = ({ file }) => {
+    console.log('file', file);
     // console.log(file.response.secure_url);
     const arrayHelpers = this.props.arrayHelpers;
 
@@ -16,12 +17,12 @@ export default class RenderUpload extends React.Component {
     if (file.status == 'done') {
       this.props.setload(false);
       if (file.response) {
-        let url = file.response.secure_url;
-        if (url) {
+        let public_id = file.response.public_id;
+        if (public_id) {
           //set value in form
           const dictKey = this.props.dictKey;
           let obj = {};
-          obj[dictKey] = url;
+          obj[dictKey] = public_id;
           arrayHelpers.push(obj);
         }
       }

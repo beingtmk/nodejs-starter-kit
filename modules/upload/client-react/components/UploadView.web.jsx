@@ -31,6 +31,7 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
       render(text, record) {
         return (
           <a href={record.path} download={text}>
+            {/* {console.log('record', record, 'text', text)} */}
             {text} ({filesize(record.size)})
           </a>
         );

@@ -6,6 +6,10 @@ import settings from '@gqlapp/config';
 import { PropTypes } from 'prop-types';
 import { Table, Divider, Tag, Button } from 'antd';
 
+// import download from './downloadResource';
+
+const download_url = 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/fl_attachment/';
+
 const ResourcesView = props => {
   const [setErrors] = React.useState([]);
 
@@ -74,18 +78,28 @@ const ResourcesView = props => {
     {
       title: 'Action',
       key: 'action',
-      render(text, record) {
+      render(text, record, public_id) {
         return (
           <span>
-            {'Download'}
-            {record &&
+            {/* {record &&
               record.node &&
               record.node.resource.map((r, k) => {
                 console.log('r', r, 'k', k);
                 <a href={r.resourceUrl}>
                   <p>{k}</p>
                 </a>;
+              })} */}
+
+            {
+              ((public_id = []),
+              record && record.node && record.node.resource.map(file => public_id.push(file.resourceUrl)),
+              console.log('public_id', public_id))
+            }
+            <Button color="primary">
+              {public_id.map(id => {
+                return <a href={download_url + id}>{'Download'}</a>;
               })}
+            </Button>
             <Divider type="vertical" />
 
             <Button color="primary" onClick={() => handleDeleteUser(record && record.node && record.node.id)}>
