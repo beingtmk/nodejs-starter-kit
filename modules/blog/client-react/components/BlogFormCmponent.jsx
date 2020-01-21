@@ -101,7 +101,7 @@ const BlogFormWithFormik = withFormik({
     status: props.blog && props.blog.status,
     image: props.blog && props.blog.image,
     content: props.blog && props.blog.content,
-    tags: props.blog && props.blog.tags.length > 1 ? props.blog.tags : [],
+    tags: props.blog && props.blog.tags.length > 1 ? props.blog.tags.map(a => a.name) : [],
     modelId: props.blog && props.blog.model ? props.blog.model.id : null
   }),
   validate: values => validate(values, BlogFormSchema),
