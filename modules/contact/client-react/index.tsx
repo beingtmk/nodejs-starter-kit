@@ -1,4 +1,6 @@
 import React from 'react';
+import { Icon } from 'antd';
+
 import { Route, NavLink } from 'react-router-dom';
 import loadable from '@loadable/component';
 
@@ -9,7 +11,7 @@ import resources from './locales';
 
 const NavLinkWithI18n = translate('contact')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/contact" className="nav-link" activeClassName="active">
-    {t('navLink')}
+    <Icon type="contacts" /> {t('navLink')}
   </NavLink>
 ));
 

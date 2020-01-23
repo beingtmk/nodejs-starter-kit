@@ -21,12 +21,6 @@ export default new ClientModule({
     <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
     <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />
   ],
-  navItemRight: [
-    <MenuItem key="/home1">
-      <NavLink to="/home1" className="nav-link" activeClassName="active">
-        Home1
-      </NavLink>
-    </MenuItem>
-  ],
+
   localization: [{ ns: 'home', resources }]
 });

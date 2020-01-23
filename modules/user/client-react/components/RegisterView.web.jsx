@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import Grid from 'hedron';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, CardGroup, Icon, CardTitle, CardText } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RegisterForm from './RegisterForm';
@@ -32,14 +32,16 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
   );
 
   const renderContent = () => (
-    <>
-      <h1 className="text-center">{t('reg.form.title')}</h1>
+    <Card>
+      <CardTitle>
+        <Icon type="user-add" /> {t('reg.form.title')}
+      </CardTitle>
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
         renderConfirmationModal()
       ) : (
         <RegisterForm onSubmit={onSubmit} />
       )}
-    </>
+    </Card>
   );
 
   return (

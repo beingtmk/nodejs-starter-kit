@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Grid from 'hedron';
 
-import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText, Button } from '@gqlapp/look-client-react';
+import {
+  LayoutCenter,
+  PageLayout,
+  Card,
+  CardGroup,
+  CardTitle,
+  CardText,
+  Button,
+  Icon
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import LoginForm from './LoginForm';
@@ -40,8 +49,10 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
       {isRegistered ? (
         renderConfirmationModal()
       ) : (
-        <React.Fragment>
-          <h1 className="text-center">{t('login.form.title')}</h1>
+        <Card>
+          <CardTitle>
+            <Icon type="login" /> {t('login.form.title')}
+          </CardTitle>
           <LoginForm onSubmit={onSubmit} />
           <hr />
           <Card>
@@ -51,7 +62,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
               <CardText>user@example.com:user1234</CardText>
             </CardGroup>
           </Card>
-        </React.Fragment>
+        </Card>
       )}
     </>
   );

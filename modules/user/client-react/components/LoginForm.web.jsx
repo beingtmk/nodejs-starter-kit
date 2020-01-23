@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { NavLink, Link } from 'react-router-dom';
+import { Icon } from 'antd';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -101,11 +102,10 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
           alignItems: 'center'
         }}
       >
-        <div className="text-center">
-          <Button size="lg" style={{ width: 'fit-content' }} color="primary" type="submit" disabled={submitting}>
-            {t('login.form.btnSubmit')}
-          </Button>
-        </div>
+        <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
+          <Icon type="login" /> {t('login.form.btnSubmit')}
+        </Button>
+
         {renderSocialButtons(buttonsLength, t)}
       </div>
       <div className="text-center" style={{ marginTop: 10 }}>

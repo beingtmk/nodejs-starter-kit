@@ -163,7 +163,15 @@ class NavBar extends React.Component {
             {ref.modules.navItemsUser}
             {/* {this.NavLinkMyInvitesWithI18n()} */}
             {__DEV__ && (
-              <SubMenu key="test" style={{ color: 'black !important' }} title={<MenuItem>Dev</MenuItem>}>
+              <SubMenu
+                key="test"
+                style={{ color: 'black !important' }}
+                title={
+                  <MenuItem>
+                    <Icon type="deployment-unit" /> Dev
+                  </MenuItem>
+                }
+              >
                 {ref.modules.navItemsTest}
                 <MenuItem>
                   <a href="/graphiql">GraphiQL</a>
@@ -171,7 +179,14 @@ class NavBar extends React.Component {
               </SubMenu>
             )}
             <LoggedIn role="admin">
-              <SubMenu key="admin" title={<MenuItem>Admin</MenuItem>}>
+              <SubMenu
+                key="admin"
+                title={
+                  <MenuItem>
+                    <Icon type="safety-certificate" /> Admin
+                  </MenuItem>
+                }
+              >
                 {ref.modules.navItemsAdmin}
               </SubMenu>
             </LoggedIn>
