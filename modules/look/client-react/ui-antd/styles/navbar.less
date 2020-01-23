@@ -1,5 +1,5 @@
 @navbar-height-large:80px;
-@navbar-height-small: 50px;
+@navbar-height-small: 40px;
 
 .navbar-parallex{
   z-index: 100;
@@ -32,16 +32,10 @@
   max-width: 1200px;
   padding: 0 24px;
 }
-.nav-item-sign-in{
-  margin: 0 -20px;
-  border-radius: 5px;
-  padding: 0 10px;
-  background-color:  @primary-color;
-  color: white !important;
-}
+
 
 .navbar-contact-menu{
-  background: @primary-color;
+  background: @secondary-color;
   color: white;
   border-radius: 5px;
   margin: 0 -50vw;
@@ -58,9 +52,11 @@
   }
   .navbar-logo-lg{
     height:@navbar-height-small !important;
-    margin-top: -8px !important;
-    padding-top: 0 !important;
-
+    padding: 0 !important;
+    margin-top:-0px !important;
+  }
+  .navbar-logo-img{
+    margin-top: -25px;
   }
   .navbar-wrapper{
     padding: 0 5px;
@@ -71,17 +67,25 @@
     margin-top: @navbar-height-small; 
 
   }
+  .navbar-drawer-logo{
+    height:@navbar-height-small;
+    color: @primary-color;
+  }
+
 
 
 }
+
 .navbar-menu{
   line-height: 39px;
 }
 
 .navbar-logo-lg{
+  border: 2px solid @primary-color;
+
   border-radius: 10px;
-  margin-top: -40px;
-  height: 80px;
+  margin-top: -39px;
+  height: @navbar-height-large;
   overflow: hidden;
   padding-top:2px;
   background: white;

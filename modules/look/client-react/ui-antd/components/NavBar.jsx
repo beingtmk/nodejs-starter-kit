@@ -4,7 +4,6 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Icon, Row, Col } from 'antd';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
-import { enquireScreen } from 'enquire-js';
 
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
@@ -14,37 +13,14 @@ const { SubMenu } = Menu;
 
 const ref = { modules: null };
 
-let isMobile;
-enquireScreen(b => {
-  isMobile = b;
-});
-
 export const onAppCreate = async modules => (ref.modules = modules);
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: '/',
-      isMobile,
-      show: true //!location.port, ToDo - find a better approach this
+      current: '/'
     };
-  }
-
-  componentDidMount() {
-    // 适配手机屏幕;
-    enquireScreen(b => {
-      this.setState({ isMobile: !!b });
-    });
-    // ToDo - find a better approach for below statement
-    // if (true) {
-
-    setTimeout(() => {
-      this.setState({
-        show: true
-      });
-    }, 500);
-    // }
   }
 
   handleClick = e => {
@@ -66,6 +42,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const isMobile = this.props && this.props.isMobile;
     return (
       <Row className="navbar-wrapper">
         <Col lg={24} xs={0}>
@@ -89,16 +66,18 @@ class NavBar extends React.Component {
                   location="page-layout"
                   className="navbar-logo-lg"
                   animation={{
-                    playScale: [1, 1.5],
-                    scale: this.state.isMobile ? '' : 0.5,
-                    translateY: this.state.isMobile ? '' : '18px'
+                    playScale: [1, 1.1],
+                    scale: isMobile ? 1 : 0.5,
+                    translateX: isMobile ? '' : '-79px',
+                    translateY: isMobile ? '' : '20px'
                   }}
                 >
                   <img
                     height="100%"
                     src={
-                      'https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772806/nodejs-starterkit/raphael_node-js_simple-blue_512x512.png'
+                      'https://res.cloudinary.com/www-lenshood-in/image/upload/v1579780961/nodejs-starterkit/untitled_2.svg'
                     }
+                    className="navbar-logo-img"
                     alt="Mountain"
                   />
                 </ScrollParallax>
@@ -152,14 +131,14 @@ class NavBar extends React.Component {
               </Menu>
             </Col>
             <Col xs={12} md={12} lg={0}>
-              <div onClick={this.showDrawer} style={{ height: '50px' }}>
+              <div onClick={this.showDrawer} className="navbar-drawer-logo">
                 <Icon
                   type="menu"
                   style={{
-                    color: 'black',
+                    color: 'inherit',
                     fontSize: '20px',
                     position: 'absolute',
-                    top: '15px',
+                    top: '10px',
                     right: '0px'
                   }}
                 />
@@ -205,7 +184,8 @@ class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default withRouter(NavBar);

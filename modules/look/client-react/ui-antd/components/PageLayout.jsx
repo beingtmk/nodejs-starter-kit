@@ -3,14 +3,43 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Layout, BackTop, Button, Tooltip } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+import { enquireScreen } from 'enquire-js';
 
 import NavBar from './NavBar';
 
 import styles from '../styles/styles.less';
 
 const { Header, Content } = Layout;
+let isMobile;
+enquireScreen(b => {
+  isMobile = b;
+});
 
 class PageLayout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: '/',
+      isMobile,
+      show: true //!location.port, ToDo - find a better approach this
+    };
+  }
+
+  componentDidMount() {
+    // 适配手机屏幕;
+    enquireScreen(b => {
+      this.setState({ isMobile: !!b });
+    });
+    // ToDo - find a better approach for below statement
+    // if (true) {
+
+    setTimeout(() => {
+      this.setState({
+        show: true
+      });
+    }, 500);
+    // }
+  }
   render() {
     const { children, navBar, type } = this.props;
     const contentStyle = type === 'home' ? 'home-content-layout' : 'content-layout';
@@ -20,10 +49,10 @@ class PageLayout extends React.Component {
           <ScrollParallax
             location="page-layout"
             className="navbar-parallex"
-            animation={{ playScale: [1, 1.5], translateY: '-40px' }}
+            animation={{ playScale: [1, 1.1], translateY: this.state.isMobile ? '' : '-40px' }}
           >
             <Header className="no-print">
-              <NavBar />
+              <NavBar isMobile={this.state.isMobile} />
             </Header>{' '}
           </ScrollParallax>
         )}
