@@ -1,0 +1,89 @@
+@navbar-height-large:80px;
+@navbar-height-small: 50px;
+
+.navbar-parallex{
+  z-index: 100;
+  position:fixed;
+  width:100vw;
+  height: @navbar-height-large !important;
+  overflow: hidden;
+}
+
+
+.content-layout{
+  position: relative;
+  margin: auto;
+  margin-top: @navbar-height-large; 
+  max-width: 1200px;
+  padding: 24px;
+}
+.ant-layout-header {
+  height: 100% !important;
+  padding: 0 !important;
+  width:100%;
+  background: white;
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+}
+
+.navbar-wrapper{
+  position: relative;
+  margin: auto;
+  max-width: 1200px;
+  padding: 0 24px;
+}
+.nav-item-sign-in{
+  margin: 0 -20px;
+  border-radius: 5px;
+  padding: 0 10px;
+  background-color:  @primary-color;
+  color: white !important;
+}
+
+.navbar-contact-menu{
+  background: @primary-color;
+  color: white;
+  border-radius: 5px;
+  margin: 0 -50vw;
+  padding: 0 50vw;
+  margin-bottom: 2px;
+  font-size: 1em;
+}
+
+
+@media only screen and (max-width: 769px) {
+  .ant-layout-header {
+    height: @navbar-height-small !important;
+    z-index: 100;
+  }
+  .navbar-logo-lg{
+    height:@navbar-height-small !important;
+    margin-top: -8px !important;
+    padding-top: 0 !important;
+
+  }
+  .navbar-wrapper{
+    padding: 0 5px;
+  }
+  .content-layout{
+    margin:0;
+    padding: 5px ;
+    margin-top: @navbar-height-small; 
+
+  }
+
+
+}
+.navbar-menu{
+  line-height: 39px;
+}
+
+.navbar-logo-lg{
+  border-radius: 10px;
+  margin-top: -40px;
+  height: 80px;
+  overflow: hidden;
+  padding-top:2px;
+  background: white;
+  width: fit-content
+}

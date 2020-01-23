@@ -1,4 +1,9 @@
 @import 'antd';
+@import 'navbar.less';
+
+
+
+
 
 #root {
   min-height: 100vh;
@@ -22,23 +27,7 @@
   }
 }
 
-//----Navbar----//
-.ant-layout-header{
-  height: 50px !important;
-  z-index: 100;
-  padding: 0px;
-}
 
-
-@media only screen and (min-width: 1024px) {
-  .ant-layout-header{
-    padding:0 10px !important;
-  }
-}
-
-.ant-menu-item{
-  height:fit-content !important;
-}
 
 // Overriding antd css
 .ant-menu-horizontal > .ant-menu-item > a::before{

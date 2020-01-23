@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Layout, BackTop, Button, Tooltip } from 'antd';
+import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
 import NavBar from './NavBar';
 
@@ -12,20 +13,26 @@ const { Header, Content } = Layout;
 class PageLayout extends React.Component {
   render() {
     const { children, navBar, type } = this.props;
-    const style = type === 'home' ? { padding: 0, marginTop: '-50px' } : { padding: '24px', margin: 0 };
+    const contentStyle = type === 'home' ? 'home-content-layout' : 'content-layout';
     return (
-      <Layout>
+      <Layout id="page-layout">
         {navBar !== false && (
-          <Header className="no-print">
-            <NavBar />
-          </Header>
+          <ScrollParallax
+            location="page-layout"
+            className="navbar-parallex"
+            animation={{ playScale: [1, 1.5], translateY: '-40px' }}
+          >
+            <Header className="no-print">
+              <NavBar />
+            </Header>{' '}
+          </ScrollParallax>
         )}
         {__SERVER__ && __DEV__ && (
           <Helmet>
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
-        <Content id="content" style={style}>
+        <Content id="content" className={contentStyle}>
           {children}
         </Content>
         <BackTop>
