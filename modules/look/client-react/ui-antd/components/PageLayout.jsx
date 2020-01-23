@@ -6,8 +6,9 @@ import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 import { enquireScreen } from 'enquire-js';
 
 import NavBar from './NavBar';
+import Footer from './Footer';
 
-import styles from '../styles/styles.less';
+import styles from '../styles/index.less';
 
 const { Header, Content } = Layout;
 let isMobile;
@@ -69,6 +70,7 @@ class PageLayout extends React.Component {
             <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />
           </Tooltip>
         </BackTop>
+        <Footer />
       </Layout>
     );
   }

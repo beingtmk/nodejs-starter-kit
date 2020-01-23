@@ -12,9 +12,6 @@ import Content11 from './AntdLanding/Content11';
 import Content12 from './AntdLanding/Content12';
 import Contact0 from './AntdLanding/Contact0';
 import Teams4 from './AntdLanding/Teams4';
-import Footer2 from './AntdLanding/Footer2';
-
-import './AntdLanding/less/antMotionStyle.less';
 
 let isMobile;
 enquireScreen(b => {
@@ -60,8 +57,7 @@ export default class HomeView extends React.Component {
       <Content9 id="Content9_0" key="Content9_0" isMobile={this.state.isMobile} />,
       <Contact0 id="Contact0_0" key="Contact0_0" isMobile={this.state.isMobile} />,
       <Content11 id="Content11_0" key="Content11_0" isMobile={this.state.isMobile} />,
-      <Content12 id="Content12_0" key="Content12_0" isMobile={this.state.isMobile} />,
-      <Footer2 id="Footer2_0" key="Footer2_0" isMobile={this.state.isMobile} />
+      <Content12 id="Content12_0" key="Content12_0" isMobile={this.state.isMobile} />
     ];
     return (
       <PageLayout type="home">
