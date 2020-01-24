@@ -14,6 +14,7 @@ export const blog = {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_yHrpo9HrvefMGkn6NSCwmVUDICnDMQYF79oFMl6Z316p-XwXAQ&s'
   },
   author: {
+    id: 1,
     image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
     firstname: 'Bishal',
     lastname: 'Deb',
@@ -36,6 +37,7 @@ export const blog = {
 };
 
 export const user = {
+  id: 2,
   image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
   firstname: 'Bishal',
   lastname: 'Deb',
@@ -54,6 +56,7 @@ export const moreBlogs = [
       name: 'Anime'
     },
     author: {
+      id: 3,
       image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
       firstname: 'Prajjwal',
       lastname: 'Singh',
@@ -75,6 +78,7 @@ export const moreBlogs = [
       name: 'Anime'
     },
     author: {
+      id: 4,
       image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
       firstname: 'Runanka',
       lastname: 'Roy',
@@ -117,6 +121,7 @@ export const moreBlogs = [
       name: 'Anime'
     },
     author: {
+      id: 10,
       image: 'https://miro.medium.com/fit/c/40/40/2*_KGzadiy9s83D4vzhsCyyg.png',
       firstname: 'Prajjwal',
       lastname: 'Singh',

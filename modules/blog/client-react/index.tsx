@@ -28,6 +28,12 @@ const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunct
     {'My Bookmarks'}
   </NavLink>
 ));
+const NavLinkBlogAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/blog/admin-list" className="nav-link" activeClassName="active">
+    {'Blogs (Admin)'}
+  </NavLink>
+));
+
 export default new ClientModule({
   route: [
     <Route exact path="/blog/new" component={loadable(() => import('./containers/NewBlog').then(c => c.default))} />,
@@ -45,6 +51,11 @@ export default new ClientModule({
     <Route exact path="/blog/list" component={loadable(() => import('./containers/BlogList').then(c => c.default))} />,
     <Route
       exact
+      path="/blog/admin-list"
+      component={loadable(() => import('./containers/AdminBlogs').then(c => c.default))}
+    />,
+    <Route
+      exact
       path="/blog/@:username"
       component={loadable(() => import('./containers/UserBlogs').then(c => c.default))}
     />,
@@ -56,6 +67,9 @@ export default new ClientModule({
     </MenuItem>,
     <MenuItem key="/blog/list">
       <NavLinkBlogWithI18n />
+    </MenuItem>,
+    <MenuItem key="/blog/admin-list">
+      <NavLinkBlogAdminWithI18n />
     </MenuItem>,
     <MenuItem key="/blog/my-blogs">
       <NavLinkMyBlogsWithI18n />
