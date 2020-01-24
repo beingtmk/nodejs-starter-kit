@@ -16,22 +16,14 @@ const AdminBlogsComponent = ({ loading, blogsList, deleteBlog }) => {
 
   const columns = [
     {
-      title: (
-        <a /*onClick={e => handleOrderBy(e, 'queryItem')}*/ href="#">
-          {'Id'} {/*renderOrderByArrow('queryItem')*/}
-        </a>
-      ),
+      title: <a href="#">{'Id'}</a>,
       dataIndex: 'id',
       key: 'id',
       sorter: (a, b) => a.id - b.id,
       sortDirections: ['descend', 'ascend']
     },
     {
-      title: (
-        <a /*onClick={e => handleOrderBy(e, 'queryItem')}*/ href="#">
-          {'Title'} {/*renderOrderByArrow('queryItem')*/}
-        </a>
-      ),
+      title: <a href="#">{'Title'}</a>,
       dataIndex: 'title',
       key: 'title',
       sorter: (a, b) => a.title.length - b.title.length,
