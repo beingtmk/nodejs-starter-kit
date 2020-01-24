@@ -37,7 +37,11 @@ const NavLinkBlogAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunctio
 export default new ClientModule({
   route: [
     <Route exact path="/blog/new" component={loadable(() => import('./containers/NewBlog').then(c => c.default))} />,
-    <Route exact path="/blog/edit" component={loadable(() => import('./containers/EditBlog').then(c => c.default))} />,
+    <Route
+      exact
+      path="/blog/edit/:id"
+      component={loadable(() => import('./containers/EditBlog').then(c => c.default))}
+    />,
     <Route
       exact
       path="/blog/my-blogs"
