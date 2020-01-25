@@ -1,0 +1,36 @@
+.form-content-layout{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.form-layout-outer{
+    background-image: url('https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin-top: @navbar-height-large; 
+
+    min-width:100vw ;
+    min-height: 100vh;
+}
+.content-layout{
+    position: relative;
+    margin: auto;
+    margin-top: @navbar-height-large; 
+    max-width: 1200px;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+
+
+
+//Overriding antd
+.ant-card{
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+

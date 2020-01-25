@@ -50,10 +50,10 @@ class NavBar extends React.Component {
             <Row style={{ lineHeight: '37px' }}>
               <Col span={10} />
               <Col span={6}>
-                <Icon type="phone" /> +919870731381
+                <Icon type="phone" /> +918888888888
               </Col>
               <Col span={8}>
-                <Icon type="mail" /> rajatgoyalcoachingclasses@gmail.com
+                <Icon type="mail" /> nodejs-starterkit@approxyma.com
               </Col>
             </Row>
           </div>

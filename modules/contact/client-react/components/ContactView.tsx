@@ -3,7 +3,7 @@ import Grid from 'hedron';
 import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, CardTitle, Icon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ContactForm from './ContactForm';
@@ -17,13 +17,15 @@ interface ContactViewProps {
 const ContactView = (props: ContactViewProps) => {
   const { t } = props;
   const renderContent = () => (
-    <>
-      <h1 className="text-center">{t('form.title')}</h1>
+    <Card>
+      <CardTitle>
+        <Icon type="global" /> {t('form.title')}
+      </CardTitle>
       <ContactForm {...props} />
-    </>
+    </Card>
   );
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           <Helmet

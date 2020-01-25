@@ -60,19 +60,28 @@ class ProfileView extends React.Component {
       return (
         <PageLayout select="/profile">
           {renderMetaData(t)}
-          <h2 style={{ fontSize: '23px', fontWeight: 'bold', height: '61px', marginBottom: '0px' }}>
-            <Icon type="user" /> My Profile
-          </h2>
+
           <Row gutter={5}>
-            <Col xs={{ span: 24 }} lg={{ span: 16 }}>
-              <Card>
-                <div align="right">
-                  <Link to={`/users/${currentUser.id}`}>
-                    <Button shape="circle" size="large">
-                      <Icon type="edit" />
-                    </Button>
-                  </Link>
-                </div>
+            <Col xs={{ span: 24 }} lg={{ span: 24 }}>
+              <Card style={{ display: 'block' }}>
+                <h2
+                  style={{
+                    fontSize: '23px',
+                    fontWeight: 'bold',
+                    height: '61px',
+                    marginBottom: '0px',
+                    position: 'relative'
+                  }}
+                >
+                  <Icon type="user" /> My Profile
+                  <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
+                    <Link to={`/users/${currentUser.id}`}>
+                      <Button shape="circle" size="large">
+                        <Icon type="edit" />
+                      </Button>
+                    </Link>
+                  </div>
+                </h2>
 
                 <ProfileHeadComponent
                   profile={currentUser.profile && currentUser.profile}

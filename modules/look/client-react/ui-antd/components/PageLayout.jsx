@@ -10,6 +10,24 @@ import Footer from './Footer';
 
 import styles from '../styles/index.less';
 
+const layoutTypes = [
+  {
+    type: null,
+    outerClassName: 'content-layout',
+    innerClassName: null
+  },
+  {
+    type: 'home',
+    outerClassName: 'home-content-layout',
+    innerClassName: null
+  },
+  {
+    type: 'forms',
+    outerClassName: 'form-layout-outer',
+    innerClassName: 'form-content-layout'
+  }
+];
+
 const { Header, Content } = Layout;
 let isMobile;
 enquireScreen(b => {
@@ -43,14 +61,36 @@ class PageLayout extends React.Component {
   }
   render() {
     const { children, navBar, type } = this.props;
-    const contentStyle = type === 'home' ? 'home-content-layout' : 'content-layout';
+    const contentStyle = layoutTypes.filter(item => item.type === type);
+    console.log(contentStyle);
+
+    const renderContent = () => {
+      if (contentStyle.length !== 0 && contentStyle[0].innerClassName) {
+        return (
+          <Content id="content" className={contentStyle[0].outerClassName}>
+            <div className={contentStyle[0].innerClassName}>{children}</div>
+          </Content>
+        );
+      }
+      return (
+        <Content
+          id="content"
+          className={(contentStyle.length !== 0 && contentStyle[0].outerClassName) || 'content-layout'}
+        >
+          {children}
+        </Content>
+      );
+    };
     return (
       <Layout id="page-layout">
         {navBar !== false && (
           <ScrollParallax
             location="page-layout"
             className="navbar-parallex"
-            animation={{ playScale: [1, 1.1], translateY: this.state.isMobile ? '' : '-40px' }}
+            animation={{
+              playScale: [1, 1.1],
+              translateY: this.state.isMobile ? '' : '-40px'
+            }}
           >
             <Header className="no-print">
               <NavBar isMobile={this.state.isMobile} />
@@ -62,9 +102,7 @@ class PageLayout extends React.Component {
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
-        <Content id="content" className={contentStyle}>
-          {children}
-        </Content>
+        {renderContent()}
         <BackTop>
           <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
             <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />

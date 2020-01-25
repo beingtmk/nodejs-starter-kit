@@ -31,11 +31,11 @@ const Footer10DataSource = {
             {
               name: 'content0',
               children: (
-                <>
+                <h1 style={{ fontSize: '20px' }}>
                   {' '}
                   <Icon type="twitter" /> <Icon type="github" /> <Icon type="youtube" />
                   <Icon type="facebook" />
-                </>
+                </h1>
               )
             }
           ]
