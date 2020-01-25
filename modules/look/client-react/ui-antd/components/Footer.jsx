@@ -2,7 +2,7 @@ import React from 'react';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Icon } from 'antd';
 
 const Footer10DataSource = {
   wrapper: { className: 'home-page-wrapper footer1-wrapper' },
@@ -18,14 +18,25 @@ const Footer10DataSource = {
         className: 'block',
         title: {
           className: 'logo',
-          children: 'https://zos.alipayobjects.com/rmsportal/qqaimmXZVSwAhpL.svg'
+          children:
+            'https://res.cloudinary.com/www-lenshood-in/image/upload/v1579780961/nodejs-starterkit/untitled_2.svg'
         },
         childWrapper: {
           className: 'slogan',
           children: [
             {
               name: 'content0',
-              children: 'Animation specification and components of Ant Design.'
+              children: 'An all js stater-kit for all app needs.'
+            },
+            {
+              name: 'content0',
+              children: (
+                <>
+                  {' '}
+                  <Icon type="twitter" /> <Icon type="github" /> <Icon type="youtube" />
+                  <Icon type="facebook" />
+                </>
+              )
             }
           ]
         }
@@ -35,14 +46,9 @@ const Footer10DataSource = {
         xs: 24,
         md: 6,
         className: 'block',
-        title: { children: '产品' },
+        title: { children: 'About Company' },
         childWrapper: {
-          children: [
-            { name: 'link0', href: '#', children: '产品更新记录' },
-            { name: 'link1', href: '#', children: 'API文档' },
-            { name: 'link2', href: '#', children: '快速入门' },
-            { name: 'link3', href: '#', children: '参考指南' }
-          ]
+          children: [{ name: 'link0', href: '/about-us', children: 'About Us' }]
         }
       },
       {
@@ -50,9 +56,13 @@ const Footer10DataSource = {
         xs: 24,
         md: 6,
         className: 'block',
-        title: { children: '关于' },
+        title: { children: 'Static Pages' },
         childWrapper: {
-          children: [{ href: '#', name: 'link0', children: 'FAQ' }, { href: '#', name: 'link1', children: '联系我们' }]
+          children: [
+            { href: '/faq', name: 'link0', children: 'FAQ' },
+            { name: 'link1', href: '/terms-of-service', children: 'Terms Of Service' },
+            { name: 'link2', href: '/privacy-policy', children: 'Privacy Policy' }
+          ]
         }
       },
       {
@@ -60,11 +70,11 @@ const Footer10DataSource = {
         xs: 24,
         md: 6,
         className: 'block',
-        title: { children: '资源' },
+        title: { children: 'Keep in Touch' },
         childWrapper: {
           children: [
-            { href: '#', name: 'link0', children: 'Ant Design' },
-            { href: '#', name: 'link1', children: 'Ant Motion' }
+            { href: '/contact', name: 'link0', children: 'Contact Us' },
+            { href: '#', name: 'link1', children: 'Email' }
           ]
         }
       }
@@ -77,7 +87,7 @@ const Footer10DataSource = {
     children: (
       <>
         <span>
-          ©2018 by <a href="https://motion.ant.design">Ant Motion</a> All Rights Reserved
+          <a href="https://approxyma.com">Approxyma</a>
         </span>
       </>
     )
