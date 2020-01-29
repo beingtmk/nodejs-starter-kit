@@ -1,16 +1,56 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Blog {
+  id: Int!
+  author: User!
+  model: Model!
+  title: String!
+  image: String!
+  gearSubcategory: String
+  gearSubSubcategory: String
+  content: String!
+  status: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Model {
+  id: Int!
+  name: String!
+  image: String!
+  desc: String!
+  createdAt: String!
+  updatedAt: String!
 }
 
 extend type Query {
-  queryName: TypeName
+  models: [Model]
+  model(id: Int!): Model
+  blogs: [Blog]
+  blog(id: Int!): Blog
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addBlog(input: AddBlogInput!): Blog
+  deleteBlog(id: Int!): Blog
+  addModel(input: AddModelInput!): Model
+  deleteModel(id: Int!): Model
 }
 
-extend type Subscription {
-  subscriptionName: TypeName
+input AddModelInput {
+  name: String!
+  image: String!
+  desc: String!
 }
+
+input AddBlogInput {
+  title: String!
+  image: String!
+  content: String!
+  status: String!
+  modelId: Int!
+  userId: Int
+}
+
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }

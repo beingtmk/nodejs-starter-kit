@@ -14,7 +14,7 @@ exports.up = function(knex) {
         table.string('image');
         table.string('content');
         table
-          .integer('user_id')
+          .integer('author_id')
           .unsigned()
           .references('id')
           .inTable('user')
