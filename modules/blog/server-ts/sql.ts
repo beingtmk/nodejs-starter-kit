@@ -11,7 +11,6 @@ import {
   // returnId, orderedFor
 } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
-// import User from '@gqlapp/user-server-ts/sql';
 // import { has } from 'lodash';
 
 Model.knex(knex);
@@ -57,8 +56,29 @@ export default class Blog extends Model {
         .eager(eager)
         .orderBy('id', 'desc')
     );
-    // console.log(set);
-    // return set;
+  }
+
+  public async blog(id: number) {
+    const res = camelizeKeys(
+      await Blog.query()
+        .findById(id)
+        .eager(eager)
+        .orderBy('id', 'desc')
+    );
+    return res;
+  }
+
+  public async models() {
+    return camelizeKeys(await ModelDAO.query().orderBy('id', 'desc'));
+  }
+
+  public async model(id: number) {
+    const res = camelizeKeys(
+      await ModelDAO.query()
+        .findById(id)
+        .orderBy('id', 'desc')
+    );
+    return res;
   }
 }
 
