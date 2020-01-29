@@ -5,8 +5,6 @@ type Blog {
   model: Model!
   title: String!
   image: String!
-  gearSubcategory: String
-  gearSubSubcategory: String
   content: String!
   status: String!
   createdAt: String!
@@ -31,8 +29,10 @@ extend type Query {
 
 extend type Mutation {
   addBlog(input: AddBlogInput!): Blog
+  editBlog(input: EditBlogInput!): Blog
   deleteBlog(id: Int!): Blog
   addModel(input: AddModelInput!): Model
+  updateModel(input: UpdateModelInput!): Model
   deleteModel(id: Int!): Model
 }
 
@@ -42,13 +42,30 @@ input AddModelInput {
   desc: String!
 }
 
+input UpdateModelInput {
+  id: Int!
+  name: String!
+  image: String!
+  desc: String!
+}
+
 input AddBlogInput {
   title: String!
   image: String!
   content: String!
-  status: String!
+  status: String
   modelId: Int!
-  userId: Int
+  authorId: Int
+}
+
+input EditBlogInput {
+  id: Int!
+  title: String
+  image: String
+  content: String
+  status: String
+  modelId: Int
+  authorId: Int
 }
 
 # extend type Subscription {

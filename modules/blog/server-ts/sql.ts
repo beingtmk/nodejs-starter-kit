@@ -1,22 +1,24 @@
 import {
-  camelizeKeys
-  //  decamelizeKeys, decamelize
+  camelizeKeys,
+  decamelizeKeys
+  //  decamelize
 } from 'humps';
 import {
   Model
   // raw
 } from 'objection';
 import {
-  knex
-  // returnId, orderedFor
+  knex,
+  returnId
+  //  orderedFor
 } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 // import { has } from 'lodash';
 
 Model.knex(knex);
 
-const eager = '[author.[profile], model]';
-// const eager = '[model]';
+// const eager = '[author.[profile], model]';
+const eager = '[author, model]';
 
 export default class Blog extends Model {
   // private id: any;
@@ -68,6 +70,26 @@ export default class Blog extends Model {
     return res;
   }
 
+  public async addBlog(input: any) {
+    const res = await returnId(knex('blog').insert(decamelizeKeys(input)));
+    return res;
+  }
+
+  public async editBlog(id: number, input: any) {
+    const res = await returnId(
+      knex('blog')
+        .where({ id })
+        .update(decamelizeKeys(input))
+    );
+    return res;
+  }
+
+  public async deleteBlog(id: number) {
+    return knex('blog')
+      .where({ id })
+      .del();
+  }
+
   public async models() {
     return camelizeKeys(await ModelDAO.query().orderBy('id', 'desc'));
   }
@@ -79,6 +101,26 @@ export default class Blog extends Model {
         .orderBy('id', 'desc')
     );
     return res;
+  }
+
+  public async addModel(input: any) {
+    const res = await returnId(knex('model').insert(input));
+    return res;
+  }
+
+  public async updateModel(id: number, input: any) {
+    const res = await returnId(
+      knex('model')
+        .where({ id })
+        .update(input)
+    );
+    return res;
+  }
+
+  public async deleteModel(id: number) {
+    return knex('model')
+      .where({ id })
+      .del();
   }
 }
 
