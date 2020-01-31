@@ -35,7 +35,11 @@ const NavLinkBlogAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunctio
     {'Blogs (Admin)'}
   </NavLink>
 ));
-
+const NavLinkmodelAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/blog/model-list" className="nav-link" activeClassName="active">
+    {'Models (Admin)'}
+  </NavLink>
+));
 export default new ClientModule({
   route: [
     <AuthRoute
@@ -74,6 +78,13 @@ export default new ClientModule({
       role={['admin']}
       component={loadable(() => import('./containers/AdminBlogs').then(c => c.default))}
     />,
+    <AuthRoute
+      exact
+      path="/blog/model-list"
+      redirect="/profile"
+      role={['admin']}
+      component={loadable(() => import('./containers/AdminModelsList').then(c => c.default))}
+    />,
     <Route
       exact
       path="/blog/@:username"
@@ -93,6 +104,11 @@ export default new ClientModule({
     <IfLoggedIn key="/blog/admin-list" role="admin">
       <MenuItem>
         <NavLinkBlogAdminWithI18n />
+      </MenuItem>
+    </IfLoggedIn>,
+    <IfLoggedIn key="/blog/model-list" role="admin">
+      <MenuItem>
+        <NavLinkmodelAdminWithI18n />
       </MenuItem>
     </IfLoggedIn>,
     <IfLoggedIn key="/blog/my-blogs">

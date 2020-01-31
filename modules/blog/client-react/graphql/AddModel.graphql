@@ -1,0 +1,7 @@
+#import "./Models.graphql"
+
+mutation addModel($input: AddModelInput!) {
+  addModel(input: $input) {
+    ...ModelsInfo
+  }
+}
