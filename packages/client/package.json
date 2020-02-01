@@ -56,7 +56,7 @@
         "@gqlapp/reports-client-react": "^0.1.0",
         "@gqlapp/validation-common-react": "^0.1.0",
         "@loadable/component": "^5.10.1",
-        "antd": "^3.19.8",
+        "antd": "^3.26.7",
         "apollo-cache-inmemory": "1.4.2",
         "apollo-cache-router": "^1.1.6",
         "apollo-client": "^2.6.4",

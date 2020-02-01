@@ -45,7 +45,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
   );
 
   return (
-    <PageLayout>
+    <PageLayout type='forms'>
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData(t)}

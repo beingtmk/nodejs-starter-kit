@@ -19,7 +19,7 @@ const Footer10DataSource = {
         title: {
           className: 'logo',
           children:
-            'https://res.cloudinary.com/www-lenshood-in/image/upload/v1579780961/nodejs-starterkit/untitled_2.svg'
+            'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
         },
         childWrapper: {
           className: 'slogan',

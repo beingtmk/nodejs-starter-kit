@@ -75,7 +75,7 @@ class NavBar extends React.Component {
                   <img
                     height="100%"
                     src={
-                      'https://res.cloudinary.com/www-lenshood-in/image/upload/v1579780961/nodejs-starterkit/untitled_2.svg'
+                      'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
                     }
                     className="navbar-logo-img"
                     alt="Mountain"

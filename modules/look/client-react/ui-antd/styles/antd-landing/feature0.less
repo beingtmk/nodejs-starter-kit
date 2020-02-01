@@ -10,7 +10,10 @@
 
     >.title-wrapper {
       margin: 0 auto 48px;
+      text-decoration-style: solid;
+      text-underline-offset: 100px;
     }
+
 
     &-block {
       padding: 0 4%;
@@ -52,4 +55,25 @@
   .@{content0}-wrapper {
     min-height: 880px;
   }
+}
+
+.title-text{
+display: inline;
+position: relative;
+}
+.home-underline{
+  position: absolute;
+  height: 5px;
+  bottom:0;
+  right:10%;
+  left:10%;
+  animation: underline-animation 5s infinite;
+  background-color: rgba(5,118,255,1);
+
+
+}
+
+@keyframes underline-animation {
+  from {background: linear-gradient(to right, rgba(5,118,255,1) 0%, rgba(217,217,217,1) 10%, rgba(5,118,255,1) 100%);}
+  to {background: linear-gradient(to right, rgba(5,118,255,1) 0%, rgba(217,217,217,1) 90%, rgba(5,118,255,1) 100%);}
 }
