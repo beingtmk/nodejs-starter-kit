@@ -3,6 +3,7 @@ import Grid from 'hedron';
 import Helmet from 'react-helmet';
 import { withFormik } from 'formik';
 import { PropTypes } from 'prop-types';
+import { PageHeader } from 'antd';
 
 import settings from '@gqlapp/config';
 import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
@@ -48,6 +49,14 @@ const EditResourcesView = props => {
       {/* {console.log('props', props)} */}
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
+          <PageHeader
+            // style={{
+            //   border: '1px solid rgb(235, 237, 240)'
+            // }}
+            onBack={() => props.history.goBack()}
+            title={`${t('title')}`}
+            subTitle={t('resources.btn.edit')}
+          />
           {renderMetaData()}
           <Grid.Box sm={{ hidden: 'true' }}>
             <LayoutCenter>{renderContent()}</LayoutCenter>
@@ -63,6 +72,7 @@ const EditResourcesView = props => {
 
 EditResourcesView.propTypes = {
   t: PropTypes.func,
+  history: PropTypes.object,
   values: PropTypes.obj,
   handleSubmit: PropTypes.func,
   handleUploadFiles: PropTypes.func

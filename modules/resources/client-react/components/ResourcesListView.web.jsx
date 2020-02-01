@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { Table, Divider, Tag, Button, Menu, Dropdown, Icon } from 'antd';
 
 const download_url = 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/fl_attachment/';
 
-const ResourcesView = props => {
+const ResourcesListView = props => {
+  const { currentUser } = props;
   const [setErrors] = React.useState([]);
 
   const columns = [
@@ -74,6 +76,9 @@ const ResourcesView = props => {
       render(text, record) {
         const public_id = [];
         record && record.node && record.node.resource.map(file => public_id.push(file.resourceUrl));
+        const resourceId = record && record.node && record.node.id;
+        const userId = record && record.node && record.node.userId;
+        const owner = currentUser.id === userId || currentUser.id === 1 ? true : false;
         const downloads = (
           <Menu>
             {public_id.map((id, i) => {
@@ -90,28 +95,42 @@ const ResourcesView = props => {
             {public_id && public_id.length > 1 ? (
               <Dropdown overlay={downloads}>
                 <Button color="primary">
-                  Downloads <Icon type="down" />
+                  <Icon type="download" /> <Icon type="down" />
                 </Button>
               </Dropdown>
             ) : (
               <Button color="primary">
                 {public_id.map(id => {
-                  return <a href={download_url + id}>{'Download'}</a>;
+                  return (
+                    <a href={download_url + id}>
+                      <Icon type="download" />
+                    </a>
+                  );
                 })}
               </Button>
             )}
             <Divider type="vertical" />
-
-            <Button color="primary" onClick={() => handleDeleteUser(record && record.node && record.node.id)}>
-              {'Delete'}
-            </Button>
+            {console.log('record', record)}
+            {owner && (
+              <>
+                <Link to={`/edit-resource/${resourceId}`}>
+                  <Button color="primary">
+                    <Icon type="edit" />
+                  </Button>
+                </Link>
+                <Divider type="vertical" />
+                <Button color="primary" onClick={() => handleDeleteResource(resourceId)}>
+                  <Icon type="delete" />
+                </Button>
+              </>
+            )}
           </span>
         );
       }
     }
   ];
 
-  const handleDeleteUser = async id => {
+  const handleDeleteResource = async id => {
     const result = await props.deleteResource(id);
     if (result && result.errors) {
       setErrors(result.errors);
@@ -121,15 +140,15 @@ const ResourcesView = props => {
   };
 
   const edges = props.resources && props.resources.edges;
-  return !props.loading && <Table columns={columns} dataSource={edges} />;
+  return !props.loading && <Table style={{ overflowX: 'auto' }} columns={columns} dataSource={edges} />;
 };
 
-ResourcesView.propTypes = {
-  t: PropTypes.func,
+ResourcesListView.propTypes = {
+  currentUser: PropTypes.object,
   deleteResource: PropTypes.func,
   resources: PropTypes.object,
   loading: PropTypes.bool,
   edges: PropTypes.array
 };
 
-export default ResourcesView;
+export default ResourcesListView;

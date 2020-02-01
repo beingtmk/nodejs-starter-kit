@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import Helmet from 'react-helmet';
 import { message } from 'antd';
+import Helmet from 'react-helmet';
+import { PropTypes } from 'prop-types';
 import { graphql } from 'react-apollo';
-import update from 'immutability-helper';
 import { Link } from 'react-router-dom';
+import update from 'immutability-helper';
 
 import { Button, PageLayout } from '@gqlapp/look-client-react';
 import { removeTypename, PLATFORM, compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { PropTypes } from 'prop-types';
-import settings from '../../../../settings';
-import ResourcesFilterView from '../components/ResourcesFilterView.web';
-import ResourcesListView from '../components/ResourcesListView.web';
+import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
 import RESOURCES_STATE_QUERY from '../graphql/ResourcesStateQuery.client.graphql';
 import RESOURCES_QUERY from '../graphql/ResourcesQuery.graphql';
 import DELETE_RESOURCE from '../graphql/DeleteResource.graphql';
 import RESOURCES_SUBSCRIPTION from '../graphql/ResourcesSubscription.graphql';
 import UPDATE_RESOURCES_FILTER from '../graphql/UpdateResourcesFilter.client.graphql';
+
+import settings from '../../../../settings';
+import ResourcesFilterView from '../components/ResourcesFilterView.web';
+import ResourcesListView from '../components/ResourcesListView.web';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
@@ -136,7 +138,7 @@ const Resources = props => {
     />
   );
 
-  // console.log('props', props);
+  console.log('props', props);
   return (
     <PageLayout>
       {renderMetaData()}
@@ -267,6 +269,12 @@ export default compose(
         mutate({ variables: { filter: { tags } } });
       }
     })
+  }),
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { loading, currentUser };
+    }
   }),
   translate('resources')
 )(Resources);
