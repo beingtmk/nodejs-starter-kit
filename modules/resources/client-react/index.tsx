@@ -6,6 +6,7 @@ import loadable from '@loadable/component';
 
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
+import resolvers from './resolvers';
 import resources from './locales';
 
 const NavLinkWithI18n = translate('resources')(({ t }: { t: TranslateFunction }) => (
@@ -33,5 +34,6 @@ export default new ClientModule({
       <NavLinkWithI18n />
     </MenuItem>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'resources', resources }]
 });

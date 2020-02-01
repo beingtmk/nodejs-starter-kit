@@ -2,5 +2,41 @@
   "title": "Resources",
   "navLink": "Resources",
   "meta": "Resources",
-  "welcomeText": "Hello, This is the Resources module"
+  "welcomeText": "Hello, This is the Resources module",
+  "resources": {
+    "title": "Resources",
+    "meta": "A Resources List page example",
+    "loadMsg": "Loading...",
+    "list": {
+      "title": "Resources",
+      "item": {
+        "filter": "Filter",
+        "search": "Search ...",
+        "role": {
+          "label": "Role",
+          "all": "All",
+          "user": "user",
+          "admin": "admin"
+        }
+      }
+    },
+    "select": {
+      "okText": "Done",
+      "dismissText": "Cancel"
+    },
+    "btnModalSubmit": "Submit",
+    "btnModalClose": "Close",
+    "orderByText": "Order by",
+    "column": {
+      "name": "Username",
+      "email": "Email",
+      "role": "Role",
+      "active": "Is Active",
+      "actions": "Actions"
+    },
+    "btn": {
+      "add": "Add resource",
+      "delete": "Delete"
+    }
+  }
 }

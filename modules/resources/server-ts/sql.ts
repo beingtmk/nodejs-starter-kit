@@ -80,7 +80,7 @@ export default class Resources extends Model {
       // }
 
       if (has(filter, 'tags') && filter.tags !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.from('resources').where(function() {
           this.where('tags', filter.tags);
         });
       }
@@ -88,7 +88,7 @@ export default class Resources extends Model {
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder
           .from('resources')
-          .leftJoin('resources AS ld', 'ld.resources_id', 'resource.id')
+          // .leftJoin('resources AS ld', 'ld.id', 'resource.resource_id')
           .where(function() {
             this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
               .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))

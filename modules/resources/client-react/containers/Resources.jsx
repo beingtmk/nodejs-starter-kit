@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import Helmet from 'react-helmet';
 import { message } from 'antd';
 import { graphql } from 'react-apollo';
 import update from 'immutability-helper';
+import { Link } from 'react-router-dom';
 
-import { PLATFORM, compose } from '@gqlapp/core-common';
+import { Button, PageLayout } from '@gqlapp/look-client-react';
+import { removeTypename, PLATFORM, compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
+import { PropTypes } from 'prop-types';
 import settings from '../../../../settings';
-import ResourcesView from '../components/ResourcesView';
+import ResourcesFilterView from '../components/ResourcesFilterView.web';
+import ResourcesListView from '../components/ResourcesListView.web';
 
+import RESOURCES_STATE_QUERY from '../graphql/ResourcesStateQuery.client.graphql';
 import RESOURCES_QUERY from '../graphql/ResourcesQuery.graphql';
 import DELETE_RESOURCE from '../graphql/DeleteResource.graphql';
 import RESOURCES_SUBSCRIPTION from '../graphql/ResourcesSubscription.graphql';
+import UPDATE_RESOURCES_FILTER from '../graphql/UpdateResourcesFilter.client.graphql';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 const Resources = props => {
-  const { t, updateQuery, subscribeToMore, filter } = props;
+  const { t, updateQuery, subscribeToMore } = props;
+  const filter = {};
   const useResourcesWithSubscription = (subscribeToMore, filter) => {
     const [resourcesUpdated, setresourcesUpdated] = useState(null);
 
@@ -116,12 +124,47 @@ const Resources = props => {
     }
   });
 
-  console.log('props', props);
-  return <ResourcesView {...props} t={translate} />;
+  const renderMetaData = () => (
+    <Helmet
+      title={`${settings.app.name} - ${t('title')}`}
+      meta={[
+        {
+          name: 'description',
+          content: `${settings.app.name} - ${t('meta')}`
+        }
+      ]}
+    />
+  );
+
+  // console.log('props', props);
+  return (
+    <PageLayout>
+      {renderMetaData()}
+      <h2>{t('resources.list.title')}</h2>
+      <Link to="/add-resources">
+        <Button color="primary">{t('resources.btn.add')}</Button>
+      </Link>
+      <hr />
+      <ResourcesFilterView {...props} filter={filter} />
+      <hr />
+      <ResourcesListView {...props} filter={filter} />
+    </PageLayout>
+  );
   // }
 };
 
+Resources.propTypes = {
+  t: PropTypes.func,
+  updateQuery: PropTypes.func,
+  subscribeToMore: PropTypes.func
+};
+
 export default compose(
+  graphql(RESOURCES_STATE_QUERY, {
+    props({ data: { resourcesState } }) {
+      return removeTypename(resourcesState);
+    }
+  }),
   graphql(RESOURCES_QUERY, {
     options: ({ orderBy, filter }) => {
       return {
@@ -187,7 +230,7 @@ export default compose(
               }
             });
 
-            const newListResource = onDeleteResource(prevResource, deleteResource.id);
+            const newListResource = deleteResource(prevResource, deleteResource.id);
 
             // Write resource to cache
             cache.writeQuery({
@@ -206,6 +249,22 @@ export default compose(
           }
         });
         message.warning('Resource deleted.');
+      }
+    })
+  }),
+  graphql(UPDATE_RESOURCES_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onTitleChange(title) {
+        mutate({ variables: { filter: { title } } });
+      },
+      onUploadedByChange(uploadedBy) {
+        mutate({ variables: { filter: { uploadedBy } } });
+      },
+      onTagsChange(tags) {
+        mutate({ variables: { filter: { tags } } });
       }
     })
   }),

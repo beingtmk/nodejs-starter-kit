@@ -1,0 +1,12 @@
+fragment ResourcesStateInfo on ResourcesState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    title
+    uploadedBy
+    tags
+  }
+}

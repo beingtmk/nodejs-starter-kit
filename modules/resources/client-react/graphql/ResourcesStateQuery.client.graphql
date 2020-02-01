@@ -1,0 +1,7 @@
+#import "./ResourcesState.client.graphql"
+
+query ResourcessState {
+  resourcesState @client {
+    ...ResourcesStateInfo
+  }
+}

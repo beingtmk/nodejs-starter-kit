@@ -1,0 +1,3 @@
+mutation updateResourcesFilter($filter: FilterListInput!) {
+  updateResourcesFilter(filter: $filter) @client
+}

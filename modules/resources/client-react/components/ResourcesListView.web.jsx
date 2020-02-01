@@ -1,8 +1,4 @@
 import React from 'react';
-import Helmet from 'react-helmet';
-
-import { PageLayout } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
 import { PropTypes } from 'prop-types';
 import { Table, Divider, Tag, Button, Menu, Dropdown, Icon } from 'antd';
 
@@ -17,7 +13,6 @@ const ResourcesView = props => {
       dataIndex: 'title',
       key: 'title',
       render(text, record) {
-        // console.log('e', text, 'record', record);
         const title = record.node && record.node.title;
         return <p>{title}</p>;
       }
@@ -78,8 +73,7 @@ const ResourcesView = props => {
       key: 'action',
       render(text, record) {
         const public_id = [];
-        record && record.node && record.node.resource.map(file => public_id.push(file.resourceUrl)),
-          console.log('public_id', public_id);
+        record && record.node && record.node.resource.map(file => public_id.push(file.resourceUrl));
         const downloads = (
           <Menu>
             {public_id.map((id, i) => {
@@ -91,7 +85,6 @@ const ResourcesView = props => {
             })}
           </Menu>
         );
-        console.log('downloads', downloads);
         return (
           <span>
             {public_id && public_id.length > 1 ? (
@@ -118,18 +111,6 @@ const ResourcesView = props => {
     }
   ];
 
-  const renderMetaData = t => (
-    <Helmet
-      title={`${settings.app.name} - ${t('title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('meta')}`
-        }
-      ]}
-    />
-  );
-
   const handleDeleteUser = async id => {
     const result = await props.deleteResource(id);
     if (result && result.errors) {
@@ -140,13 +121,7 @@ const ResourcesView = props => {
   };
 
   const edges = props.resources && props.resources.edges;
-  return (
-    <PageLayout>
-      {renderMetaData(props.t)}
-      <a href="/add-resources">Add a file</a>
-      {!props.loading && <Table columns={columns} dataSource={edges} />}
-    </PageLayout>
-  );
+  return !props.loading && <Table columns={columns} dataSource={edges} />;
 };
 
 ResourcesView.propTypes = {
