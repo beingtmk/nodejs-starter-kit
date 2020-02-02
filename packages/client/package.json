@@ -111,6 +111,7 @@
         "use-react-router": "^1.0.7"
     ,
     "@gqlapp/address-client-react": "^1.0.0",
+    "@gqlapp/events-client-react": "^1.0.0",
     "@gqlapp/notifications-client-react": "^1.0.0",
     "@gqlapp/resources-client-react": "^1.0.0"},
   "devDependencies": {
