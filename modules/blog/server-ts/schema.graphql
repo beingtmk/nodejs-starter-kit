@@ -70,7 +70,13 @@ input EditBlogInput {
 
 extend type Subscription {
   modelUpdated: UpdateModelPayload
+  blogsUpdated: UpdateBlogsPayload
   # subscriptionName: TypeName
+}
+
+type UpdateBlogsPayload {
+  mutation: String!
+  node: Blog!
 }
 
 type UpdateModelPayload {

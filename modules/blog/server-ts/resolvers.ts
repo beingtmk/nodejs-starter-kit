@@ -2,6 +2,7 @@ import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
 
 const MODEL_SUBSCRIPTION = 'model_subscription';
+const BLOGS_SUBSCRIPTION = 'blogs_subscription';
 
 export default (pubsub: PubSub) => ({
   Query: {
@@ -72,7 +73,14 @@ export default (pubsub: PubSub) => ({
           input.authorId = identity.id;
         }
         const id = await Blog.addBlog(input);
-        return Blog.blog(id);
+        const item = await Blog.blog(id);
+        pubsub.publish(BLOGS_SUBSCRIPTION, {
+          blogsUpdated: {
+            mutation: 'CREATED',
+            node: item
+          }
+        });
+        return item;
       } catch (e) {
         return e;
       }
@@ -82,7 +90,14 @@ export default (pubsub: PubSub) => ({
         const inputId = input.id;
         delete input.id;
         await Blog.editBlog(inputId, input);
-        return Blog.blog(inputId);
+        const item = await Blog.blog(inputId);
+        pubsub.publish(BLOGS_SUBSCRIPTION, {
+          blogsUpdated: {
+            mutation: 'UPDATED',
+            node: item
+          }
+        });
+        return item;
       } catch (e) {
         return e;
       }
@@ -91,6 +106,12 @@ export default (pubsub: PubSub) => ({
       try {
         const data = await Blog.blog(id);
         await Blog.deleteBlog(id);
+        pubsub.publish(BLOGS_SUBSCRIPTION, {
+          blogsUpdated: {
+            mutation: 'DELETED',
+            node: data
+          }
+        });
         return data;
       } catch (e) {
         return e;
@@ -103,6 +124,14 @@ export default (pubsub: PubSub) => ({
         () => pubsub.asyncIterator(MODEL_SUBSCRIPTION),
         (payload, variables) => {
           return payload.modelUpdated.id === variables.id;
+        }
+      )
+    },
+    blogsUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(BLOGS_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.blogsUpdated.id === variables.id;
         }
       )
     }
