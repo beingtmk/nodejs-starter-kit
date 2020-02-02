@@ -132,7 +132,7 @@ class Content extends React.PureComponent {
 }
 
 Content.propTypes = {
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool
 };
 
 export default Content;

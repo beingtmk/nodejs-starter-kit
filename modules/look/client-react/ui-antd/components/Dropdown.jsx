@@ -7,7 +7,7 @@ class DropDown extends React.Component {
     children: PropTypes.node,
     type: PropTypes.string
   };
-  componentWillMOunt() {
+  componentDidMOunt() {
     console.log(this.props);
   }
 

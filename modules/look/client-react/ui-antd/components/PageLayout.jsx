@@ -62,7 +62,6 @@ class PageLayout extends React.Component {
   render() {
     const { children, navBar, type } = this.props;
     const contentStyle = layoutTypes.filter(item => item.type === type);
-    console.log(contentStyle);
 
     const renderContent = () => {
       if (contentStyle.length !== 0 && contentStyle[0].innerClassName) {

@@ -200,7 +200,7 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   location: PropTypes.object.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool
 };
 
 export default withRouter(NavBar);
