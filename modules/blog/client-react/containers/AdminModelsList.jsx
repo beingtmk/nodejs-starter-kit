@@ -12,6 +12,7 @@ import { useModelsWithSubscription } from './withSubscription';
 import {
   // withFilterUpdating,
   // withOrderByUpdating,
+  withModelUpdate,
   withModels,
   // withModelsState,
   withModelAdd,
@@ -65,6 +66,7 @@ export default compose(
   withModels,
   // withOrderByUpdating,
   // withFilterUpdating,
+  withModelUpdate,
   withModelAdd,
   withDeleteModel
 )(translate('blog')(AdminModelsList));

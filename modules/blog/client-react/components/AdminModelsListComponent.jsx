@@ -1,11 +1,10 @@
 /* eslint-disable react/display-name */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Loading } from '@gqlapp/look-client-react';
-import { Popconfirm, Button, message, Modal } from 'antd';
+import { Popconfirm, Button, message } from 'antd';
 
-import { FormError } from '@gqlapp/forms-client-react';
 import ModelsFormComponent from './ModelsFormComponent';
 
 const ModelsComponent = ({
@@ -15,14 +14,9 @@ const ModelsComponent = ({
   models,
   // currentUser,
   addModel,
-  deleteModel
+  deleteModel,
+  updateModel
 }) => {
-  const [visible, setVisible] = useState(false);
-
-  const setModalVisible = () => {
-    setVisible(!visible);
-  };
-
   const cancel = () => {
     message.error('Task cancelled');
   };
@@ -59,17 +53,6 @@ const ModelsComponent = ({
     return deleteModel(id);
   };
 
-  const onSubmit = async values => {
-    try {
-      await addModel(values);
-    } catch (e) {
-      message.destroy();
-      message.error("Couldn't add the Item. Please try again.");
-      throw new FormError("Couldn't add the Item. Please try again.", e);
-    }
-    setModalVisible();
-  };
-
   const columns = [
     {
       title: (
@@ -97,16 +80,19 @@ const ModelsComponent = ({
       title: 'Delete',
       key: 'actions',
       dataIndex: 'id',
-      render: text => (
-        <Popconfirm
-          title="Cancel Request?"
-          onConfirm={() => handleDelete(text)}
-          onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button shape="circle" icon="delete" type="danger" size="small" />
-        </Popconfirm>
+      render: (text, record) => (
+        <>
+          <Popconfirm
+            title="Cancel Request?"
+            onConfirm={() => handleDelete(text)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button shape="circle" icon="delete" type="danger" size="small" />
+          </Popconfirm>
+          <ModelsFormComponent model={record} title={'Edit the Model'} onSubmit={updateModel} />
+        </>
       )
     }
   ];
@@ -120,20 +106,8 @@ const ModelsComponent = ({
           <Table
             dataSource={models}
             columns={columns}
-            title={() => (
-              <Button type="primary" onClick={() => setModalVisible()}>
-                Add a Model
-              </Button>
-            )}
+            title={() => <ModelsFormComponent title={'Add a Model'} onSubmit={addModel} />}
           />
-          <Modal
-            title={<strong>Add a Model</strong>}
-            visible={visible}
-            onCancel={() => setModalVisible()}
-            footer={null}
-          >
-            <ModelsFormComponent onSubmit={onSubmit} />
-          </Modal>
         </>
       )}
     </>
@@ -147,6 +121,7 @@ ModelsComponent.propTypes = {
   // onOrderBy: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   addModel: PropTypes.func,
+  updateModel: PropTypes.func,
   deleteModel: PropTypes.func
 };
 

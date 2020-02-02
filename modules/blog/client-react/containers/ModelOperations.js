@@ -3,6 +3,7 @@ import update from 'immutability-helper';
 // import { removeTypename, log } from '@gqlapp/core-common';
 import { message } from 'antd';
 import ADD_MODEL from '../graphql/AddModel.graphql';
+import UPDATE_MODEL from '../graphql/UpdateModel.graphql';
 // import MODEL_STATE_QUERY from '../graphql/ModelsStateQuery.client.graphql';
 // import UPDATE_ORDER_BY from '../graphql/UpdateOrderBy.client.graphql';
 import MODELS_QUERY from '../graphql/ModelsQuery.graphql';
@@ -21,12 +22,36 @@ const withModelAdd = Component =>
   graphql(ADD_MODEL, {
     props: ({ mutate }) => ({
       addModel: async input => {
-        const { data: addModel } = await mutate({
-          variables: { input }
-        });
-        message.destroy();
-        message.success('Model added!');
-        return addModel;
+        try {
+          const { data: addModel } = await mutate({
+            variables: { input }
+          });
+          message.destroy();
+          message.success('Model added!');
+          return addModel;
+        } catch (e) {
+          message.success("Couldn't perform the action!");
+          throw e;
+        }
+      }
+    })
+  })(Component);
+
+const withModelUpdate = Component =>
+  graphql(UPDATE_MODEL, {
+    props: ({ mutate }) => ({
+      updateModel: async input => {
+        try {
+          const { data: updateModel } = await mutate({
+            variables: { input }
+          });
+          message.destroy();
+          message.success('Changes saved!');
+          return updateModel;
+        } catch (e) {
+          message.success("Couldn't perform the action!");
+          throw e;
+        }
       }
     })
   })(Component);
@@ -35,12 +60,11 @@ const withDeleteModel = Component =>
   graphql(DELETE_MODEL, {
     props: ({ mutate }) => ({
       deleteModel: async input => {
+        message.loading('Please wait...', 0);
         const data = await mutate({
           variables: { id: input }
         });
-
         message.destroy();
-
         if (data == null) {
           message.error("Couldn't Delete The Item");
         } else {
@@ -138,6 +162,7 @@ export {
   // withModelsState,
   withModelAdd,
   withModels,
+  withModelUpdate,
   // withOrderByUpdating,
   // withFilterUpdating,
   withDeleteModel
