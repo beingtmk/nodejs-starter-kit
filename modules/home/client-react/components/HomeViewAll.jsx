@@ -39,8 +39,6 @@ import Teams4 from './AntdLanding/Teams4';
 import Footer1 from './AntdLanding/Footer1';
 import Footer2 from './AntdLanding/Footer2';
 
-import './AntdLanding/less/antMotionStyle.less';
-
 let isMobile;
 enquireScreen(b => {
   isMobile = b;

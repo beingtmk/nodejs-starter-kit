@@ -1,11 +1,10 @@
 import React from 'react';
-import { MenuItem } from '@gqlapp/look-client-react';
 
 import ClientModule from '@gqlapp/module-client-react';
 // import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 
-import { Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import resources from './locales';
 
 // const NavLinkWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (

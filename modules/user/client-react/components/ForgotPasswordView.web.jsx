@@ -34,7 +34,7 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
   );
 
   return (
-    <PageLayout type='forms'>
+    <PageLayout type="forms">
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}
