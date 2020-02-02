@@ -68,6 +68,12 @@ input EditBlogInput {
   authorId: Int
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  modelUpdated: UpdateModelPayload
+  # subscriptionName: TypeName
+}
+
+type UpdateModelPayload {
+  mutation: String!
+  node: Model!
+}

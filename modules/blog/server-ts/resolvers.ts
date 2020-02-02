@@ -1,8 +1,7 @@
-import {
-  PubSub
-  //  withFilter
-} from 'graphql-subscriptions';
+import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
+
+const MODEL_SUBSCRIPTION = 'model_subscription';
 
 export default (pubsub: PubSub) => ({
   Query: {
@@ -23,7 +22,14 @@ export default (pubsub: PubSub) => ({
     addModel: withAuth(async (obj: any, { input }: any, { Blog }: any) => {
       try {
         const id = await Blog.addModel(input);
-        return Blog.model(id);
+        const item = await Blog.model(id);
+        pubsub.publish(MODEL_SUBSCRIPTION, {
+          modelUpdated: {
+            mutation: 'CREATED',
+            node: item
+          }
+        });
+        return item;
       } catch (e) {
         return e;
       }
@@ -33,7 +39,14 @@ export default (pubsub: PubSub) => ({
         const inputId = input.id;
         delete input.id;
         await Blog.updateModel(inputId, input);
-        return Blog.model(inputId);
+        const item = await Blog.model(inputId);
+        pubsub.publish(MODEL_SUBSCRIPTION, {
+          modelUpdated: {
+            mutation: 'UPDATED',
+            node: item
+          }
+        });
+        return item;
       } catch (e) {
         return e;
       }
@@ -42,6 +55,12 @@ export default (pubsub: PubSub) => ({
       try {
         const data = await Blog.model(id);
         await Blog.deleteModel(id);
+        pubsub.publish(MODEL_SUBSCRIPTION, {
+          modelUpdated: {
+            mutation: 'DELETED',
+            node: data
+          }
+        });
         return data;
       } catch (e) {
         return e;
@@ -78,5 +97,14 @@ export default (pubsub: PubSub) => ({
       }
     })
   },
-  Subscription: {}
+  Subscription: {
+    modelUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(MODEL_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.modelUpdated.id === variables.id;
+        }
+      )
+    }
+  }
 });
