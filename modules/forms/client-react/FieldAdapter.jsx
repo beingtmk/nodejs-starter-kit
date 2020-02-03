@@ -25,11 +25,8 @@ class FieldAdapter extends Component {
     super(props);
     this.props = props;
   }
-
-  // To Do - ReConfirm that this works
   onChange = (e, secondArg) => {
-    const { onChange } = this.props;
-    // console.log(this.props);
+    const { formik, onChange } = this.props;
     if (onChange) {
       onChange(e);
     }
@@ -49,7 +46,7 @@ class FieldAdapter extends Component {
     } else if (e.target.type == 'number') {
       this.props.formik.setFieldValue(e.target.name, parseInt(e.target.value));
     } else {
-      this.props.formik.setFieldValue(this.props.name, e.target.value || e.target.checked);
+      formik.handleChange(e);
     }
   };
 
