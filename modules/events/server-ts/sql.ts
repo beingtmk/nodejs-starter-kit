@@ -82,6 +82,11 @@ export default class Events extends Model {
     return res;
   }
 
+  public async editEvent(params: Event & Identifier) {
+    const res = await Events.query().upsertGraph(decamelizeKeys(params));
+    return res;
+  }
+
   public async addParticipant(params: EventParticipant) {
     const res = await Participants.query().insertGraph(decamelizeKeys(params));
     return res;

@@ -12,13 +12,14 @@ type Event {
   date: String
   time: String
   admins: [Admin]
-  # participants: [Participant]  # Maybe this is not need while fetching all the events
+  # participants: [Participant]  # Maybe this is not needed while fetching all the events
 }
 
 type Admin {
   id: Int
   userId: Int
   eventId: Int
+  username: String
   contactInfo: String
 }
 
@@ -36,6 +37,7 @@ extend type Query {
 
 extend type Mutation {
   addEvent(input: AddEventInput!): Boolean
+  editEvent(input: EditEventInput!): Boolean
   addParticipant(input: ParticipantInput): Boolean
 }
 
@@ -53,8 +55,22 @@ input AddEventInput {
   admins: [AdminInput]
 }
 
-input AdminInput {
+input EditEventInput {
+  id: Int!
   userId: Int!
+  title: String!
+  details: String!
+  venue: String!
+  date: String!
+  time: String!
+  admins: [AdminInput]
+}
+
+input AdminInput {
+  # id: Int
+  userId: Int
+  eventId: Int
+  username: String!
   contactInfo: String!
 }
 

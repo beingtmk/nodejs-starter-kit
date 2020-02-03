@@ -36,6 +36,7 @@ exports.up = function(knex) {
           .references('id')
           .inTable('user')
           .onDelete('CASCADE');
+        table.string('username');
         table.string('contact_info');
         table.timestamps(false, true);
       })

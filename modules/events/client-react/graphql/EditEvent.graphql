@@ -1,0 +1,19 @@
+mutation editEvent($input: EditEventInput!) {
+  editEvent(input: $input)
+  # {
+  #   id
+  #   userId
+  #   title
+  #   details
+  #   venue
+  #   date
+  #   time
+  #   admins {
+  #     id
+  #     userId
+  #     username
+  #     eventId
+  #     contactInfo
+  #   }
+  # }
+}
