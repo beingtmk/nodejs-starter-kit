@@ -1,16 +1,64 @@
 # Entity
 type TypeName {
-  typeName: String!
+  id: Int!
+}
+
+type Event {
+  id: Int
+  userId: Int
+  title: String
+  details: String
+  venue: String
+  date: String
+  time: String
+  admins: [Admin]
+  # participants: [Participant]  # Maybe this is not need while fetching all the events
+}
+
+type Admin {
+  id: Int
+  userId: Int
+  eventId: Int
+  contactInfo: String
+}
+
+type Participant {
+  id: Int
+  userId: Int
+  eventId: Int
 }
 
 extend type Query {
-  queryName: TypeName
+  events: [Event]
+  event(id: Int!): Event
+  participants(id: Int!): [Participant]
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addEvent(input: AddEventInput!): Boolean
+  addParticipant(input: ParticipantInput): Boolean
 }
 
 extend type Subscription {
   subscriptionName: TypeName
+}
+
+input AddEventInput {
+  userId: Int!
+  title: String!
+  details: String!
+  venue: String!
+  date: String!
+  time: String!
+  admins: [AdminInput]
+}
+
+input AdminInput {
+  userId: Int!
+  contactInfo: String!
+}
+
+input ParticipantInput {
+  eventId: Int!
+  userId: Int!
 }
