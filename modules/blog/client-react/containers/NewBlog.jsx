@@ -1,35 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { message } from 'antd';
 import NewBlogView from '../components/NewBlogView';
 import { withModels } from './ModelOperations';
+import ADD_BLOG from '../graphql/AddBlog.graphql';
 
 class NewBlog extends React.Component {
-  onSubmit = value => {
-    message.loading('Please wait...', 0);
-    try {
-      console.log(value);
-    } catch (e) {
-      message.destroy();
-      message.error('Submission error. Please try again');
-      throw Error(e);
-    }
-    message.destroy();
-    message.success('Submission success');
-  };
+  // onSubmit = value => {
+  //   message.loading("Please wait...", 0);
+  //   try {
+  //     await this.props.addBlog(values);
+  //   } catch (e) {
+  //     message.destroy();
+  //     message.error("Submission error. Please try again");
+  //     throw Error(e);
+  //   }
+  //   message.destroy();
+  //   message.success("Blog Submission success");
+  //   if (this.props.history) {
+  //     return this.props.push('/users/');
+  //   }
+  //   if (this.props.navigation) {
+  //     return this.props.navigation.goBack();
+  //   }
+  // };
 
   render() {
-    return <NewBlogView onSubmit={this.onSubmit} models={this.props.models} {...this.props} />;
+    return <NewBlogView onSubmit={this.props.addBlog} models={this.props.models} {...this.props} />;
   }
 }
 
 NewBlog.propTypes = {
-  // onSubmit: PropTypes.func,
+  addBlog: PropTypes.func,
   models: PropTypes.array
-  // blog: PropTypes.object,
 };
 
-export default compose(withModels)(translate('blog')(NewBlog));
+export default compose(
+  withModels,
+  graphql(ADD_BLOG, {
+    props: ({ ownProps: { history, navigation }, mutate }) => ({
+      addBlog: async values => {
+        message.destroy();
+        message.loading('Please wait...', 0);
+        try {
+          let blogData = await mutate({
+            variables: {
+              input: values
+            },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              addBlog: {
+                __typename: 'Model',
+                ...values
+              }
+            }
+          });
+
+          message.destroy();
+          message.success('Blog added.');
+          if (history) {
+            return history.push('/blog/' + blogData.data.addBlog.id, {
+              blog: blogData.data.addBlog
+            });
+          } else if (navigation) {
+            return navigation.navigate('Blog', {
+              id: blogData.data.addBlog.id
+            });
+          }
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })
+  // graphql(ADD_BLOG, {
+  //   props: ({ mutate }) => ({
+  //     addBlog: async input => {
+  //       try {
+  //         console.log("valuesss", input);
+  //         const { data: addBlog } = await mutate({
+  //           variables: { input }
+  //         });
+  //         message.destroy();
+  //         message.success("Blog added!");
+  //         return addBlog;
+  //       } catch (e) {
+  //         message.error("Couldn't perform the action!");
+  //         throw e;
+  //       }
+  //     }
+  //   })
+  // })
+)(translate('blog')(NewBlog));

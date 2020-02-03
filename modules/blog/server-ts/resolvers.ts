@@ -67,11 +67,12 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    addBlog: withAuth(async (obj: any, { input }: any, { identity, Blog }: any) => {
+    addBlog: withAuth(async (obj: any, { input }: any, { auth, Blog }: any) => {
       try {
         if (!input.authorId) {
-          input.authorId = identity.id;
+          input.authorId = auth.isAuthenticated.id;
         }
+        delete input.tags;
         const id = await Blog.addBlog(input);
         const item = await Blog.blog(id);
         pubsub.publish(BLOGS_SUBSCRIPTION, {
@@ -89,6 +90,7 @@ export default (pubsub: PubSub) => ({
       try {
         const inputId = input.id;
         delete input.id;
+        delete input.tags;
         await Blog.editBlog(inputId, input);
         const item = await Blog.blog(inputId);
         pubsub.publish(BLOGS_SUBSCRIPTION, {

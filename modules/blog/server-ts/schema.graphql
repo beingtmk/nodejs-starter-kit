@@ -4,7 +4,7 @@ type Blog {
   author: User!
   model: Model!
   title: String!
-  image: String!
+  image: String
   content: String!
   status: String!
   createdAt: String!
@@ -51,11 +51,12 @@ input UpdateModelInput {
 
 input AddBlogInput {
   title: String!
-  image: String!
+  image: String
   content: String!
   status: String
   modelId: Int!
   authorId: Int
+  tags: [String]
 }
 
 input EditBlogInput {
@@ -66,6 +67,7 @@ input EditBlogInput {
   status: String
   modelId: Int
   authorId: Int
+  tags: [String]
 }
 
 extend type Subscription {

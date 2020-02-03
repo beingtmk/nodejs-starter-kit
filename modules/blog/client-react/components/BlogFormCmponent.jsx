@@ -22,7 +22,6 @@ import { statusForm } from '../constants';
 
 const BlogFormSchema = {
   title: [required],
-  image: [required],
   status: [required],
   content: [required],
   modelId: [required]
@@ -106,13 +105,12 @@ const BlogFormWithFormik = withFormik({
   }),
   validate: values => validate(values, BlogFormSchema),
   handleSubmit(
-    values
-    // {
-    //   props: { onSubmit }
-    // }
+    values,
+    {
+      props: { onSubmit }
+    }
   ) {
-    // onSubmit(values);
-    console.log(values);
+    onSubmit(values);
   },
   enableReinitialize: true,
   displayName: 'BlogForm' // helps with React DevTools

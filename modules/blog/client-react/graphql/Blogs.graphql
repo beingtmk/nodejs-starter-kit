@@ -1,0 +1,16 @@
+fragment BlogsInfo on Blog {
+  id
+  title
+  content
+  image
+  model {
+    id
+    name
+    image
+    desc
+  }
+  author {
+    id
+    username
+  }
+}
