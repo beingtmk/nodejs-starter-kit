@@ -27,7 +27,7 @@ const BlogFormSchema = {
   content: [required],
   modelId: [required]
 };
-const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
+const BlogForm = ({ values, handleSubmit, submitting, cardTitle, models }) => {
   const DataUpdate = data => (values.content = data);
   const handleTags = data => (values.tags = data);
   const [load, setload] = useState(false);
@@ -43,7 +43,7 @@ const BlogForm = ({ values, handleSubmit, submitting, cardTitle, model }) => {
         >
           <Form name="BlogForm" onSubmit={handleSubmit}>
             <Field name="modelId" component={RenderSelect} label="Select the model" value={values.modelId}>
-              {model.map((item, idx) => (
+              {models.map((item, idx) => (
                 <Select.Option key={idx} value={item.id}>
                   {item.name}
                 </Select.Option>
@@ -89,7 +89,7 @@ BlogForm.propTypes = {
   onSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   values: PropTypes.object,
-  model: PropTypes.array,
+  models: PropTypes.array,
   blog: PropTypes.object,
   cardTitle: PropTypes.string
   // t: PropTypes.func

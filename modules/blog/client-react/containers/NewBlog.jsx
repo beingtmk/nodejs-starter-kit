@@ -1,9 +1,11 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
+// import { graphql } from 'react-apollo';
+import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { message } from 'antd';
 import NewBlogView from '../components/NewBlogView';
-import { model } from '../demoData';
+import { withModels } from './ModelOperations';
 
 class NewBlog extends React.Component {
   onSubmit = value => {
@@ -20,8 +22,14 @@ class NewBlog extends React.Component {
   };
 
   render() {
-    return <NewBlogView onSubmit={this.onSubmit} model={model} {...this.props} />;
+    return <NewBlogView onSubmit={this.onSubmit} models={this.props.models} {...this.props} />;
   }
 }
 
-export default translate('blog')(NewBlog);
+NewBlog.propTypes = {
+  // onSubmit: PropTypes.func,
+  models: PropTypes.array
+  // blog: PropTypes.object,
+};
+
+export default compose(withModels)(translate('blog')(NewBlog));
