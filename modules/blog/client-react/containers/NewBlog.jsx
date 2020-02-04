@@ -9,25 +9,6 @@ import { withModels } from './ModelOperations';
 import ADD_BLOG from '../graphql/AddBlog.graphql';
 
 class NewBlog extends React.Component {
-  // onSubmit = value => {
-  //   message.loading("Please wait...", 0);
-  //   try {
-  //     await this.props.addBlog(values);
-  //   } catch (e) {
-  //     message.destroy();
-  //     message.error("Submission error. Please try again");
-  //     throw Error(e);
-  //   }
-  //   message.destroy();
-  //   message.success("Blog Submission success");
-  //   if (this.props.history) {
-  //     return this.props.push('/users/');
-  //   }
-  //   if (this.props.navigation) {
-  //     return this.props.navigation.goBack();
-  //   }
-  // };
-
   render() {
     return <NewBlogView onSubmit={this.props.addBlog} models={this.props.models} {...this.props} />;
   }
@@ -53,7 +34,7 @@ export default compose(
             optimisticResponse: {
               __typename: 'Mutation',
               addBlog: {
-                __typename: 'Model',
+                __typename: 'Blog',
                 ...values
               }
             }
@@ -78,22 +59,4 @@ export default compose(
       }
     })
   })
-  // graphql(ADD_BLOG, {
-  //   props: ({ mutate }) => ({
-  //     addBlog: async input => {
-  //       try {
-  //         console.log("valuesss", input);
-  //         const { data: addBlog } = await mutate({
-  //           variables: { input }
-  //         });
-  //         message.destroy();
-  //         message.success("Blog added!");
-  //         return addBlog;
-  //       } catch (e) {
-  //         message.error("Couldn't perform the action!");
-  //         throw e;
-  //       }
-  //     }
-  //   })
-  // })
 )(translate('blog')(NewBlog));

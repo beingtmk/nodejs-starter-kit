@@ -20,11 +20,12 @@ const EditBlogView = props => {
   return (
     <PageLayout>
       {renderMetaData(props.t)}
-      {flag ? <BlogFormCmponent {...props} cardTitle={'Edit Blog'} /> : <Loading />}
+      {flag && !props.loading ? <BlogFormCmponent {...props} cardTitle={'Edit Blog'} /> : <Loading />}
     </PageLayout>
   );
 };
 EditBlogView.propTypes = {
+  loading: PropTypes.bool,
   t: PropTypes.func
 };
 

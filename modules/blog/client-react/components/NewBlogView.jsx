@@ -20,11 +20,12 @@ const NewBlogView = props => {
   return (
     <PageLayout>
       {renderMetaData(props.t)}
-      {flag ? <BlogFormCmponent {...props} cardTitle={'Add Blog'} /> : <Loading />}
+      {flag && !props.loading ? <BlogFormCmponent {...props} cardTitle={'Add Blog'} /> : <Loading />}
     </PageLayout>
   );
 };
 NewBlogView.propTypes = {
+  loading: PropTypes.bool,
   t: PropTypes.func
 };
 
