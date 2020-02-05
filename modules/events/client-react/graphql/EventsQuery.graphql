@@ -1,6 +1,18 @@
 # GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+query events {
+  events {
+    id
+    userId
+    title
+    details
+    venue
+    date
+    time
+    admins {
+      id
+      userId
+      eventId
+      contactInfo
+    }
   }
 }
