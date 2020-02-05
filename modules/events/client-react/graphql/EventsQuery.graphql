@@ -12,7 +12,13 @@ query events {
       id
       userId
       eventId
+      username
       contactInfo
+    }
+    participants {
+      id
+      eventId
+      userId
     }
   }
 }

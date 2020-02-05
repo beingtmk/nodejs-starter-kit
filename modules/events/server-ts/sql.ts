@@ -28,7 +28,7 @@ export interface EventParticipant {
 export interface Identifier {
   id: number;
 }
-const eager = '[admins]';
+const eager = '[admins, participants]';
 
 export default class Events extends Model {
   static get tableName() {
@@ -47,6 +47,14 @@ export default class Events extends Model {
         join: {
           from: 'events.id',
           to: 'admins.event_id'
+        }
+      },
+      participants: {
+        relation: Model.HasManyRelation,
+        modelClass: Participants,
+        join: {
+          from: 'events.id',
+          to: 'participants.event_id'
         }
       }
     };

@@ -7,7 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
-import { AuthRoute } from '@gqlapp/users-client-react/';
+// import { AuthRoute } from '@gqlapp/users-client-react/';
 
 const NavLinkWithI18n = translate('events')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/events" className="nav-link" activeClassName="active">

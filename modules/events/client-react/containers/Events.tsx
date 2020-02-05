@@ -1,6 +1,6 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import { removeTypename, PLATFORM, compose } from '@gqlapp/core-common';
+import { compose } from '@gqlapp/core-common';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import EventsView from '../components/EventsView.web';

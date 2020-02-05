@@ -14,5 +14,10 @@ query event($id: Int!) {
       eventId
       contactInfo
     }
+    participants {
+      id
+      userId
+      eventId
+    }
   }
 }

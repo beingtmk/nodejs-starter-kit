@@ -12,7 +12,7 @@ type Event {
   date: String
   time: String
   admins: [Admin]
-  # participants: [Participant]  # Maybe this is not needed while fetching all the events
+  participants: [Participant] # Maybe this is not needed while fetching all the events
 }
 
 type Admin {
