@@ -2,5 +2,39 @@
   "navLink": "Events",
   "title": "Events module",
   "meta": "Events example",
-  "welcomeText": "Hello, This is the Events module"
+  "welcomeText": "Hello, This is the Events module",
+  "editEvent": {
+    "title": "Edit Event",
+    "meta": "An Edit Event page example",
+    "errorMsg": "Event editing failed!",
+    "loadMsg": "Loading...",
+    "form": {
+      "title": "Event",
+      "titleEdit": "Edit",
+      "titleCreate": "Create",
+      "field": {
+        "name": "Username",
+        "email": "Email",
+        "role": {
+          "label": "Role",
+          "user": "user",
+          "admin": "admin"
+        },
+        "active": "Is Active",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "serial": "Serial",
+        "pass": "Password",
+        "passConf": "Password Confirmation",
+        "date": "Date and Time",
+        "admins": "Admins"
+      },
+      "btnSubmit": "Save"
+    },
+    "select": {
+      "okText": "Done",
+      "dismissText": "Cancel"
+    },
+    "btnBack": "Back"
+  }
 }

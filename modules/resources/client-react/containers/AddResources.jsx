@@ -5,9 +5,9 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import AddResourcesView from '../components/AddResourcesView';
-
 import ADD_RESOURCE from '../graphql/AddResource.graphql';
+
+import AddResourcesView from '../components/AddResourcesView';
 
 class Resources extends React.Component {
   render() {

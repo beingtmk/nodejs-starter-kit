@@ -8,6 +8,8 @@ import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import { RenderField, Button, RenderDynamicField } from '@gqlapp/look-client-react';
 
+const FormItem = Form.Item;
+
 const editEventFormSchema = {
   title: [required, minLength(3)],
   details: [required, minLength(20)],
@@ -21,10 +23,18 @@ const editEventFormSchema = {
 class EventFormComponent extends React.Component {
   state = {};
 
+  onChange = value => {
+    const { values } = this.props;
+    values.date = value._d.toDateString();
+    values.time = value._d.toTimeString();
+    // console.log('values', this.props.values);
+  };
+
   onOk = value => {
     const { values } = this.props;
     values.date = value._d.toDateString();
     values.time = value._d.toTimeString();
+    // console.log('values', this.props.values);
   };
 
   render() {
@@ -56,16 +66,20 @@ class EventFormComponent extends React.Component {
             label="Event Venue"
             value={values.venue}
           />
-          <DatePicker
-            showTime
-            placeholder={moment(`${values.date}`, 'YYYY-MM-DD')._i}
-            onOk={this.onOk}
-            // defaultValue={moment(`${values.date}`, 'YYYY-MM-DD')}
-          />
-          {/* {console.log(
+          <FormItem label={t('editEvent.form.field.date')}>
+            <DatePicker
+              showTime
+              placeholder={moment(`${values.date}`, 'YYYY-MM-DD')._i}
+              onChange={this.onChange}
+              onOk={this.onOk}
+              // defaultValue={moment(`${values.date}`, 'YYYY-MM-DD')}
+            />
+            {/* {console.log(
             'date+time',
             moment(`${values.date} ${values.time}`, 'YYYY-MM-DD HH:mm:ss')._i
           )} */}
+          </FormItem>
+
           <FieldArray
             name="admins"
             render={arrayHelpers => (
@@ -76,7 +90,7 @@ class EventFormComponent extends React.Component {
                 arrayHelpers={arrayHelpers}
                 values={values.admins}
                 name="admins"
-                label={t('userEdit.form.field.addresses')}
+                label={t('editEvent.form.field.admins')}
               />
             )}
           />
@@ -109,37 +123,32 @@ EventFormComponent.propTypes = {
 
 const EditEventWithFormik = withFormik({
   mapPropsToValues: props => {
-    const { title, venue, details, date, time, admins } = props.event;
-
     function getAdmin(admin) {
       return {
-        userId: (admin && admin.userId) || null,
+        userId: (admin && admin.userId) || (props.currentUser && props.currentUser.id) || null,
         username: (admin && admin.username) || '',
         contactInfo: (admin && admin.contactInfo) || ''
       };
     }
 
     return {
-      title: (title && title) || '',
-      details: (details && details) || '',
-      venue: (venue && venue) || '',
-      date: (date && date) || '',
-      time: (time && time) || '',
-      admins: (admins && admins.map(getAdmin)) || []
+      id: (props.event && props.event.id) || null,
+      userId: (props.event && props.event.userId) || (props.currentUser && props.currentUser.id) || null,
+      title: (props.event && props.event.title) || '',
+      details: (props.event && props.event.details) || '',
+      venue: (props.event && props.event.venue) || '',
+      date: (props.event && props.event.date) || '',
+      time: (props.event && props.event.time) || '',
+      admins: (props.event && props.event.admins.map(getAdmin)) || []
     };
   },
   async handleSubmit(
     values,
     {
       setErrors,
-      props: {
-        onSubmit,
-        event: { id, userId }
-      }
+      props: { onSubmit }
     }
   ) {
-    values.id = id;
-    values.userId = userId;
     await onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

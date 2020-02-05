@@ -46,6 +46,7 @@ extend type Subscription {
 }
 
 input AddEventInput {
+  id: Int
   userId: Int!
   title: String!
   details: String!
