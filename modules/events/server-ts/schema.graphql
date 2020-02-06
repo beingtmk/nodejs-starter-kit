@@ -38,6 +38,7 @@ extend type Query {
 extend type Mutation {
   addEvent(input: AddEventInput!): Boolean
   editEvent(input: EditEventInput!): Boolean
+  deleteEvent(id: Int!): Event
   addParticipant(input: ParticipantInput): Boolean
 }
 

@@ -82,7 +82,7 @@ class EventsView extends React.Component {
   );
 
   render() {
-    const { t, loading } = this.props;
+    const { t, loading, deleteEvent } = this.props;
     return (
       <PageLayout>
         {this.renderMetaData(t)}
@@ -97,7 +97,7 @@ class EventsView extends React.Component {
           <>
             <Calendar dateCellRender={this.dateCellRender} monthCellRender={this.monthCellRender} />
             {this.state.event ? (
-              <EventDetailsCard event={this.state.event} />
+              <EventDetailsCard event={this.state.event} deleteEvent={deleteEvent} />
             ) : (
               <EventDetailsCard event={this.NoSelectedEvent} />
             )}
@@ -110,6 +110,7 @@ class EventsView extends React.Component {
 
 EventsView.propTypes = {
   t: PropTypes.func,
+  deleteEvent: PropTypes.func,
   loading: PropTypes.bool,
   events: PropTypes.object
 };

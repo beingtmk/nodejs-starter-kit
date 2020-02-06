@@ -1,6 +1,6 @@
 import { knex } from '@gqlapp/database-server-ts';
-import { Model, raw } from 'objection';
-import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
+import { Model } from 'objection';
+import { camelizeKeys, decamelizeKeys } from 'humps';
 
 // Give the knex object to objection.
 Model.knex(knex);
@@ -76,9 +76,8 @@ export default class Events extends Model {
     );
   }
 
-  public async participants(id: number) {
-    const res = camelizeKeys(await Participants.query().where('event_id', '=', id));
-    return res;
+  public async participant(id: number) {
+    return camelizeKeys(await Participants.query().where('event_id', '=', id));
   }
 
   // Mutation functions
@@ -93,6 +92,12 @@ export default class Events extends Model {
   public async editEvent(params: Event & Identifier) {
     const res = await Events.query().upsertGraph(decamelizeKeys(params));
     return res;
+  }
+
+  public deleteEvent(id: number) {
+    return knex('events')
+      .where('id', '=', id)
+      .del();
   }
 
   public async addParticipant(params: EventParticipant) {

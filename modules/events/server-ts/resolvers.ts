@@ -26,7 +26,7 @@ export default (pubsub: any) => ({
       return events;
     },
     async participants(obj: any, { id }: Identifier, { Events }: any) {
-      const participants = await Events.participants(id);
+      const participants = await Events.participant(id);
       return participants;
     }
   },
@@ -57,10 +57,18 @@ export default (pubsub: any) => ({
     editEvent: withAuth(async (obj: any, { input }: EventInputWithId, context: any) => {
       try {
         await context.Events.editEvent(input);
-        // const resource = await context.Events.resource(input.id);
         return true;
       } catch (e) {
         return e;
+      }
+    }),
+    deleteEvent: withAuth(async (obj: any, { id }: Identifier, context: any) => {
+      const event = await context.Events.event(id);
+      const isDeleted = await context.Events.deleteEvent(id);
+      if (isDeleted) {
+        return { id: event.id };
+      } else {
+        return { id: null };
       }
     }),
     addParticipant: withAuth(async (obj: any, { input }: EventParticipantInput, context: any) => {
