@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Calendar, Badge } from 'antd';
+import { Spin, Calendar, Badge, Button, Icon } from 'antd';
 import Helmet from 'react-helmet';
 
 import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
@@ -86,9 +86,14 @@ class EventsView extends React.Component {
     return (
       <PageLayout>
         {this.renderMetaData(t)}
-        {/* <div className="text-center">
-        <p>{t('welcomeText')}</p>
-      </div> */}
+        <div className="text-center" style={{ display: 'flex' }}>
+          <h2>{t('title')}</h2>
+          <a href={`/add-event`} style={{ paddingLeft: '10px' }}>
+            <Button color="primary">
+              <Icon type="plus" />
+            </Button>
+          </a>
+        </div>
         {loading ? (
           <LayoutCenter>
             <Spin />
