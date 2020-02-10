@@ -1,4 +1,5 @@
 import React from 'react';
+import Grid from 'hedron';
 import { PropTypes } from 'prop-types';
 import { Divider, Button, Icon } from 'antd';
 
@@ -9,68 +10,68 @@ import {
 
 import ParticipantDetail from './ParticipantDetails';
 
-const EventDetailsCard = ({ event, deleteEvent }) => {
-  const [
-    // error,
-    setError
-  ] = React.useState([]);
-
-  const handleDeleteEvent = async id => {
-    try {
-      await deleteEvent(id);
-    } catch (e) {
-      setError({ error: e.message });
-    }
-  };
+const EventDetailsCard = ({ event, handleDeleteEvent, handleAddParticipant, currentUser }) => {
   return (
     <>
       {/* {error && <Alert color="error">{error}</Alert>} */}
       {event && (
-        <>
-          <Card>
-            <h1>{event.title}</h1>
-            {event.details && (
-              <>
-                <h4>{event.details} </h4>
-                <h4>Venue: {event.venue} </h4>
-                <h4>Date: {event.date}</h4>
-                <h4>Time: {event.time}</h4>
-                <a href={`/edit-event/${event.id}`}>
-                  <Button color="primary">
-                    <Icon type="edit" />
+        <Grid.Bounds direction="vertical">
+          <Grid.Box fill>
+            <Card>
+              <h1>{event.title}</h1>
+              {event.details && (
+                <>
+                  <h4>{event.details} </h4>
+                  <h4>Venue: {event.venue} </h4>
+                  <h4>Date: {event.date}</h4>
+                  <h4>Time: {event.time}</h4>
+                  <Divider />
+                  <a href={`/edit-event/${event.id}`}>
+                    <Button color="primary">
+                      <Icon type="edit" />
+                    </Button>
+                  </a>
+                  <Divider type="vertical" />
+                  <Button color="primary" onClick={() => handleDeleteEvent(event.id)}>
+                    <Icon type="delete" />
                   </Button>
-                </a>
-                <Divider type="vertical" />
-                <Button color="primary" onClick={() => handleDeleteEvent(event.id)}>
-                  <Icon type="delete" />
-                </Button>
-              </>
+                  <Divider type="vertical" />
+                  <Button color="primary" onClick={() => handleAddParticipant(event.id, currentUser.id)}>
+                    <Icon type="plus" />
+                  </Button>
+                </>
+              )}
+            </Card>
+          </Grid.Box>
+          <Grid.Box>
+            {event.details && (
+              <Card>
+                <h3>Admin List: </h3>
+                {event.admins.map(admin => (
+                  <div>
+                    <Divider />
+                    <h4>
+                      {admin.username}: {admin.contactInfo}
+                    </h4>
+                  </div>
+                ))}
+              </Card>
             )}
-          </Card>
-          {event.details && (
-            <Card>
-              <h3>Admin List: </h3>
-              {event.admins.map(admin => (
-                <div>
-                  <h4>
-                    {admin.username}: {admin.contactInfo}
-                  </h4>
-                  {/* <Divider /> */}
-                </div>
-              ))}
-            </Card>
-          )}
-          {event.details && (
-            <Card>
-              <h3>Participants List: </h3>
-              {event.participants.map(participant => (
-                <div>
-                  <ParticipantDetail participant={participant} />
-                </div>
-              ))}
-            </Card>
-          )}
-        </>
+          </Grid.Box>
+          <Grid.Box>
+            {event.details && (
+              <Card>
+                <h3>Participants List: </h3>
+                {event.participants.map(participant => (
+                  <div>
+                    {/* {console.log('participant', participant)} */}
+                    <ParticipantDetail participant={participant} />
+                  </div>
+                ))}
+              </Card>
+            )}
+          </Grid.Box>
+        </Grid.Bounds>
       )}
     </>
   );
@@ -78,7 +79,9 @@ const EventDetailsCard = ({ event, deleteEvent }) => {
 
 EventDetailsCard.propTypes = {
   event: PropTypes.object,
-  deleteEvent: PropTypes.func
+  currentUser: PropTypes.object,
+  handleAddParticipant: PropTypes.func,
+  handleDeleteEvent: PropTypes.func
 };
 
 export default EventDetailsCard;

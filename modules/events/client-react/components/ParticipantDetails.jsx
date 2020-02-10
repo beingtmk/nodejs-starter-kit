@@ -1,4 +1,5 @@
 import React from 'react';
+import { Divider } from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 
@@ -10,8 +11,11 @@ const ParticipantDetails = props => {
     <>
       {props.user && (
         <>
-          <h4>{props.user.email}</h4>
-          <h4>{props.user.username}</h4>
+          <Divider />
+          <h4>
+            {props.user.username}: {props.user.email}
+          </h4>
+          {/* <h4>{props.user.email}</h4> */}
         </>
       )}
     </>
