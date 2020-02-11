@@ -6,7 +6,7 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import ADD_PARTICIPANT from '../graphql/AddParticipant.graphql';
+import TOGGLE_PARTICIPANT from '../graphql/ToggleParticipant.graphql';
 import EVENTS_QUERY from '../graphql/EventsQuery.graphql';
 import DELETE_EVENT from '../graphql/DeleteEvent.graphql';
 
@@ -14,7 +14,7 @@ import EventsView from '../components/EventsView.web';
 
 class Events extends React.Component {
   render() {
-    // console.log('props', this.props);
+    console.log('props', this.props);
     return <EventsView {...this.props} />;
   }
 }
@@ -65,33 +65,64 @@ export default compose(
       };
     }
   }),
-  graphql(ADD_PARTICIPANT, {
-    props: ({ ownProps: mutate }) => ({
-      addParticipant: async (eventId, userId) => {
+  graphql(TOGGLE_PARTICIPANT, {
+    props: ({ mutate }) => ({
+      toggleParticipant: async (eventId, userId) => {
         message.destroy();
         message.loading('Please wait...', 0);
         try {
-          await mutate({
-            variables: {
-              input: { eventId, userId }
-            },
+          let {
+            data: { toggleParticipant }
+          } = await mutate({
+            variables: { input: { eventId, userId } },
             optimisticResponse: {
               __typename: 'Mutation',
-              addParticipant: {
+              toggleParticipant: {
                 __typename: 'Event',
                 eventId,
                 userId
               }
             }
+            // ,
+
+            // update: store => {
+            //   // Get previous events from cache
+            //   const prevEvents = store.readQuery({ query: EVENTS_QUERY });
+            //   // Write events to cache
+            //   function test(event) {
+            //     if (event.id !== eventId) return event;
+            //     if (event.id === eventId) {
+            //       console.log('object', event.participants.map(p => p.userId === userId));
+            //       if (event.participants.map(p => p.userId === userId).includes(true)) {
+            //         event.participants = event.participants.filter(p => p.userId !== userId);
+            //         return event;
+            //       } else {
+            //         event.participants.push({ id: Math.random(), eventId, userId, __typename: 'Event' });
+            //         return event;
+            //       }
+            //     }
+            //   }
+            //   console.log('events in update', prevEvents);
+            //   const upEvents = prevEvents.events.filter(event => test(event));
+
+            //   store.writeQuery({
+            //     query: EVENTS_QUERY,
+            //     data: {
+            //       events: upEvents,
+            //       __typename: 'Events'
+            //     }
+            //   });
+            //   console.log('upEvents', upEvents);
+            // }
           });
 
+          if (toggleParticipant.errors) {
+            return { errors: toggleParticipant.errors };
+          }
           message.destroy();
-          message.success('Participant added.');
-          // history.push('/events');
+          message.success(toggleParticipant);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
+          console.log(e);
         }
       }
     })

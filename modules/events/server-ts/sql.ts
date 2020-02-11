@@ -76,9 +76,9 @@ export default class Events extends Model {
     );
   }
 
-  public async participant(id: number) {
-    return camelizeKeys(await Participants.query().where('event_id', '=', id));
-  }
+  // public async participant(id: number) {
+  //   return camelizeKeys(await Participants.query().where('event_id', '=', id));
+  // }
 
   // Mutation functions
 
@@ -100,9 +100,35 @@ export default class Events extends Model {
       .del();
   }
 
-  public async addParticipant(params: EventParticipant) {
-    const res = await Participants.query().insertGraph(decamelizeKeys(params));
-    return res;
+  public async participantStatus(eventId: number, userId: number) {
+    const count = camelizeKeys(
+      await knex
+        .count('p.id')
+        .from('participants as p')
+        .where('p.user_id', '=', userId)
+        .andWhere('p.event_id', '=', eventId)
+        .first()
+    )['count(`p`.`id`)'];
+    let wStatus = false;
+    if (count > 0) {
+      wStatus = true;
+    }
+    return wStatus;
+  }
+
+  public async addOrRemoveParticipant(input: EventParticipant) {
+    const status = await this.participantStatus(input.eventId, input.userId);
+    if (status) {
+      await knex('participants')
+        .where('event_id', '=', input.eventId)
+        .andWhere('user_id', '=', input.userId)
+        .del();
+      return 'Unenroll SuccessFully';
+    } else {
+      // await knex('participants').insert(decamelizeKeys(input));
+      await Participants.query().insertGraph(decamelizeKeys(input));
+      return 'Enroll SuccessFully';
+    }
   }
 }
 

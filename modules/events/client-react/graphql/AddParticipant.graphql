@@ -1,3 +1,0 @@
-mutation addParticipant($input: ParticipantInput!) {
-  addParticipant(input: $input)
-}

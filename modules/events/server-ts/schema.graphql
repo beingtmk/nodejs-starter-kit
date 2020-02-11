@@ -32,14 +32,15 @@ type Participant {
 extend type Query {
   events: [Event]
   event(id: Int!): Event
-  participants(id: Int!): [Participant]
+  # participants(id: Int!): [Participant]
 }
 
 extend type Mutation {
   addEvent(input: AddEventInput!): Boolean
   editEvent(input: EditEventInput!): Boolean
   deleteEvent(id: Int!): Event
-  addParticipant(input: ParticipantInput): Boolean
+  # addParticipant(input: ParticipantInput): Boolean
+  toggleParticipant(input: ParticipantInput): String
 }
 
 extend type Subscription {

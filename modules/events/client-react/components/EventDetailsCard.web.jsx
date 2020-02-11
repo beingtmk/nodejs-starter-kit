@@ -10,7 +10,7 @@ import {
 
 import ParticipantDetail from './ParticipantDetails';
 
-const EventDetailsCard = ({ event, handleDeleteEvent, handleAddParticipant, currentUser }) => {
+const EventDetailsCard = ({ event, handleDeleteEvent, handleToggleParticipant, currentUser }) => {
   return (
     <>
       {/* {error && <Alert color="error">{error}</Alert>} */}
@@ -36,7 +36,7 @@ const EventDetailsCard = ({ event, handleDeleteEvent, handleAddParticipant, curr
                     <Icon type="delete" />
                   </Button>
                   <Divider type="vertical" />
-                  <Button color="primary" onClick={() => handleAddParticipant(event.id, currentUser.id)}>
+                  <Button color="primary" onClick={() => handleToggleParticipant(event.id, currentUser.id)}>
                     <Icon type="plus" />
                   </Button>
                 </>
@@ -80,7 +80,7 @@ const EventDetailsCard = ({ event, handleDeleteEvent, handleAddParticipant, curr
 EventDetailsCard.propTypes = {
   event: PropTypes.object,
   currentUser: PropTypes.object,
-  handleAddParticipant: PropTypes.func,
+  handleToggleParticipant: PropTypes.func,
   handleDeleteEvent: PropTypes.func
 };
 

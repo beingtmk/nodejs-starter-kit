@@ -24,11 +24,12 @@ export default (pubsub: any) => ({
     async event(obj: any, { id }: Identifier, { Events }: any) {
       const events = await Events.event(id);
       return events;
-    },
-    async participants(obj: any, { id }: Identifier, { Events }: any) {
-      const participants = await Events.participant(id);
-      return participants;
     }
+    // ,
+    // async participants(obj: any, { id }: Identifier, { Events }: any) {
+    //   const participants = await Events.participant(id);
+    //   return participants;
+    // }
   },
   Mutation: {
     addEvent: withAuth(async (obj: any, { input }: EventInput, context: any) => {
@@ -71,16 +72,8 @@ export default (pubsub: any) => ({
         return { id: null };
       }
     }),
-    addParticipant: withAuth(async (obj: any, { input }: EventParticipantInput, context: any) => {
-      try {
-        if (!input.userId) {
-          input.userId = context.identity.id;
-        }
-        await context.Events.addParticipant(input);
-        return true;
-      } catch (e) {
-        return e;
-      }
+    toggleParticipant: withAuth(async (obj: any, { input }: EventParticipantInput, context: any) => {
+      return context.Events.addOrRemoveParticipant(input);
     })
   },
   Subscription: {}

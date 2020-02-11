@@ -135,9 +135,9 @@ class EventsView extends React.Component {
     }
   };
 
-  handleAddParticipant = async (eventId, userId) => {
+  handleToggleParticipant = async (eventId, userId) => {
     try {
-      await this.props.addParticipant(eventId, userId);
+      await this.props.toggleParticipant(eventId, userId);
     } catch (e) {
       throw Error(e);
     }
@@ -159,7 +159,7 @@ class EventsView extends React.Component {
                 <EventDetailsCard
                   event={event}
                   handleDeleteEvent={this.handleDeleteEvent}
-                  handleAddParticipant={this.handleAddParticipant}
+                  handleToggleParticipant={this.handleToggleParticipant}
                   currentUser={currentUser}
                 />
               </Modal>
@@ -236,7 +236,7 @@ class EventsView extends React.Component {
                     <EventDetailsCard
                       event={this.state.event}
                       handleDeleteEvent={this.handleDeleteEvent}
-                      handleAddParticipant={this.handleAddParticipant}
+                      handleToggleParticipant={this.handleToggleParticipant}
                       currentUser={currentUser}
                     />
                   )}
@@ -252,7 +252,7 @@ class EventsView extends React.Component {
 
 EventsView.propTypes = {
   t: PropTypes.func,
-  addParticipant: PropTypes.func,
+  toggleParticipant: PropTypes.func,
   deleteEvent: PropTypes.func,
   loading: PropTypes.bool,
   currentUser: PropTypes.object,

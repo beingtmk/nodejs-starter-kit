@@ -1,0 +1,3 @@
+mutation toggleParticipant($input: ParticipantInput!) {
+  toggleParticipant(input: $input)
+}
