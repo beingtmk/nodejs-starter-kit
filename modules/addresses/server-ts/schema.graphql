@@ -1,8 +1,3 @@
-# Entity
-type TypeName {
-  typeName: String!
-}
-
 type Address {
   id: Int
   userId: Int!
@@ -14,13 +9,22 @@ type Address {
 }
 
 extend type Query {
-  queryName: TypeName
+  addresses(id: Int): [Address]!
 }
 
 extend type Mutation {
-  addAddress(input: [Address]!): Boolean!
+  addAddress(input: AddressInput!): Boolean!
 }
 
-extend type Subscription {
-  subscriptionName: TypeName
+# extend type Subscription {
+# }
+
+input AddressInput {
+  id: Int
+  userId: Int!
+  streetAddress1: String!
+  streetAddress2: String!
+  city: String!
+  state: String!
+  pinCode: Int!
 }

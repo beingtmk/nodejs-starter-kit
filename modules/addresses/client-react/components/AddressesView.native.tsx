@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 
-interface AddressViewProps {
+interface AddressesViewProps {
   t: TranslateFunction;
 }
 
-const AddressView = ({ t }: AddressViewProps) => {
+const AddressesView = ({ t }: AddressesViewProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.element}>
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddressView;
+export default AddressesView;

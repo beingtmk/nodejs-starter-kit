@@ -15,12 +15,28 @@ export interface Address {
   pinCode: number;
 }
 
+export interface Identifier {
+  id: number;
+}
+
 export default class Addresses extends Model {
-  public addresss() {
-    return knex.select();
+  static get tableName() {
+    return 'user_address';
   }
 
-  public addAddress(params: Event) {
-    return Address.query().insertGraph(decamelizeKeys(params));
+  static get idColumn() {
+    return 'id';
+  }
+  public async addresses(id: number) {
+    return camelizeKeys(
+      await Addresses.query()
+        // .from('user_address as ua')
+        .where('user_id', '=', id)
+        .orderBy('id', 'desc')
+    );
+  }
+
+  public async addAddress(params: Address) {
+    return Addresses.query().insertGraph(decamelizeKeys(params));
   }
 }
