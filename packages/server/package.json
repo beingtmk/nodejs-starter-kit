@@ -137,6 +137,8 @@
         "universal-cookie-express": "^2.2.0",
         "uuid": "^3.2.1"
     ,
+    "@gqlapp/address-server-ts": "^1.0.0",
+    "@gqlapp/addresses-server-ts": "^1.0.0",
     "@gqlapp/events-server-ts": "^1.0.0"},
   "devDependencies": {
         "@types/chai": "^4.1.4",

@@ -1,3 +1,5 @@
+import addresses from '@gqlapp/addresses-server-ts';
+import address from '@gqlapp/address-server-ts';
 import events from '@gqlapp/events-server-ts';
 import resources from '@gqlapp/resources-server-ts';
 import core from '@gqlapp/core-server-ts';
@@ -22,6 +24,8 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  addresses,
+  address,
   events,
   resources,
   authentication,

@@ -1,0 +1,26 @@
+# Entity
+type TypeName {
+  typeName: String!
+}
+
+type Address {
+  id: Int
+  userId: Int!
+  streetAddress1: String!
+  streetAddress2: String!
+  city: String!
+  state: String!
+  pinCode: Int!
+}
+
+extend type Query {
+  queryName: TypeName
+}
+
+extend type Mutation {
+  addAddress(input: [Address]!): Boolean!
+}
+
+extend type Subscription {
+  subscriptionName: TypeName
+}

@@ -1,3 +1,4 @@
+import addresses from '@gqlapp/addresses-client-react';
 import events from '@gqlapp/events-client-react';
 import resources from '@gqlapp/resources-client-react';
 import address from '@gqlapp/address-client-react';
@@ -24,6 +25,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  addresses,
   events,
   resources,
   address,
