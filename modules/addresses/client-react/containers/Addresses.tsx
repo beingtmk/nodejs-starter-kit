@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import AddressView from '../components/AddressesView';
+import AddressesView from '../components/AddressesView';
 
-interface AddressProps {
+interface AddressesProps {
   t: TranslateFunction;
 }
 
@@ -26,10 +26,10 @@ const addresses = [
   }
 ];
 
-class Address extends React.Component<AddressProps> {
+class Addresses extends React.Component<AddressesProps> {
   public render() {
-    return <AddressView {...this.props} addresses={addresses} />;
+    return <AddressesView {...this.props} addresses={addresses} />;
   }
 }
 
-export default translate('address')(Address);
+export default translate('addresses')(Addresses);

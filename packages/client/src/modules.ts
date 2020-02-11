@@ -1,7 +1,6 @@
 import addresses from '@gqlapp/addresses-client-react';
 import events from '@gqlapp/events-client-react';
 import resources from '@gqlapp/resources-client-react';
-import address from '@gqlapp/address-client-react';
 import notifications from '@gqlapp/notifications-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import core from '@gqlapp/core-client-react';
@@ -28,7 +27,6 @@ const modules = new ClientModule(
   addresses,
   events,
   resources,
-  address,
   notifications,
   pwa,
   look,

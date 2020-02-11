@@ -15,7 +15,7 @@ const renderMetaData = t => (
   />
 );
 
-const AddressView = ({ t, values }) => {
+const AddressesView = ({ t, values }) => {
   const { addresses: address } = values;
   const addresses = [...address];
   return (
@@ -40,12 +40,12 @@ const AddressView = ({ t, values }) => {
   );
 };
 
-AddressView.propTypes = {
+AddressesView.propTypes = {
   values: PropTypes.array,
   t: PropTypes.func
 };
 
-const AddressViewWithFormik = withFormik({
+const AddressesViewWithFormik = withFormik({
   mapPropsToValues: values => {
     const { addresses } = values;
 
@@ -71,4 +71,4 @@ const AddressViewWithFormik = withFormik({
   },
   displayName: 'CheckoutBill ' // helps with React DevTools
 });
-export default AddressViewWithFormik(AddressView);
+export default AddressesViewWithFormik(AddressesView);
