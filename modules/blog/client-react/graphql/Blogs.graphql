@@ -4,6 +4,7 @@ fragment BlogsInfo on Blog {
   content
   image
   status
+  createdAt
   model {
     id
     name

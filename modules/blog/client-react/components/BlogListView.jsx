@@ -21,12 +21,13 @@ const BlogListView = props => {
   return (
     <PageLayout>
       {renderMetaData(props.t)}
-      {flag ? <BlogListComponent {...props} /> : <Loading />}
+      {flag && !props.loading ? <BlogListComponent {...props} /> : <Loading />}
     </PageLayout>
   );
 };
 BlogListView.propTypes = {
-  t: PropTypes.func
+  t: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default BlogListView;

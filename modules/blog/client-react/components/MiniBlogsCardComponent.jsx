@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 // import {  } from "@gqlapp/look-client-react";
 import { Col, Row, Card, Avatar, Divider, Tooltip } from 'antd';
+import moment from 'moment';
 import MiniBlogImageComponent from './MiniBlogImageComponent';
 import BlogActionsComponent from './BlogActionsComponent';
 
@@ -29,7 +30,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
               <i>({blog.author.username}) </i>
             </span>
           }
-          description={<span>{`${blog.createdAt} - ${blog.readTime} read`}</span>}
+          description={<span>{`${moment(blog.createdAt).format("MMM DD, 'YY")} - ${blog.readTime} read`}</span>}
         />
         <Divider />
         <BlogActionsComponent blog={blog} />
