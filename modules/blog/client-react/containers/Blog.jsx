@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from '@gqlapp/core-common';
+import { graphql } from 'react-apollo';
 import { translate } from '@gqlapp/i18n-client-react';
 // import { message } from 'antd';
-import { blog, moreBlogs } from '../demoData';
+import { moreBlogs } from '../demoData';
 import BlogView from '../components/BlogView';
 
-class Blog extends React.Component {
-  render() {
-    console.log(this.props.match);
+import BLOG_QUERY from '../graphql/BlogQuery.graphql';
 
-    return <BlogView {...this.props} blog={blog} moreBlogs={moreBlogs} />;
+class Blog extends React.Component {
+  // state = blog;
+
+  render() {
+    // if (this.props.blog) this.state = { ...this.state, ...this.props.blog };
+    return <BlogView {...this.props} moreBlogs={moreBlogs} />;
   }
 }
 
@@ -17,4 +22,22 @@ Blog.propTypes = {
   match: PropTypes.object
 };
 
-export default translate('blog')(Blog);
+export default compose(
+  graphql(BLOG_QUERY, {
+    options: props => {
+      let id = 0;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
+      return {
+        variables: { id: Number(id) }
+      };
+    },
+    props({ data: { loading, error, blog } }) {
+      if (error) throw new Error(error);
+      return { loading, blog };
+    }
+  })
+)(translate('blog')(Blog));

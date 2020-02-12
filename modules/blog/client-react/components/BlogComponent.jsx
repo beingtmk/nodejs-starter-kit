@@ -45,11 +45,12 @@ const BlogComponent = ({ blog, moreBlogs }) => {
           <br />
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
           <Divider />
-          {blog.tags.map((item, idx) => (
-            <Tag color="#2db7f5" key={idx}>
-              {item.name}
-            </Tag>
-          ))}
+          {blog.tags &&
+            blog.tags.map((item, idx) => (
+              <Tag color="#2db7f5" key={idx}>
+                {item.name}
+              </Tag>
+            ))}
           <Divider />
           <BlogActionsComponent blog={blog} />
         </Card>
