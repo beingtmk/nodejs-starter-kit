@@ -60,6 +60,15 @@ export default class Blog extends Model {
     );
   }
 
+  public async userBlogs(id: number) {
+    return camelizeKeys(
+      await Blog.query()
+        .where({ author_id: id })
+        .eager(eager)
+        .orderBy('id', 'desc')
+    );
+  }
+
   public async blog(id: number) {
     const res = camelizeKeys(
       await Blog.query()

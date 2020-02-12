@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import { translate } from '@gqlapp/i18n-client-react';
 // import { message } from 'antd';
 // import { moreBlogs } from "../demoData";
-import BLOG_QUERY from '../graphql/BlogsQuery.graphql';
+import BLOG_QUERY from '../graphql/MiniBlogsCardQuery.graphql';
 import BlogListView from '../components/BlogListView';
 
 class BlogList extends React.Component {
@@ -16,7 +16,7 @@ class BlogList extends React.Component {
 
 BlogList.propTypes = {
   // subscribeToMore: PropTypes.func
-  blogs: PropTypes.object
+  blogs: PropTypes.array
 };
 
 export default compose(

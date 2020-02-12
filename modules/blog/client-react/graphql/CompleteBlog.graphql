@@ -1,9 +1,11 @@
-fragment BlogsInfo on Blog {
+fragment CompleteBlogInfo on Blog {
   id
   title
   content
   image
   status
+  createdAt
+  updatedAt
   model {
     id
     name
@@ -13,5 +15,9 @@ fragment BlogsInfo on Blog {
   author {
     id
     username
+    profile {
+      firstName
+      lastName
+    }
   }
 }

@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Col, Row, Card, Button, Tooltip, Alert } from 'antd';
+import { Col, Row, Card, Button, Tooltip, Alert, Popconfirm, message } from 'antd';
+import { Link } from 'react-router-dom';
 import { status } from '../constants';
 import MiniBlogImageComponent from './MiniBlogImageComponent';
 
-const MyMiniBlogsCardComponent = ({ blog }) => {
+const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
+  const cancel = () => {
+    message.error('Task cancelled');
+  };
+
   const blogData = () => {
     return (
       <>
@@ -21,28 +26,31 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
         <br />
         <Row gutter={16}>
           <Col xs={10} lg={12} sm={10} md={10}>
-            <Button
-              type={'primary'}
-              icon="edit"
-              size="default"
-              ghost
-              block
-              //   onClick={() => setClap()}
-            >
-              Edit
-            </Button>
+            <Link to={`/blog/edit/${blog.id}`}>
+              <Button
+                type={'primary'}
+                icon="edit"
+                size="default"
+                ghost
+                block
+                //   onClick={() => setClap()}
+              >
+                Edit
+              </Button>
+            </Link>
           </Col>
           <Col xs={14} sm={12}>
-            <Button
-              type={'danger'}
-              icon="delete"
-              size="default"
-              ghost
-              block
-              //   onClick={() => setClap()}
+            <Popconfirm
+              title="Delete blog?"
+              onConfirm={() => deleteBlog(blog.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
             >
-              Delete
-            </Button>
+              <Button type={'danger'} icon="delete" size="default" ghost block>
+                Delete
+              </Button>
+            </Popconfirm>
           </Col>
           {blog.status != status[1] && (
             <Col xs={24} lg={24} sm={22} md={22}>
@@ -57,7 +65,12 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
               icon={blog.status != status[1] ? 'book' : 'stop'}
               size="default"
               block
-              //   onClick={() => setClap()}
+              onClick={() =>
+                editBlog({
+                  id: blog.id,
+                  status: blog.status != status[1] ? status[1] : status[2]
+                })
+              }
             >
               {blog.status != status[1] ? 'Publish' : 'Disable'}
             </Button>
@@ -112,7 +125,9 @@ const MyMiniBlogsCardComponent = ({ blog }) => {
 
 MyMiniBlogsCardComponent.propTypes = {
   blog: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
+  deleteBlog: PropTypes.func,
+  editBlog: PropTypes.func
 };
 
 export default translate('blog')(MyMiniBlogsCardComponent);

@@ -1,17 +1,20 @@
-fragment BlogsInfo on Blog {
+fragment MiniBlogsCardInfo on Blog {
   id
   title
   content
   image
   status
+  createdAt
   model {
     id
     name
-    image
-    desc
   }
   author {
     id
     username
+    profile {
+      firstName
+      lastName
+    }
   }
 }

@@ -25,6 +25,7 @@ extend type Query {
   model(id: Int!): Model
   blogs: [Blog]
   blog(id: Int!): Blog
+  userBlogs(id: Int): [Blog]
 }
 
 extend type Mutation {

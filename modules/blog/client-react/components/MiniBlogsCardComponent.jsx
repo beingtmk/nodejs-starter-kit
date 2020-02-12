@@ -26,7 +26,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
           avatar={<Avatar src={blog.author.image} />}
           title={
             <span>
-              {`${blog.author.firstname} ${blog.author.lastname} `}
+              {blog.author.profile && `${blog.author.profile.firstName} ${blog.author.profile.lastName} `}
               <i>({blog.author.username}) </i>
             </span>
           }

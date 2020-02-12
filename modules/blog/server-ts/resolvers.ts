@@ -9,6 +9,9 @@ export default (pubsub: PubSub) => ({
     async blogs(obj: any, args: any, context: any) {
       return context.Blog.blogs();
     },
+    async userBlogs(obj: any, { id }: any, { Blog, req: { identity } }: any) {
+      return Blog.userBlogs(id || identity.id);
+    },
     async blog(obj: any, { id }: any, context: any) {
       return context.Blog.blog(id);
     },

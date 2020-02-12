@@ -8,7 +8,7 @@ import { status } from '../constants';
 
 const { TabPane } = Tabs;
 
-const MyBlogsView = ({ blogs }) => {
+const MyBlogsView = ({ blogs, deleteBlog, editBlog }) => {
   return (
     <Row>
       <Col
@@ -26,7 +26,13 @@ const MyBlogsView = ({ blogs }) => {
           <Tabs defaultActiveKey="all" size="large">
             <TabPane tab="All" key="all">
               {blogs.map(item => (
-                <MyMiniBlogsCardComponent key={item.id} moreFlag={false} blog={item} />
+                <MyMiniBlogsCardComponent
+                  key={item.id}
+                  moreFlag={false}
+                  blog={item}
+                  deleteBlog={deleteBlog}
+                  editBlog={editBlog}
+                />
               ))}
             </TabPane>
             {status.map(item => (
@@ -34,7 +40,7 @@ const MyBlogsView = ({ blogs }) => {
                 {blogs
                   .filter(val => val.status == item)
                   .map(item => (
-                    <MyMiniBlogsCardComponent key={item.id} blog={item} />
+                    <MyMiniBlogsCardComponent key={item.id} blog={item} editBlog={editBlog} deleteBlog={deleteBlog} />
                   ))}
               </TabPane>
             ))}
@@ -47,7 +53,9 @@ const MyBlogsView = ({ blogs }) => {
 
 MyBlogsView.propTypes = {
   blogs: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  editBlog: PropTypes.func,
+  deleteBlog: PropTypes.func
 };
 
 export default translate('blog')(MyBlogsView);
