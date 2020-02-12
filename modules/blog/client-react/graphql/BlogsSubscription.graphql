@@ -1,0 +1,10 @@
+#import "./Blogs.graphql"
+
+subscription onBlogssUpdated {
+  blogsUpdated {
+    mutation
+    node {
+      ...BlogsInfo
+    }
+  }
+}

@@ -5,13 +5,9 @@ import { Link } from 'react-router-dom';
 import { Table, Loading } from '@gqlapp/look-client-react';
 import { Popconfirm, Button, message, Tooltip } from 'antd';
 
-const AdminBlogsComponent = ({ loading, blogsList, deleteBlog }) => {
+const AdminBlogsComponent = ({ loading, blogs, deleteBlog }) => {
   const cancel = () => {
     message.error('Task cancelled');
-  };
-
-  const handleDelete = id => {
-    return deleteBlog({ id: id });
   };
 
   const columns = [
@@ -86,8 +82,8 @@ const AdminBlogsComponent = ({ loading, blogsList, deleteBlog }) => {
           </Tooltip>
           <Tooltip title="Delete">
             <Popconfirm
-              title="Cancel Request?"
-              onConfirm={() => handleDelete(text)}
+              title="Delete blog?"
+              onConfirm={() => deleteBlog(text)}
               onCancel={cancel}
               okText="Yes"
               cancelText="No"
@@ -108,10 +104,10 @@ const AdminBlogsComponent = ({ loading, blogsList, deleteBlog }) => {
 
   return (
     <>
-      {loading && !blogsList ? (
+      {loading && !blogs ? (
         <Loading text="Loading... " />
       ) : (
-        <Table dataSource={blogsList} columns={columns} title={() => 'List of Blogs'} />
+        <Table dataSource={blogs} columns={columns} title={() => 'List of Blogs'} />
       )}
     </>
   );
@@ -119,7 +115,7 @@ const AdminBlogsComponent = ({ loading, blogsList, deleteBlog }) => {
 
 AdminBlogsComponent.propTypes = {
   loading: PropTypes.bool.isRequired,
-  blogsList: PropTypes.array,
+  blogs: PropTypes.array,
   deleteBlog: PropTypes.func
   //   currentUser: PropTypes.object
   // t: PropTypes.func
