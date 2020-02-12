@@ -1,11 +1,15 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
+import { message } from 'antd';
 
-import { compose } from '@gqlapp/core-common';
+import { compose, removeTypename } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import { PropTypes } from 'prop-types';
+import { PageLayout } from '@gqlapp/look-client-react';
 import ADDRESSES_QUERY from '../graphql/AddressesQuery.graphql';
+import ADD_OR_EDIT_ADDRESS from '../graphql/AddOrEditAddress.graphql';
 
 import AddressesView from '../components/AddressesView';
 
@@ -31,14 +35,17 @@ import AddressesView from '../components/AddressesView';
 class Addresses extends React.Component {
   render() {
     console.log('props', this.props);
-    return <AddressesView {...this.props} />;
+    return <PageLayout>{!this.props.loading && <AddressesView {...this.props} />}</PageLayout>;
   }
 }
+
+Addresses.propTypes = {
+  loading: PropTypes.bool
+};
 
 export default compose(
   graphql(CURRENT_USER_QUERY, {
     props({ data: { loading, error, currentUser } }) {
-      console.log('1');
       if (error) throw new Error(error);
       return {
         loading,
@@ -54,6 +61,32 @@ export default compose(
       if (error) throw new Error(error);
       return { loading, addresses };
     }
+  }),
+  graphql(ADD_OR_EDIT_ADDRESS, {
+    props: ({ mutate, ownProps: { currentUser } }) => ({
+      addOrEditAddresses: async values => {
+        message.destroy();
+        message.loading('Please wait...', 0);
+        try {
+          values.userId = currentUser && currentUser.id;
+          values.pinCode = Number(values.pinCode);
+          const input = removeTypename(values);
+          const {
+            data: { addOrEditAddress }
+          } = await mutate({
+            variables: {
+              input: input
+            }
+          });
+          message.destroy();
+          message.success(addOrEditAddress);
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
   }),
   translate('addresses')
 )(Addresses);

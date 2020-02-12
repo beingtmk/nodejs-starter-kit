@@ -28,15 +28,25 @@ export default class Addresses extends Model {
     return 'id';
   }
   public async addresses(id: number) {
-    return camelizeKeys(
-      await Addresses.query()
-        // .from('user_address as ua')
-        .where('user_id', '=', id)
-        .orderBy('id', 'desc')
-    );
+    return camelizeKeys(await Addresses.query().where('user_id', '=', id));
   }
 
   public async addAddress(params: Address) {
     return Addresses.query().insertGraph(decamelizeKeys(params));
+  }
+
+  public async addOrEditAddress(params: Address) {
+    if (params.id) {
+      // const status = await this.addressStatus(params);
+      await Addresses.query().upsertGraph(decamelizeKeys(params));
+      return 'Address edited';
+    } else {
+      // perform address add
+      await Addresses.query().insertGraph(decamelizeKeys(params));
+      return 'Address added';
+    }
+    // if (status) {
+    //   // perform address edit
+    // }
   }
 }

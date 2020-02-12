@@ -231,7 +231,7 @@ class RenderAddress extends React.Component {
                     okText="Save"
                     onCancel={() => this.modalControl(indexa, false) || this.checkAdd(indexa)}
                     onOk={() =>
-                      this.modalControl(indexa, false) || onSubmit() || this.setState({ newAddressState: false })
+                      this.modalControl(indexa, false) || onSubmit(address) || this.setState({ newAddressState: false })
                     }
                   >
                     <div>

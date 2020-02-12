@@ -3,7 +3,6 @@ import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
 import { FieldArray, withFormik } from 'formik';
 
-import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RenderAddress from './RenderAddresses';
@@ -15,11 +14,11 @@ const renderMetaData = t => (
   />
 );
 
-const AddressesView = ({ t, values }) => {
+const AddressesView = ({ t, values, addOrEditAddresses }) => {
   const { addresses: address } = values;
   const addresses = [...address];
   return (
-    <PageLayout>
+    <>
       {renderMetaData(t)}
       <FieldArray
         name="addresses"
@@ -30,18 +29,20 @@ const AddressesView = ({ t, values }) => {
             arrayHelpers={arrayHelpers}
             label="addresses"
             t={t}
-            // onSubmit={() => this.handleSave(values)}
+            onSubmit={addOrEditAddresses}
+            // userId={currentUser.id}
             // isSelectable={true}
             // onSelect={onSelect}
           />
         )}
       />
-    </PageLayout>
+    </>
   );
 };
 
 AddressesView.propTypes = {
   values: PropTypes.array,
+  addOrEditAddresses: PropTypes.func,
   t: PropTypes.func
 };
 
@@ -51,6 +52,8 @@ const AddressesViewWithFormik = withFormik({
 
     function getAddresses(address) {
       return {
+        id: address.id ? address.id : null,
+        userId: address.userId,
         streetAddress1: address.streetAddress1,
         streetAddress2: address.streetAddress2,
         city: address.city,
@@ -64,10 +67,14 @@ const AddressesViewWithFormik = withFormik({
     };
   },
   async handleSubmit(
-    values // , { props: { onSubmit } }
+    values // , { props: { addOrEditAddresses } }
   ) {
     console.log('values', values);
-    // onSubmit();
+    // try {
+    //   await addOrEditAddresses(values);
+    // } catch (e) {
+    //   console.log(e);
+    // }
   },
   displayName: 'CheckoutBill ' // helps with React DevTools
 });

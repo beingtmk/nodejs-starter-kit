@@ -24,6 +24,13 @@ export default (pubsub: any) => ({
       } catch (e) {
         return e;
       }
+    }),
+    addOrEditAddress: withAuth(async (obj: any, { input }: AddressInput, context: any) => {
+      try {
+        return await context.Addresses.addOrEditAddress(input);
+      } catch (e) {
+        return e;
+      }
     })
   },
   Subscription: {}
