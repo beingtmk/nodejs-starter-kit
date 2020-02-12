@@ -168,7 +168,17 @@ class RenderAddress extends React.Component {
   };
 
   render() {
-    const { arrayHelpers, name, addresses, t, label, onSubmit, backgroundColor, borderColor } = this.props;
+    const {
+      arrayHelpers,
+      name,
+      addresses,
+      t,
+      label,
+      onSubmit,
+      backgroundColor,
+      borderColor,
+      handleDeleteAddress
+    } = this.props;
     function cancel(e) {
       console.log(e);
       message.error('Click on No');
@@ -242,7 +252,7 @@ class RenderAddress extends React.Component {
                 <Grid.Box shiftRight>
                   <Popconfirm
                     title="Are you sure to delete this address?"
-                    onConfirm={() => arrayHelpers.remove(indexa)}
+                    onConfirm={() => arrayHelpers.remove(indexa) || handleDeleteAddress(address.id)}
                     onCancel={cancel}
                     okText="Yes"
                     cancelText="No"
@@ -340,6 +350,7 @@ RenderAddress.propTypes = {
   arrayHelpers: PropTypes.object,
   onSubmit: PropTypes.func,
   onSelect: PropTypes.func,
+  handleDeleteAddress: PropTypes.func,
   backgroundColor: PropTypes.string,
   borderColor: PropTypes.string
 };

@@ -31,6 +31,14 @@ export default (pubsub: any) => ({
       } catch (e) {
         return e;
       }
+    }),
+    deleteAddress: withAuth(async (obj: any, { id }: Identifier, context: any) => {
+      try {
+        await context.Addresses.deleteAddress(id);
+        return true;
+      } catch (e) {
+        return e;
+      }
     })
   },
   Subscription: {}

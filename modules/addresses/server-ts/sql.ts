@@ -45,8 +45,11 @@ export default class Addresses extends Model {
       await Addresses.query().insertGraph(decamelizeKeys(params));
       return 'Address added';
     }
-    // if (status) {
-    //   // perform address edit
-    // }
+  }
+
+  public deleteAddress(id: number) {
+    return knex('user_address')
+      .where('id', '=', id)
+      .del();
   }
 }

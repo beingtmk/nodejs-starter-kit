@@ -14,7 +14,7 @@ const renderMetaData = t => (
   />
 );
 
-const AddressesView = ({ t, values, addOrEditAddresses }) => {
+const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
   const { addresses: address } = values;
   const addresses = [...address];
   return (
@@ -30,7 +30,7 @@ const AddressesView = ({ t, values, addOrEditAddresses }) => {
             label="addresses"
             t={t}
             onSubmit={addOrEditAddresses}
-            // userId={currentUser.id}
+            handleDeleteAddress={deleteAddress}
             // isSelectable={true}
             // onSelect={onSelect}
           />
@@ -43,7 +43,8 @@ const AddressesView = ({ t, values, addOrEditAddresses }) => {
 AddressesView.propTypes = {
   values: PropTypes.array,
   addOrEditAddresses: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
+  deleteAddress: PropTypes.func
 };
 
 const AddressesViewWithFormik = withFormik({
