@@ -6,7 +6,13 @@ import { withFormik, FieldArray } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, Button, RenderDynamicField } from '@gqlapp/look-client-react';
+import {
+  RenderField,
+  Button
+  // , RenderDynamicField
+} from '@gqlapp/look-client-react';
+
+import AddAdminsComponent from './AddAdminsComponent.web';
 
 const FormItem = Form.Item;
 
@@ -74,17 +80,31 @@ class EventFormComponent extends React.Component {
               onOk={this.onOk}
               // defaultValue={moment(`${values.date}`, 'YYYY-MM-DD')}
             />
-            {/* {console.log(
-            'date+time',
-            moment(`${values.date} ${values.time}`, 'YYYY-MM-DD HH:mm:ss')._i
-          )} */}
+            {/* {console.log('date+time', moment(`${values.date} ${values.time}`, 'YYYY-MM-DD HH:mm:ss')._i)} */}
           </FormItem>
 
-          <FieldArray
+          {/* <FieldArray
             name="admins"
             render={arrayHelpers => (
               <RenderDynamicField
                 keys={[{ key: 'username', type: 'text' }, { key: 'contactInfo', type: 'text' }]}
+                buttonText="Add Admin"
+                style={{ width: '40%' }}
+                arrayHelpers={arrayHelpers}
+                values={values.admins}
+                name="admins"
+                label={t('editEvent.form.field.admins')}
+              />
+            )}
+          /> */}
+          <FieldArray
+            name="admins"
+            render={arrayHelpers => (
+              <AddAdminsComponent
+                keys={[
+                  { key: 'username', placeholder: 'Name', type: 'text' },
+                  { key: 'contactInfo', placeholder: 'Contact Info', type: 'text' }
+                ]}
                 buttonText="Add Admin"
                 style={{ width: '40%' }}
                 arrayHelpers={arrayHelpers}

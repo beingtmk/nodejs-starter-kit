@@ -1,47 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import {
-  Icon,
-  // , Modal
-  Divider
-} from 'antd';
-import { PropTypes } from 'prop-types';
+import Grid from 'hedron';
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { RenderField, RenderAutoComplete } from '@gqlapp/look-client-react';
+import { Form, Icon, Divider } from 'antd';
+import { RenderField, RenderUpload, Button } from '@gqlapp/look-client-react';
 
-const AddAdminBtn = styled.div`
-  /* background: #fff;
-  border: 1px solid rgba(100, 100, 100, 0.4);
-  border-radius: 0 0 2px 2px;
-  color: #1d2129;
-   */
-  height: 40px;
-  width: 40px;
-  cursor: pointer;
-  text-align: center;
-  margin-left: 10px;
-  padding: 4px 4px;
-  border: 3px solid #ddd;
-  border-radius: 10px;
-  background-color: #fff;
-  position: relative;
-  bottom: 10px;
+const FormItem = Form.Item;
 
-  &:hover {
-    border: 3px solid #4c8bf5;
-  }
-`;
-const AdminCard = styled.div`
-  font-size: 12px;
-  /* padding: 20px;
-  padding-bottom: 1px; */
-  border: 3px solid #4c8bf5;
-  background-color: #fff;
-  width: 100%;
-  border-radius: 10px;
+const HomeAddressBlock = styled.div`
+  font-size: 14px;
+  text-shadow: 0.7px 0 0;
+  letter-spacing: 0.3px;
+  /* position: relative;
+  bottom: 8px; */
 `;
 
-const AdminCardLines = styled.div`
+const AddressLines = styled.h4`
   & > h4 {
     line-height: 12px;
     color: #5d5f5f !important;
@@ -50,120 +25,212 @@ const AdminCardLines = styled.div`
   }
 `;
 
-class AddAdminsComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    const { visible } = this.state;
-    this.props.value.map((admin, index) => {
-      visible[index] = false;
+const HomeAddress = styled.div`
+  font-size: 12px;
+  margin: 0px 27px 10px;
+  padding: 0px 10px;
+  padding-bottom: 1px;
+  border: 3px solid ${props => props.borderColor || 'rgba(175, 226, 217, 0.81)'};
+  background-color: ${props => props.backgroundColor || 'rgba(35, 177, 149, 0.2)'};
+  width: 100%;
+  border-radius: 10px;
+
+  ${props =>
+    props.selectable
+      ? css`
+          margin-bottom: 15px;
+          background-color: #fff;
+          width: 165px !important;
+        `
+      : css`
+          /* margin-top: 15px; */
+          width: 165px !important;
+        `}
+  ${props =>
+    props.active &&
+    css`
+      cursor: pointer;
+      background-color: ${props => props.backgroundColor || 'rgba(35, 177, 149, 0.2)'};
+    `}
+  &:hover {
+    background-color: ${props => props.selectable && (props.backgroundColor || 'rgba(35, 177, 149, 0.2)')};
+  }
+`;
+const Visible = styled.div`
+  display: ${props => props.visible || 'none'};
+`;
+
+export default class AddAdminsComponent extends React.Component {
+  state = {
+    visible: []
+  };
+
+  componentDidMount() {
+    const visible = this.state.visible;
+    this.props.values.map((v, indexv) => {
+      visible[indexv] = 'none';
     });
     this.setState({ visible });
   }
 
-  state = { visible: [], dataSource: [] };
+  add = () => {
+    const arrayHelpers = this.props.arrayHelpers;
+    let obj = {};
+    const keys = this.props.keys;
 
-  handleVisible = () => {
-    const { visible } = this.state;
-    if (!visible) {
-      const admin = {};
-      this.props.value.push(admin);
-    }
-    this.setState({ visible: visible ? false : true });
+    keys.map(k => (obj[k.key] = ''));
+
+    arrayHelpers.push(obj);
+    this.handleVisible(this.props.values.length);
   };
 
-  // FOR RENDERAUTOCOMPLETE
-  handleSearch = value => {
-    this.setState({
-      dataSource: value ? this.searchResult(value) : []
-    });
+  handleVisible = index => {
+    const visible = this.state.visible;
+    visible[index] = visible[index] === 'block' ? 'none' : 'block';
+    this.setState({ visible });
   };
-
-  searchResult(query) {
-    var items = this.props.users.filter(
-      item =>
-        item.username.toUpperCase().includes(query.toUpperCase()) ||
-        (item.profile &&
-          ((item.profile.firstName && item.profile.firstName.toUpperCase().includes(query.toUpperCase())) ||
-            (item.profile.lastName && item.profile.lastName.toUpperCase().includes(query.toUpperCase()))))
-    );
-    return items;
-  }
 
   render() {
-    const {
-      label,
-      value,
-      //  isAdmin, users,
-      name
-    } = this.props;
-    console.log('value', value);
+    console.log('props addadmns', this.props);
+    const keys = this.props.keys;
+    const name = this.props.name;
+    const values = this.props.values;
+    const arrayHelpers = this.props.arrayHelpers;
+    let formItems = null;
 
-    let adminCard = [];
-    let adminCardField = [];
-    {
-      value.map(
-        (admin, index) => (
-          (adminCard[index] = (
-            <AdminCardLines>
-              <h4>{admin.userName}</h4>
-              <h4>{admin.contactInfo}</h4>
-            </AdminCardLines>
-          )),
-          (adminCardField[index] = (
-            <div>
-              {console.log('`${name}[${index}].userName`', `${name}[${index}].userName`)}
-              <Field
-                name={`${name}[${index}].userName`}
-                dataSource={this.state.dataSource.map(item => item.username)}
-                component={RenderAutoComplete}
-                label="User Name"
-                value={admin.userName}
-                // onSelect={this.onSelect}
-                onSearch={this.handleSearch}
-              />
-              <Field
-                name={`${name}[${index}].contactInfo`}
-                component={RenderField}
-                placeholder="Enter contact info..."
-                type="text"
-                label="Contact Info"
-                value={admin.contactInfo}
-              />
-              <Divider />
-            </div>
-          ))
-        )
-      );
+    if (values) {
+      formItems = values.map((v, indexv) => (
+        <Visible visible={this.state.visible[indexv]}>
+          <FormItem required={false} key={indexv} style={{ margin: '0px' }}>
+            {keys.map((k, indexk) => (
+              <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={indexk}>
+                {k.type == 'text' ? (
+                  <Field
+                    name={`${name}[${indexv}].${k.key}`}
+                    component={RenderField}
+                    placeholder={k.placeholder || k.key}
+                    type="text"
+                    label={`${k.label || k.key}`}
+                    // label={`${k.label || k.key} #${indexv + 1}`}
+                    value={v[k.key]}
+                    key={indexv}
+                    // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  />
+                ) : null}
+
+                {k.type == 'number' ? (
+                  <Field
+                    name={`${name}[${indexv}].${k.key}`}
+                    component={RenderField}
+                    placeholder={k.placeholder || k.key}
+                    type="number"
+                    label={`${k.label || k.key}`}
+                    value={v[k.key]}
+                    key={indexv}
+                  />
+                ) : null}
+
+                {k.type == 'image' ? (
+                  <Field
+                    name={`${name}[${indexv}].${k.key}`}
+                    component={RenderUpload}
+                    type="text"
+                    setload={this.props.setload}
+                    label={k.label || k.key}
+                    value={v[k.key]}
+                    key={indexv}
+                    // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  />
+                ) : null}
+              </FormItem>
+            ))}
+            {keys.length > 1 ? (
+              <>
+                <Icon type="enter" style={{ paddingTop: '40px' }} onClick={() => this.handleVisible(indexv)} />
+                <Icon
+                  style={{ paddingTop: '40px' }}
+                  title="Remove "
+                  className="dynamic-delete-button"
+                  type="minus-circle-o"
+                  onClick={() => arrayHelpers.remove(indexv)}
+                />
+              </>
+            ) : null}
+          </FormItem>
+          <Divider />
+        </Visible>
+      ));
+    }
+
+    let formCards = null;
+
+    if (values) {
+      formCards = values.map((v, indexv) => (
+        <Grid.Box>
+          <Grid.Bounds direction="vertical">
+            <HomeAddress>
+              <Grid.Box>
+                <HomeAddressBlock>Admin</HomeAddressBlock>
+              </Grid.Box>
+              <Grid.Box>
+                <AddressLines>
+                  {keys.map(k => (
+                    <h4>{v[k.key]}</h4>
+                  ))}
+                </AddressLines>
+              </Grid.Box>
+              {keys.length > 1 ? (
+                <Grid.Box shiftRight fill>
+                  <Icon
+                    style={{ fontSize: '15px', padding: '0px 10px' }}
+                    type="edit"
+                    onClick={() => this.handleVisible(indexv)}
+                  />
+                </Grid.Box>
+              ) : null}
+            </HomeAddress>
+          </Grid.Bounds>
+        </Grid.Box>
+      ));
     }
 
     return (
-      <>
-        <Divider />
-        <div style={{ display: 'flex' }}>
-          <h4>{label} :</h4>
-          <AddAdminBtn onClick={this.handleVisible}>
-            <Icon style={{ fontSize: '25px' }} type="plus" />
-          </AddAdminBtn>
-        </div>
-        <Divider />
-        {value.map((admin, index) => (
-          <>{adminCardField[index]}</>
-        ))}
-        {value.map((admin, index) => (
-          <>
-            <AdminCard>{adminCard[index]}</AdminCard>;
-          </>
-        ))}
-      </>
+      <Grid.Provider
+        // debug
+        padding="0px"
+        breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}
+      >
+        <Grid.Bounds direction="horizontal">
+          <Grid.Box fill>
+            <FormItem label={this.props.label}>
+              <Grid.Bounds direction="vertical">
+                <Grid.Box>{formItems}</Grid.Box>
+                <Grid.Box>
+                  <Grid.Bounds direction="horizontal" wrap>
+                    {formCards}
+                  </Grid.Bounds>
+                </Grid.Box>
+              </Grid.Bounds>
+            </FormItem>
+          </Grid.Box>
+          <Grid.Box>
+            <Button onClick={this.add} type="button" disabled={this.state.visible.includes('block')}>
+              <Icon type="plus" />
+            </Button>
+          </Grid.Box>
+        </Grid.Bounds>
+      </Grid.Provider>
     );
   }
 }
 
 AddAdminsComponent.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.array,
-  users: PropTypes.object,
-  name: PropTypes.string
-};
+  values: PropTypes.array,
+  keys: PropTypes.array,
+  setload: PropTypes.func,
 
-export default AddAdminsComponent;
+  buttonText: PropTypes.string,
+  arrayHelpers: PropTypes.object
+};
