@@ -74,6 +74,9 @@ export default (pubsub: any) => ({
     }),
     toggleParticipant: withAuth(async (obj: any, { input }: EventParticipantInput, context: any) => {
       return context.Events.addOrRemoveParticipant(input);
+    }),
+    deleteAdmin: withAuth(async (obj: any, { id }: Identifier, context: any) => {
+      return context.Events.deleteAdmin(id);
     })
   },
   Subscription: {}

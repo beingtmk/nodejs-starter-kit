@@ -19,7 +19,7 @@ class EditEventView extends Component {
   );
 
   render() {
-    const { t, event, editEvent, loading, currentUser } = this.props;
+    const { t, event, editEvent, loading, currentUser, deleteAdmin } = this.props;
 
     return (
       <>
@@ -33,11 +33,23 @@ class EditEventView extends Component {
                 <>
                   <Grid.Box sm={{ hidden: 'true' }}>
                     <LayoutCenter>
-                      <EventFormComponent t={t} event={event} onSubmit={editEvent} currentUser={currentUser} />
+                      <EventFormComponent
+                        t={t}
+                        event={event}
+                        onSubmit={editEvent}
+                        currentUser={currentUser}
+                        deleteAdmin={deleteAdmin}
+                      />
                     </LayoutCenter>
                   </Grid.Box>
                   <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-                    <EventFormComponent t={t} event={event} onSubmit={editEvent} currentUser={currentUser} />
+                    <EventFormComponent
+                      t={t}
+                      event={event}
+                      onSubmit={editEvent}
+                      currentUser={currentUser}
+                      deleteAdmin={deleteAdmin}
+                    />
                   </Grid.Box>
                 </>
               )}
@@ -54,6 +66,7 @@ EditEventView.propTypes = {
   loading: PropTypes.bool,
   event: PropTypes.object,
   currentUser: PropTypes.object,
+  deleteAdmin: PropTypes.func,
   editEvent: PropTypes.func
 };
 

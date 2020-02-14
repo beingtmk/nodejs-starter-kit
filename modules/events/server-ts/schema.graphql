@@ -39,7 +39,7 @@ extend type Mutation {
   addEvent(input: AddEventInput!): Boolean
   editEvent(input: EditEventInput!): Boolean
   deleteEvent(id: Int!): Event
-  # addParticipant(input: ParticipantInput): Boolean
+  deleteAdmin(id: Int!): Boolean
   toggleParticipant(input: ParticipantInput): String
 }
 
@@ -70,7 +70,7 @@ input EditEventInput {
 }
 
 input AdminInput {
-  # id: Int
+  id: Int
   userId: Int
   eventId: Int
   username: String!

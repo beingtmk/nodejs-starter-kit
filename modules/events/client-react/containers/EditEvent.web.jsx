@@ -8,6 +8,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import EVENT_QUERY from '../graphql/EventQuery.graphql';
 import EDIT_EVENT from '../graphql/EditEvent.graphql';
+import DELETE_ADMIN from '../graphql/DeleteAdmin.graphql';
 
 import EditEventView from '../components/EditEventView.web';
 
@@ -77,6 +78,14 @@ export default compose(
         currentUser
       };
     }
+  }),
+  graphql(DELETE_ADMIN, {
+    props: ({ mutate }) => ({
+      deleteAdmin: id => {
+        mutate({ variables: { id } });
+        message.warning('Admin deleted!!');
+      }
+    })
   }),
   translate('events')
 )(EditEvent);

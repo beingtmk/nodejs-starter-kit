@@ -44,7 +44,7 @@ class EventFormComponent extends React.Component {
   };
 
   render() {
-    const { t, values, handleSubmit } = this.props;
+    const { t, values, handleSubmit, deleteAdmin } = this.props;
     return (
       <>
         <Form onSubmit={handleSubmit}>
@@ -111,20 +111,10 @@ class EventFormComponent extends React.Component {
                 values={values.admins}
                 name="admins"
                 label={t('editEvent.form.field.admins')}
+                deleteValue={deleteAdmin}
               />
             )}
           />
-
-          {/* <AddAdminsComponent
-            name="admins"
-            //  placeholder=""
-            label="Admins"
-            // value={values.admins}
-            value={admins}
-            user={currentUser}
-            users={users}
-            isAdmin={true}
-          /> */}
 
           <Button color="primary" type="submit">
             Submit
@@ -137,6 +127,7 @@ class EventFormComponent extends React.Component {
 
 EventFormComponent.propTypes = {
   t: PropTypes.func,
+  deleteAdmin: PropTypes.func,
   handleSubmit: PropTypes.func,
   values: PropTypes.object
 };
@@ -145,6 +136,7 @@ const EditEventWithFormik = withFormik({
   mapPropsToValues: props => {
     function getAdmin(admin) {
       return {
+        id: (admin && admin.id) || null,
         userId: (admin && admin.userId) || (props.currentUser && props.currentUser.id) || null,
         username: (admin && admin.username) || '',
         contactInfo: (admin && admin.contactInfo) || ''

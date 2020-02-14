@@ -90,18 +90,33 @@ export default class AddAdminsComponent extends React.Component {
     this.setState({ visible });
   };
 
+  handleDelete = async (index, id) => {
+    this.props.arrayHelpers.remove(index);
+    try {
+      await this.props.deleteValue(id);
+    } catch (e) {
+      throw Error(e);
+    }
+  };
+
   render() {
-    console.log('props addadmns', this.props);
-    const keys = this.props.keys;
-    const name = this.props.name;
-    const values = this.props.values;
-    const arrayHelpers = this.props.arrayHelpers;
+    // console.log('props addadmns', this.props);
+    const {
+      keys,
+      name,
+      values
+      // , arrayHelpers
+    } = this.props;
+    // const keys = this.props.keys;
+    // const name = this.props.name;
+    // const values = this.props.values;
+    // const arrayHelpers = this.props.arrayHelpers;
     let formItems = null;
 
     if (values) {
       formItems = values.map((v, indexv) => (
         <Visible visible={this.state.visible[indexv]}>
-          <FormItem required={false} key={indexv} style={{ margin: '0px' }}>
+          <FormItem required={false} key={indexv} style={{ height: '75px' }}>
             {keys.map((k, indexk) => (
               <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={indexk}>
                 {k.type == 'text' ? (
@@ -146,13 +161,12 @@ export default class AddAdminsComponent extends React.Component {
             ))}
             {keys.length > 1 ? (
               <>
-                <Icon type="enter" style={{ paddingTop: '40px' }} onClick={() => this.handleVisible(indexv)} />
+                <Icon type="check" style={{ padding: '50px 10px' }} onClick={() => this.handleVisible(indexv)} />
                 <Icon
-                  style={{ paddingTop: '40px' }}
                   title="Remove "
                   className="dynamic-delete-button"
                   type="minus-circle-o"
-                  onClick={() => arrayHelpers.remove(indexv)}
+                  onClick={() => this.handleDelete(indexv, v.id)}
                 />
               </>
             ) : null}
@@ -230,7 +244,7 @@ AddAdminsComponent.propTypes = {
   values: PropTypes.array,
   keys: PropTypes.array,
   setload: PropTypes.func,
-
+  deleteValue: PropTypes.func,
   buttonText: PropTypes.string,
   arrayHelpers: PropTypes.object
 };

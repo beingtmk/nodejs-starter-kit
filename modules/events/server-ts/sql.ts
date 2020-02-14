@@ -109,11 +109,11 @@ export default class Events extends Model {
         .andWhere('p.event_id', '=', eventId)
         .first()
     )['count(`p`.`id`)'];
-    let wStatus = false;
+    let pStatus = false;
     if (count > 0) {
-      wStatus = true;
+      pStatus = true;
     }
-    return wStatus;
+    return pStatus;
   }
 
   public async addOrRemoveParticipant(input: EventParticipant) {
@@ -129,6 +129,31 @@ export default class Events extends Model {
       await Participants.query().insertGraph(decamelizeKeys(input));
       return 'Enroll SuccessFully';
     }
+  }
+
+  public async adminStatus(id: number) {
+    const count = camelizeKeys(
+      await knex
+        .count('a.id')
+        .from('admins as a')
+        .where('a.id', '=', id)
+        .first()
+    )['count(`a`.`id`)'];
+    let aStatus = false;
+    if (count > 0) {
+      aStatus = true;
+    }
+    return aStatus;
+  }
+
+  public async deleteAdmin(id: number) {
+    const aStatus = this.adminStatus(id);
+    if (aStatus) {
+      return knex('admins')
+        .where('id', '=', id)
+        .del();
+    }
+    return true;
   }
 }
 
