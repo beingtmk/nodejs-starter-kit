@@ -23,30 +23,57 @@
 }
 
 //----Navbar----//
-.ant-layout-header{
+.ant-layout-header {
   height: 50px !important;
 }
 
-
 @media only screen and (max-width: 600px) {
-  .ant-layout-header{
-    padding:0 10px !important;
+  .ant-layout-header {
+    padding: 0 10px !important;
   }
 }
 
-.ant-menu-item{
-  height:fit-content !important;
+.ant-menu-item {
+  height: fit-content !important;
 }
-
-
 
 //---i18n-----//
 
-.language-picker-nav{
-  width:100px !important;
+.language-picker-nav {
+  width: 100px !important;
 }
 
-
-.ant-menu-vertical.ant-menu-sub, .ant-menu-vertical-left.ant-menu-sub, .ant-menu-vertical-right.ant-menu-sub{
+.ant-menu-vertical.ant-menu-sub,
+.ant-menu-vertical-left.ant-menu-sub,
+.ant-menu-vertical-right.ant-menu-sub {
   min-width: fit-content !important;
+}
+
+.title-line-wrapper {
+  height: 2px;
+  width: 100%;
+  max-width: 312px;
+  overflow: hidden;
+  .title-line {
+    height: 100%;
+    width: 64px;
+    transform: translateX(-64px);
+    background: linear-gradient(
+      to right,
+      rgba(@primary-color, 0) 0%,
+      rgba(@primary-color, 1) 100%
+    );
+    animation: TitleLine 3s ease-in-out 1.5s infinite;
+  }
+}
+
+@keyframes TitleLine {
+  0%,
+  25% {
+    transform: translateX(-64px);
+  }
+  75%,
+  100% {
+    transform: translateX(400px);
+  }
 }

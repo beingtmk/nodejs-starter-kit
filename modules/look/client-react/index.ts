@@ -6,5 +6,6 @@ export * from './look';
 
 export { default as LayoutCenter } from './LayoutCenter';
 export { default as Loading } from './Loading';
+export { default as New } from './new';
 
 export default new ClientModule({ onAppCreate: [onAppCreate], localization: [{ ns: 'user', resources }] });

@@ -27,5 +27,6 @@ export { default as LanguagePicker } from './LanguagePicker';
 export { default as Pagination } from './Pagination';
 export { default as Avatar } from './Avatar';
 export { default as Icon } from './Icon';
+export { default as New } from './new';
 
 export { onAppCreate } from './NavBar';
