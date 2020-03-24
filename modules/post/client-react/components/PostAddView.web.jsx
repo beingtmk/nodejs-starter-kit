@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
+import { PageLayout, LayoutCenter, New } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import PostForm from './PostForm';
@@ -33,6 +33,7 @@ const PostAddView = ({ addPost, t }) => {
       <h2>
         {t(`post.label.create`)} {t('post.label.post')}
       </h2>
+      <New length="125px" />
       <PostForm onSubmit={onSubmit(addPost)} />
       <br />
     </>
