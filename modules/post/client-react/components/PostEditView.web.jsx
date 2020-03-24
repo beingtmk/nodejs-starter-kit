@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
+import { PageLayout, LayoutCenter, New } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import PostForm from './PostForm';
@@ -40,6 +40,7 @@ const PostEditView = ({ loading, post, match, location, subscribeToMore, editPos
       <h2>
         {t(`post.label.edit`)} {t('post.label.post')}
       </h2>
+      <New length="110px" />
       <PostForm onSubmit={onSubmit(postObj, editPost)} post={post} />
       <br />
       {postObj && (

@@ -3,7 +3,7 @@ import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, New } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
@@ -24,6 +24,7 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
   const renderContent = () => (
     <>
       <h1 className="text-center">{t('forgotPass.form.title')}</h1>
+      <New length="140px" />
       <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
     </>
   );
