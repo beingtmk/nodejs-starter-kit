@@ -3,7 +3,7 @@ import Grid from 'hedron';
 import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, New } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ContactForm from './ContactForm';
@@ -19,7 +19,7 @@ const ContactView = (props: ContactViewProps) => {
   const renderContent = () => (
     <>
       <h1 className="text-center">{t('form.title')}</h1>
-      <New length="100px" />
+      <Underline length="100px" />
       <ContactForm {...props} />
     </>
   );

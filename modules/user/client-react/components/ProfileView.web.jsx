@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, Card, CardGroup, CardTitle, CardText, PageLayout, New } from '@gqlapp/look-client-react';
+import { LayoutCenter, Card, CardGroup, CardTitle, CardText, PageLayout, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const renderMetaData = t => {
@@ -27,7 +27,7 @@ const ProfileView = ({ currentUserLoading, currentUser, t }) => {
   const renderContent = () => (
     <>
       <h2>{t('profile.card.title')}</h2>
-      <New length="75px" />
+      <Underline length="75px" />
       <Card>
         <CardGroup>
           <CardTitle>{t('profile.card.group.name')}:</CardTitle>

@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, New } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UserForm from './UserForm';
@@ -31,7 +31,7 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
       <h2>
         {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
       </h2>
-      <New length="100px" />
+      <Underline length="100px" />
       <UserForm
         onSubmit={onSubmit}
         shouldDisplayRole={isNotSelf}

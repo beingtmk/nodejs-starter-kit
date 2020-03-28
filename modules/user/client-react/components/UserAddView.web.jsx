@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, New } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UserForm from './UserForm';
@@ -29,7 +29,7 @@ const UserAddView = ({ t, onSubmit }) => {
       <h2>
         {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
       </h2>
-      <New length="120px" />
+      <Underline length="120px" />
       <UserForm onSubmit={onSubmit} initialValues={{}} shouldDisplayRole={true} shouldDisplayActive={true} />
     </>
   );

@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import Grid from 'hedron';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText, New } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RegisterForm from './RegisterForm';
@@ -34,7 +34,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
   const renderContent = () => (
     <>
       <h1 className="text-center">{t('reg.form.title')}</h1>
-      <New length="80px" />
+      <Underline length="80px" />
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
         renderConfirmationModal()
       ) : (

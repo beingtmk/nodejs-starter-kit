@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const New = ({ e }) => {
+const Underline = ({ e }) => {
   return (
     <React.Fragment>
       <div key="line" className="title-line-wrapper" align="left" style={{ maxWidth: `${e}` }}>
@@ -15,7 +15,7 @@ const New = ({ e }) => {
   );
 };
 
-New.propTypes = {
+Underline.propTypes = {
   e: PropTypes.object
 };
-export default New;
+export default Underline;
