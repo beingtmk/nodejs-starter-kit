@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { match, email, minLength, required, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Button, Alert } from '@gqlapp/look-client-react';
+import { Form, RenderField, Button, Alert, Icon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const registerFormSchema = {
@@ -42,8 +42,8 @@ const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
       />
       <div className="text-center">
         {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-        <Button color="primary" type="submit" disabled={submitting}>
-          {t('reg.form.btnSubmit')}
+        <Button block color="primary" type="submit" disabled={submitting}>
+          <Icon type="user-add" /> {t('reg.form.btnSubmit')}
         </Button>
       </div>
     </Form>

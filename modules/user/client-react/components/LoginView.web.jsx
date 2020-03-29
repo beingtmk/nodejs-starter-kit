@@ -11,7 +11,8 @@ import {
   CardTitle,
   CardText,
   Button,
-  Underline
+  Underline,
+  Icon
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
@@ -49,8 +50,10 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
       {isRegistered ? (
         renderConfirmationModal()
       ) : (
-        <React.Fragment>
-          <h1 className="text-center">{t('login.form.title')}</h1>
+        <Card>
+          <CardTitle>
+            <Icon type="login" /> {t('login.form.title')}
+          </CardTitle>
           <Underline length="80px" />
           <LoginForm onSubmit={onSubmit} />
           <hr />
@@ -61,13 +64,13 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
               <CardText>user@example.com:user1234</CardText>
             </CardGroup>
           </Card>
-        </React.Fragment>
+        </Card>
       )}
     </>
   );
 
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}

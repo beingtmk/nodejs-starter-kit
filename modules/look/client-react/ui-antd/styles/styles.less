@@ -1,6 +1,10 @@
-@import 'antd';
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap.css");
+
+
 
 #root {
+  font-family: 'Poppins', sans-serif !important;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,6 +39,11 @@
 
 .ant-menu-item {
   height: fit-content !important;
+
+
+// Overriding antd css
+.ant-menu-horizontal > .ant-menu-item > a::before{
+  margin-bottom: 0px !important;
 }
 
 //---i18n-----//

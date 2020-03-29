@@ -6,7 +6,7 @@ import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { validate } from '@gqlapp/validation-common-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 
-import { Form, RenderField, Button, Alert } from '@gqlapp/look-client-react';
+import { Form, RenderField, Button, Alert, Icon } from '@gqlapp/look-client-react';
 import { ContactForm } from '../types';
 
 interface ContactFormProps {
@@ -34,8 +34,8 @@ const BaseContactForm = ({
     />
     <div className="text-center">
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <Button color="primary" type="submit">
-        {t('form.btnSubmit')}
+      <Button block color="primary" type="submit">
+        <Icon type="mail" /> {t('form.btnSubmit')}
       </Button>
     </div>
   </Form>
