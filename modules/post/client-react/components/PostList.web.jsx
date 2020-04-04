@@ -81,12 +81,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
         <Grid.Bounds direction="vertical">
           <Helmet
             title={`${settings.app.name} - ${t('list.title')}`}
-            meta={[
-              {
-                name: 'description',
-                content: `${settings.app.name} - ${t('list.meta')}`
-              }
-            ]}
+            meta={[{ name: 'description', content: `${settings.app.name} - ${t('list.meta')}` }]}
           />
           <Grid.Box sm={{ hidden: 'true' }}>
             <LayoutCenter>{renderContent()}</LayoutCenter>

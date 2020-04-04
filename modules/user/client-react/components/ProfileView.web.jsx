@@ -75,6 +75,7 @@ class ProfileView extends React.Component {
                   }}
                 >
                   <Icon type="user" /> My Profile
+                  <Underline length="150px" />
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`/users/${currentUser.id}`}>
                       <Button shape="circle" size="large">
@@ -111,7 +112,6 @@ class ProfileView extends React.Component {
                       <h2>
                         <Icon type="team" /> {t('profile.card.group.role')}:
                       </h2>
-      <Underline length="75px" />
                       <CardText>{currentUser.role ? currentUser.role : 'Not Provided'}</CardText>
                     </div>
 
