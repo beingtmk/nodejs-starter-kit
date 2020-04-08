@@ -10,6 +10,7 @@ const CommentComponent = ({
   dislike,
   children,
   reference,
+  currentUser,
   deleteContentComment,
   addContentComment,
   editContentComment,
@@ -67,11 +68,12 @@ const CommentComponent = ({
         modalVisible={modalVisible}
         title={formState}
         reference={reference}
+        currentUser={currentUser}
         referenceId={referenceId}
         content={formState === REPLY ? `@${user.username} ` : content}
       />
       <Comment
-        actions={actions}
+        actions={currentUser && currentUser.id === user.id ? actions : [actions[0], actions[1], actions[2]]}
         author={<a>{user.username}</a>}
         avatar={<Avatar src={user.image} alt={user.username} />}
         content={<p>{content}</p>}
@@ -90,6 +92,7 @@ const CommentComponent = ({
 CommentComponent.propTypes = {
   comment: PropTypes.object,
   children: PropTypes.object,
+  currentUser: PropTypes.object,
   referenceId: PropTypes.number,
   reference: PropTypes.string,
   like: PropTypes.func,

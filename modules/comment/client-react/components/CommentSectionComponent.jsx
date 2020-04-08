@@ -23,8 +23,8 @@ const CommentSectionComponent = props => {
         <Collapse>
           <Panel header={<h1>{props.header}</h1>} key="1">
             <>
-              <Button color="primary" onClick={() => setModalVisible(true)}>
-                Add Comment
+              <Button color="primary" onClick={() => setModalVisible(true)} disabled={!props.currentUser}>
+                {props.currentUser ? 'Add Comment' : 'Login to Comment'}
               </Button>
               <CommentFormComponent
                 blogId={props.blogId}
@@ -41,6 +41,7 @@ const CommentSectionComponent = props => {
                     addContentComment={props.addContentComment}
                     editContentComment={props.editContentComment}
                     referenceId={item.comment.id}
+                    currentUser={props.currentUser}
                   />
                 </CommentComponent>
               ))}
@@ -62,6 +63,7 @@ CommentSectionComponent.propTypes = {
   deleteContentComment: PropTypes.func,
   blogComments: PropTypes.array,
   header: PropTypes.string,
+  currentUser: PropTypes.object,
   blogId: PropTypes.number
 };
 

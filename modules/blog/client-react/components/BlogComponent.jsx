@@ -10,7 +10,7 @@ import BlogActionsComponent from './BlogActionsComponent';
 
 const { Meta } = Card;
 
-const BlogComponent = ({ blog, moreBlogs }) => {
+const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
   return (
     <Row>
       <Col
@@ -58,7 +58,7 @@ const BlogComponent = ({ blog, moreBlogs }) => {
         <BlogRefCardComponent model={blog.model} />
         <br />
         <br />
-        <CommentSection blogId={blog.id} header="Comments" />
+        <CommentSection currentUser={currentUser} blogId={blog.id} header="Comments" />
       </Col>
 
       <Col
@@ -85,6 +85,7 @@ const BlogComponent = ({ blog, moreBlogs }) => {
 
 BlogComponent.propTypes = {
   blog: PropTypes.object,
+  currentUser: PropTypes.object,
   moreBlogs: PropTypes.array,
   t: PropTypes.func
 };

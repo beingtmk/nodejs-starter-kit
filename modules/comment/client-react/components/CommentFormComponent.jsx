@@ -11,7 +11,7 @@ const CommentFormComponentSchema = {
   content: [required]
 };
 
-const CommentFormComponent = ({ values, handleSubmit, modalVisible, setModalVisible, errors, title }) => {
+const CommentFormComponent = ({ currentUser, values, handleSubmit, modalVisible, setModalVisible, errors, title }) => {
   return (
     <Modal
       title={title}
@@ -29,8 +29,8 @@ const CommentFormComponent = ({ values, handleSubmit, modalVisible, setModalVisi
           value={values.content}
         />
         {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-        <Button color="primary" type="submit">
-          Submit
+        <Button color="primary" type="submit" disabled={!currentUser}>
+          {currentUser ? 'Submit' : 'Login to Comment'}
         </Button>
       </Form>
     </Modal>
@@ -41,6 +41,7 @@ CommentFormComponent.propTypes = {
   onSubmit: PropTypes.func,
   setModalVisible: PropTypes.func,
   values: PropTypes.object,
+  currentUser: PropTypes.object,
   errors: PropTypes.object,
   content: PropTypes.object,
   title: PropTypes.string,
