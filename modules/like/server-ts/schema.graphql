@@ -21,15 +21,9 @@ input TypeLikeInput {
 }
 
 extend type Mutation {
-  addLike(input: AddLikeInput!): Like
+  addLike(input: UserLikeInput!): Like
   deleteLike(id: Int!): Like
   deleteLikeUser(input: UserLikeInput!): Like
-}
-
-input AddLikeInput {
-  typeId: Int!
-  type: String!
-  userId: Int
 }
 
 input UserLikeInput {

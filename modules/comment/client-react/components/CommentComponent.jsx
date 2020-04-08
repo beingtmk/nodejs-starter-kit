@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Comment, Icon, Tooltip, Avatar, Menu, Dropdown } from 'antd';
 import moment from 'moment';
+
+import Likes from '@gqlapp/like-client-react/containers/Likes';
+
 import CommentFormComponent from './CommentFormComponent';
 import { REPLY, EDIT } from '../constants';
 
 const CommentComponent = ({
-  like,
-  dislike,
   children,
   reference,
   currentUser,
@@ -15,7 +16,7 @@ const CommentComponent = ({
   addContentComment,
   editContentComment,
   referenceId,
-  comment: { likes, dislikes, action, content, createdAt, user, id }
+  comment: { content, createdAt, user, id }
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [formState, setFormState] = useState(REPLY);
@@ -36,19 +37,13 @@ const CommentComponent = ({
     </Menu>
   );
 
+  const LikeValues = {
+    type: 'COMMENT',
+    typeId: id
+  };
+
   const actions = [
-    <span key="comment-basic-like">
-      <Tooltip title="Like">
-        <Icon type="like" theme={action === 'liked' ? 'filled' : 'outlined'} onClick={like} />
-      </Tooltip>
-      <span style={{ paddingLeft: 8, cursor: 'auto' }}>{likes}</span>
-    </span>,
-    <span key="comment-basic-dislike">
-      <Tooltip title="Dislike">
-        <Icon type="dislike" theme={action === 'disliked' ? 'filled' : 'outlined'} onClick={dislike} />
-      </Tooltip>
-      <span style={{ paddingLeft: 8, cursor: 'auto' }}>{dislikes}</span>
-    </span>,
+    <Likes LikeValues={LikeValues} />,
     <span key="comment-basic-reply-to" onClick={() => RenderForm(REPLY)}>
       Reply
     </span>,
@@ -73,7 +68,7 @@ const CommentComponent = ({
         content={formState === REPLY ? `@${user.username} ` : content}
       />
       <Comment
-        actions={currentUser && currentUser.id === user.id ? actions : [actions[0], actions[1], actions[2]]}
+        actions={currentUser && currentUser.id === user.id ? actions : [actions[0], actions[1]]}
         author={<a>{user.username}</a>}
         avatar={<Avatar src={user.image} alt={user.username} />}
         content={<p>{content}</p>}
@@ -95,11 +90,9 @@ CommentComponent.propTypes = {
   currentUser: PropTypes.object,
   referenceId: PropTypes.number,
   reference: PropTypes.string,
-  like: PropTypes.func,
   deleteContentComment: PropTypes.func,
   editContentComment: PropTypes.func,
-  addContentComment: PropTypes.func,
-  dislike: PropTypes.func
+  addContentComment: PropTypes.func
 };
 
 export default CommentComponent;

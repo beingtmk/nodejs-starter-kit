@@ -57,7 +57,7 @@ export default (pubsub: PubSub) => ({
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;
         }
-        const item = await Like.like(input);
+        const item = await Like.likeUsingUser(input);
         await Like.deleteLikeUser(input);
         pubsub.publish(LIKE_SUBSCRIPTION, {
           likesUpdated: {

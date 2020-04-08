@@ -59,6 +59,16 @@ export default class Like extends Model {
     return res;
   }
 
+  public async likeUsingUser(input: any) {
+    const res = camelizeKeys(
+      await Like.query()
+        .where(decamelizeKeys(input))
+        .eager(eager)
+        .first()
+    );
+    return res;
+  }
+
   public async conditionLikes(input: any) {
     return camelizeKeys(
       await Like.query()
@@ -81,7 +91,7 @@ export default class Like extends Model {
 
   public async deleteLikeUser(input: any) {
     return knex('like')
-      .where(input)
+      .where(decamelizeKeys(input))
       .del();
   }
 }

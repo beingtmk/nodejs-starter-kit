@@ -1,6 +1,7 @@
-# GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+#import "./Like.graphql"
+
+query typeLikes($input: TypeLikeInput!) {
+  typeLikes(input: $input) {
+    ...LikeInfo
   }
 }

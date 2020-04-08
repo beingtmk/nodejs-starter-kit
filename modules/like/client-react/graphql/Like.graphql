@@ -1,0 +1,11 @@
+fragment LikeInfo on Like {
+  id
+  type
+  typeId
+  user {
+    id
+    username
+  }
+  createdAt
+  updatedAt
+}
