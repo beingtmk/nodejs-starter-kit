@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return Promise.all([
     knex.schema
-      .createTable('comment', table => {
+      .createTable('content_comment', table => {
         table.increments('id');
         table.string('content');
         table
@@ -24,7 +24,7 @@ exports.up = function(knex) {
           .integer('comment_id')
           .unsigned()
           .references('id')
-          .inTable('comment')
+          .inTable('content_comment')
           .onDelete('CASCADE');
         table.timestamps(false, true);
       })
@@ -34,13 +34,13 @@ exports.up = function(knex) {
           .integer('reference_id')
           .unsigned()
           .references('id')
-          .inTable('comment')
+          .inTable('content_comment')
           .onDelete('CASCADE');
         table
           .integer('comment_id')
           .unsigned()
           .references('id')
-          .inTable('comment')
+          .inTable('content_comment')
           .onDelete('CASCADE');
         table.timestamps(false, true);
       })
@@ -51,6 +51,6 @@ exports.down = function(knex) {
   return Promise.all([
     knex.schema.dropTable('reply_comment'),
     knex.schema.dropTable('blog_comment'),
-    knex.schema.dropTable('comment')
+    knex.schema.dropTable('content_comment')
   ]);
 };

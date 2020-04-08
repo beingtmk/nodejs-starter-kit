@@ -7,20 +7,20 @@ const BLOG_C_SUBSCRIPTION = 'blog_comment_subscription';
 export default (pubsub: PubSub) => ({
   Query: {
     async comments(obj: any, args: any, context: any) {
-      return context.Comment.comments();
+      return context.ContentComment.comments();
     },
-    async blogComments(obj: any, { blogId }: any, { Comment }: any) {
-      return Comment.blogComments(blogId);
+    async blogComments(obj: any, { blogId }: any, { ContentComment }: any) {
+      return ContentComment.blogComments(blogId);
     },
     async comment(obj: any, { id }: any, context: any) {
-      return context.Comment.comment(id);
+      return context.ContentComment.comment(id);
     },
     async commentReplies(obj: any, { referenceId }: any, context: any) {
-      return context.Comment.commentReplies(referenceId);
+      return context.ContentComment.commentReplies(referenceId);
     }
   },
   Mutation: {
-    addComment: withAuth(async (obj: any, { input }: any, { auth, Comment }: any) => {
+    addContentComment: withAuth(async (obj: any, { input }: any, { auth, ContentComment }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;
@@ -38,14 +38,14 @@ export default (pubsub: PubSub) => ({
           throw new Error('Reference error');
         }
 
-        const commentId = await Comment.addComment(input);
-        const item = await Comment.comment(commentId);
+        const commentId = await ContentComment.addComment(input);
+        const item = await ContentComment.comment(commentId);
 
         let data;
         let id;
         if (blogId) {
-          id = await Comment.addBlogComment({ blogId, commentId });
-          data = await Comment.blogComment(id);
+          id = await ContentComment.addBlogComment({ blogId, commentId });
+          data = await ContentComment.blogComment(id);
           pubsub.publish(BLOG_C_SUBSCRIPTION, {
             blogCommentUpdated: {
               mutation: 'CREATED',
@@ -53,8 +53,8 @@ export default (pubsub: PubSub) => ({
             }
           });
         } else {
-          id = await Comment.addReplyComment({ referenceId, commentId });
-          data = await Comment.replyComment(id);
+          id = await ContentComment.addReplyComment({ referenceId, commentId });
+          data = await ContentComment.replyComment(id);
           pubsub.publish(C_REPLY_SUBSCRIPTION, {
             replyCommentUpdated: {
               mutation: 'CREATED',
@@ -68,7 +68,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    editComment: withAuth(async (obj: any, { input }: any, { Comment }: any) => {
+    editContentComment: withAuth(async (obj: any, { input }: any, { ContentComment }: any) => {
       try {
         const ref = input.ref;
         if (ref !== 'BLOG' && ref !== 'REPLY') {
@@ -76,12 +76,12 @@ export default (pubsub: PubSub) => ({
         }
         delete input.ref;
 
-        await Comment.editComment(input);
-        const item = await Comment.comment(input.id);
+        await ContentComment.editComment(input);
+        const item = await ContentComment.comment(input.id);
 
         let data;
         if (ref === 'BLOG') {
-          data = await Comment.blogCommentWithCid(input.id);
+          data = await ContentComment.blogCommentWithCid(input.id);
           pubsub.publish(BLOG_C_SUBSCRIPTION, {
             blogCommentUpdated: {
               mutation: 'UPDATED',
@@ -89,7 +89,7 @@ export default (pubsub: PubSub) => ({
             }
           });
         } else {
-          data = await Comment.replyCommentCid(input.id);
+          data = await ContentComment.replyCommentCid(input.id);
           pubsub.publish(C_REPLY_SUBSCRIPTION, {
             replyCommentUpdated: {
               mutation: 'UPDATED',
@@ -102,14 +102,14 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteComment: withAuth(async (obj: any, { id, ref }: any, { Comment }: any) => {
+    deleteContentComment: withAuth(async (obj: any, { id, ref }: any, { ContentComment }: any) => {
       try {
-        const item = await Comment.comment(id);
+        const item = await ContentComment.comment(id);
 
         let data;
         if (ref === 'BLOG') {
-          data = await Comment.blogCommentWithCid(id);
-          await Comment.deleteBlogCommentWithCid(id);
+          data = await ContentComment.blogCommentWithCid(id);
+          await ContentComment.deleteBlogCommentWithCid(id);
           pubsub.publish(BLOG_C_SUBSCRIPTION, {
             blogCommentUpdated: {
               mutation: 'DELETED',
@@ -117,8 +117,8 @@ export default (pubsub: PubSub) => ({
             }
           });
         } else {
-          data = await Comment.replyCommentCid(id);
-          await Comment.deleteReplyCommentWithCid(id);
+          data = await ContentComment.replyCommentCid(id);
+          await ContentComment.deleteReplyCommentWithCid(id);
           pubsub.publish(C_REPLY_SUBSCRIPTION, {
             replyCommentUpdated: {
               mutation: 'DELETED',
@@ -127,7 +127,7 @@ export default (pubsub: PubSub) => ({
           });
         }
 
-        await Comment.deleteComment(id);
+        await ContentComment.deleteComment(id);
 
         return item;
       } catch (e) {

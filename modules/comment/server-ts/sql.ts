@@ -23,11 +23,11 @@ const eager = '[user]';
 const blogEager = '[comment[user]]';
 const replyEager = '[comment[user]]';
 
-export default class Comment extends Model {
+export default class ContentComment extends Model {
   // private id: any;
 
   static get tableName() {
-    return 'comment';
+    return 'content_comment';
   }
 
   static get idColumn() {
@@ -40,7 +40,7 @@ export default class Comment extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'comment.user_id',
+          from: 'content_comment.user_id',
           to: 'user.id'
         }
       }
@@ -49,7 +49,7 @@ export default class Comment extends Model {
 
   public async comments() {
     return camelizeKeys(
-      await Comment.query()
+      await ContentComment.query()
         .eager(eager)
         .orderBy('id', 'desc')
     );
@@ -57,7 +57,7 @@ export default class Comment extends Model {
 
   public async comment(id: number) {
     const res = camelizeKeys(
-      await Comment.query()
+      await ContentComment.query()
         .findById(id)
         .eager(eager)
         .orderBy('id', 'desc')
@@ -124,7 +124,7 @@ export default class Comment extends Model {
   }
 
   public async addComment(input: any) {
-    const res = await Comment.query().insertGraph(decamelizeKeys(input));
+    const res = await ContentComment.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
@@ -139,12 +139,12 @@ export default class Comment extends Model {
   }
 
   public async editComment(id: number, input: any) {
-    const res = await Comment.query().upsertGraph(decamelizeKeys(input));
+    const res = await ContentComment.query().upsertGraph(decamelizeKeys(input));
     return res.id;
   }
 
   public async deleteComment(id: number) {
-    return knex('comment')
+    return knex('content_comment')
       .where({ id })
       .del();
   }
@@ -195,10 +195,10 @@ class BlogComment extends Model {
       },
       comment: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Comment,
+        modelClass: ContentComment,
         join: {
           from: 'blog_comment.comment_id',
-          to: 'comment.id'
+          to: 'content_comment.id'
         }
       }
     };
@@ -218,18 +218,18 @@ class ReplyComment extends Model {
     return {
       reference: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Comment,
+        modelClass: ContentComment,
         join: {
           from: 'reply_comment.reference_id',
-          to: 'comment.id'
+          to: 'content_comment.id'
         }
       },
       comment: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Comment,
+        modelClass: ContentComment,
         join: {
           from: 'reply_comment.comment_id',
-          to: 'comment.id'
+          to: 'content_comment.id'
         }
       }
     };

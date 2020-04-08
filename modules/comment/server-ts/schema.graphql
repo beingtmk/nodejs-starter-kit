@@ -1,5 +1,5 @@
 # Entity
-type Comment {
+type ContentComment {
   id: Int!
   content: String!
   user: User!
@@ -9,8 +9,8 @@ type Comment {
 
 type ReplyComment {
   id: Int!
-  reference: Comment!
-  comment: Comment!
+  reference: ContentComment!
+  comment: ContentComment!
   createdAt: String!
   updatedAt: String!
 }
@@ -18,32 +18,32 @@ type ReplyComment {
 type BlogComment {
   id: Int!
   blog: Blog!
-  comment: Comment!
+  comment: ContentComment!
   createdAt: String!
   updatedAt: String!
 }
 
 extend type Query {
-  comments: [Comment]
-  comment(id: Int!): Comment
+  comments: [ContentComment]
+  comment(id: Int!): ContentComment
   blogComments(blogId: Int): [BlogComment]
   commentReplies(referenceId: Int): [ReplyComment]
 }
 
 extend type Mutation {
-  addComment(input: AddCommentInput!): Comment
-  editComment(input: EditCommentInput!): Comment
-  deleteComment(id: int!, ref: String!): Comment
+  addContentComment(input: AddContentCommentInput!): ContentComment
+  editContentComment(input: EditContentCommentInput!): ContentComment
+  deleteContentComment(id: int!, ref: String!): ContentComment
 }
 
-input AddCommentInput {
+input AddContentCommentInput {
   blogId: Int
   referenceId: Int
   userId: Int
   content: String!
 }
 
-input EditCommentInput {
+input EditContentCommentInput {
   id: int!
   ref: String!
   userId: Int
