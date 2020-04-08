@@ -1,16 +1,66 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Comment {
+  id: Int!
+  content: String!
+  user: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ReplyComment {
+  id: Int!
+  reference: Comment!
+  comment: Comment!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type BlogComment {
+  id: Int!
+  blog: Blog!
+  comment: Comment!
+  createdAt: String!
+  updatedAt: String!
 }
 
 extend type Query {
-  queryName: TypeName
+  comments: [Comment]
+  comment(id: Int!): Comment
+  blogComments(blogId: Int): [BlogComment]
+  commentReplies(referenceId: Int): [ReplyComment]
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addComment(input: AddCommentInput!): Comment
+  editComment(input: EditCommentInput!): Comment
+  deleteComment(id: int!, ref: String!): Comment
+}
+
+input AddCommentInput {
+  blogId: Int
+  referenceId: Int
+  userId: Int
+  content: String!
+}
+
+input EditCommentInput {
+  id: int!
+  ref: String!
+  userId: Int
+  content: String!
 }
 
 extend type Subscription {
-  subscriptionName: TypeName
+  replyCommentUpdated: UpdateReplyCommentPayload
+  blogCommentUpdated: UpdateBlogCommentPayload
+}
+
+type UpdateReplyCommentPayload {
+  mutation: String!
+  node: ReplyComment!
+}
+
+type UpdateBlogCommentPayload {
+  mutation: String!
+  node: BlogComment!
 }
