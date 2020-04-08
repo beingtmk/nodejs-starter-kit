@@ -26,8 +26,8 @@ type BlogComment {
 extend type Query {
   comments: [ContentComment]
   comment(id: Int!): ContentComment
-  blogComments(blogId: Int): [BlogComment]
-  commentReplies(referenceId: Int): [ReplyComment]
+  blogComments(blogId: Int!): [BlogComment]
+  commentReplies(referenceId: Int!): [ReplyComment]
 }
 
 extend type Mutation {

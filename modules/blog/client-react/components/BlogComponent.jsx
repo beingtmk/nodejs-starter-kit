@@ -58,7 +58,7 @@ const BlogComponent = ({ blog, moreBlogs }) => {
         <BlogRefCardComponent model={blog.model} />
         <br />
         <br />
-        <CommentSection header="Comments" />
+        <CommentSection blogId={blog.id} header="Comments" />
       </Col>
 
       <Col

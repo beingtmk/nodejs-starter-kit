@@ -9,11 +9,12 @@ const CommentComponent = ({
   like,
   dislike,
   children,
-  deleteComment,
-  addComment,
-  editComment,
-  refId,
-  comment: { likes, dislikes, action, content, time, user, id }
+  reference,
+  deleteContentComment,
+  addContentComment,
+  editContentComment,
+  referenceId,
+  comment: { likes, dislikes, action, content, createdAt, user, id }
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [formState, setFormState] = useState(REPLY);
@@ -23,22 +24,12 @@ const CommentComponent = ({
     setFormState(val);
   };
 
-  const replyComment = val => {
-    val['id'] = refId;
-    addComment(val);
-  };
-
-  const EditComment = val => {
-    val['id'] = id;
-    editComment(val);
-  };
-
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={() => RenderForm(EDIT)}>
         Edit
       </Menu.Item>
-      <Menu.Item key="2" onClick={() => deleteComment(id)}>
+      <Menu.Item key="2" onClick={() => deleteContentComment(id, reference)}>
         Delete
       </Menu.Item>
     </Menu>
@@ -70,10 +61,13 @@ const CommentComponent = ({
   return (
     <>
       <CommentFormComponent
-        onSubmit={formState === REPLY ? replyComment : EditComment}
+        onSubmit={formState === REPLY ? addContentComment : editContentComment}
+        comId={formState === REPLY ? null : id}
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
         title={formState}
+        reference={reference}
+        referenceId={referenceId}
         content={formState === REPLY ? `@${user.username} ` : content}
       />
       <Comment
@@ -82,8 +76,8 @@ const CommentComponent = ({
         avatar={<Avatar src={user.image} alt={user.username} />}
         content={<p>{content}</p>}
         datetime={
-          <Tooltip title={time}>
-            <span>{moment(time).fromNow()}</span>
+          <Tooltip title={createdAt}>
+            <span>{moment(createdAt).fromNow()}</span>
           </Tooltip>
         }
       >
@@ -96,11 +90,12 @@ const CommentComponent = ({
 CommentComponent.propTypes = {
   comment: PropTypes.object,
   children: PropTypes.object,
-  refId: PropTypes.number,
+  referenceId: PropTypes.number,
+  reference: PropTypes.string,
   like: PropTypes.func,
-  deleteComment: PropTypes.func,
-  editComment: PropTypes.func,
-  addComment: PropTypes.func,
+  deleteContentComment: PropTypes.func,
+  editContentComment: PropTypes.func,
+  addContentComment: PropTypes.func,
   dislike: PropTypes.func
 };
 

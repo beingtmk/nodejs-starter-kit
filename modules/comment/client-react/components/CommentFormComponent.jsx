@@ -56,11 +56,17 @@ const CommentFormWithFormik = withFormik({
   async handleSubmit(
     values,
     {
-      props: { onSubmit, setModalVisible }
+      props: { onSubmit, setModalVisible, blogId, referenceId, comId, reference }
     }
   ) {
     message.loading('Please wait...', 0);
-    console.log(values);
+    if (comId) {
+      values['id'] = comId;
+      values['ref'] = reference;
+    } else {
+      if (blogId) values['blogId'] = blogId;
+      if (referenceId) values['referenceId'] = referenceId;
+    }
     onSubmit(values);
     setModalVisible(false);
   },

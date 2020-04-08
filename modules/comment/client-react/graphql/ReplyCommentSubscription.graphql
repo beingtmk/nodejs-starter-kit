@@ -1,0 +1,13 @@
+#import "./Comment.graphql"
+
+subscription onReplyCOmmentUpdated {
+  replyCommentUpdated {
+    mutation
+    node {
+      id
+      comment {
+        ...CommentInfo
+      }
+    }
+  }
+}

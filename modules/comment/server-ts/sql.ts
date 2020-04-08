@@ -108,7 +108,7 @@ export default class ContentComment extends Model {
       await ReplyComment.query()
         .findById(id)
         .eager(replyEager)
-        .orderBy('id', 'desc')
+        .orderBy('id', 'asc')
     );
     return res;
   }
@@ -138,7 +138,7 @@ export default class ContentComment extends Model {
     return res.id;
   }
 
-  public async editComment(id: number, input: any) {
+  public async editComment(input: any) {
     const res = await ContentComment.query().upsertGraph(decamelizeKeys(input));
     return res.id;
   }

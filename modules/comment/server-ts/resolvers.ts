@@ -76,12 +76,13 @@ export default (pubsub: PubSub) => ({
         }
         delete input.ref;
 
-        await ContentComment.editComment(input);
-        const item = await ContentComment.comment(input.id);
+        const id = await ContentComment.editComment(input);
+
+        const item = await ContentComment.comment(id);
 
         let data;
         if (ref === 'BLOG') {
-          data = await ContentComment.blogCommentWithCid(input.id);
+          data = await ContentComment.blogCommentWithCid(id);
           pubsub.publish(BLOG_C_SUBSCRIPTION, {
             blogCommentUpdated: {
               mutation: 'UPDATED',
@@ -89,7 +90,7 @@ export default (pubsub: PubSub) => ({
             }
           });
         } else {
-          data = await ContentComment.replyCommentCid(input.id);
+          data = await ContentComment.replyCommentCid(id);
           pubsub.publish(C_REPLY_SUBSCRIPTION, {
             replyCommentUpdated: {
               mutation: 'UPDATED',
