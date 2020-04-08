@@ -1,3 +1,4 @@
+import like from '@gqlapp/like-server-ts';
 import comment from '@gqlapp/comment-server-ts';
 import blog from '@gqlapp/blog-server-ts';
 import core from '@gqlapp/core-server-ts';
@@ -22,6 +23,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  like,
   comment,
   blog,
   authentication,

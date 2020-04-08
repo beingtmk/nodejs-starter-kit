@@ -60,7 +60,6 @@ export default class ContentComment extends Model {
       await ContentComment.query()
         .findById(id)
         .eager(eager)
-        .orderBy('id', 'desc')
     );
     return res;
   }
@@ -79,7 +78,6 @@ export default class ContentComment extends Model {
       await BlogComment.query()
         .findById(id)
         .eager(blogEager)
-        .orderBy('id', 'desc')
     );
     return res;
   }
@@ -108,7 +106,6 @@ export default class ContentComment extends Model {
       await ReplyComment.query()
         .findById(id)
         .eager(replyEager)
-        .orderBy('id', 'asc')
     );
     return res;
   }
