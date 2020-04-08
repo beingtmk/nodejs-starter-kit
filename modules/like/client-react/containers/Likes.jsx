@@ -16,25 +16,24 @@ import DELETE_LIKE from '../graphql/DeleteLikeUser.graphql';
 import ADD_LIKE from '../graphql/AddLike.graphql';
 
 const Like = props => {
-  const {
-    subscribeToMore,
-    LikeValues: { type }
-  } = props;
+  const { subscribeToMore, LikeValues } = props;
   useEffect(() => {
-    const subscribe = subscribeToLike(subscribeToMore);
+    const subscribe = subscribeToLike(subscribeToMore, LikeValues);
     return () => subscribe();
   });
-  return type == 'BLOG' ? <BlogLikeComponent {...props} /> : <CommentLikeComponent {...props} />;
+  return LikeValues.type == 'BLOG' ? <BlogLikeComponent {...props} /> : <CommentLikeComponent {...props} />;
 };
 
-const onAdd = (prev, node) => {
+const onAdd = (prev, node, LikeValues) => {
   // ignore if duplicate
   if (prev.typeLikes.some(item => node.id === item.id)) {
     return prev;
   }
+
   return update(prev, {
     typeLikes: {
-      $set: [node, ...prev.typeLikes]
+      $set:
+        LikeValues.type == node.type && LikeValues.typeId == node.typeId ? [node, ...prev.typeLikes] : prev.typeLikes
     }
   });
 };
@@ -54,7 +53,7 @@ const onDelete = (prev, id) => {
   });
 };
 
-const subscribeToLike = subscribeToMore =>
+const subscribeToLike = (subscribeToMore, LikeValues) =>
   subscribeToMore({
     document: LIKE_SUBSCRIPTION,
     updateQuery: (
@@ -69,7 +68,7 @@ const subscribeToLike = subscribeToMore =>
     ) => {
       let newResult = prev;
       if (mutation === 'CREATED') {
-        newResult = onAdd(prev, node);
+        newResult = onAdd(prev, node, LikeValues);
       } else if (mutation === 'UPDATED') {
         newResult = onDelete(prev, node.id);
       } else if (mutation === 'DELETED') {

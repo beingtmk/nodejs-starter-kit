@@ -16,7 +16,6 @@ const CommentSectionComponent = props => {
   useEffect(() => {
     setflag(true);
   }, []);
-  console.log('PROPS', props);
   return (
     <span>
       {flag && !props.blogCommentLoading ? (
@@ -28,13 +27,20 @@ const CommentSectionComponent = props => {
               </Button>
               <CommentFormComponent
                 blogId={props.blogId}
+                currentUser={props.currentUser}
                 onSubmit={props.addContentComment}
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
                 title="Add a comment"
               />
               {props.blogComments.map(item => (
-                <CommentComponent reference={'BLOG'} referenceId={item.comment.id} comment={item.comment} {...props}>
+                <CommentComponent
+                  key={item.id}
+                  reference={'BLOG'}
+                  referenceId={item.comment.id}
+                  comment={item.comment}
+                  {...props}
+                >
                   <CommentReply
                     reference={'REPLY'}
                     deleteContentComment={props.deleteContentComment}

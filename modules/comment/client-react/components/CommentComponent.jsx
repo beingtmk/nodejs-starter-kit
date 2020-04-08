@@ -37,7 +37,7 @@ const CommentComponent = ({
     </Menu>
   );
 
-  const LikeValues = {
+  let LikeValues = {
     type: 'COMMENT',
     typeId: id
   };

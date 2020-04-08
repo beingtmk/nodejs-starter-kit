@@ -8,12 +8,11 @@ const CommentReplyComponent = props => {
   useEffect(() => {
     setflag(true);
   }, []);
-  console.log('PROPS111', props);
   return (
     <span>
       {flag && !props.replyCommentLoading ? (
         props.commentReplies.map(item => (
-          <CommentComponent referenceId={props.referenceId} comment={item.comment} {...props} />
+          <CommentComponent key={item.id} referenceId={props.referenceId} comment={item.comment} {...props} />
         ))
       ) : (
         <Loading />

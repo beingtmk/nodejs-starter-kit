@@ -13,11 +13,11 @@ const BlogLikeComponent = ({
   likesLoading
 }) => {
   const [likeFlag, setLikeFlag] = useState(
-    typeLikes && typeLikes.find(item => currentUser && item.user.id === currentUser.id)
+    typeLikes && currentUser ? typeLikes.find(item => item.user.id === currentUser.id) : false
   );
 
   const likeFunc = async () => {
-    (await likeFlag) ? deleteLikeUser(LikeValues) : addLike(LikeValues);
+    likeFlag ? await deleteLikeUser(LikeValues) : await addLike(LikeValues);
     setLikeFlag(!likeFlag);
   };
 
