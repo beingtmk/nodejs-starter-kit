@@ -20,8 +20,8 @@ Model.knex(knex);
 
 // const eager = '[author.[profile], model]';
 const eager = '[user]';
-const blogEager = '[comment[user]]';
-const replyEager = '[comment[user]]';
+const blogEager = '[comment.[user]]';
+const replyEager = '[comment.[user]]';
 
 export default class ContentComment extends Model {
   // private id: any;

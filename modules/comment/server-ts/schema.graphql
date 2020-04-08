@@ -33,7 +33,7 @@ extend type Query {
 extend type Mutation {
   addContentComment(input: AddContentCommentInput!): ContentComment
   editContentComment(input: EditContentCommentInput!): ContentComment
-  deleteContentComment(id: int!, ref: String!): ContentComment
+  deleteContentComment(id: Int!, ref: String!): ContentComment
 }
 
 input AddContentCommentInput {
@@ -44,7 +44,7 @@ input AddContentCommentInput {
 }
 
 input EditContentCommentInput {
-  id: int!
+  id: Int!
   ref: String!
   userId: Int
   content: String!
