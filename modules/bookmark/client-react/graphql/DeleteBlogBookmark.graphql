@@ -1,0 +1,5 @@
+mutation deleteBlogBookmark($input: UserBlogBookmarkInput!) {
+  deleteBlogBookmark(input: $input) {
+    id
+  }
+}

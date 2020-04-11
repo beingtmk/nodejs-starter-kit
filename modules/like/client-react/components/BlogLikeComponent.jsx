@@ -17,7 +17,11 @@ const BlogLikeComponent = ({
   );
 
   const likeFunc = async () => {
-    likeFlag ? await deleteLikeUser(LikeValues) : await addLike(LikeValues);
+    try {
+      likeFlag ? await deleteLikeUser(LikeValues) : await addLike(LikeValues);
+    } catch (e) {
+      throw e;
+    }
     setLikeFlag(!likeFlag);
   };
 

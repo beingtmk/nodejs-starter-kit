@@ -111,6 +111,7 @@
         "use-react-router": "^1.0.7"
     ,
     "@gqlapp/blog-client-react": "^1.0.0",
+    "@gqlapp/bookmark-client-react": "^1.0.0",
     "@gqlapp/comment-client-react": "^1.0.0",
     "@gqlapp/like-client-react": "^1.0.0"},
   "devDependencies": {

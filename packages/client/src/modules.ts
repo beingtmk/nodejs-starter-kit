@@ -1,3 +1,4 @@
+import bookmark from '@gqlapp/bookmark-client-react';
 import like from '@gqlapp/like-client-react';
 import comment from '@gqlapp/comment-client-react';
 import blog from '@gqlapp/blog-client-react';
@@ -23,6 +24,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  bookmark,
   like,
   comment,
   blog,
