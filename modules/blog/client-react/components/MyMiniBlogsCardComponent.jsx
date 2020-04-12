@@ -89,6 +89,15 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
               </Button>
             </Col>
           )}
+
+          <br />
+          <Col xs={24} lg={24} sm={22} md={22}>
+            <Link to={`/blog/${blog.id}`}>
+              <Button size="small" block type="primary" ghost>
+                Read
+              </Button>
+            </Link>
+          </Col>
         </Row>
       </>
     );
@@ -100,7 +109,7 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
         <Card
           hoverable
           title={`Category: ${blog.model.name}`}
-          cover={<MiniBlogImageComponent height={240} title={blog.title} image={blog.image} />}
+          cover={<MiniBlogImageComponent height={260} title={blog.title} image={blog.image} />}
           style={{ marginBottom: '20px' }}
         >
           <div style={{ height: '250px', width: '100%' }}>{blogData()}</div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-// import {  } from "@gqlapp/look-client-react";
-import { Col, Row, Card, Avatar, Divider, Tooltip } from 'antd';
+import { Link } from 'react-router-dom';
+import { Button, Col, Row, Card, Avatar, Divider, Tooltip } from 'antd';
 import moment from 'moment';
 import MiniBlogImageComponent from './MiniBlogImageComponent';
 import BlogActionsComponent from './BlogActionsComponent';
@@ -35,6 +35,14 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
         />
         <Divider />
         <BlogActionsComponent blog={blog} />
+        <br />
+        <Col xs={24} lg={24} sm={22} md={22}>
+          <Link to={`/blog/${blog.id}`}>
+            <Button size="small" block type="primary" ghost>
+              Read
+            </Button>
+          </Link>
+        </Col>
       </>
     );
   };
@@ -44,7 +52,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
         <Card
           hoverable
           title={`${moreFlag == true ? 'More from' : 'Category:'} ${blog.model.name}`}
-          cover={<MiniBlogImageComponent height={240} title={blog.title} image={blog.image} />}
+          cover={<MiniBlogImageComponent height={260} title={blog.title} image={blog.image} />}
           style={{ marginBottom: '20px' }}
         >
           {blogData()}
