@@ -1,7 +1,7 @@
 #import "./BlogBookmark.graphql"
 
-query userBlogBookmarks($userId: Int!) {
-  userBlogBookmarks(userId: $userId) {
+query userBlogBookmarks {
+  userBlogBookmarks {
     ...BlogBookmarkInfo
   }
 }

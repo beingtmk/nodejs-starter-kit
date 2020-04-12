@@ -15,9 +15,9 @@ import DELETE_BLOG_BOOKMARK from '../graphql/DeleteBlogBookmark.graphql';
 import ADD_BLOG_BOOKMARK from '../graphql/AddBlogBookmark.graphql';
 
 const BlogBookmark = props => {
-  const { subscribeToMore } = props;
+  const { subscribeToMore, blogId } = props;
   useEffect(() => {
-    const subscribe = subscribeToBlogBookmark(subscribeToMore);
+    const subscribe = subscribeToBlogBookmark(subscribeToMore, blogId);
     return () => subscribe();
   });
   return <BlogBookmarkComponent {...props} />;
@@ -39,7 +39,7 @@ const onDelete = prev => {
   });
 };
 
-const subscribeToBlogBookmark = subscribeToMore =>
+const subscribeToBlogBookmark = (subscribeToMore, blogId) =>
   subscribeToMore({
     document: BLOG_BOOKMARK_SUBSCRIPTION,
     updateQuery: (
@@ -52,6 +52,8 @@ const subscribeToBlogBookmark = subscribeToMore =>
         }
       }
     ) => {
+      if (node.blog.id != blogId) return prev;
+
       let newResult = prev;
       if (mutation === 'CREATED') {
         newResult = onAdd(prev, node);
@@ -65,7 +67,8 @@ const subscribeToBlogBookmark = subscribeToMore =>
   });
 
 BlogBookmark.propTypes = {
-  subscribeToMore: PropTypes.func
+  subscribeToMore: PropTypes.func,
+  blogId: PropTypes.number
 };
 
 export default compose(

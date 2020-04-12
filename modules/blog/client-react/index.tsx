@@ -68,7 +68,7 @@ export default new ClientModule({
       path="/blog/bookmarks"
       redirect="/profile"
       role={['user', 'admin']}
-      component={loadable(() => import('./containers/MyBookmarks').then(c => c.default))}
+      component={loadable(() => import('@gqlapp/bookmark-client-react/containers/BlogBookMarks').then(c => c.default))}
     />,
     <Route exact path="/blog/list" component={loadable(() => import('./containers/BlogList').then(c => c.default))} />,
     <AuthRoute
