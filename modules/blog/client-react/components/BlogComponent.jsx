@@ -4,6 +4,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import { Col, Row, Card, Avatar, Divider, Tag } from 'antd';
 import CommentSection from '@gqlapp/comment-client-react/containers/CommentSection';
+import moment from 'moment';
 import BlogRefCardComponent from './BlogRefCardComponent';
 import MiniBlogsCardComponent from './MiniBlogsCardComponent';
 import BlogActionsComponent from './BlogActionsComponent';
@@ -41,7 +42,7 @@ const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
                 <i>({blog.author.username}) </i>
               </span>
             }
-            description={`${blog.createdAt} - ${blog.readTime} read`}
+            description={`${moment(blog.createdAt).format('MMM DD, YYYY')}`}
           />
           <br />
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />

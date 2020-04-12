@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row, Card, Button, Tooltip, Alert, Popconfirm, message } from 'antd';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { status } from '../constants';
 import MiniBlogImageComponent from './MiniBlogImageComponent';
 
@@ -22,7 +23,7 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
             </strong>
           </h2>
         </Tooltip>
-        <h3>{`${blog.createdAt}`}</h3>
+        <h3>{`${moment(blog.createdAt).format('MMM DD, YYYY')}`}</h3>
         <br />
         <Row gutter={16}>
           <Col xs={10} lg={12} sm={10} md={10}>
@@ -58,7 +59,22 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
               <Alert message={blog.status.charAt(0).toUpperCase() + blog.status.slice(1)} type="warning" />
             </Col>
           )}
-          <Col xs={24} lg={24} sm={22} md={22}>
+          {blog.status == status[1] && (
+            <Col xs={24} lg={24} sm={22} md={22}>
+              <br />
+              <Button
+                type={'default'}
+                icon="share-alt"
+                size="default"
+                block
+                //   onClick={() => setClap()}
+              >
+                Share
+              </Button>
+            </Col>
+          )}
+          <Col xs={12} lg={12} sm={11} md={11}>
+            {' '}
             <br />
             <Button
               type={'primary'}
@@ -75,25 +91,10 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
               {blog.status != status[1] ? 'Publish' : 'Disable'}
             </Button>
           </Col>
-          {blog.status == status[1] && (
-            <Col xs={24} lg={24} sm={22} md={22}>
-              <br />
-              <Button
-                type={'default'}
-                icon="share-alt"
-                size="default"
-                block
-                //   onClick={() => setClap()}
-              >
-                Share
-              </Button>
-            </Col>
-          )}
-
-          <br />
-          <Col xs={24} lg={24} sm={22} md={22}>
+          <Col xs={12} lg={12} sm={11} md={11}>
+            <br />
             <Link to={`/blog/${blog.id}`}>
-              <Button size="small" block type="primary" ghost>
+              <Button block type="primary" ghost>
                 Read
               </Button>
             </Link>
@@ -123,7 +124,7 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
               {blogData()}
             </Col>
             <Col style={{ margin: 0 }} span={12}>
-              <MiniBlogImageComponent height={280} title={blog.title} image={blog.image} />
+              <MiniBlogImageComponent height={275} title={blog.title} image={blog.image} />
             </Col>
           </Row>
         </Card>

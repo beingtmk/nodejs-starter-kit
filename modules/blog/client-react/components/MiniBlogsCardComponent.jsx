@@ -31,14 +31,14 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
               <i>({blog.author.username}) </i>
             </span>
           }
-          description={<span>{`${moment(blog.createdAt).format("MMM DD, 'YY")} - ${blog.readTime} read`}</span>}
+          description={<span>{`${moment(blog.createdAt).format('MMM DD, YYYY')}`}</span>}
         />
         <Divider />
         <BlogActionsComponent blog={blog} />
         <br />
         <Col xs={24} lg={24} sm={22} md={22}>
           <Link to={`/blog/${blog.id}`}>
-            <Button size="small" block type="primary" ghost>
+            <Button block type="primary" ghost>
               Read
             </Button>
           </Link>
