@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row } from '@gqlapp/look-client-react';
-
 import { Card, Avatar, Button } from 'antd';
+import { Name } from '../constants';
 
 const BlogRefCardComponent = ({ user, model }) => {
   return (
@@ -17,7 +17,7 @@ const BlogRefCardComponent = ({ user, model }) => {
           <h1>
             {(user && (
               <span>
-                <strong>{`${user.firstname} ${user.lastname} `}</strong>
+                <strong>{Name(user.profile)}</strong>
                 <i>({user.username}) </i>
               </span>
             )) ||

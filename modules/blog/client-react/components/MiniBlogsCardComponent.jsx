@@ -6,6 +6,7 @@ import { Col, Row, Card, Avatar, Divider, Tooltip } from 'antd';
 import moment from 'moment';
 import MiniBlogImageComponent from './MiniBlogImageComponent';
 import BlogActionsComponent from './BlogActionsComponent';
+import { Name } from '../constants';
 
 const { Meta } = Card;
 
@@ -26,7 +27,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
           avatar={<Avatar src={blog.author.image} />}
           title={
             <span>
-              {blog.author.profile && `${blog.author.profile.firstName} ${blog.author.profile.lastName} `}
+              {Name(blog.author.profile)}
               <i>({blog.author.username}) </i>
             </span>
           }

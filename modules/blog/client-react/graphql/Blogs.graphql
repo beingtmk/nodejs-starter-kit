@@ -13,5 +13,9 @@ fragment BlogsInfo on Blog {
   author {
     id
     username
+    profile {
+      firstName
+      lastName
+    }
   }
 }

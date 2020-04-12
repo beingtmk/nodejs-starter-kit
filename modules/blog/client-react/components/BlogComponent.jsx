@@ -7,6 +7,7 @@ import CommentSection from '@gqlapp/comment-client-react/containers/CommentSecti
 import BlogRefCardComponent from './BlogRefCardComponent';
 import MiniBlogsCardComponent from './MiniBlogsCardComponent';
 import BlogActionsComponent from './BlogActionsComponent';
+import { Name } from '../constants';
 
 const { Meta } = Card;
 
@@ -36,7 +37,7 @@ const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
             avatar={<Avatar src={blog.author.image} />}
             title={
               <span>
-                {`${blog.author.firstname} ${blog.author.lastname} `}
+                {Name(blog.author.profile)}
                 <i>({blog.author.username}) </i>
               </span>
             }

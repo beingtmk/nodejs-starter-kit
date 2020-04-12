@@ -22,7 +22,7 @@ const MyMiniBlogsCardComponent = ({ blog, deleteBlog, editBlog }) => {
             </strong>
           </h2>
         </Tooltip>
-        <h3>{`${blog.createdAt} - ${blog.readTime} read`}</h3>
+        <h3>{`${blog.createdAt}`}</h3>
         <br />
         <Row gutter={16}>
           <Col xs={10} lg={12} sm={10} md={10}>
