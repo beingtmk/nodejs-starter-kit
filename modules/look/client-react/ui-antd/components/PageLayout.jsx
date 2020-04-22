@@ -64,13 +64,6 @@ class PageLayout extends React.Component {
     const contentStyle = layoutTypes.filter(item => item.type === type);
 
     const renderContent = () => {
-      if (contentStyle.length !== 0 && contentStyle[0].innerClassName) {
-        return (
-          <Content id="content" className={contentStyle[0].outerClassName}>
-            <div className={contentStyle[0].innerClassName}>{children}</div>
-          </Content>
-        );
-      }
       return (
         <Content
           id="content"
