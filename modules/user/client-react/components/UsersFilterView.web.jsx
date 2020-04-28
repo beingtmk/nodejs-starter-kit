@@ -24,7 +24,7 @@ const UsersFilterView = ({
     </FormItem>
     &nbsp;
     <FormItem label={t('users.list.item.role.label')}>
-      <Select name="role" defaultValue={role} onChange={e => onRoleChange(e.target.value)}>
+      <Select name="role" defaultValue={role} style={{ width: '100px' }} onChange={e => onRoleChange(e.target.value)}>
         <Option key={1} value="">
           {t('users.list.item.role.all')}
         </Option>
