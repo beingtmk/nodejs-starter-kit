@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import Grid from 'hedron';
 
 import {
   LayoutCenter,
@@ -14,6 +13,7 @@ import {
   Underline,
   Icon
 } from '@gqlapp/look-client-react';
+
 import settings from '@gqlapp/config';
 
 import LoginForm from './LoginForm';
@@ -50,7 +50,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
       {isRegistered ? (
         renderConfirmationModal()
       ) : (
-        <Card>
+        <Card className="form-card">
           <CardTitle>
             <Icon type="login" /> {t('login.form.title')}
           </CardTitle>
@@ -71,17 +71,9 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
 
   return (
     <PageLayout type="forms">
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          <Grid.Box sm={{ hidden: true }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      {renderMetaData()}
+
+      {renderContent()}
     </PageLayout>
   );
 };

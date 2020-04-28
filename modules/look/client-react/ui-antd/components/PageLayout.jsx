@@ -2,7 +2,6 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Layout, BackTop, Button, Tooltip } from 'antd';
-import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 import { enquireScreen } from 'enquire-js';
 
 import NavBar from './NavBar';
@@ -28,7 +27,7 @@ const layoutTypes = [
   }
 ];
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 let isMobile;
 enquireScreen(b => {
   isMobile = b;
@@ -64,13 +63,6 @@ class PageLayout extends React.Component {
     const contentStyle = layoutTypes.filter(item => item.type === type);
 
     const renderContent = () => {
-      if (contentStyle.length !== 0 && contentStyle[0].innerClassName) {
-        return (
-          <Content id="content" className={contentStyle[0].outerClassName}>
-            <div className={contentStyle[0].innerClassName}>{children}</div>
-          </Content>
-        );
-      }
       return (
         <Content
           id="content"
@@ -82,20 +74,7 @@ class PageLayout extends React.Component {
     };
     return (
       <Layout id="page-layout">
-        {navBar !== false && (
-          <ScrollParallax
-            location="page-layout"
-            className="navbar-parallex"
-            animation={{
-              playScale: [1, 1.1],
-              translateY: this.state.isMobile ? '' : '-40px'
-            }}
-          >
-            <Header className="no-print">
-              <NavBar isMobile={this.state.isMobile} />
-            </Header>{' '}
-          </ScrollParallax>
-        )}
+        {navBar !== false && <NavBar isMobile={this.state.isMobile} />}
         {__SERVER__ && __DEV__ && (
           <Helmet>
             <style type="text/css">{styles._getCss()}</style>
