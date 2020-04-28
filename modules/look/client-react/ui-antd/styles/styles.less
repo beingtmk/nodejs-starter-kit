@@ -1,6 +1,10 @@
-@import 'antd';
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap.css");
+
+
 
 #root {
+  font-family: 'Poppins', sans-serif !important;
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,20 +26,11 @@
   }
 }
 
-//----Navbar----//
-.ant-layout-header{
-  height: 50px !important;
-}
 
 
-@media only screen and (max-width: 600px) {
-  .ant-layout-header{
-    padding:0 10px !important;
-  }
-}
-
-.ant-menu-item{
-  height:fit-content !important;
+// Overriding antd css
+.ant-menu-horizontal > .ant-menu-item > a::before{
+  margin-bottom: 0px !important;
 }
 
 

@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UserForm from './UserForm';
@@ -26,7 +26,7 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
   );
 
   const renderContent = () => (
-    <>
+    <Card>
       <Link to={currentUser && currentUser.role === 'admin' ? '/users' : '/profile'}>Back</Link>
       <h2>
         {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
@@ -37,11 +37,11 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
         shouldDisplayActive={isNotSelf}
         initialValues={user}
       />
-    </>
+    </Card>
   );
 
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}

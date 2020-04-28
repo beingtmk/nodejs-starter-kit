@@ -3,7 +3,7 @@ import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, CardTitle, Icon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
@@ -23,13 +23,18 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
 
   const renderContent = () => (
     <>
-      <h1 className="text-center">{t('forgotPass.form.title')}</h1>
-      <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
+      <Card>
+        <CardTitle>
+          <Icon type="undo" /> {t('forgotPass.form.title')}
+        </CardTitle>
+        <h1 className="text-center"></h1>
+        <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
+      </Card>
     </>
   );
 
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
         <Grid.Bounds direction="vertical">
           {renderMetaData()}
