@@ -1,33 +1,92 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Layout } from 'antd';
+import { Layout, BackTop, Button, Tooltip } from 'antd';
+import { enquireScreen } from 'enquire-js';
 
 import NavBar from './NavBar';
+import Footer from './Footer';
 
-import styles from '../styles/styles.less';
+import styles from '../styles/index.less';
 
-const { Header, Content } = Layout;
+const layoutTypes = [
+  {
+    type: null,
+    outerClassName: 'content-layout',
+    innerClassName: null
+  },
+  {
+    type: 'home',
+    outerClassName: 'home-content-layout',
+    innerClassName: null
+  },
+  {
+    type: 'forms',
+    outerClassName: 'form-layout-outer',
+    innerClassName: 'form-content-layout'
+  }
+];
+
+const { Content } = Layout;
+let isMobile;
+enquireScreen(b => {
+  isMobile = b;
+});
 
 class PageLayout extends React.Component {
-  render() {
-    const { children, navBar } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      current: '/',
+      isMobile,
+      show: true //!location.port, ToDo - find a better approach this
+    };
+  }
 
+  componentDidMount() {
+    // 适配手机屏幕;
+    enquireScreen(b => {
+      this.setState({ isMobile: !!b });
+    });
+    // ToDo - find a better approach for below statement
+    // if (true) {
+
+    setTimeout(() => {
+      this.setState({
+        show: true
+      });
+    }, 500);
+    // }
+  }
+  render() {
+    const { children, navBar, type } = this.props;
+    const contentStyle = layoutTypes.filter(item => item.type === type);
+
+    const renderContent = () => {
+      return (
+        <Content
+          id="content"
+          className={(contentStyle.length !== 0 && contentStyle[0].outerClassName) || 'content-layout'}
+        >
+          {children}
+        </Content>
+      );
+    };
     return (
-      <Layout>
-        {navBar !== false && (
-          <Header className="no-print">
-            <NavBar />
-          </Header>
-        )}
+      <Layout id="page-layout">
+        {navBar !== false && <NavBar isMobile={this.state.isMobile} />}
         {__SERVER__ && __DEV__ && (
           <Helmet>
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
-        <Content id="content" style={{ background: '#fff', padding: 24 }}>
-          {children}
-        </Content>
+        {renderContent()}
+        <BackTop>
+          <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
+            <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />
+          </Tooltip>
+        </BackTop>
+        <Footer />
       </Layout>
     );
   }
@@ -35,7 +94,8 @@ class PageLayout extends React.Component {
 
 PageLayout.propTypes = {
   children: PropTypes.node,
-  navBar: PropTypes.bool
+  navBar: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default PageLayout;

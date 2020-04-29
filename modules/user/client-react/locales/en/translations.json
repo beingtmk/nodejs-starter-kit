@@ -62,13 +62,63 @@
         "email": "Email",
         "role": "Role",
         "full": "Full Name",
+        "responseTime": "Response Time",
+        "acceptanceRate": "Acceptance Rate",
+        "designation": "Designation",
+        "about": "About",
+        "website": "Website",
+        "mobile": "Mobile",
+
+        "isAvailable": "Availability Status",
+        "rating": "Rating",
+        "flag": "Flag",
+        "verification": {
+          "title": "Verification Status",
+          "address": "Address",
+          "email": "Email",
+          "id": "ID",
+          "mobile": "Mobile",
+          "isReferred": "Referred"
+        },
         "addresses": {
           "title": "Addresses",
           "subTitle": "Address",
           "city": "City",
           "pinCode": "Pin Code",
           "state": "State",
-          "streetAddress": "Street Address"
+          "streetAddress": "Street Address",
+          "primeAddress": "Prime Address"
+        },
+        "portfolios": {
+          "title": "Portfolios",
+          "subtitle": "Portfolio"
+        },
+        "endorsements": {
+          "title": "Endorsements",
+          "subTitle": "Endorsement",
+          "notFound": "No Endorsements Found"
+        },
+        "endorsed": {
+          "title": "Endorsed",
+          "subTitle": "Endorsee",
+          "notFound": "No Endorsee Found"
+        },
+        "followers": {
+          "title": "Followers",
+          "notFound": "No Followers Found"
+        },
+        "following": {
+          "title": "Following",
+          "notFound": "No Following Found"
+        },
+        "referedBy": {
+          "id": "ID",
+          "email": "Email",
+          "profile": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "mobile": "Mobile"
+          }
         }
       },
       "fldEmail": "Email",

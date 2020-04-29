@@ -3,6 +3,7 @@ import like from '@gqlapp/like-client-react';
 import comment from '@gqlapp/comment-client-react';
 import blog from '@gqlapp/blog-client-react';
 import pwa from '@gqlapp/pwa-client-react';
+import home from '@gqlapp/home-client-react';
 import core from '@gqlapp/core-client-react';
 import look from '@gqlapp/look-client-react';
 import i18n from '@gqlapp/i18n-client-react';
@@ -29,6 +30,7 @@ const modules = new ClientModule(
   comment,
   blog,
   pwa,
+  home,
   look,
   validation,
   defaultRouter,

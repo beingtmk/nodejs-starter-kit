@@ -15,6 +15,8 @@ export { default as RenderUpload } from './RenderUpload';
 export { default as RenderUploadMultiple } from './RenderUploadMultiple';
 export { default as RenderTagsField } from './RenderTagsField';
 export { default as Alert } from './Alert';
+export { default as NavBar } from './NavBar';
+
 export { default as Container } from './Container';
 export { default as Row } from './Row';
 export { default as Col } from './Col';

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Icon } from 'antd';
+
 import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter } from 'react-router-dom';
 import loadable from '@loadable/component';
@@ -12,9 +14,13 @@ import DataRootComponent from './containers/DataRootComponent';
 
 import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from './containers/Auth';
 
-const ProfileName = withLoadedUser(({ currentUser }) =>
-  currentUser ? currentUser.fullName || currentUser.username : null
-);
+const ProfileName = withLoadedUser(({ currentUser }) => {
+  return (
+    <>
+      <Icon type="user" /> {currentUser ? currentUser.fullName || currentUser.username : null}
+    </>
+  );
+});
 
 const LogoutLink = withRouter(
   withLogout(
@@ -30,7 +36,7 @@ const LogoutLink = withRouter(
         }}
         className="nav-link"
       >
-        {t('navLink.logout')}
+        <Icon type="logout" /> {t('navLink.logout')}
       </a>
     ))
   )
@@ -46,6 +52,7 @@ const NavLinkUsersWithI18n = translate('user')(({ t }) => (
 ));
 const NavLinkLoginWithI18n = translate('user')(({ t }) => (
   <NavLink to="/login" className="nav-link" activeClassName="active">
+    <Icon type="login" />
     {t('navLink.signIn')}
   </NavLink>
 ));

@@ -1,13 +1,12 @@
 /* eslint-disable react/display-name */
 
 import React, { Fragment } from 'react';
-import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Button, Pagination, LayoutCenter } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Button, Pagination } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -76,20 +75,18 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
   return (
     <PageLayout>
       {/* Render metadata */}
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          <Helmet
-            title={`${settings.app.name} - ${t('list.title')}`}
-            meta={[{ name: 'description', content: `${settings.app.name} - ${t('list.meta')}` }]}
-          />
-          <Grid.Box sm={{ hidden: 'true' }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+
+      <Helmet
+        title={`${settings.app.name} - ${t('list.title')}`}
+        meta={[
+          {
+            name: 'description',
+            content: `${settings.app.name} - ${t('list.meta')}`
+          }
+        ]}
+      />
+
+      {renderContent()}
     </PageLayout>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import Grid from 'hedron';
 
-import { LayoutCenter, PageLayout, Card, CardGroup, CardTitle, CardText, Button } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardGroup, CardTitle, CardText, Button, Icon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import LoginForm from './LoginForm';
@@ -40,8 +39,10 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
       {isRegistered ? (
         renderConfirmationModal()
       ) : (
-        <React.Fragment>
-          <h1 className="text-center">{t('login.form.title')}</h1>
+        <Card className="form-card">
+          <CardTitle>
+            <Icon type="login" /> {t('login.form.title')}
+          </CardTitle>
           <LoginForm onSubmit={onSubmit} />
           <hr />
           <Card>
@@ -51,24 +52,16 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
               <CardText>user@example.com:user1234</CardText>
             </CardGroup>
           </Card>
-        </React.Fragment>
+        </Card>
       )}
     </>
   );
 
   return (
-    <PageLayout>
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          <Grid.Box sm={{ hidden: true }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: true }} lg={{ hidden: true }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+    <PageLayout type="forms">
+      {renderMetaData()}
+
+      {renderContent()}
     </PageLayout>
   );
 };
