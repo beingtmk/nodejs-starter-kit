@@ -1,0 +1,5 @@
+fragment LocationStateInfo on LocationState {
+  filter {
+    distance
+  }
+}

@@ -138,6 +138,7 @@
         "uuid": "^3.2.1"
     ,
     "@gqlapp/bookmark-server-ts": "^1.0.0",
+    "@gqlapp/geolocation-server-ts": "^1.0.0",
     "@gqlapp/like-server-ts": "^1.0.0"},
   "devDependencies": {
         "@types/chai": "^4.1.4",
