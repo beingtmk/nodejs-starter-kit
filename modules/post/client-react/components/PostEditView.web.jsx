@@ -36,10 +36,11 @@ const PostEditView = ({ loading, post, match, location, subscribeToMore, editPos
   const renderContent = () => (
     <>
       <Link to="/posts">{t('post.btn.back')}</Link>
-      <h2>
-        {t(`post.label.edit`)} {t('post.label.post')}
-      </h2>
-      <Underline length="110px" />
+      <Underline>
+        <h2>
+          {t(`post.label.edit`)} {t('post.label.post')}
+        </h2>
+      </Underline>
       <PostForm onSubmit={onSubmit(postObj, editPost)} post={post} />
       <br />
       {postObj && (

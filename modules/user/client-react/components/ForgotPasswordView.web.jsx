@@ -1,8 +1,7 @@
 import React from 'react';
-import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-
+import { Row, Col } from 'antd';
 import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
@@ -24,11 +23,12 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
   const renderContent = () => (
     <>
       <Card>
-        <CardTitle>
-          <Icon type="undo" /> {t('forgotPass.form.title')}
-        </CardTitle>
+        <Underline>
+          <CardTitle>
+            <Icon type="undo" /> {t('forgotPass.form.title')}
+          </CardTitle>
+        </Underline>
         <h1 className="text-center"></h1>
-      <Underline length="140px" />
         <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
       </Card>
     </>
@@ -36,17 +36,15 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
 
   return (
     <PageLayout type="forms">
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          <Grid.Box sm={{ hidden: 'true' }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      {renderMetaData()}
+      <Row>
+        <Col md={0} lg={0}>
+          {renderContent()}
+        </Col>
+        <Col xs={0} md={24} lg={24}>
+          <LayoutCenter>{renderContent()}</LayoutCenter>
+        </Col>
+      </Row>
     </PageLayout>
   );
 };

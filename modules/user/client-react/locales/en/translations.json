@@ -56,7 +56,7 @@
     "errorMsg": "No current user is logged in",
     "editProfileText": "Edit Profile",
     "card": {
-      "title": "Profile",
+      "title": "My Profile",
       "group": {
         "name": "User Name",
         "email": "Email",

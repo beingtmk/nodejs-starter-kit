@@ -32,10 +32,11 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
 
   const renderContent = () => (
     <Card className="form-card">
-      <CardTitle>
-        <Icon type="user-add" /> {t('reg.form.title')}
-      </CardTitle>
-      <Underline length="80px" />
+      <Underline>
+        <CardTitle>
+          <Icon type="user-add" /> {t('reg.form.title')}
+        </CardTitle>
+      </Underline>
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
         renderConfirmationModal()
       ) : (

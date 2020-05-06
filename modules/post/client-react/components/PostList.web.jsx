@@ -61,8 +61,9 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   const renderContent = () => (
     <>
-      <h2>{t('list.subTitle')}</h2>
-      <Underline length="100px" />
+      <Underline>
+        <h2>{t('list.subTitle')}</h2>
+      </Underline>
       <Link to="/post/new">
         <Button color="primary">{t('list.btn.add')}</Button>
       </Link>

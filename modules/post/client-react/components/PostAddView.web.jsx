@@ -30,10 +30,11 @@ const PostAddView = ({ addPost, t }) => {
     <>
       {renderMetaData()}
       <Link to="/posts">{t('post.btn.back')}</Link>
-      <h2>
-        {t(`post.label.create`)} {t('post.label.post')}
-      </h2>
-      <Underline length="125px" />
+      <Underline>
+        <h2>
+          {t(`post.label.create`)} {t('post.label.post')}
+        </h2>
+      </Underline>
       <PostForm onSubmit={onSubmit(addPost)} />
       <br />
     </>

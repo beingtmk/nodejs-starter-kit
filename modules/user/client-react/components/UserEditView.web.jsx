@@ -1,9 +1,8 @@
 import React from 'react';
-import Grid from 'hedron';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-
+import { Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import { LayoutCenter, PageLayout, Card, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
@@ -28,10 +27,11 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
   const renderContent = () => (
     <Card>
       <Link to={currentUser && currentUser.role === 'admin' ? '/users' : '/profile'}>Back</Link>
-      <h2>
-        {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
-      </h2>
-      <Underline length="100px" />
+      <Underline>
+        <h2>
+          {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
+        </h2>
+      </Underline>
       <UserForm
         onSubmit={onSubmit}
         shouldDisplayRole={isNotSelf}
@@ -43,23 +43,19 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
 
   return (
     <PageLayout type="forms">
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          {loading && !user ? (
-            <div className="text-center">{t('userEdit.loadMsg')}</div>
-          ) : (
-            <>
-              <Grid.Box sm={{ hidden: 'true' }}>
-                <LayoutCenter>{renderContent()}</LayoutCenter>
-              </Grid.Box>
-              <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-                {renderContent()}
-              </Grid.Box>
-            </>
-          )}
-        </Grid.Bounds>
-      </Grid.Provider>
+      {renderMetaData()}
+      {loading && !user ? (
+        <div className="text-center">{t('userEdit.loadMsg')}</div>
+      ) : (
+        <Row>
+          <Col md={0} lg={0}>
+            {renderContent()}
+          </Col>
+          <Col xs={0} md={24} lg={24}>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
+          </Col>
+        </Row>
+      )}
     </PageLayout>
   );
 };

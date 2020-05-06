@@ -40,10 +40,11 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
         renderConfirmationModal()
       ) : (
         <Card className="form-card">
-          <CardTitle>
-            <Icon type="login" /> {t('login.form.title')}
-          </CardTitle>
-          <Underline length="80px" />
+          <Underline>
+            <CardTitle>
+              <Icon type="login" /> {t('login.form.title')}
+            </CardTitle>
+          </Underline>
           <LoginForm onSubmit={onSubmit} />
           <hr />
           <Card>

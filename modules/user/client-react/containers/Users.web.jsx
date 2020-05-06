@@ -46,8 +46,9 @@ const Users = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      <h2>{t('users.list.title')}</h2>
-      <Underline length="80px" />
+      <Underline>
+        <h2>{t('users.list.title')}</h2>
+      </Underline>
       <Link to="/users/new">
         <Button color="primary">{t('users.btn.add')}</Button>
       </Link>

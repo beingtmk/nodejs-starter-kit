@@ -74,8 +74,11 @@ class ProfileView extends React.Component {
                     position: 'relative'
                   }}
                 >
-                  <Icon type="user" /> My Profile
-                  <Underline length="150px" />
+                  <Underline>
+                    <div>
+                      <Icon type="user" /> {t(`profile.card.title`)}
+                    </div>
+                  </Underline>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`/users/${currentUser.id}`}>
                       <Button shape="circle" size="large">

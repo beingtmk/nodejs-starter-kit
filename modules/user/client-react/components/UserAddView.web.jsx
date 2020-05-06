@@ -25,10 +25,11 @@ const UserAddView = ({ t, onSubmit }) => {
   const renderContent = () => (
     <Card className="form-card">
       <Link to="/users">Back</Link>
-      <h2>
-        {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
-      </h2>
-      <Underline length="120px" />
+      <Underline>
+        <h2>
+          {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
+        </h2>
+      </Underline>
       <UserForm onSubmit={onSubmit} initialValues={{}} shouldDisplayRole={true} shouldDisplayActive={true} />
     </Card>
   );
