@@ -24,6 +24,11 @@ const NavLinkAdminWithI18n = translate('listing')(({ t }: { t: TranslateFunction
 
 export default new ClientModule({
   route: [
+    <Route
+      exact
+      path="/listing-detail/:id"
+      component={loadable(() => import('./containers/ListingDetail').then(c => c.default))}
+    />,
     <AuthRoute
       exact
       role={['admin']}
@@ -47,6 +52,13 @@ export default new ClientModule({
       path="/listing_catalogue"
       component={loadable(() => import('./containers/ListingCatalogue.web').then(c => c.default))}
     />
+    // <AuthRoute
+    //   redirect="/profile"
+    //   role={['user', 'admin']}
+    //   exact
+    //   path="/my-listings"
+    //   component={loadable(() => import('./containers/MyListings').then(c => c.default))}
+    // />
   ],
   navItemAdmin: [
     <IfLoggedIn>

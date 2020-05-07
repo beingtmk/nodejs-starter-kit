@@ -1,0 +1,177 @@
+import React, { Component } from 'react';
+import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
+import { Row, Col, Breadcrumb, Divider, Spin, Card, Descriptions, Avatar, Statistic, Carousel, Icon } from 'antd';
+
+import { translate } from '@gqlapp/i18n-client-react';
+import { PageLayout } from '@gqlapp/look-client-react';
+
+import settings from '../../../../settings';
+
+const { Meta } = Card;
+
+class ListingDetailView extends Component {
+  constructor(props) {
+    super(props);
+    this.next = this.next.bind(this);
+    this.previous = this.previous.bind(this);
+    this.carousel = React.createRef();
+  }
+
+  renderMetaData = () => (
+    <Helmet
+      title={`${settings.app.name} - ${this.props.t('listingDetail.title')}`}
+      meta={[
+        {
+          name: 'description',
+          content: this.props.t('listingDetail.meta')
+        }
+      ]}
+    />
+  );
+
+  next() {
+    this.carousel.next();
+  }
+
+  previous() {
+    this.carousel.prev();
+  }
+
+  prevSlide = () => {
+    this.carousel.prev();
+  };
+
+  nextSlide = () => {
+    this.carousel.next();
+  };
+
+  render() {
+    const { listing, loading } = this.props;
+    const images = listing && listing.listingImage && listing.listingImage.length !== 0 && listing.listingImage;
+    const status = {
+      customPaging: function(i) {
+        return (
+          <a>
+            <img src={images[i].imageUrl} style={{ width: '30px', height: '30px', zIndex: '10' }} />
+          </a>
+        );
+      },
+
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      dots: true
+
+      // nextArrow: <SampleNextArrow />,
+      // prevArrow: <SamplePrevArrow />
+    };
+    return (
+      <PageLayout>
+        {this.renderMetaData()}
+        {!loading && !listing && <h3>{'Listing not found!'}</h3>}
+        {loading && !listing ? (
+          <Spin />
+        ) : (
+          <>
+            <Breadcrumb
+              separator=">"
+              style={{
+                padding: '0px 0 0 10px',
+                marginTop: '5px',
+                marginBottom: '5px'
+              }}
+            >
+              <Breadcrumb.Item>{listing.title}</Breadcrumb.Item>
+              <Breadcrumb.Item>{`Listing ${listing.id}`}</Breadcrumb.Item>
+            </Breadcrumb>
+            <Card
+              title={<h1>{listing.title}</h1>}
+              style={{
+                background: 'white',
+                borderRadius: '10px'
+              }}
+              cover={
+                <div style={{ height: '50vh', paddingTop: '10px' }} align="center">
+                  <div
+                    style={{
+                      height: '300px',
+                      position: 'relative',
+                      marginBottom: '30px'
+                    }}
+                  >
+                    <div className="carousel-arrow carousel-arrow-left" onClick={this.prevSlide}>
+                      <Icon type="left" className="carousel-arrow-icon" />
+                    </div>
+                    <Carousel className="listing-detail-carousel" ref={node => (this.carousel = node)} {...status}>
+                      {images.map((item, id) => (
+                        <div key={id} align="center">
+                          <img src={item.imageUrl} style={{ height: '300px' }} />
+                        </div>
+                      ))}
+                    </Carousel>
+                    <div className="carousel-arrow carousel-arrow-right" onClick={this.nextSlide}>
+                      <Icon type="right" className="carousel-arrow-icon" />
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <Divider />
+              <Row>
+                {/* <Col md={12} xs={24}>
+                <a href={`/public-profile/${listing.user.id}`}>
+                  <Meta
+                    avatar={
+                      <Avatar
+                        style={{ height: '60px', width: '60px' }}
+                        src={listing && listing.user && listing.user.profile && listing.user.profile.avatar}
+                      />
+                    }
+                    title={<h2 style={{ marginLeft: '10px' }}>{getName()}</h2>}
+                    description={<h3 style={{ marginLeft: '10px', marginTop: '-10px' }}>{listing.user.username}</h3>}
+                  />
+                </a>
+              </Col> */}
+              </Row>
+              <br />
+              <Descriptions layout="horizontal" bordered column={1}>
+                {listing.listingCost.cost && listing.listingCost.cost && (
+                  <Descriptions.Item label="Cost">
+                    <Statistic
+                      value={
+                        listing && listing.listingCost && listing.listingCost.cost ? listing.listingCost.cost : 'Free'
+                      }
+                      prefix={
+                        <img
+                          height="20px"
+                          width="20px"
+                          alt=""
+                          src="https://res.cloudinary.com/dpvrqxttb/image/upload/v1588191192/edgenus/ddibd7whj8ha7hdml6pq.svg"
+                        />
+                      }
+                    />
+                  </Descriptions.Item>
+                )}
+                {<Descriptions.Item label="Description">{listing.description}</Descriptions.Item>}
+                {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
+              </Descriptions>
+            </Card>
+          </>
+        )}
+      </PageLayout>
+    );
+  }
+}
+
+ListingDetailView.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  listing: PropTypes.object,
+  reviews: PropTypes.array,
+  location: PropTypes.object.isRequired,
+  t: PropTypes.func,
+  onShare: PropTypes.func
+};
+
+export default translate('listing')(ListingDetailView);

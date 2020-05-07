@@ -5,7 +5,7 @@ fragment ListingInfo on Listing {
   isActive
   createdAt
   updatedAt
-  # isActive
+  isActive
   listingImage {
     id
     description
