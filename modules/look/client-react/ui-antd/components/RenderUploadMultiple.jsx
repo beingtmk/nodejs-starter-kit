@@ -39,10 +39,13 @@ export default class RenderUpload extends React.Component {
     // const input = this.props.input;
     // const defaultFileList = this.props.defaultFileList;
 
-    const cloudinary_url = 'https://api.cloudinary.com/v1_1/www-lenshood-in/image/upload';
+    const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
+    // const cloudinary_url =
+    //   'https://api.cloudinary.com/v1_1/www-lenshood-in/image/upload';
     // { upload_preset: 'nxzf2ip6' }
     // const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    const cloudinary_data = { upload_preset: 'nxzf2ip6' };
+    // const cloudinary_data = { upload_preset: 'nxzf2ip6' };
+    const cloudinary_data = { upload_preset: 'hycdtdxe' };
 
     let validateStatus = '';
     // if (touched && error) {

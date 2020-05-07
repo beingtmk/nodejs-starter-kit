@@ -1,0 +1,107 @@
+# Entity
+type Listing {
+  id: Int
+  userId: Int!
+  title: String!
+  description: String
+  isActive: Boolean
+  listingImage: [ListingImage]
+  listingCost: ListingCost
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ListingImage {
+  id: Int
+  listingId: Int
+  imageUrl: String
+  description: String
+}
+
+type ListingCost {
+  id: Int
+  listingId: Int
+  cost: Int
+}
+
+type Listings {
+  totalCount: Int
+  edges: [ListingEdges]
+  pageInfo: ListingPageInfo
+}
+
+type ListingEdges {
+  node: Listing
+  cursor: Int
+}
+
+type ListingPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+extend type Query {
+  listings(
+    limit: Int
+    after: Int
+    orderBy: OrderByListInput
+    filter: FilterListInput
+  ): Listings
+}
+
+extend type Mutation {
+  # Create new listing
+  addListing(input: AddListingInput!): Boolean
+  # # Edit a listing
+  editListing(input: EditListingInput!): Boolean
+  # # Delete a listing
+  deleteListing(id: Int!): Boolean
+
+  # Activating a Listing
+  toggleListingIsActive(id: Int!): Boolean
+}
+
+# extend type Subscription {}
+
+# Input for ordering listings
+input OrderByListInput {
+  column: String
+  # asc | desc
+  order: String
+}
+
+input FilterListInput {
+  isActive: Boolean
+  searchText: String
+}
+
+input AddListingInput {
+  id: Int
+  userId: Int
+  title: String
+  description: String
+  isActive: Boolean
+  listingImage: [ListingImageInput]
+  listingCost: ListingCostInput
+}
+
+# Input for addListing Mutation
+input ListingImageInput {
+  id: Int
+  description: String
+  imageUrl: String!
+}
+input ListingCostInput {
+  cost: Int
+}
+
+# Input for editListing Mutation
+input EditListingInput {
+  id: Int!
+  userId: Int
+  title: String
+  description: String
+  isActive: Boolean
+  listingImage: [ListingImageInput]
+  listingCost: ListingCostInput
+}

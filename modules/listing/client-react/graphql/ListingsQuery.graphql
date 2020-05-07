@@ -1,0 +1,22 @@
+#import "./Listing.graphql"
+
+query listings(
+  $limit: Int!
+  $after: Int
+  $orderBy: OrderByListInput
+  $filter: FilterListInput
+) {
+  listings(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ListingInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

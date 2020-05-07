@@ -1,0 +1,34 @@
+fragment ListingInfo on Listing {
+  id
+  title
+  description
+  isActive
+  createdAt
+  updatedAt
+  # isActive
+  listingImage {
+    id
+    description
+    imageUrl
+  }
+  listingCost {
+    id
+    cost
+  }
+  # user {
+  #   id
+  #   username
+  #   portfolios {
+  #     platform
+  #     portfolioUrl
+  #   }
+  #   profile {
+  #     avatar
+  #     firstName
+  #     lastName
+  #     rating
+  #     about
+  #     mobile
+  #   }
+  # }
+}
