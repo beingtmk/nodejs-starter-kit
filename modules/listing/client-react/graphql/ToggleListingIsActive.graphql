@@ -1,0 +1,3 @@
+mutation toggleListingIsActive($id: Int!) {
+  toggleListingIsActive(id: $id)
+}
