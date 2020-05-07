@@ -38,6 +38,9 @@ export default (pubsub: any) => ({
           hasNextPage
         }
       };
+    },
+    async listing(obj: any, { id }: Identifier, context: any) {
+      return context.Listing.listing(id);
     }
   },
   Mutation: {

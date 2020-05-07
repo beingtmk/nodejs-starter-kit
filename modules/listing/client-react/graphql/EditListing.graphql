@@ -1,0 +1,3 @@
+mutation editListing($input: EditListingInput!) {
+  editListing(input: $input)
+}

@@ -33,6 +33,12 @@ export default new ClientModule({
     <AuthRoute
       exact
       role={['admin', 'user']}
+      path="/edit/listing/:id"
+      component={loadable(() => import('./containers/EditListing.web').then(c => c.default))}
+    />,
+    <AuthRoute
+      exact
+      role={['admin', 'user']}
       path="/new/listing"
       component={loadable(() => import('./containers/AddListing.web').then(c => c.default))}
     />,

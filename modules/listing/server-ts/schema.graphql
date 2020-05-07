@@ -47,6 +47,7 @@ extend type Query {
     orderBy: OrderByListInput
     filter: FilterListInput
   ): Listings
+  listing(id: Int!): Listing
 }
 
 extend type Mutation {
@@ -92,6 +93,7 @@ input ListingImageInput {
   imageUrl: String!
 }
 input ListingCostInput {
+  id: Int
   cost: Int
 }
 
