@@ -48,6 +48,7 @@ extend type Query {
     filter: FilterListInput
   ): Listings
   listing(id: Int!): Listing
+  userListings(userId: Int): [Listing]
 }
 
 extend type Mutation {

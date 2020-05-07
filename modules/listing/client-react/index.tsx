@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -9,6 +10,22 @@ import { MenuItem } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 
 import resources from './locales';
+const MyListingsNavItemAccount = () => {
+  return (
+    <NavLink to="/my-listings">
+      <div>
+        <Icon type="solution" /> {'My Listings'}
+      </div>
+    </NavLink>
+  );
+};
+
+const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
+  <NavLink to="/my-listings" className=" AccDetItem" activeClassName="AccDetItemSelected">
+    <Icon style={{ paddingRight: '5px' }} type="solution" />
+    {t('listing:navLinkMyListings')}
+  </NavLink>
+));
 
 const NavLinkTestWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/listing_catalogue" className="nav-link" activeClassName="active">
@@ -51,14 +68,14 @@ export default new ClientModule({
       exact
       path="/listing_catalogue"
       component={loadable(() => import('./containers/ListingCatalogue.web').then(c => c.default))}
+    />,
+    <AuthRoute
+      redirect="/profile"
+      role={['user', 'admin']}
+      exact
+      path="/my-listings"
+      component={loadable(() => import('./containers/MyListings').then(c => c.default))}
     />
-    // <AuthRoute
-    //   redirect="/profile"
-    //   role={['user', 'admin']}
-    //   exact
-    //   path="/my-listings"
-    //   component={loadable(() => import('./containers/MyListings').then(c => c.default))}
-    // />
   ],
   navItemAdmin: [
     <IfLoggedIn>
@@ -71,6 +88,20 @@ export default new ClientModule({
     <MenuItem key="/listing_catalogue">
       <NavLinkTestWithI18n />
     </MenuItem>
+  ],
+  navItemUser: [
+    <IfLoggedIn key="/my-listings">
+      <MenuItem>
+        <MyListingsNavItemAccount />
+      </MenuItem>
+    </IfLoggedIn>
+  ],
+  navItemAccount: [
+    <IfLoggedIn key="/my-listings">
+      <MenuItem>
+        <NavLinkMyListingsWithI18n />
+      </MenuItem>
+    </IfLoggedIn>
   ],
   localization: [{ ns: 'listing', resources }]
 });

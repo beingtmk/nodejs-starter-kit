@@ -41,7 +41,13 @@ export default (pubsub: any) => ({
     },
     async listing(obj: any, { id }: Identifier, context: any) {
       return context.Listing.listing(id);
-    }
+    },
+    userListings: withAuth(
+      ["user:view:self"],
+      async (obj: any, { userId }: any, context: any) => {
+        return context.Listing.userListings(userId || context.req.identity.id);
+      }
+    ),
   },
   Mutation: {
     addListing: withAuth(

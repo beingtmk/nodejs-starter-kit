@@ -1,0 +1,7 @@
+#import "./MyListings.graphql"
+
+query myListings {
+  userListings {
+    ...MyListings
+  }
+}

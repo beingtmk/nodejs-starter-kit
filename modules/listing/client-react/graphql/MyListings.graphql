@@ -1,0 +1,16 @@
+fragment MyListings on Listing {
+  id
+  title
+  description
+  listingImage {
+    id
+    imageUrl
+  }
+  listingCost{
+    id
+    cost
+  }
+  # user {
+  #   id
+  # }
+}

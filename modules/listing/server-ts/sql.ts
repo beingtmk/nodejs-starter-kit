@@ -148,6 +148,17 @@ export default class ListingDAO extends Model {
         .update({ is_active: isActive })
     );
   }
+
+  public async userListings(userId: number) {
+    const res = camelizeKeys(
+      await ListingDAO.query()
+        .where('user_id', userId)
+        .eager(eager)
+        .orderBy('id', 'desc')
+    );
+    // console.log(query[0]);
+    return res;
+  }
 }
 
 // ListingImage model.
