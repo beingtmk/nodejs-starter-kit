@@ -1,0 +1,10 @@
+# GraphQL queries
+query locations($input: GeolocationInput!, $filter: FilterLocationInput!) {
+  locations(input: $input, filter: $filter) {
+    id
+    latitude
+    longitude
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,20 @@
+fragment MiniBlogsCardInfo on Blog {
+  id
+  title
+  content
+  image
+  status
+  createdAt
+  model {
+    id
+    name
+  }
+  author {
+    id
+    username
+    profile {
+      firstName
+      lastName
+    }
+  }
+}

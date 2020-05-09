@@ -1,0 +1,7 @@
+#import "./CompleteBlog.graphql"
+
+query blog($id: Int!) {
+  blog(id: $id) {
+    ...CompleteBlogInfo
+  }
+}
