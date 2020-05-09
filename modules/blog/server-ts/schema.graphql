@@ -1,0 +1,88 @@
+# Entity
+type Blog {
+  id: Int!
+  author: User!
+  model: Model!
+  title: String!
+  image: String
+  content: String!
+  status: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Model {
+  id: Int!
+  name: String!
+  image: String!
+  desc: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+extend type Query {
+  models: [Model]
+  model(id: Int!): Model
+  blogs: [Blog]
+  blog(id: Int!): Blog
+  userBlogs(id: Int): [Blog]
+}
+
+extend type Mutation {
+  addBlog(input: AddBlogInput!): Blog
+  editBlog(input: EditBlogInput!): Blog
+  deleteBlog(id: Int!): Blog
+  addModel(input: AddModelInput!): Model
+  updateModel(input: UpdateModelInput!): Model
+  deleteModel(id: Int!): Model
+}
+
+input AddModelInput {
+  name: String!
+  image: String!
+  desc: String!
+}
+
+input UpdateModelInput {
+  id: Int!
+  name: String!
+  image: String!
+  desc: String!
+}
+
+input AddBlogInput {
+  title: String!
+  image: String
+  content: String!
+  status: String
+  modelId: Int!
+  authorId: Int
+  tags: [String]
+}
+
+input EditBlogInput {
+  id: Int!
+  title: String
+  image: String
+  content: String
+  status: String
+  modelId: Int
+  authorId: Int
+  tags: [String]
+}
+
+extend type Subscription {
+  modelUpdated: UpdateModelPayload
+  blogsUpdated: UpdateBlogsPayload
+  # subscriptionName: TypeName
+}
+
+type UpdateBlogsPayload {
+  mutation: String!
+  node: Blog!
+}
+
+type UpdateModelPayload {
+  mutation: String!
+  node: Model!
+}

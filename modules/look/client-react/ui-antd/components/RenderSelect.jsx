@@ -26,7 +26,15 @@ const RenderSelect = props => {
   return (
     <FormItem label={label} validateStatus={validateStatus} help={error}>
       <div>
-        <Select {...input} type={type} onChange={onChange}>
+        <Select
+          showSearch
+          optionFilterProp="children"
+          placeholder={label}
+          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          {...input}
+          type={type}
+          onChange={onChange}
+        >
           {children}
         </Select>
       </div>

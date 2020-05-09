@@ -1,0 +1,10 @@
+#import "./Models.graphql"
+
+subscription onModelsUpdated {
+  modelUpdated {
+    mutation
+    node {
+      ...ModelsInfo
+    }
+  }
+}

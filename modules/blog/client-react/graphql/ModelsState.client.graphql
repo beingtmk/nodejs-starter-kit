@@ -1,0 +1,10 @@
+fragment ModelsStateInfo on ModelsState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    gearCategory
+  }
+}

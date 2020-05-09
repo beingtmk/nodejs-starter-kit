@@ -1,0 +1,35 @@
+# Entity
+type BlogBookmark {
+  id: Int!
+  blog: Blog!
+  user: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
+extend type Query {
+  blogBookmarks: [BlogBookmark]
+  userBlogBookmarks(userId: Int): [BlogBookmark]
+  userBlogBookmark(input: UserBlogBookmarkInput!): BlogBookmark
+  blogBookmark(id: Int!): BlogBookmark
+}
+
+extend type Mutation {
+  addBlogBookmark(input: UserBlogBookmarkInput!): BlogBookmark
+  deleteBlogBookmark(input: UserBlogBookmarkInput!): BlogBookmark
+  deleteBlogBookmarkWithId(id: Int!): BlogBookmark
+}
+
+input UserBlogBookmarkInput {
+  userId: Int
+  blogId: Int!
+}
+
+extend type Subscription {
+  blogBookmarksUpdated: UpdateBlogBookmarkPayload
+}
+
+type UpdateBlogBookmarkPayload {
+  mutation: String!
+  node: BlogBookmark!
+}

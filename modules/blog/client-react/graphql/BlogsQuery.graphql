@@ -1,0 +1,7 @@
+#import "./Blogs.graphql"
+
+query blogs {
+  blogs {
+    ...BlogsInfo
+  }
+}

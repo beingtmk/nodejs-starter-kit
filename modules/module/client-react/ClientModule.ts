@@ -19,6 +19,8 @@ export interface ClientModuleShape extends BaseModuleShape {
   navItemAdmin?: Array<React.ReactElement<any>>;
   // Acount specific
   navItemAccount?: Array<React.ReactElement<any>>;
+  // Blog specific
+  navItemsBlog?: Array<React.ReactElement<any>>;
 }
 
 interface ClientModule extends ClientModuleShape {}

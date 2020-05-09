@@ -1,0 +1,7 @@
+#import "./Like.graphql"
+
+query typeLikes($input: TypeLikeInput!) {
+  typeLikes(input: $input) {
+    ...LikeInfo
+  }
+}

@@ -1,0 +1,42 @@
+# Entity
+type Like {
+  id: Int!
+  typeId: Int!
+  type: String!
+  user: User!
+  createdAt: String!
+  updatedAt: String!
+}
+
+extend type Query {
+  likes: [Like]
+  typeLikes(input: TypeLikeInput!): [Like]
+  userLike(input: UserLikeInput!): [Like]
+  like(id: Int!): Like
+}
+
+input TypeLikeInput {
+  typeId: Int!
+  type: String!
+}
+
+extend type Mutation {
+  addLike(input: UserLikeInput!): Like
+  deleteLike(id: Int!): Like
+  deleteLikeUser(input: UserLikeInput!): Like
+}
+
+input UserLikeInput {
+  type: String!
+  userId: Int
+  typeId: Int!
+}
+
+extend type Subscription {
+  likesUpdated: UpdateLikePayload
+}
+
+type UpdateLikePayload {
+  mutation: String!
+  node: Like!
+}
