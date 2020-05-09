@@ -3,6 +3,7 @@ fragment BlogsInfo on Blog {
   title
   content
   image
+  description
   status
   model {
     id

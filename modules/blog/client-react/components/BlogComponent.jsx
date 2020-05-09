@@ -22,20 +22,30 @@ const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
         lg={{ span: 16, offset: 4 }}
       >
         <Card
+          className="blog-detailview-card"
+          bodyStyle={{ padding: "10px" }}
           title={
             <>
-              <a href="#">
-                <Avatar size={64} src={blog.model.image} />
-                <strong style={{ marginLeft: "20px", fontSize: "30px" }}>
-                  {blog.model.name}
-                </strong>
-              </a>
-              <Divider />
-              <h1 style={{ fontSize: "40px", marginBottom: "15px" }}>
-                <strong>{blog.title}</strong>
+              <h1
+                style={{
+                  fontSize: "40px",
+                  marginBottom: "15px",
+                  padding: "0 20px",
+                }}
+              >
+                {blog.title}
               </h1>
-              <br />
+              <h2
+                style={{
+                  color: "rgba(0, 0, 0, 0.54)",
+                  marginBottom: "25px",
+                  padding: "0 20px",
+                }}
+              >
+                {blog.description}
+              </h2>
               <Meta
+                style={{ padding: "0 20px" }}
                 avatar={<Avatar src={blog.author.image} />}
                 title={
                   <span>
@@ -51,18 +61,18 @@ const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
           cover={<img alt={blog.title} src={blog.image} />}
         >
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-          <Divider />
+          {/* <Divider />
           {blog.tags &&
             blog.tags.map((item, idx) => (
               <Tag color="#2db7f5" key={idx}>
                 {item.name}
               </Tag>
-            ))}
+            ))} */}
           <Divider />
           <BlogActionsComponent blog={blog} />
         </Card>
-        {/* <BlogRefCardComponent user={blog.author} /> */}
-        {/* <BlogRefCardComponent model={blog.model} /> */}
+        <BlogRefCardComponent user={blog.author} />
+        <BlogRefCardComponent model={blog.model} />
         {/* <br /> */}
         <br />
         <CommentSection

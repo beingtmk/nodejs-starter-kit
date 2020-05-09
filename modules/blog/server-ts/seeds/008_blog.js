@@ -25,7 +25,8 @@ export async function seed(knex) {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_yHrpo9HrvefMGkn6NSCwmVUDICnDMQYF79oFMl6Z316p-XwXAQ&s',
         model_id: Math.floor(Math.random() * 10) + 1,
         author_id: 1,
-        status: status[Math.floor(Math.random() * 3)]
+        status: status[Math.floor(Math.random() * 3)],
+        description: `Lorem Ipsum ${i + 1} is simply dummy text of the printing and typesetting industry.`
       });
     })
   );

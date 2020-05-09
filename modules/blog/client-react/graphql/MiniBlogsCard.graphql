@@ -4,6 +4,7 @@ fragment MiniBlogsCardInfo on Blog {
   content
   image
   status
+  description
   createdAt
   model {
     id

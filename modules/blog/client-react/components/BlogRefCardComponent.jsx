@@ -29,11 +29,11 @@ const BlogRefCardComponent = ({ user, model }) => {
           <h3>{model ? model.desc : user.desc}</h3>
         </Col>
         <br />
-        <Col xs={24} md={2} lg={3}>
+        {/* <Col xs={24} md={2} lg={3}>
           <Button type="primary" ghost>
             Follow
           </Button>
-        </Col>
+        </Col> */}
       </Row>
     </Card>
   );

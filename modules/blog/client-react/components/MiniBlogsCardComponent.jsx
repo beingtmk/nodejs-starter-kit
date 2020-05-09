@@ -22,14 +22,12 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
           <h1 className="blog-mini-card-title two-line-limiter">
             {blog.title}
           </h1>
-          {/* <h1>
-            <strong>
-              {blog.title.substring(0, 24)}
-              {blog.title.length > 24 && "..."}
-            </strong>
-          </h1> */}
         </Tooltip>
-        <br />
+        <Tooltip placement="bottomLeft" title={blog && blog.description}>
+          <h2 className="blog-mini-card-description two-line-limiter">
+            {blog && blog.description}
+          </h2>
+        </Tooltip>
         <Meta
           avatar={<Avatar src={blog.author.image} />}
           title={
@@ -56,7 +54,7 @@ const MiniBlogsCardComponent = ({ blog, moreFlag }) => {
     );
   };
   return (
-    <div style={{marginBottom: "20px"}}>
+    <div style={{ marginBottom: "20px" }}>
       <Card
         cover={
           <MiniBlogImageComponent

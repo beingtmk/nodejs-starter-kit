@@ -3,6 +3,7 @@ fragment CompleteBlogInfo on Blog {
   title
   content
   image
+  description
   status
   createdAt
   updatedAt
