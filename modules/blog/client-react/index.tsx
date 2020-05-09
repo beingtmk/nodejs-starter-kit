@@ -85,11 +85,11 @@ export default new ClientModule({
       role={['admin']}
       component={loadable(() => import('./containers/AdminModelsList').then(c => c.default))}
     />,
-    <Route
-      exact
-      path="/blog/@:username"
-      component={loadable(() => import('./containers/UserBlogs').then(c => c.default))}
-    />,
+    // <Route
+    //   exact
+    //   path="/blog/@:username"
+    //   component={loadable(() => import('./containers/UserBlogs').then(c => c.default))}
+    // />,
     <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
   navItemsBlog: [

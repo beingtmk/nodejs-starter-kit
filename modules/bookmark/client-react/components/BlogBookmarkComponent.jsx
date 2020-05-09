@@ -30,14 +30,14 @@ const BlogLikeComponent = ({
         <Tooltip placement="bottomLeft" title={likeFlag ? 'Un-bookmark' : 'Bookmark this blog'}>
           <Icon
             onClick={() => likeFunc()}
-            type="safety-certificate"
+            type="book"
             theme={!likeFlag ? 'outlined' : 'filled'}
             style={{ fontSize: '22px', marginTop: '10px' }}
           />
         </Tooltip>
       ) : (
         <Tooltip placement="bottomLeft" title={'Login to bookmark the post'}>
-          <Icon type="safety-certificate" theme={'outlined'} style={{ fontSize: '22px', marginTop: '10px' }} />
+          <Icon type="book" theme={'outlined'} style={{ fontSize: '22px', marginTop: '10px' }} />
         </Tooltip>
       )}
     </span>

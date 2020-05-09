@@ -1,61 +1,81 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { translate } from '@gqlapp/i18n-client-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { translate } from "@gqlapp/i18n-client-react";
 
-import { Col, Row, Tabs } from 'antd';
-import MyMiniBlogsCardComponent from './MyMiniBlogsCardComponent';
-import { status } from '../constants';
+import { Col, Row, Tabs } from "antd";
+import MyMiniBlogsCardComponent from "./MyMiniBlogsCardComponent";
+import { status } from "../constants";
 
 const { TabPane } = Tabs;
 
-const MyBlogsView = ({ blogs, deleteBlog, editBlog }) => {
+const MyBlogsComponent = ({ blogs, deleteBlog, editBlog }) => {
   return (
-    <Row>
-      <Col
-        xs={{ span: 22, offset: 1 }}
-        sm={{ span: 22, offset: 1 }}
-        md={{ span: 22, offset: 1 }}
-        lg={{ span: 20, offset: 2 }}
-      >
-        <h1>
-          <strong>My Blogs</strong>
-          <br />
-          <br />
-        </h1>
-        <Row gutter={32}>
-          <Tabs defaultActiveKey="all" size="large">
-            <TabPane tab="All" key="all">
-              {blogs.map(item => (
-                <MyMiniBlogsCardComponent
-                  key={item.id}
-                  moreFlag={false}
-                  blog={item}
-                  deleteBlog={deleteBlog}
-                  editBlog={editBlog}
-                />
-              ))}
-            </TabPane>
-            {status.map(item => (
-              <TabPane tab={item.charAt(0).toUpperCase() + item.slice(1)} key={item}>
-                {blogs
-                  .filter(val => val.status == item)
-                  .map(item => (
-                    <MyMiniBlogsCardComponent key={item.id} blog={item} editBlog={editBlog} deleteBlog={deleteBlog} />
-                  ))}
-              </TabPane>
-            ))}
-          </Tabs>
-        </Row>
-      </Col>
+    <Row gutter={32} className="blog-list-row">
+      <div style={{ marginBottom: "30px", marginLeft: "16px" }}>
+        <h1 style={{ fontSize: "32px" }}>My Blogs</h1>
+
+        <div align="left">
+          <div
+            key="line"
+            className="title-line-wrapper"
+            style={{ width: "200px" }}
+            align="left"
+          >
+            <div
+              className="title-line "
+              // style={{ transform: "translateX(-64px)" }}
+            />
+          </div>
+        </div>
+      </div>
+      <Tabs defaultActiveKey="all" size="large" className="my-blogs-tabs">
+        <TabPane tab="All" key="all">
+          {blogs ? (
+            blogs.map((item) => (
+              <MyMiniBlogsCardComponent
+                key={item.id}
+                blog={item}
+                deleteBlog={deleteBlog}
+                editBlog={editBlog}
+              />
+            ))
+          ) : (
+            <Empty />
+          )}
+        </TabPane>
+        {status.map((item) => (
+          <TabPane
+            tab={item.charAt(0).toUpperCase() + item.slice(1)}
+            key={item}
+          >
+            <Row gutter={32}>
+              {blogs ? (
+                blogs
+                  .filter((val) => val.status == item)
+                  .map((item) => (
+                    <MyMiniBlogsCardComponent
+                      key={item.id}
+                      blog={item}
+                      deleteBlog={deleteBlog}
+                      editBlog={editBlog}
+                    />
+                  ))
+              ) : (
+                <Empty />
+              )}
+            </Row>
+          </TabPane>
+        ))}
+      </Tabs>
     </Row>
   );
 };
 
-MyBlogsView.propTypes = {
+MyBlogsComponent.propTypes = {
   blogs: PropTypes.array,
   t: PropTypes.func,
   editBlog: PropTypes.func,
-  deleteBlog: PropTypes.func
+  deleteBlog: PropTypes.func,
 };
 
-export default translate('blog')(MyBlogsView);
+export default translate("blog")(MyBlogsComponent);

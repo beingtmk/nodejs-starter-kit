@@ -1,23 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const MiniBlogImageComponent = props => {
+const MiniBlogImageComponent = (props) => {
   return (
     <div
+      className="blog-list-card-image"
       style={{
-        overflow: 'hidden',
-        height: `${props.height}px`,
-        background: 'grey'
+        overflow: "hidden",
+        minWidth: "200px",
+        height: "200px",
+
+        backgroundImage: `url(${props.image})`,
+        objectFit: "cover",
+        position: "relative",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
       align="center"
     >
-      <img
-        style={{
-          height: '100%'
-        }}
-        alt={props.title}
-        src={props.image}
-      />
+      {props.catagory && (
+        <div className="blog-mini-card-image-catagory">
+          <h3 style={{ color: "inherit" }}>
+            {props.catagory.map((item) => `${item} `)}
+          </h3>
+        </div>
+      )}
     </div>
   );
 };
@@ -25,7 +32,7 @@ const MiniBlogImageComponent = props => {
 MiniBlogImageComponent.propTypes = {
   title: PropTypes.string,
   image: PropTypes.string,
-  height: PropTypes.number
+  height: PropTypes.number,
 };
 
 export default MiniBlogImageComponent;
