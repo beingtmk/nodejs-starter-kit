@@ -3,7 +3,6 @@ import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { has } from 'lodash';
 import { Model } from 'objection';
 import bcrypt from 'bcryptjs';
-import { Model } from 'objection';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
 

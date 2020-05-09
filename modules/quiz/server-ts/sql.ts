@@ -11,7 +11,7 @@ import { has } from 'lodash';
 import { User } from '@gqlapp/user-server-ts/sql';
 import { Identifier } from '@gqlapp/chat-server-ts/sql';
 
-const eager = '[user.[user]]';
+const eager = '[user]';
 
 export default class Quiz extends Model {
   static get tableName() {
@@ -35,7 +35,7 @@ export default class Quiz extends Model {
     };
   }
 
-  public async getQuizzes() {
+  public async getQuizzes(filter) {
     const queryBuilder = await Quiz.query().eager(eager);
     const res = camelizeKeys(queryBuilder);
     return res;
@@ -59,16 +59,17 @@ export default class Quiz extends Model {
     return res;
   }
 
-  public async editQuiz({ params }: any) {
-    // console.log('profile edit resolvers1', decamelizeKeys(params));
+  public async editQuiz( input ) {
+    console.log('quiz edit sql', decamelizeKeys(input));
 
-    const res = await Quiz.query().upsertGraph(decamelizeKeys(params));
+    const res = await Quiz.query().upsertGraph(decamelizeKeys(input));
     // console.log('profile edit resolvers', res);
 
     return res;
   }
+  
 
-  public async deleteQuiz({ id }: Identifier) {
+  public async deleteQuiz( id ) {
     return knex('quiz')
       .where('id', '=', id)
       .del();

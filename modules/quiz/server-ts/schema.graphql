@@ -11,6 +11,8 @@ type Quiz {
 }
 
 extend type Query {
+  #get quizzes
+  quizzes(filter: String): [Quiz]
   #get quiz by id
   quiz(id: Int!): Quiz
 }
@@ -19,7 +21,17 @@ extend type Mutation {
   # Create new quiz
   addQuiz(input: AddQuizInput!): Boolean
   # Edit a quiz
-  # editUser(input: EditUserInput!): UserPayload!
+  editQuiz(input: EditQuizInput!): Quiz
+  # Delete quiz
+  deleteQuiz(id:Int): Quiz
+}
+
+input EditQuizInput {
+  id: Int!
+  userId: Int!
+  active: Boolean!
+  title: String!
+  description: String!
 }
 
 input AddQuizInput {
