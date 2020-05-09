@@ -1,3 +1,4 @@
+import quiz from '@gqlapp/quiz-server-ts';
 import home from '@gqlapp/home-server-ts';
 import core from '@gqlapp/core-server-ts';
 import i18n from '@gqlapp/i18n-server-ts';
@@ -21,6 +22,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  quiz,
   home,
   authentication,
   cookies,

@@ -1,0 +1,34 @@
+# Entity
+type Quiz {
+  id: Int!
+  userId: Int
+  active: Boolean
+  title: String
+  description: String
+  createdAt: String
+  updatedAt: String!
+  user: User
+}
+
+extend type Query {
+  #get quiz by id
+  quiz(id: Int!): Quiz
+}
+
+extend type Mutation {
+  # Create new quiz
+  addQuiz(input: AddQuizInput!): Boolean
+  # Edit a quiz
+  # editUser(input: EditUserInput!): UserPayload!
+}
+
+input AddQuizInput {
+  userId: Int!
+  active: Boolean!
+  title: String!
+  description: String!
+}
+
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }

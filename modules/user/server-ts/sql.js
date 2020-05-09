@@ -2,10 +2,12 @@
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { has } from 'lodash';
 import bcrypt from 'bcryptjs';
+import { Model } from 'objection';
+
 import { knex, returnId } from '@gqlapp/database-server-ts';
 
 // Actual query fetching and transformation in DB
-class User {
+export class User extends Model {
   async getUsers(orderBy, filter) {
     const queryBuilder = knex
       .select(
@@ -167,10 +169,12 @@ class User {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
