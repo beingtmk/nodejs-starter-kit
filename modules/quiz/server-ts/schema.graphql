@@ -8,6 +8,33 @@ type Quiz {
   createdAt: String
   updatedAt: String!
   user: User
+  questions:[Question]
+}
+
+type Question {
+  id: Int!
+  quizId: Int!
+  description: String!
+  choices:[Choice]
+  createdAt: String
+  updatedAt: String
+}
+
+type Choice {
+  id: Int!
+  questionId: Int!
+  description: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Answer {
+  id: Int!
+  questionId: Int!
+  userId: Int!
+  choiceId: Int!
+  createdAt: String
+  updatedAt: String
 }
 
 extend type Query {
@@ -26,12 +53,17 @@ extend type Mutation {
   deleteQuiz(id:Int): Quiz
 }
 
-input EditQuizInput {
-  id: Int!
-  userId: Int!
-  active: Boolean!
-  title: String!
+input QuestionInput {
+  id: Int
+  quizId: Int
   description: String!
+  choices:[ChoiceInput]
+}
+
+input ChoiceInput {
+  id: Int
+  questionId: Int
+  description: String! 
 }
 
 input AddQuizInput {
@@ -39,7 +71,18 @@ input AddQuizInput {
   active: Boolean!
   title: String!
   description: String!
+  questions:[QuestionInput]
 }
+
+input EditQuizInput {
+  id: Int!
+  userId: Int!
+  active: Boolean!
+  title: String!
+  description: String!
+  questions:[QuestionInput]
+}
+
 
 # extend type Subscription {
 #   subscriptionName: TypeName

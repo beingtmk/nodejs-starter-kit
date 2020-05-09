@@ -22,7 +22,7 @@ export default (pubsub: any) => ({
     }
   },
   Mutation: {
-    async addQuiz(obj, { input }, { Quiz }) {
+    async addQuiz(obj: any, { input }:any, { Quiz }:any) {
       console.log('input in res', input);
       const isAdded = Quiz.addQuiz(input);
       console.log('quiz added', isAdded);
