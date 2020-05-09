@@ -1,4 +1,9 @@
 import quiz from '@gqlapp/quiz-server-ts';
+import geolocation from '@gqlapp/geolocation-server-ts';
+import bookmark from '@gqlapp/bookmark-server-ts';
+import like from '@gqlapp/like-server-ts';
+import comment from '@gqlapp/comment-server-ts';
+import blog from '@gqlapp/blog-server-ts';
 import home from '@gqlapp/home-server-ts';
 import core from '@gqlapp/core-server-ts';
 import i18n from '@gqlapp/i18n-server-ts';
@@ -23,6 +28,11 @@ const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
   quiz,
+  geolocation,
+  bookmark,
+  like,
+  comment,
+  blog,
   home,
   authentication,
   cookies,
