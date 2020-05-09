@@ -3,7 +3,7 @@ import { Model, raw } from 'objection';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
-import { User } from '@gqlapp/user-server-ts/sql';
+// import { User } from '@gqlapp/user-server-ts/sql';
 
 Model.knex(knex);
 
@@ -46,14 +46,14 @@ export default class ListingDAO extends Model {
 
   static get relationMappings() {
     return {
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: 'listing.user_id',
-          to: 'user.id'
-        }
-      },
+      // user: {
+      //   relation: Model.BelongsToOneRelation,
+      //   modelClass: User,
+      //   join: {
+      //     from: 'listing.user_id',
+      //     to: 'user.id'
+      //   }
+      // },
       listing_image: {
         relation: Model.HasManyRelation,
         modelClass: ListingImage,
