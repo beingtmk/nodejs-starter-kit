@@ -11,6 +11,10 @@ fragment BlogsInfo on Blog {
     image
     desc
   }
+  tags {
+    id
+    text
+  }
   author {
     id
     username

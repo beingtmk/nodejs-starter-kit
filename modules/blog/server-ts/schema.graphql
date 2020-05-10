@@ -8,6 +8,7 @@ type Blog {
   description: String
   content: String!
   status: String!
+  tags: [BlogTag]
   createdAt: String!
   updatedAt: String!
 }
@@ -59,7 +60,7 @@ input AddBlogInput {
   description: String
   modelId: Int!
   authorId: Int
-  tags: [String]
+  tags: [TagInput]
 }
 
 input EditBlogInput {
@@ -71,7 +72,12 @@ input EditBlogInput {
   status: String
   modelId: Int
   authorId: Int
-  tags: [String]
+  tags: [TagInput]
+}
+
+input TagInput {
+  id: Int
+  text: String!
 }
 
 extend type Subscription {

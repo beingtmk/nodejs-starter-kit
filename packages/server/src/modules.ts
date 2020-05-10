@@ -1,3 +1,4 @@
+import tag from '@gqlapp/tag-server-ts';
 import geolocation from '@gqlapp/geolocation-server-ts';
 import bookmark from '@gqlapp/bookmark-server-ts';
 import like from '@gqlapp/like-server-ts';
@@ -26,6 +27,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  tag,
   geolocation,
   bookmark,
   like,

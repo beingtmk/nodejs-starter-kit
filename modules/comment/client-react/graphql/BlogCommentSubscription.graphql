@@ -6,7 +6,7 @@ subscription onBlogCOmmentUpdated {
     node {
       id
       comment {
-        ...CommentInfo
+        ...CommentsInfo
       }
     }
   }

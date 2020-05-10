@@ -16,17 +16,17 @@ export default (pubsub: PubSub) => ({
       return context.Blog.blog(id);
     },
     async models(obj: any, args: any, context: any) {
-      return context.Blog.models();
+      return context.Model.models();
     },
     async model(obj: any, { id }: any, context: any) {
-      return context.Blog.model(id);
+      return context.Model.model(id);
     }
   },
   Mutation: {
-    addModel: withAuth(async (obj: any, { input }: any, { Blog }: any) => {
+    addModel: withAuth(async (obj: any, { input }: any, { Model }: any) => {
       try {
-        const id = await Blog.addModel(input);
-        const item = await Blog.model(id);
+        const id = await Model.addModel(input);
+        const item = await Model.model(id);
         pubsub.publish(MODEL_SUBSCRIPTION, {
           modelUpdated: {
             mutation: 'CREATED',
@@ -38,12 +38,12 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    updateModel: withAuth(async (obj: any, { input }: any, { Blog }: any) => {
+    updateModel: withAuth(async (obj: any, { input }: any, { Model }: any) => {
       try {
         const inputId = input.id;
         delete input.id;
-        await Blog.updateModel(inputId, input);
-        const item = await Blog.model(inputId);
+        await Model.updateModel(inputId, input);
+        const item = await Model.model(inputId);
         pubsub.publish(MODEL_SUBSCRIPTION, {
           modelUpdated: {
             mutation: 'UPDATED',
@@ -55,10 +55,10 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteModel: withAuth(async (obj: any, { id }: any, { Blog }: any) => {
+    deleteModel: withAuth(async (obj: any, { id }: any, { Model }: any) => {
       try {
-        const data = await Blog.model(id);
-        await Blog.deleteModel(id);
+        const data = await Model.model(id);
+        await Model.deleteModel(id);
         pubsub.publish(MODEL_SUBSCRIPTION, {
           modelUpdated: {
             mutation: 'DELETED',
@@ -75,7 +75,6 @@ export default (pubsub: PubSub) => ({
         if (!input.authorId) {
           input.authorId = auth.isAuthenticated.id;
         }
-        delete input.tags;
         const id = await Blog.addBlog(input);
         const item = await Blog.blog(id);
         pubsub.publish(BLOGS_SUBSCRIPTION, {
@@ -91,10 +90,7 @@ export default (pubsub: PubSub) => ({
     }),
     editBlog: withAuth(async (obj: any, { input }: any, { Blog }: any) => {
       try {
-        const inputId = input.id;
-        delete input.id;
-        delete input.tags;
-        await Blog.editBlog(inputId, input);
+        const inputId = await Blog.editBlog(input);
         const item = await Blog.blog(inputId);
         pubsub.publish(BLOGS_SUBSCRIPTION, {
           blogsUpdated: {

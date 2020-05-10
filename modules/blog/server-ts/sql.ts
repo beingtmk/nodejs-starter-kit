@@ -15,10 +15,12 @@ import {
 import { User } from '@gqlapp/user-server-ts/sql';
 // import { has } from 'lodash';
 
+import { BlogTag } from '@gqlapp/tag-server-ts/sql';
+
 Model.knex(knex);
 
 // const eager = '[author.[profile], model]';
-const eager = '[author, model]';
+const eager = '[author, model, tags]';
 
 export default class Blog extends Model {
   // private id: any;
@@ -47,6 +49,14 @@ export default class Blog extends Model {
         join: {
           from: 'blog.model_id',
           to: 'model.id'
+        }
+      },
+      tags: {
+        relation: Model.HasManyRelation,
+        modelClass: BlogTag,
+        join: {
+          from: 'blog.id',
+          to: 'blog_tag.blog_id'
         }
       }
     };
@@ -80,23 +90,29 @@ export default class Blog extends Model {
   }
 
   public async addBlog(input: any) {
-    const res = await returnId(knex('blog').insert(decamelizeKeys(input)));
-    return res;
+    const res = await Blog.query().insertGraph(decamelizeKeys(input));
+    return res.id;
   }
 
-  public async editBlog(id: number, input: any) {
-    const res = await returnId(
-      knex('blog')
-        .where({ id })
-        .update(decamelizeKeys(input))
-    );
-    return res;
+  public async editBlog(input: any) {
+    const res = await Blog.query().upsertGraph(decamelizeKeys(input));
+    return res.id;
   }
 
   public async deleteBlog(id: number) {
     return knex('blog')
       .where({ id })
       .del();
+  }
+}
+
+export class ModelDAO extends Model {
+  static get tableName() {
+    return 'model';
+  }
+
+  static get idColumn() {
+    return 'id';
   }
 
   public async models() {
@@ -107,7 +123,6 @@ export default class Blog extends Model {
     const res = camelizeKeys(
       await ModelDAO.query()
         .findById(id)
-        .orderBy('id', 'desc')
     );
     return res;
   }
@@ -130,15 +145,5 @@ export default class Blog extends Model {
     return knex('model')
       .where({ id })
       .del();
-  }
-}
-
-class ModelDAO extends Model {
-  static get tableName() {
-    return 'model';
-  }
-
-  static get idColumn() {
-    return 'id';
   }
 }

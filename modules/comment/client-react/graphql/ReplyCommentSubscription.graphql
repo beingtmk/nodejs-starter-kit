@@ -6,7 +6,7 @@ subscription onReplyCOmmentUpdated {
     node {
       id
       comment {
-        ...CommentInfo
+        ...CommentsInfo
       }
     }
   }

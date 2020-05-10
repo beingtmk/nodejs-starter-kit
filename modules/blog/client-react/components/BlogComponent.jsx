@@ -61,13 +61,16 @@ const BlogComponent = ({ blog, moreBlogs, currentUser }) => {
           cover={<img alt={blog.title} src={blog.image} />}
         >
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-          {/* <Divider />
-          {blog.tags &&
-            blog.tags.map((item, idx) => (
-              <Tag color="#2db7f5" key={idx}>
-                {item.name}
-              </Tag>
-            ))} */}
+          {blog.tags && blog.tags.length > 0 ? (
+            <>
+              <Divider />
+              {blog.tags.map((item, idx) => (
+                <Tag color="#2db7f5" key={idx}>
+                  {item.text}
+                </Tag>
+              ))}
+            </>
+          ) : null}
           <Divider />
           <BlogActionsComponent blog={blog} />
         </Card>

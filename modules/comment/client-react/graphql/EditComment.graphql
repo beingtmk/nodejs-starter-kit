@@ -2,6 +2,6 @@
 
 mutation editContentComment($input: EditContentCommentInput!) {
   editContentComment(input: $input) {
-    ...CommentInfo
+    ...CommentsInfo
   }
 }
