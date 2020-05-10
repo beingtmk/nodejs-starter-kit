@@ -42,6 +42,8 @@ extend type Query {
   quizzes(filter: String): [Quiz]
   #get quiz by id
   quiz(id: Int!): Quiz
+  #get answer
+  answer(input: AnswerInput!): Answer
 }
 
 extend type Mutation {
@@ -51,6 +53,15 @@ extend type Mutation {
   editQuiz(input: EditQuizInput!): Quiz
   # Delete quiz
   deleteQuiz(id:Int): Quiz
+  # Add answer
+  addAnswer(input: AnswerInput!): Answer
+}
+
+input AnswerInput {
+  id: Int
+  questionId: Int!
+  userId: Int!
+  choiceId: Int!
 }
 
 input QuestionInput {
