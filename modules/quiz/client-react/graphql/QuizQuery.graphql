@@ -1,6 +1,14 @@
-# GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+
+query quiz($id: Int!) {
+  quiz(id: $id) {
+    id
+    userId
+    active
+    title
+    description
+    questions{
+      id
+      description
+    }
   }
 }

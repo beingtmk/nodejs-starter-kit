@@ -63,9 +63,9 @@ export default class Quiz extends Model {
   public async addQuiz(input: any) {
     console.log("quizzz added11", input);
 
-    const res = await Quiz.query().insertGraph(decamelizeKeys(input));
-    console.log("quizzz added", res);
-    return res;
+    const res = camelizeKeys(await Quiz.query().insertGraph(decamelizeKeys(input)));
+    // console.log("quizzz added", res);
+    return res.id;
   }
 
   public async editQuiz(input: any) {

@@ -27,16 +27,17 @@ export default (pubsub: any) => ({
   Mutation: {
     async addQuiz(obj: any, { input }:any, { Quiz }:any) {
       console.log('input in res', input);
-      const isAdded = Quiz.addQuiz(input);
-      console.log('quiz added', isAdded);
-
+      const id = await Quiz.addQuiz(input);
+      console.log('quiz added', id);
+      const newQuiz = await Quiz.getQuiz(id);
+      console.log('neee', newQuiz);
       // const quiz = await Quiz.getQuiz(id);
       // console.log('user profile', userProfile);
 
-      if (isAdded) {
-        return true;
+      if (id) {
+        return newQuiz;
       } else {
-        return false;
+        return null;
       }
     },
     deleteQuiz: withAuth(async (obj: any, { id }: any, { Quiz }: any) => {
@@ -55,7 +56,7 @@ export default (pubsub: any) => ({
       }
     }),
     editQuiz: withAuth(async (obj: any, { input }: any, { Quiz }: any) => {
-      // try {
+      try {
         const inputId = input.id;
         console.log('quiz edit resolvers1', input);
 
@@ -73,9 +74,9 @@ export default (pubsub: any) => ({
         //   }
         // });
         return item;
-      // } catch (e) {
-      //   return e;
-      // }
+      } catch (e) {
+        return e;
+      }
     }),
     async addAnswer(obj: any, { input }:any, { Quiz }:any) {
       console.log('input in res', input);

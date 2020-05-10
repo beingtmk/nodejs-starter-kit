@@ -6,7 +6,7 @@ type Quiz {
   title: String
   description: String
   createdAt: String
-  updatedAt: String!
+  updatedAt: String
   user: User
   questions:[Question]
 }
@@ -48,7 +48,7 @@ extend type Query {
 
 extend type Mutation {
   # Create new quiz
-  addQuiz(input: AddQuizInput!): Boolean
+  addQuiz(input: AddQuizInput!): Quiz
   # Edit a quiz
   editQuiz(input: EditQuizInput!): Quiz
   # Delete quiz

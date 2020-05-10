@@ -15,7 +15,11 @@ const NavLinkWithI18n = translate('quiz')(({ t }: { t: TranslateFunction }) => (
 ));
 
 export default new ClientModule({
-  route: [<Route exact path="/quiz" component={loadable(() => import('./containers/Quiz').then(c => c.default))} />],
+  route: [
+  <Route exact path="/quiz" component={loadable(() => import('./containers/Quiz').then(c => c.default))} />,
+  <Route exact path="/quiz/add" component={loadable(() => import('./containers/QuizAdd').then(c => c.default))} />,
+  <Route exact path="/quiz/edit/:id" component={loadable(() => import('./containers/QuizEdit').then(c => c.default))} />,
+],
   navItem: [
     <MenuItem key="/quiz">
       <NavLinkWithI18n />

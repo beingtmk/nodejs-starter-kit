@@ -1,0 +1,10 @@
+
+mutation editQuiz($input: EditQuizInput!) {
+  editQuiz(input: $input) {
+    id
+    userId
+    active
+    title
+    description
+  }
+}
