@@ -46,7 +46,7 @@ const ResultComponent = (props) => {
   );
 };
 
-const QuizResultView = (props) => {
+const PersonalQuizResultView = (props) => {
   return (
     <PageLayout type="forms">
       {renderMetaData(props.t)}
@@ -66,4 +66,4 @@ const QuizResultView = (props) => {
   );
 };
 
-export default QuizResultView;
+export default PersonalQuizResultView;

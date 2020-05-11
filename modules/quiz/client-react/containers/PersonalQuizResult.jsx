@@ -2,7 +2,7 @@ import React from 'react';
 // import { Mutation, FetchResult, MutationFn } from 'react-apollo';
 import { FormError } from '@gqlapp/forms-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import QuizResultView from '../components/QuizResultView';
+import PersonalQuizResultView from '../components/PersonalQuizResultView';
 import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { message } from 'antd';
@@ -15,7 +15,7 @@ import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
 
-const QuizResult = (props) => {
+const PersonalQuizResult = (props) => {
   // const onSubmit =  async (values) => {
   //   const { t, addAnswer, quiz, quizLoading } = props; 
   //   try {
@@ -31,7 +31,7 @@ const QuizResult = (props) => {
   console.log('quiz', props);
   return (
     
-    <QuizResultView {...props} />
+    <PersonalQuizResultView {...props} />
     );
   };
   
@@ -81,4 +81,4 @@ export default compose(
       return { answersLoading: loading, answers };
     }
   }),
-  )(translate('contact')(QuizResult));
+  )(translate('contact')(PersonalQuizResult));
