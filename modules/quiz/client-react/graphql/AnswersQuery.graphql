@@ -1,0 +1,21 @@
+query answers($quizId: Int!, $userId: Int!) {
+  answers(quizId: $quizId, userId:$userId) {
+    answers {
+      id
+      userId
+      choiceId
+      questionId
+    }
+    # active
+    # title
+    # description
+    # questions{
+    #   id
+    #   description
+    #   choices{
+    #     id
+    #     description
+    #   }
+    # }
+  }
+}

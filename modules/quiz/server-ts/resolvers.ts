@@ -31,15 +31,13 @@ export default (pubsub: any) => ({
       })
       console.log('ggggg', questionIdArray);
       let resultsArray = [];
-      const queried = questionIdArray.length !==0 &&  questionIdArray.map((queId, key)=>{
-        const params = {userId: userId, questionId: queId}
-        const result = context.Quiz.getAnswerByParams(params);
-        console.log('resssss', result)
-        resultsArray.push(result[0]);
-      })
-      console.log('ggggggggggggg', resultsArray);
+      const params = {userId: userId, questionIdArray: questionIdArray};
+      const result = await context.Quiz.getAnswersByParams(params);
+      console.log('ggggggggggggg', result);
 
-      return resultsArray ;
+      return {
+        answers:result
+      } ;
     }
   },
   Mutation: {

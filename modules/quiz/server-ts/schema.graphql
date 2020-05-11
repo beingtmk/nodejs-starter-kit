@@ -44,7 +44,11 @@ extend type Query {
   quiz(id: Int!): Quiz
   #get answer
   answer(input: AnswerInput!): Answer
-  answers(userId: Int!,   quizId: Int): [Answer]
+  answers(userId: Int!,   quizId: Int): AnswersOutput
+}
+
+type AnswersOutput {
+  answers:[Answer]
 }
 
 extend type Mutation {

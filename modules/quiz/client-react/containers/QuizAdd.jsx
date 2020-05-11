@@ -15,11 +15,12 @@ import QUIZ_ADD from '../graphql/QuizAdd.graphql';
 
 const QuizAdd = (props) => {
   const onSubmit =  async (values) => {
-    const { t, addQuiz, currentUserLoading, currentUser } = props;
+    const { t, addQuiz, currentUserLoading, currentUser, history } = props;
     const userId = !currentUserLoading && currentUser && currentUser.id;
     values.userId = userId;
     try {
-      await addQuiz(values);
+      const newQ = await addQuiz(values);
+      history.push(`/quiz/${newQ.id}`)
     } catch (e) {
       throw new FormError(t('serverError'), e);
     }

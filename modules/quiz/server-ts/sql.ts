@@ -107,6 +107,16 @@ export default class Quiz extends Model {
     );
     return res;
   }
+  public async getAnswersByParams(params: any) {
+    const res = camelizeKeys(
+      await knex("answer")
+        .where({ user_id: params.userId })
+        .andWhere(function() {
+          this.whereIn('answer.question_id', params.questionIdArray);
+        })
+    );
+    return res;
+  }
 
   public async getQuestion(id: number) {
     const res = camelizeKeys(
