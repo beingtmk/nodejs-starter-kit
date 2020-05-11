@@ -20,7 +20,8 @@ const QuizAdd = (props) => {
     values.userId = userId;
     try {
       const newQ = await addQuiz(values);
-      history.push(`/quiz/${newQ.id}`)
+      console.log('newww', newQ);
+      history.push(`/quiz/${newQ.data.addQuiz.id}`)
     } catch (e) {
       throw new FormError(t('serverError'), e);
     }
@@ -59,8 +60,10 @@ export default compose(
             }
           });
 
+          
           message.destroy();
           message.success('Quiz added.');
+          return quizData;
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

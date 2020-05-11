@@ -16,11 +16,12 @@ import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQue
 
 const Quiz = (props) => {
   const onSubmit =  async (values) => {
-    const { t, addAnswer, quiz, quizLoading } = props; 
+    const { t, addAnswer, quiz, quizLoading, history } = props; 
     try {
       await addAnswer(values);
       message.destroy();
           message.success('Answers Submitted');
+          history.push(`/quiz/result/${quiz.id}`);
     } catch (e) {
       message.destroy();
           message.error("Couldn't perform the action");

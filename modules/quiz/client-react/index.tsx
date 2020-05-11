@@ -18,7 +18,7 @@ export default new ClientModule({
   route: [
   <Route exact path="/quiz/:id" component={loadable(() => import('./containers/Quiz').then(c => c.default))} />,
   <Route exact path="/quiz/result/:id" component={loadable(() => import('./containers/QuizResult').then(c => c.default))} />,
-  <Route exact path="/quiz/add" component={loadable(() => import('./containers/QuizAdd').then(c => c.default))} />,
+  <Route exact path="/quiz-add" component={loadable(() => import('./containers/QuizAdd').then(c => c.default))} />,
   <Route exact path="/quiz/edit/:id" component={loadable(() => import('./containers/QuizEdit').then(c => c.default))} />,
 ],
   navItem: [
