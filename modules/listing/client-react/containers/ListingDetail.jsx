@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 
-// import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserId.graphql';
+import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 
 import ListingDetailView from '../components/ListingDetailView';
@@ -21,12 +22,12 @@ ListingDetail.propTypes = {
 };
 
 export default compose(
-  // graphql(CURRENT_USER_QUERY, {
-  //   props({ data: { loading, error, currentUser } }) {
-  //     if (error) throw new Error(error);
-  //     return { currentUserLoading: loading, currentUser };
-  //   }
-  // }),
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { currentUserLoading: loading, currentUser };
+    }
+  }),
   graphql(LISTING_QUERY, {
     options: props => {
       let id = 0;
@@ -42,6 +43,19 @@ export default compose(
     props({ data: { loading, error, listing } }) {
       if (error) throw new Error(error);
       return { loading, listing };
+    }
+  }),
+  graphql(USER_QUERY, {
+    options: props => {
+      let id = 0;
+      id = props.listing ? props.listing.userId : id;
+      return {
+        variables: { id: id }
+      };
+    },
+    props({ data: { loading, error, user } }) {
+      if (error) throw new Error(error);
+      return { loading, user };
     }
   })
 )(ListingDetail);

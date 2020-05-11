@@ -5,6 +5,7 @@ import { Row, Col, Breadcrumb, Divider, Spin, Card, Descriptions, Avatar, Statis
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout } from '@gqlapp/look-client-react';
+import AddToCart from '../containers/AddToCart';
 
 import settings from '../../../../settings';
 
@@ -47,8 +48,20 @@ class ListingDetailView extends Component {
   };
 
   render() {
-    const { listing, loading } = this.props;
+    const { listing, loading, user, history, navigation, currentUser } = this.props;
     const images = listing && listing.listingImage && listing.listingImage.length !== 0 && listing.listingImage;
+    const getName = () => {
+      const firstName = user && user.user && user.user.profile && user.user.profile.firstName;
+      const lastName = user && user.user && user.user.profile && user.user.profile.lastName;
+      if (firstName && lastName) {
+        return `${firstName} ${lastName}`;
+      } else if (firstName && !lastName) {
+        return firstName;
+      } else {
+        return 'Name Not Available';
+      }
+    };
+
     const status = {
       customPaging: function(i) {
         return (
@@ -120,20 +133,25 @@ class ListingDetailView extends Component {
             >
               <Divider />
               <Row>
-                {/* <Col md={12} xs={24}>
-                <a href={`/public-profile/${listing.user.id}`}>
-                  <Meta
-                    avatar={
-                      <Avatar
-                        style={{ height: '60px', width: '60px' }}
-                        src={listing && listing.user && listing.user.profile && listing.user.profile.avatar}
-                      />
-                    }
-                    title={<h2 style={{ marginLeft: '10px' }}>{getName()}</h2>}
-                    description={<h3 style={{ marginLeft: '10px', marginTop: '-10px' }}>{listing.user.username}</h3>}
-                  />
-                </a>
-              </Col> */}
+                <Col md={12} xs={24}>
+                  <a href={`/public-profile/${listing.userId}`}>
+                    <Meta
+                      avatar={
+                        <Avatar
+                          style={{ height: '60px', width: '60px' }}
+                          src={user && user.user && user.user.profile && user.user.profile.avatar}
+                        />
+                      }
+                      title={<h2 style={{ marginLeft: '10px' }}>{getName()}</h2>}
+                      description={
+                        <h3 style={{ marginLeft: '10px', marginTop: '-10px' }}>{user && user.user.username}</h3>
+                      }
+                    />
+                  </a>
+                </Col>
+                <Col align="right" md={12} xs={0}>
+                  <AddToCart listing={listing} currentUser={currentUser} history={history} navigation={navigation} />
+                </Col>
               </Row>
               <br />
               <Descriptions layout="horizontal" bordered column={1}>

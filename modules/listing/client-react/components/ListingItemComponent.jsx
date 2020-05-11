@@ -80,19 +80,21 @@ class EventItemComponent extends Component {
                 <Icon type="edit" />
               </BorderListzero>
             </Col>
-            <Col span={12}>
-              <Popconfirm
-                title="Are you sure to delete this Listing?"
-                onConfirm={() => this.props.deleteProduct(item.id)}
-                onCancel={this.cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <BorderListzero block>
-                  <Icon type="delete" />
-                </BorderListzero>
-              </Popconfirm>
-            </Col>
+            {this.props.deleteProduct && (
+              <Col span={12}>
+                <Popconfirm
+                  title="Are you sure to delete this Listing?"
+                  onConfirm={() => this.props.deleteProduct(item.id)}
+                  onCancel={this.cancel}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <BorderListzero block>
+                    <Icon type="delete" />
+                  </BorderListzero>
+                </Popconfirm>
+              </Col>
+            )}
           </Row>
         }
       >

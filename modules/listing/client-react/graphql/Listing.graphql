@@ -1,5 +1,6 @@
 fragment ListingInfo on Listing {
   id
+  userId
   title
   description
   isActive
@@ -15,20 +16,4 @@ fragment ListingInfo on Listing {
     id
     cost
   }
-  # user {
-  #   id
-  #   username
-  #   portfolios {
-  #     platform
-  #     portfolioUrl
-  #   }
-  #   profile {
-  #     avatar
-  #     firstName
-  #     lastName
-  #     rating
-  #     about
-  #     mobile
-  #   }
-  # }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from 'antd';
 
 import { CookiesProvider } from 'react-cookie';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { translate } from '@gqlapp/i18n-client-react';
 import { MenuItem } from '@gqlapp/look-client-react';
@@ -112,6 +112,11 @@ export default new ClientModule({
       redirectOnLoggedIn
       redirect="/profile"
       component={loadable(() => import('./containers/ResetPassword').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path="/public-profile/:id"
+      component={loadable(() => import('./containers/PublicProfile').then(c => c.default))}
     />
   ],
   navItemAdmin: [

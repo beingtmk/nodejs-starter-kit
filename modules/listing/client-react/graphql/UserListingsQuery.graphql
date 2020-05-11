@@ -1,0 +1,7 @@
+#import "./Listing.graphql"
+
+query userListings($userId: Int) {
+  userListings(userId: $userId) {
+    ...ListingInfo
+  }
+}
