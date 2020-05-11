@@ -44,6 +44,7 @@ extend type Query {
   quiz(id: Int!): Quiz
   #get answer
   answer(input: AnswerInput!): Answer
+  answers(userId: Int!,   quizId: Int): [Answer]
 }
 
 extend type Mutation {
@@ -55,6 +56,12 @@ extend type Mutation {
   deleteQuiz(id:Int): Quiz
   # Add answer
   addAnswer(input: AnswerInput!): Answer
+  addAnswers(input: AnswersInput!): Boolean
+
+}
+
+input AnswersInput {
+  results: [AnswerInput]!
 }
 
 input AnswerInput {

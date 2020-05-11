@@ -18,9 +18,9 @@ import QuizAddForm from "./QuizAddForm";
 const QuizAddView = (props) => {
   const { t } = props;
   const renderContent = () => (
-    <Card>
+    <Card style={{maxWidth:'500px', margin:'auto'}}>
       <CardTitle>
-        <Icon type="global" /> {'Add Quiz'}
+        <Icon type="global" /> {'Edit Quiz'}
       </CardTitle>
       <QuizAddForm {...props} />
     </Card>

@@ -22,6 +22,24 @@ export default (pubsub: any) => ({
     },
     async answer(obj: any, { input }: any, context: any) {
       return context.Quiz.getAnswerByParams(input);
+    },
+    async answers(obj: any, { userId, quizId }: any, context: any) {
+      const quiz = await context.Quiz.getQuiz(quizId)
+      let questionIdArray = []
+      quiz.questions.map((question, key)=>{
+        questionIdArray.push(question.id);
+      })
+      console.log('ggggg', questionIdArray);
+      let resultsArray = [];
+      const queried = questionIdArray.length !==0 &&  questionIdArray.map((queId, key)=>{
+        const params = {userId: userId, questionId: queId}
+        const result = context.Quiz.getAnswerByParams(params);
+        console.log('resssss', result)
+        resultsArray.push(result[0]);
+      })
+      console.log('ggggggggggggg', resultsArray);
+
+      return resultsArray ;
     }
   },
   Mutation: {
@@ -78,6 +96,16 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
+    async addAnswers(obj: any, { input }:any, { Quiz }:any) {
+      try{
+        input.results.map((result, item)=>{
+          Quiz.addAnswer(result);
+        })
+        return true;
+      }catch (e){
+        return false;
+      }
+    },
     async addAnswer(obj: any, { input }:any, { Quiz }:any) {
       console.log('input in res', input);
       const ansExists = await Quiz.getAnswerByParams(input);

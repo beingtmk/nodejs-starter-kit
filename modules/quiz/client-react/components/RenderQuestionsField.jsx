@@ -38,7 +38,7 @@ export default class RenderQuestionsField extends React.Component {
     console.log("keys", keys);
     // const handleChoices = (data) => (values.choices = data);
 
-    if (values) {
+    if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
         <Row>
           <Col span={24}>
@@ -50,7 +50,7 @@ export default class RenderQuestionsField extends React.Component {
                     component={RenderField}
                     placeholder={keys.placeholder || keys.key}
                     type="text"
-                    label={`${keys.label || keys.key}`}
+                    label={<h3 style={{marginBottom:'0', display:'inline'}}>{`${keys.label}-${indexv+1}`}</h3>}
                     // label={`${k.label || k.key} #${indexv + 1}`}
                     value={v.description}
                     //   key={indexv}
@@ -150,7 +150,7 @@ export default class RenderQuestionsField extends React.Component {
         <FormItem label={this.props.label}>
           {formItems}
           <FormItem>
-            <Button style={{ width: "200px" }} onClick={this.add}>
+            <Button style={{ width: "100%" }} onClick={this.add}>
               {/* <Icon type="plus" /> */}
               {this.props.buttonText || "Add Field"}
             </Button>

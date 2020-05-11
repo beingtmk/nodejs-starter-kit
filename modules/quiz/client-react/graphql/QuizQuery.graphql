@@ -9,6 +9,10 @@ query quiz($id: Int!) {
     questions{
       id
       description
+      choices{
+        id
+        description
+      }
     }
   }
 }

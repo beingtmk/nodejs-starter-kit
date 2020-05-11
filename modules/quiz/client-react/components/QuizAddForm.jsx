@@ -81,18 +81,38 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
 
 const QuizAddFormWithFormik = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: (props) => ({
-    title: (props.quiz && props.quiz.title) || "",
-    description: (props.quiz && props.quiz.description) || "",
-    active: (props.quiz && props.quiz.active) || true,
-    questions: (props.quiz && props.quiz.questions) || [],
-  }),
+  mapPropsToValues: (props) => {
+    function getChoices(choice) {
+      return {
+        id: (choice && choice.id) || null,
+        description: (choice && choice.description) || '',
+        // choices: question && question.choices && question.choices.map(getChoices) || []
+      };
+    }
+    function getQuestions(question) {
+      return {
+        id: (question && question.id) || null,
+        description: (question && question.description) || '',
+        choices: question && question.choices && question.choices.map(getChoices) || []
+      };
+    }
+    return {
+      title: (props.quiz && props.quiz.title) || "",
+      description: (props.quiz && props.quiz.description) || "",
+      active: (props.quiz && props.quiz.active) || true,
+      questions: (props.quiz && props.quiz.questions && props.quiz.questions.map(getQuestions)) || [],
+    }
+  },
   async handleSubmit(
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }
   ) {
-    values.questions = Object.values(values.questions);
-
+    values.questions = Object.values(values.questions
+    //   .map((question, key)=>{
+    //   question.choices = Object.values(question.choices);
+    // })
+    );
+    // values.questions = (values.questions.map)
     try {
       await onSubmit(values);
       resetForm();
