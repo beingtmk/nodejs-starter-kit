@@ -11,7 +11,7 @@ export default (pubsub: PubSub) => ({
     },
     async allLocations(obj: any, args: any, context: any) {
       return context.Geolocation.allLocations();
-    },
+    }
   },
   Mutation: {},
   Subscription: {
@@ -23,12 +23,13 @@ export default (pubsub: PubSub) => ({
           const {
             filter: { distance }
           } = variables;
-          const checkByFilter =
-            (!distance || distance === node.distance);
+          const checkByFilter = !distance || distance === node.distance;
 
           switch (mutation) {
             case 'UPDATED':
               return !checkByFilter;
+            default:
+              return;
           }
         }
       )

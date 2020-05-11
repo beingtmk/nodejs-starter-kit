@@ -180,10 +180,12 @@ export class User extends Model {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {

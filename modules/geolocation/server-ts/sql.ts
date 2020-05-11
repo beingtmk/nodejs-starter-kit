@@ -1,13 +1,6 @@
-import {
-  camelizeKeys,
-} from 'humps';
-import {
-  Model, raw
-} from 'objection';
-import {
-  knex
-} from '@gqlapp/database-server-ts';
-import { has } from 'lodash';
+import { camelizeKeys } from 'humps';
+import { Model } from 'objection';
+import { knex } from '@gqlapp/database-server-ts';
 Model.knex(knex);
 
 export default class Geolocation extends Model {
@@ -35,7 +28,6 @@ export default class Geolocation extends Model {
 
     // return camelizeKeys(await res);
 
-    
     const queryBuilder = Geolocation.query();
     // if (has(filter, 'distance') && filter.distance !== '') {
 
@@ -49,12 +41,7 @@ export default class Geolocation extends Model {
   }
 
   public async allLocations() {
-    let res = await camelizeKeys(
-      await knex
-        .select('*')
-        .from('geolocation')
-    );
-    return res
+    const res = await camelizeKeys(await knex.select('*').from('geolocation'));
+    return res;
   }
 }
-

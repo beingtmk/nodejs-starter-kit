@@ -1,16 +1,14 @@
-import React from "react";
-import Helmet from "react-helmet";
-import PropTypes from "prop-types";
-import { PageLayout, Loading } from "@gqlapp/look-client-react";
-import settings from "@gqlapp/config";
-import BlogFormCmponent from "./BlogFormCmponent";
+import React from 'react';
+import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
+import { PageLayout, Loading } from '@gqlapp/look-client-react';
+import settings from '@gqlapp/config';
+import BlogFormCmponent from './BlogFormCmponent';
 
-const renderMetaData = (t) => (
+const renderMetaData = t => (
   <Helmet
-    title={`${settings.app.name} - ${t("title")}`}
-    meta={[
-      { name: "description", content: `${settings.app.name} - ${t("meta")}` },
-    ]}
+    title={`${settings.app.name} - ${t('title')}`}
+    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
   />
 );
 
@@ -24,7 +22,7 @@ class EditBlogView extends React.Component {
       <PageLayout>
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.loading ? (
-          <BlogFormCmponent {...this.props} cardTitle={"Edit Blog"} />
+          <BlogFormCmponent {...this.props} cardTitle={'Edit Blog'} />
         ) : (
           <Loading />
         )}
@@ -34,7 +32,7 @@ class EditBlogView extends React.Component {
 }
 EditBlogView.propTypes = {
   loading: PropTypes.bool,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default EditBlogView;

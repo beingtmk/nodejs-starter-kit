@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row } from '@gqlapp/look-client-react';
-import { Card, Avatar, Button } from 'antd';
+import { Card, Avatar } from 'antd';
 import { Name } from '../constants';
 
 const BlogRefCardComponent = ({ user, model }) => {

@@ -120,10 +120,7 @@ export class ModelDAO extends Model {
   }
 
   public async model(id: number) {
-    const res = camelizeKeys(
-      await ModelDAO.query()
-        .findById(id)
-    );
+    const res = camelizeKeys(await ModelDAO.query().findById(id));
     return res;
   }
 

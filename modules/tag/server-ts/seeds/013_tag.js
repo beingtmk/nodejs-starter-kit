@@ -7,7 +7,7 @@ export async function seed(knex) {
     [...Array(40).keys()].map(async i => {
       return returnId(knex('blog_tag')).insert({
         text: `tag${i + 1}`,
-        blog_id: Math.floor(Math.random() * 10) + 1,
+        blog_id: Math.floor(Math.random() * 10) + 1
       });
     })
   );
