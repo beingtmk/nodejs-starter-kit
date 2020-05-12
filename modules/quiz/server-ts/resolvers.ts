@@ -68,27 +68,35 @@ export default (pubsub: any) => ({
       try {
         let quiz = await context.Quiz.getQuiz(id);
         let choiceIdArray = [];
-        quiz.questions && quiz.questions.length !==0 && quiz.questions.map((question, key1) => {
-          question.choices && question.choices.length !==0 && question.choices.map((choice, key2) => {
-            choiceIdArray.push(choice.id);
-            quiz.questions[key1].choices[key2].count = 0;
+        quiz.questions &&
+          quiz.questions.length !== 0 &&
+          quiz.questions.map((question, key1) => {
+            question.choices &&
+              question.choices.length !== 0 &&
+              question.choices.map((choice, key2) => {
+                choiceIdArray.push(choice.id);
+                quiz.questions[key1].choices[key2].count = 0;
+              });
           });
-        });
 
         const params = { choiceIdArray: choiceIdArray };
         const result = await context.Quiz.getAnswersByChoiceArray(params);
         console.log(result);
-        quiz.questions && quiz.questions.length !==0 && quiz.questions.map((question, key1) => {
-          question.choices && question.choices.length !==0 && question.choices.map((choice, key2) => {
-            var choiceCount = 0;
-            result.map((re, key)=>{
-              if(re.choiceId === choice.id){
-                choiceCount += 1;
-              }
-            })
-              quiz.questions[key1].choices[key2].count = choiceCount;
+        quiz.questions &&
+          quiz.questions.length !== 0 &&
+          quiz.questions.map((question, key1) => {
+            question.choices &&
+              question.choices.length !== 0 &&
+              question.choices.map((choice, key2) => {
+                var choiceCount = 0;
+                result.map((re, key) => {
+                  if (re.choiceId === choice.id) {
+                    choiceCount += 1;
+                  }
+                });
+                quiz.questions[key1].choices[key2].count = choiceCount;
+              });
           });
-        });
         return quiz;
       } catch (e) {
         return null;
@@ -151,8 +159,26 @@ export default (pubsub: any) => ({
     }),
     async addAnswers(obj: any, { input }: any, { Quiz }: any) {
       try {
-        input.results.map((result, item) => {
-          Quiz.addAnswer(result);
+        input.results.map(async (result, item) => {
+          const ansExists = await Quiz.getAnswerByParams(result);
+          console.log("ansexists", ansExists);
+          var isDone;
+          const questionItem = await Quiz.getQuestion(result.questionId);
+          console.log("question existss", questionItem);
+          var questionHasChoice = false;
+          questionItem.map((item, key) => {
+            if (item.id === result.choiceId) {
+              questionHasChoice = true;
+            }
+          });
+          if (!questionHasChoice) {
+            return null;
+          }
+          if (ansExists && ansExists.length !== 0) {
+            isDone = await Quiz.updateAnswer(result);
+          } else {
+            isDone = await Quiz.addAnswer(result);
+          }
         });
         return true;
       } catch (e) {

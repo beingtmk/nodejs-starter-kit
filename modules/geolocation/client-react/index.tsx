@@ -19,11 +19,11 @@ const NavLinkWithI18n = translate('geolocation')(({ t }: { t: TranslateFunction 
 
 export default new ClientModule({
   route: [<Route exact path="/geolocation" component={loadable(() => import('./containers/Geolocation').then(c => c.default))} />],
-  navItem: [
-    <MenuItem key="/geolocation">
-      <NavLinkWithI18n />
-    </MenuItem>
-  ],
+  // navItem: [
+  //   <MenuItem key="/geolocation">
+  //     <NavLinkWithI18n />
+  //   </MenuItem>
+  // ],
   resolver: [resolvers],
   localization: [{ ns: 'geolocation', resources }],
   rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)]

@@ -13,7 +13,7 @@ import {
   Icon,
   RenderCheckBox,
 } from "@gqlapp/look-client-react";
-import { Radio, Input } from 'antd';
+import { Radio, Input } from "antd";
 
 import RenderQuizQuestionField from "./RenderQuizQuestionField";
 // import { QuizAddForm } from '../types';
@@ -23,22 +23,30 @@ import RenderQuizQuestionField from "./RenderQuizQuestionField";
 //   onSubmit: (values: QuizAddForm) => void;
 // }
 
-const QuizForm = ({ currentUser, quiz, values, handleSubmit, t, status, errors }) => {
+const QuizForm = ({
+  currentUser,
+  quiz,
+  values,
+  handleSubmit,
+  t,
+  status,
+  errors,
+}) => {
   const handleResults = (data) => (values.results = data);
   // const [load, setload] = React.useState(false);
-  console.log('form values', values);
+  console.log("form values", values);
   return (
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
       <FieldArray
-      name='results'
-        render={arrayHelpers => (
+        name="results"
+        render={(arrayHelpers) => (
           <RenderQuizQuestionField
             // setload={setload}
             arrayHelpers={arrayHelpers}
             values={values.results}
             label={"Answer Following QUestions"}
-            name='results'
+            name="results"
             // buttonText='Add Question'
             // keys={{type:'text', label:'question', key:'description'}}
             quiz={quiz}
@@ -49,8 +57,7 @@ const QuizForm = ({ currentUser, quiz, values, handleSubmit, t, status, errors }
         // resultsVal={values.results}
         handleResults={handleResults}
       />
-      
-      
+
       <div className="text-center">
         {errors && errors.errorMsg && (
           <Alert color="error">{errors.errorMsg}</Alert>
@@ -69,9 +76,18 @@ const QuizFormWithFormik = withFormik({
   mapPropsToValues: (props) => {
     function getResult(question) {
       return {
-        questionId: (question && question.id),
-        userId: (props.currentUser && props.currentUser.id),
-        choiceId: null
+        questionId: question && question.id,
+        userId: props.currentUser && props.currentUser.id,
+        choiceId: null,
+        // choices: question && question.choices && question.choices.map(getChoices) || []
+      };
+    }
+    function getAnswers(result) {
+      return {
+        id: result && result.id,
+        questionId: result && result.questionId,
+        userId:result && result.userId,
+        choiceId: result && result.choiceId,
         // choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
@@ -83,12 +99,17 @@ const QuizFormWithFormik = withFormik({
     //   };
     // }
     return {
-      results: props.quiz && props.quiz.questions && props.quiz.questions.map(getResult)
+      results:
+        props.answers && props.answers.answers.length !== 0
+          ? props.answers.answers.map(getAnswers)
+          : props.quiz &&
+            props.quiz.questions &&
+            props.quiz.questions.map(getResult),
       // title: (props.quiz && props.quiz.title) || "",
       // description: (props.quiz && props.quiz.description) || "",
       // active: (props.quiz && props.quiz.active) || true,
       // questions: (props.quiz && props.quiz.questions && props.quiz.questions.map(getQuestions)) || [],
-    }
+    };
   },
   async handleSubmit(
     values,

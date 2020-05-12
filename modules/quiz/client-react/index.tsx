@@ -3,7 +3,7 @@ import React from "react";
 import ClientModule from "@gqlapp/module-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import loadable from "@loadable/component";
-
+import {Icon} from 'antd';
 import { Route, NavLink } from "react-router-dom";
 import { MenuItem } from "@gqlapp/look-client-react";
 import resources from "./locales";
@@ -11,7 +11,15 @@ import resources from "./locales";
 const NavLinkQuizListWithI18n = translate("quiz")(
   ({ t }: { t: TranslateFunction }) => (
     <NavLink to="/quiz-list" className="nav-link" activeClassName="active">
-      Quiz{" "}
+     Quiz
+    </NavLink>
+  )
+);
+
+const NavLinkQuizCatalogueWithI18n = translate("quiz")(
+  ({ t }: { t: TranslateFunction }) => (
+    <NavLink to="/quiz-catalogue" className="nav-link" activeClassName="active">
+      <Icon type="question-circle" /> {" "}Quiz{" "}
     </NavLink>
   )
 );
@@ -78,6 +86,11 @@ export default new ClientModule({
   navItemAdmin: [
     <MenuItem key="/quiz-list">
       <NavLinkQuizListWithI18n />
+    </MenuItem>,
+  ],
+  navItem: [
+    <MenuItem key="/quiz-catalogue">
+      <NavLinkQuizCatalogueWithI18n />
     </MenuItem>,
   ],
   localization: [{ ns: "quiz", resources }],
