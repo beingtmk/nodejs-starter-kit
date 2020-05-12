@@ -68,45 +68,27 @@ export default (pubsub: any) => ({
       try {
         let quiz = await context.Quiz.getQuiz(quizId);
         let choiceIdArray = [];
-        quiz.questions.map((question, key1) => {
-          question.choices.map((choice, key2) => {
+        quiz.questions && quiz.questions.length !==0 && quiz.questions.map((question, key1) => {
+          question.choices && question.choices.length !==0 && question.choices.map((choice, key2) => {
             choiceIdArray.push(choice.id);
             quiz.questions[key1].choices[key2].count = 0;
           });
-          // questionIdArray.push(question.id);
         });
-        console.log("ggggg", quiz.questions[0].choices);
 
         const params = { choiceIdArray: choiceIdArray };
         const result = await context.Quiz.getAnswersByChoiceArray(params);
-        console.log("ggggggggggggg", result);
-
-        quiz.questions.map((question, key1) => {
-          question.choices.map((choice, key2) => {
-            const found = result.find((r) => r.choiceId === choice.id);
-            console.log("found", found);
-            if (!found || (found && found.length === 0)) {
-              // userIdArray.push(item.userId);
-              quiz.questions[key1].choices[key2].count += 1;
-            }
+        console.log(result);
+        quiz.questions && quiz.questions.length !==0 && quiz.questions.map((question, key1) => {
+          question.choices && question.choices.length !==0 && question.choices.map((choice, key2) => {
+            var choiceCount = 0;
+            result.map((re, key)=>{
+              if(re.choiceId === choice.id){
+                choiceCount += 1;
+              }
+            })
+              quiz.questions[key1].choices[key2].count = choiceCount;
           });
-          // questionIdArray.push(question.id);
         });
-
-        console.log("ggggghhhh", quiz.questions[0].choices);
-
-        // choiceIdArray.map()
-        // let userIdArray = []
-        // result.map((item, key)=>{
-        //   const found = userIdArray.find(id => id === item.userId);
-        //   console.log('found', found);
-        //   if(!found || (found && found.length === 0)){
-        //     userIdArray.push(item.userId);
-        //   }
-        // })
-        // console.log('userIddd', userIdArray);
-        // const users = context.User.getUsersWithIdArray(userIdArray);
-        // console.log('usersss', users);
         return quiz;
       } catch (e) {
         return null;
