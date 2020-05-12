@@ -144,19 +144,35 @@ class User {
   }
 
   createFacebookAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_facebook')).insert({
+      fb_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createGithubAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_github')).insert({ gh_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_github')).insert({
+      gh_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createGoogleOAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_google')).insert({ google_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_google')).insert({
+      google_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createLinkedInAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_linkedin')).insert({ ln_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_linkedin')).insert({
+      ln_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   editUser({ id, username, email, role, isActive }, passwordHash) {
@@ -167,10 +183,12 @@ class User {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
@@ -179,7 +197,10 @@ class User {
         .update(decamelizeKeys(profile))
         .where({ user_id: id });
     } else {
-      return returnId(knex('user_profile')).insert({ ...decamelizeKeys(profile), user_id: id });
+      return returnId(knex('user_profile')).insert({
+        ...decamelizeKeys(profile),
+        user_id: id
+      });
     }
   }
 
@@ -366,6 +387,80 @@ class User {
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
+  }
+
+  async getUserItems(limit, after, orderBy, filter) {
+    const queryBuilder = knex
+      .select(
+        'u.id as id',
+        'u.username as username',
+        'u.role',
+        'u.is_active',
+        'u.email as email',
+        'up.first_name as first_name',
+        'up.last_name as last_name',
+        'ca.serial',
+        'fa.fb_id',
+        'fa.display_name AS fbDisplayName',
+        'lna.ln_id',
+        'lna.display_name AS lnDisplayName',
+        'gha.gh_id',
+        'gha.display_name AS ghDisplayName',
+        'ga.google_id',
+        'ga.display_name AS googleDisplayName'
+      )
+      .from('user AS u')
+      .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+      .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
+      .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
+      .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
+      .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
+      .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id');
+
+    console.log('sql filters', filter);
+
+    // add filter conditions
+    if (filter) {
+      if (has(filter, 'role') && filter.role !== '') {
+        queryBuilder.where(function() {
+          this.where('u.role', filter.role);
+        });
+      }
+
+      if (has(filter, 'isActive') && filter.isActive !== null) {
+        queryBuilder.where(function() {
+          this.where('u.is_active', filter.isActive);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['first_name', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['last_name', `%${filter.searchText}%`]));
+        });
+      }
+    }
+
+    const allUserItems = camelizeKeys(await queryBuilder);
+    const total = allUserItems.length;
+    var res = {};
+
+    if (limit && after) {
+      res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      res = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      res = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      res = camelizeKeys(await queryBuilder);
+    }
+    console.log('sql userList', res);
+    return {
+      userItems: res,
+      total: total
+    };
   }
 }
 const userDAO = new User();

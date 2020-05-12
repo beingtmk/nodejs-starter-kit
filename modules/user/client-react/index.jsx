@@ -56,7 +56,11 @@ const NavLinkLoginWithI18n = translate('user')(({ t }) => (
     {t('navLink.signIn')}
   </NavLink>
 ));
-
+const NavLinkTestWithI18n = translate('user')(({ t }) => (
+  <NavLink to="/users-list" className="nav-link" activeClassName="active">
+    {t('navLink.users')}
+  </NavLink>
+));
 export default new ClientModule({
   route: [
     <AuthRoute
@@ -117,6 +121,11 @@ export default new ClientModule({
       exact
       path="/public-profile/:id"
       component={loadable(() => import('./containers/PublicProfile').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path="/users-list"
+      component={loadable(() => import('./containers/UsersProfileCatalogue').then(c => c.default))}
     />
   ],
   navItemAdmin: [
@@ -126,7 +135,11 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
-
+  navItemTest: [
+    <MenuItem key="/users-list">
+      <NavLinkTestWithI18n />
+    </MenuItem>
+  ],
   navItemUser: [
     <IfLoggedIn key="/profile">
       <MenuItem>

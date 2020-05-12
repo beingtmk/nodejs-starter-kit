@@ -36,19 +36,34 @@ export default pubsub => ({
 
       throw new Error(t('user:accessDenied'));
     }),
-    currentUser(
-      obj,
-      args,
-      {
-        User,
-        req: { identity }
-      }
-    ) {
+    currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
         return User.getUser(identity.id);
       } else {
         return null;
       }
+    },
+    async userList(obj, { orderBy, filter, limit, after }, { User }) {
+      const UserItemOutput = await User.getUserItems(limit, after, orderBy, filter);
+      const { userItems, total } = UserItemOutput;
+      const hasNextPage = total > after + limit;
+      console.log('User items', UserItemOutput);
+      const edgesArray = [];
+      userItems.map((UserItem, index) => {
+        edgesArray.push({
+          cursor: after + index,
+          node: UserItem
+        });
+      });
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     }
   },
   User: {
@@ -93,7 +108,9 @@ export default pubsub => ({
         }
 
         if (input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
@@ -108,8 +125,15 @@ export default pubsub => ({
             : !password.requireEmailConfirmation;
 
           [createdUserId] = await User.register({ ...input, isActive }, passwordHash).transacting(trx);
-          await User.editUserProfile({ id: createdUserId, ...input }).transacting(trx);
-          if (certificate.enabled) await User.editAuthCertificate({ id: createdUserId, ...input }).transacting(trx);
+          await User.editUserProfile({
+            id: createdUserId,
+            ...input
+          }).transacting(trx);
+          if (certificate.enabled)
+            await User.editAuthCertificate({
+              id: createdUserId,
+              ...input
+            }).transacting(trx);
           trx.commit();
         } catch (e) {
           trx.rollback();
@@ -170,7 +194,9 @@ export default pubsub => ({
         }
 
         if (input.password && input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
