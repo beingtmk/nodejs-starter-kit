@@ -6,17 +6,9 @@ import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button } from '@gqlapp/look-client-react';
 import {Spin as Loader} from 'antd';
-const UsersView = ({  loadingQuizzes, quizzes, t }) => {
-  // const [errors, setErrors] = useState([]);
+const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
+// 
 
-  // const handleDeleteUser = async id => {
-  //   const result = await deleteUser(id);
-  //   if (result && result.errors) {
-  //     setErrors(result.errors);
-  //   } else {
-  //     setErrors([]);
-  //   }
-  // };
 
   // const renderOrderByArrow = name => {
   //   if (orderBy && orderBy.column === name) {
@@ -108,15 +100,33 @@ const UsersView = ({  loadingQuizzes, quizzes, t }) => {
     //   dataIndex: 'role',
     //   key: 'role'
     // },
-    // {
-    //   title: t('users.column.actions'),
-    //   key: 'actions',
-    //   render: (text, record) => (
-    //     <Button color="primary" size="sm" onClick={() => handleDeleteUser(record.id)}>
-    //       {t('users.btn.delete')}
-    //     </Button>
-    //   )
-    // }
+    {
+      title: 'View Answer Count',
+      key: 'count',
+      render: (text, record) => (
+        <Button color="primary" size="sm" href={`/quiz/count/${record.id}`}>
+          View Answer Count
+        </Button>
+      )
+    },
+    {
+      title: 'View Attendees',
+      key: 'attendees',
+      render: (text, record) => (
+        <Button color="primary" size="sm" href={`/quiz/attendees/${record.id}`}>
+          View Attendees
+        </Button>
+      )
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => (
+        <Button color="primary" size="sm" onClick={() => deleteQuiz(record.id)}>
+          Delete
+        </Button>
+      )
+    }
   ];
 
   return (

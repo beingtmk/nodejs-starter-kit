@@ -9,6 +9,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import  QUIZZES_QUERY from '../graphql/QuizzesQuery.graphql';
+import DELETE_USER from '../graphql/DeleteQuiz.graphql'
 import QuizzesListView from '../components/QuizzesListView';
 
 // import QuizzesFilterView from '../components/QuizzesFilterView';
@@ -50,7 +51,7 @@ const Quizzes = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      <h2>{t('users.list.title')}</h2>
+      <h2>Quizzes</h2>
       <Link to="/quiz-add">
         <Button color="primary">{'Add Quiz'}</Button>
       </Link>
@@ -90,6 +91,24 @@ export default compose(
       return { loadingQuizzes:loading, quizzes };
     }
   }),
+  graphql(DELETE_USER, {
+    props: ({ mutate }) => ({
+      deleteQuiz: async id => {
+        try {
+          const {
+            data: { deleteQuiz }
+          } = await mutate({
+            variables: { id }
+          });
+
+          if (deleteQuiz.errors) {
+            return { errors: deleteQuiz.errors };
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    })}),
   // graphql(QUIZZES_QUERY, {
   //   options: ({ 
   //     // orderBy,

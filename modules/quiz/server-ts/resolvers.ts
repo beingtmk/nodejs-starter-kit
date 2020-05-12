@@ -38,6 +38,32 @@ export default (pubsub: any) => ({
       return {
         answers:result
       } ;
+    },
+    async getAttendees(obj: any, { quizId }: any, context: any) {
+      const quiz = await context.Quiz.getQuiz(quizId)
+      let questionIdArray = []
+      quiz.questions.map((question, key)=>{
+        questionIdArray.push(question.id);
+      })
+      console.log('ggggg', questionIdArray);
+
+      const params = {questionIdArray: questionIdArray};
+      const result = await context.Quiz.getAnswersByQuestionArray(params);
+      console.log('ggggggggggggg', result);
+      let userIdArray = []
+      result.map((item, key)=>{
+        const found = userIdArray.find(id => id === item.userId);
+        console.log('found', found);
+        if(!found || (found && found.length === 0)){
+          userIdArray.push(item.userId);
+        }
+      })
+      console.log('userIddd', userIdArray);
+      const users = context.User.getUsersWithIdArray(userIdArray);
+      console.log('usersss', users);
+      return {
+        users:users
+      } ;
     }
   },
   Mutation: {

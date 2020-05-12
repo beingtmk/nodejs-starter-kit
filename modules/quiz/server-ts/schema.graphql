@@ -44,7 +44,13 @@ extend type Query {
   quiz(id: Int!): Quiz
   #get answer
   answer(input: AnswerInput!): Answer
-  answers(userId: Int!,   quizId: Int): AnswersOutput
+  answers(userId: Int!,   quizId: Int!): AnswersOutput
+  getAttendees(quizId: Int!): AttendeesOutput
+  # getQuizCount(quizId: Int!): 
+}
+
+type AttendeesOutput {
+  users:[User]
 }
 
 type AnswersOutput {
