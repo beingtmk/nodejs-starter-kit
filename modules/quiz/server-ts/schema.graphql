@@ -46,7 +46,37 @@ extend type Query {
   answer(input: AnswerInput!): Answer
   answers(userId: Int!,   quizId: Int!): AnswersOutput
   getAttendees(quizId: Int!): AttendeesOutput
-  # getQuizCount(quizId: Int!): 
+  getQuizCount(quizId: Int!): QuizWithCount
+}
+
+type QuizWithCount {
+    id: Int!
+  userId: Int
+  active: Boolean
+  title: String
+  description: String
+  createdAt: String
+  updatedAt: String
+  user: User
+  questions:[QuestionWithCount]
+}
+
+type QuestionWithCount {
+  id: Int!
+  quizId: Int!
+  description: String!
+  choices:[ChoiceWithCount]
+  createdAt: String
+  updatedAt: String
+}
+
+type ChoiceWithCount {
+  id: Int!
+  questionId: Int!
+  description: String!
+  count: Int!
+  createdAt: String
+  updatedAt: String
 }
 
 type AttendeesOutput {

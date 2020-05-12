@@ -1,5 +1,4 @@
-import withAuth from 'graphql-auth';
-
+import withAuth from "graphql-auth";
 
 export default (pubsub: any) => ({
   Query: {
@@ -24,55 +23,103 @@ export default (pubsub: any) => ({
       return context.Quiz.getAnswerByParams(input);
     },
     async answers(obj: any, { userId, quizId }: any, context: any) {
-      const quiz = await context.Quiz.getQuiz(quizId)
-      let questionIdArray = []
-      quiz.questions.map((question, key)=>{
+      const quiz = await context.Quiz.getQuiz(quizId);
+      let questionIdArray = [];
+      quiz.questions.map((question, key) => {
         questionIdArray.push(question.id);
-      })
-      console.log('ggggg', questionIdArray);
+      });
+      console.log("ggggg", questionIdArray);
       let resultsArray = [];
-      const params = {userId: userId, questionIdArray: questionIdArray};
+      const params = { userId: userId, questionIdArray: questionIdArray };
       const result = await context.Quiz.getAnswersByParams(params);
-      console.log('ggggggggggggg', result);
+      console.log("ggggggggggggg", result);
 
       return {
-        answers:result
-      } ;
+        answers: result,
+      };
     },
     async getAttendees(obj: any, { quizId }: any, context: any) {
-      const quiz = await context.Quiz.getQuiz(quizId)
-      let questionIdArray = []
-      quiz.questions.map((question, key)=>{
+      const quiz = await context.Quiz.getQuiz(quizId);
+      let questionIdArray = [];
+      quiz.questions.map((question, key) => {
         questionIdArray.push(question.id);
-      })
-      console.log('ggggg', questionIdArray);
+      });
+      console.log("ggggg", questionIdArray);
 
-      const params = {questionIdArray: questionIdArray};
+      const params = { questionIdArray: questionIdArray };
       const result = await context.Quiz.getAnswersByQuestionArray(params);
-      console.log('ggggggggggggg', result);
-      let userIdArray = []
-      result.map((item, key)=>{
-        const found = userIdArray.find(id => id === item.userId);
-        console.log('found', found);
-        if(!found || (found && found.length === 0)){
+      console.log("ggggggggggggg", result);
+      let userIdArray = [];
+      result.map((item, key) => {
+        const found = userIdArray.find((id) => id === item.userId);
+        console.log("found", found);
+        if (!found || (found && found.length === 0)) {
           userIdArray.push(item.userId);
         }
-      })
-      console.log('userIddd', userIdArray);
+      });
+      console.log("userIddd", userIdArray);
       const users = context.User.getUsersWithIdArray(userIdArray);
-      console.log('usersss', users);
+      console.log("usersss", users);
       return {
-        users:users
-      } ;
-    }
+        users: users,
+      };
+    },
+    async getQuizCount(obj: any, { quizId }: any, context: any) {
+      try {
+        let quiz = await context.Quiz.getQuiz(quizId);
+        let choiceIdArray = [];
+        quiz.questions.map((question, key1) => {
+          question.choices.map((choice, key2) => {
+            choiceIdArray.push(choice.id);
+            quiz.questions[key1].choices[key2].count = 0;
+          });
+          // questionIdArray.push(question.id);
+        });
+        console.log("ggggg", quiz.questions[0].choices);
+
+        const params = { choiceIdArray: choiceIdArray };
+        const result = await context.Quiz.getAnswersByChoiceArray(params);
+        console.log("ggggggggggggg", result);
+
+        quiz.questions.map((question, key1) => {
+          question.choices.map((choice, key2) => {
+            const found = result.find((r) => r.choiceId === choice.id);
+            console.log("found", found);
+            if (!found || (found && found.length === 0)) {
+              // userIdArray.push(item.userId);
+              quiz.questions[key1].choices[key2].count += 1;
+            }
+          });
+          // questionIdArray.push(question.id);
+        });
+
+        console.log("ggggghhhh", quiz.questions[0].choices);
+
+        // choiceIdArray.map()
+        // let userIdArray = []
+        // result.map((item, key)=>{
+        //   const found = userIdArray.find(id => id === item.userId);
+        //   console.log('found', found);
+        //   if(!found || (found && found.length === 0)){
+        //     userIdArray.push(item.userId);
+        //   }
+        // })
+        // console.log('userIddd', userIdArray);
+        // const users = context.User.getUsersWithIdArray(userIdArray);
+        // console.log('usersss', users);
+        return quiz;
+      } catch (e) {
+        return null;
+      }
+    },
   },
   Mutation: {
-    async addQuiz(obj: any, { input }:any, { Quiz }:any) {
-      console.log('input in res', input);
+    async addQuiz(obj: any, { input }: any, { Quiz }: any) {
+      console.log("input in res", input);
       const id = await Quiz.addQuiz(input);
-      console.log('quiz added', id);
+      console.log("quiz added", id);
       const newQuiz = await Quiz.getQuiz(id);
-      console.log('neee', newQuiz);
+      console.log("neee", newQuiz);
       // const quiz = await Quiz.getQuiz(id);
       // console.log('user profile', userProfile);
 
@@ -100,7 +147,7 @@ export default (pubsub: any) => ({
     editQuiz: withAuth(async (obj: any, { input }: any, { Quiz }: any) => {
       try {
         const inputId = input.id;
-        console.log('quiz edit resolvers1', input);
+        console.log("quiz edit resolvers1", input);
 
         // if (input.authorId) {
         //   input.authorId = await Profile.getProfileId(input.authorId);
@@ -120,41 +167,41 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    async addAnswers(obj: any, { input }:any, { Quiz }:any) {
-      try{
-        input.results.map((result, item)=>{
+    async addAnswers(obj: any, { input }: any, { Quiz }: any) {
+      try {
+        input.results.map((result, item) => {
           Quiz.addAnswer(result);
-        })
+        });
         return true;
-      }catch (e){
+      } catch (e) {
         return false;
       }
     },
-    async addAnswer(obj: any, { input }:any, { Quiz }:any) {
-      console.log('input in res', input);
+    async addAnswer(obj: any, { input }: any, { Quiz }: any) {
+      console.log("input in res", input);
       const ansExists = await Quiz.getAnswerByParams(input);
-      console.log('ansexists', ansExists);
+      console.log("ansexists", ansExists);
       var isDone;
       const questionItem = await Quiz.getQuestion(input.questionId);
-      console.log('question existss', questionItem);
+      console.log("question existss", questionItem);
       var questionHasChoice = false;
-      questionItem.map((item, key)=>{
-        if(item.id === input.choiceId){
+      questionItem.map((item, key) => {
+        if (item.id === input.choiceId) {
           questionHasChoice = true;
         }
-      })
-      if(!questionHasChoice){
+      });
+      if (!questionHasChoice) {
         return null;
       }
-      if(ansExists && ansExists.length !==0){
+      if (ansExists && ansExists.length !== 0) {
         isDone = await Quiz.updateAnswer(input);
-      }else{
+      } else {
         isDone = await Quiz.addAnswer(input);
       }
-      console.log('ansexists123', isDone);
+      console.log("ansexists123", isDone);
 
       const newAnswer = await Quiz.getAnswerByParams(input);
-      console.log('ansexists123444', newAnswer);
+      console.log("ansexists123444", newAnswer);
 
       // const isAdded = Quiz.addQuiz(input);
       // console.log('quiz added', isAdded);
@@ -169,5 +216,5 @@ export default (pubsub: any) => ({
       }
     },
   },
-  Subscription: {}
+  Subscription: {},
 });
