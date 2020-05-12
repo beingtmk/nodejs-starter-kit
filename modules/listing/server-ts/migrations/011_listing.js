@@ -23,7 +23,6 @@ exports.up = function(knex) {
           .inTable('listing')
           .onDelete('CASCADE');
         table.string('image_url');
-        table.string('description');
         table.timestamps(false, true);
       })
       .createTable('listing_cost', table => {

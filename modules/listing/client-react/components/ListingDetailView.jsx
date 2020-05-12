@@ -49,7 +49,7 @@ class ListingDetailView extends Component {
 
   render() {
     const { listing, loading, user, history, navigation, currentUser } = this.props;
-    const images = listing && listing.listingImage && listing.listingImage.length !== 0 && listing.listingImage;
+    const images = listing && listing.listingImages && listing.listingImages.length !== 0 && listing.listingImages;
     const getName = () => {
       const firstName = user && user.user && user.user.profile && user.user.profile.firstName;
       const lastName = user && user.user && user.user.profile && user.user.profile.lastName;

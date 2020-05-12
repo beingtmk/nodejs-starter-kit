@@ -17,7 +17,7 @@ class RelatedCardComponent extends Component {
 
     const listing_id = listing && listing.id;
     const listing_img =
-      listing && listing.listingImage.length !== 0 && listing.listingImage && listing.listingImage[0].imageUrl;
+      listing && listing.listingImages.length !== 0 && listing.listingImages && listing.listingImages[0].imageUrl;
 
     const rent_per_day = listing && listing.listingCost && listing.listingCost.cost;
 

@@ -7,9 +7,8 @@ fragment ListingInfo on Listing {
   createdAt
   updatedAt
   isActive
-  listingImage {
+  listingImages {
     id
-    description
     imageUrl
   }
   listingCost {

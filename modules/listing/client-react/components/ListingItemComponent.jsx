@@ -107,7 +107,7 @@ class EventItemComponent extends Component {
             align="center"
             style={{ maxHeight: '200px', overflow: 'hidden' }}
           >
-            <img alt="" src={item.listingImage[0].imageUrl} width="100%" />
+            <img alt="" src={item.listingImages[0].imageUrl} width="100%" />
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }}>
             <div

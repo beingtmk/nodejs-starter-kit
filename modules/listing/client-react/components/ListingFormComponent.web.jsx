@@ -57,13 +57,13 @@ class ListingFormComponent extends React.Component {
             value={values.listingCost.cost}
           />
           <FieldArray
-            name="listingImage"
+            name="listingImages"
             label={'Listing Image'}
             render={arrayHelpers => (
               <RenderUploadMultiple
                 setload={load => this.setState({ load: load })}
                 arrayHelpers={arrayHelpers}
-                values={values.listingImage}
+                values={values.listingImages}
                 dictKey="imageUrl"
               />
             )}
@@ -102,8 +102,8 @@ const ListingWithFormik = withFormik({
       title: (props.listing && props.listing.title) || '',
       description: (props.listing && props.listing.description) || '',
       listingCost: (props.listing && props.listing.listingCost) || { cost: null },
-      listingImage:
-        (props.listing && props.listing.listingImage && props.listing.listingImage.map(getListingImage)) || []
+      listingImages:
+        (props.listing && props.listing.listingImages && props.listing.listingImages.map(getListingImage)) || []
     };
   },
   async handleSubmit(values, { setErrors, props: { onSubmit } }) {

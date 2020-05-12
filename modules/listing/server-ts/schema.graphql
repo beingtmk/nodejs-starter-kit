@@ -5,17 +5,16 @@ type Listing {
   title: String!
   description: String
   isActive: Boolean
-  listingImage: [ListingImage]
+  listingImages: [ListingImages]
   listingCost: ListingCost
   createdAt: String!
   updatedAt: String!
 }
 
-type ListingImage {
+type ListingImages {
   id: Int
   listingId: Int
   imageUrl: String
-  description: String
 }
 
 type ListingCost {
@@ -83,14 +82,13 @@ input AddListingInput {
   title: String
   description: String
   isActive: Boolean
-  listingImage: [ListingImageInput]
+  listingImages: [ListingImagesInput]
   listingCost: ListingCostInput
 }
 
 # Input for addListing Mutation
-input ListingImageInput {
+input ListingImagesInput {
   id: Int
-  description: String
   imageUrl: String!
 }
 input ListingCostInput {
@@ -105,6 +103,6 @@ input EditListingInput {
   title: String
   description: String
   isActive: Boolean
-  listingImage: [ListingImageInput]
+  listingImages: [ListingImagesInput]
   listingCost: ListingCostInput
 }

@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { List, Spin, Divider } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Pagination, Loader } from "@gqlapp/look-client-react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { List, Spin, Divider } from 'antd';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Pagination, Loader } from '@gqlapp/look-client-react';
 
 // import '../resources/listingCatalogue.css';
 
@@ -33,14 +33,14 @@ class CatalogueWithInfiniteScroll extends Component {
     const hasMore = this.props.hasMore;
     const endCursor = this.props.endCursor;
     const totalCount = this.props.totalCount;
-    console.log("called");
+    console.log('called');
     if (!hasMore) {
-      console.log("end reached");
+      console.log('end reached');
       this.setState({ hasMore: false });
 
       return;
     } else {
-      const newData = await this.props.loadData(endCursor + 1, "add");
+      const newData = await this.props.loadData(endCursor + 1, 'add');
       this.setState({
         data: newData,
         loading: false
@@ -49,12 +49,12 @@ class CatalogueWithInfiniteScroll extends Component {
   };
 
   render() {
-    console.log("in", this.state);
+    console.log('in', this.state);
     const CardComponent = this.props.component;
     return (
       <InfiniteScroll
         scrollThreshold={0.9}
-        style={{ overflow: "none" }}
+        style={{ overflow: 'none' }}
         dataLength={this.state.data.totalCount}
         next={this.fetchMoreData}
         hasMore={this.state.hasMore}
@@ -65,14 +65,14 @@ class CatalogueWithInfiniteScroll extends Component {
         }
         endMessage={
           <Divider>
-            <p style={{ textAlign: "center", marginTop: "25px" }}>
+            <p style={{ textAlign: 'center', marginTop: '25px' }}>
               <b>{this.props.endMessage}</b>
             </p>
           </Divider>
         }
         children={
           <List
-            className='catalogue-infinite-list'
+            className="catalogue-infinite-list"
             grid={this.props.grid}
             dataSource={this.state.data.edges}
             renderItem={item => (

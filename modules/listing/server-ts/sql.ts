@@ -31,7 +31,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[listing_image, listing_cost]';
+const eager = '[listing_images, listing_cost]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -54,7 +54,7 @@ export default class ListingDAO extends Model {
       //     to: 'user.id'
       //   }
       // },
-      listing_image: {
+      listing_images: {
         relation: Model.HasManyRelation,
         modelClass: ListingImage,
         join: {
