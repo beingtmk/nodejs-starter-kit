@@ -38,8 +38,8 @@ export default (pubsub: any) => ({
         answers: result,
       };
     },
-    async getAttendees(obj: any, { quizId }: any, context: any) {
-      const quiz = await context.Quiz.getQuiz(quizId);
+    async getAttendees(obj: any, { id }: any, context: any) {
+      const quiz = await context.Quiz.getQuiz(id);
       let questionIdArray = [];
       quiz.questions.map((question, key) => {
         questionIdArray.push(question.id);
@@ -64,9 +64,9 @@ export default (pubsub: any) => ({
         users: users,
       };
     },
-    async getQuizCount(obj: any, { quizId }: any, context: any) {
+    async getQuizCount(obj: any, { id }: any, context: any) {
       try {
-        let quiz = await context.Quiz.getQuiz(quizId);
+        let quiz = await context.Quiz.getQuiz(id);
         let choiceIdArray = [];
         quiz.questions && quiz.questions.length !==0 && quiz.questions.map((question, key1) => {
           question.choices && question.choices.length !==0 && question.choices.map((choice, key2) => {

@@ -45,8 +45,8 @@ extend type Query {
   #get answer
   answer(input: AnswerInput!): Answer
   answers(userId: Int!,   quizId: Int!): AnswersOutput
-  getAttendees(quizId: Int!): AttendeesOutput
-  getQuizCount(quizId: Int!): QuizWithCount
+  getAttendees(id: Int!): AttendeesOutput
+  getQuizCount(id: Int!): QuizWithCount
 }
 
 type QuizWithCount {
