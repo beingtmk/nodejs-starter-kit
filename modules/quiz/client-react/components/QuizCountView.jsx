@@ -4,7 +4,7 @@ import { Spin as Loader, Badge } from "antd";
 import { PageLayout, Card } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
-import QuizForm from "./QuizForm";
+// import QuizForm from "./QuizForm";
 
 const renderMetaData = (t) => (
   <Helmet

@@ -1,0 +1,10 @@
+
+query  getAttendees($id: Int!) {
+   getAttendees(id: $id) {
+  users{
+    id
+    username
+    email
+  }
+  }
+}

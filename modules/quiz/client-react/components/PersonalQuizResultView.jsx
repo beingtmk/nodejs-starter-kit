@@ -16,7 +16,7 @@ const renderMetaData = (t) => (
   />
 );
 
-const ResultComponent = (props) => {
+export const ResultComponent = (props) => {
   const queAnsArray = [];
   const answers = props.answers;
 
