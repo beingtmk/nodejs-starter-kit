@@ -19,15 +19,13 @@ const ListingCatalogueView = props => {
   const { t, loading, listings } = props;
 
   const RenderListings = () => (
-    // <Fragment>
     <div>
       <h2 className="headingTop">
         <strong>All Listings</strong>
       </h2>
-      <Divider style={{ margin: '5px 0px' }} />
+      <Divider style={{ margin: '5px 0px 10px' }} />
       <SuggestedCardListComponent {...props} />
     </div>
-    // </Fragment>
   );
 
   return (

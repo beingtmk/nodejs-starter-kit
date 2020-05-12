@@ -20,17 +20,7 @@ class ProfileCatalogueCard extends React.Component {
     super(props);
   }
   render() {
-    const {
-      item
-      // paused
-    } = this.props;
-    const ViewProfileAction = () => {
-      return (
-        <h4 style={{ textAlign: 'right', color: 'white' }} href={`public-profile/${item.id}`}>
-          View Profile <Icon type="arrow-right" />
-        </h4>
-      );
-    };
+    const { item } = this.props;
     return (
       <Link to={`/public-profile/${item.user ? item.user.id : item.id}`}>
         <Card
