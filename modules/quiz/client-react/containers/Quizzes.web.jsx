@@ -9,7 +9,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import  QUIZZES_QUERY from '../graphql/QuizzesQuery.graphql';
-import DELETE_USER from '../graphql/DeleteQuiz.graphql'
+import DELETE_QUIZ from '../graphql/DeleteQuiz.graphql'
 import QuizzesListView from '../components/QuizzesListView';
 
 // import QuizzesFilterView from '../components/QuizzesFilterView';
@@ -91,7 +91,7 @@ export default compose(
       return { loadingQuizzes:loading, quizzes };
     }
   }),
-  graphql(DELETE_USER, {
+  graphql(DELETE_QUIZ, {
     props: ({ mutate }) => ({
       deleteQuiz: async id => {
         try {

@@ -62,6 +62,13 @@ export default new ClientModule({
     />,
     <Route
       exact
+      path="/quiz-catalogue"
+      component={loadable(() =>
+        import("./containers/QuizzesPublic.web").then((c) => c.default)
+      )}
+    />,
+    <Route
+      exact
       path="/quiz/attendees/:id"
       component={loadable(() =>
         import("./containers/QuizAttendees").then((c) => c.default)
