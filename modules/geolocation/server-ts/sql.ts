@@ -3,6 +3,15 @@ import { Model } from 'objection';
 import { knex } from '@gqlapp/database-server-ts';
 Model.knex(knex);
 
+export interface LatLong {
+  latitude: number;
+  longitude: number;
+}
+
+export interface FilterDist {
+  distance: number;
+}
+
 export default class Geolocation extends Model {
   // private id: any;
 
@@ -14,7 +23,7 @@ export default class Geolocation extends Model {
     return 'id';
   }
 
-  public async locations({ latitude, longitude }: any, filter: any) {
+  public async locations({ latitude, longitude }: LatLong, filter: FilterDist) {
     // SECTION FOR DISTANCE BASED QUERY
     // let lat = latitude
     // let long = longitude

@@ -11,19 +11,20 @@ import COMMENT_REPLY_SUBSCRIPTION from '../graphql/ReplyCommentSubscription.grap
 import COMMENT_QUERY from '../graphql/ReplyCommentsQuery.graphql';
 
 const CommentReply = props => {
-  const { subscribeToMore } = props;
+  const { subscribeToMore, referenceId } = props;
   useEffect(() => {
-    const subscribe = subscribeToBlogComment(subscribeToMore);
+    const subscribe = subscribeToBlogComment(subscribeToMore, referenceId);
     return () => subscribe();
   });
   return <CommentReplyComponent {...props} />;
 };
 
-const onAdd = (prev, node) => {
+const onAdd = (prev, node, referenceId) => {
   // ignore if duplicate
-  if (prev.commentReplies.some(item => node.id === item.id)) {
+  if (prev.commentReplies.some(item => node.id === item.id) || referenceId !== node.reference.id) {
     return prev;
   }
+
   return update(prev, {
     commentReplies: {
       $set: [node, ...prev.commentReplies]
@@ -46,7 +47,7 @@ const onDelete = (prev, id) => {
   });
 };
 
-const subscribeToBlogComment = subscribeToMore =>
+const subscribeToBlogComment = (subscribeToMore, referenceId) =>
   subscribeToMore({
     document: COMMENT_REPLY_SUBSCRIPTION,
     updateQuery: (
@@ -61,9 +62,10 @@ const subscribeToBlogComment = subscribeToMore =>
     ) => {
       let newResult = prev;
       if (mutation === 'CREATED') {
-        newResult = onAdd(prev, node);
+        newResult = onAdd(prev, node, referenceId);
       } else if (mutation === 'UPDATED') {
         newResult = onDelete(prev, node.id);
+        return () => newResult();
       } else if (mutation === 'DELETED') {
         newResult = onDelete(prev, node.id);
       }

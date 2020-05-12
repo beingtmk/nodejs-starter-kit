@@ -43,7 +43,7 @@ CommentFormComponent.propTypes = {
   values: PropTypes.object,
   currentUser: PropTypes.object,
   errors: PropTypes.object,
-  content: PropTypes.object,
+  content: PropTypes.string,
   title: PropTypes.string,
   modalVisible: PropTypes.bool,
   t: PropTypes.func

@@ -19,6 +19,15 @@ Model.knex(knex);
 
 const eager = '[user, blog.[author, model]]';
 
+export interface UserBookmark {
+  userId: number;
+  blogId: number;
+}
+
+export interface Identifier {
+  id: number;
+}
+
 export default class Bookmark extends Model {
   // private id: any;
 
@@ -77,7 +86,7 @@ export default class Bookmark extends Model {
     return res;
   }
 
-  public async userBlogBookmark(input: any) {
+  public async userBlogBookmark(input: UserBookmark) {
     const res = camelizeKeys(
       await Bookmark.query()
         .where(decamelizeKeys(input))
@@ -87,7 +96,7 @@ export default class Bookmark extends Model {
     return res;
   }
 
-  public async addBlogBookmark(input: any) {
+  public async addBlogBookmark(input: UserBookmark) {
     const res = await Bookmark.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
@@ -98,7 +107,7 @@ export default class Bookmark extends Model {
       .del();
   }
 
-  public async deleteBlogBookmark(input: any) {
+  public async deleteBlogBookmark(input: UserBookmark) {
     return knex('blog_bookmark')
       .where(decamelizeKeys(input))
       .del();

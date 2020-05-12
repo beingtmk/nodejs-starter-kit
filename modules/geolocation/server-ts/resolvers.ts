@@ -1,12 +1,18 @@
 import { PubSub } from 'graphql-subscriptions';
 
 import { withFilter } from 'graphql-subscriptions';
+import { LatLong, FilterDist } from './sql';
+
+interface LatLongInput {
+  input: LatLong;
+  filter: FilterDist;
+}
 
 const LOCATION_SUBSCRIPTION = 'location_subscription';
 
 export default (pubsub: PubSub) => ({
   Query: {
-    async locations(obj: any, { input, filter }: any, context: any) {
+    async locations(obj: any, { input, filter }: LatLongInput, context: any) {
       return context.Geolocation.locations(input, filter);
     },
     async allLocations(obj: any, args: any, context: any) {

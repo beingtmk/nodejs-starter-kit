@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from 'antd';
 import { Loading } from '@gqlapp/look-client-react';
@@ -12,9 +12,11 @@ const BlogLikeComponent = ({
   LikeValues,
   currentUserLoading
 }) => {
-  const [likeFlag, setLikeFlag] = useState(
-    typeLikes && currentUser ? typeLikes.find(item => item.user.id === currentUser.id) : false
-  );
+  const [likeFlag, setLikeFlag] = useState(false);
+
+  useEffect(() => {
+    setLikeFlag(typeLikes && currentUser ? typeLikes.find(item => item.user.id === currentUser.id) : false);
+  }, [typeLikes, currentUser]);
 
   const likeFunc = async () => {
     try {

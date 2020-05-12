@@ -19,6 +19,31 @@ import { BlogTag } from '@gqlapp/tag-server-ts/sql';
 
 Model.knex(knex);
 
+export interface BlogInput {
+  title: string;
+  image: string;
+  content: string;
+  description: string;
+  status: string;
+  modelId: number;
+  authorId: number;
+  tags: TagInput[];
+}
+
+export interface ModelInput {
+  name: string;
+  image: string;
+  desc: string;
+}
+
+export interface TagInput {
+  id: number;
+  text: string;
+}
+
+export interface Identifier {
+  id: number;
+}
 // const eager = '[author.[profile], model]';
 const eager = '[author, model, tags]';
 
@@ -89,12 +114,12 @@ export default class Blog extends Model {
     return res;
   }
 
-  public async addBlog(input: any) {
+  public async addBlog(input: BlogInput) {
     const res = await Blog.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
-  public async editBlog(input: any) {
+  public async editBlog(input: Identifier & BlogInput) {
     const res = await Blog.query().upsertGraph(decamelizeKeys(input));
     return res.id;
   }
@@ -124,12 +149,12 @@ export class ModelDAO extends Model {
     return res;
   }
 
-  public async addModel(input: any) {
+  public async addModel(input: ModelInput) {
     const res = await returnId(knex('model').insert(input));
     return res;
   }
 
-  public async updateModel(id: number, input: any) {
+  public async updateModel(id: number, input: ModelInput) {
     const res = await returnId(
       knex('model')
         .where({ id })

@@ -71,6 +71,7 @@ const subscribeToLike = (subscribeToMore, LikeValues) =>
         newResult = onAdd(prev, node, LikeValues);
       } else if (mutation === 'UPDATED') {
         newResult = onDelete(prev, node.id);
+        return () => newResult();
       } else if (mutation === 'DELETED') {
         newResult = onDelete(prev, node.id);
       }

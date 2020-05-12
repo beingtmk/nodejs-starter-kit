@@ -1,29 +1,46 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
+import { ModelInput, BlogInput, Identifier } from './sql';
 
 const MODEL_SUBSCRIPTION = 'model_subscription';
 const BLOGS_SUBSCRIPTION = 'blogs_subscription';
+
+interface AddModel {
+  input: ModelInput;
+}
+
+interface EditModel {
+  input: ModelInput & Identifier;
+}
+
+interface EditBlog {
+  input: BlogInput & Identifier;
+}
+
+interface AddBlog {
+  input: BlogInput;
+}
 
 export default (pubsub: PubSub) => ({
   Query: {
     async blogs(obj: any, args: any, context: any) {
       return context.Blog.blogs();
     },
-    async userBlogs(obj: any, { id }: any, { Blog, req: { identity } }: any) {
+    async userBlogs(obj: any, { id }: Identifier, { Blog, req: { identity } }: any) {
       return Blog.userBlogs(id || identity.id);
     },
-    async blog(obj: any, { id }: any, context: any) {
+    async blog(obj: any, { id }: Identifier, context: any) {
       return context.Blog.blog(id);
     },
     async models(obj: any, args: any, context: any) {
       return context.Model.models();
     },
-    async model(obj: any, { id }: any, context: any) {
+    async model(obj: any, { id }: Identifier, context: any) {
       return context.Model.model(id);
     }
   },
   Mutation: {
-    addModel: withAuth(async (obj: any, { input }: any, { Model }: any) => {
+    addModel: withAuth(async (obj: any, { input }: AddModel, { Model }: any) => {
       try {
         const id = await Model.addModel(input);
         const item = await Model.model(id);
@@ -38,7 +55,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    updateModel: withAuth(async (obj: any, { input }: any, { Model }: any) => {
+    updateModel: withAuth(async (obj: any, { input }: EditModel, { Model }: any) => {
       try {
         const inputId = input.id;
         delete input.id;
@@ -55,7 +72,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteModel: withAuth(async (obj: any, { id }: any, { Model }: any) => {
+    deleteModel: withAuth(async (obj: any, { id }: Identifier, { Model }: any) => {
       try {
         const data = await Model.model(id);
         await Model.deleteModel(id);
@@ -70,7 +87,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    addBlog: withAuth(async (obj: any, { input }: any, { auth, Blog }: any) => {
+    addBlog: withAuth(async (obj: any, { input }: AddBlog, { auth, Blog }: any) => {
       try {
         if (!input.authorId) {
           input.authorId = auth.isAuthenticated.id;
@@ -88,7 +105,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    editBlog: withAuth(async (obj: any, { input }: any, { Blog }: any) => {
+    editBlog: withAuth(async (obj: any, { input }: EditBlog, { Blog }: any) => {
       try {
         const inputId = await Blog.editBlog(input);
         const item = await Blog.blog(inputId);
@@ -103,7 +120,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteBlog: withAuth(async (obj: any, { id }: any, { Blog }: any) => {
+    deleteBlog: withAuth(async (obj: any, { id }: Identifier, { Blog }: any) => {
       try {
         const data = await Blog.blog(id);
         await Blog.deleteBlog(id);

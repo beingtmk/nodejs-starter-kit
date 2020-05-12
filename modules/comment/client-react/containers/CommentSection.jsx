@@ -17,8 +17,8 @@ import ADD_COMMENT from '../graphql/AddComment.graphql';
 const CommentSection = props => {
   const { subscribeToMore } = props;
   useEffect(() => {
-    const subscribe = subscribeToBlogComment(subscribeToMore);
-    return () => subscribe();
+    return subscribeToBlogComment(subscribeToMore);
+    //  () => subscribe();
   });
   return <CommentSectionComponent {...props} />;
 };
@@ -68,6 +68,7 @@ const subscribeToBlogComment = subscribeToMore =>
         newResult = onAdd(prev, node);
       } else if (mutation === 'UPDATED') {
         newResult = onDelete(prev, node.id);
+        return () => newResult();
       } else if (mutation === 'DELETED') {
         newResult = onDelete(prev, node.id);
       }
