@@ -118,11 +118,12 @@ class ListingDetailView extends Component {
                       <Icon type="left" className="carousel-arrow-icon" />
                     </div>
                     <Carousel className="listing-detail-carousel" ref={node => (this.carousel = node)} {...status}>
-                      {images.map((item, id) => (
-                        <div key={id} align="center">
-                          <img src={item.imageUrl} style={{ height: '300px' }} />
-                        </div>
-                      ))}
+                      {images &&
+                        images.map((item, id) => (
+                          <div key={id} align="center">
+                            <img src={item.imageUrl} style={{ height: '300px' }} />
+                          </div>
+                        ))}
                     </Carousel>
                     <div className="carousel-arrow carousel-arrow-right" onClick={this.nextSlide}>
                       <Icon type="right" className="carousel-arrow-icon" />

@@ -50,20 +50,6 @@ extend type Query {
   userListings(userId: Int): [Listing]
 }
 
-extend type Mutation {
-  # Create new listing
-  addListing(input: AddListingInput!): Boolean
-  # # Edit a listing
-  editListing(input: EditListingInput!): Boolean
-  # # Delete a listing
-  deleteListing(id: Int!): Boolean
-
-  # Activating a Listing
-  toggleListingIsActive(id: Int!): Boolean
-}
-
-# extend type Subscription {}
-
 # Input for ordering listings
 input OrderByListInput {
   column: String
@@ -74,6 +60,18 @@ input OrderByListInput {
 input FilterListInput {
   isActive: Boolean
   searchText: String
+}
+
+extend type Mutation {
+  # Create new listing
+  addListing(input: AddListingInput!): Listing
+  # # Edit a listing
+  editListing(input: EditListingInput!): Boolean
+  # # Delete a listing
+  deleteListing(id: Int!): Boolean
+
+  # Activating a Listing
+  toggleListingIsActive(id: Int!): Boolean
 }
 
 input AddListingInput {
@@ -106,3 +104,16 @@ input EditListingInput {
   listingImages: [ListingImagesInput]
   listingCost: ListingCostInput
 }
+
+extend type Subscription {
+  # Subscription for listing list
+  listingsUpdated(endCursor: Int, filter: FilterListInput): UpdateListingPayload
+}
+
+# Payload for listingsUpdated Subscription
+type UpdateListingPayload {
+  mutation: String!
+  id: Int
+  node: Listing
+}
+

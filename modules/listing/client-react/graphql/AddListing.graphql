@@ -1,3 +1,7 @@
+#import "./Listing.graphql"
+
 mutation addListing($input: AddListingInput!) {
-  addListing(input: $input)
+  addListing(input: $input) {
+    ...ListingInfo
+  }
 }
