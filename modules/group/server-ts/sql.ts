@@ -64,7 +64,7 @@ export default class Group extends Model {
     return {
       members: {
         relation: Model.HasManyRelation,
-        groupClass: GroupMember,
+        modelClass: GroupMember,
         join: {
           from: 'group.id',
           to: 'group_member.group_id'
@@ -132,7 +132,7 @@ export class GroupMember extends Model {
     return {
       member: {
         relation: Model.BelongsToOneRelation,
-        groupClass: User,
+        modelClass: User,
         join: {
           from: 'group_member.email',
           to: 'user.email'
@@ -140,7 +140,7 @@ export class GroupMember extends Model {
       },
       group: {
         relation: Model.BelongsToOneRelation,
-        groupClass: Group,
+        modelClass: Group,
         join: {
           from: 'group_member.group_id',
           to: 'group.id'

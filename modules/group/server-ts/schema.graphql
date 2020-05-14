@@ -1,7 +1,7 @@
 type Group {
   id: Int!
   title: String!
-  avatar: String!
+  avatar: String
   description: String!
   members: [GroupMember]
   groupType: String!
