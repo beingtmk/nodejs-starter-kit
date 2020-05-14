@@ -5,7 +5,8 @@ import { compose } from '@gqlapp/core-common';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';
-import LISTING_QUERY from '../graphql/ListingQuery.graphql';
+
+import { withListing } from './ListingOperations';
 
 import ListingDetailView from '../components/ListingDetailView';
 
@@ -22,27 +23,11 @@ ListingDetail.propTypes = {
 };
 
 export default compose(
+  withListing,
   graphql(CURRENT_USER_QUERY, {
     props({ data: { loading, error, currentUser } }) {
       if (error) throw new Error(error);
       return { currentUserLoading: loading, currentUser };
-    }
-  }),
-  graphql(LISTING_QUERY, {
-    options: props => {
-      let id = 0;
-      if (props.match) {
-        id = props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.id;
-      }
-      return {
-        variables: { id: Number(id) }
-      };
-    },
-    props({ data: { loading, error, listing } }) {
-      if (error) throw new Error(error);
-      return { loading, listing };
     }
   }),
   graphql(USER_QUERY, {

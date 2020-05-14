@@ -4,7 +4,7 @@ import { Subscription } from 'react-apollo';
 
 import LISTINGS_SUBSCRIPTION from '../graphql/ListingsSubscription.graphql';
 
-export const useListingsWithSubscription = (subscribeToMore, filter) => {
+const useListingsWithSubscription = (subscribeToMore, filter) => {
   const [listingsUpdated, setListingsUpdated] = useState(null);
 
   useEffect(() => {
@@ -54,3 +54,57 @@ export default Component => {
 
   return ListingsWithSubscription;
 };
+
+// const subscribeToListingList = (subscribeToMore) =>
+//   subscribeToMore({
+//     document: LISTINGS_SUBSCRIPTION,
+//     updateQuery: (
+//       prev,
+//       {
+//         subscriptionData: {
+//           data: {
+//             listingsUpdated: { mutation, node }
+//           }
+//         }
+//       }
+//     ) => {
+//       let newResult = prev;
+//       console.log('PREVVVV', prev, node);
+//       if (mutation === 'CREATED') {
+//         newResult = onAddListing(prev, node.id);
+//       } else if (mutation === 'UPDATED') {
+//         newResult = onDeleteListing(prev, node.id);
+//       } else if (mutation === 'DELETED') {
+//         newResult = onDeleteListing(prev, node.id);
+//       }
+
+//       return newResult;
+//     }
+//   });
+const useListingListWithSubscription = subscribeToMore => {
+  const [listingsUpdated, setListingsUpdated] = useState(null);
+
+  useEffect(() => {
+    const subscribe = subscribeToListings();
+    return () => subscribe();
+  });
+
+  const subscribeToListings = () => {
+    return subscribeToMore({
+      document: LISTINGS_SUBSCRIPTION,
+      updateQuery: (
+        prev,
+        {
+          subscriptionData: {
+            data: { listingsUpdated: newData }
+          }
+        }
+      ) => {
+        setListingsUpdated(newData);
+      }
+    });
+  };
+
+  return listingsUpdated;
+};
+export { useListingListWithSubscription, useListingsWithSubscription };

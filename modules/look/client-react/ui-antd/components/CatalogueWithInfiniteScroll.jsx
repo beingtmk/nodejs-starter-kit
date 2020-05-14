@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List, Spin, Divider } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Pagination, Loader } from '@gqlapp/look-client-react';
-
-// import '../resources/listingCatalogue.css';
 
 class CatalogueWithInfiniteScroll extends Component {
   constructor(props) {
@@ -29,10 +26,8 @@ class CatalogueWithInfiniteScroll extends Component {
 
   fetchMoreData = async () => {
     this.setState({ loading: true });
-    let { data } = this.state;
     const hasMore = this.props.hasMore;
     const endCursor = this.props.endCursor;
-    const totalCount = this.props.totalCount;
     console.log('called');
     if (!hasMore) {
       console.log('end reached');
@@ -70,19 +65,18 @@ class CatalogueWithInfiniteScroll extends Component {
             </p>
           </Divider>
         }
-        children={
-          <List
-            className="catalogue-infinite-list"
-            grid={this.props.grid}
-            dataSource={this.state.data.edges}
-            renderItem={item => (
-              <List.Item key={item.node.id}>
-                <CardComponent key={item.node.id} item={item.node} />
-              </List.Item>
-            )}
-          />
-        }
-      />
+      >
+        <List
+          className="catalogue-infinite-list"
+          grid={this.props.grid}
+          dataSource={this.state.data.edges}
+          renderItem={item => (
+            <List.Item key={item.node.id}>
+              <CardComponent key={item.node.id} item={item.node} />
+            </List.Item>
+          )}
+        />
+      </InfiniteScroll>
     );
   }
 }
@@ -94,7 +88,15 @@ CatalogueWithInfiniteScroll.propTypes = {
       gearCategory: PropTypes.string.isRequired,
       gearSubcategory: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  list: PropTypes.array,
+  grid: PropTypes.object,
+  endMessage: PropTypes.string,
+  component: PropTypes.any,
+  hasMore: PropTypes.bool,
+  loading: PropTypes.bool,
+  loadData: PropTypes.func,
+  endCursor: PropTypes.number
 };
 
 export default CatalogueWithInfiniteScroll;

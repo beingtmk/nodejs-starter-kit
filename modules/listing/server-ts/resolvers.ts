@@ -17,7 +17,6 @@ interface ListingInputWithId {
 
 const LISTING_SUBSCRIPTION = 'listing_subscription';
 const LISTINGS_SUBSCRIPTION = 'listings_subscription';
-const LISTINGREVIEW_SUBSCRIPTION = 'listing_review_subscription';
 
 export default (pubsub: any) => ({
   Query: {
@@ -88,13 +87,13 @@ export default (pubsub: any) => ({
           }
         });
         // publish for edit listing page
-        // pubsub.publish(LISTING_SUBSCRIPTION, {
-        //   listingUpdated: {
-        //     mutation: 'UPDATED',
-        //     id: listing.id,
-        //     node: listing
-        //   }
-        // });
+        pubsub.publish(LISTING_SUBSCRIPTION, {
+          listingUpdated: {
+            mutation: 'UPDATED',
+            id: listing.id,
+            node: listing
+          }
+        });
         return true;
       } catch (e) {
         return e;
@@ -113,13 +112,13 @@ export default (pubsub: any) => ({
           }
         });
         // publish for edit listing page
-        // pubsub.publish(LISTING_SUBSCRIPTION, {
-        //   listingUpdated: {
-        //     mutation: 'DELETED',
-        //     id, // import { ONSHELF, ONRENT } from "../common/constants/ListingStates";
-        //     node: listing,
-        //   },
-        // });
+        pubsub.publish(LISTING_SUBSCRIPTION, {
+          listingUpdated: {
+            mutation: 'DELETED',
+            id, // import { ONSHELF, ONRENT } from "../common/constants/ListingStates";
+            node: listing
+          }
+        });
         // return { id: listing.id };
         return true;
       } else {
@@ -143,13 +142,13 @@ export default (pubsub: any) => ({
           }
         });
         // // publish for edit listing page
-        // pubsub.publish(LISTING_SUBSCRIPTION, {
-        //   listingUpdated: {
-        //     mutation: 'UPDATED',
-        //     id: list.id,
-        //     node: list
-        //   }
-        // });
+        pubsub.publish(LISTING_SUBSCRIPTION, {
+          listingUpdated: {
+            mutation: 'UPDATED',
+            id: list.id,
+            node: list
+          }
+        });
         // return { id: list.id };
         return true;
       } else {
@@ -168,6 +167,14 @@ export default (pubsub: any) => ({
           } else {
             return true;
           }
+        }
+      )
+    },
+    listingUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(LISTING_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.listingUpdated.id === variables.id;
         }
       )
     }

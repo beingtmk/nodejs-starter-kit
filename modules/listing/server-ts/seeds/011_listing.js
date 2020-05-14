@@ -4,11 +4,11 @@ exports.seed = async function(knex) {
   await truncateTables(knex, Promise, ['listing', 'listing_image', 'listing_cost']);
 
   await Promise.all(
-    [...Array(20).keys()].map(async ii => {
+    [...Array(50).keys()].map(async ii => {
       const listing = await returnId(knex('listing')).insert({
         user_id: Math.floor(Math.random() * 2) + 1,
         // user_id: 1,
-        title: `Listing ${ii}`,
+        title: `Listing ${ii + 1}`,
         description: `This is listing ${ii + 1}`,
         is_active: Math.random() < 0.6 ? false : true
       });

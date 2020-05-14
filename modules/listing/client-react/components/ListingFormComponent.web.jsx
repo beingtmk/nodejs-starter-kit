@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Form, DatePicker, Card, Select } from 'antd';
+import { Form, Card } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -8,8 +8,8 @@ import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import { RenderField, RenderUploadMultiple, Button } from '@gqlapp/look-client-react';
 
 const ListingFormSchema = {
-  // title: [required, minLength(3)],
-  // description: [required, minLength(20)]
+  title: [required, minLength(3)],
+  description: [required, minLength(10)]
 };
 
 class ListingFormComponent extends React.Component {
@@ -90,7 +90,6 @@ const ListingWithFormik = withFormik({
     function getListingImage(listingImg) {
       return {
         id: (listingImg && listingImg.id) || null,
-        description: (listingImg && listingImg.description) || '',
         imageUrl: (listingImg && listingImg.imageUrl) || ''
       };
     }

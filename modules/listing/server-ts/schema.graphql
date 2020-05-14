@@ -108,6 +108,9 @@ input EditListingInput {
 extend type Subscription {
   # Subscription for listing list
   listingsUpdated(endCursor: Int, filter: FilterListInput): UpdateListingPayload
+
+  # Subscription for when editing a listing
+  listingUpdated(id: Int!): UpdateListingPayload
 }
 
 # Payload for listingsUpdated Subscription
@@ -116,4 +119,3 @@ type UpdateListingPayload {
   id: Int
   node: Listing
 }
-

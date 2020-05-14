@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Rate, Avatar, Divider, Button, Icon, Tooltip } from 'antd';
+import { Card } from 'antd';
 
 const { Meta } = Card;
 
@@ -52,7 +52,6 @@ class RelatedCardComponent extends Component {
               description={
                 <>
                   <h4>&#8377;{rent_per_day} per day</h4>
-                  <Divider style={{ margin: '5px 0px' }} />
                 </>
               }
             />

@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Spin, Row, Col, Button, Icon, Divider } from 'antd';
+import { Spin, Row, Col, Button, Icon } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 
@@ -31,7 +31,7 @@ class MyListingsView extends Component {
     }
   }
   render() {
-    const { userListings, loading, deleteListing, currentUser, history } = this.props;
+    const { userListings, loading, deleteListing, history } = this.props;
     const { status } = this.state;
     const delListing = async id => {
       try {
@@ -79,13 +79,6 @@ class MyListingsView extends Component {
                 </ButtonGroup>
               </Col>
             </Row>
-            {currentUser.profile.userType === 'MENTOR' && (
-              <Button type="primary" href="/add-event">
-                Add Event
-              </Button>
-            )}
-            {console.log('status', status)}
-
             {status === ALL && (
               <>
                 {userListings &&
@@ -132,7 +125,7 @@ MyListingsView.propTypes = {
   userListings: PropTypes.array,
   loading: PropTypes.bool,
   deleteListing: PropTypes.func,
-  currentUser: PropTypes.object
+  history: PropTypes.object
 };
 
 export default MyListingsView;

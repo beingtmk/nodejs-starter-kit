@@ -34,7 +34,7 @@ const NavLinkTestWithI18n = translate('listing')(({ t }: { t: TranslateFunction 
 ));
 
 const NavLinkAdminWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/listing" className="nav-link" activeClassName="active">
+  <NavLink to="/listings" className="nav-link" activeClassName="active">
     {t('listing:navLink')}
   </NavLink>
 ));
@@ -49,7 +49,7 @@ export default new ClientModule({
     <AuthRoute
       exact
       role={['admin']}
-      path="/listing"
+      path="/listings"
       component={loadable(() => import('./containers/Listing.web').then(c => c.default))}
     />,
     <AuthRoute
@@ -79,7 +79,7 @@ export default new ClientModule({
   ],
   navItemAdmin: [
     <IfLoggedIn>
-      <MenuItem key="/listing">
+      <MenuItem key="/listings">
         <NavLinkAdminWithI18n />
       </MenuItem>
     </IfLoggedIn>
