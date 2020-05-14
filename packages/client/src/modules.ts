@@ -1,3 +1,4 @@
+import group from '@gqlapp/group-client-react';
 import tag from '@gqlapp/tag-client-react';
 import geolocation from '@gqlapp/geolocation-client-react';
 import bookmark from '@gqlapp/bookmark-client-react';
@@ -27,6 +28,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  group,
   tag,
   geolocation,
   bookmark,

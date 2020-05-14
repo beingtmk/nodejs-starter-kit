@@ -122,6 +122,7 @@
     "@gqlapp/bookmark-client-react": "^1.0.0",
     "@gqlapp/comment-client-react": "^1.0.0",
     "@gqlapp/geolocation-client-react": "^1.0.0",
+    "@gqlapp/group-client-react": "^1.0.0",
     "@gqlapp/like-client-react": "^1.0.0",
     "@gqlapp/tag-client-react": "^1.0.0"},
   "devDependencies": {
