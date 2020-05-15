@@ -5,7 +5,6 @@ import { Spin as Loader } from 'antd';
 import { compose } from '@gqlapp/core-common';
 
 import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';
-// import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
 import PublicProfileView from '../components/PublicProfileView';
 
 const PublicProfile = props => {
@@ -14,7 +13,7 @@ const PublicProfile = props => {
 };
 
 PublicProfile.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.object,
   // shape({
   //   id: PropTypes.number,
   //   role: PropTypes.string,
@@ -26,15 +25,10 @@ PublicProfile.propTypes = {
   //     lastName: PropTypes.string
   //   })
   // })
+  userloading: PropTypes.object
 };
 
 export default compose(
-  // graphql(CURRENT_USER_QUERY, {
-  //   props({ data: { loading, error, currentUser } }) {
-  //     if (error) throw new Error(error);
-  //     return { currentUserLoading: loading, currentUser };
-  //   }
-  // }),
   graphql(USER_QUERY, {
     options: props => {
       let id = 0;

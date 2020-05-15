@@ -7,7 +7,7 @@ import settings from '../../../../settings';
 import ListingItemComponent from './ListingItemComponent';
 
 const MyListingsView = props => {
-  const { user, userListings, loading, history } = props;
+  const { user, userListings, loading, history, currentUser, deleteListing } = props;
 
   return (
     <>
@@ -31,7 +31,15 @@ const MyListingsView = props => {
             </Col>
           </Row>
 
-          {userListings && userListings.map(listing => <ListingItemComponent history={history} item={listing} />)}
+          {userListings &&
+            userListings.map(listing => (
+              <ListingItemComponent
+                history={history}
+                item={listing}
+                currentUser={currentUser}
+                deleteProduct={deleteListing}
+              />
+            ))}
         </>
       )}
     </>
@@ -39,6 +47,7 @@ const MyListingsView = props => {
 };
 
 MyListingsView.propTypes = {
+  currentUser: PropTypes.object,
   user: PropTypes.object,
   userListings: PropTypes.array,
   loading: PropTypes.bool,

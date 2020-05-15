@@ -31,7 +31,7 @@ class MyListingsView extends Component {
     }
   }
   render() {
-    const { userListings, loading, deleteListing, history } = this.props;
+    const { userListings, loading, deleteListing, history, currentUser } = this.props;
     const { status } = this.state;
     const delListing = async id => {
       try {
@@ -83,7 +83,12 @@ class MyListingsView extends Component {
               <>
                 {userListings &&
                   userListings.map(listing => (
-                    <ListingItemComponent history={history} item={listing} deleteProduct={delListing} />
+                    <ListingItemComponent
+                      history={history}
+                      item={listing}
+                      deleteProduct={delListing}
+                      currentUser={currentUser}
+                    />
                   ))}
                 {/* <Divider />
                 <h3>My Orders</h3>
@@ -92,6 +97,7 @@ class MyListingsView extends Component {
                     order.orderDetails.map(item => (
                       <CartItemComponent
                         item={item}
+                        currentUser={currentUser}
                         // deleteProduct={props.deleteProduct}
                       />
                     ))
@@ -101,7 +107,12 @@ class MyListingsView extends Component {
             {userListings &&
               status === MYLISTING &&
               userListings.map(listing => (
-                <ListingItemComponent history={history} item={listing} deleteProduct={delListing} />
+                <ListingItemComponent
+                  history={history}
+                  item={listing}
+                  deleteProduct={delListing}
+                  currentUser={currentUser}
+                />
               ))}
 
             {/* {userListings &&
@@ -110,6 +121,7 @@ class MyListingsView extends Component {
                 order.orderDetails.map(item => (
                   <CartItemComponent
                     item={item}
+                    currentUser={currentUser}
                     // deleteProduct={props.deleteProduct}
                   />
                 ))
@@ -125,6 +137,7 @@ MyListingsView.propTypes = {
   userListings: PropTypes.array,
   loading: PropTypes.bool,
   deleteListing: PropTypes.func,
+  currentUser: PropTypes.object,
   history: PropTypes.object
 };
 

@@ -55,32 +55,6 @@ export default Component => {
   return ListingsWithSubscription;
 };
 
-// const subscribeToListingList = (subscribeToMore) =>
-//   subscribeToMore({
-//     document: LISTINGS_SUBSCRIPTION,
-//     updateQuery: (
-//       prev,
-//       {
-//         subscriptionData: {
-//           data: {
-//             listingsUpdated: { mutation, node }
-//           }
-//         }
-//       }
-//     ) => {
-//       let newResult = prev;
-//       console.log('PREVVVV', prev, node);
-//       if (mutation === 'CREATED') {
-//         newResult = onAddListing(prev, node.id);
-//       } else if (mutation === 'UPDATED') {
-//         newResult = onDeleteListing(prev, node.id);
-//       } else if (mutation === 'DELETED') {
-//         newResult = onDeleteListing(prev, node.id);
-//       }
-
-//       return newResult;
-//     }
-//   });
 const useListingListWithSubscription = subscribeToMore => {
   const [listingsUpdated, setListingsUpdated] = useState(null);
 

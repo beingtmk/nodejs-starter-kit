@@ -35,7 +35,7 @@ class ProfileView extends React.Component {
   };
 
   render() {
-    const { t, user } = this.props;
+    const { t, user, history } = this.props;
     const { profile } = user.user;
     console.log('bleh', profile && profile);
     if (profile) {
@@ -62,7 +62,7 @@ class ProfileView extends React.Component {
                   description={userCardData(t, user, this.getUserId()).profileHead}
                 />
                 <Divider />
-                <UserListings user={user.user} />
+                <UserListings user={user.user} history={history} />
               </Card>
             </Col>
           </Row>
@@ -81,9 +81,10 @@ class ProfileView extends React.Component {
 
 ProfileView.propTypes = {
   currentUserLoading: PropTypes.bool,
-  currentUser: PropTypes.object,
   t: PropTypes.func,
   match: PropTypes.object,
+  user: PropTypes.object,
+  history: PropTypes.object,
   navigation: PropTypes.object
 };
 export default translate('user')(ProfileView);

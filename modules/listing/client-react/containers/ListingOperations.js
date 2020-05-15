@@ -128,6 +128,7 @@ const updateMyListingsState = (ListingsUpdated, updateQuery) => {
 };
 const onAddMyListing = (prev, node) => {
   // ignore if duplicate
+  console.log('prev', prev);
   if (prev.userListings.some(listing => node.id === listing.id)) {
     return prev;
   }
@@ -336,9 +337,9 @@ const withUserListing = Component =>
         variables: { userId: props.user && props.user.id }
       };
     },
-    props({ data: { loading, error, userListings } }) {
+    props({ data: { loading, error, userListings, updateQuery, subscribeToMore } }) {
       if (error) throw new Error(error);
-      return { loading, userListings };
+      return { loading, userListings, updateQuery, subscribeToMore };
     }
   })(Component);
 

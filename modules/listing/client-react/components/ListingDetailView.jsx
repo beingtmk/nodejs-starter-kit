@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Row, Col, Breadcrumb, Divider, Spin, Card, Descriptions, Avatar, Statistic, Carousel, Icon } from 'antd';
+import {
+  Row,
+  Col,
+  Breadcrumb,
+  Divider,
+  Spin,
+  Card,
+  Descriptions,
+  Avatar,
+  Statistic,
+  Carousel,
+  Icon,
+  Tooltip
+} from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout } from '@gqlapp/look-client-react';
@@ -140,20 +153,22 @@ class ListingDetailView extends Component {
                 <Row>
                   <Col md={12} xs={24}>
                     <a href={`/public-profile/${listing.userId}`}>
-                      <Meta
-                        avatar={
-                          <Avatar
-                            style={{ height: '60px', width: '60px' }}
-                            src={(user && user.user && user.user.profile && user.user.profile.avatar) || AVATAR}
-                          />
-                        }
-                        title={<h2 style={{ marginLeft: '10px' }}>{getName()}</h2>}
-                        description={
-                          <h3 style={{ marginLeft: '10px', marginTop: '-10px' }}>
-                            {user && user.user && user.user.username}
-                          </h3>
-                        }
-                      />
+                      <Tooltip placement="topLeft" title="Visit User's Profile">
+                        <Meta
+                          avatar={
+                            <Avatar
+                              style={{ height: '60px', width: '60px' }}
+                              src={(user && user.user && user.user.profile && user.user.profile.avatar) || AVATAR}
+                            />
+                          }
+                          title={<h2 style={{ marginLeft: '10px' }}>{getName()}</h2>}
+                          description={
+                            <h3 style={{ marginLeft: '10px', marginTop: '-10px' }}>
+                              {user && user.user && user.user.username}
+                            </h3>
+                          }
+                        />
+                      </Tooltip>
                     </a>
                   </Col>
                   <Col align="right" md={12} xs={0}>

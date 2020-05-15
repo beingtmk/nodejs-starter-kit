@@ -47,7 +47,7 @@ class ListingItemComponent extends Component {
   };
 
   render() {
-    const { item, history, user, loading } = this.props;
+    const { item, history, user, loading, currentUser } = this.props;
 
     const sellerFirstName = (user && user.user && user.user.profile && user.user.profile.firstName) || null;
     const sellerLastName = (user && user.user && user.user.profile && user.user.profile.lastName) || null;
@@ -66,7 +66,6 @@ class ListingItemComponent extends Component {
     };
     const seller = sellerName(sellerFirstName, sellerLastName);
     const sellerAvatar = (user && user.user && user.user.profile && user.user.profile.avatar) || AVATAR;
-    console.log('props', this.props);
     return (
       // <Link to={`/listing-detail/${item.id}`}>
       !loading && (
@@ -78,28 +77,33 @@ class ListingItemComponent extends Component {
             padding: '0px'
           }}
           extra={
-            <Row>
-              <Col span={12}>
-                <BorderListzero block onClick={() => history.push(`/edit/listing/${item.id}`)}>
-                  <Icon type="edit" />
-                </BorderListzero>
-              </Col>
-              {this.props.deleteProduct && (
+            currentUser &&
+            user &&
+            user.user &&
+            currentUser.id === user.user.id && (
+              <Row>
                 <Col span={12}>
-                  <Popconfirm
-                    title="Are you sure to delete this Listing?"
-                    onConfirm={() => this.props.deleteProduct(item.id)}
-                    onCancel={this.cancel}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <BorderListzero block>
-                      <Icon type="delete" />
-                    </BorderListzero>
-                  </Popconfirm>
+                  <BorderListzero block onClick={() => history.push(`/edit/listing/${item.id}`)}>
+                    <Icon type="edit" />
+                  </BorderListzero>
                 </Col>
-              )}
-            </Row>
+                {this.props.deleteProduct && (
+                  <Col span={12}>
+                    <Popconfirm
+                      title="Are you sure to delete this Listing?"
+                      onConfirm={() => this.props.deleteProduct(item.id)}
+                      onCancel={this.cancel}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <BorderListzero block>
+                        <Icon type="delete" />
+                      </BorderListzero>
+                    </Popconfirm>
+                  </Col>
+                )}
+              </Row>
+            )
           }
         >
           <Row gutter={24} type="flex" justify="space-around" align="middle">
@@ -124,7 +128,7 @@ class ListingItemComponent extends Component {
                 <h3>{`Event-Id: ${item.id}`}</h3>
                 <Divider style={{ margin: '5px 0px' }} />
 
-                <Link target="_blank" className="listing-link" to={`/public-profile/${user.id}`}>
+                <Link target="_blank" className="listing-link" to={`/public-profile/${user.user.id}`}>
                   <Tooltip placement="topLeft" title="Visit User's Profile">
                     <Meta
                       avatar={<Avatar src={sellerAvatar} />}
@@ -134,7 +138,7 @@ class ListingItemComponent extends Component {
                           <br />
                         </h4>
                       }
-                      description={<h5 style={{ marginTop: '-10px' }}>{user.username}</h5>}
+                      description={<h5 style={{ marginTop: '-10px' }}>{user.user.username}</h5>}
                     />
                   </Tooltip>
                 </Link>
@@ -172,6 +176,7 @@ class ListingItemComponent extends Component {
 
 ListingItemComponent.propTypes = {
   item: PropTypes.object,
+  currentUser: PropTypes.object,
   deleteProduct: PropTypes.func,
   user: PropTypes.object,
   history: PropTypes.object,

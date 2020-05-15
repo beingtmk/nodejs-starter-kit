@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { graphql } from 'react-apollo';
 import { PropTypes } from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 
 import { translate } from '@gqlapp/i18n-client-react/translate';
 
-// import LISTINGS_SUBSCRIPTION from '../graphql/ListingsSubscription.graphql';
+import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
 import MyListingsView from '../components/MyListingsView';
 
@@ -12,8 +13,8 @@ import { useListingListWithSubscription } from './withSubscriptions';
 import { withMyListing, withListingsDeleting, updateMyListingsState } from './ListingOperations';
 
 const MyListings = props => {
-  const { updateQuery, subscribeToMore, filter } = props;
-  const listingsUpdated = useListingListWithSubscription(subscribeToMore, filter);
+  const { updateQuery, subscribeToMore } = props;
+  const listingsUpdated = useListingListWithSubscription(subscribeToMore);
 
   useEffect(() => {
     if (listingsUpdated) {
@@ -30,4 +31,14 @@ MyListings.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(withMyListing, withListingsDeleting, translate('listing'))(MyListings);
+export default compose(
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { currentUserLoading: loading, currentUser };
+    }
+  }),
+  withMyListing,
+  withListingsDeleting,
+  translate('listing')
+)(MyListings);
