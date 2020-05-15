@@ -92,14 +92,14 @@ export default class Blog extends Model {
     };
   }
 
-  public async blogs(filter: FilterInput) {
+  public async blogs(filter: FilterInput, limit: number, after: number) {
     const queryBuilder = Blog.query()
       .eager(eager)
       .orderBy('id', 'desc');
 
     if (filter) {
       if (has(filter, 'status') && filter.status !== null && filter.status !== '') {
-        queryBuilder.from('blog').where(function() {
+        queryBuilder.from('blog').where(function () {
           this.where('blog.status', filter.status);
         });
       }
@@ -108,7 +108,7 @@ export default class Blog extends Model {
         queryBuilder
           .from('blog')
           .leftJoin('model', 'model.id', 'blog.model_id')
-          .where(function() {
+          .where(function () {
             this.where('model.name', filter.model);
           });
       }
@@ -119,7 +119,7 @@ export default class Blog extends Model {
           .leftJoin('user as u', 'u.id', 'blog.author_id')
           .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
           .leftJoin('blog_tag as t', 't.blog_id', 'blog.id')
-          .where(function() {
+          .where(function () {
             this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
               .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
               .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['t.text', `%${filter.searchText}%`]))
@@ -130,8 +130,20 @@ export default class Blog extends Model {
           });
       }
     }
+    const allBlogs = camelizeKeys(await queryBuilder);
+    const total = allBlogs.length;
 
-    return camelizeKeys(await queryBuilder);
+    var blogs = {};
+    if (limit && after) {
+      blogs = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      blogs = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      blogs = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      blogs = camelizeKeys(await queryBuilder);
+    }
+    return { blogs, total };
   }
 
   public async userBlogs(id: number) {

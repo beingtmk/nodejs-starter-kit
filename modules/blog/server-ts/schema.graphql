@@ -25,9 +25,25 @@ type Model {
 extend type Query {
   models: [Model]
   model(id: Int!): Model
-  blogs(filter: FilterBlogInput): [Blog]
+  blogs(limit: Int, after: Int, filter: FilterBlogInput): BlogList
   blog(id: Int!): Blog
   userBlogs(id: Int): [Blog]
+}
+
+type BlogEdges {
+  node: Blog
+  cursor: Int
+}
+
+type BlogList {
+  totalCount: Int
+  edges: [BlogEdges]
+  pageInfo: BlogPageInfo
+}
+
+type BlogPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
 }
 
 input FilterBlogInput {

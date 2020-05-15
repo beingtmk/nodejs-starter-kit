@@ -1,18 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { compose, removeTypename } from '@gqlapp/core-common';
-import { graphql } from 'react-apollo';
-import update from 'immutability-helper';
-import { translate } from '@gqlapp/i18n-client-react';
-import { message } from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { compose, removeTypename, PLATFORM } from "@gqlapp/core-common";
+import { graphql } from "react-apollo";
+import update from "immutability-helper";
+import { translate } from "@gqlapp/i18n-client-react";
+import { message } from "antd";
 
-import BLOG_SUBSCRIPTION from '../graphql/BlogsSubscription.graphql';
-import BLOG_QUERY from '../graphql/BlogsQuery.graphql';
-import DELETE_BLOG from '../graphql/DeleteBlog.graphql';
-import UPDATE_FILTER from '../graphql/UpdateBlogFilter.client.graphql';
-import BLOG_STATE_QUERY from '../graphql/BlogStateQuery.client.graphql';
-import AdminBlogsView from '../components/AdminBlogsView';
-import { withModels } from './ModelOperations';
+import BLOG_SUBSCRIPTION from "../graphql/BlogsSubscription.graphql";
+import BLOG_QUERY from "../graphql/BlogsQuery.graphql";
+import DELETE_BLOG from "../graphql/DeleteBlog.graphql";
+import UPDATE_FILTER from "../graphql/UpdateBlogFilter.client.graphql";
+import BLOG_STATE_QUERY from "../graphql/BlogStateQuery.client.graphql";
+import AdminBlogsView from "../components/AdminBlogsView";
+import { withModels } from "./ModelOperations";
+import settings from "@gqlapp/config";
+
+const limit =
+  PLATFORM === "web" || PLATFORM === "server"
+    ? settings.pagination.web.itemsNumber
+    : settings.pagination.mobile.itemsNumber;
 
 class AdminBlogs extends React.Component {
   componentDidMount() {
@@ -28,23 +34,28 @@ class AdminBlogs extends React.Component {
 
 AdminBlogs.propTypes = {
   subscribeToMore: PropTypes.func,
-  filter: PropTypes.object
+  filter: PropTypes.object,
 };
 
 const onAddBlog = (prev, node) => {
   // ignore if duplicate
-  if (prev.blogs.some(item => node.id === item.id)) {
+  if (prev.blogs.edges.some((item) => node.id === item.id)) {
     return prev;
   }
   return update(prev, {
     blogs: {
-      $set: [...prev.blogs, node]
-    }
+      totalCount: {
+        $set: prev.posts.totalCount + 1,
+      },
+      edges: {
+        $set: [node, ...prev.blogs],
+      },
+    },
   });
 };
 
 const onDelete = (prev, id) => {
-  const index = prev.blogs.findIndex(item => item.id === id);
+  const index = prev.blogs.edges.findIndex((item) => item.id === id);
 
   // ignore if not found
   if (index < 0) {
@@ -53,8 +64,13 @@ const onDelete = (prev, id) => {
 
   return update(prev, {
     blogs: {
-      $splice: [[index, 1]]
-    }
+      totalCount: {
+        $set: prev.blogs.totalCount - 1,
+      },
+      edges: {
+        $splice: [[index, 1]],
+      },
+    },
   });
 };
 
@@ -67,22 +83,22 @@ const subscribeToBlogs = (subscribeToMore, filter) =>
       {
         subscriptionData: {
           data: {
-            blogsUpdated: { mutation, node }
-          }
-        }
+            blogsUpdated: { mutation, node },
+          },
+        },
       }
     ) => {
       let newResult = prev;
-      if (mutation === 'CREATED') {
+      if (mutation === "CREATED") {
         newResult = onAddBlog(prev, node);
-      } else if (mutation === 'UPDATED') {
+      } else if (mutation === "UPDATED") {
         newResult = onDelete(prev, node.id);
         return () => newResult();
-      } else if (mutation === 'DELETED') {
+      } else if (mutation === "DELETED") {
         newResult = onDelete(prev, node.id);
       }
       return newResult;
-    }
+    },
   });
 
 export default compose(
@@ -90,7 +106,7 @@ export default compose(
   graphql(BLOG_STATE_QUERY, {
     props({ data: { blogState } }) {
       return removeTypename(blogState);
-    }
+    },
   }),
   graphql(UPDATE_FILTER, {
     props: ({ mutate }) => ({
@@ -102,47 +118,82 @@ export default compose(
       },
       onStatusChange(status) {
         mutate({ variables: { filter: { status } } });
-      }
-    })
+      },
+    }),
   }),
   graphql(BLOG_QUERY, {
     options: ({ filter }) => {
       return {
-        fetchPolicy: 'network-only',
-        variables: { filter }
+        fetchPolicy: "network-only",
+        variables: { limit, after: 0, filter },
       };
     },
-    props({ data: { loading, blogs, refetch, error, updateQuery, subscribeToMore } }) {
+    props({ data }) {
+      const {
+        loading,
+        error,
+        blogs,
+        fetchMore,
+        updateQuery,
+        subscribeToMore,
+        refetch,
+      } = data;
+      const allBlogs = blogs;
+      const loadData = (after, dataDelivery) => {
+        return fetchMore({
+          variables: { after },
+
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const totalCount = fetchMoreResult.blogs.totalCount;
+            const newEdges = fetchMoreResult.blogs.edges;
+            const pageInfo = fetchMoreResult.blogs.pageInfo;
+            const displayedEdges =
+              dataDelivery === "add"
+                ? [...previousResult.blogs.edges, ...newEdges]
+                : newEdges;
+
+            return {
+              blogs: {
+                totalCount,
+                edges: displayedEdges,
+                pageInfo,
+                __typename: "Blogs",
+              },
+            };
+          },
+        });
+      };
       return {
         blogLoading: loading,
-        blogs,
+        blogs: allBlogs,
+        loadData,
         refetch,
         subscribeToMore,
         updateQuery,
-        errors: error ? error.graphQLErrors : null
+        errors: error ? error.graphQLErrors : null,
       };
-    }
+    },
   }),
   graphql(DELETE_BLOG, {
     props: ({ mutate }) => ({
-      deleteBlog: async id => {
-        message.loading('Please wait...', 0);
+      deleteBlog: async (id) => {
+        message.loading("Please wait...", 0);
         try {
           const {
-            data: { deleteBlog }
+            data: { deleteBlog },
           } = await mutate({ variables: { id } });
 
           if (deleteBlog.errors) {
             return { errors: deleteBlog.errors };
           }
           message.destroy();
-          message.success('Success!');
+          message.success("Success!");
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
         }
-      }
-    })
+      },
+    }),
   })
-)(translate('blog')(AdminBlogs));
+)(translate("blog")(AdminBlogs));

@@ -23,12 +23,36 @@ interface AddBlog {
 
 interface BlogFilter {
   filter: FilterInput;
+  limit: number;
+  after: number;
 }
 
 export default (pubsub: PubSub) => ({
   Query: {
-    async blogs(obj: any, { filter }: BlogFilter, context: any) {
-      return context.Blog.blogs(filter);
+    async blogs(obj: any, { filter, limit, after }: BlogFilter, context: any) {
+      const BlogOutput = await context.Blog.blogs(filter, limit, after);
+      const { blogs, total } = BlogOutput;
+
+      const hasNextPage = total > after + limit;
+
+      const edgesArray: any = [];
+      blogs.map((item: any, i: number) => {
+        edgesArray.push({
+          cursor: after + i,
+          node: item
+        });
+      });
+
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     },
     async userBlogs(obj: any, { id }: Identifier, { Blog, req: { identity } }: any) {
       return Blog.userBlogs(id || identity.id);

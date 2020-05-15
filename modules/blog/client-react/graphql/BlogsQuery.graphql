@@ -1,7 +1,17 @@
 #import "./Blogs.graphql"
 
-query blogs($filter: FilterBlogInput) {
-  blogs(filter: $filter) {
-    ...BlogsInfo
+query blogs($limit: Int!, $after: Int, $filter: FilterBlogInput) {
+  blogs(limit: $limit, after: $after, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...BlogsInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
