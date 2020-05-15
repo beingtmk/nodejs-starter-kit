@@ -104,7 +104,7 @@ input TagInput {
 
 extend type Subscription {
   modelUpdated: UpdateModelPayload
-  blogsUpdated(filter: FilterBlogInput): UpdateBlogsPayload
+  blogsUpdated(endCursor: Int!, filter: FilterBlogInput): UpdateBlogsPayload
   # subscriptionName: TypeName
 }
 

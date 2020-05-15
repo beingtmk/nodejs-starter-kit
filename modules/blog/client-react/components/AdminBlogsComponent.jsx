@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Table, Loading } from "@gqlapp/look-client-react";
 import { Popconfirm, Button, message, Tooltip, Spin, Divider } from "antd";
-import settings from "@gqlapp/config";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 class AdminBlogsComponent extends React.Component {

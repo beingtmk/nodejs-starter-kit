@@ -21,11 +21,66 @@ const limit =
     : settings.pagination.mobile.itemsNumber;
 
 class AdminBlogs extends React.Component {
-  componentDidMount() {
-    const { subscribeToMore, filter } = this.props;
-    const subscribe = subscribeToBlogs(subscribeToMore, filter);
-    return () => subscribe();
+  constructor(props) {
+    super(props);
+    this.subscription = null;
   }
+
+  componentDidUpdate(prevProps) {
+    if (!this.props.blogLoading) {
+      const endCursor = this.props.blogs
+        ? this.props.blogs.pageInfo.endCursor
+        : 0;
+      const prevEndCursor = prevProps.blogs
+        ? prevProps.blogs.pageInfo.endCursor
+        : null;
+      // Check if props have changed and, if necessary, stop the subscription
+      if (this.subscription && prevEndCursor !== endCursor) {
+        this.subscription();
+        this.subscription = null;
+      }
+      if (!this.subscription) {
+        this.subscribeToBlogs(endCursor);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.subscription) {
+      // unsubscribe
+      this.subscription();
+      this.subscription = null;
+    }
+  }
+
+  subscribeToBlogs = (endCursor) => {
+    const { subscribeToMore, filter } = this.props;
+    subscribeToMore({
+      document: BLOG_SUBSCRIPTION,
+      variables: { endCursor, filter },
+      updateQuery: (
+        prev,
+        {
+          subscriptionData: {
+            data: {
+              blogsUpdated: { mutation, node },
+            },
+          },
+        }
+      ) => {
+        let newResult = prev;
+        if (mutation === "CREATED") {
+          newResult = onAddBlog(prev, node);
+        } else if (mutation === "UPDATED") {
+          newResult = onDelete(prev, node.id);
+          return () => newResult();
+        } else if (mutation === "DELETED") {
+          newResult = onDelete(prev, node.id);
+        }
+        return newResult;
+      },
+    });
+  };
 
   render() {
     return <AdminBlogsView {...this.props} />;
@@ -39,23 +94,43 @@ AdminBlogs.propTypes = {
 
 const onAddBlog = (prev, node) => {
   // ignore if duplicate
-  if (prev.blogs.edges.some((item) => node.id === item.id)) {
-    return prev;
+  if (prev.blogs.edges.some((post) => node.id === post.cursor)) {
+    return update(prev, {
+      blogs: {
+        totalCount: {
+          $set: prev.blogs.totalCount - 1,
+        },
+        edges: {
+          $set: prev.blogs.edges,
+        },
+      },
+    });
   }
+
+  const filteredPosts = prev.blogs.edges.filter(
+    (post) => post.node.id !== null
+  );
+
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: "BlogEdges",
+  };
+
   return update(prev, {
     blogs: {
       totalCount: {
-        $set: prev.posts.totalCount + 1,
+        $set: prev.blogs.totalCount + 1,
       },
       edges: {
-        $set: [node, ...prev.blogs],
+        $set: [edge, ...filteredPosts],
       },
     },
   });
 };
 
 const onDelete = (prev, id) => {
-  const index = prev.blogs.edges.findIndex((item) => item.id === id);
+  const index = prev.blogs.edges.findIndex((item) => item.node.id === id);
 
   // ignore if not found
   if (index < 0) {
@@ -73,33 +148,6 @@ const onDelete = (prev, id) => {
     },
   });
 };
-
-const subscribeToBlogs = (subscribeToMore, filter) =>
-  subscribeToMore({
-    document: BLOG_SUBSCRIPTION,
-    variables: { filter },
-    updateQuery: (
-      prev,
-      {
-        subscriptionData: {
-          data: {
-            blogsUpdated: { mutation, node },
-          },
-        },
-      }
-    ) => {
-      let newResult = prev;
-      if (mutation === "CREATED") {
-        newResult = onAddBlog(prev, node);
-      } else if (mutation === "UPDATED") {
-        newResult = onDelete(prev, node.id);
-        return () => newResult();
-      } else if (mutation === "DELETED") {
-        newResult = onDelete(prev, node.id);
-      }
-      return newResult;
-    },
-  });
 
 export default compose(
   withModels,

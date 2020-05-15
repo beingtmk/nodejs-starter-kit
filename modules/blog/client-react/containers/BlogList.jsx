@@ -91,7 +91,7 @@ export default compose(
       };
       return {
         blogLoading: loading,
-        allBlogs,
+        blogs: allBlogs,
         loadData,
         refetch,
         subscribeToMore,

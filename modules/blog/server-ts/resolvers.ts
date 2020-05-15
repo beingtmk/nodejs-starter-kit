@@ -44,7 +44,7 @@ export default (pubsub: PubSub) => ({
       });
 
       const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
-      
+
       return {
         totalCount: total,
         edges: edgesArray,
@@ -179,6 +179,7 @@ export default (pubsub: PubSub) => ({
         (payload, variables) => {
           const { mutation, node } = payload.blogsUpdated;
           const {
+            endCursor,
             filter: { searchText, model, status }
           } = variables;
           const checkByFilter =
@@ -191,9 +192,9 @@ export default (pubsub: PubSub) => ({
 
           switch (mutation) {
             case 'UPDATED':
-              return !checkByFilter;
+              return !checkByFilter && endCursor <= node.id;
             default:
-              return;
+              return endCursor <= node.id;
           }
         }
       )
