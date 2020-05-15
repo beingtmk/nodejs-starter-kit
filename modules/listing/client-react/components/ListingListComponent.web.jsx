@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popconfirm, Icon, message, Dropdown, Menu, Tooltip, Spin } from 'antd';
+import { Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button, Pagination } from '@gqlapp/look-client-react';
@@ -73,7 +73,12 @@ const ListingListComponent = props => {
       ),
       dataIndex: 'owner',
       key: 'owner',
-      render: (text, record) => <>{record && record.user && record.user.username}</>
+      render: (text, record) => (
+        <Link to={`/public-profile/${record && record.userId}`}>
+          {console.log('record', record)}
+          {record && record.user && record.user.username}
+        </Link>
+      )
     },
     {
       title: (
@@ -158,6 +163,7 @@ const ListingListComponent = props => {
 
 ListingListComponent.propTypes = {
   loading: PropTypes.bool.isRequired,
+  loadData: PropTypes.bool,
   listings: PropTypes.object,
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
