@@ -3,7 +3,8 @@ import React from 'react';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
-
+import { CookiesProvider } from 'react-cookie';
+import resolvers from './resolvers';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
@@ -124,5 +125,7 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
   localization: [{ ns: 'blog', resources }]
 });

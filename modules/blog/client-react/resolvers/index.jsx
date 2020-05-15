@@ -1,60 +1,37 @@
 import update from 'immutability-helper';
 
-import LIVESEARCH_STATE_QUERY from '../graphql/ModelsStateQuery.client.graphql';
+import BLOG_STATE_QUERY from '../graphql/BlogStateQuery.client.graphql';
 
-const TYPE_SEARCH_STATE = 'ModelsState';
-const TYPE_SEARCH_STATE_FILTER = 'FilterSearchInput';
-const TYPE_SEARCH_STATE_ORDER_BY = 'OrderBySearchInput';
+const TYPE_BLOG_STATE = 'BlogState';
+const TYPE_BLOG_STATE_FILTER = 'FilterBlogInput';
 
 const defaults = {
-  modelState: {
-    orderBy: {
-      column: '',
-      order: '',
-      __typename: TYPE_SEARCH_STATE_ORDER_BY
-    },
+  blogState: {
     filter: {
       searchText: '',
-      gearCategory: '',
-      __typename: TYPE_SEARCH_STATE_FILTER
+      model: '',
+      status: '',
+      __typename: TYPE_BLOG_STATE_FILTER
     },
-    __typename: TYPE_SEARCH_STATE
+    __typename: TYPE_BLOG_STATE
   }
 };
 
 const resolvers = {
   Mutation: {
-    updateOrderBy: (_, { orderBy }, { cache }) => {
-      const { modelState } = cache.readQuery({
-        query: LIVESEARCH_STATE_QUERY
+    updateBlogFilter: (_, { filter }, { cache }) => {
+      const { blogState } = cache.readQuery({
+        query: BLOG_STATE_QUERY
       });
 
-      const newModelsState = update(modelState, {
-        orderBy: { $merge: orderBy }
-      });
-
-      cache.writeData({
-        data: {
-          modelState: newModelsState,
-          __type: TYPE_SEARCH_STATE
-        }
-      });
-
-      return null;
-    },
-    updateFilter: (_, { filter }, { cache }) => {
-      const { modelState } = cache.readQuery({
-        query: LIVESEARCH_STATE_QUERY
-      });
-
-      const newModelsState = update(modelState, {
+      const newBlogsState = update(blogState, {
         filter: { $merge: filter }
       });
 
       cache.writeData({
         data: {
-          modelState: newModelsState,
-          __type: TYPE_SEARCH_STATE
+          blogState: newBlogsState,
+          __type: TYPE_BLOG_STATE
         }
       });
 

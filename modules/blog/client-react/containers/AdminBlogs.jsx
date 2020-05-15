@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { compose } from '@gqlapp/core-common';
+import { compose, removeTypename } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 import update from 'immutability-helper';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -9,21 +9,26 @@ import { message } from 'antd';
 import BLOG_SUBSCRIPTION from '../graphql/BlogsSubscription.graphql';
 import BLOG_QUERY from '../graphql/BlogsQuery.graphql';
 import DELETE_BLOG from '../graphql/DeleteBlog.graphql';
-
+import UPDATE_FILTER from '../graphql/UpdateBlogFilter.client.graphql';
+import BLOG_STATE_QUERY from '../graphql/BlogStateQuery.client.graphql';
 import AdminBlogsView from '../components/AdminBlogsView';
+import { withModels } from './ModelOperations';
 
-const AdminBlogs = props => {
-  const { subscribeToMore } = props;
-  useEffect(() => {
-    const subscribe = subscribeToBlogs(subscribeToMore);
+class AdminBlogs extends React.Component {
+  componentDidMount() {
+    const { subscribeToMore, filter } = this.props;
+    const subscribe = subscribeToBlogs(subscribeToMore, filter);
     return () => subscribe();
-  });
-  return <AdminBlogsView {...props} />;
-};
+  }
+
+  render() {
+    return <AdminBlogsView {...this.props} />;
+  }
+}
 
 AdminBlogs.propTypes = {
-  subscribeToMore: PropTypes.func
-  // filter: PropTypes.object
+  subscribeToMore: PropTypes.func,
+  filter: PropTypes.object
 };
 
 const onAddBlog = (prev, node) => {
@@ -53,9 +58,10 @@ const onDelete = (prev, id) => {
   });
 };
 
-const subscribeToBlogs = subscribeToMore =>
+const subscribeToBlogs = (subscribeToMore, filter) =>
   subscribeToMore({
     document: BLOG_SUBSCRIPTION,
+    variables: { filter },
     updateQuery: (
       prev,
       {
@@ -80,16 +86,35 @@ const subscribeToBlogs = subscribeToMore =>
   });
 
 export default compose(
+  withModels,
+  graphql(BLOG_STATE_QUERY, {
+    props({ data: { blogState } }) {
+      return removeTypename(blogState);
+    }
+  }),
+  graphql(UPDATE_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onModelChange(model) {
+        mutate({ variables: { filter: { model } } });
+      },
+      onStatusChange(status) {
+        mutate({ variables: { filter: { status } } });
+      }
+    })
+  }),
   graphql(BLOG_QUERY, {
-    // options: ({ orderBy, filter }) => {
-    //   return {
-    //     fetchPolicy: 'network-only',
-    //     variables: { orderBy, filter }
-    //   };
-    // },
+    options: ({ filter }) => {
+      return {
+        fetchPolicy: 'network-only',
+        variables: { filter }
+      };
+    },
     props({ data: { loading, blogs, refetch, error, updateQuery, subscribeToMore } }) {
       return {
-        loading,
+        blogLoading: loading,
         blogs,
         refetch,
         subscribeToMore,

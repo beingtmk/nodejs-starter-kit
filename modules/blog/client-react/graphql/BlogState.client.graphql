@@ -1,0 +1,7 @@
+fragment BlogStateInfo on BlogState {
+  filter {
+    searchText
+    model
+    status
+  }
+}

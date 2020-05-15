@@ -1,0 +1,7 @@
+#import "./BlogState.client.graphql"
+
+query blogState {
+  blogState @client {
+    ...BlogStateInfo
+  }
+}

@@ -1,7 +1,7 @@
 #import "./Blogs.graphql"
 
-query blogs {
-  blogs {
+query blogs($filter: FilterBlogInput) {
+  blogs(filter: $filter) {
     ...BlogsInfo
   }
 }
