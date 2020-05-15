@@ -81,7 +81,6 @@
         "hedron": "^1.0.0-beta.12",
         "history": "^4.7.2",
         "i18next": "^11.2.3",
-        "react-infinite-scroll-component": "^5.0.4",
         "immutability-helper": "^2.6.2",
         "jwt-decode": "^2.2.0",
         "lodash": "^4.17.4",
@@ -105,6 +104,7 @@
         "react-ga": "^2.3.5",
         "react-helmet": "^5.2.1",
         "react-i18next": "^10.12.2",
+        "react-infinite-scroll-component": "^5.0.4",
         "react-redux": "^7.1.0",
         "react-router": "^5.0.0",
         "react-router-dom": "^5.0.0",
@@ -119,7 +119,8 @@
         "subscriptions-transport-ws": "^0.9.16",
         "use-react-router": "^1.0.7"
     ,
-    "@gqlapp/listing-client-react": "^1.0.0"},
+    "@gqlapp/listing-client-react": "^1.0.0",
+    "@gqlapp/order-client-react": "^1.0.0"},
   "devDependencies": {
         "@storybook/addon-actions": "^5.1.8",
         "@storybook/addon-links": "^5.1.8",
