@@ -25,9 +25,15 @@ type Model {
 extend type Query {
   models: [Model]
   model(id: Int!): Model
-  blogs: [Blog]
+  blogs(filter: FilterBlogInput): [Blog]
   blog(id: Int!): Blog
   userBlogs(id: Int): [Blog]
+}
+
+input FilterBlogInput {
+  searchText: String
+  model: String
+  status: String
 }
 
 extend type Mutation {
@@ -82,7 +88,7 @@ input TagInput {
 
 extend type Subscription {
   modelUpdated: UpdateModelPayload
-  blogsUpdated: UpdateBlogsPayload
+  blogsUpdated(filter: FilterBlogInput): UpdateBlogsPayload
   # subscriptionName: TypeName
 }
 

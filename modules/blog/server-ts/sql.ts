@@ -13,7 +13,7 @@ import {
   //  orderedFor
 } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
-// import { has } from 'lodash';
+import { has } from 'lodash';
 
 import { BlogTag } from '@gqlapp/tag-server-ts/sql';
 
@@ -30,6 +30,11 @@ export interface BlogInput {
   tags: TagInput[];
 }
 
+export interface FilterInput {
+  searchText: string;
+  model: string;
+  status: string;
+}
 export interface ModelInput {
   name: string;
   image: string;
@@ -87,12 +92,46 @@ export default class Blog extends Model {
     };
   }
 
-  public async blogs() {
-    return camelizeKeys(
-      await Blog.query()
-        .eager(eager)
-        .orderBy('id', 'desc')
-    );
+  public async blogs(filter: FilterInput) {
+    const queryBuilder = Blog.query()
+      .eager(eager)
+      .orderBy('id', 'desc');
+
+    if (filter) {
+      if (has(filter, 'status') && filter.status !== null && filter.status !== '') {
+        queryBuilder.from('blog').where(function() {
+          this.where('blog.status', filter.status);
+        });
+      }
+
+      if (has(filter, 'model') && filter.model !== null && filter.model.length !== 0) {
+        queryBuilder
+          .from('blog')
+          .leftJoin('model', 'model.id', 'blog.model_id')
+          .where(function() {
+            this.where('model.name', filter.model);
+          });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder
+          .from('blog')
+          .leftJoin('user as u', 'u.id', 'blog.author_id')
+          .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+          .leftJoin('blog_tag as t', 't.blog_id', 'blog.id')
+          .where(function() {
+            this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['t.text', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.email', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
+          });
+      }
+    }
+
+    return camelizeKeys(await queryBuilder);
   }
 
   public async userBlogs(id: number) {

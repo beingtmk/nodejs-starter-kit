@@ -1,6 +1,6 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
-import { ModelInput, BlogInput, Identifier } from './sql';
+import { ModelInput, BlogInput, Identifier, FilterInput } from './sql';
 
 const MODEL_SUBSCRIPTION = 'model_subscription';
 const BLOGS_SUBSCRIPTION = 'blogs_subscription';
@@ -21,10 +21,14 @@ interface AddBlog {
   input: BlogInput;
 }
 
+interface BlogFilter {
+  filter: FilterInput;
+}
+
 export default (pubsub: PubSub) => ({
   Query: {
-    async blogs(obj: any, args: any, context: any) {
-      return context.Blog.blogs();
+    async blogs(obj: any, { filter }: BlogFilter, context: any) {
+      return context.Blog.blogs(filter);
     },
     async userBlogs(obj: any, { id }: Identifier, { Blog, req: { identity } }: any) {
       return Blog.userBlogs(id || identity.id);
@@ -149,7 +153,24 @@ export default (pubsub: PubSub) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(BLOGS_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.blogsUpdated.id === variables.id;
+          const { mutation, node } = payload.blogsUpdated;
+          const {
+            filter: { searchText, model, status }
+          } = variables;
+          const checkByFilter =
+            (!model || model === node.model.name) &&
+            (!status || status === node.status) &&
+            (!searchText ||
+              node.title.toUpperCase().includes(searchText.toUpperCase()) ||
+              node.description.toUpperCase().includes(searchText.toUpperCase()) ||
+              node.tags.some((item: any) => item.text.toUpperCase().includes(searchText.toUpperCase())));
+
+          switch (mutation) {
+            case 'UPDATED':
+              return !checkByFilter;
+            default:
+              return;
+          }
         }
       )
     }
