@@ -16,7 +16,7 @@ export async function seed(knex) {
   );
 
   await Promise.all(
-    [...Array(10).keys()].map(async i => {
+    [...Array(40).keys()].map(async i => {
       return returnId(knex('blog')).insert({
         title: `Blog ${i + 1}`,
         content:

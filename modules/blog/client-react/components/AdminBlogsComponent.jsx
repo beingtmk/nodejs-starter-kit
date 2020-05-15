@@ -1,59 +1,22 @@
 /* eslint-disable react/display-name */
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Table, Loading } from "@gqlapp/look-client-react";
-import { Popconfirm, Button, message, Tooltip } from "antd";
+import { Popconfirm, Button, message, Tooltip, Spin, Divider } from "antd";
 import settings from "@gqlapp/config";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const { itemsNumber, type } = settings.pagination.web;
-
 class AdminBlogsComponent extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: this.props.blogs,
-      loading: false,
-      hasMore: true,
-    };
-    this.fetchMoreData.bind(this);
-  }
-  componentDidMount = () => {
-    const { blogs } = !this.props.loading && this.props;
-    !this.props.loading &&
-      this.setState({
-        hasMore: blogs.pageInfo.hasNextPage,
-        loading: false,
-        data: blogs,
-      });
-  };
-
   fetchMoreData = async () => {
-    this.setState({ loading: true });
-    let { data } = this.state;
-    const hasMore = this.props.blogs.pageInfo.hasNextPage;
+    let hasMore = this.props.blogs.pageInfo.hasNextPage;
     const endCursor = this.props.blogs.pageInfo.endCursor;
-    const totalCount = this.props.blogs.totalCount;
-    console.log("called");
-    if (!hasMore) {
-      console.log("end reached");
-      this.setState({ hasMore: false });
-
-      return;
-    } else {
-      const newData = await this.props.loadData(endCursor + 1, "add");
-      this.setState({
-        data: newData,
-        loading: false,
-      });
-    }
+    if (!hasMore) return;
+    await this.props.loadData(endCursor + 1, "add");
   };
 
   render() {
-    const { loading, blogs, deleteBlog } = this.props;
-    console.log("BLOGS", blogs);
+    const { blogs, deleteBlog, blogLoading } = this.props;
 
     const cancel = () => {
       message.error("Task cancelled");
@@ -153,16 +116,16 @@ class AdminBlogsComponent extends React.Component {
 
     return (
       <>
-        {loading && !blogs ? (
+        {blogLoading && !blogs ? (
           <Loading text="Loading... " />
         ) : (
           <Fragment>
             <InfiniteScroll
               scrollThreshold={0.9}
               style={{ overflow: "none" }}
-              dataLength={this.state.data.totalCount}
+              dataLength={blogs.edges.length}
               next={this.fetchMoreData}
-              hasMore={this.state.hasMore}
+              hasMore={blogs.pageInfo.hasNextPage}
               loader={
                 <div align="center">
                   <Spin />
@@ -177,7 +140,7 @@ class AdminBlogsComponent extends React.Component {
               }
               children={
                 <Table
-                  dataSource={this.state.data.edges}
+                  dataSource={blogs.edges.map(({ node }) => node)}
                   columns={columns}
                 />
               }
@@ -190,8 +153,8 @@ class AdminBlogsComponent extends React.Component {
 }
 
 AdminBlogsComponent.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  blogs: PropTypes.array,
+  blogLoading: PropTypes.bool.isRequired,
+  blogs: PropTypes.object,
   deleteBlog: PropTypes.func,
 };
 
