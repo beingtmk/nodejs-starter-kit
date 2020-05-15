@@ -52,14 +52,15 @@ export default class OrderCardComponent extends React.Component {
           </h5>
         ) : null}
         <br />
-        <div align='right'>
-        {SubmitButton ? (
-          <SubmitButton />
-        ) : (
-          <Button type="primary" onClick={this.props.onSubmit} size='large'>
-            {this.props.buttonText}
-          </Button>
-        )}</div>
+        <div align="right">
+          {SubmitButton ? (
+            <SubmitButton />
+          ) : (
+            <Button type="primary" onClick={this.props.onSubmit} size="large">
+              {this.props.buttonText}
+            </Button>
+          )}
+        </div>
       </Card>
     );
   }

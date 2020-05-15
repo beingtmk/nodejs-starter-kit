@@ -1,23 +1,15 @@
 /* eslint-disable react/display-name */
 
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Card } from "antd";
-import { Link } from "react-router-dom";
-import { translate } from "@gqlapp/i18n-client-react";
-import { Table, Button, Avatar } from "@gqlapp/look-client-react";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Card } from 'antd';
+import { Link } from 'react-router-dom';
+import { translate } from '@gqlapp/i18n-client-react';
+import { Table, Button, Avatar } from '@gqlapp/look-client-react';
 
 const { Meta } = Card;
 
-const OrdersView = ({
-  deleteOrder,
-  orderBy,
-  onOrderBy,
-  loading,
-  orders,
-  t,
-  toggleFeatured,
-}) => {
+const OrdersView = ({ deleteOrder, orderBy, onOrderBy, loading, orders, t, toggleFeatured }) => {
   const [errors, setErrors] = useState([]);
 
   // const renderOrderByArrow = name => {
@@ -55,7 +47,7 @@ const OrdersView = ({
     } else if (firstName && !lastName) {
       return firstName;
     } else {
-      return "Name Not Available";
+      return 'Name Not Available';
     }
   };
 
@@ -69,55 +61,40 @@ const OrdersView = ({
         </a> */}
         </>
       ),
-      dataIndex: "id",
-      key: "id",
+      dataIndex: 'id',
+      key: 'id',
       render: (text, record) => (
         <>
           {record.id}
           {console.log(record.id)}
         </>
-      ),
+      )
     },
     {
       title: (
         <>
-          {"Name"}
+          {'Name'}
           {/* <a onClick={e => handleOrderBy(e, 'fullName')} href="#">
           {'Name'} {renderOrderByArrow('fullName')}
         </a> */}
         </>
       ),
-      dataIndex: "fullName",
-      key: "fullName",
+      dataIndex: 'fullName',
+      key: 'fullName',
       render: (text, record) => (
         <Link className="user-link" to={`/public-profile/${record.user && record.user.id}`}>
-          <Card
-            style={{ width: "fit-content", maxWidth: "300px" }}
-            bodyStyle={{ padding: "5px" }}
-          >
+          <Card style={{ width: 'fit-content', maxWidth: '300px' }} bodyStyle={{ padding: '5px' }}>
             <Meta
-              avatar={
-                <Avatar
-                  src={
-                    record.user &&
-                    record.user.profile &&
-                    record.user.profile.avatar
-                  }
-                />
-              }
+              avatar={<Avatar src={record.user && record.user.profile && record.user.profile.avatar} />}
               title={getName(
-                record.user &&
-                  record.user.profile &&
-                  record.user.profile.firstName,
-                record.user &&
-                  record.user.profile &&
-                  record.user.profile.lastName
+                record.user && record.user.profile && record.user.profile.firstName,
+                record.user && record.user.profile && record.user.profile.lastName
               )}
-              description={<h4 style={{marginTop:'-10px'}}>{record.user && record.user.username}</h4>}
+              description={<h4 style={{ marginTop: '-10px' }}>{record.user && record.user.username}</h4>}
             />
           </Card>
         </Link>
-      ),
+      )
     },
     // {
     //   title: (
@@ -175,37 +152,29 @@ const OrdersView = ({
     //   )
     // },
     {
-      title: "Actions",
-      key: "actions",
+      title: 'Actions',
+      key: 'actions',
       render: (text, record) => (
-        <Button
-          color="primary"
-          size="sm"
-          onClick={() => deleteOrder(record.id)}
-        >
-          {t("orders.btn.delete")}
+        <Button color="primary" size="sm" onClick={() => deleteOrder(record.id)}>
+          {t('orders.btn.delete')}
         </Button>
-      ),
-    },
+      )
+    }
   ];
   return (
     <>
       {loading && !orders ? (
-        <div className="text-center">{t("orders.loadMsg")}</div>
+        <div className="text-center">{t('orders.loadMsg')}</div>
       ) : (
         <>
           {errors &&
-            errors.map((error) => (
-              <div
-                className="alert alert-danger"
-                role="alert"
-                key={error.field}
-              >
+            errors.map(error => (
+              <div className="alert alert-danger" role="alert" key={error.field}>
                 {error.message}
               </div>
             ))}
           {/* for horizontal table responsive on smaller screens */}
-          <div style={{ overflowX: "auto" }}>
+          <div style={{ overflowX: 'auto' }}>
             <Table dataSource={orders} columns={columns} />
           </div>
         </>
@@ -220,7 +189,7 @@ OrdersView.propTypes = {
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
   deleteUser: PropTypes.func.isRequired,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
-export default translate("user")(OrdersView);
+export default translate('user')(OrdersView);
