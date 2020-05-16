@@ -68,7 +68,7 @@ export function TotalPrice(cartArray) {
   console.log('cart array', cartArray);
   cartArray &&
     cartArray.map((item, key) => {
-      totalCartPrice += item.price * item.quantity;
+      totalCartPrice += item.cost * item.quantity;
     });
   return totalCartPrice;
 }
@@ -202,7 +202,7 @@ export default class CheckoutCartView extends React.Component {
                               Price{' '}
                               <Rightfloat>
                                 &#8377;{' '}
-                                {item.price && item.price !== '0'
+                                {item.cost && item.cost !== '0'
                                   ? `${item.price} X ${item.quantity} = ${item.price * item.quantity}`
                                   : 'Free'}
                               </Rightfloat>

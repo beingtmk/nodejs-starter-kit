@@ -15,32 +15,25 @@ const ORDER = {
   orderDetails: [
     {
       id: 1,
-      thumbnail: {
-        id: 1,
-        imageUrl: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg'
-      },
+      thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
       title: 'Listing 1',
-      price: 322,
+      cost: 322,
       date: 'Wed May 20 2020',
       quantity: 4
     },
     {
       id: 2,
-      thumbnail: {
-        id: 1,
-        imageUrl: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg'
-      },
+      thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
       title: 'Listing 2',
-      price: 322,
+      cost: 322,
       date: 'Wed May 20 2020',
       quantity: 3
     }
   ]
   // , delivery: {
-  //   address
+
   // }
 };
-
 class CheckoutOrder extends React.Component {
   render() {
     console.log('props', this.props);

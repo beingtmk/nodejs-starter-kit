@@ -139,12 +139,12 @@ class CartItemComponent extends Component {
             align="center"
             style={{ maxHeight: '200px', overflow: 'hidden' }}
           >
-            <img alt="" src={item.thumbnail.imageUrl} width="100%" />
+            <img alt="" src={item.thumbnail} width="100%" />
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }} style={{ padding: '24px' }}>
             <h4>
               <strong>
-                <span>Amount</span> &#8377; {`${item.price} X ${item.quantity} = ${item.price * item.quantity}`}
+                <span>Amount</span> &#8377; {`${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`}
               </strong>
             </h4>{' '}
             <br />
