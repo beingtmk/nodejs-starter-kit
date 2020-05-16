@@ -105,7 +105,7 @@ const config = {
   mode: process.env.NODE_ENV || 'development',
   performance: { hints: false },
   plugins: (process.env.NODE_ENV !== 'production'
-    ? [new webpack.HotModuleReplacementPlugin(), new NodeHmrPlugin({ cmd: '{app}', restartOnExitCodes: [250] })]
+    ? [new webpack.HotModuleReplacementPlugin(), new NodeHmrPlugin({ cmd: '--inspect {app}', restartOnExitCodes: [250] })]
     : []
   ).concat([
     new CleanWebpackPlugin('build'),
