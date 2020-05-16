@@ -3,7 +3,8 @@ import React from 'react';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
-
+import { CookiesProvider } from 'react-cookie';
+import resolvers from './resolvers';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
@@ -32,12 +33,12 @@ const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunct
 ));
 const NavLinkBlogAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/admin-list" className="nav-link" activeClassName="active">
-    {'Blogs (Admin)'}
+    {'Blogs'}
   </NavLink>
 ));
 const NavLinkmodelAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/model-list" className="nav-link" activeClassName="active">
-    {'Models (Admin)'}
+    {'Models'}
   </NavLink>
 ));
 export default new ClientModule({
@@ -101,16 +102,6 @@ export default new ClientModule({
     <MenuItem key="/blog/list">
       <NavLinkBlogWithI18n />
     </MenuItem>,
-    <IfLoggedIn key="/blog/admin-list" role="admin">
-      <MenuItem>
-        <NavLinkBlogAdminWithI18n />
-      </MenuItem>
-    </IfLoggedIn>,
-    <IfLoggedIn key="/blog/model-list" role="admin">
-      <MenuItem>
-        <NavLinkmodelAdminWithI18n />
-      </MenuItem>
-    </IfLoggedIn>,
     <IfLoggedIn key="/blog/my-blogs">
       <MenuItem>
         <NavLinkMyBlogsWithI18n />
@@ -122,5 +113,19 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
+  navItemAdmin: [
+    <IfLoggedIn key="/blog/admin-list" role="admin">
+      <MenuItem>
+        <NavLinkBlogAdminWithI18n />
+      </MenuItem>
+    </IfLoggedIn>,
+    <IfLoggedIn key="/blog/model-list" role="admin">
+      <MenuItem>
+        <NavLinkmodelAdminWithI18n />
+      </MenuItem>
+    </IfLoggedIn>
+  ],
+  resolver: [resolvers],
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
   localization: [{ ns: 'blog', resources }]
 });

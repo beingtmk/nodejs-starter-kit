@@ -2,6 +2,6 @@
 
 mutation addContentComment($input: AddContentCommentInput!) {
   addContentComment(input: $input) {
-    ...CommentInfo
+    ...CommentsInfo
   }
 }

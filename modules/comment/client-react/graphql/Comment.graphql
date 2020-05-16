@@ -1,4 +1,4 @@
-fragment CommentInfo on ContentComment {
+fragment CommentsInfo on ContentComment {
   id
   content
   user {

@@ -1,0 +1,5 @@
+#import "./BlogState.client.graphql"
+
+mutation updateBlogFilter($filter: FilterBlogInput!) {
+  updateBlogFilter(filter: $filter) @client
+}

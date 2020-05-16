@@ -18,10 +18,42 @@ import Blog from '@gqlapp/blog-server-ts/sql';
 
 Model.knex(knex);
 
+export interface AddBlogCommentInput {
+  userId: number;
+  blogId: number;
+  referenceId: number;
+  content: string;
+}
+
+export interface ReferenceIdInput {
+  referenceId: number;
+}
+
+export interface BlogIdInput {
+  blogId: number;
+}
+
+export interface UIdInput {
+  userId: number;
+}
+
+export interface CommentIdInput {
+  commentId: number;
+}
+
+export interface EditBlogCommentInput {
+  blogId: number;
+  ref: string;
+  content: string;
+}
+
+export interface Identifier {
+  id: number;
+}
 // const eager = '[author.[profile], model]';
 const eager = '[user]';
 const blogEager = '[comment.[user]]';
-const replyEager = '[comment.[user]]';
+const replyEager = '[reference, comment.[user]]';
 
 export default class ContentComment extends Model {
   // private id: any;
@@ -120,22 +152,22 @@ export default class ContentComment extends Model {
     return res;
   }
 
-  public async addComment(input: any) {
+  public async addComment(input: AddBlogCommentInput) {
     const res = await ContentComment.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
-  public async addBlogComment(input: any) {
+  public async addBlogComment(input: CommentIdInput & BlogIdInput) {
     const res = await BlogComment.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
-  public async addReplyComment(input: any) {
+  public async addReplyComment(input: ReferenceIdInput & BlogIdInput) {
     const res = await ReplyComment.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
-  public async editComment(input: any) {
+  public async editComment(input: EditBlogCommentInput & Identifier) {
     const res = await ContentComment.query().upsertGraph(decamelizeKeys(input));
     return res.id;
   }

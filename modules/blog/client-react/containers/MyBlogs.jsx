@@ -73,6 +73,7 @@ const subscribeToBlogs = subscribeToMore =>
         newResult = onAddBlog(prev, node);
       } else if (mutation === 'UPDATED') {
         newResult = onDelete(prev, node.id);
+        return () => newResult();
       } else if (mutation === 'DELETED') {
         newResult = onDelete(prev, node.id);
       }

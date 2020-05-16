@@ -1,4 +1,5 @@
-import quiz from '@gqlapp/quiz-client-react';
+import group from '@gqlapp/group-client-react';
+import tag from '@gqlapp/tag-client-react';
 import geolocation from '@gqlapp/geolocation-client-react';
 import bookmark from '@gqlapp/bookmark-client-react';
 import like from '@gqlapp/like-client-react';
@@ -28,6 +29,8 @@ const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
   quiz,
+  group,
+  tag,
   geolocation,
   bookmark,
   like,

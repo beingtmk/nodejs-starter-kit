@@ -1,26 +1,35 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
+import { BlogIdInput, ReferenceIdInput, AddBlogCommentInput, EditBlogCommentInput, Identifier } from './sql';
 
 const C_REPLY_SUBSCRIPTION = 'reply_comment_subscription';
 const BLOG_C_SUBSCRIPTION = 'blog_comment_subscription';
+
+interface AddComment {
+  input: AddBlogCommentInput;
+}
+
+interface EditComment {
+  input: EditBlogCommentInput & Identifier;
+}
 
 export default (pubsub: PubSub) => ({
   Query: {
     async comments(obj: any, args: any, context: any) {
       return context.ContentComment.comments();
     },
-    async blogComments(obj: any, { blogId }: any, { ContentComment }: any) {
+    async blogComments(obj: any, { blogId }: BlogIdInput, { ContentComment }: any) {
       return ContentComment.blogComments(blogId);
     },
-    async comment(obj: any, { id }: any, context: any) {
+    async comment(obj: any, { id }: Identifier, context: any) {
       return context.ContentComment.comment(id);
     },
-    async commentReplies(obj: any, { referenceId }: any, context: any) {
+    async commentReplies(obj: any, { referenceId }: ReferenceIdInput, context: any) {
       return context.ContentComment.commentReplies(referenceId);
     }
   },
   Mutation: {
-    addContentComment: withAuth(async (obj: any, { input }: any, { auth, ContentComment }: any) => {
+    addContentComment: withAuth(async (obj: any, { input }: AddComment, { auth, ContentComment }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;
@@ -68,7 +77,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    editContentComment: withAuth(async (obj: any, { input }: any, { ContentComment }: any) => {
+    editContentComment: withAuth(async (obj: any, { input }: EditComment, { ContentComment }: any) => {
       try {
         const ref = input.ref;
         if (ref !== 'BLOG' && ref !== 'REPLY') {

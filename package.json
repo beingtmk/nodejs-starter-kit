@@ -183,9 +183,11 @@
         "lodash": "^4.17.11",
         "medium-draft": "^0.5.18",
         "objection": "^2.1.2",
-        "opencollective": "^1.0.3"
+        "opencollective": "^1.0.3",
+        "react-infinite-scroll-component": "^5.0.4"
     },
     "resolutions": {
+        "react": "16.9.0",
         "fbjs": "^1.0.0",
         "hard-source-webpack-plugin": "https://github.com/sysgears/hard-source-webpack-plugin",
         "kleur": "^3.0.3",

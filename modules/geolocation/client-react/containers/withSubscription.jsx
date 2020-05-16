@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Subscription } from "react-apollo";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Subscription } from 'react-apollo';
 
-import LOCATION_SUBSCRIPTION from "../graphql/LocationSubscription.graphql";
+import LOCATION_SUBSCRIPTION from '../graphql/LocationSubscription.graphql';
 
 export const useLocationWithSubscription = (subscribeToMore, filter) => {
   const [locationUpdated, setLocationUpdated] = useState(null);
@@ -21,27 +21,25 @@ export const useLocationWithSubscription = (subscribeToMore, filter) => {
         prev,
         {
           subscriptionData: {
-            data: { locationUpdated: newData },
-          },
+            data: { locationUpdated: newData }
+          }
         }
       ) => {
         setLocationUpdated(newData);
-      },
+      }
     });
   };
   return locationUpdated;
 };
 
-export default (Component) => {
-  const LocationWithSubscription = (props) => {
+export default Component => {
+  const LocationWithSubscription = props => {
     const { filter } = props;
     return (
       <Subscription subscription={LOCATION_SUBSCRIPTION} variables={{ filter }}>
         {({ data, loading }) => {
           if (!loading && data.locationUpdated) {
-            return (
-              <Component {...props} locationUpdated={data.locationUpdated} />
-            );
+            return <Component {...props} locationUpdated={data.locationUpdated} />;
           }
           return <Component {...props} />;
         }}
@@ -50,7 +48,7 @@ export default (Component) => {
   };
 
   LocationWithSubscription.propTypes = {
-    filter: PropTypes.object,
+    filter: PropTypes.object
   };
 
   return LocationWithSubscription;

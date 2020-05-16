@@ -1,7 +1,7 @@
 #import "./CompleteBlog.graphql"
 
-subscription onBlogssUpdated {
-  blogsUpdated {
+subscription onBlogssUpdated($endCursor: Int!, $filter: FilterBlogInput) {
+  blogsUpdated(endCursor: $endCursor, filter: $filter) {
     mutation
     node {
       ...CompleteBlogInfo

@@ -66,16 +66,10 @@ const ModelsFormWithFormik = withFormik({
     name: model && model.name,
     desc: model && model.desc
   }),
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit, model }
-    }
-  ) {
+  async handleSubmit(values, { setErrors, props: { onSubmit, model } }) {
     message.loading('Please wait...', 0);
     if (model) values['id'] = model.id;
-    onSubmit(values).catch(e => {
+    await onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);
       } else {

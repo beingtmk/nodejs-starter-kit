@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Col, Row } from '@gqlapp/look-client-react';
-import { Card, Avatar, Button } from 'antd';
+import { Card, Avatar } from 'antd';
 import { Name } from '../constants';
 
 const BlogRefCardComponent = ({ user, model }) => {
@@ -29,11 +29,11 @@ const BlogRefCardComponent = ({ user, model }) => {
           <h3>{model ? model.desc : user.desc}</h3>
         </Col>
         <br />
-        <Col xs={24} md={2} lg={3}>
+        {/* <Col xs={24} md={2} lg={3}>
           <Button type="primary" ghost>
             Follow
           </Button>
-        </Col>
+        </Col> */}
       </Row>
     </Card>
   );

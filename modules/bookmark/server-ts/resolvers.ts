@@ -1,17 +1,26 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
+import { UserBookmark, Identifier } from './sql';
 
 const BLOG_BOOK_SUBSCRIPTION = 'blogBookmark_subscription';
+
+interface UserBookmarkInput {
+  input: UserBookmark;
+}
+
+interface UserIdInput {
+  userId: number;
+}
 
 export default (pubsub: PubSub) => ({
   Query: {
     async blogBookmarks(obj: any, args: any, context: any) {
       return context.Bookmark.blogBookmarks();
     },
-    async blogBookmark(obj: any, { id }: any, context: any) {
+    async blogBookmark(obj: any, { id }: Identifier, context: any) {
       return context.Bookmark.blogBookmark(id);
     },
-    async userBlogBookmark(obj: any, { input }: any, { Bookmark, req: { identity } }: any) {
+    async userBlogBookmark(obj: any, { input }: UserBookmarkInput, { Bookmark, req: { identity } }: any) {
       if (!input.userId && (!identity || !identity.id)) {
         return null;
       }
@@ -19,7 +28,7 @@ export default (pubsub: PubSub) => ({
       const res = await Bookmark.userBlogBookmark(input);
       return res;
     },
-    userBlogBookmarks: withAuth(async (obj: any, { userId }: any, { Bookmark, req: { identity } }: any) => {
+    userBlogBookmarks: withAuth(async (obj: any, { userId }: UserIdInput, { Bookmark, req: { identity } }: any) => {
       if (!userId) {
         userId = identity.id;
       }
@@ -27,7 +36,7 @@ export default (pubsub: PubSub) => ({
     })
   },
   Mutation: {
-    addBlogBookmark: withAuth(async (obj: any, { input }: any, { auth, Bookmark }: any) => {
+    addBlogBookmark: withAuth(async (obj: any, { input }: UserBookmarkInput, { auth, Bookmark }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;
@@ -45,7 +54,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteBlogBookmarkWithId: withAuth(async (obj: any, { id }: any, { Bookmark }: any) => {
+    deleteBlogBookmarkWithId: withAuth(async (obj: any, { id }: Identifier, { Bookmark }: any) => {
       try {
         const item = await Bookmark.blogBookmark(id);
         await Bookmark.deleteBlogBookmarkWithId(id);
@@ -60,7 +69,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteBlogBookmark: withAuth(async (obj: any, { input }: any, { auth, Bookmark }: any) => {
+    deleteBlogBookmark: withAuth(async (obj: any, { input }: UserBookmarkInput, { auth, Bookmark }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;

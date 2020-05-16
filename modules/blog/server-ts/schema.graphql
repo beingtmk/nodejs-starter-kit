@@ -5,8 +5,10 @@ type Blog {
   model: Model!
   title: String!
   image: String
+  description: String
   content: String!
   status: String!
+  tags: [BlogTag]
   createdAt: String!
   updatedAt: String!
 }
@@ -23,9 +25,31 @@ type Model {
 extend type Query {
   models: [Model]
   model(id: Int!): Model
-  blogs: [Blog]
+  blogs(limit: Int, after: Int, filter: FilterBlogInput): BlogList
   blog(id: Int!): Blog
   userBlogs(id: Int): [Blog]
+}
+
+type BlogEdges {
+  node: Blog
+  cursor: Int
+}
+
+type BlogList {
+  totalCount: Int
+  edges: [BlogEdges]
+  pageInfo: BlogPageInfo
+}
+
+type BlogPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+input FilterBlogInput {
+  searchText: String
+  model: String
+  status: String
 }
 
 extend type Mutation {
@@ -55,9 +79,10 @@ input AddBlogInput {
   image: String
   content: String!
   status: String
+  description: String
   modelId: Int!
   authorId: Int
-  tags: [String]
+  tags: [TagInput]
 }
 
 input EditBlogInput {
@@ -65,15 +90,21 @@ input EditBlogInput {
   title: String
   image: String
   content: String
+  description: String
   status: String
   modelId: Int
   authorId: Int
-  tags: [String]
+  tags: [TagInput]
+}
+
+input TagInput {
+  id: Int
+  text: String!
 }
 
 extend type Subscription {
   modelUpdated: UpdateModelPayload
-  blogsUpdated: UpdateBlogsPayload
+  blogsUpdated(endCursor: Int!, filter: FilterBlogInput): UpdateBlogsPayload
   # subscriptionName: TypeName
 }
 

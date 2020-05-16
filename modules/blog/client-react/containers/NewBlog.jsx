@@ -7,6 +7,7 @@ import { message } from 'antd';
 import NewBlogView from '../components/NewBlogView';
 import { withModels } from './ModelOperations';
 import ADD_BLOG from '../graphql/AddBlog.graphql';
+import { removeTypename } from '../constants';
 
 class NewBlog extends React.Component {
   render() {
@@ -26,16 +27,17 @@ export default compose(
       addBlog: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
+        let input = removeTypename(values);
         try {
           let blogData = await mutate({
             variables: {
-              input: values
+              input
             },
             optimisticResponse: {
               __typename: 'Mutation',
               addBlog: {
                 __typename: 'Blog',
-                ...values
+                ...input
               }
             }
           });

@@ -2,10 +2,10 @@ import ServerModule from '@gqlapp/module-server-ts';
 
 import schema from './schema.graphql';
 import createResolvers from './resolvers';
-import Blog from './sql';
+import Blog, { ModelDAO } from './sql';
 
 export default new ServerModule({
   schema: [schema],
   createResolversFunc: [createResolvers],
-  createContextFunc: [() => ({ Blog: new Blog() })]
+  createContextFunc: [() => ({ Blog: new Blog(), Model: new ModelDAO() })]
 });

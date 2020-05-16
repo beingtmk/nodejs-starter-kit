@@ -8,6 +8,7 @@ import EditBlogView from '../components/EditBlogView';
 import { withModels } from './ModelOperations';
 import EDIT_BLOG from '../graphql/EditBlog.graphql';
 import BLOG_QUERY from '../graphql/EditBLogQuery.graphql';
+import { removeTypename } from '../constants';
 
 class EditBlog extends React.Component {
   render() {
@@ -48,16 +49,17 @@ export default compose(
       editBlog: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
+        let input = removeTypename(values);
         try {
           let blogData = await mutate({
             variables: {
-              input: values
+              input
             },
             optimisticResponse: {
               __typename: 'Mutation',
               editBlog: {
                 __typename: 'Blog',
-                ...values
+                ...input
               }
             }
           });

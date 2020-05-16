@@ -1,5 +1,14 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
+import { TypeLike, UserLike, Identifier } from './sql';
+
+interface TypeLikeInput {
+  input: TypeLike;
+}
+
+interface UserLikeInput {
+  input: UserLike;
+}
 
 const LIKE_SUBSCRIPTION = 'like_subscription';
 
@@ -8,18 +17,18 @@ export default (pubsub: PubSub) => ({
     async likes(obj: any, args: any, context: any) {
       return context.Like.likes();
     },
-    async typeLikes(obj: any, { input }: any, { Like }: any) {
+    async typeLikes(obj: any, { input }: TypeLikeInput, { Like }: any) {
       return Like.conditionLikes(input);
     },
-    async like(obj: any, { id }: any, context: any) {
+    async like(obj: any, { id }: Identifier, context: any) {
       return context.Like.like(id);
     },
-    async userLike(obj: any, { input }: any, context: any) {
+    async userLike(obj: any, { input }: UserLikeInput, context: any) {
       return context.Like.conditionLikes(input)[0];
     }
   },
   Mutation: {
-    addLike: withAuth(async (obj: any, { input }: any, { auth, Like }: any) => {
+    addLike: withAuth(async (obj: any, { input }: UserLikeInput, { auth, Like }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;
@@ -37,7 +46,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteLike: withAuth(async (obj: any, { id }: any, { Like }: any) => {
+    deleteLike: withAuth(async (obj: any, { id }: Identifier, { Like }: any) => {
       try {
         const item = await Like.like(id);
         await Like.deleteLike(id);
@@ -52,7 +61,7 @@ export default (pubsub: PubSub) => ({
         return e;
       }
     }),
-    deleteLikeUser: withAuth(async (obj: any, { input }: any, { auth, Like }: any) => {
+    deleteLikeUser: withAuth(async (obj: any, { input }: UserLikeInput, { auth, Like }: any) => {
       try {
         if (!input.userId) {
           input.userId = auth.isAuthenticated.id;

@@ -4,7 +4,7 @@ query commentReplies($referenceId: Int!) {
   commentReplies(referenceId: $referenceId) {
     id
     comment {
-      ...CommentInfo
+      ...CommentsInfo
     }
   }
 }

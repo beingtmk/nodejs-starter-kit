@@ -139,7 +139,9 @@
     ,
     "@gqlapp/bookmark-server-ts": "^1.0.0",
     "@gqlapp/geolocation-server-ts": "^1.0.0",
-    "@gqlapp/like-server-ts": "^1.0.0"},
+    "@gqlapp/group-server-ts": "^1.0.0",
+    "@gqlapp/like-server-ts": "^1.0.0",
+    "@gqlapp/tag-server-ts": "^1.0.0"},
   "devDependencies": {
         "@types/chai": "^4.1.4",
         "@types/chai-http": "^3.0.5",
@@ -180,6 +182,7 @@
         "eslint": "*"
     },
     "resolutions": {
+        "react": "16.9.0",
         "graphql-resolve-batch/graphql": "14.1.1"
     }
 }

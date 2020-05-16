@@ -3,6 +3,7 @@ fragment CompleteBlogInfo on Blog {
   title
   content
   image
+  description
   status
   createdAt
   updatedAt
@@ -11,6 +12,10 @@ fragment CompleteBlogInfo on Blog {
     name
     image
     desc
+  }
+  tags {
+    id
+    text
   }
   author {
     id

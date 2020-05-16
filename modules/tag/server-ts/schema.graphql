@@ -1,0 +1,18 @@
+# Entity
+type BlogTag {
+  id: Int!
+  text: String!
+  blog: Blog!
+  createdAt: String!
+  updatedAt: String!
+}
+
+extend type Query {
+  blogTags(input: BlogTagInput): [BlogTag]
+  blogTagsText(input: String!): [BlogTag]
+}
+
+input BlogTagInput {
+  text: String
+  blogId: Int
+}

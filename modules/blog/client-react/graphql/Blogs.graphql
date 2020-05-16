@@ -3,12 +3,17 @@ fragment BlogsInfo on Blog {
   title
   content
   image
+  description
   status
   model {
     id
     name
     image
     desc
+  }
+  tags {
+    id
+    text
   }
   author {
     id

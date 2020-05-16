@@ -13,6 +13,7 @@ exports.up = function(knex) {
         table.string('title');
         table.string('image');
         table.string('content');
+        table.string('description');
         table
           .integer('author_id')
           .unsigned()

@@ -1,17 +1,18 @@
-import React from "react";
-import { Input, Button } from "antd";
-import { DebounceInput } from "react-debounce-input";
+import React from 'react';
+import { Input, Button } from 'antd';
+import { DebounceInput } from 'react-debounce-input';
+import PropTypes from 'prop-types';
 
 class CurrentLocationComponent extends React.Component {
   state = { distance: this.props.filter.distance };
-  handleChange = (distance) => {
+  handleChange = distance => {
     this.setState({ distance });
   };
   render() {
     const {
       currentLocation: { latitude, longitude },
       filter: { distance },
-      onDistanceChange,
+      onDistanceChange
     } = this.props;
     return (
       <div>
@@ -30,18 +31,22 @@ class CurrentLocationComponent extends React.Component {
         </p>
         <DebounceInput
           debounceTimeout={300}
-          placeholder={"Enter the distance below:"}
+          placeholder={'Enter the distance below:'}
           element={Input}
           type="number"
           value={distance}
-          onChange={(e) => this.handleChange(e.target.value)}
+          onChange={e => this.handleChange(e.target.value)}
         />
-        <Button onClick={() => onDistanceChange(Number(this.state.distance))}>
-          Submit
-        </Button>
+        <Button onClick={() => onDistanceChange(Number(this.state.distance))}>Submit</Button>
       </div>
     );
   }
 }
+
+CurrentLocationComponent.propTypes = {
+  filter: PropTypes.object,
+  currentLocation: PropTypes.object,
+  onDistanceChange: PropTypes.func
+};
 
 export default CurrentLocationComponent;

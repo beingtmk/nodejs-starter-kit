@@ -16,6 +16,21 @@ import { User } from '@gqlapp/user-server-ts/sql';
 
 Model.knex(knex);
 
+export interface UserLike {
+  type: string;
+  userId: number;
+  typeId: number;
+}
+
+export interface TypeLike {
+  type: string;
+  typeId: number;
+}
+
+export interface Identifier {
+  id: number;
+}
+
 const eager = '[user]';
 
 export default class Like extends Model {
@@ -59,7 +74,7 @@ export default class Like extends Model {
     return res;
   }
 
-  public async likeUsingUser(input: any) {
+  public async likeUsingUser(input: UserLike) {
     const res = camelizeKeys(
       await Like.query()
         .where(decamelizeKeys(input))
@@ -69,7 +84,7 @@ export default class Like extends Model {
     return res;
   }
 
-  public async conditionLikes(input: any) {
+  public async conditionLikes(input: UserLike) {
     return camelizeKeys(
       await Like.query()
         .where(decamelizeKeys(input))
@@ -78,7 +93,7 @@ export default class Like extends Model {
     );
   }
 
-  public async addLike(input: any) {
+  public async addLike(input: UserLike) {
     const res = await Like.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
@@ -89,7 +104,7 @@ export default class Like extends Model {
       .del();
   }
 
-  public async deleteLikeUser(input: any) {
+  public async deleteLikeUser(input: UserLike) {
     return knex('like')
       .where(decamelizeKeys(input))
       .del();

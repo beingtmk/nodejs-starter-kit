@@ -5,8 +5,11 @@ subscription onReplyCOmmentUpdated {
     mutation
     node {
       id
+      reference {
+        id
+      }
       comment {
-        ...CommentInfo
+        ...CommentsInfo
       }
     }
   }

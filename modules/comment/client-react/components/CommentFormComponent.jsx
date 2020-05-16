@@ -43,7 +43,7 @@ CommentFormComponent.propTypes = {
   values: PropTypes.object,
   currentUser: PropTypes.object,
   errors: PropTypes.object,
-  content: PropTypes.object,
+  content: PropTypes.string,
   title: PropTypes.string,
   modalVisible: PropTypes.bool,
   t: PropTypes.func
@@ -54,12 +54,7 @@ const CommentFormWithFormik = withFormik({
   mapPropsToValues: props => ({
     content: props.content
   }),
-  async handleSubmit(
-    values,
-    {
-      props: { onSubmit, setModalVisible, blogId, referenceId, comId, reference }
-    }
-  ) {
+  async handleSubmit(values, { props: { onSubmit, setModalVisible, blogId, referenceId, comId, reference } }) {
     message.loading('Please wait...', 0);
     if (comId) {
       values['id'] = comId;
