@@ -1,0 +1,242 @@
+import React from 'react';
+import Helmet from 'react-helmet';
+import styled from 'styled-components';
+import { PageLayout } from '@gqlapp/look-client-react';
+// import { TranslateFunction } from "@gqlapp/i18n-client-react";
+import { Link } from 'react-router-dom';
+import { Row, Col, Button, Card, Icon, Checkbox, Empty } from 'antd';
+// import AvailDiscount from '@gqlapp/discounts-client-react/containers/AvailDiscount';
+import settings from '../../../../settings';
+import CheckoutStepsComponent from './CheckoutStepsComponent';
+import CartItemComponent from './CartItemComponent';
+// import { TotalAmount, TotalRent, Refund } from '../helper/index';
+
+import { AGREEMENT } from '../constants/Undertaking';
+
+const CheckoutDiv = styled.div`
+  padding: 20px 8%;
+`;
+
+const font14 = styled.div`
+  font-size: 14px;
+`;
+
+const Margin20Col = styled(Col)`
+  margin: 20px 0;
+`;
+
+const Margin20Button = styled(Button)`
+  margin: 20px 0;
+`;
+
+const Margin20BoxShadowThemeCard = styled(Card)`
+  box-shadow: 0 0 8px 4px rgba(49, 196, 167, 0.05);
+`;
+
+const MarginV15 = styled(Col)`
+  margin: 15px 0 !important;
+`;
+
+const Font11h = styled.span`
+  font-size: 11.5px;
+`;
+
+const MarginB20btn = styled(Button)`
+  margin-bottom: 20px;
+`;
+
+const CartSumh2 = styled.h2`
+  text-shadow: 0.5px 0 0;
+  font-size: 19px;
+`;
+
+const Font12 = styled.div`
+  font-size: 12px;
+`;
+
+const Rightfloat = styled.div`
+  float: right;
+`;
+
+const ColorFloat = styled.strong`
+  float: right;
+  color: #3f0869;
+`;
+
+export function TotalPrice(cartArray) {
+  var totalCartPrice = 0;
+  console.log('cart array', cartArray);
+  cartArray &&
+    cartArray.map((item, key) => {
+      totalCartPrice += item.cost * item.quantity;
+    });
+  return totalCartPrice;
+}
+
+const renderMetaData = () => (
+  <Helmet
+    title={`${settings.app.name} - Cart`}
+    meta={[{ name: 'description', content: `${settings.app.name} - ${'meta'}` }]}
+  />
+);
+
+export default class CheckoutCartView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cart: !this.props.loading && this.props.order ? this.props.order : null,
+      loading: this.props.loading,
+      cartItem: null,
+      books: [],
+      randomVal: 2000,
+      checkout: false
+    };
+  }
+
+  // cartItemSelect(id) {
+  //   var cart = this.state.cart;
+  //   startDate = 'aaaaa';
+  //   endDate = 'bbbbb';
+  //   for (i in range(cart.orderDetails.length)) {
+  //     if (cart.orderDetails[i].id === id) {
+  //       cart.orderDetails[i].startDate = startDate;
+  //       cart.orderDetails[i].endDate = endDate;
+
+  //       this.setState({ cart: cart });
+  //     }
+  //   }
+  //   var i;
+  //   let item = this.props.state.products;
+  //   item.some(item => {
+  //     if (item.id === id) {
+  //       this.setState({
+  //         cartItem: item
+  //       });
+  //     }
+  //   });
+  //   this.props.setModal1Visible();
+  // }
+
+  // onChange(e) {
+  //   this.setState({
+  //     checkout: e.target.checked
+  //   });
+  // }
+
+  // getValue() {
+  //   let refundValue = 0;
+  //   this.props.state.products.map(k => {
+  //     refundValue = refundValue + k.refund;
+  //   });
+  //   return refundValue;
+  // }
+
+  render() {
+    const { history, navigation } = this.props;
+    const getCart = this.props.order;
+
+    const cartLength = getCart && getCart.length;
+
+    return (
+      <PageLayout>
+        {renderMetaData()}
+        {console.log('props', this.props)}
+        {// !this.props.loading &&
+        getCart.orderDetails.length > 0 ? (
+          <CheckoutDiv>
+            <Row>
+              <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
+                <CheckoutStepsComponent step={0} />
+              </Col>
+              <MarginV15 lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
+                <Col span={24}>
+                  <font14>
+                    <strong>My cart - </strong>
+                    {cartLength} items
+                  </font14>
+                  <h4>orderId - {getCart.id}</h4>
+                  <div>
+                    Total price: <strong>&#8377; {TotalPrice(getCart.orderDetails)} </strong>
+                  </div>
+                </Col>
+                <br />
+                <br />
+                <Row gutter={24}>
+                  <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                    {getCart.orderDetails.map(cartItem => (
+                      <CartItemComponent
+                        item={cartItem}
+                        // deleteProduct={this.props.deleteProduct}
+                      />
+                    ))}
+                  </Col>
+                  <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                    <Card>
+                      <MarginV15 span={24}>
+                        <Checkbox onChange={e => this.onChange(e)}>
+                          <Font11h>
+                            <b>{AGREEMENT}</b>
+                          </Font11h>
+                        </Checkbox>
+                      </MarginV15>
+                      {this.state.checkout ? (
+                        <Margin20Button onClick={this.props.onSubmit} type="primary" block>
+                          Checkout
+                        </Margin20Button>
+                      ) : (
+                        <Margin20Button type="primary" disabled block>
+                          Checkout
+                        </Margin20Button>
+                      )}
+                      <Link className="listing-link" to={`/events`} target="_blank">
+                        <MarginB20btn type="primary" ghost block>
+                          Add more products
+                        </MarginB20btn>
+                      </Link>
+                      <CartSumh2>Cart Summary</CartSumh2>
+                      <Font12>
+                        {getCart.orderDetails.map((item, key) => (
+                          <div key={key}>
+                            <strong>Item {key + 1}:</strong>
+                            <p>
+                              Price{' '}
+                              <Rightfloat>
+                                &#8377;{' '}
+                                {item.cost && item.cost !== '0'
+                                  ? `${item.price} X ${item.quantity} = ${item.price * item.quantity}`
+                                  : 'Free'}
+                              </Rightfloat>
+                              <br />
+                            </p>
+                          </div>
+                        ))}
+
+                        <h3>
+                          Total rent amount
+                          <ColorFloat>
+                            &#8377;
+                            {TotalPrice(getCart.orderDetails)}
+                          </ColorFloat>
+                        </h3>
+                      </Font12>
+                    </Card>
+                  </Col>
+                </Row>
+              </MarginV15>
+            </Row>
+          </CheckoutDiv>
+        ) : (
+          <div className="width100 centerAlign marginT30">
+            <Empty description="You have no items in your Cart">
+              <Link to="/events">
+                <Button style={{ width: 'fit-content' }} type="primary">
+                  Add some products
+                </Button>
+              </Link>
+            </Empty>
+          </div>
+        )}
+      </PageLayout>
+    );
+  }
+}
