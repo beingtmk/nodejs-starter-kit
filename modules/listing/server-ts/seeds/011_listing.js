@@ -16,7 +16,7 @@ exports.seed = async function(knex) {
         [...Array(3).keys()].map(async () => {
           return returnId(knex('listing_image')).insert({
             listing_id: listing[0],
-            image_url: `https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg`
+            image_url: `https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU`
           });
         })
       );
