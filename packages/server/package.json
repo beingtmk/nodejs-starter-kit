@@ -182,6 +182,7 @@
         "eslint": "*"
     },
     "resolutions": {
+        "react": "16.9.0",
         "graphql-resolve-batch/graphql": "14.1.1"
     }
 }
