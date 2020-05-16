@@ -10,6 +10,52 @@ import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import OrdersListView from '../components/OrdersListView';
 
+const ORDERS = [
+  {
+    id: 1,
+    orderDetails: [
+      {
+        id: 1,
+        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
+        title: 'Listing 1',
+        cost: 322,
+        date: 'Wed May 20 2020',
+        quantity: 4
+      },
+      {
+        id: 2,
+        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
+        title: 'Listing 2',
+        cost: 322,
+        date: 'Wed May 20 2020',
+        quantity: 3
+      }
+    ],
+    delivery: {}
+  },
+  {
+    id: 2,
+    orderDetails: [
+      {
+        id: 1,
+        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
+        title: 'Listing 1',
+        cost: 322,
+        date: 'Wed May 20 2020',
+        quantity: 4
+      },
+      {
+        id: 2,
+        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
+        title: 'Listing 2',
+        cost: 322,
+        date: 'Wed May 20 2020',
+        quantity: 3
+      }
+    ],
+    delivery: {}
+  }
+];
 const Orders = props => {
   // const { t, updateQuery, subscribeToMore } = props;
   // const filter = { isActive: true };
@@ -43,7 +89,7 @@ const Orders = props => {
       <hr />
       {/* <UsersFilterView {...props} filter={filter} />
       <hr /> */}
-      <OrdersListView {...props} />
+      <OrdersListView orders={ORDERS} {...props} />
     </PageLayout>
   );
 };

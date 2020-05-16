@@ -19,13 +19,13 @@ const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction 
 
 export default new ClientModule({
   route: [
-    // <AuthRoute
-    //   exact
-    //   path="/orders"
-    //   redirect="/profile"
-    //   role="admin"
-    //   component={loadable(() => import('./containers/Orders.web').then(c => c.default))}
-    // />,
+    <AuthRoute
+      exact
+      path="/orders"
+      redirect="/profile"
+      role="admin"
+      component={loadable(() => import('./containers/Orders.web').then(c => c.default))}
+    />,
     <Route exact path="/order" component={loadable(() => import('./containers/Order').then(c => c.default))} />,
     <Route exact path="/my-orders" component={loadable(() => import('./containers/MyOrder').then(c => c.default))} />,
     <Route exact path="/my-delivery" component={loadable(() => import('./containers/MyDelivery').then(c => c.default))} />,

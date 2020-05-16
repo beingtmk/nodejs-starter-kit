@@ -1,17 +1,16 @@
 /* eslint-disable react/display-name */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button, Avatar } from '@gqlapp/look-client-react';
+import ListingDrawerComponent from './ListingDrawerComponent';
 
 const { Meta } = Card;
 
 const OrdersView = ({ deleteOrder, orderBy, onOrderBy, loading, orders, t, toggleFeatured }) => {
-  const [errors, setErrors] = useState([]);
-
   // const renderOrderByArrow = name => {
   //   if (orderBy && orderBy.column === name) {
   //     if (orderBy.order === 'desc') {
@@ -66,36 +65,40 @@ const OrdersView = ({ deleteOrder, orderBy, onOrderBy, loading, orders, t, toggl
       render: (text, record) => (
         <>
           {record.id}
-          {console.log(record.id)}
+          {console.log(record)}
         </>
       )
     },
-    {
-      title: (
-        <>
-          {'Name'}
-          {/* <a onClick={e => handleOrderBy(e, 'fullName')} href="#">
-          {'Name'} {renderOrderByArrow('fullName')}
-        </a> */}
-        </>
-      ),
-      dataIndex: 'fullName',
-      key: 'fullName',
-      render: (text, record) => (
-        <Link className="user-link" to={`/public-profile/${record.user && record.user.id}`}>
-          <Card style={{ width: 'fit-content', maxWidth: '300px' }} bodyStyle={{ padding: '5px' }}>
-            <Meta
-              avatar={<Avatar src={record.user && record.user.profile && record.user.profile.avatar} />}
-              title={getName(
-                record.user && record.user.profile && record.user.profile.firstName,
-                record.user && record.user.profile && record.user.profile.lastName
-              )}
-              description={<h4 style={{ marginTop: '-10px' }}>{record.user && record.user.username}</h4>}
-            />
-          </Card>
-        </Link>
-      )
-    },
+    // {
+    //   title: (
+    //     <>
+    //       {'title'}
+    //       {/* <a onClick={e => handleOrderBy(e, 'fullName')} href="#">
+    //       {'Name'} {renderOrderByArrow('fullName')}
+    //     </a> */}
+    //     </>
+    //   ),
+    //   dataIndex: 'title',
+    //   key: 'title',
+    //   render: (text, record) => (
+    //     <>
+    //       {record && record.title}
+    //       {text}
+    //     </>
+    //     // <Link className="user-link" to={`/public-profile/${record.user && record.user.id}`}>
+    //     //   <Card style={{ width: 'fit-content', maxWidth: '300px' }} bodyStyle={{ padding: '5px' }}>
+    //     //     <Meta
+    //     //       avatar={<Avatar src={record.user && record.user.profile && record.user.profile.avatar} />}
+    //     //       title={getName(
+    //     //         record.user && record.user.profile && record.user.profile.firstName,
+    //     //         record.user && record.user.profile && record.user.profile.lastName
+    //     //       )}
+    //     //       description={<h4 style={{ marginTop: '-10px' }}>{record.user && record.user.username}</h4>}
+    //     //     />
+    //     //   </Card>
+    //     // </Link>
+    //   )
+    // },
     // {
     //   title: (
     //     <a onClick={e => handleOrderBy(e, 'email')} href="#">
@@ -155,30 +158,36 @@ const OrdersView = ({ deleteOrder, orderBy, onOrderBy, loading, orders, t, toggl
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => deleteOrder(record.id)}>
-          {t('orders.btn.delete')}
-        </Button>
+        <>
+          {/* <Button color="primary" size="sm" onClick={() => deleteOrder(record.id)}>
+            View
+          </Button> */}
+          <ListingDrawerComponent listing={record.orderDetails} />
+          <Button color="primary" size="sm" onClick={() => deleteOrder(record.id)}>
+            Delete
+          </Button>
+        </>
       )
     }
   ];
   return (
     <>
-      {loading && !orders ? (
+      {/* {loading && !orders ? (
         <div className="text-center">{t('orders.loadMsg')}</div>
-      ) : (
-        <>
-          {errors &&
-            errors.map(error => (
-              <div className="alert alert-danger" role="alert" key={error.field}>
-                {error.message}
-              </div>
-            ))}
-          {/* for horizontal table responsive on smaller screens */}
-          <div style={{ overflowX: 'auto' }}>
-            <Table dataSource={orders} columns={columns} />
-          </div>
-        </>
-      )}
+      ) : ( */}
+      <>
+        {/* {errors &&
+          errors.map(error => (
+            <div className="alert alert-danger" role="alert" key={error.field}>
+              {error.message}
+            </div>
+          ))} */}
+        {/* for horizontal table responsive on smaller screens */}
+        <div style={{ overflowX: 'auto' }}>
+          <Table dataSource={orders} columns={columns} />
+        </div>
+      </>
+      {/* )} */}
     </>
   );
 };
