@@ -1,4 +1,6 @@
 import group from '@gqlapp/group-client-react';
+import quiz from '@gqlapp/quiz-client-react';
+
 import tag from '@gqlapp/tag-client-react';
 import geolocation from '@gqlapp/geolocation-client-react';
 import bookmark from '@gqlapp/bookmark-client-react';

@@ -1,0 +1,28 @@
+
+query getUserWiseResult($id: Int!) {
+  getUserWiseResult(id: $id) {
+    id
+    userId
+    questions {
+      id
+      quizId
+      description
+      choices {
+        id
+        description
+      }
+      results {
+        id
+        userId
+        questionId
+        choiceId
+      }
+    }
+    attendees {
+      users {
+        id
+        username
+      }
+    }
+  }
+}

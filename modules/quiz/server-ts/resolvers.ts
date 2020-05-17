@@ -64,6 +64,50 @@ export default (pubsub: any) => ({
         users: users,
       };
     },
+    async getUserWiseResult(obj: any, { id }: any, context: any) {
+      const quiz = await context.Quiz.getQuiz(id);
+
+      let questionIdArray = [];
+      quiz.questions.map((question, key) => {
+        questionIdArray.push(question.id);
+      });
+      console.log("ggggg", questionIdArray);
+
+      const params = { questionIdArray: questionIdArray };
+      const result = await context.Quiz.getAnswersByQuestionArray(params);
+      console.log("ggggggggggggg", result);
+      let userIdArray = [];
+      result.map((item, key) => {
+        const found = userIdArray.find((id) => id === item.userId);
+        console.log("found", found);
+        if (!found || (found && found.length === 0)) {
+          userIdArray.push(item.userId);
+        }
+      });
+      console.log("userIddd", userIdArray);
+      const users = await context.User.getUsersWithIdArray(userIdArray);
+      console.log("usersss", users);
+      let quizOut = {
+        id: quiz.id,
+        userId: quiz.userId,
+        questions: quiz.questions,
+        attendees: {users:users},
+      };
+      quizOut.questions &&
+        quizOut.questions.length !== 0 &&
+        quizOut.questions.map((question, key1) => {
+          question.results= [];
+          result.map((re, key) => {
+            if (re.questionId === question.id) {
+              question.results.push(re);
+            }
+            quiz.questions[key1].question = question;
+            console.log('result pushed', quiz.questions[key1].results);
+          });
+        });
+        console.log('quizOut', quizOut);
+      return quizOut;
+    },
     async getQuizCount(obj: any, { id }: any, context: any) {
       try {
         let quiz = await context.Quiz.getQuiz(id);

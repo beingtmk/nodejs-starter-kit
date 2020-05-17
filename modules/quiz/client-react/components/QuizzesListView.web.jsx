@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button } from '@gqlapp/look-client-react';
 import {Spin as Loader} from 'antd';
+import QuizUserWiseReportModal from './QuizUserWiseReportModal';
+
 const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
 // 
 
@@ -107,6 +109,13 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
         <Button color="primary" size="sm" href={`/quiz/count/${record.id}`}>
           View Answer Count
         </Button>
+      )
+    },
+    {
+      title: 'View Userwise Result',
+      key: 'userWiseResult',
+      render: (text, record) => (
+        <QuizUserWiseReportModal quizId={record.id} />
       )
     },
     {

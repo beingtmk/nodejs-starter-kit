@@ -47,6 +47,24 @@ extend type Query {
   answers(userId: Int!,   quizId: Int!): AnswersOutput
   getAttendees(id: Int!): AttendeesOutput
   getQuizCount(id: Int!): QuizWithCount
+  getUserWiseResult(id: Int!): UserWiseResult
+}
+
+type UserWiseResult {
+  id: Int!
+  userId: Int!
+  attendees:AttendeesOutput
+  questions: [QuestionWithResult]
+}
+
+type QuestionWithResult{
+  id: Int!
+  quizId: Int!
+  description: String!
+  choices:[Choice]
+  results:[Answer]
+  createdAt: String
+  updatedAt: String
 }
 
 type QuizWithCount {
