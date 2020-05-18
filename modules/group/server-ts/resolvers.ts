@@ -1,6 +1,8 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
 import { GroupInput, GroupMemberInput, Identifier, EmailIdentifier, FilterInput } from './sql';
+import settings from '@gqlapp/config';
+import { log } from '@gqlapp/core-common';
 
 const GROUP_SUBSCRIPTION = 'group_subscription';
 const GMEMBER_SUBSCRIPTION = 'groupMembers_subscription';
@@ -73,32 +75,86 @@ export default (pubsub: PubSub) => ({
     }
   },
   Mutation: {
-    addGroup: withAuth(async (obj: any, { input }: AddGroup, { Group }: any) => {
+    addGroup: withAuth(async (obj: any, { input }: AddGroup, { Group, mailer, User }: any) => {
       try {
         const id = await Group.addGroup(input);
-        const item = await Group.group(id);
+        const data = await Group.group(id);
+
+        const url1 = `${__WEBSITE_URL__}/register`;
+        const url2 = `${__WEBSITE_URL__}/group/${id}`;
+
+        let user;
+        await input.members.map(async item => {
+          user = await User.getUserByEmail(item.email);
+          if (mailer) {
+            const sent = await mailer.sendMail({
+              from: `${settings.app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,
+              to: item.email,
+              subject: 'NodeJs-Starterkit Registration',
+              html: user
+                ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+                : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`
+            });
+            log.info(`Sent mail to: ${item.email}`);
+            if (!sent) {
+              throw new Error("Email couldn't be sent");
+            } else {
+              return true;
+            }
+          }
+        });
+
         pubsub.publish(GROUP_SUBSCRIPTION, {
           groupsUpdated: {
             mutation: 'CREATED',
-            node: item
+            node: data
           }
         });
-        return item;
+        return data;
       } catch (e) {
         return e;
       }
     }),
-    updateGroup: withAuth(async (obj: any, { input }: EditGroup, { Group }: any) => {
+    updateGroup: withAuth(async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
       try {
         await Group.updateGroup(input);
-        const item = await Group.group(input.id);
+        const data = await Group.group(input.id);
+
+        const url1 = `${__WEBSITE_URL__}/register`;
+        const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
+
+        let user;
+        await input.members.map(async item => {
+          if (!item.id && mailer) {
+            user = await User.getUserByEmail(item.email);
+            const sent = await mailer.sendMail({
+              from: `${settings.app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,
+              to: item.email,
+              subject: 'NodeJs-Starterkit Registration',
+              html: user
+                ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+                : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`
+            });
+            log.info(`Sent mail to: ${item.email}`);
+            if (!sent) {
+              throw new Error("Email couldn't be sent");
+            } else {
+              return true;
+            }
+          }
+        });
+
         pubsub.publish(GROUP_SUBSCRIPTION, {
           groupsUpdated: {
             mutation: 'UPDATED',
-            node: item
+            node: data
           }
         });
-        return item;
+        return data;
       } catch (e) {
         return e;
       }
