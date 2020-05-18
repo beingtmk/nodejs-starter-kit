@@ -31,15 +31,13 @@ const NavLinkGroupAdminWithI18n = translate('group')(({ t }: { t: TranslateFunct
 
 export default new ClientModule({
   route: [
-    // <AuthRoute
-    //   exact
-    // redirect="/profile"
-    //   role={['user', 'admin']}
-    //   path="/my-groups"
-    //   component={loadable(() =>
-    //     import("./containers/MyGroups").then((c) => c.default)
-    //   )}
-    // />,
+    <AuthRoute
+      exact
+      redirect="/profile"
+      role={['user', 'admin']}
+      path="/my-groups"
+      component={loadable(() => import('./containers/MyGroups').then(c => c.default))}
+    />,
     <AuthRoute
       exact
       role={['admin']}

@@ -45,12 +45,23 @@ const GroupComponent = ({ group }) => {
                 </h1>
                 <h2
                   style={{
-                    color: 'rgba(0, 0, 0, 0.54)',
+                    fontSize: '20px',
+                    color: 'rgba(0, 0, 0, 0.44)',
                     padding: '0 20px'
                   }}
                 >
                   {group.description}
                 </h2>
+                <br />
+                <h3
+                  style={{
+                    color: 'rgba(0, 0, 0, 0.54)',
+                    padding: '0 20px'
+                  }}
+                >
+                  {`Group Type: ${group.groupType}`}
+                </h3>
+                <br />
                 <Meta
                   style={{ padding: '10px 20px' }}
                   description={<>{`Created on ${moment(group.createdAt).format('MMM DD, YYYY')}`}</>}

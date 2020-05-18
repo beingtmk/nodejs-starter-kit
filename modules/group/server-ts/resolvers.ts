@@ -65,8 +65,8 @@ export default (pubsub: PubSub) => ({
       };
     },
 
-    async userGroups(obj: any, { email }: EmailIdentifier, context: any) {
-      return context.Group.userGroups(email);
+    async userGroups(obj: any, { email }: EmailIdentifier, { Group, req: { identity } }: any) {
+      return Group.userGroups(email || identity.email);
     },
     async group(obj: any, { id }: Identifier, context: any) {
       return context.Group.group(id);
