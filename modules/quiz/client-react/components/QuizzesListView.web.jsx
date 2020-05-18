@@ -72,8 +72,8 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
         </a> */}
         </>
       ),
-      dataIndex: 'description',
-      key: 'description'
+      dataIndex: 'title',
+      key: 'title'
     },
     {
       title: (
@@ -115,7 +115,7 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
       title: 'View Userwise Result',
       key: 'userWiseResult',
       render: (text, record) => (
-        <QuizUserWiseReportModal quizId={record.id} />
+        <QuizUserWiseReportModal quizId={record.id} title={record.title} />
       )
     },
     {
