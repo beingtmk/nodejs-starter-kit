@@ -131,11 +131,6 @@ class NavBar extends React.Component {
                   >
                     {ref.modules.navItems}
                     {ref.modules.navItemsRight}
-
-                    {/* BLOG Section */}
-                    <MenuItem>
-                      <DropDown content="Blog Section">{ref.modules.navItemsBlog}</DropDown>
-                    </MenuItem>
                     <LoggedIn>
                       <MenuItem>
                         <DropDown content={<UserAvatar />} noicon>
@@ -193,18 +188,6 @@ class NavBar extends React.Component {
                     </MenuItem>
                   </SubMenu>
                 )}
-
-                {/* BLOG Section */}
-                <SubMenu
-                  key="blog"
-                  title={
-                    <MenuItem>
-                      <Icon type="safety-certificate" /> Blog Section
-                    </MenuItem>
-                  }
-                >
-                  {ref.modules.navItemsBlog}
-                </SubMenu>
                 <LoggedIn role="admin">
                   <SubMenu
                     key="admin"
