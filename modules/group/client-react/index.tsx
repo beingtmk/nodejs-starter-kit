@@ -19,7 +19,7 @@ const NavLinkMyGroupsWithI18n = translate('group')(({ t }: { t: TranslateFunctio
 
 const NavLinkNewWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/group/new" className="nav-link" activeClassName="active">
-    {'My Groups'}
+    {'Create Group'}
   </NavLink>
 ));
 
@@ -72,13 +72,13 @@ export default new ClientModule({
     />
   ],
   navItemUser: [
-    <Menu.SubMenu title="Groups">
-      <IfLoggedIn key="/my-groups">
+    <IfLoggedIn key="/my-groups">
+      <Menu.SubMenu title="Groups">
         <MenuItem>
           <NavLinkMyGroupsWithI18n />
         </MenuItem>
-      </IfLoggedIn>
-    </Menu.SubMenu>
+      </Menu.SubMenu>
+    </IfLoggedIn>
   ],
   navItemAdmin: [
     <Menu.SubMenu title="Groups">
@@ -90,13 +90,13 @@ export default new ClientModule({
     </Menu.SubMenu>
   ],
   navItemTest: [
-    <Menu.SubMenu title="Groups">
-      <IfLoggedIn key="/group/new">
+    <IfLoggedIn key="/group/new">
+      <Menu.SubMenu title="Groups">
         <MenuItem key="/blog/new">
           <NavLinkNewWithI18n />
         </MenuItem>
-      </IfLoggedIn>
-    </Menu.SubMenu>
+      </Menu.SubMenu>
+    </IfLoggedIn>
   ],
   localization: [{ ns: 'group', resources }]
 });

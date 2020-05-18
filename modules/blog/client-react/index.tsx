@@ -94,18 +94,16 @@ export default new ClientModule({
     <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
   navItemUser: [
-    <Menu.SubMenu title="Blogs">
-      <IfLoggedIn key="/blog/my-blogs">
+    <IfLoggedIn key="/blog/">
+      <Menu.SubMenu title="Blogs">
         <MenuItem>
           <NavLinkMyBlogsWithI18n />
         </MenuItem>
-      </IfLoggedIn>
-      <IfLoggedIn key="/blog/bookmarks">
         <MenuItem key="/blog/bookmarks">
           <NavLinkMyBookmarksWithI18n />
         </MenuItem>
-      </IfLoggedIn>
-    </Menu.SubMenu>
+      </Menu.SubMenu>
+    </IfLoggedIn>
   ],
   navItemAdmin: [
     <Menu.SubMenu title="Blogs">

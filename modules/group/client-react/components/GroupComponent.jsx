@@ -53,12 +53,11 @@ const GroupComponent = ({ group }) => {
                   {group.description}
                 </h2>
                 <Meta
-                  style={{ padding: '0 20px' }}
-                  description={`Created on ${moment(group.createdAt).format('MMM DD, YYYY')}`}
+                  style={{ padding: '10px 20px' }}
+                  description={<>{`Created on ${moment(group.createdAt).format('MMM DD, YYYY')}`}</>}
                 />
-                <br />
                 <Link to={`/group/edit/${group.id}`}>
-                  <Button icon="edit" type="primary" size="small" ghost style={{ padding: '0 20px' }}>
+                  <Button icon="edit" type="primary" size="small" ghost style={{ margin: '10px 20px' }}>
                     Edit
                   </Button>
                 </Link>
@@ -92,8 +91,13 @@ const GroupComponent = ({ group }) => {
                           fontSize: '15px'
                         }}
                       >
-                        {Name(item.member.profile)}
-                        <i>({item.member.username}) </i>
+                        <strong>{item.member.email}</strong>
+                        <br />
+                        <span>{Name(item.member.profile)}</span>
+                        <br />
+                        <span>
+                          Username: <i>{item.member.username} </i>
+                        </span>
                       </span>
                     }
                     description={`Added on ${moment(item.createdAt).format('MMM DD, YYYY')}`}
@@ -104,6 +108,14 @@ const GroupComponent = ({ group }) => {
               </Col>
             ))}
             <br />
+            <Divider />
+            <h1
+              style={{
+                padding: '0 20px'
+              }}
+            >
+              Invites
+            </h1>
             <Divider />
             {invites.map(item => (
               <Col xs={24} sm={12} md={12} lg={8}>

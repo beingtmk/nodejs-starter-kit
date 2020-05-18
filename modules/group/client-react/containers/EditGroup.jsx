@@ -44,7 +44,9 @@ export default compose(
         message.destroy();
         message.loading('Please wait...', 0);
         try {
-          const { data: updateGroup } = await mutate({
+          const {
+            data: { updateGroup }
+          } = await mutate({
             variables: { input: removeTypename(values) }
           });
 
