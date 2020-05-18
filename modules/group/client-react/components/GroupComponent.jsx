@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Link } from 'react-router-dom';
-import { Col, Row, Card, Divider, Alert, Button } from 'antd';
+import { Col, Row, Card, Divider, Alert, Button, Empty } from 'antd';
 
 import MiniBlogImageComponent from '@gqlapp/blog-client-react/components/MiniBlogImageComponent';
 
@@ -12,7 +12,6 @@ import { Name, emptyCover } from '../constants';
 const { Meta } = Card;
 
 const GroupComponent = ({ group }) => {
-  console.log(group);
   let invites = [],
     joinees = [];
 
@@ -72,41 +71,45 @@ const GroupComponent = ({ group }) => {
               Members
             </h1>
             <Divider />
-            {joinees.map(item => (
-              <Col xs={24} sm={12} md={12} lg={8}>
-                <Card
-                  hoverable
-                  cover={
-                    <img
-                      style={{ height: '200px' }}
-                      alt={item.email}
-                      src={(item.member.profile && item.member.profile.avatar) || emptyCover}
-                    />
-                  }
-                >
-                  <Meta
-                    title={
-                      <span
-                        style={{
-                          fontSize: '15px'
-                        }}
-                      >
-                        <strong>{item.member.email}</strong>
-                        <br />
-                        <span>{Name(item.member.profile)}</span>
-                        <br />
-                        <span>
-                          Username: <i>{item.member.username} </i>
-                        </span>
-                      </span>
+            {joinees.length > 0 ? (
+              joinees.map(item => (
+                <Col xs={24} sm={12} md={12} lg={8}>
+                  <Card
+                    hoverable
+                    cover={
+                      <img
+                        style={{ height: '200px' }}
+                        alt={item.email}
+                        src={(item.member.profile && item.member.profile.avatar) || emptyCover}
+                      />
                     }
-                    description={`Added on ${moment(item.createdAt).format('MMM DD, YYYY')}`}
-                  />
-                  <br />
-                  <Alert type="success" message={item.type} />
-                </Card>
-              </Col>
-            ))}
+                  >
+                    <Meta
+                      title={
+                        <span
+                          style={{
+                            fontSize: '15px'
+                          }}
+                        >
+                          <strong>{item.member.email}</strong>
+                          <br />
+                          <span>{Name(item.member.profile)}</span>
+                          <br />
+                          <span>
+                            Username: <i>{item.member.username} </i>
+                          </span>
+                        </span>
+                      }
+                      description={`Added on ${moment(item.createdAt).format('MMM DD, YYYY')}`}
+                    />
+                    <br />
+                    <Alert type="success" message={item.type} />
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <Empty />
+            )}
             <br />
             <Divider />
             <h1
@@ -117,13 +120,17 @@ const GroupComponent = ({ group }) => {
               Invites
             </h1>
             <Divider />
-            {invites.map(item => (
-              <Col xs={24} sm={12} md={12} lg={8}>
-                <Card hoverable title={item.email}>
-                  <Alert type="warning" message="Invited" />
-                </Card>
-              </Col>
-            ))}
+            {invites.length > 0 ? (
+              invites.map(item => (
+                <Col xs={24} sm={12} md={12} lg={8}>
+                  <Card hoverable title={item.email}>
+                    <Alert type="warning" message="Invited" />
+                  </Card>
+                </Col>
+              ))
+            ) : (
+              <Empty />
+            )}
           </Row>
         </Card>
       </Col>

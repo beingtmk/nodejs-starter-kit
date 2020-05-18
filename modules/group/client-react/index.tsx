@@ -3,8 +3,8 @@ import React from 'react';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
-// import { CookiesProvider } from 'react-cookie';
-// import resolvers from './resolvers';
+import { CookiesProvider } from 'react-cookie';
+import resolvers from './resolvers';
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
@@ -25,7 +25,7 @@ const NavLinkNewWithI18n = translate('group')(({ t }: { t: TranslateFunction }) 
 
 const NavLinkGroupAdminWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/group/admin-list" className="nav-link" activeClassName="active">
-    {'My Groups'}
+    {'All Groups'}
   </NavLink>
 ));
 
@@ -40,15 +40,13 @@ export default new ClientModule({
     //     import("./containers/MyGroups").then((c) => c.default)
     //   )}
     // />,
-    // <AuthRoute
-    //   exact
-    //   role={["admin"]}
-    //   redirect="/profile"
-    //   path="/group/admin-list"
-    //   component={loadable(() =>
-    //     import("./containers/AdminGroups").then((c) => c.default)
-    //   )}
-    // />,
+    <AuthRoute
+      exact
+      role={['admin']}
+      redirect="/profile"
+      path="/group/admin-list"
+      component={loadable(() => import('./containers/AdminGroups').then(c => c.default))}
+    />,
     <AuthRoute
       exact
       role={['user', 'admin']}
@@ -98,5 +96,7 @@ export default new ClientModule({
       </Menu.SubMenu>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
   localization: [{ ns: 'group', resources }]
 });

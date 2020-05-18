@@ -13,9 +13,13 @@ import {
   //  orderedFor
 } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
-// import { has } from 'lodash';
+import { has } from 'lodash';
 
 Model.knex(knex);
+
+export interface FilterInput {
+  searchText: string;
+}
 
 export interface GroupMemberInput {
   email: string;
@@ -73,12 +77,45 @@ export default class Group extends Model {
     };
   }
 
-  public async groups() {
-    return camelizeKeys(
-      await Group.query()
-        .eager(gEager)
-        .orderBy('id', 'desc')
-    );
+  public async groups(filter: FilterInput, limit: number, after: number) {
+    const queryBuilder = Group.query()
+      .eager(gEager)
+      .orderBy('id', 'desc');
+
+    if (filter) {
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder
+          .from('group as g')
+          // .leftJoin('group_member as gp','g.id', 'gp.group_id')
+          // .leftJoin('user as u', 'u.email', 'gp.email')
+          // .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+          .where(function() {
+            this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.title', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.description', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.group_type', `%${filter.searchText}%`]));
+            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['gp.email', `%${filter.searchText}%`]))
+            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
+            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]))
+            // .distinct('g.id');
+          });
+      }
+    }
+
+    const allGroups = camelizeKeys(await queryBuilder);
+    const total = allGroups.length;
+
+    let groups = {};
+    if (limit && after) {
+      groups = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      groups = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      groups = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      groups = camelizeKeys(await queryBuilder);
+    }
+    return { groups, total };
   }
 
   public async group(id: number) {

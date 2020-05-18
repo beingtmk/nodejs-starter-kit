@@ -1,6 +1,6 @@
 import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
-import { GroupInput, GroupMemberInput, Identifier } from './sql';
+import { GroupInput, GroupMemberInput, Identifier, EmailIdentifier, FilterInput } from './sql';
 
 const GROUP_SUBSCRIPTION = 'group_subscription';
 const GMEMBER_SUBSCRIPTION = 'groupMembers_subscription';
@@ -21,6 +21,12 @@ interface AddGroupMember {
   input: GroupMemberInput;
 }
 
+interface GroupFilter {
+  filter: FilterInput;
+  limit: number;
+  after: number;
+}
+
 export default (pubsub: PubSub) => ({
   Query: {
     async allGroupMembers(obj: any, args: any, context: any) {
@@ -32,9 +38,33 @@ export default (pubsub: PubSub) => ({
     async groupMember(obj: any, { id }: Identifier, context: any) {
       return context.GroupMember.groupMember(id);
     },
-    async groups(obj: any, args: any, context: any) {
-      return context.Group.groups();
+
+    async groups(obj: any, { filter, limit, after }: GroupFilter, context: any) {
+      // return context.Group.groups();
+      const GroupOutput = await context.Group.groups(filter, limit, after);
+      const { groups, total } = GroupOutput;
+
+      const hasNextPage = total > after + limit;
+
+      const edgesArray: any = [];
+      groups.map((item: any, i: number) => {
+        edgesArray.push({
+          cursor: after + i,
+          node: item
+        });
+      });
+
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     },
+
     async userGroups(obj: any, { email }: EmailIdentifier, context: any) {
       return context.Group.userGroups(email);
     },
@@ -48,7 +78,7 @@ export default (pubsub: PubSub) => ({
         const id = await Group.addGroup(input);
         const item = await Group.group(id);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'CREATED',
             node: item
           }
@@ -63,7 +93,7 @@ export default (pubsub: PubSub) => ({
         await Group.updateGroup(input);
         const item = await Group.group(input.id);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'UPDATED',
             node: item
           }
@@ -78,7 +108,7 @@ export default (pubsub: PubSub) => ({
         const data = await Group.group(id);
         await Group.deleteGroup(id);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'DELETED',
             node: data
           }
@@ -100,7 +130,7 @@ export default (pubsub: PubSub) => ({
         });
         const item = await Group.group(data.groupId);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'UPDATED',
             node: item
           }
@@ -122,7 +152,7 @@ export default (pubsub: PubSub) => ({
         });
         const item = await Group.group(data.groupId);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'UPDATED',
             node: item
           }
@@ -144,7 +174,7 @@ export default (pubsub: PubSub) => ({
         });
         const item = await Group.group(data.groupId);
         pubsub.publish(GROUP_SUBSCRIPTION, {
-          groupUpdated: {
+          groupsUpdated: {
             mutation: 'UPDATED',
             node: item
           }
@@ -156,11 +186,11 @@ export default (pubsub: PubSub) => ({
     })
   },
   Subscription: {
-    groupUpdated: {
+    groupsUpdated: {
       subscribe: withFilter(
         () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.groupUpdated.id === variables.id;
+          return payload.groupsUpdated.id === variables.id;
         }
       )
     },

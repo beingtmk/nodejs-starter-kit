@@ -6,17 +6,16 @@ import { Table, Loading } from '@gqlapp/look-client-react';
 import { Popconfirm, Button, message, Tooltip, Spin, Divider } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-class AdminBlogsComponent extends React.Component {
+class AdminGroupsComponent extends React.Component {
   fetchMoreData = async () => {
-    let hasMore = this.props.blogs.pageInfo.hasNextPage;
-    const endCursor = this.props.blogs.pageInfo.endCursor;
+    let hasMore = this.props.groups.pageInfo.hasNextPage;
+    const endCursor = this.props.groups.pageInfo.endCursor;
     if (!hasMore) return;
     await this.props.loadData(endCursor + 1, 'add');
   };
 
   render() {
-    const { blogs, deleteBlog, blogLoading } = this.props;
-
+    const { groups, deleteGroup, groupLoading } = this.props;
     const cancel = () => {
       message.error('Task cancelled');
     };
@@ -37,28 +36,28 @@ class AdminBlogsComponent extends React.Component {
         sortDirections: ['descend', 'ascend']
       },
       {
-        title: <a href="#">{'Author'}</a>,
-        dataIndex: 'author',
-        key: 'author',
-        sorter: (a, b) => a.author.username.length - b.author.username.length,
+        title: <a href="#">{'Description'}</a>,
+        dataIndex: 'description',
+        key: 'description',
+        sorter: (a, b) => a.description.length - b.description.length,
         sortDirections: ['descend', 'ascend'],
-        render: text =>
-          // <Tooltip title="See Profile">
-          //   <Link to={`/blog/@${text.username}`}>
-          //     {
-          // text.id === currentUser.id ? "You" :
-          text.username
-        //     }
-        //   </Link>
-        // </Tooltip>
+        render: text => <span>{text}</span>
       },
       {
-        title: <a href="#">{'Model'}</a>,
-        dataIndex: 'model',
-        key: 'model',
-        sorter: (a, b) => a.model.name.length - b.model.name.length,
+        title: <a href="#">{'Type'}</a>,
+        dataIndex: 'groupType',
+        key: 'groupType',
+        sorter: (a, b) => a.groupType.length - b.groupType.length,
         sortDirections: ['descend', 'ascend'],
-        render: text => <span>{text.name}</span>
+        render: text => <span>{text}</span>
+      },
+      {
+        title: <a href="#">{'No of Members'}</a>,
+        dataIndex: 'members',
+        key: 'members',
+        sorter: (a, b) => a.members.filter(item => item.member).length - b.members.filter(item => item.member).length,
+        sortDirections: ['descend', 'ascend'],
+        render: text => text.filter(item => item.member).length
       },
       {
         title: 'Actions',
@@ -66,9 +65,8 @@ class AdminBlogsComponent extends React.Component {
         key: 'actions',
         render: text => (
           <>
-            <Tooltip title="Read">
-              {' '}
-              <Link to={`/blog/${text}`}>
+            <Tooltip title="Details">
+              <Link to={`/group/${text}`}>
                 <Button
                   shape="circle"
                   icon="eye"
@@ -79,7 +77,7 @@ class AdminBlogsComponent extends React.Component {
               </Link>
             </Tooltip>
             <Tooltip title="Edit">
-              <Link to={`/blog/edit/${text}`}>
+              <Link to={`/group/edit/${text}`}>
                 <Button
                   shape="circle"
                   icon="edit"
@@ -92,8 +90,8 @@ class AdminBlogsComponent extends React.Component {
             </Tooltip>
             <Tooltip title="Delete">
               <Popconfirm
-                title="Delete blog?"
-                onConfirm={() => deleteBlog(text)}
+                title="Delete group?"
+                onConfirm={() => deleteGroup(text)}
                 onCancel={cancel}
                 okText="Yes"
                 cancelText="No"
@@ -114,16 +112,16 @@ class AdminBlogsComponent extends React.Component {
 
     return (
       <>
-        {blogLoading && !blogs ? (
+        {groupLoading && !groups ? (
           <Loading text="Loading... " />
         ) : (
           <Fragment>
             <InfiniteScroll
               scrollThreshold={0.9}
               style={{ overflow: 'none' }}
-              dataLength={blogs.edges.length}
+              dataLength={groups.edges.length}
               next={this.fetchMoreData}
-              hasMore={blogs.pageInfo.hasNextPage}
+              hasMore={groups.pageInfo.hasNextPage}
               loader={
                 <div align="center">
                   <Spin />
@@ -132,12 +130,12 @@ class AdminBlogsComponent extends React.Component {
               endMessage={
                 <Divider>
                   <p style={{ textAlign: 'center', marginTop: '25px' }}>
-                    <b>End of Blogs</b>
+                    <b>End of Groups</b>
                   </p>
                 </Divider>
               }
             >
-              <Table dataSource={blogs.edges.map(({ node }) => node)} columns={columns} />
+              <Table dataSource={groups.edges.map(({ node }) => node)} columns={columns} />
             </InfiniteScroll>
           </Fragment>
         )}
@@ -146,11 +144,11 @@ class AdminBlogsComponent extends React.Component {
   }
 }
 
-AdminBlogsComponent.propTypes = {
-  blogLoading: PropTypes.bool.isRequired,
-  blogs: PropTypes.object,
+AdminGroupsComponent.propTypes = {
+  groupLoading: PropTypes.bool.isRequired,
+  groups: PropTypes.object,
   loadData: PropTypes.object,
-  deleteBlog: PropTypes.func
+  deleteGroup: PropTypes.func
 };
 
-export default AdminBlogsComponent;
+export default AdminGroupsComponent;
