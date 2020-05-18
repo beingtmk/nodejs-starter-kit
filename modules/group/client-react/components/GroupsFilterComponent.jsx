@@ -10,7 +10,7 @@ const GroupsFilterComponent = ({ filter: { searchText }, onSearchTextChange }) =
         <DebounceInput
           minLength={2}
           debounceTimeout={300}
-          placeholder={'Search by title, description, type'}
+          placeholder={'Search by title, description, type, email, username, etc'}
           element={Input}
           value={searchText}
           onChange={e => onSearchTextChange(e.target.value)}

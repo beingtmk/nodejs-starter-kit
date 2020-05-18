@@ -57,7 +57,7 @@ class AdminGroupsComponent extends React.Component {
         key: 'members',
         sorter: (a, b) => a.members.filter(item => item.member).length - b.members.filter(item => item.member).length,
         sortDirections: ['descend', 'ascend'],
-        render: text => text.filter(item => item.member).length
+        render: text => text.map(item => item.member && item.member.username)
       },
       {
         title: 'Actions',

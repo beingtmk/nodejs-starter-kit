@@ -190,7 +190,29 @@ export default (pubsub: PubSub) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.groupsUpdated.id === variables.id;
+          const { mutation, node } = payload.groupsUpdated;
+          const {
+            endCursor,
+            filter: { searchText }
+          } = variables;
+          const checkByFilter =
+            !searchText ||
+            node.title.toUpperCase().includes(searchText.toUpperCase()) ||
+            node.description.toUpperCase().includes(searchText.toUpperCase()) ||
+            node.groupType.toUpperCase().includes(searchText.toUpperCase()) ||
+            node.members.some(
+              (item: any) =>
+                item.member &&
+                (item.member.email.toUpperCase().includes(searchText.toUpperCase()) ||
+                  item.member.username.toUpperCase().includes(searchText.toUpperCase()))
+            );
+
+          switch (mutation) {
+            case 'UPDATED':
+              return !checkByFilter && endCursor <= node.id;
+            default:
+              return endCursor <= node.id;
+          }
         }
       )
     },

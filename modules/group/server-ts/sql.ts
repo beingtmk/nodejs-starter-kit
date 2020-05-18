@@ -86,18 +86,17 @@ export default class Group extends Model {
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder
           .from('group as g')
-          // .leftJoin('group_member as gp','g.id', 'gp.group_id')
-          // .leftJoin('user as u', 'u.email', 'gp.email')
-          // .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+          .leftJoin('group_member as gp', 'g.id', 'gp.group_id')
+          .leftJoin('user as u', 'u.email', 'gp.email')
+          .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
           .where(function() {
             this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.title', `%${filter.searchText}%`]))
               .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.description', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.group_type', `%${filter.searchText}%`]));
-            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['gp.email', `%${filter.searchText}%`]))
-            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
-            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
-            // .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]))
-            // .distinct('g.id');
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.group_type', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['gp.email', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
           });
       }
     }
