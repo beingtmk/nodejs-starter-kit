@@ -1,26 +1,33 @@
 import React from 'react';
 
 import ClientModule from '@gqlapp/module-client-react';
-// import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
+import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 // import { CookiesProvider } from 'react-cookie';
 // import resolvers from './resolvers';
-
-// import { NavLink } from "react-router-dom";
-// import { MenuItem } from "@gqlapp/look-client-react";
+import { Menu } from 'antd';
+import { NavLink } from 'react-router-dom';
+import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
-import {
-  AuthRoute
-  // IfLoggedIn,
-} from '@gqlapp/user-client-react/containers/Auth.web';
+import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth.web';
 
-// const NavLinkWithI18n = translate("group")(
-//   ({ t }: { t: TranslateFunction }) => (
-//     <NavLink to="/group" className="nav-link" activeClassName="active">
-//       {t("group:navLink")}
-//     </NavLink>
-//   )
-// );
+const NavLinkMyGroupsWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/my-groups" className="nav-link" activeClassName="active">
+    {'My Groups'}
+  </NavLink>
+));
+
+const NavLinkNewWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/group/new" className="nav-link" activeClassName="active">
+    {'My Groups'}
+  </NavLink>
+));
+
+const NavLinkGroupAdminWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/group/admin-list" className="nav-link" activeClassName="active">
+    {'My Groups'}
+  </NavLink>
+));
 
 export default new ClientModule({
   route: [
@@ -64,10 +71,32 @@ export default new ClientModule({
       component={loadable(() => import('./containers/Group').then(c => c.default))}
     />
   ],
-  // navItem: [
-  //   <MenuItem key="/group">
-  //     <NavLinkWithI18n />
-  //   </MenuItem>
-  // ],
+  navItemUser: [
+    <Menu.SubMenu title="Groups">
+      <IfLoggedIn key="/my-groups">
+        <MenuItem>
+          <NavLinkMyGroupsWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+    </Menu.SubMenu>
+  ],
+  navItemAdmin: [
+    <Menu.SubMenu title="Groups">
+      <IfLoggedIn key="/group/admin-list" role="admin">
+        <MenuItem>
+          <NavLinkGroupAdminWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+    </Menu.SubMenu>
+  ],
+  navItemTest: [
+    <Menu.SubMenu title="Groups">
+      <IfLoggedIn key="/group/new">
+        <MenuItem key="/blog/new">
+          <NavLinkNewWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+    </Menu.SubMenu>
+  ],
   localization: [{ ns: 'group', resources }]
 });

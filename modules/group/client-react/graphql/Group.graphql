@@ -12,6 +12,7 @@ fragment GroupInfo on Group {
     member {
       id
       username
+      email
       profile {
         firstName
         lastName
