@@ -12,6 +12,7 @@ import { User } from "@gqlapp/user-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 
 const eager = "[user, questions.[choices]]";
+const withAnswersEager = "[user, questions.[choices, answers]]";
 
 export default class Quiz extends Model {
   static get tableName() {
@@ -54,6 +55,16 @@ export default class Quiz extends Model {
       await Quiz.query()
         .findById(id)
         .withGraphFetched(eager)
+      // .eager(eager)
+      // .orderBy('id', 'desc')
+    );
+    return res;
+  }
+  public async getQuizWithAnswers(id: number) {
+    const res = camelizeKeys(
+      await Quiz.query()
+        .findById(id)
+        .withGraphFetched(withAnswersEager)
       // .eager(eager)
       // .orderBy('id', 'desc')
     );

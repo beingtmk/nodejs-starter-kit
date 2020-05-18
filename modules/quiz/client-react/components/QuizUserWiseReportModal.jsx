@@ -17,16 +17,14 @@ const QuizUserWiseReportComponent = (quiz) => {
   const getResult = (record, id) => {
     const result =
       record &&
-      record.results &&
-      record.results.length !== 0 &&
-      record.results.find((result) => result.userId === id);
-    console.log("res", result);
+      record.answers &&
+      record.answers.length !== 0 &&
+      record.answers.find((res) => res.userId === id);
     const choice =
       record &&
       record.choices &&
       record.choices.length !== 0 &&
       record.choices.find((cho) => result && result.choiceId === cho.id);
-    console.log(choice);
     return choice && choice.description;
   };
   var columns = [

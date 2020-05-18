@@ -65,7 +65,7 @@ export default (pubsub: any) => ({
       };
     },
     async getUserWiseResult(obj: any, { id }: any, context: any) {
-      const quiz = await context.Quiz.getQuiz(id);
+      const quiz = await context.Quiz.getQuizWithAnswers(id);
 
       let questionIdArray = [];
       quiz.questions.map((question, key) => {
@@ -93,18 +93,18 @@ export default (pubsub: any) => ({
         questions: quiz.questions,
         attendees: {users:users},
       };
-      quizOut.questions &&
-        quizOut.questions.length !== 0 &&
-        quizOut.questions.map((question, key1) => {
-          question.results= [];
-          result.map((re, key) => {
-            if (re.questionId === question.id) {
-              question.results.push(re);
-            }
-            quiz.questions[key1].question = question;
-            console.log('result pushed', quiz.questions[key1].results);
-          });
-        });
+      // quizOut.questions &&
+      //   quizOut.questions.length !== 0 &&
+      //   quizOut.questions.map((question, key1) => {
+      //     question.results= [];
+      //     result.map((re, key) => {
+      //       if (re.questionId === question.id) {
+      //         question.results.push(re);
+      //       }
+      //       quiz.questions[key1].question = question;
+      //       console.log('result pushed', quiz.questions[key1].results);
+      //     });
+      //   });
         console.log('quizOut', quizOut);
       return quizOut;
     },

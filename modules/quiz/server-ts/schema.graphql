@@ -62,7 +62,7 @@ type QuestionWithResult{
   quizId: Int!
   description: String!
   choices:[Choice]
-  results:[Answer]
+  answers:[Answer]
   createdAt: String
   updatedAt: String
 }
