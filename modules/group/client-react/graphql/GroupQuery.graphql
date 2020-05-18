@@ -1,6 +1,7 @@
-# GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+#import "./Group.graphql"
+
+query group($id: Int!) {
+  group(id: $id) {
+    ...GroupInfo
   }
 }

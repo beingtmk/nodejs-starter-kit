@@ -1,0 +1,23 @@
+fragment GroupInfo on Group {
+  id
+  title
+  avatar
+  description
+  groupType
+  members {
+    id
+    email
+    type
+    status
+    member {
+      id
+      username
+      profile {
+        firstName
+        lastName
+      }
+    }
+    createdAt
+  }
+  createdAt
+}

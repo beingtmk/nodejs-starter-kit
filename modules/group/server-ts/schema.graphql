@@ -41,7 +41,7 @@ extend type Mutation {
 input AddGroupInput {
   title: String!
   avatar: String
-  description: String!
+  description: String
   groupType: String!
   members: [MemberInput]
 }
@@ -59,6 +59,7 @@ input UpdateGroupInput {
   avatar: String
   description: String
   groupType: String
+  members: [MemberInput]
 }
 
 input AddGroupMemberInput {
