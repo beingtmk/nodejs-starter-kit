@@ -15,7 +15,7 @@ class AdminGroupsComponent extends React.Component {
   };
 
   render() {
-    const { groups, deleteGroup, groupLoading } = this.props;
+    const { groups, deleteGroup, groupLoading, currentUser } = this.props;
     const cancel = () => {
       message.error('Task cancelled');
     };
@@ -52,12 +52,20 @@ class AdminGroupsComponent extends React.Component {
         render: text => <span>{text}</span>
       },
       {
-        title: <a href="#">{'No of Members'}</a>,
+        title: <a href="#">{'Members'}</a>,
         dataIndex: 'members',
         key: 'members',
         sorter: (a, b) => a.members.filter(item => item.member).length - b.members.filter(item => item.member).length,
         sortDirections: ['descend', 'ascend'],
-        render: text => text.map(item => item.member && item.member.username)
+        render: text => {
+          let mem = text.filter(item => item.member);
+          return (
+            <div>
+              <strong>{mem.some(item => item.member.id === currentUser.id) ? 'You' : mem[0].member.username}</strong>
+              {mem.length > 1 ? <span>{` and ${mem.length - 1} other${mem.length === 2 ? '' : 's'}`}</span> : null}
+            </div>
+          );
+        }
       },
       {
         title: 'Actions',
@@ -148,6 +156,7 @@ AdminGroupsComponent.propTypes = {
   groupLoading: PropTypes.bool.isRequired,
   groups: PropTypes.object,
   loadData: PropTypes.object,
+  currentUser: PropTypes.object,
   deleteGroup: PropTypes.func
 };
 
