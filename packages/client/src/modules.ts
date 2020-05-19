@@ -1,3 +1,4 @@
+import addresses from '@gqlapp/addresses-client-react';
 import listing from '@gqlapp/listing-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import home from '@gqlapp/home-client-react';
@@ -22,6 +23,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  addresses,
   listing,
   pwa,
   home,

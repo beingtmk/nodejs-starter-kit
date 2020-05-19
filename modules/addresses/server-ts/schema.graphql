@@ -1,0 +1,32 @@
+type Address {
+  id: Int
+  userId: Int!
+  streetAddress1: String!
+  streetAddress2: String!
+  city: String!
+  state: String!
+  pinCode: Int!
+}
+
+extend type Query {
+  addresses(id: Int): [Address]!
+}
+
+extend type Mutation {
+  addAddress(input: AddressInput!): Boolean!
+  addOrEditAddress(input: AddressInput!): String!
+  deleteAddress(id: Int): Boolean!
+}
+
+# extend type Subscription {
+# }
+
+input AddressInput {
+  id: Int
+  userId: Int!
+  streetAddress1: String!
+  streetAddress2: String!
+  city: String!
+  state: String!
+  pinCode: Int!
+}

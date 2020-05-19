@@ -1,0 +1,3 @@
+mutation addOrEditAddress($input: AddressInput!) {
+  addOrEditAddress(input: $input)
+}
