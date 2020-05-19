@@ -78,7 +78,12 @@ class SuggestedCardListComponent extends Component {
           dataSource={this.state.data.edges}
           renderItem={item => (
             <List.Item key={item.node.id}>
-              <RelatedCardComponent key={item.node.id} item={item.node} history={this.props.history} />
+              <RelatedCardComponent
+                key={item.node.id}
+                listing={item.node}
+                history={this.props.history}
+                currentUser={this.props.currentUser}
+              />
             </List.Item>
           )}
         />
@@ -90,6 +95,7 @@ class SuggestedCardListComponent extends Component {
 SuggestedCardListComponent.propTypes = {
   listings: PropTypes.array,
   loading: PropTypes.bool,
+  currentUser: PropTypes.object,
   history: PropTypes.object,
   loadData: PropTypes.func
 };

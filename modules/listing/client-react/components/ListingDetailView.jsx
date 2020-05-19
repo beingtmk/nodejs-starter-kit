@@ -17,8 +17,9 @@ import {
 } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Button } from '@gqlapp/look-client-react';
 import AddToCart from '../containers/AddToCart';
+import BookmarkComponent from './BookmarkComponent';
 
 import settings from '../../../../settings';
 
@@ -63,7 +64,16 @@ class ListingDetailView extends Component {
   };
 
   render() {
-    const { listing, loading, user, history, navigation, currentUser } = this.props;
+    const {
+      listing,
+      loading,
+      user,
+      history,
+      navigation,
+      currentUser,
+      handleBookmark,
+      listingBookmarkStatus
+    } = this.props;
     const images = listing && listing.listingImages && listing.listingImages.length !== 0 && listing.listingImages;
     const getName = () => {
       const firstName = user && user.user && user.user.profile && user.user.profile.firstName;
@@ -117,7 +127,19 @@ class ListingDetailView extends Component {
                 <Breadcrumb.Item>{`Listing ${listing.id}`}</Breadcrumb.Item>
               </Breadcrumb>
               <Card
-                title={<h1>{listing.title}</h1>}
+                title={
+                  <Row>
+                    <Col xl={23} lg={23} md={23} sm={23}>
+                      <h1>{listing.title}</h1>
+                    </Col>
+                    <Col xl={1} lg={1} md={1} sm={1}>
+                      <BookmarkComponent
+                        handleBookmark={() => handleBookmark(listing.id, listing.userId)}
+                        bookmarkStatus={listingBookmarkStatus}
+                      />
+                    </Col>
+                  </Row>
+                }
                 style={{
                   background: 'white',
                   borderRadius: '10px'
@@ -216,7 +238,9 @@ ListingDetailView.propTypes = {
   user: PropTypes.object,
   history: PropTypes.object,
   navigation: PropTypes.object,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  handleBookmark: PropTypes.func,
+  listingBookmarkStatus: PropTypes.bool
 };
 
 export default translate('listing')(ListingDetailView);

@@ -1,0 +1,3 @@
+mutation addOrRemoveListingBookmark($listingId: Int, $userId: Int) {
+  addOrRemoveListingBookmark(listingId: $listingId, userId: $userId)
+}

@@ -1,0 +1,11 @@
+#import "./Listing.graphql"
+
+subscription onListingUpdated($id: Int) {
+  listingUpdated(id: $id) {
+    mutation
+    id
+    node {
+      ...ListingInfo
+    }
+  }
+}

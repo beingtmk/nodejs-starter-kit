@@ -69,6 +69,14 @@ export default class ListingDAO extends Model {
           from: 'listing.id',
           to: 'listing_cost.listing_id'
         }
+      },
+      listing_bookmark: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingBookmark,
+        join: {
+          from: 'listing.id',
+          to: 'listing_bookmark.listing_id'
+        }
       }
     };
   }
@@ -110,7 +118,7 @@ export default class ListingDAO extends Model {
     const allListings = camelizeKeys(await queryBuilder);
     const total = allListings.length;
     const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
-    // console.log(res);
+    console.log(res);
     return { listings: res, total };
   }
 
@@ -159,6 +167,52 @@ export default class ListingDAO extends Model {
     // console.log(query[0]);
     return res;
   }
+
+  public async myListingBookmark(userId: number, limit: number, after: number) {
+    const res = camelizeKeys(
+      await ListingBookmark.query()
+        .where('user_id', userId)
+        .eager('[listing.[listing_images, listing_cost]]')
+        .orderBy('id', 'desc')
+        .limit(limit)
+        .offset(after)
+    );
+    const allListings = res.map(item => {
+      return item.listing;
+    });
+    const total = allListings.length;
+    // console.log(res);
+    return { listings: allListings, total };
+  }
+
+  public async listingBookmarkStatus(listingId: number, userId: number) {
+    const count = camelizeKeys(
+      await ListingBookmark.query()
+        .where('listing_id', '=', listingId)
+        .andWhere('user_id', '=', userId)
+    ).length;
+    let wStatus = false;
+    console.log('count', count);
+    if (count > 0) {
+      wStatus = true;
+    }
+    return wStatus;
+  }
+
+  public async addOrRemoveListingBookmark(listingId: number, userId: number) {
+    const status = await this.listingBookmarkStatus(listingId, userId);
+    console.log('status1', status);
+    if (status) {
+      await ListingBookmark.query()
+        .where('listing_id', '=', listingId)
+        .andWhere('user_id', '=', userId)
+        .del();
+      return false;
+    } else {
+      await ListingBookmark.query().insertGraph(decamelizeKeys({ listingId, userId }));
+      return true;
+    }
+  }
 }
 
 // ListingImage model.
@@ -202,6 +256,30 @@ class ListingCost extends Model {
         modelClass: ListingDAO,
         join: {
           from: 'listing_cost.listing_id',
+          to: 'listing.id'
+        }
+      }
+    };
+  }
+}
+
+// ListingBookmark model.
+class ListingBookmark extends Model {
+  static get tableName() {
+    return 'listing_bookmark';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      listing: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingDAO,
+        join: {
+          from: 'listing_bookmark.listing_id',
           to: 'listing.id'
         }
       }

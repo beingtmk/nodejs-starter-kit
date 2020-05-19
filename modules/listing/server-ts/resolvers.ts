@@ -17,6 +17,7 @@ interface ListingInputWithId {
 
 const LISTING_SUBSCRIPTION = 'listing_subscription';
 const LISTINGS_SUBSCRIPTION = 'listings_subscription';
+const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
 
 export default (pubsub: any) => ({
   Query: {
@@ -48,6 +49,35 @@ export default (pubsub: any) => ({
     },
     userListings: withAuth(['user:view:self'], async (obj: any, { userId }: any, context: any) => {
       return context.Listing.userListings(userId || context.req.identity.id);
+    }),
+    myListingsBookmark: withAuth(async (obj: any, { userId, limit, after }: any, context: any) => {
+      const edgesArray: Edges[] = [];
+      const { total, listings } = await context.Listing.myListingBookmark(
+        userId || context.req.identity.id,
+        limit,
+        after
+      );
+
+      const hasNextPage = total > after + limit;
+      listings.map((listing: Listing & Identifier, index: number) => {
+        edgesArray.push({
+          cursor: after + index,
+          node: listing
+        });
+      });
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
+    }),
+    listingBookmarkStatus: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
+      return context.Listing.listingBookmarkStatus(listingId, userId || context.req.identity.id);
     })
   },
   Mutation: {
@@ -155,6 +185,32 @@ export default (pubsub: any) => ({
         // return { id: null };
         return false;
       }
+    }),
+    addOrRemoveListingBookmark: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
+      console.log('listingId resolvers', listingId, 'userId', userId);
+      const status = await context.Listing.addOrRemoveListingBookmark(listingId, userId);
+      console.log('status', status);
+
+      const list = await context.Listing.listing(listingId);
+      if (status) {
+        pubsub.publish(LISTINGS_BOOKMARK_SUBSCRIPTION, {
+          listingsBookmarkUpdated: {
+            mutation: 'CREATED',
+            id: list.id,
+            node: list
+          }
+        });
+        return 'Added SuccessFully';
+      } else {
+        pubsub.publish(LISTINGS_BOOKMARK_SUBSCRIPTION, {
+          listingsBookmarkUpdated: {
+            mutation: 'DELETED',
+            id: list.id,
+            node: list
+          }
+        });
+        return 'Removed SuccessFully';
+      }
     })
   },
   Subscription: {
@@ -175,6 +231,18 @@ export default (pubsub: any) => ({
         () => pubsub.asyncIterator(LISTING_SUBSCRIPTION),
         (payload, variables) => {
           return payload.listingUpdated.id === variables.id;
+        }
+      )
+    },
+    listingsBookmarkUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(LISTINGS_BOOKMARK_SUBSCRIPTION),
+        (payload, variables) => {
+          if (variables.endCursor) {
+            return variables.endCursor <= payload.listingsBookmarkUpdated.id;
+          } else {
+            return true;
+          }
         }
       )
     }

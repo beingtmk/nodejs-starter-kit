@@ -20,6 +20,16 @@ const MyListingsNavItemAccount = () => {
   );
 };
 
+const NavLinkMyListingsBookmark = () => {
+  return (
+    <NavLink to="/my-listings-bookmark">
+      <div>
+        <Icon type="star" /> {'My Listings Bookmarks'}
+      </div>
+    </NavLink>
+  );
+};
+
 const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
   <NavLink to="/my-listings" className=" AccDetItem" activeClassName="AccDetItemSelected">
     <Icon style={{ paddingRight: '5px' }} type="solution" />
@@ -75,6 +85,13 @@ export default new ClientModule({
       exact
       path="/my-listings"
       component={loadable(() => import('./containers/MyListings').then(c => c.default))}
+    />,
+    <AuthRoute
+      redirect="/profile"
+      role={['user', 'admin']}
+      exact
+      path="/my-listings-bookmark"
+      component={loadable(() => import('./containers/MyListingBookmarks').then(c => c.default))}
     />
   ],
   navItemAdmin: [
@@ -93,6 +110,11 @@ export default new ClientModule({
     <IfLoggedIn key="/my-listings">
       <MenuItem>
         <MyListingsNavItemAccount />
+      </MenuItem>
+    </IfLoggedIn>,
+    <IfLoggedIn key="/my-listings-bookmark">
+      <MenuItem>
+        <NavLinkMyListingsBookmark />
       </MenuItem>
     </IfLoggedIn>
   ],

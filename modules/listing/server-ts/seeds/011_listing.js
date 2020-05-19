@@ -24,6 +24,11 @@ exports.seed = async function(knex) {
         listing_id: listing[0],
         cost: Math.floor(Math.random() * (999 - 100 + 1) + 100)
       });
+      (Math.random() < 0.6 ? false : true) &&
+        (await returnId(knex('listing_bookmark')).insert({
+          listing_id: listing[0],
+          user_id: Math.floor(Math.random() * 2) + 1
+        }));
     })
   );
 };
