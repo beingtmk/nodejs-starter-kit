@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { compose } from '@gqlapp/core-common';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -8,13 +7,6 @@ import BookmarkComponent from './BookmarkComponent';
 import { withListingBookmarkStatus, withToogleListingBookmark } from '../containers/ListingOperations';
 
 const { Meta } = Card;
-const BookmarkStyle = styled.div`
-  position: absolute;
-  z-index: 1;
-  right: 6%;
-  top: 3%;
-`;
-
 class RelatedCardComponent extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +24,7 @@ class RelatedCardComponent extends Component {
 
   render() {
     // To Do: check if it is not present then set as default value
-    const { listingBookmarkStatus, currentUser } = this.props;
+    const { currentUser, loading, listingBookmarkStatus } = this.props;
     let listing = this.props.listing;
 
     const listing_id = listing && listing.id;
@@ -43,12 +35,12 @@ class RelatedCardComponent extends Component {
 
     return (
       <>
-        <BookmarkStyle>
+        {!loading && (
           <BookmarkComponent
             handleBookmark={() => this.bookmarkListing(listing.id, currentUser.id)}
             bookmarkStatus={listingBookmarkStatus}
           />
-        </BookmarkStyle>
+        )}
         <Link className="listing-link" to={`/listing-detail/${listing_id}`}>
           <Card
             bodyStyle={{ margin: '0px' }}
