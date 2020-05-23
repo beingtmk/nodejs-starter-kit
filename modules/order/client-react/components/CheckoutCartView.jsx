@@ -229,7 +229,7 @@ export default class CheckoutCartView extends React.Component {
         ) : (
           <div className="width100 centerAlign marginT30">
             <Empty description="You have no items in your Cart">
-              <Link to="/events">
+              <Link to="/listing_catalogue">
                 <Button style={{ width: 'fit-content' }} type="primary">
                   Add some products
                 </Button>

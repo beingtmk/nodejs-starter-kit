@@ -37,6 +37,27 @@ const ORDER = {
   // }
 };
 
+const ADDRESSES = [
+  {
+    id: 5,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  },
+  {
+    id: 3,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'Guwahati, North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  }
+];
+
 class CheckoutBill extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +101,8 @@ class CheckoutBill extends React.Component {
   };
 
   handleSelect = id => {
-    this.setState({ addressId: id });
+    console.log('addresses id', id);
+    // this.setState({ addressId: id });
   };
 
   async onSubmit() {
@@ -111,7 +133,13 @@ class CheckoutBill extends React.Component {
         {/* {this.props.loading ? (
           <Loader />
         ) : ( */}
-        <CheckoutBillView order={ORDER} onSubmit={this.onSubmit} onSelect={this.handleSelect} {...this.props} />
+        <CheckoutBillView
+          order={ORDER}
+          addresses={ADDRESSES}
+          onSubmit={this.onSubmit}
+          onSelect={this.handleSelect}
+          {...this.props}
+        />
         {/* )} */}
       </>
     );

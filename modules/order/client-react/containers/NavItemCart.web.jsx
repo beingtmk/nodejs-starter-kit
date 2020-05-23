@@ -7,14 +7,18 @@ import { translate } from '@gqlapp/i18n-client-react';
 import update from 'immutability-helper';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
+import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
 const NavItemCart = props => {
-  // useEffect(() => {
-  //   console.log('use effect', props.subscribeToMore);
-  //   const subscribe = subscribeToOrders(props.subscribeToMore);
-  //   return () => subscribe();
-  // });
+  useEffect(() => {
+    console.log('use effect', props.subscribeToMore);
+    const subscribe = subscribeToOrders(props.subscribeToMore);
+    props.refetch();
+    return () => subscribe();
+  });
 
+  console.log('props nav', props);
   return (
     <>
       {!props.currentUserLoading && (
@@ -22,7 +26,7 @@ const NavItemCart = props => {
           <Icon type="shopping-cart" /> Cart{' '}
           <Badge
             style={{ marginTop: '-5px' }}
-            count={props.order && props.order.orderDetails && props.order.orderDetails.length}
+            count={props.getCart && props.getCart.orderDetails && props.getCart.orderDetails.length}
           />
         </>
       )}
@@ -30,55 +34,55 @@ const NavItemCart = props => {
   );
 };
 
-// const onAddOrder = (prev, node) => {
-//   console.log('subscription add', prev, node);
-//   return update(prev, {
-//     blogs: {
-//       $set: node
-//     }
-//   });
-// };
+const onAddOrder = (prev, node) => {
+  console.log('subscription add', prev, node);
+  return update(prev, {
+    getCart: {
+      $set: node
+    }
+  });
+};
 
-// const onDelete = (prev, id) => {
-//   console.log('subscription deleted');
+const onDeleteOrder = (prev, node) => {
+  console.log('subscription deleted');
 
-//   // ignore if not found
-//   if (prev.id !== id) {
-//     return prev;
-//   }
+  // ignore if not found
+  if (prev.id !== node.id) {
+    return prev;
+  }
 
-//   return update(prev, {
-//     orders: {
-//       $set: null
-//     }
-//   });
-// };
+  return update(prev, {
+    getCart: {
+      $set: node
+    }
+  });
+};
 
-// const subscribeToOrders = subscribeToMore =>
-//   subscribeToMore({
-//     document: ORDERS_SUBSCRIPTION,
-//     updateQuery: (
-//       prev,
-//       {
-//         subscriptionData: {
-//           data: {
-//             ordersUpdated: { mutation, node }
-//           }
-//         }
-//       }
-//     ) => {
-//       console.log('subscribed');
-//       let newResult = prev;
-//       if (mutation === 'CREATED') {
-//         newResult = onAddOrder(prev, node);
-//       } else if (mutation === 'UPDATED') {
-//         newResult = onAddOrder(prev, node);
-//       } else if (mutation === 'DELETED') {
-//         newResult = onDeleteOrder(prev, node.id);
-//       }
-//       return newResult;
-//     }
-//   });
+const subscribeToOrders = subscribeToMore =>
+  subscribeToMore({
+    document: ORDERS_SUBSCRIPTION,
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            ordersUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      console.log('subscribed');
+      let newResult = prev;
+      if (mutation === 'CREATED') {
+        newResult = onAddOrder(prev, node);
+      } else if (mutation === 'UPDATED') {
+        newResult = onAddOrder(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteOrder(prev, node);
+      }
+      return newResult;
+    }
+  });
 
 export default compose(
   graphql(CURRENT_USER_QUERY, {
@@ -88,6 +92,14 @@ export default compose(
         currentUserLoading: loading,
         currentUser
       };
+    }
+  }),
+  graphql(GET_CART_QUERY, {
+    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { cartLoading: loading, getCart, subscribeToMore, refetch };
     }
   }),
   translate('order')

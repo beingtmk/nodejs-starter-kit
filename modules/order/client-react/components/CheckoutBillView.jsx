@@ -4,7 +4,8 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { FieldArray, withFormik } from 'formik';
 import { PageLayout } from '@gqlapp/look-client-react';
-// import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
+import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
+// import { RenderAddress } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import EventCardComponent from './CheckoutCardComponent';
@@ -62,7 +63,7 @@ class CheckoutBillView extends React.Component {
               <h3 className="billingAddress">Billing Address</h3>
               <br />
             </Col>
-            {/* <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }}>
               <FieldArray
                 name="addresses"
                 render={arrayHelpers => (
@@ -78,8 +79,8 @@ class CheckoutBillView extends React.Component {
                   />
                 )}
               />
-            </Col> */}
-            <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+            </Col>
+            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }}>
               <EventCardComponent
                 onSubmit={() => {
                   console.log('Working!');
@@ -112,8 +113,7 @@ CheckoutBillView.propTypes = {
 
 const CheckoutBillWithFormik = withFormik({
   mapPropsToValues: values => {
-    const addresses =
-      values && values.currentUser && values.currentUser.profile && values.currentUser.profile.addresses;
+    const addresses = values && values.addresses;
 
     function getAddresses(address) {
       return {
@@ -131,7 +131,7 @@ const CheckoutBillWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { props: { onSubmit } }) {
-    console.log('values', values);
+    // console.log('values', values);
     // onSubmit();
   },
   displayName: 'CheckoutBill ' // helps with React DevTools

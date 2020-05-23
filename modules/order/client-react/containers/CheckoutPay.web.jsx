@@ -12,6 +12,26 @@ import CheckoutPayView from '../components/CheckoutPayView';
 // import ORDER_PAYMENT from '../graphql/OrderPayment.graphql';
 // import PATCH_ORDER_PAYMENT from '../graphql/PatchOrderPayment.graphql';
 
+const ADDRESSES = [
+  {
+    id: 5,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  },
+  {
+    id: 3,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'Guwahati, North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  }
+];
 class CheckoutPay extends React.Component {
   constructor(props) {
     super(props);
@@ -116,7 +136,12 @@ class CheckoutPay extends React.Component {
         ) : ( */}
         <>
           {console.log('props', this.props)}
-          <CheckoutPayView {...this.props} onSubmit={this.onSubmit} openCheckout={this.openCheckout} />
+          <CheckoutPayView
+            {...this.props}
+            addresses={ADDRESSES}
+            onSubmit={this.onSubmit}
+            openCheckout={this.openCheckout}
+          />
           <div ref={el => (this.instance = el)} />
 
           <form onSubmit={this.onSubmit} id="rp_custom" hidden>

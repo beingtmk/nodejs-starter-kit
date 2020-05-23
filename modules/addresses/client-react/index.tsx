@@ -16,7 +16,8 @@ const NavLinkWithI18n = translate('addresses')(({ t }: { t: TranslateFunction })
 
 export default new ClientModule({
   route: [
-    <Route exact path="/addresses" component={loadable(() => import('./containers/Addresses').then(c => c.default))} />
+    <Route exact path="/addresses" component={loadable(() => import('./containers/Addresses').then(c => c.default))} />,
+    <Route exact path="/address" component={loadable(() => import('./containers/Address').then(c => c.default))} />
   ],
   navItemTest: [
     <MenuItem key="/addresses">

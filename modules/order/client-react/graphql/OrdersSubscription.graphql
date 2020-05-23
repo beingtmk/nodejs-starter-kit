@@ -1,0 +1,10 @@
+#import "./Order.graphql"
+
+subscription onOrdersUpdated {
+  ordersUpdated {
+    mutation
+    node {
+      ...OrderInfo
+    }
+  }
+}

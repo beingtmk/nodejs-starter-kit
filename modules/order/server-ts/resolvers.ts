@@ -1,10 +1,12 @@
-// import { PubSub, withFilter } from 'graphql-subscriptions';
+import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
 // import { knex, returnId, orderedFor } from '@gqlapp/database-server-ts';
 import { Identifier } from './sql';
 
 // import { withFilter } from 'graphql-subscriptions';
 import moment from 'moment';
+
+const ORDERS_SUBSCRIPTION = 'orders_subscription';
 
 export default (pubsub: any) => ({
   Query: {
@@ -54,6 +56,15 @@ export default (pubsub: any) => ({
         }
         const id = await Order.addToCart(input);
         if (id) {
+          console.log('resolver2', id);
+          const orderItem = await Order.order(id);
+          console.log('resolver2', orderItem);
+          pubsub.publish(ORDERS_SUBSCRIPTION, {
+            ordersUpdated: {
+              mutation: 'CREATED',
+              node: orderItem
+            }
+          });
           return true;
         }
         return false;
@@ -117,7 +128,15 @@ export default (pubsub: any) => ({
     deleteOrder: withAuth(async (obj: any, { id }: Identifier, context: any) => {
       const order = await context.Order.order(id);
       const isDeleted = await context.Order.deleteOrder(id);
+      console.log('order', order);
+      const orderItem = await context.Order.order(order.orderDetail[0].orderId);
       if (isDeleted) {
+        pubsub.publish(ORDERS_SUBSCRIPTION, {
+          ordersUpdated: {
+            mutation: 'UPDATED',
+            node: orderItem
+          }
+        });
         return { id: order.id };
       } else {
         return { id: null };
@@ -134,5 +153,13 @@ export default (pubsub: any) => ({
     })
   },
   Subscription: {
+    ordersUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(ORDERS_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.ordersUpdated.id === variables.id;
+        }
+      )
+    }
   }
 });
