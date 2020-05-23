@@ -1,4 +1,5 @@
 import addresses from '@gqlapp/addresses-server-ts';
+import order from '@gqlapp/order-server-ts';
 import listing from '@gqlapp/listing-server-ts';
 import home from '@gqlapp/home-server-ts';
 import core from '@gqlapp/core-server-ts';
@@ -24,6 +25,7 @@ const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
   addresses,
+  order,
   listing,
   home,
   authentication,
