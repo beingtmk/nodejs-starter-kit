@@ -10,7 +10,6 @@ import update from 'immutability-helper';
 import { FormError } from '@gqlapp/forms-client-react';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
-import PATCH_ORDER from '../graphql/PatchOrder.graphql';
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
@@ -23,41 +22,12 @@ const CheckoutCart = props => {
     return () => subscribe();
   });
 
-  const onSubmit = async () => {
-    const { history, navigation } = props;
-    // console.log('submit pressed!');
-    // console.log('this.props.getCart');
-    // try {
-    //   await this.props.patchOrder({id:this.props.getCart.id, state: "INITIATED"});
-    // } catch (e) {
-    //   message.error("Failed!");
-    //   console.log(e);
-    //   // throw new FormError('Failed!', e);
-    // }
-
-    // Redirect
-    if (history) {
-      return history.push('/checkout-bill/');
-    }
-    if (navigation) {
-      return navigation.goBack();
-    }
-  };
-  // onSubmit = async () => {
-  //   const { history, navigation } = this.props;
-  //   console.log('submit pressed!');
-  //   console.log('this.props.getCart');
-  //   try {
-  //     await this.props.patchOrder({id:this.props.getCart.id, state: "INITIATED"});
-  //   } catch (e) {
-  //     message.error("Failed!");
-  //     console.log(e);
-  //     // throw new FormError('Failed!', e);
-  //   }
+  // const onSubmit = async () => {
+  //   const { history, navigation } = props;
 
   //   // Redirect
   //   if (history) {
-  //     return history.push('/my-orders/');
+  //     return history.push('/checkout-bill/');
   //   }
   //   if (navigation) {
   //     return navigation.goBack();
@@ -72,7 +42,7 @@ const CheckoutCart = props => {
         <CheckoutCartView
           order={props.getCart}
           // deleteProduct={deleteProduct}
-          onSubmit={onSubmit}
+          // onSubmit={onSubmit}
           // cart={props.cart}
           {...props}
         />
@@ -153,18 +123,6 @@ export default compose(
       return { cartLoading: loading, getCart, subscribeToMore, refetch };
     }
   }),
-  graphql(PATCH_ORDER, {
-    props: ({ mutate }) => ({
-      patchOrder: async values => {
-        console.log('mutation start', values);
-        await mutate({
-          variables: {
-            input: values
-          }
-        });
-        console.log(values, 'mutation called');
-      }
-    })
-  }),
+
   translate('orders')
 )(CheckoutCart);

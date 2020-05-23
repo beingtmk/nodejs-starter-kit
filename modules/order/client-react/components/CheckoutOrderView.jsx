@@ -4,12 +4,12 @@ import { PageLayout } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import { Row, Col, message } from 'antd';
 
+import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
 import settings from '../../../../settings';
 
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
-// import naruto2 from '../../resources/naruto2.jpg';
 
 const renderMetaData = t => (
   <Helmet
@@ -97,7 +97,7 @@ export default class CheckoutOrderView extends React.Component {
 
     // Redirect
     if (history) {
-      return history.push('/my-listings/');
+      return history.push('/my-orders/');
     }
     if (navigation) {
       return navigation.goBack();
@@ -119,11 +119,16 @@ export default class CheckoutOrderView extends React.Component {
             <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
               <Row gutter={24}>
                 <Col lg={{ span: 10, offset: 0 }} xs={{ span: 24, offset: 0 }} className="margin20">
-                  <OrderTrackCardComponent
-                    orderStatus={this.props.order.state}
-                    // status={this.state.status}
-                    completed={this.state.completed}
-                  />
+                  <Row>
+                    <OrderTrackCardComponent
+                      orderStatus={this.props.order.state}
+                      // status={this.state.status}
+                      completed={this.state.completed}
+                    />
+                    <Col lg={{ span: 12, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                      <AddressView addresses={this.props.addresses} addressId={this.props.addresses[0].id} />
+                    </Col>
+                  </Row>
                 </Col>
                 <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
                   <CheckoutCardComponent

@@ -7,6 +7,7 @@ import { graphql } from 'react-apollo';
 
 // import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserId.graphql';
 // import ORDER_TRACK_QUERY from '../graphql/OrderTrackQuery.graphql';
+import PATCH_ORDER from '../graphql/PatchOrder.graphql';
 
 import CheckoutOrderView from '../components/CheckoutOrderView';
 
@@ -34,31 +35,86 @@ const ORDER = {
 
   // }
 };
+const ADDRESSES = [
+  {
+    id: 5,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  },
+  {
+    id: 3,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'Guwahati, North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  }
+];
+
 class CheckoutOrder extends React.Component {
+  onSubmit = async () => {
+    const { history, navigation } = this.props;
+    console.log('submit pressed!');
+    console.log('this.props.getCart');
+    try {
+      await this.props.patchOrder({ id: this.props.getCart.id, state: 'INITIATED' });
+    } catch (e) {
+      message.error('Failed!');
+      console.log(e);
+      // throw new FormError('Failed!', e);
+    }
+
+    // Redirect
+    if (history) {
+      return history.push('/my-orders/');
+    }
+    if (navigation) {
+      return navigation.goBack();
+    }
+  };
   render() {
     console.log('props', this.props);
     if (this.props.loading) {
       return <div>Loading.......................</div>;
     }
-    return <CheckoutOrderView order={ORDER} {...this.props} />;
+    return <CheckoutOrderView addresses={ADDRESSES} order={ORDER} {...this.props} />;
   }
 }
 
-export default compose()(CheckoutOrder);
-// graphql(CURRENT_USER_QUERY, {
-//   props({ data: { loading, error, currentUser } }) {
-//     if (error) throw new Error(error);
-//     return { currentUserLoading: loading, currentUser };
-//   }
-// }),
-// graphql(ORDER_TRACK_QUERY, {
-//   options: props => {
-//     return {
-//       variables: { id: parseInt(props.match.params.id) }
-//     };
-//   },
-//   props({ data: { loading, error, order } }) {
-//     if (error) throw new Error(error);
-//     return { loading, order };
-//   }
-// })
+export default compose(
+  // graphql(CURRENT_USER_QUERY, {
+  //   props({ data: { loading, error, currentUser } }) {
+  //     if (error) throw new Error(error);
+  //     return { currentUserLoading: loading, currentUser };
+  //   }
+  // }),
+  // graphql(ORDER_TRACK_QUERY, {
+  //   options: props => {
+  //     return {
+  //       variables: { id: parseInt(props.match.params.id) }
+  //     };
+  //   },
+  //   props({ data: { loading, error, order } }) {
+  //     if (error) throw new Error(error);
+  //     return { loading, order };
+  //   }
+  // })
+  graphql(PATCH_ORDER, {
+    props: ({ mutate }) => ({
+      patchOrder: async values => {
+        console.log('mutation start', values);
+        await mutate({
+          variables: {
+            input: values
+          }
+        });
+        console.log(values, 'mutation called');
+      }
+    })
+  })
+)(CheckoutOrder);

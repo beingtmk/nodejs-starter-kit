@@ -181,7 +181,7 @@ export default class CheckoutCartView extends React.Component {
                         </Checkbox>
                       </MarginV15>
                       {this.state.checkout ? (
-                        <Margin20Button onClick={this.props.onSubmit} type="primary" block>
+                        <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
                           Next
                         </Margin20Button>
                       ) : (
@@ -189,7 +189,7 @@ export default class CheckoutCartView extends React.Component {
                           Checkout
                         </Margin20Button>
                       )}
-                      <Link className="listing-link" to={`/events`} target="_blank">
+                      <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
                         <MarginB20btn type="primary" ghost block>
                           Add more products
                         </MarginB20btn>
