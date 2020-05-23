@@ -5,9 +5,10 @@ import { graphql } from 'react-apollo';
 
 // import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
-// import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserId.graphql';
 // import ORDER_TRACK_QUERY from '../graphql/OrderTrackQuery.graphql';
+import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import PATCH_ORDER from '../graphql/PatchOrder.graphql';
+import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
 import CheckoutOrderView from '../components/CheckoutOrderView';
 
@@ -77,22 +78,31 @@ class CheckoutOrder extends React.Component {
       return navigation.goBack();
     }
   };
+
   render() {
     console.log('props', this.props);
     if (this.props.loading) {
       return <div>Loading.......................</div>;
     }
-    return <CheckoutOrderView addresses={ADDRESSES} order={ORDER} {...this.props} />;
+    return <CheckoutOrderView addresses={ADDRESSES} onSubmit={this.onSubmit} order={ORDER} {...this.props} />;
   }
 }
 
 export default compose(
-  // graphql(CURRENT_USER_QUERY, {
-  //   props({ data: { loading, error, currentUser } }) {
-  //     if (error) throw new Error(error);
-  //     return { currentUserLoading: loading, currentUser };
-  //   }
-  // }),
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { currentUserLoading: loading, currentUser };
+    }
+  }),
+  graphql(GET_CART_QUERY, {
+    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { cartLoading: loading, getCart, subscribeToMore, refetch };
+    }
+  }),
   // graphql(ORDER_TRACK_QUERY, {
   //   options: props => {
   //     return {

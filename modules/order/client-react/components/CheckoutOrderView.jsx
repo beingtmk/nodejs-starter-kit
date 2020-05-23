@@ -55,54 +55,53 @@ export default class CheckoutOrderView extends React.Component {
       },
       completed: 3
     };
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async onSubmit(values) {
-    const { history, navigation } = this.props;
+  // async onSubmit(values) {
+  //   const { history, navigation } = this.props;
 
-    // Get Values
+  //   // Get Values
 
-    console.log('onSubmit Called!');
-    // let userValues = pick(values, [
-    //   'username',
-    //   'email',
-    //   'role',
-    //   'isActive',
-    //   'profile',
-    //   'addresses',
-    //   'portfolios',
-    //   'password'
-    // ]);
+  //   console.log('onSubmit Called!');
+  //   // let userValues = pick(values, [
+  //   //   'username',
+  //   //   'email',
+  //   //   'role',
+  //   //   'isActive',
+  //   //   'profile',
+  //   //   'addresses',
+  //   //   'portfolios',
+  //   //   'password'
+  //   // ]);
 
-    // userValues = UserFormatter.trimExtraSpaces(userValues);
+  //   // userValues = UserFormatter.trimExtraSpaces(userValues);
 
-    // if (settings.auth.certificate.enabled) {
-    //   userValues['auth'] = {
-    //     certificate: pick(values.auth.certificate, 'serial')
-    //   };
-    // }
+  //   // if (settings.auth.certificate.enabled) {
+  //   //   userValues['auth'] = {
+  //   //     certificate: pick(values.auth.certificate, 'serial')
+  //   //   };
+  //   // }
 
-    // Call Mutation
+  //   // Call Mutation
 
-    // try {
-    //   await addUser(userValues);
-    // } catch (e) {
-    //   message.error(t('userAdd.errorMsg'));
-    //   throw new FormError(t('userAdd.errorMsg'), e);
-    // }
+  //   // try {
+  //   //   await addUser(userValues);
+  //   // } catch (e) {
+  //   //   message.error(t('userAdd.errorMsg'));
+  //   //   throw new FormError(t('userAdd.errorMsg'), e);
+  //   // }
 
-    // Add Message
-    message.info('We will notify you of new updates!');
+  //   // Add Message
+  //   message.info('We will notify you of new updates!');
 
-    // Redirect
-    if (history) {
-      return history.push('/my-orders/');
-    }
-    if (navigation) {
-      return navigation.goBack();
-    }
-  }
+  //   // Redirect
+  //   if (history) {
+  //     return history.push('/my-orders/');
+  //   }
+  //   if (navigation) {
+  //     return navigation.goBack();
+  //   }
+  // }
 
   render() {
     return (
@@ -132,7 +131,7 @@ export default class CheckoutOrderView extends React.Component {
                 </Col>
                 <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
                   <CheckoutCardComponent
-                    onSubmit={this.onSubmit}
+                    onSubmit={this.props.onSubmit}
                     getCart={this.props.order}
                     product={this.state.product}
                     paid={true}

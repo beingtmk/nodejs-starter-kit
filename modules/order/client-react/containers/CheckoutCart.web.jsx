@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { compose } from '@gqlapp/core-common';
+import { compose, removeTypename } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 
@@ -11,16 +11,41 @@ import { FormError } from '@gqlapp/forms-client-react';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
+import EDIT_ORDER from '../graphql/EditOrder.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
 
 const CheckoutCart = props => {
+  const { getCart, editOrder } = props;
   useEffect(() => {
     console.log('use effect', props.subscribeToMore);
     const subscribe = subscribeToOrders(props.subscribeToMore);
     props.refetch();
     return () => subscribe();
   });
+
+  const handleSubmit = async values => {
+    console.log('props', props, 'values', values);
+    const index = getCart.orderDetails.indexOf(
+      getCart.orderDetails.filter((order, index) => order.id === values.id)[0]
+    );
+    getCart.orderDetails[index] = values;
+    console.log('value', {
+      id: getCart.id,
+      state: getCart.state,
+      orderDetails: Object.values(removeTypename(getCart.orderDetails))
+    });
+
+    try {
+      await editOrder({
+        id: getCart.id,
+        state: getCart.state,
+        orderDetails: Object.values(removeTypename(getCart.orderDetails))
+      });
+    } catch (e) {
+      throw Error(e);
+    }
+  };
 
   // const onSubmit = async () => {
   //   const { history, navigation } = props;
@@ -41,6 +66,7 @@ const CheckoutCart = props => {
       ) : (
         <CheckoutCartView
           order={props.getCart}
+          onSubmit={handleSubmit}
           // deleteProduct={deleteProduct}
           // onSubmit={onSubmit}
           // cart={props.cart}
@@ -123,6 +149,18 @@ export default compose(
       return { cartLoading: loading, getCart, subscribeToMore, refetch };
     }
   }),
+  graphql(EDIT_ORDER, {
+    props: ({ mutate }) => ({
+      editOrder: async input => {
+        const {
+          data: { editOrder }
+        } = await mutate({
+          variables: { input }
+        });
 
+        return editOrder;
+      }
+    })
+  }),
   translate('orders')
 )(CheckoutCart);

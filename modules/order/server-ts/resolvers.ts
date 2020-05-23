@@ -116,7 +116,12 @@ export default (pubsub: any) => ({
           await Order.patchOrder(id, input);
 
           const order = await Order.order(id);
-
+          pubsub.publish(ORDERS_SUBSCRIPTION, {
+            ordersUpdated: {
+              mutation: 'CREATED',
+              node: order
+            }
+          });
           return order;
         } else {
           throw new Error("You don't have the rights to do that.");

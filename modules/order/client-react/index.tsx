@@ -40,7 +40,11 @@ export default new ClientModule({
     />,
     <Route exact path="/order" component={loadable(() => import('./containers/Order').then(c => c.default))} />,
     <Route exact path="/my-orders" component={loadable(() => import('./containers/MyOrder').then(c => c.default))} />,
-    <Route exact path="/my-delivery" component={loadable(() => import('./containers/MyDelivery').then(c => c.default))} />,
+    <Route
+      exact
+      path="/my-delivery"
+      component={loadable(() => import('./containers/MyDelivery').then(c => c.default))}
+    />,
     <Route
       exact
       path="/checkout-cart"
@@ -62,6 +66,13 @@ export default new ClientModule({
       component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default))}
     />
   ],
+  // navItem: [
+  //   <MenuItem key="/checkout-cart">
+  //     <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
+  //       <NavItemCart />
+  //     </NavLink>
+  //   </MenuItem>
+  // ],
   navItemUser: [
     <MenuItem key="/checkout-cart">
       <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
@@ -69,15 +80,15 @@ export default new ClientModule({
       </NavLink>
     </MenuItem>,
     <IfLoggedIn key="/my-orders">
-    <MenuItem>
-      <NavLinkMyOrdersWithI18n />
-    </MenuItem>
+      <MenuItem>
+        <NavLinkMyOrdersWithI18n />
+      </MenuItem>
     </IfLoggedIn>,
     <IfLoggedIn key="/my-delivery">
       <MenuItem>
         <NavLinkMyDeliveriesWithI18n />
       </MenuItem>
-    </IfLoggedIn>    
+    </IfLoggedIn>
   ],
   navItemAdmin: [
     <IfLoggedIn key="/orders" role="admin">
