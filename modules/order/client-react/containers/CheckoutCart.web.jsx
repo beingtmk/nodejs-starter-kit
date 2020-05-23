@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { compose } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 
-import { Loader } from '@gqlapp/look-client-react';
+// import { Loader } from '@gqlapp/look-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import update from 'immutability-helper';
 
 import { FormError } from '@gqlapp/forms-client-react';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
+import PATCH_ORDER from '../graphql/PatchOrder.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
 
@@ -37,105 +39,52 @@ const ORDER = {
   // }
 };
 
-const CheckoutCart = props => {
-  // useEffect(() => {
-  //   console.log('use effect', props.subscribeToMore);
-  //   const subscribe = subscribeToOrders(props.subscribeToMore);
-  //   props.refetch();
-  //   return () => subscribe();
-  // });
+class CheckoutCart extends React.Component {
+  constructor(props){
+    super(props);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  
+  onSubmit = async () => {
+    const { history, navigation } = this.props;
+    console.log('submit pressed!');
+    console.log('this.props.getCart');
+    try {
+      await this.props.patchOrder({id:this.props.getCart.id, state: "INITIATED"});
+    } catch (e) {
+      message.error("Failed!");
+      console.log(e);
+      // throw new FormError('Failed!', e);
+    }
 
-  // const onSubmit = async values => {
-  //   const { history, navigation } = props;
+    // Redirect
+    if (history) {
+      return history.push('/my-orders/');
+    }
+    if (navigation) {
+      return navigation.goBack();
+    }
+  };
 
-  //   // Get Values
-
-  //   console.log('onSubmit Called!');
-
-  //   // Add Message
-  //   message.info('Success! Select your Billing Address.');
-
-  //   // Redirect
-  //   if (history) {
-  //     return history.push('/checkout-bill/');
-  //   }
-  //   if (navigation) {
-  //     return navigation.goBack();
-  //   }
-  // };
-
-  console.log('checkout cart cont', props);
-
-  return (
-    <>
-      {/* {props.currentUserLoading || props.cartLoading ? (
-        <Loader />
-      ) : ( */}
-      <CheckoutCartView
-        order={ORDER}
-        // deleteProduct={deleteProduct}
-        // onSubmit={onSubmit}
-        // cart={props.cart}
-        {...props}
-      />
-      {/* )} */}
-    </>
-  );
+  render(){
+    const props = this.props;
+    return (
+      <>
+        {props.currentUserLoading || props.cartLoading ? (
+          <>Loading...</>
+        ) : (
+        <CheckoutCartView
+          order={props.getCart}
+          // deleteProduct={deleteProduct}
+          onSubmit={this.onSubmit}
+          // cart={props.cart}
+          {...props}
+        />
+        )}
+      </>
+    );
+  }
 };
-
-// const onAddOrder = (prev, node) => {
-//   console.log('subscription add', prev, node);
-//   // ignore if duplicate
-//   // if (prev.blogs.some(item => node.id === item.id)) {
-//   //   return prev;
-//   // }
-//   return update(prev, {
-//     blogs: {
-//       $set: node
-//     }
-//   });
-// };
-
-// const onDelete = (prev, id) => {
-//   console.log('subscription deleted');
-
-//   // ignore if not found
-//   if (prev.id !== id) {
-//     return prev;
-//   }
-
-//   return update(prev, {
-//     orders: {
-//       $set: null
-//     }
-//   });
-// };
-
-// const subscribeToOrders = subscribeToMore =>
-//   subscribeToMore({
-//     document: ORDERS_SUBSCRIPTION,
-//     updateQuery: (
-//       prev,
-//       {
-//         subscriptionData: {
-//           data: {
-//             ordersUpdated: { mutation, node }
-//           }
-//         }
-//       }
-//     ) => {
-//       console.log('subscribed');
-//       let newResult = prev;
-//       if (mutation === 'CREATED') {
-//         newResult = onAddOrder(prev, node);
-//       } else if (mutation === 'UPDATED') {
-//         newResult = onAddOrder(prev, node);
-//       } else if (mutation === 'DELETED') {
-//         newResult = onDeleteOrder(prev, node.id);
-//       }
-//       return newResult;
-//     }
-//   });
 
 export default compose(
   graphql(CURRENT_USER_QUERY, {
@@ -147,5 +96,26 @@ export default compose(
       };
     }
   }),
-  translate('events')
+  graphql(GET_CART_QUERY, {
+    props({ data: { loading, error, getCart } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { cartLoading: loading, getCart };
+    }
+  }),
+  graphql(PATCH_ORDER, {
+    props: ({ mutate }) => ({
+      patchOrder: async values => {
+        console.log('mutation start', values);
+        await mutate({
+          variables: {
+            input: values
+          }
+        });
+        console.log(values, 'mutation called');
+      }
+    })
+  }),
+  translate('orders')
 )(CheckoutCart);

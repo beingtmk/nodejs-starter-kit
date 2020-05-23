@@ -95,16 +95,16 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    patchOrder: withAuth(async (obj: any, { input }: any, context: any) => {
+    patchOrder: withAuth(async (obj: any, { input }: any, { Order, req: { identity } }) => {
       try {
-        if (context.identity && context.identity.role === 'admin') {
+        if (identity && identity.role === 'admin') {
           const id = input.id;
           // console.log(input);
           delete input.id;
           // console.log(input);
-          await context.Order.patchOrder(id, input);
+          await Order.patchOrder(id, input);
 
-          const order = await context.Order.order(id);
+          const order = await Order.order(id);
 
           return order;
         } else {

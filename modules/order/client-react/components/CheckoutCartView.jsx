@@ -89,8 +89,9 @@ export default class CheckoutCartView extends React.Component {
       cartItem: null,
       books: [],
       randomVal: 2000,
-      checkout: false
+      checkout: true
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   // cartItemSelect(id) {
@@ -117,11 +118,11 @@ export default class CheckoutCartView extends React.Component {
   //   this.props.setModal1Visible();
   // }
 
-  // onChange(e) {
-  //   this.setState({
-  //     checkout: e.target.checked
-  //   });
-  // }
+  onChange(e) {
+    this.setState({
+      checkout: e.target.checked
+    });
+  }
 
   // getValue() {
   //   let refundValue = 0;
@@ -181,7 +182,7 @@ export default class CheckoutCartView extends React.Component {
                       </MarginV15>
                       {this.state.checkout ? (
                         <Margin20Button onClick={this.props.onSubmit} type="primary" block>
-                          Checkout
+                          Next
                         </Margin20Button>
                       ) : (
                         <Margin20Button type="primary" disabled block>
@@ -203,7 +204,7 @@ export default class CheckoutCartView extends React.Component {
                               <Rightfloat>
                                 &#8377;{' '}
                                 {item.cost && item.cost !== '0'
-                                  ? `${item.price} X ${item.quantity} = ${item.price * item.quantity}`
+                                  ? `${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`
                                   : 'Free'}
                               </Rightfloat>
                               <br />

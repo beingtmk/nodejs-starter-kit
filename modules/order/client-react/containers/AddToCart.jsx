@@ -6,45 +6,58 @@ import { FormError } from '@gqlapp/forms-client-react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-// import ADD_TO_CART from '../graphql/AddToCart.graphql';
+import ADD_TO_CART from '../graphql/AddToCart.graphql';
 
 import AddTocartCard from '../components/AddTocartCard';
 
 class AddToCart extends React.Component {
-  // onSubmit = async (redirect) => {
-  //   const { history, navigation, currentUser } = this.props;
+  constructor(props) {
+    super(props);
 
-  //   if (!currentUser) {
-  //     return history.push("/login/");
-  //   }
-  //   // Get Values
-  //   // console.log(values);
-  //   const event = this.props.event;
-  //   const obj = {
-  //     eventId: event.id,
-  //     userId: currentUser.id,
-  //   };
-  //   console.log(history, "called");
-  //   // Call Mutation
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-  //   try {
-  //     await this.props.addToCart(obj);
-  //   } catch (e) {
-  //     message.error("Failed!");
-  //     console.log(e);
-  //     // throw new FormError('Failed!', e);
-  //   }
+  onSubmit = async (values, redirect=false) => {
+    const { history, navigation, currentUser } = this.props;
 
-  //   // Add Message
-  //   message.success("Success! Complete your Order.");
+    // if (!currentUser) {
+    //   return history.push("/login/");
+    // }
+    // Get Values
+    console.log(values);
+    console.log("****************");
+    console.log(this.props.listing);
+    // Call Mutation
 
-  //   // Redirect
-  //   if (history || navigation) {
-  //     if (history && redirect) {
-  //       return history.push("/checkout-cart/");
-  //     }
-  //   }
-  // };
+    const obj = {
+      consumerId: 1,
+      orderDetail: {
+        cost : 491,
+        title : "Listing 50",
+        quantity:values.quantity,
+        date:values.date,
+        thumbnail:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU"
+      }
+    }
+
+    try {
+      await this.props.addToCart(obj);
+    } catch (e) {
+      message.error("Failed!");
+      console.log(e);
+      // throw new FormError('Failed!', e);
+    }
+
+    // Add Message
+    message.success("Success! Complete your Order.");
+
+    // Redirect
+    // if (history || navigation) {
+    //   if (history && redirect) {
+    //     return history.push("/checkout-cart/");
+    //   }
+    // }
+  };
 
   render() {
     console.log('props, add to cart', this.props);
@@ -57,18 +70,18 @@ class AddToCart extends React.Component {
 }
 
 export default compose(
-  // graphql(ADD_TO_CART, {
-  //   props: ({ mutate }) => ({
-  //     addToCart: async values => {
-  //       console.log('mutation start', values);
-  //       await mutate({
-  //         variables: {
-  //           input: values
-  //         }
-  //       });
-  //       console.log(values, 'mutation called');
-  //     }
-  //   })
-  // }),
-  translate('events')
+  graphql(ADD_TO_CART, {
+    props: ({ mutate }) => ({
+      addToCart: async values => {
+        console.log('mutation start', values);
+        await mutate({
+          variables: {
+            input: values
+          }
+        });
+        console.log(values, 'mutation called');
+      }
+    })
+  }),
+  translate('orders')
 )(AddToCart);

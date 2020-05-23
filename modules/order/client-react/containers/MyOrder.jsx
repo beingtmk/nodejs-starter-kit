@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -10,63 +10,9 @@ import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import MyOrdersListView from '../components/MyOrdersListView';
 
-const ORDERS = [
-  {
-    id: 1,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  },
-  {
-    id: 2,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  }
-];
+import MY_ORDERS_QUERY from '../graphql/MyOrdersQuery.graphql';
 
 const MyOrders = props => {
-  // const { t, updateQuery, subscribeToMore } = props;
-  // const filter = { isActive: true };
-  // const usersUpdated = useUsersWithSubscription(subscribeToMore, filter);
-  // console.log('users', props);
-  // useEffect(() => {
-  //   if (usersUpdated) {
-  //     updateUsersState(usersUpdated, updateQuery);
-  //   }
-  // });
 
   const renderMetaData = () => (
     <Helmet
@@ -79,19 +25,14 @@ const MyOrders = props => {
       ]}
     />
   );
-  console.log('admin blog', props);
   return (
     <PageLayout>
       {renderMetaData()}
-      {/* <h2>Orders</h2> */}
-      {/* <Link to="/users/new">
-        <Button color="primary">{t('users.btn.add')}</Button>
-      </Link> */}
-      {/* <hr /> */}
-      {/* <UsersFilterView {...props} filter={filter} />
-      <hr /> */}
-      <MyOrdersListView orders={ORDERS} {...props} />
-    </PageLayout>
+
+      {props.loading ? <>Loading...</>
+        : <MyOrdersListView orders={props.userOrders} {...props} />
+      }
+      </PageLayout>
   );
 };
 
@@ -103,4 +44,12 @@ const MyOrders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose()(translate('order')(MyOrders));
+export default compose(
+  graphql(MY_ORDERS_QUERY, {
+    props({ data: { loading, error, userOrders } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { loading, userOrders };
+    }
+  }),translate('order'))(MyOrders);
