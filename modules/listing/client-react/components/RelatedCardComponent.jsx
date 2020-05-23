@@ -35,10 +35,10 @@ class RelatedCardComponent extends Component {
 
     return (
       <>
-        {!loading && (
+        {!(typeof listingBookmarkStatus == 'undefined') && (
           <BookmarkComponent
             handleBookmark={() => this.bookmarkListing(listing.id, currentUser.id)}
-            bookmarkStatus={listingBookmarkStatus}
+            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
           />
         )}
         <Link className="listing-link" to={`/listing-detail/${listing_id}`}>

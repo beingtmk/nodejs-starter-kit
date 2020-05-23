@@ -192,7 +192,7 @@ export default class ListingDAO extends Model {
         .where('listing_id', listingId)
     ).length;
     let wStatus = false;
-    console.log('count', count);
+    // console.log('count', count);
     if (count > 0) {
       wStatus = true;
     }

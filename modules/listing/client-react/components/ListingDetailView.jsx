@@ -133,10 +133,12 @@ class ListingDetailView extends Component {
                       <h1>{listing.title}</h1>
                     </Col>
                     <Col xl={1} lg={1} md={1} sm={1}>
-                      <BookmarkComponent
-                        handleBookmark={() => handleBookmark(listing.id, listing.userId)}
-                        bookmarkStatus={listingBookmarkStatus}
-                      />
+                      {!(typeof listingBookmarkStatus == 'undefined') && (
+                        <BookmarkComponent
+                          handleBookmark={() => handleBookmark(listing.id, listing.userId)}
+                          bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                        />
+                      )}
                     </Col>
                   </Row>
                 }
@@ -240,7 +242,8 @@ ListingDetailView.propTypes = {
   navigation: PropTypes.object,
   currentUser: PropTypes.object,
   handleBookmark: PropTypes.func,
-  listingBookmarkStatus: PropTypes.bool
+  listingBookmarkStatus: PropTypes.bool,
+  listingBookmarkStatusLoading: PropTypes.bool
 };
 
 export default translate('listing')(ListingDetailView);
