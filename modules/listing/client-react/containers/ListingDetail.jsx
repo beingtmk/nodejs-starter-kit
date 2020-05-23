@@ -51,8 +51,8 @@ ListingDetail.propTypes = {
 export default compose(
   withListing,
   withCurrentUser,
-  withListingBookmarkStatus,
   withToogleListingBookmark,
+  withListingBookmarkStatus,
   graphql(USER_QUERY, {
     options: props => {
       let id = 0;

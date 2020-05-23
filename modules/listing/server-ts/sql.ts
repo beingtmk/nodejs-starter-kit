@@ -188,8 +188,8 @@ export default class ListingDAO extends Model {
   public async listingBookmarkStatus(listingId: number, userId: number) {
     const count = camelizeKeys(
       await ListingBookmark.query()
-        .where('listing_id', '=', listingId)
-        .andWhere('user_id', '=', userId)
+        .where('user_id', userId)
+        .where('listing_id', listingId)
     ).length;
     let wStatus = false;
     console.log('count', count);

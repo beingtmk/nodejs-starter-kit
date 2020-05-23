@@ -520,9 +520,16 @@ const withToogleListingBookmark = Component =>
 const withListingBookmarkStatus = Component =>
   graphql(LISTING_BOOKMARK_STATUS, {
     options: props => {
+      let id;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
+      console.log('props LO', props, 'id', id);
       return {
         variables: {
-          listingId: props.listing && props.listing.id,
+          listingId: Number(id || (props.listing && props.listing.id)),
           userId: props.currentUser && props.currentUser.id
         },
         fetchPolicy: 'network-only'
