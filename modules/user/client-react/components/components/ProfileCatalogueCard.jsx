@@ -11,7 +11,7 @@ import {
 
 const { Meta } = Card;
 
-const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+const AVATAR = 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
 // const p0 = 'M0,100 L25,100 C34,20 40,0 100,0';
 // const ease0 = TweenOne.easing.path(p0);

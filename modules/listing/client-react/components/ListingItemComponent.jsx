@@ -67,8 +67,8 @@ class ListingItemComponent extends Component {
     const seller = sellerName(sellerFirstName, sellerLastName);
     const sellerAvatar = (user && user.user && user.user.profile && user.user.profile.avatar) || AVATAR;
     return (
-      // <Link to={`/listing-detail/${item.id}`}>
       !loading && (
+        <Link to={`/listing-detail/${item.id}`}>
         <Card
           title={<h3>{item.title}</h3>}
           style={{ marginBottom: '24px' }}
@@ -168,8 +168,8 @@ class ListingItemComponent extends Component {
             </Col>
           </Row>
         </Card>
+      </Link>
       )
-      // </Link>
     );
   }
 }
