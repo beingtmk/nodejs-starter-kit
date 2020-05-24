@@ -227,6 +227,10 @@ class ListingDetailView extends Component {
                       </Descriptions.Item>
                     )}
                     {<Descriptions.Item label="Description">{listing.description}</Descriptions.Item>}
+                    {<Descriptions.Item label="Flavour">{"Vanilla"}</Descriptions.Item>}
+                    {<Descriptions.Item label="Weight">{"2kg"}</Descriptions.Item>}
+                    {<Descriptions.Item label="Ocassion">{"Birthday"}</Descriptions.Item>}
+
                     {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
                   </Descriptions>
                 </Card>
