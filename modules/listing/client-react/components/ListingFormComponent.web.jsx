@@ -86,6 +86,7 @@ ListingFormComponent.propTypes = {
 };
 
 const ListingWithFormik = withFormik({
+  enableReinitialize: true,
   mapPropsToValues: props => {
     function getListingImage(listingImg) {
       return {
@@ -100,7 +101,9 @@ const ListingWithFormik = withFormik({
       isActive: (props.listing && props.listing.isActive) || false,
       title: (props.listing && props.listing.title) || '',
       description: (props.listing && props.listing.description) || '',
-      listingCost: (props.listing && props.listing.listingCost) || { cost: null },
+      listingCost: (props.listing && props.listing.listingCost) || {
+        cost: null
+      },
       listingImages:
         (props.listing && props.listing.listingImages && props.listing.listingImages.map(getListingImage)) || []
     };
