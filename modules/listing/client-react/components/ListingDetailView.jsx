@@ -209,7 +209,7 @@ class ListingDetailView extends Component {
                 </Card>
               </Col>
               <Col xl={8} lg={9} md={11} sm={24}>
-                <AddToCart />
+                <AddToCart listing={listing}/>
               </Col>
             </Row>
           )

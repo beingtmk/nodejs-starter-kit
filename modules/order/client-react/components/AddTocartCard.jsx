@@ -80,8 +80,10 @@ const AddToCartCardWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { setErrors, props: { onSubmit } }) {
-    console.log('on submit called', values);
-    // await onSubmit(values).catch(e => {
+    // console.log('on submit called', values);
+    console.log("hey there this is a test!")
+    await onSubmit(values);
+    // .catch(e => {
     //   if (isFormError(e)) {
     //     setErrors(e.errors);
     //   } else {

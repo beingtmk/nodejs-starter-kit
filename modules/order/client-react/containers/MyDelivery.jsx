@@ -10,6 +10,9 @@ import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import MyOrdersListView from '../components/MyDeliveryListView';
 
+import MY_DELIVERIES_QUERY from '../graphql/MyDeliveriesQuery.graphql';
+
+
 const ORDERS = [
   {
     id: 1,
@@ -92,15 +95,6 @@ const ORDERS = [
 ];
 
 const MyOrders = props => {
-  // const { t, updateQuery, subscribeToMore } = props;
-  // const filter = { isActive: true };
-  // const usersUpdated = useUsersWithSubscription(subscribeToMore, filter);
-  // console.log('users', props);
-  // useEffect(() => {
-  //   if (usersUpdated) {
-  //     updateUsersState(usersUpdated, updateQuery);
-  //   }
-  // });
 
   const renderMetaData = () => (
     <Helmet
@@ -117,14 +111,11 @@ const MyOrders = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      {/* <h2>Orders</h2> */}
-      {/* <Link to="/users/new">
-        <Button color="primary">{t('users.btn.add')}</Button>
-      </Link> */}
-      {/* <hr /> */}
-      {/* <UsersFilterView {...props} filter={filter} />
-      <hr /> */}
-      <MyOrdersListView orders={ORDERS} {...props} />
+
+      {props.loading ? <>Loading...</>
+        :
+         <MyOrdersListView orders={ORDERS} {...props} />
+      }
     </PageLayout>
   );
 };
@@ -137,4 +128,14 @@ const MyOrders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose()(translate('order')(MyOrders));
+export default compose(
+  graphql(MY_DELIVERIES_QUERY, {
+    props({ data: { loading, error, userDeliveries } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      console.log("******************");
+      console.log(userDeliveries);
+      return { loading, userDeliveries };
+    }
+  }),translate('order'))(MyOrders);

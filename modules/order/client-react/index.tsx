@@ -17,6 +17,18 @@ const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction 
   </NavLink>
 ));
 
+const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/my-orders" className="nav-link" activeClassName="active">
+    {'My Orders'}
+  </NavLink>
+));
+
+const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/my-delivery" className="nav-link" activeClassName="active">
+    {'My Deliveries'}
+  </NavLink>
+));
+
 export default new ClientModule({
   route: [
     <AuthRoute
@@ -55,7 +67,17 @@ export default new ClientModule({
       <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
         <NavItemCart />
       </NavLink>
+    </MenuItem>,
+    <IfLoggedIn key="/my-orders">
+    <MenuItem>
+      <NavLinkMyOrdersWithI18n />
     </MenuItem>
+    </IfLoggedIn>,
+    <IfLoggedIn key="/my-delivery">
+      <MenuItem>
+        <NavLinkMyDeliveriesWithI18n />
+      </MenuItem>
+    </IfLoggedIn>    
   ],
   navItemAdmin: [
     <IfLoggedIn key="/orders" role="admin">
