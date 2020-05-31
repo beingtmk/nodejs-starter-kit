@@ -10,7 +10,9 @@ import { message } from 'antd';
 // import EDIT_USER from '@gqlapp/user-client-react/graphql/EditUser.graphql';
 // import CART_QUERY from '../graphql/GetCart.graphql';
 
+import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import CheckoutBillView from '../components/CheckoutBillView';
+import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
 const ORDER = {
   id: 1,
@@ -36,6 +38,27 @@ const ORDER = {
 
   // }
 };
+
+const ADDRESSES = [
+  {
+    id: 5,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  },
+  {
+    id: 3,
+    streetAddress1: 'Room A308, Manas Hostel, IITG',
+    streetAddress2: 'Guwahati, North Guwahati',
+    state: 'Assam',
+    city: 'Guwahati',
+    pinCode: '7810390',
+    mobile: '+91-9085626859'
+  }
+];
 
 class CheckoutBill extends React.Component {
   constructor(props) {
@@ -80,7 +103,8 @@ class CheckoutBill extends React.Component {
   };
 
   handleSelect = id => {
-    this.setState({ addressId: id });
+    console.log('addresses id', id);
+    // this.setState({ addressId: id });
   };
 
   async onSubmit() {
@@ -93,11 +117,11 @@ class CheckoutBill extends React.Component {
     console.log('onSubmit Called!');
 
     // Add Message
-    message.info('Success! Complete Payment.');
+    // message.info('Success! Complete Payment.');
 
     // Redirect
     if (history) {
-      return history.push('/checkout-pay/');
+      return history.push(`/checkout-order/${this.props.getCart.id}`);
     }
     if (navigation) {
       return navigation.goBack();
@@ -111,67 +135,74 @@ class CheckoutBill extends React.Component {
         {/* {this.props.loading ? (
           <Loader />
         ) : ( */}
-        <CheckoutBillView order={ORDER} onSubmit={this.onSubmit} onSelect={this.handleSelect} {...this.props} />
+        <CheckoutBillView
+          order={ORDER}
+          addresses={ADDRESSES}
+          onSubmit={this.onSubmit}
+          onSelect={this.handleSelect}
+          {...this.props}
+        />
         {/* )} */}
       </>
     );
   }
 }
 
-export default compose()(translate('order')(CheckoutBill));
-// graphql(CURRENT_USER_ADDRESS_QUERY, {
-//   props({ data: { loading, error, currentUser } }) {
-//     if (error) throw new Error(error);
-//     return { currentUserLoading: loading, currentUser };
-//   }
-// })
-// graphql(CART_QUERY, {
-//   options: props => {
-//     return {
-//       variables: { userId: props.currentUser && props.currentUser.id }
-//     };
-//   },
-//   props({ data: { loading, error, getCart } }) {
-//     if (error) throw new Error(error);
-//     return { loading, getCart };
-//   }
-// }),
-// graphql(ADD_OR_EDIT_ADDRESS, {
-//   props: ({ mutate, ownProps: { currentUser } }) => ({
-//     addOrEditAddresses: async values => {
-//       message.destroy();
-//       message.loading('Please wait...', 0);
-//       try {
-//         values.userId = currentUser && currentUser.id;
-//         values.pinCode = Number(values.pinCode);
-//         const input = removeTypename(values);
-//         const {
-//           data: { addOrEditAddress }
-//         } = await mutate({
-//           variables: {
-//             input: input
-//           }
-//         });
-//         message.destroy();
-//         message.success(addOrEditAddress);
-//       } catch (e) {
-//         message.destroy();
-//         message.error("Couldn't perform the action");
-//         console.error(e);
-//       }
-//     }
-//   })
-// })
-// graphql(EDIT_USER, {
-//   props: ({ mutate }) => ({
-//     editUser: async input => {
-//       const {
-//         data: { editUser }
-//       } = await mutate({
-//         variables: { input }
-//       });
+export default compose(
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return {
+        currentUserLoading: loading,
+        currentUser
+      };
+    }
+  }),
+  graphql(GET_CART_QUERY, {
+    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { cartLoading: loading, getCart, subscribeToMore, refetch };
+    }
+  })
+  // graphql(ADD_OR_EDIT_ADDRESS, {
+  //   props: ({ mutate, ownProps: { currentUser } }) => ({
+  //     addOrEditAddresses: async values => {
+  //       message.destroy();
+  //       message.loading('Please wait...', 0);
+  //       try {
+  //         values.userId = currentUser && currentUser.id;
+  //         values.pinCode = Number(values.pinCode);
+  //         const input = removeTypename(values);
+  //         const {
+  //           data: { addOrEditAddress }
+  //         } = await mutate({
+  //           variables: {
+  //             input: input
+  //           }
+  //         });
+  //         message.destroy();
+  //         message.success(addOrEditAddress);
+  //       } catch (e) {
+  //         message.destroy();
+  //         message.error("Couldn't perform the action");
+  //         console.error(e);
+  //       }
+  //     }
+  //   })
+  // })
+  // graphql(EDIT_USER, {
+  //   props: ({ mutate }) => ({
+  //     editUser: async input => {
+  //       const {
+  //         data: { editUser }
+  //       } = await mutate({
+  //         variables: { input }
+  //       });
 
-//       return editUser;
-//     }
-//   })
-// })
+  //       return editUser;
+  //     }
+  //   })
+  // })
+)(translate('order')(CheckoutBill));

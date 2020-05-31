@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
+import update from 'immutability-helper';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -10,63 +11,16 @@ import { Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import MyOrdersListView from '../components/MyOrdersListView';
 
-const ORDERS = [
-  {
-    id: 1,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  },
-  {
-    id: 2,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  }
-];
+import MY_ORDERS_QUERY from '../graphql/MyOrdersQuery.graphql';
+import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 
 const MyOrders = props => {
-  // const { t, updateQuery, subscribeToMore } = props;
-  // const filter = { isActive: true };
-  // const usersUpdated = useUsersWithSubscription(subscribeToMore, filter);
-  // console.log('users', props);
-  // useEffect(() => {
-  //   if (usersUpdated) {
-  //     updateUsersState(usersUpdated, updateQuery);
-  //   }
-  // });
+  useEffect(() => {
+    console.log('use effect', props.subscribeToMore);
+    const subscribe = subscribeToOrders(props.subscribeToMore);
+    props.refetch();
+    return () => subscribe();
+  });
 
   const renderMetaData = () => (
     <Helmet
@@ -79,21 +33,68 @@ const MyOrders = props => {
       ]}
     />
   );
-  console.log('admin blog', props);
   return (
     <PageLayout>
       {renderMetaData()}
-      {/* <h2>Orders</h2> */}
-      {/* <Link to="/users/new">
-        <Button color="primary">{t('users.btn.add')}</Button>
-      </Link> */}
-      {/* <hr /> */}
-      {/* <UsersFilterView {...props} filter={filter} />
-      <hr /> */}
-      <MyOrdersListView orders={ORDERS} {...props} />
+
+      {props.loading ? <>Loading...</> : <MyOrdersListView orders={props.userOrders} {...props} />}
     </PageLayout>
   );
 };
+
+const onAddOrder = (prev, node) => {
+  console.log('subscription add', prev, node);
+  // ignore if duplicate
+  // if (prev.blogs.some(item => node.id === item.id)) {
+  //   return prev;
+  // }
+  return update(prev, {
+    userOrders: {
+      $push: [node]
+    }
+  });
+};
+
+const onDeleteOrder = (prev, node) => {
+  console.log('subscription deleted');
+
+  // ignore if not found
+  if (prev.id !== node.id) {
+    return prev;
+  }
+
+  return update(prev, {
+    getCart: {
+      $set: node
+    }
+  });
+};
+
+const subscribeToOrders = subscribeToMore =>
+  subscribeToMore({
+    document: ORDERS_SUBSCRIPTION,
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            ordersUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      console.log('subscribed');
+      let newResult = prev;
+      if (mutation === 'CREATED') {
+        newResult = onAddOrder(prev, node);
+      } else if (mutation === 'UPDATED') {
+        newResult = onAddOrder(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteOrder(prev, node);
+      }
+      return newResult;
+    }
+  });
 
 // Orders.propTypes = {
 //   usersUpdated: PropTypes.object,
@@ -103,4 +104,14 @@ const MyOrders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose()(translate('order')(MyOrders));
+export default compose(
+  graphql(MY_ORDERS_QUERY, {
+    props({ data: { loading, error, userOrders, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { loading, userOrders, subscribeToMore, refetch };
+    }
+  }),
+  translate('order')
+)(MyOrders);

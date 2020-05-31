@@ -20,7 +20,6 @@ class CheckoutStepsComponent extends Component {
           <Step title={<span className="font13">Cart</span>} />
           <Step title={<span className="font13">Billing Address</span>} />
           <Step title={<span className="font13">Payment options</span>} />
-          <Step title={<span className="font13">Order Status</span>} />
         </Steps>
         <br />
         <br />

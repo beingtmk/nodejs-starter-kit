@@ -1,0 +1,12 @@
+fragment OrderInfo on Order {
+    id
+    state
+    orderDetails {
+        id
+        cost
+        quantity
+        date
+        title
+        thumbnail
+    }
+}

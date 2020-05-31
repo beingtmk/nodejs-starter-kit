@@ -7,55 +7,11 @@ import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Button, PageLayout } from '@gqlapp/look-client-react';
+
 import settings from '@gqlapp/config';
 import OrdersListView from '../components/OrdersListView';
+import ORDERS_QUERY from '../graphql/OrdersQuery.graphql';
 
-const ORDERS = [
-  {
-    id: 1,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  },
-  {
-    id: 2,
-    orderDetails: [
-      {
-        id: 1,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 1',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 4
-      },
-      {
-        id: 2,
-        thumbnail: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1582033916/ygz3yclqo2qmqewrqket.jpg',
-        title: 'Listing 2',
-        cost: 322,
-        date: 'Wed May 20 2020',
-        quantity: 3
-      }
-    ],
-    delivery: {}
-  }
-];
 const Orders = props => {
   // const { t, updateQuery, subscribeToMore } = props;
   // const filter = { isActive: true };
@@ -89,7 +45,7 @@ const Orders = props => {
       <hr />
       {/* <UsersFilterView {...props} filter={filter} />
       <hr /> */}
-      <OrdersListView orders={ORDERS} {...props} />
+      <OrdersListView {...props} />
     </PageLayout>
   );
 };
@@ -102,4 +58,17 @@ const Orders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose()(translate('order')(Orders));
+export default compose(graphql(ORDERS_QUERY, {
+  options: ({ orderBy, filter }) => {
+    return {
+      variables: { limit: 20, after: 0 },
+      fetchPolicy: 'network-only'
+    };
+  },
+  props({ data: { loading, error, orders } }) {
+    if (error) {
+      throw new Error(error);
+    }
+    return { loading, orders };
+  }
+}),translate('order'))(Orders);

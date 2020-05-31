@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { PropTypes } from 'prop-types';
 
+import AddToCartForm from './AddToCartForm';
+
 const OrderCard = styled(Card)`
   margin: 0px 0px 15px 0px !important;
   border-radius: 10px !important;
@@ -76,6 +78,7 @@ class CartItemComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      visible: false,
       myBooks: [],
       modal1Visible: false
     };
@@ -101,7 +104,7 @@ class CartItemComponent extends Component {
   // }
 
   render() {
-    const { item } = this.props;
+    const { item, edit, onSubmit } = this.props;
     console.log('cart item', item);
 
     return (
@@ -114,6 +117,18 @@ class CartItemComponent extends Component {
         title={<h3>{item.title}</h3>}
         extra={
           <>
+            {edit && (
+              <>
+                <Icon type="edit" onClick={() => this.setState({ visible: true })} />
+
+                <AddToCartForm
+                  onSubmit={onSubmit}
+                  details={item}
+                  visible={this.state.visible}
+                  handleVisible={() => this.setState({ visible: false })}
+                />
+              </>
+            )}
             {this.props.deleteProduct && (
               <Popconfirm
                 title="Are you sure to delete this order?"

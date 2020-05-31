@@ -36,12 +36,29 @@ exports.up = function(knex) {
         table.integer('cost');
         table.timestamps(false, true);
       })
+      .createTable('listing_bookmark', table => {
+        table.increments();
+        table
+          .integer('user_id')
+          .unsigned()
+          .references('id')
+          .inTable('user')
+          .onDelete('CASCADE');
+        table
+          .integer('listing_id')
+          .unsigned()
+          .references('id')
+          .inTable('listing')
+          .onDelete('CASCADE');
+        table.timestamps(false, true);
+      })
   ]);
 };
 exports.down = function(knex) {
   return Promise.all([
     knex.schema.dropTable('listing'),
     knex.schema.dropTable('listing_image'),
-    knex.schema.dropTable('listing_cost')
+    knex.schema.dropTable('listing_cost'),
+    knex.schema.dropTable('listing_bookmark')
   ]);
 };

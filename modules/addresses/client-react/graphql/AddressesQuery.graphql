@@ -1,0 +1,11 @@
+query addresses($id: Int) {
+  addresses(id: $id) {
+    id
+    userId
+    streetAddress1
+    streetAddress2
+    city
+    state
+    pinCode
+  }
+}

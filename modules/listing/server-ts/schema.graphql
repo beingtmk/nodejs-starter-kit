@@ -48,6 +48,14 @@ extend type Query {
   ): Listings
   listing(id: Int!): Listing
   userListings(userId: Int): [Listing]
+
+  #Bookmark
+  myListingsBookmark(
+    userId: Int
+    limit: Int
+    after: Int
+  ): Listings
+  listingBookmarkStatus(listingId: Int, userId: Int): Boolean
 }
 
 # Input for ordering listings
@@ -72,6 +80,9 @@ extend type Mutation {
 
   # Activating a Listing
   toggleListingIsActive(id: Int!): Boolean
+
+  # Bookmark
+  addOrRemoveListingBookmark(listingId: Int, userId: Int): String
 }
 
 input AddListingInput {
@@ -110,7 +121,10 @@ extend type Subscription {
   listingsUpdated(endCursor: Int, filter: FilterListInput): UpdateListingPayload
 
   # Subscription for when editing a listing
-  listingUpdated(id: Int!): UpdateListingPayload
+  listingUpdated(id: Int): UpdateListingPayload
+
+  # Bookmark
+  listingsBookmarkUpdated(endCursor: Int): UpdateListingPayload
 }
 
 # Payload for listingsUpdated Subscription

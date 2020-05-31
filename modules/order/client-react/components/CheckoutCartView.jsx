@@ -89,8 +89,9 @@ export default class CheckoutCartView extends React.Component {
       cartItem: null,
       books: [],
       randomVal: 2000,
-      checkout: false
+      checkout: true
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   // cartItemSelect(id) {
@@ -117,11 +118,11 @@ export default class CheckoutCartView extends React.Component {
   //   this.props.setModal1Visible();
   // }
 
-  // onChange(e) {
-  //   this.setState({
-  //     checkout: e.target.checked
-  //   });
-  // }
+  onChange(e) {
+    this.setState({
+      checkout: e.target.checked
+    });
+  }
 
   // getValue() {
   //   let refundValue = 0;
@@ -132,7 +133,7 @@ export default class CheckoutCartView extends React.Component {
   // }
 
   render() {
-    const { history, navigation } = this.props;
+    const { history, navigation, onSubmit } = this.props;
     const getCart = this.props.order;
 
     const cartLength = getCart && getCart.length;
@@ -166,6 +167,8 @@ export default class CheckoutCartView extends React.Component {
                     {getCart.orderDetails.map(cartItem => (
                       <CartItemComponent
                         item={cartItem}
+                        edit={true}
+                        onSubmit={onSubmit}
                         // deleteProduct={this.props.deleteProduct}
                       />
                     ))}
@@ -180,15 +183,15 @@ export default class CheckoutCartView extends React.Component {
                         </Checkbox>
                       </MarginV15>
                       {this.state.checkout ? (
-                        <Margin20Button onClick={this.props.onSubmit} type="primary" block>
-                          Checkout
+                        <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
+                          Next
                         </Margin20Button>
                       ) : (
                         <Margin20Button type="primary" disabled block>
                           Checkout
                         </Margin20Button>
                       )}
-                      <Link className="listing-link" to={`/events`} target="_blank">
+                      <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
                         <MarginB20btn type="primary" ghost block>
                           Add more products
                         </MarginB20btn>
@@ -203,7 +206,7 @@ export default class CheckoutCartView extends React.Component {
                               <Rightfloat>
                                 &#8377;{' '}
                                 {item.cost && item.cost !== '0'
-                                  ? `${item.price} X ${item.quantity} = ${item.price * item.quantity}`
+                                  ? `${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`
                                   : 'Free'}
                               </Rightfloat>
                               <br />
@@ -228,7 +231,7 @@ export default class CheckoutCartView extends React.Component {
         ) : (
           <div className="width100 centerAlign marginT30">
             <Empty description="You have no items in your Cart">
-              <Link to="/events">
+              <Link to="/listing_catalogue">
                 <Button style={{ width: 'fit-content' }} type="primary">
                   Add some products
                 </Button>

@@ -17,6 +17,18 @@ const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction 
   </NavLink>
 ));
 
+const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/my-orders" className="nav-link" activeClassName="active">
+    {'My Orders'}
+  </NavLink>
+));
+
+const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/my-delivery" className="nav-link" activeClassName="active">
+    {'My Deliveries'}
+  </NavLink>
+));
+
 export default new ClientModule({
   route: [
     <AuthRoute
@@ -28,7 +40,11 @@ export default new ClientModule({
     />,
     <Route exact path="/order" component={loadable(() => import('./containers/Order').then(c => c.default))} />,
     <Route exact path="/my-orders" component={loadable(() => import('./containers/MyOrder').then(c => c.default))} />,
-    <Route exact path="/my-delivery" component={loadable(() => import('./containers/MyDelivery').then(c => c.default))} />,
+    <Route
+      exact
+      path="/my-delivery"
+      component={loadable(() => import('./containers/MyDelivery').then(c => c.default))}
+    />,
     <Route
       exact
       path="/checkout-cart"
@@ -50,12 +66,29 @@ export default new ClientModule({
       component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default))}
     />
   ],
+  // navItem: [
+  //   <MenuItem key="/checkout-cart">
+  //     <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
+  //       <NavItemCart />
+  //     </NavLink>
+  //   </MenuItem>
+  // ],
   navItemUser: [
     <MenuItem key="/checkout-cart">
       <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
         <NavItemCart />
       </NavLink>
-    </MenuItem>
+    </MenuItem>,
+    <IfLoggedIn key="/my-orders">
+      <MenuItem>
+        <NavLinkMyOrdersWithI18n />
+      </MenuItem>
+    </IfLoggedIn>,
+    <IfLoggedIn key="/my-delivery">
+      <MenuItem>
+        <NavLinkMyDeliveriesWithI18n />
+      </MenuItem>
+    </IfLoggedIn>
   ],
   navItemAdmin: [
     <IfLoggedIn key="/orders" role="admin">

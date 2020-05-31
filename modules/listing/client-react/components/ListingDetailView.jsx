@@ -17,9 +17,9 @@ import {
 } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Button } from '@gqlapp/look-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
-// import AddToCart from '../containers/AddToCart';
+import BookmarkComponent from './BookmarkComponent';
 
 import settings from '../../../../settings';
 
@@ -64,7 +64,16 @@ class ListingDetailView extends Component {
   };
 
   render() {
-    const { listing, loading, user, history, navigation, currentUser } = this.props;
+    const {
+      listing,
+      loading,
+      user,
+      history,
+      navigation,
+      currentUser,
+      handleBookmark,
+      listingBookmarkStatus
+    } = this.props;
     const images = listing && listing.listingImages && listing.listingImages.length !== 0 && listing.listingImages;
     const getName = () => {
       const firstName = user && user.user && user.user.profile && user.user.profile.firstName;
@@ -119,7 +128,21 @@ class ListingDetailView extends Component {
               </Breadcrumb>
               <Col xl={16} lg={15} md={13} sm={24}>
                 <Card
-                  title={<h1>{listing.title}</h1>}
+                  title={
+                    <Row>
+                      <Col xl={23} lg={23} md={23} sm={23}>
+                        <h1>{listing.title}</h1>
+                      </Col>
+                      <Col xl={1} lg={1} md={1} sm={1}>
+                        {!(typeof listingBookmarkStatus == 'undefined') && (
+                          <BookmarkComponent
+                            handleBookmark={() => handleBookmark(listing.id, listing.userId)}
+                            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                          />
+                        )}
+                      </Col>
+                    </Row>
+                  }
                   style={{
                     background: 'white',
                     borderRadius: '10px'
@@ -209,7 +232,7 @@ class ListingDetailView extends Component {
                 </Card>
               </Col>
               <Col xl={8} lg={9} md={11} sm={24}>
-                <AddToCart />
+                <AddToCart listing={listing} />
               </Col>
             </Row>
           )
@@ -229,7 +252,10 @@ ListingDetailView.propTypes = {
   user: PropTypes.object,
   history: PropTypes.object,
   navigation: PropTypes.object,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  handleBookmark: PropTypes.func,
+  listingBookmarkStatus: PropTypes.bool,
+  listingBookmarkStatusLoading: PropTypes.bool
 };
 
 export default translate('listing')(ListingDetailView);

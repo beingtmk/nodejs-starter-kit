@@ -6,7 +6,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 import { useListingsWithSubscription } from './withSubscriptions';
-import { withListings, updateListingsState } from './ListingOperations';
+import { withListings, updateListingsState, withCurrentUser } from './ListingOperations';
 
 const ListingsCatalogue = props => {
   const { updateQuery, subscribeToMore, filter } = props;
@@ -28,4 +28,4 @@ ListingsCatalogue.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(withListings, translate('listing'))(ListingsCatalogue);
+export default compose(withCurrentUser, withListings, translate('listing'))(ListingsCatalogue);

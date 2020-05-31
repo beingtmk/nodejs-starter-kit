@@ -4,12 +4,12 @@ import { PageLayout } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import { Row, Col, message } from 'antd';
 
+import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
 import settings from '../../../../settings';
 
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
-// import naruto2 from '../../resources/naruto2.jpg';
 
 const renderMetaData = t => (
   <Helmet
@@ -55,54 +55,53 @@ export default class CheckoutOrderView extends React.Component {
       },
       completed: 3
     };
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  async onSubmit(values) {
-    const { history, navigation } = this.props;
+  // async onSubmit(values) {
+  //   const { history, navigation } = this.props;
 
-    // Get Values
+  //   // Get Values
 
-    console.log('onSubmit Called!');
-    // let userValues = pick(values, [
-    //   'username',
-    //   'email',
-    //   'role',
-    //   'isActive',
-    //   'profile',
-    //   'addresses',
-    //   'portfolios',
-    //   'password'
-    // ]);
+  //   console.log('onSubmit Called!');
+  //   // let userValues = pick(values, [
+  //   //   'username',
+  //   //   'email',
+  //   //   'role',
+  //   //   'isActive',
+  //   //   'profile',
+  //   //   'addresses',
+  //   //   'portfolios',
+  //   //   'password'
+  //   // ]);
 
-    // userValues = UserFormatter.trimExtraSpaces(userValues);
+  //   // userValues = UserFormatter.trimExtraSpaces(userValues);
 
-    // if (settings.auth.certificate.enabled) {
-    //   userValues['auth'] = {
-    //     certificate: pick(values.auth.certificate, 'serial')
-    //   };
-    // }
+  //   // if (settings.auth.certificate.enabled) {
+  //   //   userValues['auth'] = {
+  //   //     certificate: pick(values.auth.certificate, 'serial')
+  //   //   };
+  //   // }
 
-    // Call Mutation
+  //   // Call Mutation
 
-    // try {
-    //   await addUser(userValues);
-    // } catch (e) {
-    //   message.error(t('userAdd.errorMsg'));
-    //   throw new FormError(t('userAdd.errorMsg'), e);
-    // }
+  //   // try {
+  //   //   await addUser(userValues);
+  //   // } catch (e) {
+  //   //   message.error(t('userAdd.errorMsg'));
+  //   //   throw new FormError(t('userAdd.errorMsg'), e);
+  //   // }
 
-    // Add Message
-    message.info('We will notify you of new updates!');
+  //   // Add Message
+  //   message.info('We will notify you of new updates!');
 
-    // Redirect
-    if (history) {
-      return history.push('/my-listings/');
-    }
-    if (navigation) {
-      return navigation.goBack();
-    }
-  }
+  //   // Redirect
+  //   if (history) {
+  //     return history.push('/my-orders/');
+  //   }
+  //   if (navigation) {
+  //     return navigation.goBack();
+  //   }
+  // }
 
   render() {
     return (
@@ -119,15 +118,20 @@ export default class CheckoutOrderView extends React.Component {
             <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
               <Row gutter={24}>
                 <Col lg={{ span: 10, offset: 0 }} xs={{ span: 24, offset: 0 }} className="margin20">
-                  <OrderTrackCardComponent
-                    orderStatus={this.props.order.state}
-                    // status={this.state.status}
-                    completed={this.state.completed}
-                  />
+                  <Row>
+                    <OrderTrackCardComponent
+                      orderStatus={this.props.order.state}
+                      // status={this.state.status}
+                      completed={this.state.completed}
+                    />
+                    <Col lg={{ span: 12, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                      <AddressView addresses={this.props.addresses} addressId={this.props.addresses[0].id} />
+                    </Col>
+                  </Row>
                 </Col>
                 <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
                   <CheckoutCardComponent
-                    onSubmit={this.onSubmit}
+                    onSubmit={this.props.onSubmit}
                     getCart={this.props.order}
                     product={this.state.product}
                     paid={true}

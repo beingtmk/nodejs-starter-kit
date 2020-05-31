@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { PageLayout } from '@gqlapp/look-client-react';
 import { Layout, Menu, Row, Col, Card, Form, Input, Button } from 'antd';
 
+import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import EventCardComponent from './CheckoutCardComponent';
 
@@ -56,8 +57,12 @@ export default class CheckoutPay extends React.Component {
           {ORDER && ORDER.orderDetails && ORDER.orderDetails.length !== 0 && (
             <Row gutter={4} align="center">
               <CheckoutStepsComponent step={2} />
-              <Col lg={{ span: 2 }} />
-              <Col lg={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+              {/* <Col lg={{ span: 2 }}>
+              </Col> */}
+              <Col lg={{ span: 12, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                <AddressView addresses={this.props.addresses} addressId={this.props.addresses[0].id} />
+              </Col>
+              <Col lg={{ span: 12, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                 <EventCardComponent
                   onSubmit={this.props.onSubmit}
                   getCart={ORDER}

@@ -1,31 +1,33 @@
-import React from 'react';
-import { graphql } from 'react-apollo';
+import React, { useEffect } from 'react';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-
-import { withListing, withEditListing } from './ListingOperations';
+import { PropTypes } from 'prop-types';
+import { withListing, withCurrentUser, withEditListing, updateListingState } from './ListingOperations';
 
 import EditListingView from '../components/EditListingView.web';
+import { useListingWithSubscription } from './withSubscriptions';
 
 const EditListing = props => {
+  const { updateQuery, subscribeToMore, listing, history } = props;
+  const listingsUpdated = useListingWithSubscription(subscribeToMore, listing && listing.id);
+  console.log('object', listingsUpdated);
+
+  useEffect(() => {
+    if (listingsUpdated) {
+      updateListingState(listingsUpdated, updateQuery, history);
+    }
+  });
   console.log('props', props);
   return <EditListingView {...props} />;
 };
 
-export default compose(
-  graphql(CURRENT_USER_QUERY, {
-    props({ data: { loading, error, currentUser } }) {
-      if (error) throw new Error(error);
-      return {
-        loading,
-        currentUser
-      };
-    }
-  }),
-  withListing,
-  withEditListing,
-  translate('listing')
-)(EditListing);
+EditListing.propTypes = {
+  updateQuery: PropTypes.func,
+  subscribeToMore: PropTypes.func,
+  listing: PropTypes.object,
+  history: PropTypes.object
+};
+
+export default compose(withCurrentUser, withListing, withEditListing, translate('listing'))(EditListing);
