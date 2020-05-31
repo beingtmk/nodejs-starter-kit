@@ -111,6 +111,8 @@
         "react-router-dom": "^5.0.0",
         "react-stripe-elements": "^1.2.1",
         "react-sublime-video": "^0.2.5",
+        "react-slick": "^0.26.1",
+        "slick-carousel": "^1.8.1",
         "react-transition-group": "^2.3.0-beta.0",
         "reactstrap": "^5.0.0-beta",
         "redux": "^4.0.1",
