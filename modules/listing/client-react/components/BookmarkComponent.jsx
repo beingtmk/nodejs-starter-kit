@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { compose } from '@gqlapp/core-common';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Button, Icon } from 'antd';
+import { withListingBookmarkStatus } from '../containers/ListingOperations';
 
 const BookmarkStyle = styled.div`
   position: absolute;
@@ -11,9 +13,14 @@ const BookmarkStyle = styled.div`
 `;
 
 const BookmarkComponent = props => {
-  const { handleBookmark, bookmarkStatus } = props;
-  const [status, setStatus] = useState(bookmarkStatus);
+  const { handleBookmark, listingBookmarkStatus } = props;
+  const [status, setStatus] = useState(listingBookmarkStatus);
 
+  useEffect(() => {
+    setStatus(listingBookmarkStatus);
+  }, [listingBookmarkStatus]);
+
+  console.log('props', props, 'status', status);
   const handleClick = () => {
     try {
       handleBookmark();
@@ -26,7 +33,7 @@ const BookmarkComponent = props => {
   return (
     <BookmarkStyle>
       <Button shape="circle" onClick={handleClick}>
-        {status ? (
+        {status && status ? (
           <Icon type="star" theme="filled" style={{ fontSize: '15px' }} />
         ) : (
           <Icon type="star" style={{ fontSize: '15px' }} />
@@ -38,7 +45,7 @@ const BookmarkComponent = props => {
 
 BookmarkComponent.propTypes = {
   handleBookmark: PropTypes.func,
-  bookmarkStatus: PropTypes.bool
+  listingBookmarkStatus: PropTypes.bool
 };
 
-export default BookmarkComponent;
+export default compose(withListingBookmarkStatus)(BookmarkComponent);

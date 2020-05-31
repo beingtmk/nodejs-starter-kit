@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
 import BookmarkComponent from './BookmarkComponent';
-import { withListingBookmarkStatus, withToogleListingBookmark } from '../containers/ListingOperations';
+import { withToogleListingBookmark } from '../containers/ListingOperations';
 
 const { Meta } = Card;
 class RelatedCardComponent extends Component {
@@ -24,7 +24,7 @@ class RelatedCardComponent extends Component {
 
   render() {
     // To Do: check if it is not present then set as default value
-    const { currentUser, loading, listingBookmarkStatus } = this.props;
+    const { currentUser, loading } = this.props;
     let listing = this.props.listing;
 
     const listing_id = listing && listing.id;
@@ -35,10 +35,11 @@ class RelatedCardComponent extends Component {
 
     return (
       <>
-        {!(typeof listingBookmarkStatus == 'undefined') && (
+        {currentUser && (
           <BookmarkComponent
             handleBookmark={() => this.bookmarkListing(listing.id, currentUser.id)}
-            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+            listing={listing}
+            currentUser={currentUser}
           />
         )}
         <Link className="listing-link" to={`/listing-detail/${listing_id}`}>
@@ -87,4 +88,4 @@ RelatedCardComponent.propTypes = {
   listingBookmarkStatus: PropTypes.bool
 };
 
-export default compose(withListingBookmarkStatus, withToogleListingBookmark)(RelatedCardComponent);
+export default compose(withToogleListingBookmark)(RelatedCardComponent);
