@@ -21,12 +21,34 @@ type GroupMember {
 }
 
 extend type Query {
-  groups: [Group]
+  groups(limit: Int, after: Int, filter: FilterGroupInput): GroupList
   userGroups(email: String): [Group]
   group(id: Int!): Group
   allGroupMembers: [GroupMember]
   groupMember(id: Int!): GroupMember
   groupMembers(id: Int!): [GroupMember]
+}
+
+type GroupEdges {
+  node: Group
+  cursor: Int
+}
+
+type GroupList {
+  totalCount: Int
+  edges: [GroupEdges]
+  pageInfo: GroupPageInfo
+}
+
+type GroupPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+input FilterGroupInput {
+  searchText: String
+  model: String
+  status: String
 }
 
 extend type Mutation {
@@ -41,7 +63,7 @@ extend type Mutation {
 input AddGroupInput {
   title: String!
   avatar: String
-  description: String!
+  description: String
   groupType: String!
   members: [MemberInput]
 }
@@ -59,6 +81,7 @@ input UpdateGroupInput {
   avatar: String
   description: String
   groupType: String
+  members: [MemberInput]
 }
 
 input AddGroupMemberInput {
@@ -76,7 +99,7 @@ input EditGroupMemberInput {
 }
 
 extend type Subscription {
-  groupUpdated: UpdateGroupPayload
+  groupsUpdated(endCursor: Int!, filter: FilterGroupInput): UpdateGroupPayload
   groupMembersUpdated: UpdateGroupMembersPayload
 }
 

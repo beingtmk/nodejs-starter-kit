@@ -8,7 +8,7 @@ import resolvers from './resolvers';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
-
+import { Menu } from 'antd';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth.web';
 
 const NavLinkWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
@@ -93,37 +93,43 @@ export default new ClientModule({
     // />,
     <Route exact path="/blog/:id" component={loadable(() => import('./containers/Blog').then(c => c.default))} />
   ],
-  navItemsBlog: [
-    <IfLoggedIn key="/blog/new">
-      <MenuItem key="/blog/new">
-        <NavLinkWithI18n />
-      </MenuItem>
-    </IfLoggedIn>,
-    <MenuItem key="/blog/list">
-      <NavLinkBlogWithI18n />
-    </MenuItem>,
-    <IfLoggedIn key="/blog/my-blogs">
-      <MenuItem>
-        <NavLinkMyBlogsWithI18n />
-      </MenuItem>
-    </IfLoggedIn>,
-    <IfLoggedIn key="/blog/bookmarks">
-      <MenuItem key="/blog/bookmarks">
-        <NavLinkMyBookmarksWithI18n />
-      </MenuItem>
+  navItemUser: [
+    <IfLoggedIn key="/blog/">
+      <Menu.SubMenu title="Blogs">
+        <MenuItem>
+          <NavLinkMyBlogsWithI18n />
+        </MenuItem>
+        <MenuItem key="/blog/bookmarks">
+          <NavLinkMyBookmarksWithI18n />
+        </MenuItem>
+      </Menu.SubMenu>
     </IfLoggedIn>
   ],
   navItemAdmin: [
-    <IfLoggedIn key="/blog/admin-list" role="admin">
-      <MenuItem>
-        <NavLinkBlogAdminWithI18n />
+    <Menu.SubMenu title="Blogs">
+      <IfLoggedIn key="/blog/admin-list" role="admin">
+        <MenuItem>
+          <NavLinkBlogAdminWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+      <IfLoggedIn key="/blog/model-list" role="admin">
+        <MenuItem>
+          <NavLinkmodelAdminWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+    </Menu.SubMenu>
+  ],
+  navItemTest: [
+    <Menu.SubMenu title="Blogs">
+      <IfLoggedIn key="/blog/new">
+        <MenuItem key="/blog/new">
+          <NavLinkWithI18n />
+        </MenuItem>
+      </IfLoggedIn>
+      <MenuItem key="/blog/list">
+        <NavLinkBlogWithI18n />
       </MenuItem>
-    </IfLoggedIn>,
-    <IfLoggedIn key="/blog/model-list" role="admin">
-      <MenuItem>
-        <NavLinkmodelAdminWithI18n />
-      </MenuItem>
-    </IfLoggedIn>
+    </Menu.SubMenu>
   ],
   resolver: [resolvers],
   rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
