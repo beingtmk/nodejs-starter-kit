@@ -16,6 +16,7 @@ export { default as RenderUploadMultiple } from './RenderUploadMultiple';
 export { default as RenderDynamicField } from './RenderDynamicField';
 export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';
+export { default as Carousel } from './Carousel';
 
 export { default as Container } from './Container';
 export { default as Row } from './Row';
