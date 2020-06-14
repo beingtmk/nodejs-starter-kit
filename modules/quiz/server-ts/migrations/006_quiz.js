@@ -11,6 +11,7 @@ exports.up = function(knex) {
       table.boolean('active').defaultTo(false);
       table.string('title');
       table.string('description');
+      table.boolean('is_editable_by_user').defaultTo(false);
       table.timestamps(false, true);
     }),
     knex.schema.createTable('question', table => {
@@ -22,6 +23,8 @@ exports.up = function(knex) {
         .inTable('quiz')
         .onDelete('CASCADE');
       table.string('description');
+      table.string('choice_type');
+      table.boolean('is_active').defaultTo(true);
       table.timestamps(false, true);
     }),
     knex.schema.createTable('choice', table => {

@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {  FieldArray } from "formik";
+import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 import { Form, Icon, Row, Col } from "antd";
-import { RenderField, RenderUpload, Button } from "@gqlapp/look-client-react";
+import { RenderField, RenderUpload, Button, RenderCheckBox, RenderSelect, Option } from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
-
+import QuestionTypes from '../constants/QuestionTypes';
 const FormItem = Form.Item;
+
 
 export default class RenderQuestionsField extends React.Component {
   add = () => {
@@ -16,6 +17,8 @@ export default class RenderQuestionsField extends React.Component {
     const keys = this.props.keys;
 
     obj[keys.key] = "";
+    obj['choiceType'] = '';
+    obj["isActive"] = true
     obj["choices"] = [];
 
     arrayHelpers.push(obj);
@@ -40,7 +43,7 @@ export default class RenderQuestionsField extends React.Component {
 
     if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
-        <Row>
+        <Row style={{background:'#f3f3f3', marginBottom:'20px', padding:'5px'}}>
           <Col span={24}>
             <FormItem required={false} key={indexv} style={{ margin: "0px" }}>
               <Row gutter={10}>
@@ -50,38 +53,13 @@ export default class RenderQuestionsField extends React.Component {
                     component={RenderField}
                     placeholder={keys.placeholder || keys.key}
                     type="text"
-                    label={<h3 style={{marginBottom:'0', display:'inline'}}>{`${keys.label}-${indexv+1}`}</h3>}
+                    label={<h3 style={{ marginBottom: '0', display: 'inline' }}>{`${keys.label}-${indexv + 1}`}</h3>}
                     // label={`${k.label || k.key} #${indexv + 1}`}
                     value={v.description}
-                    //   key={indexv}
-                    // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
                   />
                 </Col>
-
-                {/* {k.type == 'number' ? (
-                <Field
-                  name={`${name}[${indexv}].${k.key}`}
-                  component={RenderField}
-                  placeholder={k.placeholder || k.key}
-                  type="number"
-                  label={`${k.label || k.key}`}
-                  value={v[k.key]}
-                  key={indexv}
-                />
-              ) : null} */}
-
-                {/* {k.type == 'image' ? (
-                <Field
-                  name={`${name}[${indexv}].${k.key}`}
-                  component={RenderUpload}
-                  type="text"
-                  setload={this.props.setload}
-                  label={k.label || k.key}
-                  value={v[k.key]}
-                  key={indexv}
-                  // style={{ display: 'inline-block', margin: '0px 5px' }}
-                />
-              ) : null} */}
                 <Col span={4}>
                   {values.length >= 1 ? (
                     <Icon
@@ -93,29 +71,115 @@ export default class RenderQuestionsField extends React.Component {
                     />
                   ) : null}
                 </Col>
+                <Col span={12}>
+                  <Field
+                    name={`questions[${indexv}].isActive`}
+                    component={RenderCheckBox}
+                    type="checkbox"
+                    label={<h5 style={{ marginBottom: '0', display: 'inline' }}>Is Active</h5>}
+                    // label={`${k.label || k.key} #${indexv + 1}`}
+                    checked={v.isActive}
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  />
+
+                </Col>
+                <Col span={12}>
+
+                  <Field
+                    name={`questions[${indexv}].choiceType`}
+                    component={RenderSelect}
+                    placeholder={'Choice Type'}
+                    type="select"
+                    label={<h5 style={{ marginBottom: '0', display: 'inline' }}>Choice Type</h5>}
+                    // label={`${k.label || k.key} #${indexv + 1}`}
+                    value={v.choiceType}
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  >
+
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.RADIO}
+                    >
+                      {QuestionTypes.RADIO}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.SELECT}
+                    >
+                      {QuestionTypes.SELECT}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.MSELECT}
+                    >
+                      {QuestionTypes.MSELECT}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.TEXTBOX}
+                    >
+                      {QuestionTypes.TEXTBOX}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.TEXTAREA}
+                    >
+                      {QuestionTypes.TEXTAREA}
+                    </Option>
+
+                  </Field>
+                </Col>
+
+
               </Row>
-              <FieldArray
-              name={`${name}[${indexv}].choices`}
-              render={(arrayHelpersA) => (
-                <RenderDynamicField
-                  // setload={setload}
-                  arrayHelpers={arrayHelpersA}
-                  values={v.choices}
-                  label={"Add Choices"}
+              {v.choiceType !== '' &&
+                (v.choiceType === QuestionTypes.SELECT ||
+                  v.choiceType === QuestionTypes.RADIO ||
+                  v.choiceType === QuestionTypes.MSELECT) &&
+                (<FieldArray
                   name={`${name}[${indexv}].choices`}
-                  buttonText="Add Choices"
-                  keys={[{ type: "text", label: "choices", key: "description" }]}
-                />
-              )}
-              // skills={skills}
-              values={v.choices}
-            //   handleQuestions={handleChoices}
-            />
+                  render={(arrayHelpersA) => (
+                    <RenderDynamicField
+                      // setload={setload}
+                      arrayHelpers={arrayHelpersA}
+                      values={v.choices}
+                      label={"Add Choices"}
+                      name={`${name}[${indexv}].choices`}
+                      buttonText="Add Choices"
+                      keys={[{ type: "text", label: "choices", key: "description" }]}
+                    />
+                  )}
+                  // skills={skills}
+                  values={v.choices}
+                //   handleQuestions={handleChoices}
+                />)}
             </FormItem>
           </Col>
-          
-            
-          
+
+
+
           {/* {v.choices.map((choice, indexCh) => (
             <Col span={24}>
               <Col span={12}>

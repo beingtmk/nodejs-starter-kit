@@ -49,6 +49,13 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
         label={"Active"}
         checked={values.active}
       />{" "}
+      <Field
+        name="isEditableByUser"
+        component={RenderCheckBox}
+        type="checkbox"
+        label={"Is Editable By User"}
+        checked={values.isEditableByUser}
+      />{" "}
       <FieldArray
       name='questions'
         render={arrayHelpers => (
@@ -93,6 +100,8 @@ const QuizAddFormWithFormik = withFormik({
       return {
         id: (question && question.id) || null,
         description: (question && question.description) || '',
+        choiceType: (question && question.choiceType) || '',
+        isActive: (question && question.isActive) || true,
         choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
@@ -100,6 +109,7 @@ const QuizAddFormWithFormik = withFormik({
       title: (props.quiz && props.quiz.title) || "",
       description: (props.quiz && props.quiz.description) || "",
       active: (props.quiz && props.quiz.active) || true,
+      isEditableByUser: (props.quiz && props.quiz.isEditableByUser) || false,
       questions: (props.quiz && props.quiz.questions && props.quiz.questions.map(getQuestions)) || [],
     }
   },

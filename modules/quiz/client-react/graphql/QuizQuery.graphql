@@ -5,10 +5,13 @@ query quiz($id: Int!) {
     userId
     active
     title
+    isEditableByUser
     description
     questions{
       id
       description
+      choiceType
+      isActive
       choices{
         id
         description

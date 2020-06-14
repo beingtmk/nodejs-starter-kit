@@ -8,6 +8,7 @@ type Quiz {
   createdAt: String
   updatedAt: String
   user: User
+  isEditableByUser: Boolean
   questions:[Question]
 }
 
@@ -15,6 +16,8 @@ type Question {
   id: Int!
   quizId: Int!
   description: String!
+  choiceType: String
+  isActive: Boolean
   choices:[Choice]
   createdAt: String
   updatedAt: String
@@ -61,6 +64,8 @@ type QuestionWithResult{
   id: Int!
   quizId: Int!
   description: String!
+  choiceType: String
+  isActive: Boolean
   choices:[Choice]
   answers:[Answer]
   createdAt: String
@@ -83,6 +88,8 @@ type QuestionWithCount {
   id: Int!
   quizId: Int!
   description: String!
+  choiceType: String
+  isActive: Boolean
   choices:[ChoiceWithCount]
   createdAt: String
   updatedAt: String
@@ -133,19 +140,23 @@ input QuestionInput {
   id: Int
   quizId: Int
   description: String!
+  choiceType: String
+  isActive: Boolean
   choices:[ChoiceInput]
 }
 
 input ChoiceInput {
   id: Int
   questionId: Int
-  description: String! 
+  description: String
 }
 
 input AddQuizInput {
   userId: Int!
   active: Boolean!
   title: String!
+    isEditableByUser: Boolean
+
   description: String!
   questions:[QuestionInput]
 }
@@ -154,6 +165,7 @@ input EditQuizInput {
   id: Int!
   userId: Int!
   active: Boolean!
+  isEditableByUser: Boolean
   title: String!
   description: String!
   questions:[QuestionInput]

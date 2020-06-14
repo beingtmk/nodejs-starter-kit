@@ -12,6 +12,7 @@ import { User } from "@gqlapp/user-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 
 const eager = "[user, questions.[choices]]";
+const eagerWithCount = "[user, questions.[choices]]"
 const withAnswersEager = "[user, questions.[choices, answers]]";
 
 export default class Quiz extends Model {
@@ -157,6 +158,35 @@ export default class Quiz extends Model {
     );
     return res;
   }
+  // public async getQuizCountById(id: number) {
+  //   const res = camelizeKeys(
+  //     await Quiz.query()
+  //       .findById(id)
+  //       // .select('q')
+  //       .withGraphFetched(eagerWithCount)
+  //       .modifyGraph('choices', (builder) =>{
+  //           console.log('cccccooooouuuuunnnnnttttt', Choice.relatedQuery('answers').count());
+  //           builder.select('*', Choice.relatedQuery('answer').count().as('count'))
+  //         })
+  //         .first()
+  //         .from('quiz as q')
+  //         .leftJoin('question as qu', 'qu.quiz_id', 'q.id')
+  //         .leftJoin('choice as ch', 'ch.question_id', 'qu.id')
+  //         .leftJoin('answer as a', 'a.choice_id', 'ch.id')
+  //       // .eager(eager)
+  //     // .orderBy('id', 'desc')
+  //   );
+  //   return res;
+  // }
+
+  // public async getChoiceWithCount(params){
+  //   return camelizeKeys(
+  //     await Choice.query()
+  //     .select(['Choice.*', Choice.relatedQuery('answers').count().as('count')])
+  //     .where(function() {
+  //     this.whereIn('answer.choice_id', params.choiceIdArray);
+  //   }))
+  // }
 }
 
 export class Question extends Model {
