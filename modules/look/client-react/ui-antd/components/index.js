@@ -30,5 +30,18 @@ export { default as Pagination } from './Pagination';
 export { default as Avatar } from './Avatar';
 export { default as Icon } from './Icon';
 export { default as Underline } from './underline';
+export { default as Carousel } from './Carousel';
+export { default as Badge } from './Badge';
+export { default as Breadcrumb } from './Breadcrumb';
+export { default as BreadcrumbItem } from './BreadcrumbItem';
+export { default as CheckboxGroup } from './CheckboxGroup';
+export { default as Radio } from './Radio';
+export { default as Rate } from './Rate';
+export { default as Skeleton } from './Skeleton';
+export { default as Slider } from './Slider';
+export { default as Spin } from './Spin';
+export { default as Switch } from './Switch';
+export { default as TabPane } from './TabPane';
+export { default as Tabs } from './Tabs';
 
 export { onAppCreate } from './NavBar';
