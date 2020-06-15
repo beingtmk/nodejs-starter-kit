@@ -27,11 +27,18 @@ export const ResultComponent = (props) => {
     const question = props.quiz.questions.find(
       (q) => q.id === answer.questionId
     );
-
-    const choice = question.choices.find((c) => c.id === answer.choiceId);
+    const getAnswers = () =>{
+      if(question.choiceType === QuestionTypes.TEXTAREA || question.choiceType === QuestionTypes.TEXTBOX){
+        return answer.content;
+      }else if(question.choiceType === QuestionTypes.SELECT || question.choiceType === QuestionTypes.RADIO || question.choiceType === QuestionTypes.MSELECT){
+        const choice = question.choices.filter((c) => c.id === answer.choiceId);
+        return `${choice.map(ch=> ch.description)}`
+      }
+    }
+    console.log('get annnnnn', getAnswers());
     queAnsArray.push({
       question: question && question.description,
-      answer: (question.choiceType === QuestionTypes.TEXTAREA || question.choiceType === QuestionTypes.TEXTBOX) ? answer.content : choice && choice.description,
+      answer: getAnswers(),
     });
   });
   console.log("qans", queAnsArray);

@@ -20,8 +20,13 @@ const RenderSelect = props => {
   }
 
   const onChange = value => {
+    console.log('forrrrmik', formik);
     const { formik, name } = props;
-    formik.handleChange({ target: { value, name } });
+    if(mode === 'multiple'){
+      formik.handleChange({ target: { value, name } });  
+    }
+    else{
+    formik.handleChange({ target: { value, name } });}
   };
 
   return (

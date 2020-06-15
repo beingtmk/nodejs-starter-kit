@@ -82,9 +82,26 @@ const QuizFormWithFormik = withFormik({
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }
   ) {
-    // values.results = (values.results.map)
+    var results = [];
+    values.questions.map(ques=>{
+      ques.answers.map(ans=>{
+        results.push({
+          id: ans.id,
+          questionId: ans.questionId,
+          userId: ans.userId,
+          choiceId: ans.choiceId,
+          content: ans.choiceId
+        });
+      })
+    })
+    values.results = results;
+    console.log('rreeeeeee', results);
+    values.results = (values.results.map);
+    var inputValues = {};
+    inputValues.results = values.results;
+    // const inputValues = { results:values.results };
     try {
-      await onSubmit(values);
+      await onSubmit(inputValues);
       resetForm();
       setStatus({ sent: true });
     } catch (e) {

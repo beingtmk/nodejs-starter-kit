@@ -37,6 +37,7 @@ export default class RenderQuestionsField extends React.Component {
     const name = this.props.name;
     const values = this.props.values;
     const arrayHelpers = this.props.arrayHelpers;
+    const currentUserId = this.props.currentUserId;
     let formItems = null;
     const questionsQ = this.props.quiz && this.props.quiz.questions;
     console.log("keys", values);
@@ -45,14 +46,15 @@ export default class RenderQuestionsField extends React.Component {
 
     const getTextTransformationsForValues = ()=>{
       var questions = values.questions;
-      let ques = questions.filter(quest=> (quest.choiceType===QuestionTypes.TEXTAREA || quest.choiceType===QuestionTypes.TEXTBOX || quest.choiceType===QuestionTypes.RADIO || quest.choiceType===QuestionTypes.MSELECT))
+      let ques = questions.filter(quest=> (quest.choiceType===QuestionTypes.TEXTAREA || quest.choiceType===QuestionTypes.TEXTBOX || quest.choiceType===QuestionTypes.RADIO || quest.choiceType===QuestionTypes.SELECT))
       ques.forEach((q, i)=>{
         const index = questions.indexOf(q);
         if(q.answers && q.answers.length === 0){
           const answers = [{
             choiceId: null,
             questionId: q.id,
-            content: ''
+            content: '',
+            userId: currentUserId
           }]
           questions[index].answers = answers;
         }
@@ -62,8 +64,13 @@ export default class RenderQuestionsField extends React.Component {
       
       console.log('qqqqq', questions);
       values.questions = questions;
+      return true
     }
     getTextTransformationsForValues();
+
+    const addMultipleChoice = () =>{
+      return {}
+    }
 
     if (values) {
       formItems =  values.questions && values.questions.length !== 0 && values.questions.map((v, indexv) => (
@@ -91,6 +98,33 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={choice.id}
+                    >
+                      {choice.description}
+                    </Option>
+                  ))}
+                </Field>)}
+                {v.choiceType === QuestionTypes.MSELECT &&
+                (<Field
+                  name={`questions[${indexv}].answers`}
+                  component={RenderSelect}
+                  placeholder={"none"}
+                  key={indexv}
+                  mode='multiple'
+                  type="select"
+                  label={"Select From Answers"}
+                  // label={`${k.label || k.key} #${indexv + 1}`}
+                  value={v.answers}
+                //   key={indexv}
+                // style={{ display: 'inline-block', margin: '0px 5px' }}
+                >
+                  {v.choices.map((choice, key) => (
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={{choiceId:choice.id, questionId: v.id, userId:currentUserId}}
                     >
                       {choice.description}
                     </Option>
