@@ -19,8 +19,8 @@ export default (pubsub: any) => ({
     async quiz(obj: any, { id }: any, context: any) {
       return context.Quiz.getQuiz(id);
     },
-    async quizWithCreatedChoice(obj: any, { id, userId }: any, context: any) {
-      const quiz = await context.Quiz.getQuizWithCreatedChoice(id, userId);
+    async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
+      const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
       console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqq', quiz);
       return quiz;
     },

@@ -61,54 +61,14 @@ export default class Quiz extends Model {
     );
     return res;
   }
-  public async getQuizWithCreatedChoice(id: number, userId: number) {
-    console.log("inpppput", userId);
-    const questionsWithTextChoice = camelizeKeys(
-      await knex("question")
-        .select("question.id")
-        // .leftJoin("question", "choice.question_id", "question.id")
-        .leftJoin("quiz", "question.quiz_id", "quiz.id")
-        .where("question.choice_type", QuestionTypes.TEXTBOX)
-        .orWhere("question.choice_type", QuestionTypes.TEXTAREA)
-    );
-    console.log("qqqqqqqqq", questionsWithTextChoice);
-
-    await questionsWithTextChoice.map(async (que, key) => {
-      const choi = camelizeKeys(
-        await knex
-          .select("choice.id as choi_id")
-          .from('choice')
-          .leftJoin("question", "choice.question_id", "question.id")
-          .leftJoin("quiz", "question.quiz_id", "quiz.id")
-          .where("question.id", que.id)
-          .andWhere("choice.private_id", userId)
-          .first()
-        // .where('choice.user_id', 1)
-      );
-      console.log("chhhhooooiii", choi);
-      if (!choi) {
-        await knex("choice").insert({
-          question_id: que.id,
-          description: "",
-          private_id: userId,
-        });
-      } else {
-        await knex("choice").insert({
-          id: choi.choiId,
-          question_id: que.id,
-          description: "",
-          private_id: userId,
-        });
-      }
-    });
+  public async getQuizWithAnswersByUser(id: number, userId: number) {
     const res = camelizeKeys(
       await Quiz.query()
         .findById(id)
-        .withGraphFetched(eager)
+        .withGraphFetched(withAnswersEager)
         .leftJoin("question", "question.quiz_id", "quiz.id")
-        .leftJoin("choice", "choice.question_id", "question.id")
-      // .where("choice.private_id", userId)
-      // .where('choice.private')
+        .leftJoin('answer', 'answer.question_id', 'question.id')
+        .where('answer.user_id', userId)
       // .eager(eager)
       // .orderBy('id', 'desc')
     );

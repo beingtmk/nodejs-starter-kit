@@ -44,12 +44,12 @@ const QuizForm = ({
           <RenderQuizQuestionField
             // setload={setload}
             arrayHelpers={arrayHelpers}
-            values={values.results}
+            values={values}
             label={"Answer Following QUestions"}
-            name="results"
+            name="quiz-results"
             // buttonText='Add Question'
             // keys={{type:'text', label:'question', key:'description'}}
-            quiz={quiz}
+            // quiz={quiz}
             currentUserId={currentUser.id}
           />
         )}
@@ -74,43 +74,8 @@ const QuizForm = ({
 const QuizFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    function getResult(question) {
-      return {
-        questionId: question && question.id,
-        userId: props.currentUser && props.currentUser.id,
-        choiceId: null,
-        content: ''
-        // choices: question && question.choices && question.choices.map(getChoices) || []
-      };
-    }
-    function getAnswers(result) {
-      return {
-        id: result && result.id,
-        questionId: result && result.questionId,
-        userId:result && result.userId,
-        choiceId: result && result.choiceId,
-        content: result && result.content
-        // choices: question && question.choices && question.choices.map(getChoices) || []
-      };
-    }
-    // function getQuestions(question) {
-    //   return {
-    //     id: (question && question.id) || null,
-    //     description: (question && question.description) || '',
-    //     choices: question && question.choices && question.choices.map(getChoices) || []
-    //   };
-    // }
     return {
-      results:
-        props.answers && props.answers.answers.length !== 0
-          ? props.answers.answers.map(getAnswers)
-          : props.quiz &&
-            props.quiz.questions &&
-            props.quiz.questions.map(getResult),
-      // title: (props.quiz && props.quiz.title) || "",
-      // description: (props.quiz && props.quiz.description) || "",
-      // active: (props.quiz && props.quiz.active) || true,
-      // questions: (props.quiz && props.quiz.questions && props.quiz.questions.map(getQuestions)) || [],
+      questions:props.quiz && props.quiz.questions 
     };
   },
   async handleSubmit(

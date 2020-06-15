@@ -11,6 +11,7 @@ const RenderSelect = props => {
     label,
     type,
     children,
+    mode,
     meta: { touched, error }
   } = props;
   let validateStatus = '';
@@ -27,6 +28,7 @@ const RenderSelect = props => {
     <FormItem label={label} validateStatus={validateStatus} help={error}>
       <div>
         <Select
+          mode={mode}
           showSearch
           optionFilterProp="children"
           placeholder={label}

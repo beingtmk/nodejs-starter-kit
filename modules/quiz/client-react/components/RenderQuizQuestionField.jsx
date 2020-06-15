@@ -6,10 +6,10 @@ import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 import { Form, Icon, Row, Col, Radio } from "antd";
 import { RenderField, RenderUpload, Button, RenderSelect, Option } from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
+import RenderRadioGroup from "@gqlapp/look-client-react/ui-antd/components/RenderRadioGroup";
 import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 
 const FormItem = Form.Item;
-
 export default class RenderQuestionsField extends React.Component {
   // add = () => {
   //   const arrayHelpers = this.props.arrayHelpers;
@@ -39,29 +39,51 @@ export default class RenderQuestionsField extends React.Component {
     const arrayHelpers = this.props.arrayHelpers;
     let formItems = null;
     const questionsQ = this.props.quiz && this.props.quiz.questions;
-
     console.log("keys", values);
     // const handleChoices = (data) => (values.choices = data);
     // this.add
+
+    const getTextTransformationsForValues = ()=>{
+      var questions = values.questions;
+      let ques = questions.filter(quest=> (quest.choiceType===QuestionTypes.TEXTAREA || quest.choiceType===QuestionTypes.TEXTBOX || quest.choiceType===QuestionTypes.RADIO || quest.choiceType===QuestionTypes.MSELECT))
+      ques.forEach((q, i)=>{
+        const index = questions.indexOf(q);
+        if(q.answers && q.answers.length === 0){
+          const answers = [{
+            choiceId: null,
+            questionId: q.id,
+            content: ''
+          }]
+          questions[index].answers = answers;
+        }
+
+        
+      })
+      
+      console.log('qqqqq', questions);
+      values.questions = questions;
+    }
+    getTextTransformationsForValues();
+
     if (values) {
-      formItems = values.map((v, indexv) => (
+      formItems =  values.questions && values.questions.length !== 0 && values.questions.map((v, indexv) => (
         <Row>
-          <h3>{questionsQ[indexv].description}</h3>
+          <h3>{v.description}</h3>
           <Col span={24}>
             <FormItem required={false} key={indexv} style={{ margin: "0px" }}>
-              {questionsQ[indexv].choiceType === (QuestionTypes.SELECT || QuestionTypes.RADIO || QuestionTypes.MSELECT) &&
+              {v.choiceType === QuestionTypes.SELECT &&
                 (<Field
-                  name={`results[${indexv}].choiceId`}
+                  name={`questions[${indexv}].answers[0].choiceId`}
                   component={RenderSelect}
                   placeholder={"none"}
-                  type="radio"
+                  type="select"
                   label={"Select From Answers"}
                   // label={`${k.label || k.key} #${indexv + 1}`}
-                  value={v.choiceId}
+                  value={v.answers[0].choiceId}
                 //   key={indexv}
                 // style={{ display: 'inline-block', margin: '0px 5px' }}
                 >
-                  {questionsQ[indexv].choices.map((choice, key) => (
+                  {v.choices.map((choice, key) => (
                     <Option
                       style={{
                         display: "block",
@@ -74,20 +96,50 @@ export default class RenderQuestionsField extends React.Component {
                     </Option>
                   ))}
                 </Field>)}
-              {(questionsQ[indexv].choiceType === (QuestionTypes.TEXTBOX)) && (
-                <Field
-                  name={`results[${indexv}].content`}
-                  component={RenderField}
-                  placeholder={"none"}
-                  type='text'
-                  label={"Select From Answers"}
-                  // label={`${k.label || k.key} #${indexv + 1}`}
-                  value={v.content}
-                //   key={indexv}
-                // style={{ display: 'inline-block', margin: '0px 5px' }}
-                />
-              )}
-              {(questionsQ[indexv].choiceType === (QuestionTypes.TEXTAREA)) && (
+                {(v.choiceType === (QuestionTypes.TEXTBOX)) && (
+                  <Field
+                    name={`questions[${indexv}].answers[0].content`}
+                    component={RenderField}
+                    placeholder={"none"}
+                    type='text'
+                    label={"Select From Answers"}
+                    // label={`${k.label || k.key} #${indexv + 1}`}
+                    value={v.answers[0].content}
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  />
+                )}
+                {(v.choiceType === (QuestionTypes.TEXTAREA)) && (
+                  <Field
+                    name={`questions[${indexv}].answers[0].content`}
+                    component={RenderField}
+                    placeholder={"none"}
+                    type='textarea'
+                    label={"Select From Answers"}
+                    // label={`${k.label || k.key} #${indexv + 1}`}
+                    value={v.answers[0].content}
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
+                  />
+                  )}
+                  {(v.choiceType === QuestionTypes.RADIO) &&
+                    (<Field
+                      name={`questions[${indexv}].answers[0].choiceId`}
+                      component={RenderRadioGroup}
+                      placeholder={"none"}
+                      type="radio"
+                      label={"Select From Answers"}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={v.answers[0].choiceId}
+                    //   key={indexv}
+                    // style={{ display: 'inline-block', margin: '0px 5px' }}
+                    >
+                      {v.choices.map((choice, key) => (
+                        <Radio value={choice.id}>{choice.description}</Radio>
+                      ))}
+                    </Field>)}
+                  {/* 
+              {(v.choiceType === (QuestionTypes.TEXTAREA)) && (
                 <Field
                   name={`results[${indexv}].content`}
                   component={RenderField}
@@ -99,7 +151,7 @@ export default class RenderQuestionsField extends React.Component {
                 //   key={indexv}
                 // style={{ display: 'inline-block', margin: '0px 5px' }}
                 />
-              )}
+              )} */}
             </FormItem>
           </Col>
 

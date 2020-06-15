@@ -10,7 +10,7 @@ import { message } from 'antd';
 // import CONTACT from '../graphql/Quiz.graphql';
 // import { QuizForm } from '../types';
 import ADD_ANSWER from '../graphql/AddAnswers.graphql';
-import QUIZ_QUERY from '../graphql/QuizQuery.graphql';
+import QUIZ_WITH_RESULT_QUERY from '../graphql/QuizWithResultQuery.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
 
@@ -71,7 +71,7 @@ export default compose(
       return { currentUserLoading:loading, currentUser };
     }
   }),
-  graphql(QUIZ_QUERY, {
+  graphql(QUIZ_WITH_RESULT_QUERY, {
     options: props => {
       let id = 0;
       if (props.match) {
@@ -79,14 +79,15 @@ export default compose(
       } else if (props.navigation) {
         id = props.navigation.state.params.id;
       }
+      const currentUserId = !props.currentUserLoading && props.currentUser && props.currentUser.id;
 
       return {
-        variables: { id: Number(id) }
+        variables: { id: Number(id), userId: Number(currentUserId) }
       };
     },
-    props({ data: { loading, error, quiz } }) {
+    props({ data: { loading, error, quizWithAnswers } }) {
       if (error) throw new Error(error);
-      return { quizLoading: loading, quiz };
+      return { quizLoading: loading, quiz:quizWithAnswers };
     }
   }),
   graphql(ANSWERS_QUERY, {
