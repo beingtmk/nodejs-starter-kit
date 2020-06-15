@@ -90,18 +90,17 @@ const QuizFormWithFormik = withFormik({
           questionId: ans.questionId,
           userId: ans.userId,
           choiceId: ans.choiceId,
-          content: ans.choiceId
+          content: ans.content
         });
       })
     })
     values.results = results;
+    // values.results = (results.map);
     console.log('rreeeeeee', results);
-    values.results = (values.results.map);
-    var inputValues = {};
-    inputValues.results = values.results;
+    var val = {results:values.results};
     // const inputValues = { results:values.results };
     try {
-      await onSubmit(inputValues);
+      await onSubmit(val);
       resetForm();
       setStatus({ sent: true });
     } catch (e) {
