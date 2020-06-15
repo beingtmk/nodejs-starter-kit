@@ -62,7 +62,8 @@ export default class Quiz extends Model {
     return res;
   }
   public async getQuizWithAnswersByUser(id: number, userId: number) {
-    const res = camelizeKeys(
+    var res;
+    res = camelizeKeys(
       await Quiz.query()
         .findById(id)
         .withGraphFetched(withAnswersEager)
@@ -73,6 +74,17 @@ export default class Quiz extends Model {
       // .orderBy('id', 'desc')
     );
     console.log("bbbbbbbbbbb", res);
+    if(!res){
+    res = camelizeKeys(
+        await Quiz.query()
+          .findById(id)
+          .withGraphFetched(withAnswersEager)
+          .leftJoin("question", "question.quiz_id", "quiz.id")
+          .leftJoin('answer', 'answer.question_id', 'question.id')
+        // .eager(eager)
+        // .orderBy('id', 'desc')
+      );
+    }
 
     return res;
   }
