@@ -6,6 +6,7 @@ import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 import { Form, Icon, Row, Col, Radio } from "antd";
 import { RenderField, RenderUpload, Button, RenderSelect, Option } from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
+import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 
 const FormItem = Form.Item;
 
@@ -48,30 +49,57 @@ export default class RenderQuestionsField extends React.Component {
           <h3>{questionsQ[indexv].description}</h3>
           <Col span={24}>
             <FormItem required={false} key={indexv} style={{ margin: "0px" }}>
-              <Field
-                name={`results[${indexv}].choiceId`}
-                component={RenderSelect}
-                placeholder={"none"}
-                type="radio"
-                label={"Select From Answers"}
-                // label={`${k.label || k.key} #${indexv + 1}`}
-                value={v.choiceId}
+              {questionsQ[indexv].choiceType === (QuestionTypes.SELECT || QuestionTypes.RADIO || QuestionTypes.MSELECT) &&
+                (<Field
+                  name={`results[${indexv}].choiceId`}
+                  component={RenderSelect}
+                  placeholder={"none"}
+                  type="radio"
+                  label={"Select From Answers"}
+                  // label={`${k.label || k.key} #${indexv + 1}`}
+                  value={v.choiceId}
                 //   key={indexv}
                 // style={{ display: 'inline-block', margin: '0px 5px' }}
-              >
-                {questionsQ[indexv].choices.map((choice, key) => (
-                  <Option
-                    style={{
-                      display: "block",
-                      height: "30px",
-                      lineHeight: "30px",
-                    }}
-                    value={choice.id}
-                  >
-                    {choice.description}
-                  </Option>
-                ))}
-              </Field>
+                >
+                  {questionsQ[indexv].choices.map((choice, key) => (
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={choice.id}
+                    >
+                      {choice.description}
+                    </Option>
+                  ))}
+                </Field>)}
+              {(questionsQ[indexv].choiceType === (QuestionTypes.TEXTBOX)) && (
+                <Field
+                  name={`results[${indexv}].content`}
+                  component={RenderField}
+                  placeholder={"none"}
+                  type='text'
+                  label={"Select From Answers"}
+                  // label={`${k.label || k.key} #${indexv + 1}`}
+                  value={v.content}
+                //   key={indexv}
+                // style={{ display: 'inline-block', margin: '0px 5px' }}
+                />
+              )}
+              {(questionsQ[indexv].choiceType === (QuestionTypes.TEXTAREA)) && (
+                <Field
+                  name={`results[${indexv}].content`}
+                  component={RenderField}
+                  placeholder={"none"}
+                  type='textarea'
+                  label={"Select From Answers"}
+                  // label={`${k.label || k.key} #${indexv + 1}`}
+                  value={v.content}
+                //   key={indexv}
+                // style={{ display: 'inline-block', margin: '0px 5px' }}
+                />
+              )}
             </FormItem>
           </Col>
 
@@ -108,7 +136,7 @@ export default class RenderQuestionsField extends React.Component {
       <div>
         <FormItem label={this.props.label}>
           {formItems}
-          
+
         </FormItem>
       </div>
     );

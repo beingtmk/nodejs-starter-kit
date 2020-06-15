@@ -58,6 +58,7 @@ exports.up = function(knex) {
         .references('id')
         .inTable('choice')
         .onDelete('CASCADE');
+      table.string('content');
       table.timestamps(false, true);
     })
   ]);

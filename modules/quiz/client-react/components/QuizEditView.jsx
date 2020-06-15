@@ -22,7 +22,7 @@ const QuizAddView = (props) => {
       <CardTitle>
         <Icon type="global" /> {'Edit Quiz'}
       </CardTitle>
-      <QuizAddForm {...props} />
+      {props.quiz ?(<QuizAddForm {...props} />): "Quiz doesn't exist"}
     </Card>
   );
   return (

@@ -6,7 +6,7 @@ import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 import { Form, Icon, Row, Col } from "antd";
 import { RenderField, RenderUpload, Button, RenderCheckBox, RenderSelect, Option } from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
-import QuestionTypes from '../constants/QuestionTypes';
+import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 const FormItem = Form.Item;
 
 

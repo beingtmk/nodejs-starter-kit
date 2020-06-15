@@ -5,6 +5,7 @@ query answers($quizId: Int!, $userId: Int!) {
       userId
       choiceId
       questionId
+      content
     }
     # active
     # title

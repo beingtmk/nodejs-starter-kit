@@ -9,7 +9,7 @@ type Quiz {
   updatedAt: String
   user: User
   isEditableByUser: Boolean
-  questions:[Question]
+  questions: [Question]
 }
 
 type Question {
@@ -18,7 +18,7 @@ type Question {
   description: String!
   choiceType: String
   isActive: Boolean
-  choices:[Choice]
+  choices: [Choice]
   createdAt: String
   updatedAt: String
 }
@@ -35,7 +35,8 @@ type Answer {
   id: Int!
   questionId: Int!
   userId: Int!
-  choiceId: Int!
+  choiceId: Int
+  content: String
   createdAt: String
   updatedAt: String
 }
@@ -45,9 +46,10 @@ extend type Query {
   quizzes(filter: String): [Quiz]
   #get quiz by id
   quiz(id: Int!): Quiz
+  quizWithCreatedChoice(id: Int!, userId: Int!): Quiz
   #get answer
   answer(input: AnswerInput!): Answer
-  answers(userId: Int!,   quizId: Int!): AnswersOutput
+  answers(userId: Int!, quizId: Int!): AnswersOutput
   getAttendees(id: Int!): AttendeesOutput
   getQuizCount(id: Int!): QuizWithCount
   getUserWiseResult(id: Int!): UserWiseResult
@@ -56,24 +58,24 @@ extend type Query {
 type UserWiseResult {
   id: Int!
   userId: Int!
-  attendees:AttendeesOutput
+  attendees: AttendeesOutput
   questions: [QuestionWithResult]
 }
 
-type QuestionWithResult{
+type QuestionWithResult {
   id: Int!
   quizId: Int!
   description: String!
   choiceType: String
   isActive: Boolean
-  choices:[Choice]
-  answers:[Answer]
+  choices: [Choice]
+  answers: [Answer]
   createdAt: String
   updatedAt: String
 }
 
 type QuizWithCount {
-    id: Int!
+  id: Int!
   userId: Int
   active: Boolean
   title: String
@@ -81,7 +83,7 @@ type QuizWithCount {
   createdAt: String
   updatedAt: String
   user: User
-  questions:[QuestionWithCount]
+  questions: [QuestionWithCount]
 }
 
 type QuestionWithCount {
@@ -90,7 +92,7 @@ type QuestionWithCount {
   description: String!
   choiceType: String
   isActive: Boolean
-  choices:[ChoiceWithCount]
+  choices: [ChoiceWithCount]
   createdAt: String
   updatedAt: String
 }
@@ -99,17 +101,18 @@ type ChoiceWithCount {
   id: Int!
   questionId: Int!
   description: String!
-  count: Int!
+  count: Int
+
   createdAt: String
   updatedAt: String
 }
 
 type AttendeesOutput {
-  users:[User]
+  users: [User]
 }
 
 type AnswersOutput {
-  answers:[Answer]
+  answers: [Answer]
 }
 
 extend type Mutation {
@@ -118,11 +121,10 @@ extend type Mutation {
   # Edit a quiz
   editQuiz(input: EditQuizInput!): Quiz
   # Delete quiz
-  deleteQuiz(id:Int): Quiz
+  deleteQuiz(id: Int): Quiz
   # Add answer
   addAnswer(input: AnswerInput!): Answer
   addAnswers(input: AnswersInput!): Boolean
-
 }
 
 input AnswersInput {
@@ -133,7 +135,8 @@ input AnswerInput {
   id: Int
   questionId: Int!
   userId: Int!
-  choiceId: Int!
+  choiceId: Int
+  content: String
 }
 
 input QuestionInput {
@@ -142,12 +145,13 @@ input QuestionInput {
   description: String!
   choiceType: String
   isActive: Boolean
-  choices:[ChoiceInput]
+  choices: [ChoiceInput]
 }
 
 input ChoiceInput {
   id: Int
   questionId: Int
+
   description: String
 }
 
@@ -155,10 +159,10 @@ input AddQuizInput {
   userId: Int!
   active: Boolean!
   title: String!
-    isEditableByUser: Boolean
+  isEditableByUser: Boolean
 
   description: String!
-  questions:[QuestionInput]
+  questions: [QuestionInput]
 }
 
 input EditQuizInput {
@@ -168,9 +172,8 @@ input EditQuizInput {
   isEditableByUser: Boolean
   title: String!
   description: String!
-  questions:[QuestionInput]
+  questions: [QuestionInput]
 }
-
 
 # extend type Subscription {
 #   subscriptionName: TypeName

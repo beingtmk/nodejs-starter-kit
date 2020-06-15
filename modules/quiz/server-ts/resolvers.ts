@@ -19,13 +19,18 @@ export default (pubsub: any) => ({
     async quiz(obj: any, { id }: any, context: any) {
       return context.Quiz.getQuiz(id);
     },
+    async quizWithCreatedChoice(obj: any, { id, userId }: any, context: any) {
+      const quiz = await context.Quiz.getQuizWithCreatedChoice(id, userId);
+      console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqq', quiz);
+      return quiz;
+    },
     async answer(obj: any, { input }: any, context: any) {
       return context.Quiz.getAnswerByParams(input);
     },
     async answers(obj: any, { userId, quizId }: any, context: any) {
       const quiz = await context.Quiz.getQuiz(quizId);
       let questionIdArray = [];
-      quiz.questions.map((question, key) => {
+      quiz && quiz.questions.map((question, key) => {
         questionIdArray.push(question.id);
       });
       console.log("ggggg", questionIdArray);
@@ -209,15 +214,6 @@ export default (pubsub: any) => ({
           var isDone;
           const questionItem = await Quiz.getQuestion(result.questionId);
           console.log("question existss", questionItem);
-          var questionHasChoice = false;
-          questionItem.map((item, key) => {
-            if (item.id === result.choiceId) {
-              questionHasChoice = true;
-            }
-          });
-          if (!questionHasChoice) {
-            return null;
-          }
           if (ansExists && ansExists.length !== 0) {
             isDone = await Quiz.updateAnswer(result);
           } else {

@@ -16,6 +16,7 @@ query getUserWiseResult($id: Int!) {
         userId
         questionId
         choiceId
+        content
       }
     }
     attendees {

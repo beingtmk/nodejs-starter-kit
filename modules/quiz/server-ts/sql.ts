@@ -10,9 +10,10 @@ import { has } from "lodash";
 
 import { User } from "@gqlapp/user-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
+import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 
 const eager = "[user, questions.[choices]]";
-const eagerWithCount = "[user, questions.[choices]]"
+const eagerWithCount = "[user, questions.[choices]]";
 const withAnswersEager = "[user, questions.[choices, answers]]";
 
 export default class Quiz extends Model {
@@ -50,7 +51,6 @@ export default class Quiz extends Model {
     const res = camelizeKeys(queryBuilder);
     return res;
   }
-
   public async getQuiz(id: number) {
     const res = camelizeKeys(
       await Quiz.query()
@@ -59,6 +59,61 @@ export default class Quiz extends Model {
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
+    return res;
+  }
+  public async getQuizWithCreatedChoice(id: number, userId: number) {
+    console.log("inpppput", userId);
+    const questionsWithTextChoice = camelizeKeys(
+      await knex("question")
+        .select("question.id")
+        // .leftJoin("question", "choice.question_id", "question.id")
+        .leftJoin("quiz", "question.quiz_id", "quiz.id")
+        .where("question.choice_type", QuestionTypes.TEXTBOX)
+        .orWhere("question.choice_type", QuestionTypes.TEXTAREA)
+    );
+    console.log("qqqqqqqqq", questionsWithTextChoice);
+
+    await questionsWithTextChoice.map(async (que, key) => {
+      const choi = camelizeKeys(
+        await knex
+          .select("choice.id as choi_id")
+          .from('choice')
+          .leftJoin("question", "choice.question_id", "question.id")
+          .leftJoin("quiz", "question.quiz_id", "quiz.id")
+          .where("question.id", que.id)
+          .andWhere("choice.private_id", userId)
+          .first()
+        // .where('choice.user_id', 1)
+      );
+      console.log("chhhhooooiii", choi);
+      if (!choi) {
+        await knex("choice").insert({
+          question_id: que.id,
+          description: "",
+          private_id: userId,
+        });
+      } else {
+        await knex("choice").insert({
+          id: choi.choiId,
+          question_id: que.id,
+          description: "",
+          private_id: userId,
+        });
+      }
+    });
+    const res = camelizeKeys(
+      await Quiz.query()
+        .findById(id)
+        .withGraphFetched(eager)
+        .leftJoin("question", "question.quiz_id", "quiz.id")
+        .leftJoin("choice", "choice.question_id", "question.id")
+      // .where("choice.private_id", userId)
+      // .where('choice.private')
+      // .eager(eager)
+      // .orderBy('id', 'desc')
+    );
+    console.log("bbbbbbbbbbb", res);
+
     return res;
   }
   public async getQuizWithAnswers(id: number) {
@@ -75,7 +130,9 @@ export default class Quiz extends Model {
   public async addQuiz(input: any) {
     console.log("quizzz added11", input);
 
-    const res = camelizeKeys(await Quiz.query().insertGraph(decamelizeKeys(input)));
+    const res = camelizeKeys(
+      await Quiz.query().insertGraph(decamelizeKeys(input))
+    );
     // console.log("quizzz added", res);
     return res.id;
   }
@@ -124,7 +181,7 @@ export default class Quiz extends Model {
       await knex("answer")
         .where({ user_id: params.userId })
         .andWhere(function() {
-          this.whereIn('answer.question_id', params.questionIdArray);
+          this.whereIn("answer.question_id", params.questionIdArray);
         })
     );
     return res;
@@ -134,7 +191,7 @@ export default class Quiz extends Model {
       await knex("answer")
         // .where({ user_id: params.userId })
         .where(function() {
-          this.whereIn('answer.question_id', params.questionIdArray);
+          this.whereIn("answer.question_id", params.questionIdArray);
         })
     );
     return res;
@@ -144,7 +201,7 @@ export default class Quiz extends Model {
       await knex("answer")
         // .where({ user_id: params.userId })
         .where(function() {
-          this.whereIn('answer.choice_id', params.choiceIdArray);
+          this.whereIn("answer.choice_id", params.choiceIdArray);
         })
     );
     return res;
@@ -152,9 +209,13 @@ export default class Quiz extends Model {
 
   public async getQuestion(id: number) {
     const res = camelizeKeys(
-      await knex.select("q.id", 'qc.id').from('question AS q').where('q.id', '=', id).leftJoin('choice AS qc', 'qc.question_id', 'q.id')
-        // .where({ user_id: params.userId })
-        // .andWhere({ question_id: params.questionId })
+      await knex
+        .select("q.id", "qc.id")
+        .from("question AS q")
+        .where("q.id", "=", id)
+        .leftJoin("choice AS qc", "qc.question_id", "q.id")
+      // .where({ user_id: params.userId })
+      // .andWhere({ question_id: params.questionId })
     );
     return res;
   }

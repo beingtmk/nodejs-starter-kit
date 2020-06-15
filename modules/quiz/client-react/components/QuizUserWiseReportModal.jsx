@@ -25,7 +25,8 @@ const QuizUserWiseReportComponent = (quiz) => {
       record.choices &&
       record.choices.length !== 0 &&
       record.choices.find((cho) => result && result.choiceId === cho.id);
-    return choice && choice.description;
+    console.log('fagagaga', choice, result);
+    return !choice ? result.content : choice && choice.description;
   };
   var columns = [
     {

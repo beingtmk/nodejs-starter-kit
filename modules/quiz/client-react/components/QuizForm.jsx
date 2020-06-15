@@ -79,6 +79,7 @@ const QuizFormWithFormik = withFormik({
         questionId: question && question.id,
         userId: props.currentUser && props.currentUser.id,
         choiceId: null,
+        content: ''
         // choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
@@ -88,6 +89,7 @@ const QuizFormWithFormik = withFormik({
         questionId: result && result.questionId,
         userId:result && result.userId,
         choiceId: result && result.choiceId,
+        content: result && result.content
         // choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
