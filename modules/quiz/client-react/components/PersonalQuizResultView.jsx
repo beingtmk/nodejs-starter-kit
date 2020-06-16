@@ -12,27 +12,29 @@ const { Panel } = Collapse;
 
 const renderMetaData = (t) => (
   <Helmet
-    title={`${settings.app.name} - ${t("title")}`}
+    title={`${settings.app.name} - ${'Quiz-Result'}`}
     meta={[
-      { name: "description", content: `${settings.app.name} - ${t("meta")}` },
+      { name: "description", content: `${settings.app.name} - ${'Personal'}` },
     ]}
   />
 );
 
 export const ResultComponent = (props) => {
   const queAnsArray = [];
-  const answers = props.answers;
+  const questions = props.quiz && props.quiz.questions;
 
-  answers.answers.map((answer, key) => {
-    const question = props.quiz.questions.find(
-      (q) => q.id === answer.questionId
-    );
-    const getAnswers = () =>{
-      if(question.choiceType === QuestionTypes.TEXTAREA || question.choiceType === QuestionTypes.TEXTBOX){
-        return answer.content;
-      }else if(question.choiceType === QuestionTypes.SELECT || question.choiceType === QuestionTypes.RADIO || question.choiceType === QuestionTypes.MSELECT){
-        const choice = question.choices.filter((c) => c.id === answer.choiceId);
-        return `${choice.map(ch=> ch.description)}`
+  questions.map((question, key) => {
+    const getAnswers = () => {
+      if (question.choiceType === QuestionTypes.TEXTAREA || question.choiceType === QuestionTypes.TEXTBOX) {
+        return question.answers[0].content;
+      } else {
+        let choiceIdArray = []
+        question.answers.forEach(answer => {
+          choiceIdArray.push(answer.choiceId)
+        })
+        const choice = question.choices.filter((c) => choiceIdArray.includes(c.id));
+        const choiceLength = choice.length;
+        return choice.map((ch, i) => `${ch.description}${choiceLength > 1 && choiceLength > i + 1 ? ', ' : ''}`)
       }
     }
     console.log('get annnnnn', getAnswers());

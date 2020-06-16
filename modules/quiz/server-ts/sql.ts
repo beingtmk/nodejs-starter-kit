@@ -88,6 +88,8 @@ export default class Quiz extends Model {
 
     return res;
   }
+
+
   public async getQuizWithAnswers(id: number) {
     const res = camelizeKeys(
       await Quiz.query()

@@ -90,25 +90,5 @@ export default compose(
       if (error) throw new Error(error);
       return { quizLoading: loading, quiz:quizWithAnswers };
     }
-  }),
-  graphql(ANSWERS_QUERY, {
-    options: props => {
-      let id = 0;
-      if (props.match) {
-        id = props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.id;
-      }
-      const currentUserId = !props.currentUserLoading && props.currentUser && props.currentUser.id;
-      console.log('query props', props, currentUserId);
-
-      return {
-        variables: { quizId: Number(id), userId: Number(currentUserId) }
-      };
-    },
-    props({ data: { loading, error, answers } }) {
-      if (error) throw new Error(error);
-      return { answersLoading: loading, answers };
-    }
-  }),
-  )(translate('contact')(Quiz));
+  })
+  )(translate('quiz')(Quiz));

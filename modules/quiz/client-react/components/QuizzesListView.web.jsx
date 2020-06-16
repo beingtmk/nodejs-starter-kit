@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button } from '@gqlapp/look-client-react';
-import {Spin as Loader} from 'antd';
+import { Spin as Loader, Tooltip, Popconfirm } from 'antd';
 import QuizUserWiseReportModal from './QuizUserWiseReportModal';
 
-const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
-// 
+const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz }) => {
+  // 
 
 
   // const renderOrderByArrow = name => {
@@ -42,12 +42,16 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
   //   return onOrderBy({ column: name, order });
   // };
 
+  const cancel = () => {
+    message.error("Task cancelled");
+  };
+
   const columns = [
     {
       title: (
         <>
-        <h5>Id</h5>
-        {/* <a onClick={e => handleOrderBy(e, 'username')} href="#">
+          <h5>Id</h5>
+          {/* <a onClick={e => handleOrderBy(e, 'username')} href="#">
           {t('users.column.name')} {renderOrderByArrow('username')}
         </a> */}
         </>
@@ -56,8 +60,8 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
       key: 'id',
       render: (text, record) => (
         <>
-        {record.id}
-        {/* <Link className="user-link" to={`/users/${record.id}`}>
+          {record.id}
+          {/* <Link className="user-link" to={`/users/${record.id}`}>
           {text}
         </Link> */}
         </>
@@ -66,8 +70,8 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
     {
       title: (
         <>
-        <h5>Title</h5>
-        {/* <a onClick={e => handleOrderBy(e, 'description')} href="#">
+          <h5>Title</h5>
+          {/* <a onClick={e => handleOrderBy(e, 'description')} href="#">
           {t('users.column.email')} {renderOrderByArrow('email')}
         </a> */}
         </>
@@ -78,8 +82,8 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
     {
       title: (
         <>
-        <h5>User</h5>
-        {/* <a onClick={e => handleOrderBy(e, 'isActive')} href="#">
+          <h5>User</h5>
+          {/* <a onClick={e => handleOrderBy(e, 'isActive')} href="#">
           {t('users.column.active')} {renderOrderByArrow('isActive')}
         </a> */}
         </>
@@ -87,9 +91,9 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
       dataIndex: 'record.user.username',
       key: 'username',
       render: (text, record) => (
-      <h5>
-        {console.log('record', record)}
-        {record.user && record.user.username}
+        <h5>
+          {console.log('record', record)}
+          {record.user && record.user.username}
         </h5>
       )
     },
@@ -131,9 +135,29 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => deleteQuiz(record.id)}>
-          Delete
-        </Button>
+        <>
+          <Tooltip title="Edit">
+            <Button
+              href={`quiz/edit/${record.id}`}
+              shape="circle"
+              icon="edit"
+              type="primary"
+              size="small"
+              style={{ marginBottom: "10px", marginRight: "3px" }}
+              ghost
+            />
+          </Tooltip>
+          <Popconfirm
+            title="Delete blog?"
+            onConfirm={() => deleteQuiz(record.id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button color="danger" icon='delete' shape='round' size="sm" onClick={() => deleteQuiz(record.id)} />
+
+          </Popconfirm>
+        </>
       )
     }
   ];
@@ -143,19 +167,19 @@ const UsersView = ({  loadingQuizzes, quizzes, t, deleteQuiz }) => {
       {loadingQuizzes && !quizzes ? (
         <div className="text-center" align='center'><Loader /></div>
       ) : (
-        <>
-          {/* {errors &&
+          <>
+            {/* {errors &&
             errors.map(error => (
               <div className="alert alert-danger" role="alert" key={error.field}>
                 {error.message}
               </div>
             ))} */}
-          {/* for horizontal table responsive on smaller screens */}
-          <div style={{ overflowX: 'auto' }}>
-            <Table dataSource={quizzes} columns={columns} />
-          </div>
-        </>
-      )}
+            {/* for horizontal table responsive on smaller screens */}
+            <div style={{ overflowX: 'auto' }}>
+              <Table dataSource={quizzes} columns={columns} />
+            </div>
+          </>
+        )}
     </>
   );
 };

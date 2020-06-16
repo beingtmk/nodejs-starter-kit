@@ -10,7 +10,7 @@ import { message } from 'antd';
 // import CONTACT from '../graphql/Quiz.graphql';
 // import { QuizForm } from '../types';
 import ADD_ANSWER from '../graphql/AddAnswers.graphql';
-import QUIZ_QUERY from '../graphql/QuizQuery.graphql';
+import QUIZ_WITH_RESULT_QUERY from '../graphql/QuizWithResultQuery.graphql';
 import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
@@ -43,25 +43,7 @@ export default compose(
       return { currentUserLoading:loading, currentUser };
     }
   }),
-  graphql(QUIZ_QUERY, {
-    options: props => {
-      let id = 0;
-      if (props.match) {
-        id = props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.id;
-      }
-
-      return {
-        variables: { id: Number(id) }
-      };
-    },
-    props({ data: { loading, error, quiz } }) {
-      if (error) throw new Error(error);
-      return { quizLoading: loading, quiz };
-    }
-  }),
-  graphql(ANSWERS_QUERY, {
+  graphql(QUIZ_WITH_RESULT_QUERY, {
     options: props => {
       let id = 0;
       if (props.match) {
@@ -70,15 +52,14 @@ export default compose(
         id = props.navigation.state.params.id;
       }
       const currentUserId = !props.currentUserLoading && props.currentUser && props.currentUser.id;
-      console.log('query props', props, currentUserId);
 
       return {
-        variables: { quizId: Number(id), userId: Number(currentUserId) }
+        variables: { id: Number(id), userId: Number(currentUserId) }
       };
     },
-    props({ data: { loading, error, answers } }) {
+    props({ data: { loading, error, quizWithAnswers } }) {
       if (error) throw new Error(error);
-      return { answersLoading: loading, answers };
+      return { quizLoading: loading, quiz:quizWithAnswers };
     }
-  }),
+  })
   )(translate('contact')(PersonalQuizResult));
