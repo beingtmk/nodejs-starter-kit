@@ -10,7 +10,7 @@ import { message, Modal, Button, Spin as Loader } from 'antd';
 // import CONTACT from '../graphql/Quiz.graphql';
 // import { QuizForm } from '../types';
 // import ADD_ANSWER from '../graphql/AddAnswers.graphql';
-import QUIZ_QUERY from '../graphql/QuizQuery.graphql';
+import QUIZ_WITH_RESULT_QUERY from '../graphql/QuizWithResultQuery.graphql';
 import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
 // import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import {ResultComponent} from '../components/PersonalQuizResultView'
@@ -51,7 +51,7 @@ class QuizReport extends React.Component {
           onCancel={this.handleCancel}
         >
           {console.log(this.props)}
-          {this.props.quizzLoading || this.props.answersLoading ? <Loader /> :(<ResultComponent {...this.props} />)}
+          {this.props.quizzLoading ? <Loader /> :(this.props.quiz ? (<ResultComponent {...this.props} />): 'No result queried')}
         </Modal>
       </div>
     );
@@ -59,27 +59,16 @@ class QuizReport extends React.Component {
 }
   
 export default compose(
-  graphql(QUIZ_QUERY, {
+  graphql(QUIZ_WITH_RESULT_QUERY, {
     options: props => {
       
       return {
-        variables: { id: Number(props.quizId) }
+        variables: { id: Number(props.quizId), userId: Number(props.userId) }
       };
     },
-    props({ data: { loading, error, quiz } }) {
+    props({ data: { loading, error, quizWithAnswers } }) {
       if (error) throw new Error(error);
-      return { quizzLoading: loading, quiz };
+      return { quizzLoading: loading, quiz:quizWithAnswers };
     }
-  }),
-  graphql(ANSWERS_QUERY, {
-    options: props => {
-      return {
-        variables: { quizId: Number(props.quizId), userId: Number(props.userId) }
-      };
-    },
-    props({ data: { loading, error, answers } }) {
-      if (error) throw new Error(error);
-      return { answersLoading: loading, answers };
-    }
-  }),
+  })
   )(translate('quiz')(QuizReport));

@@ -8,6 +8,7 @@ import { compose } from "@gqlapp/core-common";
 import { message, Modal, Button, Spin as Loader } from "antd";
 import QuizUserWiseReport from "../containers/QuizUserWiseReport";
 // import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
+import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 
 //To Do - Query after state.visible is true
 
@@ -15,18 +16,22 @@ const QuizUserWiseReportComponent = (quiz) => {
   const resultQuiz = quiz.quiz;
   const data = resultQuiz.questions;
   const getResult = (record, id) => {
-    const result =
-      record &&
-      record.answers &&
-      record.answers.length !== 0 &&
-      record.answers.find((res) => res.userId === id);
-    const choice =
-      record &&
-      record.choices &&
-      record.choices.length !== 0 &&
-      record.choices.find((cho) => result && result.choiceId === cho.id);
-    console.log('fagagaga', choice, result);
-    return !choice ? result.content : choice && choice.description;
+    if(record.choiceType === QuestionTypes.TEXTBOX || record.choiceType === QuestionTypes.TEXTAREA){
+      const result =
+        record &&
+        record.answers &&
+        record.answers.length !== 0 &&
+        record.answers.find((res) => res.userId === id);
+        return result.content
+    }else{
+      let choiceIdArray = []
+        record.answers.forEach(answer => {
+          choiceIdArray.push(answer.choiceId)
+        })
+        const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
+        const choiceLength = choice.length;
+        return choice.map((ch, i) => `${ch.description}${choiceLength > 1 && choiceLength > i + 1 ? ', ' : ''}`)
+    }
   };
   var columns = [
     {
