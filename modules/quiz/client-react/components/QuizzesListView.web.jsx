@@ -8,7 +8,7 @@ import { Table, Button } from '@gqlapp/look-client-react';
 import { Spin as Loader, Tooltip, Popconfirm } from 'antd';
 import QuizUserWiseReportModal from './QuizUserWiseReportModal';
 
-const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz }) => {
+const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, currentUser }) => {
   // 
 
 
@@ -141,20 +141,33 @@ const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz }) => {
               href={`quiz/edit/${record.id}`}
               shape="circle"
               icon="edit"
-              type="primary"
+              type="secondary"
               size="small"
               style={{ marginBottom: "10px", marginRight: "3px" }}
-              ghost
             />
           </Tooltip>
+          <Tooltip title="Duplicate Quiz">
+
+            <Popconfirm
+              title="Duplicate Quiz?"
+              onConfirm={() => duplicateQuiz({quizId:record.id, userId: currentUser && currentUser.id})}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type='primary' icon='copy' shape='circle' size="md" />
+
+            </Popconfirm>
+          </Tooltip>
+
           <Popconfirm
-            title="Delete blog?"
+            title="Delete Quiz?"
             onConfirm={() => deleteQuiz(record.id)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
-            <Button color="danger" icon='delete' shape='round' size="sm" onClick={() => deleteQuiz(record.id)} />
+            <Button color="danger" icon='delete' shape='circle' size="md" />
 
           </Popconfirm>
         </>

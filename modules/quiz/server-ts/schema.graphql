@@ -151,6 +151,8 @@ extend type Mutation {
   # Add answer
   addAnswer(input: AnswerInput!): Answer
   addAnswers(input: AnswersInput!): Boolean
+  duplicateQuiz(userId: Int!, quizId: Int!): Quiz
+
 }
 
 input AnswersInput {

@@ -263,6 +263,20 @@ export default (pubsub: any) => ({
         return null;
       }
     },
+    duplicateQuiz: withAuth(
+      async (
+        obj: any,
+        input: { userId: number; quizId: number },
+        context: any
+      ) => {
+        const res = await context.Quiz.duplicateQuiz(
+          input.userId,
+          input.quizId
+        );
+        console.log('ressssss', res);
+        return res;
+      }
+    )
   },
   Subscription: {},
 });

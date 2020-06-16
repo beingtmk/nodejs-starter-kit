@@ -68,19 +68,19 @@ export default class Quiz extends Model {
         .findById(id)
         .withGraphFetched(withAnswersEager)
         .leftJoin("question", "question.quiz_id", "quiz.id")
-        .leftJoin('answer', 'answer.question_id', 'question.id')
-        .where('answer.user_id', userId)
+        .leftJoin("answer", "answer.question_id", "question.id")
+        .where("answer.user_id", userId)
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
     console.log("bbbbbbbbbbb", res);
-    if(!res){
-    res = camelizeKeys(
+    if (!res) {
+      res = camelizeKeys(
         await Quiz.query()
           .findById(id)
           .withGraphFetched(withAnswersEager)
           .leftJoin("question", "question.quiz_id", "quiz.id")
-          .leftJoin('answer', 'answer.question_id', 'question.id')
+          .leftJoin("answer", "answer.question_id", "question.id")
         // .eager(eager)
         // .orderBy('id', 'desc')
       );
@@ -88,7 +88,6 @@ export default class Quiz extends Model {
 
     return res;
   }
-
 
   public async getQuizWithAnswers(id: number) {
     const res = camelizeKeys(
@@ -193,6 +192,39 @@ export default class Quiz extends Model {
     );
     return res;
   }
+  public async duplicateQuiz(userId: number, quizId: number) {
+    var insertData = await Quiz.query()
+      .eager(eager)
+      .where("id", "=", quizId)
+      .first();
+
+    function deleteIds(v) {
+      delete v.id;
+      delete v.created_at;
+      delete v.updated_at;
+    }
+    // console.log()
+    // const res = {}
+    deleteIds(insertData);
+    delete insertData.user;
+
+    insertData.questions.forEach((v) => {
+      deleteIds(v);
+      v.choices.forEach((a) => {
+        deleteIds(a);
+      });
+    });
+    insertData.user_id = userId;
+    const res = camelizeKeys(
+      await Quiz.query()
+        // .eager(eager)
+        .insertGraphAndFetch(insertData)
+        .first()
+    );
+    console.log('sql ress', res);
+    return res;
+  }
+
   // public async getQuizCountById(id: number) {
   //   const res = camelizeKeys(
   //     await Quiz.query()
