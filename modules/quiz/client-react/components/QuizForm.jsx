@@ -14,6 +14,7 @@ import {
   RenderCheckBox,
 } from "@gqlapp/look-client-react";
 import { Radio, Input } from "antd";
+import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 
 import RenderQuizQuestionField from "./RenderQuizQuestionField";
 // import { QuizAddForm } from '../types';
@@ -74,8 +75,28 @@ const QuizForm = ({
 const QuizFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
+    console.log('props', props);
+    const currentUserId = props.currentUser && props.currentUser.id;
+    var questions = props.quiz && props.quiz.questions;
+      let ques = questions.filter(quest=> (quest.choiceType===QuestionTypes.TEXTAREA || quest.choiceType===QuestionTypes.TEXTBOX || quest.choiceType===QuestionTypes.RADIO || quest.choiceType===QuestionTypes.SELECT))
+      ques.forEach((q, i)=>{
+        const index = questions.indexOf(q);
+        if((q.answers && q.answers.length === 0) || !q.answers){
+          const answers = [{
+            choiceId: null,
+            questionId: q.id,
+            content: '',
+            userId: currentUserId
+          }]
+          console.log('answers', answers);
+          questions[index].answers = answers;
+        }
+
+        
+      })
+      console.log('questions', questions);
     return {
-      questions:props.quiz && props.quiz.questions 
+      questions:questions 
     };
   },
   async handleSubmit(

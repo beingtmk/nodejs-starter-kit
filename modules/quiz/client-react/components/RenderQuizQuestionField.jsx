@@ -56,7 +56,7 @@ export default class RenderQuestionsField extends React.Component {
             content: '',
             userId: currentUserId
           }]
-          questions[index].answers = answers;
+          values.questions[index].answers = answers;
         }
 
         
@@ -86,7 +86,7 @@ export default class RenderQuestionsField extends React.Component {
                   type="select"
                   label={"Select From Answers"}
                   // label={`${k.label || k.key} #${indexv + 1}`}
-                  value={v.answers[0].choiceId}
+                  value={v.answers && v.answers[0].choiceId}
                 //   key={indexv}
                 // style={{ display: 'inline-block', margin: '0px 5px' }}
                 >
@@ -138,7 +138,7 @@ export default class RenderQuestionsField extends React.Component {
                     type='text'
                     label={"Select From Answers"}
                     // label={`${k.label || k.key} #${indexv + 1}`}
-                    value={v.answers[0].content}
+                    value={v.answers && v.answers[0].content}
                   //   key={indexv}
                   // style={{ display: 'inline-block', margin: '0px 5px' }}
                   />
@@ -151,7 +151,7 @@ export default class RenderQuestionsField extends React.Component {
                     type='textarea'
                     label={"Select From Answers"}
                     // label={`${k.label || k.key} #${indexv + 1}`}
-                    value={v.answers[0].content}
+                    value={v.answers && v.answers[0].content}
                   //   key={indexv}
                   // style={{ display: 'inline-block', margin: '0px 5px' }}
                   />
@@ -164,7 +164,7 @@ export default class RenderQuestionsField extends React.Component {
                       type="radio"
                       label={"Select From Answers"}
                       // label={`${k.label || k.key} #${indexv + 1}`}
-                      value={v.answers[0].choiceId}
+                      value={v.answers && v.answers[0].choiceId}
                     //   key={indexv}
                     // style={{ display: 'inline-block', margin: '0px 5px' }}
                     >

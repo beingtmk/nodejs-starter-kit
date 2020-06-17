@@ -11,6 +11,7 @@ import { has } from "lodash";
 import { User } from "@gqlapp/user-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import { user } from "@gqlapp/blog-client-react/demoData";
 
 const eager = "[user, questions.[choices]]";
 const eagerWithCount = "[user, questions.[choices]]";
@@ -66,25 +67,32 @@ export default class Quiz extends Model {
     res = camelizeKeys(
       await Quiz.query()
         .findById(id)
-        .withGraphFetched(withAnswersEager)
-        .leftJoin("question", "question.quiz_id", "quiz.id")
-        .leftJoin("answer", "answer.question_id", "question.id")
-        .where("answer.user_id", userId)
+        .withGraphFetched(eager).first()
+        // .where('questions:answers.user_id', userId)
+        // .joinRelated("answer")
+        // .where("answer.user_id", userId)
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
-    console.log("bbbbbbbbbbb", res);
-    if (!res) {
-      res = camelizeKeys(
-        await Quiz.query()
-          .findById(id)
-          .withGraphFetched(withAnswersEager)
-          .leftJoin("question", "question.quiz_id", "quiz.id")
-          .leftJoin("answer", "answer.question_id", "question.id")
-        // .eager(eager)
-        // .orderBy('id', 'desc')
-      );
+    var questionsIdArray = []
+    res.questions && res.questions.map(qu=>{
+      questionsIdArray.push(qu.id)
+    })
+    const answers = camelizeKeys(await knex('answer')
+    .whereIn('answer.question_id', questionsIdArray)
+    .where('answer.user_id', userId))
+
+    if(!answers || (answers && answers.length ===0 )){
+      return res;
     }
+    answers && answers.map(ans=>{
+      var q = res.questions.find(ques=> ques.id === ans.questionId)
+      const index = res.questions.indexOf(q);
+      q.answers = [];
+      q.answers.push(ans);
+      res.questions[index] = q;
+    })
+    console.log("bbbbbbbbbbb", res);
 
     return res;
   }

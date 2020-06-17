@@ -26,13 +26,13 @@ export const ResultComponent = (props) => {
   questions.map((question, key) => {
     const getAnswers = () => {
       if (question.choiceType === QuestionTypes.TEXTAREA || question.choiceType === QuestionTypes.TEXTBOX) {
-        return question.answers[0].content;
+        return question.answers && question.answers[0].content;
       } else {
         let choiceIdArray = []
-        question.answers.forEach(answer => {
+        question.answers && question.answers.forEach(answer => {
           choiceIdArray.push(answer.choiceId)
         })
-        const choice = question.choices.filter((c) => choiceIdArray.includes(c.id));
+        const choice = question.choices && question.choices.filter((c) => choiceIdArray.includes(c.id));
         const choiceLength = choice.length;
         return choice.map((ch, i) => `${ch.description}${choiceLength > 1 && choiceLength > i + 1 ? ', ' : ''}`)
       }
