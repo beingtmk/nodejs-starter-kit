@@ -67,7 +67,11 @@ const QuizUserWiseReportComponent = (quiz) => {
   );
 };
 class QuizUserWiseReportModal extends React.Component {
-  state = { visible: false };
+  constructor(props) {
+    super(props);
+    // this.subscription = null;
+    this.state = { visible: false, groupId:null };
+  }
 
   showModal = () => {
     this.setState({
@@ -89,6 +93,13 @@ class QuizUserWiseReportModal extends React.Component {
     });
   };
 
+  setGroupId=(e)=>{
+    console.log('setting', e);
+    this.setState({
+      groupId:e
+    })
+  }
+
   render() {
     return (
       <div>
@@ -107,6 +118,8 @@ class QuizUserWiseReportModal extends React.Component {
         >
           <QuizUserWiseReport
             quizId={this.props.quizId}
+            groupId={this.state.groupId}
+            setGroupId={this.setGroupId}
             QuizUserWiseReportComponent={QuizUserWiseReportComponent}
           />
 
