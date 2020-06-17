@@ -70,7 +70,7 @@ export default (pubsub: any) => ({
       };
     },
     async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
-      const quiz = await context.Quiz.getQuizWithAnswers(id);
+      const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
 
       // let questionIdArray = [];
       // quiz.questions.map((question, key) => {
@@ -84,7 +84,7 @@ export default (pubsub: any) => ({
       let userIdArray = [];
 
       quiz && quiz.questions && quiz.questions.map(ques=>{
-        ques && ques.answers.map(ans=>{
+        ques && ques.answers && ques.answers.map(ans=>{
           result.push(ans);
         })
       })

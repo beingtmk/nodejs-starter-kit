@@ -9,6 +9,7 @@ import { Model } from "objection";
 import { has } from "lodash";
 
 import { User } from "@gqlapp/user-server-ts/sql";
+import { GroupMember } from "@gqlapp/group-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { user } from "@gqlapp/blog-client-react/demoData";
@@ -67,44 +68,98 @@ export default class Quiz extends Model {
     res = camelizeKeys(
       await Quiz.query()
         .findById(id)
-        .withGraphFetched(eager).first()
-        // .where('questions:answers.user_id', userId)
-        // .joinRelated("answer")
-        // .where("answer.user_id", userId)
+        .withGraphFetched(eager)
+        .first()
+      // .where('questions:answers.user_id', userId)
+      // .joinRelated("answer")
+      // .where("answer.user_id", userId)
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
-    var questionsIdArray = []
-    res.questions && res.questions.map(qu=>{
-      questionsIdArray.push(qu.id)
-    })
-    const answers = camelizeKeys(await knex('answer')
-    .whereIn('answer.question_id', questionsIdArray)
-    .where('answer.user_id', userId))
+    var questionsIdArray = [];
+    res.questions &&
+      res.questions.map((qu) => {
+        questionsIdArray.push(qu.id);
+      });
+    const answers = camelizeKeys(
+      await knex("answer")
+        .whereIn("answer.question_id", questionsIdArray)
+        .where("answer.user_id", userId)
+    );
 
-    if(!answers || (answers && answers.length ===0 )){
+    if (!answers || (answers && answers.length === 0)) {
       return res;
     }
-    answers && answers.map(ans=>{
-      var q = res.questions.find(ques=> ques.id === ans.questionId)
-      const index = res.questions.indexOf(q);
-      q.answers = [];
-      q.answers.push(ans);
-      res.questions[index] = q;
-    })
+    answers &&
+      answers.map((ans) => {
+        var q = res.questions.find((ques) => ques.id === ans.questionId);
+        const index = res.questions.indexOf(q);
+        q.answers = [];
+        q.answers.push(ans);
+        res.questions[index] = q;
+      });
     console.log("bbbbbbbbbbb", res);
 
     return res;
   }
 
-  public async getQuizWithAnswers(id: number) {
-    const res = camelizeKeys(
+  public async getQuizWithAnswers(id: number, groupId: number) {
+    if (!groupId) {
+      const res = camelizeKeys(
+        await Quiz.query()
+          .findById(id)
+          .withGraphFetched(withAnswersEager)
+        // .eager(eager)
+        // .orderBy('id', 'desc')
+      );
+      return res;
+    }
+    var res = camelizeKeys(
       await Quiz.query()
         .findById(id)
-        .withGraphFetched(withAnswersEager)
+        .withGraphFetched(eager)
+        .first()
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
+
+    const usersByGroup = await knex("group_member")
+      .leftJoin("user", "user.email", "group_member.email")
+      .select("user.id as userId")
+      .where("group_member.group_id", groupId);
+    console.log("usersBygroup", usersByGroup);
+    if (usersByGroup && usersByGroup.length === 0) {
+      return res;
+    }
+    var userIdArray = [];
+    usersByGroup &&
+      usersByGroup.map((uu) => {
+        userIdArray.push(uu.userId);
+      });
+    var questionsIdArray = [];
+    res.questions &&
+      res.questions.map((qu) => {
+        questionsIdArray.push(qu.id);
+      });
+    const answers = camelizeKeys(
+      await knex("answer")
+        .whereIn("answer.question_id", questionsIdArray)
+        .whereIn("answer.user_id", userIdArray)
+    );
+    console.log("answers", answers);
+    if (answers && answers.length === 0) {
+      return res;
+    }
+    answers &&
+      answers.map((ans) => {
+        var q = res.questions.find((ques) => ques.id === ans.questionId);
+        const index = res.questions.indexOf(q);
+        if (!q.answers) {
+          q.answers = [];
+        }
+        q.answers.push(ans);
+        res.questions[index] = q;
+      });
     return res;
   }
 
@@ -229,7 +284,7 @@ export default class Quiz extends Model {
         .insertGraphAndFetch(insertData)
         .first()
     );
-    console.log('sql ress', res);
+    console.log("sql ress", res);
     return res;
   }
 
