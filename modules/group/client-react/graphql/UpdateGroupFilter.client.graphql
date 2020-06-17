@@ -1,0 +1,5 @@
+#import "./GroupState.client.graphql"
+
+mutation updateGroupFilter($filter: FilterGroupInput!) {
+  updateGroupFilter(filter: $filter) @client
+}

@@ -1,0 +1,7 @@
+#import "./GroupState.client.graphql"
+
+query groupState {
+  groupState @client {
+    ...GroupStateInfo
+  }
+}

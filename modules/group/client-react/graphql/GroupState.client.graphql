@@ -1,0 +1,5 @@
+fragment GroupStateInfo on GroupState {
+  filter {
+    searchText
+  }
+}
