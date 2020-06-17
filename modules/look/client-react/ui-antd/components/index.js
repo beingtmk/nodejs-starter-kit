@@ -30,5 +30,6 @@ export { default as Pagination } from './Pagination';
 export { default as Avatar } from './Avatar';
 export { default as Icon } from './Icon';
 export { default as Underline } from './underline';
+export { default as Heading } from './Heading';
 
 export { onAppCreate } from './NavBar';
