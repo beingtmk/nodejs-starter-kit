@@ -1,0 +1,10 @@
+
+mutation duplicateQuiz($userId: Int!, $quizId: Int!) {
+  duplicateQuiz(userId:$userId, quizId:$quizId) {
+    id
+    userId
+    active
+    title
+    description
+  }
+}

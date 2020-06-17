@@ -1,0 +1,10 @@
+#import "./Comment.graphql"
+
+query commentReplies($referenceId: Int!) {
+  commentReplies(referenceId: $referenceId) {
+    id
+    comment {
+      ...CommentsInfo
+    }
+  }
+}

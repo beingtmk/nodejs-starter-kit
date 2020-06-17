@@ -128,6 +128,5 @@ RenderUpload.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   setload: PropTypes.func,
-
   value: PropTypes.string
 };

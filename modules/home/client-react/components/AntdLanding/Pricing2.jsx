@@ -25,7 +25,10 @@ const Pricing20DataSource = {
           key: 'name',
           name: 'empty',
           childWrapper: {
-            children: [{ name: 'name', children: ' ' }, { name: 'content', children: ' ' }]
+            children: [
+              { name: 'name', children: ' ' },
+              { name: 'content', children: ' ' }
+            ]
           }
         },
         {

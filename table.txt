@@ -1,0 +1,14 @@
+1   - counter
+2   - user
+3   - post
+4   - stripe_subscription
+5   - upload
+6   - message
+7   - report
+8   - blog
+9   - comment
+10  - like
+11  - bookmark
+12  - geolocation
+13  - tag
+14  - group

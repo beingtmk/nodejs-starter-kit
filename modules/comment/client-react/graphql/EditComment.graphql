@@ -1,0 +1,7 @@
+#import "./Comment.graphql"
+
+mutation editContentComment($input: EditContentCommentInput!) {
+  editContentComment(input: $input) {
+    ...CommentsInfo
+  }
+}

@@ -1,0 +1,10 @@
+#import "./Comment.graphql"
+
+query blogComments($blogId: Int!) {
+  blogComments(blogId: $blogId) {
+    id
+    comment {
+      ...CommentsInfo
+    }
+  }
+}

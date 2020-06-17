@@ -1,0 +1,10 @@
+
+mutation addQuiz($input: AddQuizInput!) {
+  addQuiz(input: $input) {
+    id
+    userId
+    active
+    title
+    description
+  }
+}

@@ -79,7 +79,7 @@ class NavBar extends React.Component {
                       animation={{
                         playScale: [1, 1.1],
                         scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-79px',
+                        translateX: isMobile ? '' : '-45px',
                         translateY: isMobile ? '' : '20px'
                       }}
                     >
@@ -132,6 +132,10 @@ class NavBar extends React.Component {
                     {ref.modules.navItems}
                     {ref.modules.navItemsRight}
 
+                    {/* BLOG Section */}
+                    <MenuItem>
+                      <DropDown content="Blog Section">{ref.modules.navItemsBlog}</DropDown>
+                    </MenuItem>
                     <LoggedIn>
                       <MenuItem>
                         <DropDown content={<UserAvatar />} noicon>
@@ -189,6 +193,18 @@ class NavBar extends React.Component {
                     </MenuItem>
                   </SubMenu>
                 )}
+
+                {/* BLOG Section */}
+                <SubMenu
+                  key="blog"
+                  title={
+                    <MenuItem>
+                      <Icon type="safety-certificate" /> Blog Section
+                    </MenuItem>
+                  }
+                >
+                  {ref.modules.navItemsBlog}
+                </SubMenu>
                 <LoggedIn role="admin">
                   <SubMenu
                     key="admin"

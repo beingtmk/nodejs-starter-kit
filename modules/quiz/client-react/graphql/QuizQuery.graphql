@@ -1,0 +1,21 @@
+
+query quiz($id: Int!) {
+  quiz(id: $id) {
+    id
+    userId
+    active
+    title
+    isEditableByUser
+    description
+    questions{
+      id
+      description
+      choiceType
+      isActive
+      choices{
+        id
+        description
+      }
+    }
+  }
+}

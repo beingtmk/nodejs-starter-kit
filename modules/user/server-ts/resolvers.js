@@ -36,14 +36,7 @@ export default pubsub => ({
 
       throw new Error(t('user:accessDenied'));
     }),
-    currentUser(
-      obj,
-      args,
-      {
-        User,
-        req: { identity }
-      }
-    ) {
+    currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
         return User.getUser(identity.id);
       } else {
@@ -124,7 +117,7 @@ export default pubsub => ({
               const encodedToken = Buffer.from(emailToken).toString('base64');
               const url = `${__WEBSITE_URL__}/confirmation/${encodedToken}`;
               mailer.sendMail({
-                from: `${app.name} <${process.env.EMAIL_USER}>`,
+                from: `${app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,
                 to: user.email,
                 subject: 'Your account has been created',
                 html: `<p>Hi, ${user.username}!</p>
@@ -189,7 +182,7 @@ export default pubsub => ({
             const url = `${__WEBSITE_URL__}/profile`;
 
             mailer.sendMail({
-              from: `${settings.app.name} <${process.env.EMAIL_USER}>`,
+              from: `${settings.app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,
               to: input.email,
               subject: 'Your Password Has Been Updated',
               html: `<p>Your account password has been updated.</p>

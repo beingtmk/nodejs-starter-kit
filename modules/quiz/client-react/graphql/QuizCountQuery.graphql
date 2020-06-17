@@ -1,0 +1,19 @@
+
+query getQuizCount($id: Int!) {
+  getQuizCount(id: $id) {
+    id
+    userId
+    active
+    title
+    description
+    questions{
+      id
+      description
+      choices{
+        id
+        description
+        count
+      }
+    }
+  }
+}

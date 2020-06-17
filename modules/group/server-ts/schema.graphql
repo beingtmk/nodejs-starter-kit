@@ -1,0 +1,91 @@
+type Group {
+  id: Int!
+  title: String!
+  avatar: String
+  description: String!
+  members: [GroupMember]
+  groupType: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type GroupMember {
+  id: Int!
+  email: String!
+  type: String!
+  status: String!
+  group: Group!
+  member: User
+  createdAt: String!
+  updatedAt: String!
+}
+
+extend type Query {
+  groups: [Group]
+  userGroups(email: String): [Group]
+  group(id: Int!): Group
+  allGroupMembers: [GroupMember]
+  groupMember(id: Int!): GroupMember
+  groupMembers(id: Int!): [GroupMember]
+}
+
+extend type Mutation {
+  addGroupMember(input: AddGroupMemberInput!): GroupMember
+  editGroupMember(input: EditGroupMemberInput!): GroupMember
+  deleteGroupMember(id: Int!): GroupMember
+  addGroup(input: AddGroupInput!): Group
+  updateGroup(input: UpdateGroupInput!): Group
+  deleteGroup(id: Int!): Group
+}
+
+input AddGroupInput {
+  title: String!
+  avatar: String
+  description: String!
+  groupType: String!
+  members: [MemberInput]
+}
+
+input MemberInput {
+  id: Int
+  email: String!
+  type: String!
+  status: String!
+}
+
+input UpdateGroupInput {
+  id: Int!
+  title: String
+  avatar: String
+  description: String
+  groupType: String
+}
+
+input AddGroupMemberInput {
+  email: String!
+  type: String!
+  status: String!
+  groupId: Int!
+}
+
+input EditGroupMemberInput {
+  id: Int!
+  email: String
+  type: String
+  status: String
+}
+
+extend type Subscription {
+  groupUpdated: UpdateGroupPayload
+  groupMembersUpdated: UpdateGroupMembersPayload
+}
+
+type UpdateGroupMembersPayload {
+  mutation: String!
+  node: GroupMember!
+}
+
+type UpdateGroupPayload {
+  mutation: String!
+  node: Group!
+}

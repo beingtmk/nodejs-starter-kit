@@ -1,11 +1,25 @@
 // Helpers
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { has } from 'lodash';
+import { Model } from 'objection';
 import bcrypt from 'bcryptjs';
+
 import { knex, returnId } from '@gqlapp/database-server-ts';
 
+Model.knex(knex);
+
 // Actual query fetching and transformation in DB
-class User {
+export class User extends Model {
+  // private id: any;
+
+  static get tableName() {
+    return 'user';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
   async getUsers(orderBy, filter) {
     const queryBuilder = knex
       .select(
@@ -105,6 +119,40 @@ class User {
     );
   }
 
+  async getUsersWithIdArray(idArray){
+    return camelizeKeys(
+      await knex
+        .select(
+          'u.id',
+          'u.username',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          'up.first_name',
+          'up.last_name',
+          'ca.serial',
+          'fa.fb_id',
+          'fa.display_name AS fbDisplayName',
+          'lna.ln_id',
+          'lna.display_name AS lnDisplayName',
+          'gha.gh_id',
+          'gha.display_name AS ghDisplayName',
+          'ga.google_id',
+          'ga.display_name AS googleDisplayName'
+        )
+        .from('user AS u')
+        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
+        .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
+        .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
+        .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
+        .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
+        .where(function() {
+          this.whereIn('u.id', idArray);
+        })
+    );
+  }
+
   async getUserWithPassword(id) {
     return camelizeKeys(
       await knex
@@ -167,10 +215,12 @@ class User {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {

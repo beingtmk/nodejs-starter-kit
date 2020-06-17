@@ -1,0 +1,11 @@
+query userBlogBookmark($input: UserBlogBookmarkInput!) {
+  userBlogBookmark(input: $input) {
+    id
+    blog {
+      id
+    }
+    user {
+      id
+    }
+  }
+}
