@@ -24,8 +24,14 @@ const QuizUserWiseReportComponent = (quiz) => {
         record.answers.find((res) => res.userId === id);
         return result.content
     }else{
+      const result =
+        record &&
+        record.answers &&
+        record.answers.length !== 0 &&
+        record.answers.filter((res) => res.userId === id);
       let choiceIdArray = []
-        record.answers.forEach(answer => {
+
+      result.forEach(answer => {
           choiceIdArray.push(answer.choiceId)
         })
         const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));

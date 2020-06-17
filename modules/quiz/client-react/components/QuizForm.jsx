@@ -51,7 +51,7 @@ const QuizForm = ({
             // buttonText='Add Question'
             // keys={{type:'text', label:'question', key:'description'}}
             // quiz={quiz}
-            currentUserId={currentUser.id}
+            currentUserId={currentUser && currentUser.id}
           />
         )}
         // skills={skills}

@@ -16,6 +16,9 @@ const renderMetaData = (t) => (
 );
 
 const QuizView = (props) => {
+  if(!props.currentUserLoading && !props.currentUser){
+    props.history.push('/login');
+  }
   return (
     <PageLayout type="forms">
       {renderMetaData(props.t)}

@@ -52,7 +52,7 @@ extend type Query {
   answers(userId: Int!, quizId: Int!): AnswersOutput
   getAttendees(id: Int!): AttendeesOutput
   getQuizCount(id: Int!): QuizWithCount
-  getUserWiseResult(id: Int!): UserWiseResult
+  getUserWiseResult(id: Int!, groupId: Int): UserWiseResult
 }
 
 type QuizWithAnswers{

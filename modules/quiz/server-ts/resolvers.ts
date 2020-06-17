@@ -69,19 +69,26 @@ export default (pubsub: any) => ({
         users: users,
       };
     },
-    async getUserWiseResult(obj: any, { id }: any, context: any) {
+    async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswers(id);
 
-      let questionIdArray = [];
-      quiz.questions.map((question, key) => {
-        questionIdArray.push(question.id);
-      });
-      console.log("ggggg", questionIdArray);
+      // let questionIdArray = [];
+      // quiz.questions.map((question, key) => {
+      //   questionIdArray.push(question.id);
+      // });
+      // console.log("ggggg", questionIdArray);
 
-      const params = { questionIdArray: questionIdArray };
-      const result = await context.Quiz.getAnswersByQuestionArray(params);
-      console.log("ggggggggggggg", result);
+      // const params = { questionIdArray: questionIdArray };
+      var result = []
+      
       let userIdArray = [];
+
+      quiz && quiz.questions && quiz.questions.map(ques=>{
+        ques && ques.answers.map(ans=>{
+          result.push(ans);
+        })
+      })
+      console.log("ggggggggggggg", result);
       result.map((item, key) => {
         const found = userIdArray.find((id) => id === item.userId);
         console.log("found", found);

@@ -1,6 +1,6 @@
 
-query getUserWiseResult($id: Int!) {
-  getUserWiseResult(id: $id) {
+query getUserWiseResult($id: Int!, $groupId: Int) {
+  getUserWiseResult(id: $id, groupId: $groupId) {
     id
     userId
     questions {

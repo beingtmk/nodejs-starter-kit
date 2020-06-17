@@ -44,33 +44,6 @@ export default class RenderQuestionsField extends React.Component {
     // const handleChoices = (data) => (values.choices = data);
     // this.add
 
-    const getTextTransformationsForValues = ()=>{
-      var questions = values.questions;
-      let ques = questions.filter(quest=> (quest.choiceType===QuestionTypes.TEXTAREA || quest.choiceType===QuestionTypes.TEXTBOX || quest.choiceType===QuestionTypes.RADIO || quest.choiceType===QuestionTypes.SELECT))
-      ques.forEach((q, i)=>{
-        const index = questions.indexOf(q);
-        if(q.answers && q.answers.length === 0){
-          const answers = [{
-            choiceId: null,
-            questionId: q.id,
-            content: '',
-            userId: currentUserId
-          }]
-          values.questions[index].answers = answers;
-        }
-
-        
-      })
-      
-      console.log('qqqqq', questions);
-      values.questions = questions;
-      return true
-    }
-    getTextTransformationsForValues();
-
-    const addMultipleChoice = () =>{
-      return {}
-    }
 
     if (values) {
       formItems =  values.questions && values.questions.length !== 0 && values.questions.map((v, indexv) => (
