@@ -1,7 +1,0 @@
-#import "./CompleteBlog.graphql"
-
-mutation editBlog($input: EditBlogInput!) {
-  editBlog(input: $input) {
-    ...CompleteBlogInfo
-  }
-}

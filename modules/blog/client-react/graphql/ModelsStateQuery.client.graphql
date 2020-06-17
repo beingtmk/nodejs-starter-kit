@@ -1,7 +1,0 @@
-#import "./ModelsState.client.graphql"
-
-query modelsState {
-  modelState @client {
-    ...ModelsStateInfo
-  }
-}

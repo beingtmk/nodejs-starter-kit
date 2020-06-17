@@ -21,7 +21,7 @@
   "include": [
     "**/typings.d.ts",
     "**/*.ts",
-    "**/*.tsx", "modules/blog/client-react/components/NewBlogView.jsx", "modules/blog/client-react/containers/NewBlog.jsx", "modules/geolocation/client-react/components/GeolocationView.jsx"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"

@@ -1,7 +1,0 @@
-#import "./Models.graphql"
-
-query models {
-  models {
-    ...ModelsInfo
-  }
-}

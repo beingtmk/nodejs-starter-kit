@@ -48,7 +48,14 @@ ResetPasswordForm.propTypes = {
 const ResetPasswordFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({ password: '', passwordConfirmation: '' }),
-  async handleSubmit(values, { setErrors, resetForm, props: { onSubmit } }) {
+  async handleSubmit(
+    values,
+    {
+      setErrors,
+      resetForm,
+      props: { onSubmit }
+    }
+  ) {
     await onSubmit(values)
       .then(() => resetForm())
       .catch(e => {

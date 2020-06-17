@@ -1,7 +1,0 @@
-#import "./Blogs.graphql"
-
-mutation addBlog($input: AddBlogInput!) {
-  addBlog(input: $input) {
-    ...BlogsInfo
-  }
-}

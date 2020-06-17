@@ -30,28 +30,12 @@ folder:
 
 ```js
 // modules/favicon/common/index.js
-const exportedAssets = {};
+// Favicon.ico should not be hashed, since some browsers expect it to be exactly on /favicon.ico URL
+require('!file-loader?name=[name].[ext]!./assets/favicon.ico'); // eslint-disable-line
 
-if (!__TEST__) {
-  // Favicon.ico should not be hashed, since some browsers expect it to be exactly on /favicon.ico URL
-  require('!file-loader?name=[name].[ext]!./assets/favicon.ico'); // eslint-disable-line
-
-  // Require all files from assets dir recursively addding them into assets.json
-  let req = require.context('!file-loader?name=[hash].[ext]!./assets', true, /.*/);
-  req.keys().map(key => {
-    exportedAssets[`${key.replace('./', '')}`] = req(key);
-  });
-}
-
-export default exportedAssets;
-```
-
-To use new assets in your client side react code, import from the favicon package as follows:
-
-```js
-import assets from '@gqlapp/favicon-common';
-
-export const Favicon = <img src={assets['favicon.ico']} />
+// Require all files from assets dir recursively adding them into assets.json
+let req = require.context('!file-loader?name=[hash].[ext]!./assets', true, /.*/);
+req.keys().map(req);
 ```
 
 ## Installing and Importing Dependencies

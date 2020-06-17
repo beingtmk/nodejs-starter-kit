@@ -5,7 +5,7 @@ import { Form, Input } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-const RenderField = ({ rows, input, label, type, meta: { touched, error }, placeholder }) => {
+const RenderField = ({ input, label, type, meta: { touched, error }, placeholder }) => {
   let validateStatus = '';
   if (touched && error) {
     validateStatus = 'error';
@@ -14,7 +14,7 @@ const RenderField = ({ rows, input, label, type, meta: { touched, error }, place
     <FormItem label={label} hasFeedback={type != 'textarea'} validateStatus={validateStatus} help={touched && error}>
       {type != 'textarea' ? <Input {...input} placeholder={placeholder || label} type={type} /> : null}
 
-      {type == 'textarea' ? <TextArea {...input} placeholder={placeholder || label} rows={rows || 5} /> : null}
+      {type == 'textarea' ? <TextArea {...input} placeholder={placeholder || label} /> : null}
     </FormItem>
   );
 };
@@ -22,7 +22,6 @@ const RenderField = ({ rows, input, label, type, meta: { touched, error }, place
 RenderField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
-  rows: PropTypes.number,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object

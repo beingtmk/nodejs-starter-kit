@@ -1,7 +1,0 @@
-#import "./MiniBlogsCard.graphql"
-
-query userBlogs {
-  userBlogs {
-    ...MiniBlogsCardInfo
-  }
-}

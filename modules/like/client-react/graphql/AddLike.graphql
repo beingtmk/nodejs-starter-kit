@@ -1,7 +1,0 @@
-#import "./Like.graphql"
-
-mutation addLike($input: UserLikeInput!) {
-  addLike(input: $input) {
-    ...LikeInfo
-  }
-}

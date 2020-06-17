@@ -1,4 +1,0 @@
-
-mutation addAnswers($input: AnswersInput!) {
-  addAnswers(input: $input)
-}

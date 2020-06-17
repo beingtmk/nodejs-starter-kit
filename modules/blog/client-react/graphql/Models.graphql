@@ -1,6 +1,0 @@
-fragment ModelsInfo on Model {
-  id
-  name
-  image
-  desc
-}

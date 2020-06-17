@@ -1,7 +1,0 @@
-#import "./BlogBookmark.graphql"
-
-mutation addBlogBookmark($input: UserBlogBookmarkInput!) {
-  addBlogBookmark(input: $input) {
-    ...BlogBookmarkInfo
-  }
-}

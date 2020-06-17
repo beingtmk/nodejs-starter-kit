@@ -1,6 +1,0 @@
-# GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
-  }
-}

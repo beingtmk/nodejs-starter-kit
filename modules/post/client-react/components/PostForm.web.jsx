@@ -44,7 +44,12 @@ const PostFormWithFormik = withFormik({
     content: props.post && props.post.content
   }),
   validate: values => validate(values, postFormSchema),
-  handleSubmit(values, { props: { onSubmit } }) {
+  handleSubmit(
+    values,
+    {
+      props: { onSubmit }
+    }
+  ) {
     onSubmit(values);
   },
   enableReinitialize: true,

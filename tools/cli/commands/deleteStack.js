@@ -17,10 +17,7 @@ const handleDeleteStackCommand = (stackList, logger, isShowStackList) => {
   if (isShowStackList) {
     displayStackList(logger);
   } else if (checkStackList(stackList, logger)) {
-    deleteStack(
-      stackList.map(stack => stack.toLowerCase()),
-      logger
-    );
+    deleteStack(stackList.map(stack => stack.toLowerCase()), logger);
   }
 };
 

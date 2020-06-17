@@ -53,10 +53,7 @@ const Footer10DataSource = {
         className: 'block',
         title: { children: '关于' },
         childWrapper: {
-          children: [
-            { href: '#', name: 'link0', children: 'FAQ' },
-            { href: '#', name: 'link1', children: '联系我们' }
-          ]
+          children: [{ href: '#', name: 'link0', children: 'FAQ' }, { href: '#', name: 'link1', children: '联系我们' }]
         }
       },
       {

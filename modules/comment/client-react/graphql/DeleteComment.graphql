@@ -1,5 +1,0 @@
-mutation deleteContentComment($id: Int!, $ref: String!) {
-  deleteContentComment(id: $id, ref: $ref) {
-    id
-  }
-}

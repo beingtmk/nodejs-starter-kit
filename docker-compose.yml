@@ -15,7 +15,7 @@ services:
       - ${APP_DIR}/build
       - ${APP_DIR}/node_modules
     working_dir: ${APP_DIR}
-    # user: node
+    user: node
     command: >
        sh -c '
        yarn &&

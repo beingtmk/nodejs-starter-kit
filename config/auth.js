@@ -47,7 +47,7 @@ export default {
       scope: ['r_emailaddress', 'r_basicprofile']
     },
     google: {
-      enabled: true,
+      enabled: false,
       clientID: process.env.GOOGLE_CLIENTID,
       clientSecret: process.env.GOOGLE_CLIENTSECRET,
       callbackURL: '/auth/google/callback',

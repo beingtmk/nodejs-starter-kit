@@ -77,7 +77,7 @@ export default class DynamicFieldSet extends React.Component {
               ) : null}
             </FormItem>
           ))}
-          {keys.length >= 1 ? (
+          {keys.length > 1 ? (
             <Icon
               style={{ paddingTop: '40px' }}
               title="Remove "
@@ -110,6 +110,7 @@ DynamicFieldSet.propTypes = {
   values: PropTypes.array,
   keys: PropTypes.array,
   setload: PropTypes.func,
+
   buttonText: PropTypes.string,
   arrayHelpers: PropTypes.object
 };

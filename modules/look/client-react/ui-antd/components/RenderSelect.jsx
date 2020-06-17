@@ -11,7 +11,6 @@ const RenderSelect = props => {
     label,
     type,
     children,
-    mode,
     meta: { touched, error }
   } = props;
   let validateStatus = '';
@@ -20,28 +19,14 @@ const RenderSelect = props => {
   }
 
   const onChange = value => {
-    console.log('forrrrmik', formik);
     const { formik, name } = props;
-    if(mode === 'multiple'){
-      formik.handleChange({ target: { value, name } });  
-    }
-    else{
-    formik.handleChange({ target: { value, name } });}
+    formik.handleChange({ target: { value, name } });
   };
 
   return (
     <FormItem label={label} validateStatus={validateStatus} help={error}>
       <div>
-        <Select
-          mode={mode}
-          showSearch
-          optionFilterProp="children"
-          placeholder={label}
-          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-          {...input}
-          type={type}
-          onChange={onChange}
-        >
+        <Select {...input} type={type} onChange={onChange}>
           {children}
         </Select>
       </div>

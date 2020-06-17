@@ -1,7 +1,0 @@
-#import "./LocationState.client.graphql"
-
-query LocationState {
-  locationState @client {
-    ...LocationStateInfo
-  }
-}

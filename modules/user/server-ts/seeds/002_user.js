@@ -33,16 +33,4 @@ export async function seed(knex) {
     role: 'user',
     is_active: true
   });
-
-  await Promise.all(
-    [...Array(10).keys()].map(async i => {
-      return returnId(knex('user')).insert({
-        username: `user${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        password_hash: await bcrypt.hash('user1234', 12),
-        role: 'user',
-        is_active: true
-      });
-    })
-  );
 }

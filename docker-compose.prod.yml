@@ -16,7 +16,7 @@ services:
       - ${APP_DIR}/node_modules
       - /home/node/.cache/yarn
     working_dir: ${APP_DIR}
-    # user: node
+    user: node
     command: >
        sh -c '
        NODE_ENV=development yarn &&

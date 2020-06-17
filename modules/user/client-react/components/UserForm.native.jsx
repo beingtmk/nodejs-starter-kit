@@ -178,7 +178,13 @@ const UserFormWithFormik = withFormik({
       }
     };
   },
-  handleSubmit(values, { setErrors, props: { onSubmit } }) {
+  handleSubmit(
+    values,
+    {
+      setErrors,
+      props: { onSubmit }
+    }
+  ) {
     onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

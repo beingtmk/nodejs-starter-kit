@@ -1,7 +1,0 @@
-#import "./Models.graphql"
-
-mutation updateModel($input: UpdateModelInput!) {
-  updateModel(input: $input) {
-    ...ModelsInfo
-  }
-}

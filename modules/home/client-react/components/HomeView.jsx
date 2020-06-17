@@ -1,7 +1,6 @@
 import React from 'react';
 // import Helmet from 'react-helmet';
 
-
 import { PageLayout } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
 // import settings from '@gqlapp/config';
