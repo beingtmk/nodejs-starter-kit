@@ -1,0 +1,35 @@
+
+subscription quizzesUpdated( $filter: FilterQuizInput) {
+  quizzesUpdated(filter: $filter) {
+    mutation
+    node {
+      id
+      userId
+      active
+      title
+      isEditableByUser
+      description
+      user{
+        id
+        username
+      }
+      questions {
+        id
+        description
+        choiceType
+        isActive
+        answers {
+          id
+          content
+          questionId
+          choiceId
+          userId
+        }
+        choices {
+          id
+          description
+        }
+      }
+    }
+  }
+}

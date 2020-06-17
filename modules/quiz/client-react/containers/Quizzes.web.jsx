@@ -15,28 +15,28 @@ import DUPLICATE_QUIZ from '../graphql/DuplicateQuiz.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
 // import QuizzesFilterView from '../components/QuizzesFilterView';
-// import { useQuizzesWithSubscription } from './withSubscription';
-// import {
-//   withFilterUpdating,
-//   withOrderByUpdating,
-//   withQuizzes,
-//   withQuizzesDeleting,
-//   withQuizzesState,
-//   updateQuizzesState
-// } from './UserOperations';
+import { useQuizzesWithSubscription } from './withSubscription';
+import {
+  // withFilterUpdating,
+  // withOrderByUpdating,
+  // withQuizzes,
+  // withQuizzesDeleting,
+  // withQuizzesState,
+  updateQuizzesState
+} from './QuizOperations';
 
 const Quizzes = props => {
   const { t
-    // , updateQuery, subscribeToMore
+    , updateQuery, subscribeToMore
   } = props;
   // const filter = { isActive: true };
-  // const usersUpdated = useQuizzesWithSubscription(subscribeToMore, filter);
+  const quizzesUpdated = useQuizzesWithSubscription(subscribeToMore);
 
-  // useEffect(() => {
-  //   if (usersUpdated) {
-  //     updateQuizzesState(usersUpdated, updateQuery);
-  //   }
-  // });
+  useEffect(() => {
+    if (quizzesUpdated) {
+      updateQuizzesState(quizzesUpdated, updateQuery);
+    }
+  });
 
   const renderMetaData = () => (
     <Helmet
@@ -83,15 +83,15 @@ export default compose(
         fetchPolicy: 'network-only',
         variables: {
           // orderBy, 
-          filter: ''
+          filter: {searchText:''}
         }
       };
     },
-    props({ data: { loading, quizzes, error } }) {
+    props({ data: { loading, quizzes, error, updateQuery, subscribeToMore } }) {
       if (error) {
         throw new Error(error);
       }
-      return { loadingQuizzes: loading, quizzes };
+      return { loadingQuizzes: loading, quizzes, updateQuery, subscribeToMore };
     }
   }),
   graphql(CURRENT_USER_QUERY, {

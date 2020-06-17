@@ -89,7 +89,7 @@ export default compose(
         fetchPolicy: "network-only",
         variables: {
           // orderBy,
-          filter: "",
+          filter: {searchText:''},
         },
       };
     },

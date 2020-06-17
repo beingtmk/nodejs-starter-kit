@@ -15,6 +15,7 @@ type Quiz {
 type Question {
   id: Int!
   quizId: Int!
+  answers: [Answer]
   description: String!
   choiceType: String
   isActive: Boolean
@@ -43,7 +44,7 @@ type Answer {
 
 extend type Query {
   #get quizzes
-  quizzes(filter: String): [Quiz]
+  quizzes(filter: FilterQuizInput): [Quiz]
   #get quiz by id
   quiz(id: Int!): Quiz
   quizWithAnswers(id: Int!, userId: Int!): QuizWithAnswers
@@ -203,6 +204,19 @@ input EditQuizInput {
   questions: [QuestionInput]
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  # modelUpdated: UpdateModelPayload
+  quizzesUpdated( filter: FilterQuizInput): UpdateQuizPayload
+  # subscriptionName: TypeName
+}
+
+type UpdateQuizPayload {
+  mutation: String!
+  node: Quiz
+}
+
+input FilterQuizInput {
+  searchText: String
+  # model: String
+  # status: String
+}

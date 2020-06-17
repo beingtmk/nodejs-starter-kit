@@ -1,4 +1,7 @@
 import withAuth from "graphql-auth";
+import { PubSub, withFilter } from 'graphql-subscriptions';
+
+const QUIZ_SUBSCRIPTION = 'quiz_subscription';
 
 export default (pubsub: any) => ({
   Query: {
@@ -63,7 +66,7 @@ export default (pubsub: any) => ({
         }
       });
       console.log("userIddd", userIdArray);
-      const users = context.User.getUsersWithIdArray(userIdArray);
+      const users = await context.User.getUsersWithIdArray(userIdArray);
       console.log("usersss", users);
       return {
         users: users,
@@ -160,15 +163,22 @@ export default (pubsub: any) => ({
     },
   },
   Mutation: {
-    async addQuiz(obj: any, { input }: any, { Quiz }: any) {
+    async addQuiz(obj: any, { input }: any, { Quiz, User }: any) {
       console.log("input in res", input);
       const id = await Quiz.addQuiz(input);
       console.log("quiz added", id);
-      const newQuiz = await Quiz.getQuiz(id);
+      var newQuiz = await Quiz.getQuiz(id);
+      const getUser = await User.getUserForQuizSubscription(newQuiz.userId)
+      newQuiz.user = getUser;
       console.log("neee", newQuiz);
       // const quiz = await Quiz.getQuiz(id);
       // console.log('user profile', userProfile);
-
+      pubsub.publish(QUIZ_SUBSCRIPTION, {
+        quizzesUpdated: {
+          mutation: 'CREATED',
+          node: newQuiz
+        }
+      });
       if (id) {
         return newQuiz;
       } else {
@@ -179,18 +189,18 @@ export default (pubsub: any) => ({
       try {
         const data = await Quiz.getQuiz(id);
         await Quiz.deleteQuiz(id);
-        // pubsub.publish(BLOGS_SUBSCRIPTION, {
-        //   blogsUpdated: {
-        //     mutation: 'DELETED',
-        //     node: data
-        //   }
-        // });
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'DELETED',
+            node: data
+          }
+        });
         return data;
       } catch (e) {
         return e;
       }
     }),
-    editQuiz: withAuth(async (obj: any, { input }: any, { Quiz }: any) => {
+    editQuiz: withAuth(async (obj: any, { input, User }: any, { Quiz }: any) => {
       try {
         const inputId = input.id;
         console.log("quiz edit resolvers1", input);
@@ -201,13 +211,21 @@ export default (pubsub: any) => ({
         // delete input.id;
         // delete input.tags;
         const isDeleted = await Quiz.editQuiz(input);
-        const item = await Quiz.getQuiz(inputId);
-        // pubsub.publish(BLOGS_SUBSCRIPTION, {
-        //   blogsUpdated: {
+        var item = await Quiz.getQuiz(inputId);
+        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        //   quizzesUpdated: {
         //     mutation: 'UPDATED',
         //     node: item
         //   }
         // });
+        const getUser = await User.getUserForQuizSubscription(item.userId)
+      item.user = getUser;
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'UPDATED',
+            node: item
+          }
+        });
         return item;
       } catch (e) {
         return e;
@@ -215,6 +233,8 @@ export default (pubsub: any) => ({
     }),
     async addAnswers(obj: any, { input }: any, { Quiz }: any) {
       try {
+        var userId
+        var quizId
         input.results.map(async (result, item) => {
           const ansExists = await Quiz.getAnswerByParams(result);
           console.log("ansexists", ansExists);
@@ -225,6 +245,17 @@ export default (pubsub: any) => ({
             isDone = await Quiz.updateAnswer(result);
           } else {
             isDone = await Quiz.addAnswer(result);
+          }
+          quizId = questionItem.quizId;
+          userId = result.userId
+        });
+        const id = quizId
+        const item = await Quiz.getQuizWithAnswersByUser(id, userId);
+
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'UPDATED',
+            node: item
           }
         });
         return true;
@@ -276,14 +307,56 @@ export default (pubsub: any) => ({
         input: { userId: number; quizId: number },
         context: any
       ) => {
-        const res = await context.Quiz.duplicateQuiz(
+        try{const res = await context.Quiz.duplicateQuiz(
           input.userId,
           input.quizId
         );
-        console.log('ressssss', res);
-        return res;
+        const getQuiz = await context.Quiz.getQuiz(res.id);
+        console.log('ressssss', getQuiz);
+        // const getUser = await context.User.getUserForQuizSubscription(res.userId)
+      // res.user = getUser;
+      console.log('copiiiied', getQuiz)
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'CREATED',
+            node: getQuiz
+          }
+        });
+        return res;}
+        catch (e){
+          return e;
+        }
       }
     )
   },
-  Subscription: {},
+  Subscription: {
+    quizzesUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(QUIZ_SUBSCRIPTION),
+        (payload, variables) => {
+          const { mutation, node } = payload.quizzesUpdated;
+          console.log('subsss', node);
+          const {
+            // filter: { searchText }
+          } = variables;
+          // const checkByFilter =
+            // (!model || model === node.model.name) &&
+            // (!status || status === node.status) &&
+            // (!searchText ||
+            //   node.title.toUpperCase().includes(searchText.toUpperCase()))
+            //   node.description.toUpperCase().includes(searchText.toUpperCase()) ||
+            //   node.tags.some((item: any) => item.text.toUpperCase().includes(searchText.toUpperCase())));
+
+            switch (mutation) {
+              case 'DELETED':
+                return true;
+              case 'CREATED':
+                return true;
+              case 'UPDATED':
+                return true;
+            }
+        }
+      )
+    }
+  },
 });
