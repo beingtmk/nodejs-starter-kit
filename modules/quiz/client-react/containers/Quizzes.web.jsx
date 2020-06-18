@@ -83,7 +83,7 @@ export default compose(
         fetchPolicy: 'network-only',
         variables: {
           // orderBy, 
-          filter: {searchText:''}
+          filter: { searchText: '' }
         }
       };
     },
@@ -142,7 +142,8 @@ export default compose(
           });
 
           if (quizData && quizData.data && quizData.data.duplicateQuiz && quizData.data.duplicateQuiz.id) {
-
+            console.log('redirect url', `/quiz/edit/${quizData.data.duplicateQuiz.id}`);
+            history.push(`/quiz/edit/${quizData.data.duplicateQuiz.id}`)
             message.destroy();
             message.success('Quiz duplicateed.');
           } else {

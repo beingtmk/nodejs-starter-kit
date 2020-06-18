@@ -34,8 +34,26 @@ const QuizAdd = (props) => {
 };
 
 export default compose(
+  graphql(QUIZ_QUERY, {
+    options: props => {
+      let id = 0;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
+
+      return {
+        variables: { id: Number(id) }
+      };
+    },
+    props({ data: { loading, error, quiz, refetch } }) {
+      if (error) throw new Error(error);
+      return { quizLoading: loading, quiz, refetch };
+    }
+  }),
   graphql(QUIZ_EDIT, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
+    props: ({ ownProps: { history, navigation, refetch }, mutate }) => ({
       editQuiz: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
@@ -52,7 +70,7 @@ export default compose(
               }
             }
           });
-
+          refetch();
           message.destroy();
           message.success('Quiz edited.');
         } catch (e) {
@@ -62,23 +80,5 @@ export default compose(
         }
       }
     })
-  }),
-  graphql(QUIZ_QUERY, {
-    options: props => {
-      let id = 0;
-      if (props.match) {
-        id = props.match.params.id;
-      } else if (props.navigation) {
-        id = props.navigation.state.params.id;
-      }
-
-      return {
-        variables: { id: Number(id) }
-      };
-    },
-    props({ data: { loading, error, quiz } }) {
-      if (error) throw new Error(error);
-      return { quizLoading: loading, quiz };
-    }
   }),
   )(translate('contact')(QuizAdd));

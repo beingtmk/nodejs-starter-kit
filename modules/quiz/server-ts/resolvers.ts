@@ -218,8 +218,8 @@ export default (pubsub: any) => ({
         //     node: item
         //   }
         // });
-        const getUser = await User.getUserForQuizSubscription(item.userId)
-      item.user = getUser;
+        // const getUser = await Quiz.getQuiz(item.userId)
+      // item.user = getUser;
         pubsub.publish(QUIZ_SUBSCRIPTION, {
           quizzesUpdated: {
             mutation: 'UPDATED',
