@@ -28,7 +28,7 @@ const PersonalQuizResult = (props) => {
   //     throw new FormError(t('serverError'), e);
   //   }
   // };
-  console.log('quiz', props);
+  props.refetch();
   return (
     
     <PersonalQuizResultView {...props} />
@@ -57,9 +57,9 @@ export default compose(
         variables: { id: Number(id), userId: Number(currentUserId) }
       };
     },
-    props({ data: { loading, error, quizWithAnswers } }) {
+    props({ data: { loading, error, quizWithAnswers, refetch } }) {
       if (error) throw new Error(error);
-      return { quizLoading: loading, quiz:quizWithAnswers };
+      return { quizLoading: loading, quiz:quizWithAnswers, refetch };
     }
   })
   )(translate('contact')(PersonalQuizResult));
