@@ -15,12 +15,19 @@ import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
 const QuizUserWiseReport = (props) => {
   const QuizUserWiseReportComponent = props.QuizUserWiseReportComponent;
   console.log('groupsss', props.groupId,  props.quiz && props.quiz.attendees);
+
+  const setGroupId = (e) => {
+    props.setGroupId(e);
+    console.log('refetch comencing');
+  }
+  props.refetchResult()
+
   return (
     <>
       {!props.groupLoading && props.groups && props.groups.edges && props.groups.edges.length !== 0 && (<Form layout="inline">
         <FormItem label='Select by group'>
-        <Select  name="group" defaultValue={props.groupId || 'All'} style={{ width: '100px' }} onChange={e => props.setGroupId(e)}>
-          <Option key={1} value="">
+        <Select  name="group" defaultValue={props.groupId || 'All'} style={{ width: '100px' }} onChange={setGroupId}>
+          <Option key={1} value={null}>
             All
           </Option>
           {props.groups.edges.map((edge) => (
@@ -51,9 +58,9 @@ export default compose(
         variables: { id: Number(props.quizId), groupId: Number(props.groupId) },
       };
     },
-    props({ data: { loading, error, getUserWiseResult } }) {
+    props({ data: { loading, error, getUserWiseResult, refetch } }) {
       if (error) throw new Error(error);
-      return { quizzLoading: loading, quiz: getUserWiseResult };
+      return { quizzLoading: loading, quiz: getUserWiseResult, refetchResult:refetch };
     },
   }),
   graphql(GROUP_QUERY, {

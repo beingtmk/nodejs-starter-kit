@@ -5,7 +5,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 import { CookiesProvider } from 'react-cookie';
 import resolvers from './resolvers';
-import { Menu } from 'antd';
+import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
@@ -13,7 +13,7 @@ import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth
 
 const NavLinkMyGroupsWithI18n = translate('group')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/my-groups" className="nav-link" activeClassName="active">
-    {'My Groups'}
+    <Icon type='team'/>{'My Groups'}
   </NavLink>
 ));
 

@@ -8,7 +8,7 @@ import resolvers from './resolvers';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
-import { Menu } from 'antd';
+import { Menu, Icon } from 'antd';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth.web';
 
 const NavLinkWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
@@ -18,17 +18,17 @@ const NavLinkWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
 ));
 const NavLinkMyBlogsWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/my-blogs" className="nav-link" activeClassName="active">
-    {'My Blogs'}
+    <Icon type='solution'/>{'My Blogs'}
   </NavLink>
 ));
 const NavLinkBlogWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/list" className="nav-link" activeClassName="active">
-    {'All Blogs'}
+    <Icon type='file-text'/>{'All Blogs'}
   </NavLink>
 ));
 const NavLinkMyBookmarksWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/blog/bookmarks" className="nav-link" activeClassName="active">
-    {'My Bookmarks'}
+    <Icon type='save'/> {'My Bookmarks'}
   </NavLink>
 ));
 const NavLinkBlogAdminWithI18n = translate('blog')(({ t }: { t: TranslateFunction }) => (
@@ -117,19 +117,17 @@ export default new ClientModule({
           <NavLinkmodelAdminWithI18n />
         </MenuItem>
       </IfLoggedIn>
-    </Menu.SubMenu>
-  ],
-  navItemTest: [
-    <Menu.SubMenu title="Blogs">
       <IfLoggedIn key="/blog/new">
         <MenuItem key="/blog/new">
           <NavLinkWithI18n />
         </MenuItem>
       </IfLoggedIn>
+    </Menu.SubMenu>
+  ],
+  navItem: [
       <MenuItem key="/blog/list">
         <NavLinkBlogWithI18n />
       </MenuItem>
-    </Menu.SubMenu>
   ],
   resolver: [resolvers],
   rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
