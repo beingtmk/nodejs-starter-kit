@@ -66,5 +66,10 @@ export { default as Tabs } from './Tabs';
 export { default as Timeline } from './Timeline';
 export { default as TimelineItem } from './TimelineItem';
 export { default as Tooltip } from './Tooltip';
+export { default as Anchor } from './Anchor';
+export { default as AnchorLink } from './AnchorLink';
+export { default as PageHeader } from './PageHeader';
+export { default as Tag } from './Tag';
+export { default as AutoComplete } from './AutoComplete';
 
 export { onAppCreate } from './NavBar';
