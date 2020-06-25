@@ -1,0 +1,10 @@
+#import "./Group.graphql"
+
+subscription onGroupsUpdated($endCursor: Int!, $filter: FilterGroupInput) {
+  groupsUpdated(endCursor: $endCursor, filter: $filter) {
+    mutation
+    node {
+      ...GroupInfo
+    }
+  }
+}

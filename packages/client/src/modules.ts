@@ -1,3 +1,10 @@
+import group from '@gqlapp/group-client-react';
+import tag from '@gqlapp/tag-client-react';
+import geolocation from '@gqlapp/geolocation-client-react';
+import bookmark from '@gqlapp/bookmark-client-react';
+import like from '@gqlapp/like-client-react';
+import comment from '@gqlapp/comment-client-react';
+import blog from '@gqlapp/blog-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import home from '@gqlapp/home-client-react';
 import core from '@gqlapp/core-client-react';
@@ -21,6 +28,13 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  group,
+  tag,
+  geolocation,
+  bookmark,
+  like,
+  comment,
+  blog,
   pwa,
   home,
   look,

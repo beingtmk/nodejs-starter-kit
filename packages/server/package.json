@@ -94,14 +94,14 @@
         "i18next-express-middleware": "^1.1.1",
         "isomorphic-fetch": "^2.2.1",
         "jsonwebtoken": "^8.1.0",
-        "knex": "^0.14.2",
-        "objection": "^2.0.7",
+        "knex": "^0.14.6",
         "lerna": "^2.5.1",
         "lint-staged": "^7.0.4",
         "lodash": "^4.17.4",
         "minilog": "^3.1.0",
         "mysql2": "^1.5.1",
         "nodemailer": "^4.4.1",
+        "objection": "^2.0.7",
         "passport": "^0.4.0",
         "passport-facebook": "^2.1.1",
         "passport-github": "^1.1.0",
@@ -136,8 +136,13 @@
         "tslint-config-prettier": "^1.5.0",
         "universal-cookie-express": "^2.2.0",
         "uuid": "^3.2.1"
-    },
-    "devDependencies": {
+    ,
+    "@gqlapp/bookmark-server-ts": "^1.0.0",
+    "@gqlapp/geolocation-server-ts": "^1.0.0",
+    "@gqlapp/group-server-ts": "^1.0.0",
+    "@gqlapp/like-server-ts": "^1.0.0",
+    "@gqlapp/tag-server-ts": "^1.0.0"},
+  "devDependencies": {
         "@types/chai": "^4.1.4",
         "@types/chai-http": "^3.0.5",
         "@types/graphql-iso-date": "^3.3.0",
@@ -177,6 +182,7 @@
         "eslint": "*"
     },
     "resolutions": {
+        "react": "16.9.0",
         "graphql-resolve-batch/graphql": "14.1.1"
     }
 }

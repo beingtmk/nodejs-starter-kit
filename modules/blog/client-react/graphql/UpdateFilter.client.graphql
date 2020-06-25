@@ -1,0 +1,5 @@
+#import "./ModelsState.client.graphql"
+
+mutation updateFilter($filter: FilterSearchInput!) {
+  updateFilter(filter: $filter) @client
+}

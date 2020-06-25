@@ -1,0 +1,5 @@
+mutation deleteLikeUser($input: UserLikeInput!) {
+  deleteLikeUser(input: $input) {
+    id
+  }
+}

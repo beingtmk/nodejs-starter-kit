@@ -1,0 +1,5 @@
+#import "./LocationState.client.graphql"
+
+mutation updateLocationFilter($filter: FilterLocationInput!) {
+  updateLocationFilter(filter: $filter) @client
+}

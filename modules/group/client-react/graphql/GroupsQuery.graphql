@@ -1,0 +1,17 @@
+#import "./Group.graphql"
+
+query groups($limit: Int!, $after: Int, $filter: FilterGroupInput) {
+  groups(limit: $limit, after: $after, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...GroupInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

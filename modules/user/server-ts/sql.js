@@ -1,11 +1,24 @@
 // Helpers
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { has } from 'lodash';
+import { Model } from 'objection';
 import bcrypt from 'bcryptjs';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 
+Model.knex(knex);
+
 // Actual query fetching and transformation in DB
-class User {
+export class User extends Model {
+  // private id: any;
+
+  static get tableName() {
+    return 'user';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
   async getUsers(orderBy, filter) {
     const queryBuilder = knex
       .select(
@@ -167,10 +180,12 @@ class User {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {

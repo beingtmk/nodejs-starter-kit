@@ -1,0 +1,10 @@
+fragment CommentsInfo on ContentComment {
+  id
+  content
+  user {
+    id
+    username
+  }
+  createdAt
+  updatedAt
+}

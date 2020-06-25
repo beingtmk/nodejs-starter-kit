@@ -19,6 +19,8 @@ export interface ClientModuleShape extends BaseModuleShape {
   navItemAdmin?: Array<React.ReactElement<any>>;
   // Acount specific
   navItemAccount?: Array<React.ReactElement<any>>;
+  // Blog specific
+  navItemsBlog?: Array<React.ReactElement<any>>;
 }
 
 interface ClientModule extends ClientModuleShape {}
@@ -41,9 +43,10 @@ class ClientModule extends BaseModule {
    * @returns client-side React route components list
    */
   get routes() {
-    return (this.route || []).map(
-      (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-        React.cloneElement(component, { key: component.key || idx + items.length })
+    return (
+      this.route || []
+    ).map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+      React.cloneElement(component, { key: component.key || idx + items.length })
     );
   }
 

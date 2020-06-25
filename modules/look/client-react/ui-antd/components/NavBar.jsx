@@ -131,7 +131,6 @@ class NavBar extends React.Component {
                   >
                     {ref.modules.navItems}
                     {ref.modules.navItemsRight}
-
                     <LoggedIn>
                       <MenuItem>
                         <DropDown content={<UserAvatar />} noicon>

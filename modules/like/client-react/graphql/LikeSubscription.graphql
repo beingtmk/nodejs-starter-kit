@@ -1,0 +1,10 @@
+#import "./Like.graphql"
+
+subscription onLikeUpdated {
+  likesUpdated {
+    mutation
+    node {
+      ...LikeInfo
+    }
+  }
+}

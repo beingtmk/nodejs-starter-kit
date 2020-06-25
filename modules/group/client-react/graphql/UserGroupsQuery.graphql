@@ -1,0 +1,7 @@
+#import "./Group.graphql"
+
+query userGroups {
+  userGroups {
+    ...GroupInfo
+  }
+}

@@ -1,0 +1,12 @@
+subscription onLocationUpdated($filter: FilterLocationInput) {
+  locationUpdated(filter: $filter) {
+    mutation
+    node {
+      id
+      latitude
+      longitude
+      createdAt
+      updatedAt
+    }
+  }
+}
