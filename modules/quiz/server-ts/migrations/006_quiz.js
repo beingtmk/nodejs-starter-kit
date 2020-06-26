@@ -1,74 +1,88 @@
 exports.up = function(knex) {
   return Promise.all([
-    knex.schema.createTable('quiz', table => {
+    knex.schema.createTable("quiz", (table) => {
       table.increments();
       table
-        .integer('user_id')
+        .integer("user_id")
         .unsigned()
-        .references('id')
-        .inTable('user')
-        .onDelete('CASCADE');
-      table.boolean('active').defaultTo(false);
-      table.string('title');
-      table.string('description');
-      table.boolean('is_editable_by_user').defaultTo(false);
+        .references("id")
+        .inTable("user")
+        .onDelete("CASCADE");
+      table.boolean("active").defaultTo(false);
+      table.string("title");
+      table.string("description");
+      table.boolean("is_editable_by_user").defaultTo(false);
       table.timestamps(false, true);
     }),
-    knex.schema.createTable('question', table => {
+    knex.schema.createTable("section", (table) => {
       table.increments();
       table
-        .integer('quiz_id')
+        .integer("quiz_id")
         .unsigned()
-        .references('id')
-        .inTable('quiz')
-        .onDelete('CASCADE');
-      table.string('description');
-      table.string('choice_type');
-      table.boolean('is_active').defaultTo(true);
+        .references("id")
+        .inTable("quiz")
+        .onDelete("CASCADE");
+      table.string("title");
+      // table.string('choice_type');
+      table.boolean("is_active").defaultTo(true);
       table.timestamps(false, true);
     }),
-    knex.schema.createTable('choice', table => {
+    knex.schema.createTable("question", (table) => {
       table.increments();
       table
-        .integer('question_id')
+        .integer("section_id")
         .unsigned()
-        .references('id')
-        .inTable('question')
-        .onDelete('CASCADE');
-      table.string('description');
+        .references("id")
+        .inTable("section")
+        .onDelete("CASCADE");
+      table.string("description");
+      table.string("choice_dependence_description");
+      table.string("choice_type");
+      table.boolean("is_active").defaultTo(true);
       table.timestamps(false, true);
     }),
-    knex.schema.createTable('answer', table => {
+    knex.schema.createTable("choice", (table) => {
       table.increments();
       table
-        .integer('user_id')
+        .integer("question_id")
         .unsigned()
-        .references('id')
-        .inTable('user')
-        .onDelete('CASCADE');
-      table
-        .integer('question_id')
-        .unsigned()
-        .references('id')
-        .inTable('question')
-        .onDelete('CASCADE');
-      table
-        .integer('choice_id')
-        .unsigned()
-        .references('id')
-        .inTable('choice')
-        .onDelete('CASCADE');
-      table.string('content');
+        .references("id")
+        .inTable("question")
+        .onDelete("CASCADE");
+      table.string("description");
       table.timestamps(false, true);
-    })
+    }),
+    knex.schema.createTable("answer", (table) => {
+      table.increments();
+      table
+        .integer("user_id")
+        .unsigned()
+        .references("id")
+        .inTable("user")
+        .onDelete("CASCADE");
+      table
+        .integer("question_id")
+        .unsigned()
+        .references("id")
+        .inTable("question")
+        .onDelete("CASCADE");
+      table
+        .integer("choice_id")
+        .unsigned()
+        .references("id")
+        .inTable("choice")
+        .onDelete("CASCADE");
+      table.string("content");
+      table.timestamps(false, true);
+    }),
   ]);
 };
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.dropTable('answer'),
-    knex.schema.dropTable('choice'),
-    knex.schema.dropTable('question'),
-    knex.schema.dropTable('quiz')
+    knex.schema.dropTable("answer"),
+    knex.schema.dropTable("choice"),
+    knex.schema.dropTable("question"),
+    knex.schema.dropTable("quiz"),
   ]);
 };
