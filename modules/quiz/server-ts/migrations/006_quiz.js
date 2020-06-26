@@ -23,7 +23,7 @@ exports.up = function(knex) {
         .inTable("quiz")
         .onDelete("CASCADE");
       table.string("title");
-      // table.string('choice_type');
+      table.string('description');
       table.boolean("is_active").defaultTo(true);
       table.timestamps(false, true);
     }),
@@ -97,8 +97,10 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return Promise.all([
     knex.schema.dropTable("answer"),
+    knex.schema.dropTable("attempt"),
     knex.schema.dropTable("choice"),
     knex.schema.dropTable("question"),
+    knex.schema.dropTable("section"),
     knex.schema.dropTable("quiz"),
   ]);
 };
