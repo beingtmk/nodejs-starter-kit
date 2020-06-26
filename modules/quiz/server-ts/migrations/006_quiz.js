@@ -52,13 +52,29 @@ exports.up = function(knex) {
       table.string("description");
       table.timestamps(false, true);
     }),
-    knex.schema.createTable("answer", (table) => {
+    knex.schema.createTable("attempt", (table) => {
       table.increments();
       table
         .integer("user_id")
         .unsigned()
         .references("id")
         .inTable("user")
+        .onDelete("CASCADE");
+      table
+        .integer("quiz_id")
+        .unsigned()
+        .references("id")
+        .inTable("quiz")
+        .onDelete("CASCADE");
+      table.timestamps(false, true);
+    }),
+    knex.schema.createTable("answer", (table) => {
+      table.increments();
+      table
+        .integer("attempt_id")
+        .unsigned()
+        .references("id")
+        .inTable("attempt")
         .onDelete("CASCADE");
       table
         .integer("question_id")
