@@ -12,8 +12,9 @@ import {
   Alert,
   Icon,
   RenderCheckBox,
+  Card
 } from "@gqlapp/look-client-react";
-import RenderQuestionsField from "./RenderQuestionsField";
+import RenderSectionsField from "./RenderSectionsField";
 // import { QuizAddForm } from '../types';
 
 // interface QuizAddFormProps {
@@ -22,66 +23,68 @@ import RenderQuestionsField from "./RenderQuestionsField";
 // }
 
 const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
-  const handleQuestions = (data) => (values.questions = data);
+  const handleSections = (data) => (values.sections = data);
   // const [load, setload] = React.useState(false);
   console.log('form values', values);
   return (
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
-      <Field
-        name="title"
-        component={RenderField}
-        type="text"
-        label={"Title"}
-        value={values.title}
-      />
-      <Field
-        name="description"
-        component={RenderField}
-        type="text"
-        label={"Description"}
-        value={values.description}
-      />
-      <Field
-        name="active"
-        component={RenderCheckBox}
-        type="checkbox"
-        label={"Active"}
-        checked={values.active}
-      />{" "}
-      <Field
-        name="isEditableByUser"
-        component={RenderCheckBox}
-        type="checkbox"
-        label={"Is Editable By User"}
-        checked={values.isEditableByUser}
-      />{" "}
-      <FieldArray
-      name='questions'
-        render={arrayHelpers => (
-          <RenderQuestionsField
-            // setload={setload}
-            arrayHelpers={arrayHelpers}
-            values={values.questions}
-            label={"Add Questions"}
-            name='questions'
-            buttonText='Add Question'
-            keys={{type:'text', label:'question', key:'description'}}
-          />
-        )}
-        // skills={skills}
-        questionsVal={values.questions}
-        handleQuestions={handleQuestions}
-      />
-      <div className="text-center">
-        {errors && errors.errorMsg && (
-          <Alert color="error">{errors.errorMsg}</Alert>
-        )}
-        <Button block color="primary" type="submit">
-          {/* <Icon type="mail" /> {t('form.btnSubmit')} */}
+      <Card
+        style={{marginBottom:'10px'}} 
+        title={<h2>Quiz</h2>}
+        extra={
+          <div className="text-center">
+            {errors && errors.errorMsg && (
+              <Alert color="error">{errors.errorMsg}</Alert>
+            )}
+            <Button block color="primary" type="submit">
+              {/* <Icon type="mail" /> {t('form.btnSubmit')} */}
           Submit
         </Button>
-      </div>
+          </div>
+        }>
+        <Field
+          name="title"
+          component={RenderField}
+          type="text"
+          label={"Title"}
+          value={values.title}
+        />
+        <Field
+          name="description"
+          component={RenderField}
+          type="text"
+          label={"Description"}
+          value={values.description}
+        />
+        <Field
+          name="active"
+          component={RenderCheckBox}
+          type="checkbox"
+          label={"Active"}
+          checked={values.active}
+        />{" "}
+        <Field
+          name="isEditableByUser"
+          component={RenderCheckBox}
+          type="checkbox"
+          label={"Is Editable By User"}
+          checked={values.isEditableByUser}
+        />{" "}
+      </Card>
+      <FieldArray
+        name='sections'
+        render={arrayHelpers => (
+          <RenderSectionsField
+            arrayHelpers={arrayHelpers}
+            values={values.sections}
+            name='sections'
+          />
+        )}
+        sectionsVal={values.sections}
+        handleSections={handleSections}
+      />
+
     </Form>
   );
 };
@@ -89,6 +92,7 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
 const QuizAddFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
+    console.log('map props', props);
     function getChoices(choice) {
       return {
         id: (choice && choice.id) || null,
@@ -105,24 +109,35 @@ const QuizAddFormWithFormik = withFormik({
         choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
+    function getSections(section) {
+      return {
+        id: (section && section.id) || null,
+        title: (section && section.title) || '',
+        description: (section && section.description) || '',
+        isActive: (section && section.isActive) || true,
+        questions: section && section.questions && section.questions.map(getQuestions) || []
+      };
+    }
     return {
+      id: (props.quiz && props.quiz.id) || null,
       title: (props.quiz && props.quiz.title) || "",
       description: (props.quiz && props.quiz.description) || "",
       active: (props.quiz && props.quiz.active) || true,
       isEditableByUser: (props.quiz && props.quiz.isEditableByUser) || false,
-      questions: (props.quiz && props.quiz.questions && props.quiz.questions.map(getQuestions)) || [],
+      sections: (props.quiz && props.quiz.sections && props.quiz.sections.map(getSections)) || [],
     }
   },
   async handleSubmit(
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }
   ) {
-    values.questions = Object.values(values.questions
-    //   .map((question, key)=>{
-    //   question.choices = Object.values(question.choices);
-    // })
+    values.sections = Object.values(values.sections
+      //   .map((question, key)=>{
+      //   question.choices = Object.values(question.choices);
+      // })
     );
     // values.questions = (values.questions.map)
+    console.log('on submit', values)
     try {
       await onSubmit(values);
       resetForm();

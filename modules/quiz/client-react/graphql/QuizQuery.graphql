@@ -5,16 +5,24 @@ query quiz($id: Int!) {
     userId
     active
     title
-    isEditableByUser
     description
-    questions{
+    isEditableByUser
+    sections{
       id
+      quizId
+      title
       description
-      choiceType
       isActive
-      choices{
+      questions{
         id
+        sectionId
         description
+        choiceType
+        choices{
+          id
+          questionId
+          description
+        }
       }
     }
   }

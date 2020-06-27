@@ -14,9 +14,8 @@ export default class RenderQuestionsField extends React.Component {
   add = () => {
     const arrayHelpers = this.props.arrayHelpers;
     let obj = {};
-    const keys = this.props.keys;
 
-    obj[keys.key] = "";
+    obj['description'] = "";
     obj['choiceType'] = '';
     obj["isActive"] = true
     obj["choices"] = [];
@@ -37,23 +36,24 @@ export default class RenderQuestionsField extends React.Component {
     const name = this.props.name;
     const values = this.props.values;
     const arrayHelpers = this.props.arrayHelpers;
+    const sectionIndex = this.props.sectionIndex;
     let formItems = null;
     console.log("keys", keys);
     // const handleChoices = (data) => (values.choices = data);
 
     if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
-        <Row style={{background:'#f3f3f3', marginBottom:'20px', padding:'5px'}}>
+        <Row style={{ background: '#f3f3f3', marginBottom: '20px', padding: '5px' }}>
           <Col span={24}>
             <FormItem required={false} key={indexv} style={{ margin: "0px" }}>
               <Row gutter={10}>
                 <Col span={20}>
                   <Field
-                    name={`questions[${indexv}].description`}
+                    name={`sections[${sectionIndex}].questions[${indexv}].description`}
                     component={RenderField}
-                    placeholder={keys.placeholder || keys.key}
+                    placeholder={'Question Description'}
                     type="text"
-                    label={<h3 style={{ marginBottom: '0', display: 'inline' }}>{`${keys.label}-${indexv + 1}`}</h3>}
+                    label={<h3 style={{ marginBottom: '0', display: 'inline' }}>{`Question Description`}</h3>}
                     // label={`${k.label || k.key} #${indexv + 1}`}
                     value={v.description}
                   //   key={indexv}
@@ -73,7 +73,7 @@ export default class RenderQuestionsField extends React.Component {
                 </Col>
                 <Col span={12}>
                   <Field
-                    name={`questions[${indexv}].isActive`}
+                    name={`sections[${sectionIndex}].questions[${indexv}].isActive`}
                     component={RenderCheckBox}
                     type="checkbox"
                     label={<h5 style={{ marginBottom: '0', display: 'inline' }}>Is Active</h5>}
@@ -87,7 +87,7 @@ export default class RenderQuestionsField extends React.Component {
                 <Col span={12}>
 
                   <Field
-                    name={`questions[${indexv}].choiceType`}
+                    name={`sections[${sectionIndex}].questions[${indexv}].choiceType`}
                     component={RenderSelect}
                     placeholder={'Choice Type'}
                     type="select"
@@ -159,14 +159,14 @@ export default class RenderQuestionsField extends React.Component {
                   v.choiceType === QuestionTypes.RADIO ||
                   v.choiceType === QuestionTypes.MSELECT) &&
                 (<FieldArray
-                  name={`${name}[${indexv}].choices`}
+                  name={`sections[${sectionIndex}].questions[${indexv}].choices`}
                   render={(arrayHelpersA) => (
                     <RenderDynamicField
                       // setload={setload}
                       arrayHelpers={arrayHelpersA}
                       values={v.choices}
                       label={"Add Choices"}
-                      name={`${name}[${indexv}].choices`}
+                      name={`sections[${sectionIndex}].questions[${indexv}].choices`}
                       buttonText="Add Choices"
                       keys={[{ type: "text", label: "choices", key: "description" }]}
                     />
@@ -216,7 +216,7 @@ export default class RenderQuestionsField extends React.Component {
           <FormItem>
             <Button style={{ width: "100%" }} onClick={this.add}>
               {/* <Icon type="plus" /> */}
-              {this.props.buttonText || "Add Field"}
+              {'Add Questions'}
             </Button>
           </FormItem>
         </FormItem>
