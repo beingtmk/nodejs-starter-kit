@@ -14,9 +14,9 @@ import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { user } from "@gqlapp/blog-client-react/demoData";
 
-const eager = "[user, questions.[choices]]";
-const eagerWithCount = "[user, questions.[choices]]";
-const withAnswersEager = "[user, questions.[choices, answers]]";
+const eager = "[user, sections.[questions.[choices]]]";
+// const eagerWithCount = "[user, questions.[choices]]";
+// const withAnswersEager = "[user, questions.[choices, answers]]";
 
 export default class Quiz extends Model {
   static get tableName() {

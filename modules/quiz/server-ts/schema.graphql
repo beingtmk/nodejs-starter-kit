@@ -67,18 +67,18 @@ type Answer {
 }
 
 extend type Query {
-  #get quizzes
-  quizzes(filter: FilterQuizInput): [Quiz]
-  #get quiz by id
+  # #get quizzes
+  # quizzes(filter: FilterQuizInput): [Quiz]
+  # #get quiz by id
   quiz(id: Int!): Quiz
-  #get quiz attempt of a user
-  attempt(quizId: Int!, userId: Int!): Attempt
-  #get attempts
-  getAttempts(quizId: Int!): [Attempt]
-  #get quiz with answer count
-  getQuizCount(id: Int!): Quiz
-  #get user wise attempts
-  getUserWiseAttempts(id: Int!, groupId: Int): Quiz
+  # #get quiz attempt of a user
+  # attempt(quizId: Int!, userId: Int!): Attempt
+  # #get attempts
+  # getAttempts(quizId: Int!): [Attempt]
+  # #get quiz with answer count
+  # getQuizCount(id: Int!): Quiz
+  # #get user wise attempts
+  # getUserWiseAttempts(id: Int!, groupId: Int): Quiz
 }
 
 input FilterQuizInput {
@@ -88,69 +88,94 @@ input FilterQuizInput {
 }
 
 extend type Mutation {
-  # Create new quiz
+  # # Create new quiz
   addQuiz(input: AddQuizInput!): Quiz
-  # Edit a quiz
-  editQuiz(input: Quiz!): Quiz
-  # Delete quiz
+  # # Edit a quiz
+  editQuiz(input: EditQuizInput!): Quiz
+  # # Delete quiz
   deleteQuiz(id: Int): Quiz
-  # Add attempt
-  addAttempt(input: AttemptInput!): Attempt
-  # Duplicate quiz
-  duplicateQuiz(userId: Int!, quizId: Int!): Quiz
+  # # Add attempt
+  # addAttempt(input: AttemptInput!): Attempt
+  # # Duplicate quiz
+  # duplicateQuiz(userId: Int!, quizId: Int!): Quiz
 }
 
-type AttemptInput {
+input EditQuizInput {
+  id: Int!
+  userId: Int!
+  active: Boolean
+  title: String
+  description: String
+
+  isEditableByUser: Boolean
+  sections:[EditSectionInput]
+}
+
+input EditSectionInput {
+  id:Int
+  quizid: Int
+  title: String!
+  description: String
+  isActive: Boolean
+  questions: [EditQuestionInput]
+}
+
+input EditQuestionInput {
+  id:Int
+  sectionId: Int
+  description: String!
+  choiceType: String
+  choiceDependenceDescription: String
+  isActive: Boolean
+  choices: [EditChoiceInput]
+}
+
+input EditChoiceInput {
+  id:Int
+  questionId: Int
+  description: String!
+}
+
+input AttemptInput {
   userId: Int
   quizId: Int
-  user:User
-  quiz: Quiz
   answers: [AnswerInput]
 }
 
-type AnswerInput {
+input AnswerInput {
   questionId: Int!
   choiceId: Int
   content: String
-  createdAt: String
-  updatedAt: String
+
 }
 
-type AddQuizInput {
+input AddQuizInput {
   userId: Int
   active: Boolean
   title: String
   description: String
-  createdAt: String
-  updatedAt: String
   isEditableByUser: Boolean
   sections:[SectionInput]
 }
 
-type SectionInput {
+input SectionInput {
   title: String
   description: String
-  createdAt: String
-  updatedAt: String
   isActive: Boolean
   questions: [QuestionInput]
 
 }
 
-type QuestionInput {
+input QuestionInput {
   description: String
   choiceType: String
   choiceDependenceDescription: String
   isActive: Boolean
   choices: [ChoiceInput]
-  createdAt: String
-  updatedAt: String
 }
 
-type ChoiceInput {
+input ChoiceInput {
   description: String
-  createdAt: String
-  updatedAt: String
 }
 
 extend type Subscription {
