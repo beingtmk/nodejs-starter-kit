@@ -37,12 +37,20 @@ export default class Quiz extends Model {
           to: "user.id",
         },
       },
-      questions: {
+      sections: {
         relation: Model.HasManyRelation,
-        modelClass: Question,
+        modelClass: Section,
         join: {
           from: "quiz.id",
-          to: "question.quiz_id",
+          to: "section.quiz_id",
+        },
+      },
+      attempts: {
+        relation: Model.HasManyRelation,
+        modelClass: Attempt,
+        join: {
+          from: "quiz.id",
+          to: "attempt.quiz_id",
         },
       },
     };
@@ -319,6 +327,37 @@ export default class Quiz extends Model {
   // }
 }
 
+export class Section extends Model {
+  static get tableName() {
+    return "section";
+  }
+
+  static get idColumn() {
+    return "id";
+  }
+
+  static get relationMappings() {
+    return {
+      quiz: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Quiz,
+        join: {
+          from: "section.quiz_id",
+          to: "quiz.id",
+        },
+      },
+      questions: {
+        relation: Model.HasManyRelation,
+        modelClass: Question,
+        join: {
+          from: "section.id",
+          to: "question.section_id",
+        },
+      },
+    };
+  }
+}
+
 export class Question extends Model {
   static get tableName() {
     return "question";
@@ -330,12 +369,12 @@ export class Question extends Model {
 
   static get relationMappings() {
     return {
-      quiz: {
+      section: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Question,
+        modelClass: Section,
         join: {
-          from: "question.quiz_id",
-          to: "quiz.id",
+          from: "question.section_id",
+          to: "section.id",
         },
       },
       choices: {
@@ -389,6 +428,45 @@ export class Choice extends Model {
   }
 }
 
+export class Attempt extends Model {
+  static get tableName() {
+    return "attempt";
+  }
+
+  static get idColumn() {
+    return "id";
+  }
+
+  static get relationMappings() {
+    return {
+      quiz: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Quiz,
+        join: {
+          from: "attempt.quiz_id",
+          to: "quiz.id",
+        },
+      },
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: "attempt.user_id",
+          to: "user.id",
+        },
+      },
+      answers: {
+        relation: Model.HasManyRelation,
+        modelClass: Answer,
+        join: {
+          from: "attempt.id",
+          to: "answer.attempt_id",
+        },
+      },
+    };
+  }
+}
+
 export class Answer extends Model {
   static get tableName() {
     return "answer";
@@ -400,20 +478,20 @@ export class Answer extends Model {
 
   static get relationMappings() {
     return {
+      attempt: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Attempt,
+        join: {
+          from: "answer.attempt_id",
+          to: "attempt.id",
+        },
+      },
       question: {
         relation: Model.BelongsToOneRelation,
         modelClass: Question,
         join: {
           from: "answer.question_id",
           to: "question.id",
-        },
-      },
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: "answer.user_id",
-          to: "user.id",
         },
       },
       choice: {
