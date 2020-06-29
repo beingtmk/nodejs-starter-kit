@@ -5,14 +5,15 @@ import { Form, Input } from 'antd';
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-const RenderField = ({ rows, input, label, type, meta: { touched, error }, placeholder }) => {
+const RenderField = ({ rows, input, label, type, meta: { touched, error }, placeholder, style }) => {
   let validateStatus = '';
   if (touched && error) {
     validateStatus = 'error';
   }
+  console.log(style);
   return (
-    <FormItem label={label} hasFeedback={type != 'textarea'} validateStatus={validateStatus} help={touched && error}>
-      {type != 'textarea' ? <Input {...input} placeholder={placeholder || label} type={type} /> : null}
+    <FormItem label={label} hasFeedback={type != 'textarea'} validateStatus={validateStatus} help={touched && error} style={style}>
+      {type != 'textarea' ? <Input {...input} placeholder={placeholder || label} type={type}  /> : null}
 
       {type == 'textarea' ? <TextArea {...input} placeholder={placeholder || label} rows={rows || 5} /> : null}
     </FormItem>

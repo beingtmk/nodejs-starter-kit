@@ -4,4 +4,5 @@ module.exports = Object.freeze({
   MSELECT: "MSELECT",
   TEXTBOX: "TEXTBOX",
   TEXTAREA: "TEXTAREA",
+  DEPENDENCE: "DEPENDENCE",
 });

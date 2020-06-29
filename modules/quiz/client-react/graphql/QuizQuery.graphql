@@ -18,6 +18,7 @@ query quiz($id: Int!) {
         sectionId
         description
         choiceType
+        choiceDependenceDescription
         choices{
           id
           questionId

@@ -30,7 +30,7 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
       <Card
-        style={{marginBottom:'10px'}} 
+        style={{ marginBottom: '10px' }}
         title={<h2>Quiz</h2>}
         extra={
           <div className="text-center">
@@ -106,6 +106,7 @@ const QuizAddFormWithFormik = withFormik({
         description: (question && question.description) || '',
         choiceType: (question && question.choiceType) || '',
         isActive: (question && question.isActive) || true,
+        choiceDependenceDescription: (question && question.choiceDependenceDescription) || null,
         choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
