@@ -98,8 +98,8 @@ extend type Mutation {
   deleteQuiz(id: Int): Quiz
    # Add answers
   addAnswers(input: AnswersInput!): Boolean
-  # # Duplicate quiz
-  # duplicateQuiz(userId: Int!, quizId: Int!): Quiz
+   # Duplicate quiz
+  duplicateQuiz(userId: Int!, quizId: Int!): Quiz
 }
 
 input AnswersInput {

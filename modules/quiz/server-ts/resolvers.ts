@@ -301,33 +301,33 @@ export default (pubsub: any) => ({
     //     return null;
     //   }
     // },
-    // duplicateQuiz: withAuth(
-    //   async (
-    //     obj: any,
-    //     input: { userId: number; quizId: number },
-    //     context: any
-    //   ) => {
-    //     try{const res = await context.Quiz.duplicateQuiz(
-    //       input.userId,
-    //       input.quizId
-    //     );
-    //     const getQuiz = await context.Quiz.getQuiz(res.id);
-    //     console.log('ressssss', getQuiz);
-    //     // const getUser = await context.User.getUserForQuizSubscription(res.userId)
-    //   // res.user = getUser;
-    //   console.log('copiiiied', getQuiz)
-    //     pubsub.publish(QUIZ_SUBSCRIPTION, {
-    //       quizzesUpdated: {
-    //         mutation: 'CREATED',
-    //         node: getQuiz
-    //       }
-    //     });
-    //     return res;}
-    //     catch (e){
-    //       return e;
-    //     }
-    //   }
-    // )
+    duplicateQuiz: withAuth(
+      async (
+        obj: any,
+        input: { userId: number; quizId: number },
+        context: any
+      ) => {
+        try{const res = await context.Quiz.duplicateQuiz(
+          input.userId,
+          input.quizId
+        );
+        const getQuiz = await context.Quiz.getQuiz(res.id);
+        console.log('ressssss', getQuiz);
+        // const getUser = await context.User.getUserForQuizSubscription(res.userId)
+      // res.user = getUser;
+      console.log('copiiiied', getQuiz)
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'CREATED',
+            node: getQuiz
+          }
+        });
+        return res;}
+        catch (e){
+          return e;
+        }
+      }
+    )
   },
   Subscription: {
     quizzesUpdated: {

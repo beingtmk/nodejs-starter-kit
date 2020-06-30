@@ -17,7 +17,8 @@ import { user } from "@gqlapp/blog-client-react/demoData";
 const eager = "[user, sections.[questions.[choices]]]";
 // const eagerWithCount = "[user, questions.[choices]]";
 const withAnswersEager = "[user, sections.[questions.[choices, answers]]]";
-const withChoiceAnswersEager = "[user, sections.[questions.[choices.[answers]]]]";
+const withChoiceAnswersEager =
+  "[user, sections.[questions.[choices.[answers]]]]";
 
 export default class Quiz extends Model {
   static get tableName() {
@@ -108,7 +109,7 @@ export default class Quiz extends Model {
     res.sections &&
       res.sections.map((sect, secI) => {
         sect.questions.map((ques, quI) => {
-          const answs = answers.filter(anss =>anss.questionId === ques.id);
+          const answs = answers.filter((anss) => anss.questionId === ques.id);
           res.sections[secI].questions[quI].answers = answs;
           console.log("resresres", res.sections[secI].questions[quI].answers);
         });
@@ -305,12 +306,17 @@ export default class Quiz extends Model {
     deleteIds(insertData);
     delete insertData.user;
 
-    insertData.questions.forEach((v) => {
-      deleteIds(v);
-      v.choices.forEach((a) => {
-        deleteIds(a);
+    insertData &&
+      insertData.sections &&
+      insertData.sections.map((sec, secI) => {
+        deleteIds(insertData.sections[secI]);
+        sec.questions.forEach((ques, queI) => {
+          deleteIds(insertData.sections[secI].questions[queI]);
+          ques.choices.forEach((cho, choI) => {
+            deleteIds(insertData.sections[secI].questions[queI].choices[choI]);
+          });
+        });
       });
-    });
     insertData.user_id = userId;
     const res = camelizeKeys(
       await Quiz.query()
