@@ -154,6 +154,7 @@ input EditChoiceInput {
 
 
 input AddQuizInput {
+  id: Int
   userId: Int
   active: Boolean
   title: String
@@ -163,6 +164,7 @@ input AddQuizInput {
 }
 
 input SectionInput {
+  id: Int
   title: String
   description: String
   isActive: Boolean
@@ -171,6 +173,7 @@ input SectionInput {
 }
 
 input QuestionInput {
+  id: Int
   description: String
   choiceType: String
   choiceDependenceDescription: String
@@ -179,6 +182,7 @@ input QuestionInput {
 }
 
 input ChoiceInput {
+  id: Int
   description: String
 }
 
