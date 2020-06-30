@@ -19,7 +19,7 @@ const QuizAddView = (props) => {
   const { t } = props;
   const renderContent = () => (
     <div style={{ maxWidth: '800px', margin: 'auto' }}>
-      <Card style={{marginBottom:'20px'}}><h1 style={{fontSize:'25px'}}>Quiz Edit Form</h1></Card>
+      <Card style={{marginBottom:'20px'}}><h1 style={{fontSize:'25px'}}><Icon type="edit" /> Quiz Edit Form</h1></Card>
       {props.quiz ? (<QuizAddForm {...props} />) : "Quiz doesn't exist"}
     </div>
   );

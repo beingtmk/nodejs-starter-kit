@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
-import { Form, Icon, Row, Col, Radio, Button, Progress } from "antd";
+import { Form, Icon, Row, Col, Radio, Button, Progress, Affix } from "antd";
 import { RenderField, RenderUpload, RenderSelect, Option, Card } from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
 import RenderRadioGroup from "@gqlapp/look-client-react/ui-antd/components/RenderRadioGroup";
@@ -117,7 +117,9 @@ export default class RenderSectionsField extends React.Component {
       <>
         <Card style={{ marginBottom: '30px' }}>
           <h3>{this.props.quizTitle}</h3>
-          <Progress percent={((currentSection) / sectionLength) * 100} />
+          <Affix offsetTop={45}>
+            <Progress percent={((currentSection) / sectionLength) * 100} style={{color:'black', background:'white', padding:'5px', borderRadius:'5px'}} />
+          </Affix>
         </Card>
         <Card title={
           <h4>{values.sections[currentSection] && values.sections[currentSection].title}</h4>

@@ -18,12 +18,14 @@ import QuizAddForm from "./QuizAddForm";
 const QuizAddView = (props) => {
   const { t } = props;
   const renderContent = () => (
-    <Card style={{maxWidth:'500px', margin:'auto'}}>
-      <CardTitle>
-        <Icon type="global" /> {'Add Quiz'}
-      </CardTitle>
+    <div style={{ maxWidth: '800px', margin: 'auto' }}>
+      <Card style={{marginBottom:'30px'}}>
+        <h1 style={{fontSize:"25px"}}>
+        <Icon type="plus" /> {'Add Quiz'}
+        </h1>
+      </Card>
       <QuizAddForm {...props} />
-    </Card>
+    </div>
   );
   return (
     <PageLayout type="forms" align='center'>
