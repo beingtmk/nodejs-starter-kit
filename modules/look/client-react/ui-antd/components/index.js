@@ -47,7 +47,7 @@ export { default as Divider } from './Divider';
 export { default as Empty } from './Empty';
 export { default as InputNumber } from './InputNumber';
 export { default as List } from './List';
-export { default as Panel } from './Panel';
+export { default as CollapsePanel } from './CollapsePanel';
 export { default as Popconfirm } from './Popconfim';
 export { default as Popover } from './Popover';
 export { default as Progress } from './Progress';
