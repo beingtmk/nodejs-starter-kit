@@ -52,29 +52,13 @@ exports.up = function(knex) {
       table.string("description");
       table.timestamps(false, true);
     }),
-    knex.schema.createTable("attempt", (table) => {
+    knex.schema.createTable("answer", (table) => {
       table.increments();
       table
         .integer("user_id")
         .unsigned()
         .references("id")
         .inTable("user")
-        .onDelete("CASCADE");
-      table
-        .integer("quiz_id")
-        .unsigned()
-        .references("id")
-        .inTable("quiz")
-        .onDelete("CASCADE");
-      table.timestamps(false, true);
-    }),
-    knex.schema.createTable("answer", (table) => {
-      table.increments();
-      table
-        .integer("attempt_id")
-        .unsigned()
-        .references("id")
-        .inTable("attempt")
         .onDelete("CASCADE");
       table
         .integer("question_id")
@@ -97,7 +81,6 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return Promise.all([
     knex.schema.dropTable("answer"),
-    knex.schema.dropTable("attempt"),
     knex.schema.dropTable("choice"),
     knex.schema.dropTable("question"),
     knex.schema.dropTable("section"),

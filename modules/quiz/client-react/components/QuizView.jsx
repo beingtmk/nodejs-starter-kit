@@ -27,12 +27,9 @@ const QuizView = (props) => {
           <Loader />
         </div>
       ) : (
-        <Card
-          style={{ maxWidth: "500px", margin: "auto" }}
-          title={<h1>{props.quiz && props.quiz.title}</h1>}
-        >
+        <div style={{maxWidth:'800px', margin:'auto'}}>
           {props.quiz ? (<QuizForm {...props} />): <h4>Quiz doesn't exists</h4>}
-        </Card>
+        </div>
       )}
     </PageLayout>
   );

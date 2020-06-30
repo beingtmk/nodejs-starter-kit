@@ -16,7 +16,7 @@ import { user } from "@gqlapp/blog-client-react/demoData";
 
 const eager = "[user, sections.[questions.[choices]]]";
 // const eagerWithCount = "[user, questions.[choices]]";
-// const withAnswersEager = "[user, questions.[choices, answers]]";
+const withAnswersEager = "[user, sections.[questions.[choices, answers]]]";
 
 export default class Quiz extends Model {
   static get tableName() {
@@ -43,14 +43,6 @@ export default class Quiz extends Model {
         join: {
           from: "quiz.id",
           to: "section.quiz_id",
-        },
-      },
-      attempts: {
-        relation: Model.HasManyRelation,
-        modelClass: Attempt,
-        join: {
-          from: "quiz.id",
-          to: "attempt.quiz_id",
         },
       },
     };
@@ -85,27 +77,40 @@ export default class Quiz extends Model {
       // .orderBy('id', 'desc')
     );
     var questionsIdArray = [];
-    res.questions &&
-      res.questions.map((qu) => {
-        questionsIdArray.push(qu.id);
+    res.sections &&
+      res.sections.map((sect) => {
+        sect.questions.map((qu) => {
+          questionsIdArray.push(qu.id);
+        });
       });
     const answers = camelizeKeys(
       await knex("answer")
         .whereIn("answer.question_id", questionsIdArray)
         .where("answer.user_id", userId)
     );
+    console.log("cccccccccccccccccccccc", answers);
 
     if (!answers || (answers && answers.length === 0)) {
       return res;
     }
-    answers &&
-      answers.map((ans) => {
-        var q = res.questions.find((ques) => ques.id === ans.questionId);
-        const index = res.questions.indexOf(q);
-        q.answers = [];
-        q.answers.push(ans);
-        res.questions[index] = q;
+
+    res.sections &&
+      res.sections.map((sect, secI) => {
+        sect.questions.map((ques, quI) => {
+          const answs = answers.filter(anss =>anss.questionId === ques.id);
+          res.sections[secI].questions[quI].answers = answs;
+          console.log("resresres", res.sections[secI].questions[quI].answers);
+        });
       });
+
+    // answers &&
+    //   answers.map((ans) => {
+    //     var q = res.questions.find((ques) => ques.id === ans.questionId);
+    //     const index = res.questions.indexOf(q);
+    //     q.answers = [];
+    //     q.answers.push(ans);
+    //     res.questions[index] = q;
+    //   });
     console.log("bbbbbbbbbbb", res);
 
     return res;
@@ -263,6 +268,16 @@ export default class Quiz extends Model {
     );
     return res;
   }
+
+  public async getQuizBySectionId(id: number) {
+    return await camelizeKeys(
+      knex("quiz")
+        .leftJoin("section as sec", "sec.quiz_id", "quiz.id")
+        .where("sec.id", "=", id)
+        .first()
+    );
+  }
+
   public async duplicateQuiz(userId: number, quizId: number) {
     var insertData = await Quiz.query()
       .eager(eager)
@@ -428,45 +443,6 @@ export class Choice extends Model {
   }
 }
 
-export class Attempt extends Model {
-  static get tableName() {
-    return "attempt";
-  }
-
-  static get idColumn() {
-    return "id";
-  }
-
-  static get relationMappings() {
-    return {
-      quiz: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Quiz,
-        join: {
-          from: "attempt.quiz_id",
-          to: "quiz.id",
-        },
-      },
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: "attempt.user_id",
-          to: "user.id",
-        },
-      },
-      answers: {
-        relation: Model.HasManyRelation,
-        modelClass: Answer,
-        join: {
-          from: "attempt.id",
-          to: "answer.attempt_id",
-        },
-      },
-    };
-  }
-}
-
 export class Answer extends Model {
   static get tableName() {
     return "answer";
@@ -478,12 +454,12 @@ export class Answer extends Model {
 
   static get relationMappings() {
     return {
-      attempt: {
+      user: {
         relation: Model.BelongsToOneRelation,
-        modelClass: Attempt,
+        modelClass: User,
         join: {
-          from: "answer.attempt_id",
-          to: "attempt.id",
+          from: "answer.user_id",
+          to: "user.id",
         },
       },
       question: {

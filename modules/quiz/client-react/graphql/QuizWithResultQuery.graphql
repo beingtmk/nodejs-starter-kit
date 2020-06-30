@@ -1,27 +1,34 @@
-
 query quizWithAnswers($id: Int!, $userId: Int!) {
-  quizWithAnswers(id: $id, userId:$userId) {
+  quizWithAnswers(id: $id, userId: $userId) {
     id
     userId
     active
     title
     isEditableByUser
     description
-    questions{
+    sections {
       id
+      title
+      quizId
       description
-      choiceType
       isActive
-      answers{
-        id
-        content
-        questionId
-        choiceId
-        userId
-      }
-      choices{
+      questions {
         id
         description
+        choiceType
+        isActive
+        choiceDependenceDescription
+        answers {
+          id
+          content
+          questionId
+          choiceId
+          userId
+        }
+        choices {
+          id
+          description
+        }
       }
     }
   }

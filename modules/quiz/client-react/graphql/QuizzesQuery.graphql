@@ -1,21 +1,18 @@
-
-query quizzes( $filter: FilterQuizInput) {
+query quizzes($filter: FilterQuizInput) {
   quizzes(filter: $filter) {
     id
     userId
     active
     title
     description
-    user{
+    user {
       id
       username
     }
-    questions{
+    sections {
       id
-      description
-      choices{
+      questions {
         id
-        description
       }
     }
   }

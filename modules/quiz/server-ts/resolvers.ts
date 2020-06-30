@@ -15,18 +15,18 @@ export default (pubsub: any) => ({
 
     //   return quiz;
     // },
-    // async quizzes(obj: any, { filter }: any, context: any) {
-    //   return context.Quiz.getQuizzes(filter);
-    // },
+    async quizzes(obj: any, { filter }: any, context: any) {
+      return context.Quiz.getQuizzes(filter);
+    },
 
     async quiz(obj: any, { id }: any, context: any) {
       return context.Quiz.getQuiz(id);
     },
-    // async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
-    //   const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
-    //   console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqq', quiz);
-    //   return quiz;
-    // },
+    async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
+      const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
+      console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqq', quiz);
+      return quiz;
+    },
     // async answer(obj: any, { input }: any, context: any) {
     //   return context.Quiz.getAnswerByParams(input);
     // },
@@ -231,38 +231,39 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    // async addAnswers(obj: any, { input }: any, { Quiz }: any) {
-    //   try {
-    //     var userId
-    //     var quizId
-    //     input.results.map(async (result, item) => {
-    //       const ansExists = await Quiz.getAnswerByParams(result);
-    //       console.log("ansexists", ansExists);
-    //       var isDone;
-    //       const questionItem = await Quiz.getQuestion(result.questionId);
-    //       console.log("question existss", questionItem);
-    //       if (ansExists && ansExists.length !== 0) {
-    //         isDone = await Quiz.updateAnswer(result);
-    //       } else {
-    //         isDone = await Quiz.addAnswer(result);
-    //       }
-    //       quizId = questionItem.quizId;
-    //       userId = result.userId
-    //     });
-    //     const id = quizId
-    //     const item = await Quiz.getQuizWithAnswersByUser(id, userId);
+    async addAnswers(obj: any, { input }: any, { Quiz }: any) {
+      try {
+        var userId
+        var sectionId
+        input.results.map(async (result, item) => {
+          const ansExists = await Quiz.getAnswerByParams(result);
+          console.log("ansexists", ansExists);
+          var isDone;
+          const questionItem = await Quiz.getQuestion(result.questionId);
+          console.log("question existss", questionItem);
+          if (ansExists && ansExists.length !== 0) {
+            isDone = await Quiz.updateAnswer(result);
+          } else {
+            isDone = await Quiz.addAnswer(result);
+          }
+          sectionId = questionItem.sectionId;
+          userId = result.userId
+        });
+        const quizI = await Quiz.getQuizBySectionId(sectionId);
+        const id = quizI && quizI.id
+        const item = await Quiz.getQuizWithAnswersByUser(id, userId);
 
-    //     pubsub.publish(QUIZ_SUBSCRIPTION, {
-    //       quizzesUpdated: {
-    //         mutation: 'UPDATED',
-    //         node: item
-    //       }
-    //     });
-    //     return true;
-    //   } catch (e) {
-    //     return false;
-    //   }
-    // },
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: 'UPDATED',
+            node: item
+          }
+        });
+        return true;
+      } catch (e) {
+        return e;
+      }
+    },
     // async addAnswer(obj: any, { input }: any, { Quiz }: any) {
     //   console.log("input in res", input);
     //   const ansExists = await Quiz.getAnswerByParams(input);

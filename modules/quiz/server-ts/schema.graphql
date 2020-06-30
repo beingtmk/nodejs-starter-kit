@@ -10,7 +10,6 @@ type Quiz {
   user: User
   isEditableByUser: Boolean
   sections:[Section]
-  attempts: [Attempt]
 }
 
 type Section {
@@ -47,19 +46,11 @@ type Choice {
   updatedAt: String
 }
 
-type Attempt {
-  id: Int
-  userId: Int
-  quizId: Int
-  user:User
-  quiz: Quiz
-  answers: [Answer]
-}
 
 type Answer {
   id: Int!
   questionId: Int!
-  attemptId: Int!
+  userId: Int
   choiceId: Int
   content: String
   createdAt: String
@@ -68,11 +59,11 @@ type Answer {
 
 extend type Query {
   # #get quizzes
-  # quizzes(filter: FilterQuizInput): [Quiz]
+  quizzes(filter: FilterQuizInput): [Quiz]
   # #get quiz by id
   quiz(id: Int!): Quiz
   # #get quiz attempt of a user
-  # attempt(quizId: Int!, userId: Int!): Attempt
+  quizWithAnswers(id: Int!, userId: Int!): Quiz
   # #get attempts
   # getAttempts(quizId: Int!): [Attempt]
   # #get quiz with answer count
@@ -88,16 +79,28 @@ input FilterQuizInput {
 }
 
 extend type Mutation {
-  # # Create new quiz
+   # Create new quiz
   addQuiz(input: AddQuizInput!): Quiz
-  # # Edit a quiz
+   # Edit a quiz
   editQuiz(input: EditQuizInput!): Quiz
-  # # Delete quiz
+   # Delete quiz
   deleteQuiz(id: Int): Quiz
-  # # Add attempt
-  # addAttempt(input: AttemptInput!): Attempt
+   # Add answers
+  addAnswers(input: AnswersInput!): Boolean
   # # Duplicate quiz
   # duplicateQuiz(userId: Int!, quizId: Int!): Quiz
+}
+
+input AnswersInput {
+  results: [AnswerInput]!
+}
+
+input AnswerInput {
+  id: Int
+  questionId: Int!
+  userId: Int!
+  choiceId: Int
+  content: String
 }
 
 input EditQuizInput {
@@ -136,18 +139,8 @@ input EditChoiceInput {
   description: String!
 }
 
-input AttemptInput {
-  userId: Int
-  quizId: Int
-  answers: [AnswerInput]
-}
 
-input AnswerInput {
-  questionId: Int!
-  choiceId: Int
-  content: String
 
-}
 
 input AddQuizInput {
   userId: Int

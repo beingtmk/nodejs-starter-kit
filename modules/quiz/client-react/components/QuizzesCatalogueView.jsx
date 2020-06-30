@@ -18,6 +18,13 @@ const renderMetaData = (t) => (
 const QuizzesCatalogueView = (props) => {
   const { quizzes } = props;
 
+  const getQuestionCount = (sections) => {
+    let qCount = 0;
+    sections.map(section => {
+      qCount = qCount + (section.questions && section.questions.length);
+    })
+    return qCount;
+  }
   return (
     <div style={{ width: "100%" }}>
       {quizzes.length === 0 && "No Quizzes To Show"}
@@ -25,14 +32,14 @@ const QuizzesCatalogueView = (props) => {
         <br />
         {quizzes.map((quiz, key) => (
           <a href={`/quiz/${quiz.id}`}>
-          <Col xs={24} md={12} lg={8}>
-            <Card title={<h3>{quiz.title}</h3>}>
-              {console.log(quizzes[0])}
-              <h4>{quiz.description}</h4>
-              <h5>{`Question Count: ${quiz.questions && quiz.questions.length}`}</h5>
+            <Col xs={24} md={12} lg={8}>
+              <Card title={<h3>{quiz.title}</h3>}>
+                {console.log(quizzes[0])}
+                <h4>{quiz.description}</h4>
+                <h5>{`Question Count: ${quiz.sections && getQuestionCount(quiz.sections)}`}</h5>
 
-            </Card>
-          </Col></a>
+              </Card>
+            </Col></a>
         ))}
       </Row>
     </div>

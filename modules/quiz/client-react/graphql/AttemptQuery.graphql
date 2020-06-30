@@ -1,0 +1,37 @@
+query quizWithFirstAttempt($quizId: Int!, $userId: Int!) {
+  quizWithFirstAttempt(quizId: $quizId, userId: $userId) {
+    quiz {
+      id
+      userId
+      active
+      title
+      isEditableByUser
+      description
+      sections {
+        id
+        title
+        quizId
+        description
+        isActive
+        questions {
+          id
+          description
+          choiceType
+          choiceDependenceDescription
+          isActive
+          choices {
+            id
+            description
+          }
+          answers {
+            id
+            questionId
+            attemptId
+            choiceId
+            content
+          }
+        }
+      }
+    }
+  }
+}
