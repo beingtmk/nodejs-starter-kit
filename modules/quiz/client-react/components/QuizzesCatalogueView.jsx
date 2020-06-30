@@ -36,7 +36,6 @@ const QuizzesCatalogueView = (props) => {
               <Card title={<h3>{quiz.title}</h3>}>
                 {console.log(quizzes[0])}
                 <h4>{quiz.description}</h4>
-                <h5>{`Question Count: ${quiz.sections && getQuestionCount(quiz.sections)}`}</h5>
 
               </Card>
             </Col></a>

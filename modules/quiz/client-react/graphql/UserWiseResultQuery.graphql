@@ -1,23 +1,26 @@
-
 query getUserWiseResult($id: Int!, $groupId: Int) {
   getUserWiseResult(id: $id, groupId: $groupId) {
     id
     userId
-    questions {
+    sections {
       id
       quizId
-      description
-      choiceType
-      choices {
+      questions {
         id
+        sectionId
         description
-      }
-      answers {
-        id
-        userId
-        questionId
-        choiceId
-        content
+        choiceType
+        choices {
+          id
+          description
+        }
+        answers {
+          id
+          userId
+          questionId
+          choiceId
+          content
+        }
       }
     }
     attendees {

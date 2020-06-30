@@ -13,8 +13,13 @@ import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
 //To Do - Query after state.visible is true
 
 const QuizUserWiseReportComponent = (quiz) => {
+  console.log('quizzzz', quiz);
   const resultQuiz = quiz.quiz;
-  const data = resultQuiz.questions;
+  var questionsData = [];
+  resultQuiz && resultQuiz.sections && resultQuiz.sections.map(sec=>{
+    questionsData = [...questionsData, ...sec.questions]
+  })
+  const data = questionsData;
   const getResult = (record, id) => {
     if(record.choiceType === QuestionTypes.TEXTBOX || record.choiceType === QuestionTypes.TEXTAREA){
       const result =

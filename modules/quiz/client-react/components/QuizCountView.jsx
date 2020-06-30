@@ -16,27 +16,33 @@ const renderMetaData = (t) => (
 );
 
 const QuizCountComponent = (props) => {
-  const questions = props.quiz && props.quiz.questions;
-  console.log(questions);
+  const sections = props.quiz && props.quiz.sections;
   return (
     <>
-      {questions.length !== 0 &&
-        questions.map((item, key) => (
-          <> 
-            <h2>{`${key + 1} - ${item.description}`}</h2>
-            {item.choices &&
-              item.choices.length !== 0 &&
-              item.choices.map((choice, key) => (
-                <div style={{marginLeft:'40px'}}>
-                  <h3 style={{display:'inline'}}>{`${choice.description} -`}</h3><Badge showZero count={choice.count} />
-                  <br/>
+      {sections &&
+        sections.map((section) => (
+          <div style={{ marginBottom: "30px" }}>
+            <h3>{section.title}</h3>
+            <hr/>
+            {section &&
+              section.questions &&
+              section.questions.map((question) => (
+                <div style={{ marginBottom: "10px" }}>
+                  <h4>{question.description}</h4>
+                  {question &&
+                    question.choices &&
+                    question.choices.map((choice) => (
+                      <div>
+                        <h5 style={{ display: "inline" }}>
+                          {choice.description} -
+                        </h5>
+                        <Badge showZero count={choice.count} />
+                      </div>
+                    ))}
                 </div>
               ))}
-          <br/>
-          <br/>
-          </>
+          </div>
         ))}
-    
     </>
   );
 };

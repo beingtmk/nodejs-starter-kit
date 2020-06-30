@@ -1,4 +1,3 @@
-
 query getQuizCount($id: Int!) {
   getQuizCount(id: $id) {
     id
@@ -6,13 +5,17 @@ query getQuizCount($id: Int!) {
     active
     title
     description
-    questions{
+    sections {
       id
-      description
-      choices{
+      title
+      questions {
         id
         description
-        count
+        choices {
+          id
+          description
+          count
+        }
       }
     }
   }

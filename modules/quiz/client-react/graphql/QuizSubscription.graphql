@@ -1,5 +1,4 @@
-
-subscription quizzesUpdated( $filter: FilterQuizInput) {
+subscription quizzesUpdated($filter: FilterQuizInput) {
   quizzesUpdated(filter: $filter) {
     mutation
     node {
@@ -9,25 +8,32 @@ subscription quizzesUpdated( $filter: FilterQuizInput) {
       title
       isEditableByUser
       description
-      user{
+      user {
         id
         username
       }
-      questions {
+      sections {
         id
+        quizId
+        title
         description
-        choiceType
         isActive
-        answers {
-          id
-          content
-          questionId
-          choiceId
-          userId
-        }
-        choices {
+        questions {
           id
           description
+          choiceType
+          isActive
+          answers {
+            id
+            content
+            questionId
+            choiceId
+            userId
+          }
+          choices {
+            id
+            description
+          }
         }
       }
     }

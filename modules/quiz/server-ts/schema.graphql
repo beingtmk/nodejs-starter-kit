@@ -57,19 +57,30 @@ type Answer {
   updatedAt: String
 }
 
+type AttendeesOutput {
+  users: [User]
+}
+
+type UserWiseResult {
+  id: Int!
+  userId: Int!
+  attendees: AttendeesOutput
+  sections: [Section]
+}
+
 extend type Query {
-  # #get quizzes
+  #get quizzes
   quizzes(filter: FilterQuizInput): [Quiz]
-  # #get quiz by id
+  #get quiz by id
   quiz(id: Int!): Quiz
-  # #get quiz attempt of a user
+  #get quiz attempt of a user
   quizWithAnswers(id: Int!, userId: Int!): Quiz
-  # #get attempts
-  # getAttempts(quizId: Int!): [Attempt]
-  # #get quiz with answer count
-  # getQuizCount(id: Int!): Quiz
-  # #get user wise attempts
-  # getUserWiseAttempts(id: Int!, groupId: Int): Quiz
+  #get attendees
+  getAttendees(id: Int!): AttendeesOutput
+  #get quiz with answer count
+  getQuizCount(id: Int!): Quiz
+  #get user wise result
+  getUserWiseResult(id: Int!, groupId: Int): UserWiseResult
 }
 
 input FilterQuizInput {

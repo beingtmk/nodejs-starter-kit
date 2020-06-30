@@ -36,7 +36,6 @@ const PersonalQuizResult = (props) => {
   };
   
 export default compose(
-
   graphql(CURRENT_USER_QUERY, {
     props({ data: { loading, error, currentUser } }) {
       if (error) throw new Error(error);
