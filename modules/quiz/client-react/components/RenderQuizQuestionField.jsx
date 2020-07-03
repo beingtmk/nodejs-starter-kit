@@ -83,7 +83,7 @@ export default class RenderQuestionsField extends React.Component {
                           component={RenderSelect}
                           placeholder={"none"}
                           type="select"
-                          label={"Select From Answers"}
+                          label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].choiceId}
                         //   key={indexv}
@@ -111,7 +111,7 @@ export default class RenderQuestionsField extends React.Component {
                           key={indexv}
                           mode="multiple"
                           type="select"
-                          label={"Select From Answers"}
+                          label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers}
                         //   key={indexv}
@@ -141,7 +141,7 @@ export default class RenderQuestionsField extends React.Component {
                           component={RenderField}
                           placeholder={"none"}
                           type="text"
-                          label={"Select From Answers"}
+                          label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].content}
                         //   key={indexv}
@@ -154,7 +154,7 @@ export default class RenderQuestionsField extends React.Component {
                           component={RenderField}
                           placeholder={"none"}
                           type="textarea"
-                          label={"Select From Answers"}
+                          label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].content}
                         //   key={indexv}
@@ -168,14 +168,14 @@ export default class RenderQuestionsField extends React.Component {
                             component={RenderRadioGroup}
                             placeholder={"none"}
                             type="radio"
-                            label={"Select From Answers"}
+                            label={""}
                             // label={`${k.label || k.key} #${indexv + 1}`}
                             value={v.answers && v.answers[0].choiceId}
                           //   key={indexv}
                           // style={{ display: 'inline-block', margin: '0px 5px' }}
                           >
                             {v.choices.map((choice, key) => (
-                              <Radio value={choice.id}>{choice.description}</Radio>
+                              <Radio style={{display:'block'}} value={choice.id}>{choice.description}</Radio>
                             ))}
                           </Field>
                         )}
@@ -186,7 +186,7 @@ export default class RenderQuestionsField extends React.Component {
                   component={RenderField}
                   placeholder={"none"}
                   type='textarea'
-                  label={"Select From Answers"}
+                  label={""}
                   // label={`${k.label || k.key} #${indexv + 1}`}
                   value={v.content}
                 //   key={indexv}
