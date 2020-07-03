@@ -27,7 +27,7 @@ const SectionComponent = ({ sec, currentSection, currentUserId }) => {
             // setload={setload}
             sectionIndex={currentSection}
             arrayHelpers={arrayHelpers}
-            values={sec.questions}
+            values={sec && sec.questions}
             // label={"Answer Following QUestions"}
             name="quiz-results"
             // buttonText='Add Question'

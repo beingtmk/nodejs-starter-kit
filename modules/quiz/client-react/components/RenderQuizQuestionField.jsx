@@ -50,7 +50,7 @@ export default class RenderQuestionsField extends React.Component {
     // const handleChoices = (data) => (values.choices = data);
     // this.add
     const { sectionIndex } = this.props;
-    const choiceDep = this.props.values.find(
+    const choiceDep = this.props.values && this.props.values.find(
       (va) => va.choiceType === QuestionTypes.DEPENDENCE
     );
     var depChoice;

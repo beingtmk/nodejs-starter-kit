@@ -84,7 +84,7 @@ const QuizFormWithFormik = withFormik({
     console.log("props", props);
     const currentUserId = props.currentUser && props.currentUser.id;
     var sections = props.quiz && props.quiz.sections;
-    sections.map((section, sI) => {
+    sections.length !==0 && sections.map((section, sI) => {
       var questions = section.questions;
       let ques = questions.filter(
         (quest) =>
