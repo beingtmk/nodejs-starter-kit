@@ -5,4 +5,6 @@ module.exports = Object.freeze({
   TEXTBOX: "TEXTBOX",
   TEXTAREA: "TEXTAREA",
   DEPENDENCE: "DEPENDENCE",
+  SLIDER: "SLIDER",
+  MULTIPLECHECK: "MULTIPLECHECK",
 });

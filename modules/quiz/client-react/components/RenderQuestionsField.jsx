@@ -73,7 +73,7 @@ export default class RenderQuestionsField extends React.Component {
                   <>
                     {values.length >= 1 ? (
                       <Icon
-                        style={{ fontSize: "25px", paddingTop:'5px' }}
+                        style={{ fontSize: "25px", paddingTop: '5px' }}
                         title="Remove "
                         className="dynamic-delete-button"
                         type="minus-circle-o"
@@ -174,6 +174,26 @@ export default class RenderQuestionsField extends React.Component {
                     >
                       {QuestionTypes.DEPENDENCE}
                     </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.SLIDER}
+                    >
+                      {QuestionTypes.SLIDER}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      value={QuestionTypes.MULTIPLECHECK}
+                    >
+                      {QuestionTypes.MULTIPLECHECK}
+                    </Option>
 
                   </Field>
                 </Col>
@@ -211,6 +231,8 @@ export default class RenderQuestionsField extends React.Component {
                 (v.choiceType === QuestionTypes.SELECT ||
                   v.choiceType === QuestionTypes.DEPENDENCE ||
                   v.choiceType === QuestionTypes.RADIO ||
+                  v.choiceType === QuestionTypes.SLIDER ||
+                  v.choiceType === QuestionTypes.MULTIPLECHECK ||
                   v.choiceType === QuestionTypes.MSELECT) &&
                 (<FieldArray
                   name={`${name}[${indexv}].choices`}
@@ -222,7 +244,7 @@ export default class RenderQuestionsField extends React.Component {
                       label={"Add Choices"}
                       name={`${name}[${indexv}].choices`}
                       buttonText="Add Choices"
-                      keys={[{ type: "text", label: "choices", key: "description" }]}
+                      keys={[{ type: "text", label: v.choiceType === QuestionTypes.SLIDER ? 'enter label' : "choices", key: "description" }]}
                     />
                   )}
                   // skills={skills}
