@@ -11,6 +11,7 @@ query getQuizCount($id: Int!) {
       questions {
         id
         description
+        choiceType
         choices {
           id
           description

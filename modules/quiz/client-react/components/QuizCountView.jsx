@@ -5,6 +5,7 @@ import { PageLayout, Card } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
 // import QuizForm from "./QuizForm";
+import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 
 const renderMetaData = (t) => (
   <Helmet
@@ -23,13 +24,15 @@ const QuizCountComponent = (props) => {
         sections.map((section) => (
           <div style={{ marginBottom: "30px" }}>
             <h3>{section.title}</h3>
-            <hr/>
+            <hr />
             {section &&
               section.questions &&
               section.questions.map((question) => (
                 <div style={{ marginBottom: "10px" }}>
                   <h4>{question.description}</h4>
                   {question &&
+                    question.choiceType &&
+                    question.choiceType !== QuestionTypes.SLIDER &&
                     question.choices &&
                     question.choices.map((choice) => (
                       <div>

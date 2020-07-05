@@ -31,7 +31,8 @@ export const ResultComponent = (props) => {
         const getAnswers = () => {
           if (
             question.choiceType === QuestionTypes.TEXTAREA ||
-            question.choiceType === QuestionTypes.TEXTBOX
+            question.choiceType === QuestionTypes.TEXTBOX ||
+            question.choiceType === QuestionTypes.SLIDER
           ) {
             return question.answers && question.answers[0].content;
           } else {

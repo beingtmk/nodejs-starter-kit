@@ -92,7 +92,9 @@ const QuizFormWithFormik = withFormik({
           quest.choiceType === QuestionTypes.TEXTBOX ||
           quest.choiceType === QuestionTypes.RADIO ||
           quest.choiceType === QuestionTypes.SELECT ||
-          quest.choiceType === QuestionTypes.DEPENDENCE
+          quest.choiceType === QuestionTypes.DEPENDENCE ||
+          quest.choiceType === QuestionTypes.SLIDER
+
       );
       ques.forEach((q, i) => {
         const index = questions.indexOf(q);

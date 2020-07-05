@@ -21,7 +21,7 @@ const QuizUserWiseReportComponent = (quiz) => {
   })
   const data = questionsData;
   const getResult = (record, id) => {
-    if(record.choiceType === QuestionTypes.TEXTBOX || record.choiceType === QuestionTypes.TEXTAREA){
+    if(record.choiceType === QuestionTypes.TEXTBOX || record.choiceType === QuestionTypes.TEXTAREA|| record.choiceType === QuestionTypes.SLIDER){
       const result =
         record &&
         record.answers &&

@@ -6,5 +6,4 @@ module.exports = Object.freeze({
   TEXTAREA: "TEXTAREA",
   DEPENDENCE: "DEPENDENCE",
   SLIDER: "SLIDER",
-  MULTIPLECHECK: "MULTIPLECHECK",
 });

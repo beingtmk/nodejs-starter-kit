@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
-import { Form, Icon, Row, Col, Radio } from "antd";
+import { Form, Icon, Row, Col, Radio, Slider } from "antd";
 import {
   RenderField,
   RenderUpload,
@@ -50,25 +50,41 @@ export default class RenderQuestionsField extends React.Component {
     // const handleChoices = (data) => (values.choices = data);
     // this.add
     const { sectionIndex } = this.props;
-    const choiceDep = this.props.values && this.props.values.find(
-      (va) => va.choiceType === QuestionTypes.DEPENDENCE
-    );
+    const choiceDep =
+      this.props.values &&
+      this.props.values.find(
+        (va) => va.choiceType === QuestionTypes.DEPENDENCE
+      );
     var depChoice;
     if (choiceDep) {
       const ch = choiceDep.answers[0] && choiceDep.answers[0].choiceId;
       const choi = choiceDep.choices.find((c) => c.id === ch);
-      depChoice =  choi && choi.description;
+      depChoice = choi && choi.description;
     }
     console.log("ch dep", choiceDep, depChoice);
     if (values) {
       formItems =
         values.length !== 0 &&
-        values.map((v, indexv) => (
-          <Row>
-            {((choiceDep &&
-              ((depChoice && depChoice === v.choiceDependenceDescription) ||
-                v.choiceType === QuestionTypes.DEPENDENCE)) ||
-              !choiceDep) && (
+        values.map((v, indexv) => {
+          var marks = {};
+
+          if (v.choiceType === QuestionTypes.SLIDER) {
+            const lengthC = v.choices && v.choices.length;
+            const markL = 100 / (lengthC - 1);
+            v.choices &&
+              v.choices.map(
+                (cho, key) =>
+                  (marks[
+                    `${key * markL > 99 ? 100 : Math.round(key * markL)}`
+                  ] = { label: cho.description })
+              );
+          }
+          return (
+            <Row>
+              {((choiceDep &&
+                ((depChoice && depChoice === v.choiceDependenceDescription) ||
+                  v.choiceType === QuestionTypes.DEPENDENCE)) ||
+                !choiceDep) && (
                 <>
                   <h3>{v.description}</h3>
                   <Col span={24}>
@@ -86,8 +102,8 @@ export default class RenderQuestionsField extends React.Component {
                           label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].choiceId}
-                        //   key={indexv}
-                        // style={{ display: 'inline-block', margin: '0px 5px' }}
+                          //   key={indexv}
+                          // style={{ display: 'inline-block', margin: '0px 5px' }}
                         >
                           {v.choices.map((choice, key) => (
                             <Option
@@ -114,8 +130,8 @@ export default class RenderQuestionsField extends React.Component {
                           label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers}
-                        //   key={indexv}
-                        // style={{ display: 'inline-block', margin: '0px 5px' }}
+                          //   key={indexv}
+                          // style={{ display: 'inline-block', margin: '0px 5px' }}
                         >
                           {v.choices.map((choice, key) => (
                             <Option
@@ -144,8 +160,8 @@ export default class RenderQuestionsField extends React.Component {
                           label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].content}
-                        //   key={indexv}
-                        // style={{ display: 'inline-block', margin: '0px 5px' }}
+                          //   key={indexv}
+                          // style={{ display: 'inline-block', margin: '0px 5px' }}
                         />
                       )}
                       {v.choiceType === QuestionTypes.TEXTAREA && (
@@ -157,28 +173,51 @@ export default class RenderQuestionsField extends React.Component {
                           label={""}
                           // label={`${k.label || k.key} #${indexv + 1}`}
                           value={v.answers && v.answers[0].content}
-                        //   key={indexv}
-                        // style={{ display: 'inline-block', margin: '0px 5px' }}
+                          //   key={indexv}
+                          // style={{ display: 'inline-block', margin: '0px 5px' }}
                         />
                       )}
                       {(v.choiceType === QuestionTypes.RADIO ||
                         v.choiceType === QuestionTypes.DEPENDENCE) && (
-                          <Field
-                            name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
-                            component={RenderRadioGroup}
-                            placeholder={"none"}
-                            type="radio"
-                            label={""}
-                            // label={`${k.label || k.key} #${indexv + 1}`}
-                            value={v.answers && v.answers[0].choiceId}
+                        <Field
+                          name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
+                          component={RenderRadioGroup}
+                          placeholder={"none"}
+                          type="radio"
+                          label={""}
+                          // label={`${k.label || k.key} #${indexv + 1}`}
+                          value={v.answers && v.answers[0].choiceId}
                           //   key={indexv}
                           // style={{ display: 'inline-block', margin: '0px 5px' }}
-                          >
-                            {v.choices.map((choice, key) => (
-                              <Radio style={{display:'block'}} value={choice.id}>{choice.description}</Radio>
-                            ))}
-                          </Field>
-                        )}
+                        >
+                          {v.choices.map((choice, key) => (
+                            <Radio
+                              style={{ display: "block" }}
+                              value={choice.id}
+                            >
+                              {choice.description}
+                            </Radio>
+                          ))}
+                        </Field>
+                      )}
+                      {v.choiceType === QuestionTypes.SLIDER && (
+                        <Field
+                          name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
+                          component={SliderFormComponent}
+                          placeholder={"none"}
+                          type="radio"
+                          label={""}
+                          marks={marks}
+                          // label={`${k.label || k.key} #${indexv + 1}`}
+                          value={
+                            v.answers &&
+                            v.answers.length !== 0 &&
+                            v.answers[0].content
+                          }
+                          //   key={indexv}
+                          // style={{ display: 'inline-block', margin: '0px 5px' }}
+                        />
+                      )}
                       {/* 
               {(v.choiceType === (QuestionTypes.TEXTAREA)) && (
                 <Field
@@ -224,8 +263,9 @@ export default class RenderQuestionsField extends React.Component {
             </Button> */}
                 </>
               )}
-          </Row>
-        ));
+            </Row>
+          );
+        });
     }
     return (
       <div>
@@ -244,4 +284,22 @@ RenderQuestionsField.propTypes = {
 
   buttonText: PropTypes.string,
   arrayHelpers: PropTypes.object,
+};
+
+const SliderFormComponent = (props) => {
+  console.log("slider", props);
+  const handleChange = (e) => {
+    console.log(e);
+    props.formik && props.formik.setFieldValue(props.name, `${e}`);
+  };
+  return (
+    <div style={{ padding: "0  20px" }}>
+      <Slider
+        marks={props.marks}
+        included={false}
+        defaultValue={Number(props.value)}
+        onChange={handleChange}
+      />
+    </div>
+  );
 };
