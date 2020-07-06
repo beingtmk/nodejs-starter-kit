@@ -1,0 +1,8 @@
+mutation addUserMobile($input: AddMobileInput!) {
+  addUserMobile(input: $input) {
+    mobile
+    otpSent
+    isVerified
+    error
+  }
+}
