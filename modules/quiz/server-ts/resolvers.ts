@@ -148,6 +148,22 @@ export default (pubsub: any) => ({
                 qu &&
                   qu.choices &&
                   qu.choices.map((cho, choI) => {
+                    // cho &&
+                    //   cho.answers &&
+                    //   cho.answers.map((answerItem, anInt) => {
+                    //     var ansCount = false;
+                    //     const repeatAns = cho.answers.filter(
+                    //       (anI) =>
+                    //         anI.choiceId === answerItem.choiceId &&
+                    //         anI.questionId === answerItem.questionId &&
+                    //         anI.userId === answerItem.userId
+                    //     );
+                    //     repeatAns.map((repeA, repI) => {
+                    //       if (repI !== 0) {
+                    //         cho.answers.pop(repeA);
+                    //       }
+                    //     });
+                    //   });
                     quiz.sections[secI].questions[quI].choices[choI].count =
                       cho && cho.answers && cho.answers.length;
                     delete quiz.sections[secI].questions[quI].choices[choI]
@@ -231,14 +247,23 @@ export default (pubsub: any) => ({
       }
     }),
     async addAnswers(obj: any, { input }: any, { Quiz }: any) {
+      console.log("iinnppuutt", input);
       try {
         var userId;
         var sectionId;
+        // const editedResult = Quiz.addAnswers(input.results);
+        // if(editedResult)
+        // {
+        //   sectionId = questionItem.sectionId;
+        //   userId = input && input.results[0].userId;
+        // }
         input.results.map(async (result, item) => {
           const ansExists = await Quiz.getAnswerByParams(result);
           console.log("ansexists", ansExists);
           var isDone;
-          const questionItem = await Quiz.getQuestion(result.questionId);
+          const questionItem = await Quiz.getQuestion(
+            input.results && input.results[0].questionId
+          );
           console.log("question existss", questionItem);
           if (ansExists && ansExists.length !== 0) {
             isDone = await Quiz.updateAnswer(result);
@@ -307,27 +332,28 @@ export default (pubsub: any) => ({
         input: { userId: number; quizId: number },
         context: any
       ) => {
-        try{const res = await context.Quiz.duplicateQuiz(
-          input.userId,
-          input.quizId
-        );
-        const getQuiz = await context.Quiz.getQuiz(res.id);
-        console.log('ressssss', getQuiz);
-        // const getUser = await context.User.getUserForQuizSubscription(res.userId)
-      // res.user = getUser;
-      console.log('copiiiied', getQuiz)
-        pubsub.publish(QUIZ_SUBSCRIPTION, {
-          quizzesUpdated: {
-            mutation: 'CREATED',
-            node: getQuiz
-          }
-        });
-        return res;}
-        catch (e){
+        try {
+          const res = await context.Quiz.duplicateQuiz(
+            input.userId,
+            input.quizId
+          );
+          const getQuiz = await context.Quiz.getQuiz(res.id);
+          console.log("ressssss", getQuiz);
+          // const getUser = await context.User.getUserForQuizSubscription(res.userId)
+          // res.user = getUser;
+          console.log("copiiiied", getQuiz);
+          pubsub.publish(QUIZ_SUBSCRIPTION, {
+            quizzesUpdated: {
+              mutation: "CREATED",
+              node: getQuiz,
+            },
+          });
+          return res;
+        } catch (e) {
           return e;
         }
       }
-    )
+    ),
   },
   Subscription: {
     quizzesUpdated: {

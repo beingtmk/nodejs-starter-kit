@@ -32,7 +32,8 @@ export const ResultComponent = (props) => {
           if (
             question.choiceType === QuestionTypes.TEXTAREA ||
             question.choiceType === QuestionTypes.TEXTBOX ||
-            question.choiceType === QuestionTypes.SLIDER
+            question.choiceType === QuestionTypes.SLIDER ||
+            question.choiceType === QuestionTypes.COUNTRIES
           ) {
             return question.answers && question.answers[0].content;
           } else {

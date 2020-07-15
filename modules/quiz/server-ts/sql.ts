@@ -220,6 +220,12 @@ export default class Quiz extends Model {
     console.log("resssssss", res);
     return res;
   }
+  public async addAnswers(input: any) {
+    const res = await Answer.query()
+      .insertWithRelated(decamelizeKeys(input));
+    console.log("resssssss", res);
+    return res;
+  }
 
   public async updateAnswer(input: any) {
     const res = await knex("answer")

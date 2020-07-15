@@ -1,32 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form } from 'antd';
-import Select from './Select';
+import React from "react";
+import PropTypes from "prop-types";
+import { Form } from "antd";
+import Select from "./Select";
 
 const FormItem = Form.Item;
 
-const RenderSelect = props => {
+const RenderSelect = (props) => {
   const {
     input,
     label,
     type,
     children,
     mode,
-    meta: { touched, error }
+    meta: { touched, error },
   } = props;
-  let validateStatus = '';
+  let validateStatus = "";
   if (touched && error) {
-    validateStatus = 'error';
+    validateStatus = "error";
   }
 
-  const onChange = value => {
-    console.log('forrrrmik', formik);
+  const onChange = (value) => {
+    console.log("forrrrmik", formik);
     const { formik, name } = props;
-    if(mode === 'multiple'){
-      formik.handleChange({ target: { value, name } });  
-    }
-    else{
-    formik.handleChange({ target: { value, name } });}
+    formik.handleChange({ target: { value, name } });
   };
 
   return (
@@ -37,7 +33,10 @@ const RenderSelect = props => {
           showSearch
           optionFilterProp="children"
           placeholder={label}
-          filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          filterOption={(input, option) =>
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >=
+            0
+          }
           {...input}
           type={type}
           onChange={onChange}
@@ -56,7 +55,7 @@ RenderSelect.propTypes = {
   type: PropTypes.string,
   meta: PropTypes.object,
   name: PropTypes.string.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default RenderSelect;

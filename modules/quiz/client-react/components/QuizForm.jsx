@@ -84,35 +84,37 @@ const QuizFormWithFormik = withFormik({
     console.log("props", props);
     const currentUserId = props.currentUser && props.currentUser.id;
     var sections = props.quiz && props.quiz.sections;
-    sections.length !==0 && sections.map((section, sI) => {
-      var questions = section.questions;
-      let ques = questions.filter(
-        (quest) =>
-          quest.choiceType === QuestionTypes.TEXTAREA ||
-          quest.choiceType === QuestionTypes.TEXTBOX ||
-          quest.choiceType === QuestionTypes.RADIO ||
-          quest.choiceType === QuestionTypes.SELECT ||
-          quest.choiceType === QuestionTypes.DEPENDENCE ||
-          quest.choiceType === QuestionTypes.SLIDER
-
-      );
-      ques.forEach((q, i) => {
-        const index = questions.indexOf(q);
-        if ((q.answers && q.answers.length === 0) || !q.answers) {
-          const answers = [
-            {
-              choiceId: null,
-              questionId: q.id,
-              content: "",
-              userId: currentUserId,
-            },
-          ];
-          console.log("answers", answers);
-          questions[index].answers = answers;
-        }
+    sections.length !== 0 &&
+      sections.map((section, sI) => {
+        var questions = section.questions;
+        let ques = questions.filter(
+          (quest) =>
+            quest.choiceType === QuestionTypes.TEXTAREA ||
+            quest.choiceType === QuestionTypes.TEXTBOX ||
+            quest.choiceType === QuestionTypes.RADIO ||
+            quest.choiceType === QuestionTypes.SELECT ||
+            quest.choiceType === QuestionTypes.DEPENDENCE ||
+            quest.choiceType === QuestionTypes.SLIDER ||
+            quest.choiceType === QuestionTypes.COUNTRIES
+        );
+        ques.forEach((q, i) => {
+          const index = questions.indexOf(q);
+          if ((q.answers && q.answers.length === 0) || !q.answers) {
+            const answers = [
+              {
+                choiceId: null,
+                questionId: q.id,
+                content: "",
+                userId: currentUserId,
+              },
+            ];
+            console.log("answers", answers);
+            questions[index].answers = answers;
+          }
+          section.questions = questions;
+        });
+        sections[sI] = section;
       });
-      sections[sI] = section;
-    });
     return {
       sections: sections,
     };
@@ -123,23 +125,26 @@ const QuizFormWithFormik = withFormik({
   ) {
     console.log("submit", values);
     var results = [];
-    values.sections.map((sect) => {
-      sect.questions.map((ques) => {
-        ques.answers.map((ans) => {
-          results.push({
-            id: ans.id,
-            questionId: ans.questionId,
-            userId: ans.userId,
-            choiceId: ans.choiceId,
-            content: ans.content,
+    values.sections &&
+      values.sections.map((sect) => {
+        sect.questions &&
+          sect.questions.map((ques) => {
+            ques.answers &&
+              ques.answers.map((ans) => {
+                results.push({
+                  id: ans.id,
+                  questionId: ans.questionId,
+                  userId: ans.userId,
+                  choiceId: ans.choiceId,
+                  content: ans.content,
+                });
+              });
           });
-        });
       });
-    });
     values.results = results;
     // values.results = (results.map);
     console.log("rreeeeeee", results);
-    var val = { results: values.results };
+    var val = { results: results };
     const inputValues = { results: values.results };
     try {
       await onSubmit(val);

@@ -8,40 +8,52 @@ import { compose } from "@gqlapp/core-common";
 import { message, Modal, Button, Spin as Loader } from "antd";
 import QuizUserWiseReport from "../containers/QuizUserWiseReport";
 // import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
-import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
+import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 
 //To Do - Query after state.visible is true
 
 const QuizUserWiseReportComponent = (quiz) => {
-  console.log('quizzzz', quiz);
+  console.log("quizzzz", quiz);
   const resultQuiz = quiz.quiz;
   var questionsData = [];
-  resultQuiz && resultQuiz.sections && resultQuiz.sections.map(sec=>{
-    questionsData = [...questionsData, ...sec.questions]
-  })
+  resultQuiz &&
+    resultQuiz.sections &&
+    resultQuiz.sections.map((sec) => {
+      questionsData = [...questionsData, ...sec.questions];
+    });
   const data = questionsData;
   const getResult = (record, id) => {
-    if(record.choiceType === QuestionTypes.TEXTBOX || record.choiceType === QuestionTypes.TEXTAREA|| record.choiceType === QuestionTypes.SLIDER){
+    if (
+      record.choiceType === QuestionTypes.TEXTBOX ||
+      record.choiceType === QuestionTypes.TEXTAREA ||
+      record.choiceType === QuestionTypes.SLIDER ||
+      record.choiceType === QuestionTypes.COUNTRIES
+    ) {
       const result =
         record &&
         record.answers &&
         record.answers.length !== 0 &&
         record.answers.find((res) => res.userId === id);
-        return result.content
-    }else{
+      return result.content;
+    } else {
       const result =
         record &&
         record.answers &&
         record.answers.length !== 0 &&
         record.answers.filter((res) => res.userId === id);
-      let choiceIdArray = []
+      let choiceIdArray = [];
 
-      result.forEach(answer => {
-          choiceIdArray.push(answer.choiceId)
-        })
-        const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
-        const choiceLength = choice.length;
-        return choice.map((ch, i) => `${ch.description}${choiceLength > 1 && choiceLength > i + 1 ? ', ' : ''}`)
+      result.forEach((answer) => {
+        choiceIdArray.push(answer.choiceId);
+      });
+      const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
+      const choiceLength = choice.length;
+      return choice.map(
+        (ch, i) =>
+          `${ch.description}${
+            choiceLength > 1 && choiceLength > i + 1 ? ", " : ""
+          }`
+      );
     }
   };
   var columns = [
@@ -66,7 +78,7 @@ const QuizUserWiseReportComponent = (quiz) => {
       });
     });
   return (
-    <div style={{width:'100%', overflowX:'auto'}}>
+    <div style={{ width: "100%", overflowX: "auto" }}>
       <Table columns={columns} dataSource={data} />
     </div>
   );
@@ -75,7 +87,7 @@ class QuizUserWiseReportModal extends React.Component {
   constructor(props) {
     super(props);
     // this.subscription = null;
-    this.state = { visible: false, groupId:null };
+    this.state = { visible: false, groupId: null };
   }
 
   showModal = () => {
@@ -98,12 +110,12 @@ class QuizUserWiseReportModal extends React.Component {
     });
   };
 
-  setGroupId=(e)=>{
-    console.log('setting', e);
+  setGroupId = (e) => {
+    console.log("setting", e);
     this.setState({
-      groupId:e
-    })
-  }
+      groupId: e,
+    });
+  };
 
   render() {
     return (
@@ -113,7 +125,7 @@ class QuizUserWiseReportModal extends React.Component {
         </Button>
 
         <Modal
-        className='quiz-result-modal'
+          className="quiz-result-modal"
           title={this.props.title}
           visible={this.state.visible}
           footer={null}
