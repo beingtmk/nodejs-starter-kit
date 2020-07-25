@@ -1,0 +1,7 @@
+#import "./Quiz.graphql"
+
+query addQuizQuery($userId: Int!) {
+  addQuizQuery(userId: $userId) {
+        ...QuizFragment
+  }
+}

@@ -4,6 +4,7 @@ type Quiz {
   userId: Int
   active: Boolean
   title: String
+  state: String
   description: String
   createdAt: String
   updatedAt: String
@@ -30,7 +31,8 @@ type Question {
   answers: [Answer]
   description: String!
   choiceType: String
-  choiceDependenceDescription: String
+  dependentQuestionId: Int
+  dependentChoiceId: Int
   isActive: Boolean
   choices: [Choice]
   createdAt: String
@@ -75,6 +77,8 @@ extend type Query {
   quiz(id: Int!): Quiz
   #get quiz attempt of a user
   quizWithAnswers(id: Int!, userId: Int!): Quiz
+  #add quiz query
+  addQuizQuery(userId: Int!): Quiz
   #get attendees
   getAttendees(id: Int!): AttendeesOutput
   #get quiz with answer count
@@ -92,6 +96,10 @@ input FilterQuizInput {
 extend type Mutation {
    # Create new quiz
   addQuiz(input: AddQuizInput!): Quiz
+   # Add section in existing quiz
+  addSection(quizId: Int!): Section
+   # Add section in existing quiz
+  submitQuestion(input:QuestionInput): Question
    # Edit a quiz
   editQuiz(input: EditQuizInput!): Quiz
    # Delete quiz
@@ -139,7 +147,8 @@ input EditQuestionInput {
   sectionId: Int
   description: String!
   choiceType: String
-  choiceDependenceDescription: String
+  dependentQuestionId: Int
+  dependentChoiceId: Int
   isActive: Boolean
   choices: [EditChoiceInput]
 }
@@ -176,7 +185,8 @@ input QuestionInput {
   id: Int
   description: String
   choiceType: String
-  choiceDependenceDescription: String
+  dependentQuestionId: Int
+  dependentChoiceId: Int
   isActive: Boolean
   choices: [ChoiceInput]
 }

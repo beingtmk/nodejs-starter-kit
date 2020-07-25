@@ -1,6 +1,6 @@
 import withAuth from "graphql-auth";
 import { PubSub, withFilter } from "graphql-subscriptions";
-
+import QuizStates from "@gqlapp/quiz-common/constants/QuizState";
 const QUIZ_SUBSCRIPTION = "quiz_subscription";
 
 export default (pubsub: any) => ({
@@ -21,6 +21,23 @@ export default (pubsub: any) => ({
 
     async quiz(obj: any, { id }: any, context: any) {
       return context.Quiz.getQuiz(id);
+    },
+    async addQuizQuery(obj: any, { userId }: any, context: any) {
+      try {
+        var quiz = await context.Quiz.getCurrentQuiz(userId);
+        console.log('current quiz exists', quiz);
+        if (!quiz) {
+          const quizData = {
+            userId,
+            state: QuizStates.CURRENT,
+          };
+          quiz = await context.Quiz.addCurrentQuiz(quizData);
+          console.log('current quiz added', quiz);
+        }
+        return quiz;
+      } catch (e) {
+        return e;
+      }
     },
     async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
@@ -200,6 +217,34 @@ export default (pubsub: any) => ({
         return null;
       }
     },
+
+    async addSection(obj: any, { quizId }: any, { Quiz, User }: any) {
+      try{
+      console.log("input in res", quizId);
+      const section = await Quiz.addSection(quizId);
+      if(section){
+        await Quiz.changeQuizState(quizId, QuizStates.UPDATED)
+      }
+      // const id = await Quiz.addQuiz(input);
+      // console.log("quiz added", id);
+      // var newQuiz = await Quiz.getQuiz(id);
+      // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+      // newQuiz.user = getUser;
+      // console.log("neee", newQuiz);
+      // const quiz = await Quiz.getQuiz(id);
+      // console.log('user profile', userProfile);
+      // pubsub.publish(QUIZ_SUBSCRIPTION, {
+      //   quizzesUpdated: {
+      //     mutation: "CREATED",
+      //     node: newQuiz,
+      //   },
+      // });
+        return section;
+      } catch (e) {
+        return null;
+      }
+    },
+
     deleteQuiz: withAuth(async (obj: any, { id }: any, { Quiz }: any) => {
       try {
         const data = await Quiz.getQuiz(id);

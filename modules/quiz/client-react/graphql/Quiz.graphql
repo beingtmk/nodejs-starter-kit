@@ -1,0 +1,29 @@
+fragment QuizFragment on Quiz {
+  id
+  userId
+  active
+  title
+  description
+  isEditableByUser
+  sections {
+    id
+    quizId
+    title
+    description
+    isActive
+    questions {
+      id
+      sectionId
+      description
+      choiceType
+      dependentQuestionId
+      dependentChoiceId
+      choices {
+        id
+        questionId
+        questionId
+        description
+      }
+    }
+  }
+}

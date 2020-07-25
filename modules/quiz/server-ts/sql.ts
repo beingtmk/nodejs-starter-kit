@@ -13,6 +13,7 @@ import { GroupMember } from "@gqlapp/group-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { user } from "@gqlapp/blog-client-react/demoData";
+import QuizStates from '@gqlapp/quiz-common/constants/QuizState';
 
 const eager = "[user, sections.[questions.[choices]]]";
 // const eagerWithCount = "[user, questions.[choices]]";
@@ -60,6 +61,20 @@ export default class Quiz extends Model {
       await Quiz.query()
         .findById(id)
         .withGraphFetched(eager)
+      // .eager(eager)
+      // .orderBy('id', 'desc')
+    );
+    return res;
+  }
+
+  public async getCurrentQuiz(userId: number) {
+    const res = camelizeKeys(
+      await Quiz.query()
+        // .findById(id)
+        .where('user_id', '=', userId)
+        .andWhere('state', '=', QuizStates.CURRENT)
+        .withGraphFetched(eager)
+        .first()
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
@@ -196,6 +211,36 @@ export default class Quiz extends Model {
     );
     // console.log("quizzz added", res);
     return res.id;
+  }
+
+  public async addCurrentQuiz(input: any) {
+    console.log("quizzz added11", input);
+
+    const res = camelizeKeys(
+      await Quiz.query().insertGraph(decamelizeKeys(input))
+    );
+    console.log("quizzz added", res);
+    return res;
+  }
+
+  public async changeQuizState(quizId: number, state:string) {
+    const isUpdated = await knex("quiz")
+      .where({ id: quizId })
+      .update({ state: state });
+    return isUpdated;
+  }
+
+  public async addSection(quizId: number) {
+    const input = {
+      quizId: quizId
+    }
+    console.log("section added11", input);
+
+    const res = camelizeKeys(
+      await Section.query().insertGraph(decamelizeKeys(input))
+    );
+    console.log("section added", res);
+    return res;
   }
 
   public async editQuiz(input: any) {

@@ -13,6 +13,10 @@ import resources from './locales';
 import DataRootComponent from './containers/DataRootComponent';
 
 import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from './containers/Auth';
+import CurrentUserWrapper from './containers/CurrentUserWrapper';
+
+export { CurrentUserWrapper };
+
 
 const ProfileName = withLoadedUser(({ currentUser }) => {
   return (

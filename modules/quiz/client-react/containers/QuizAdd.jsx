@@ -6,20 +6,20 @@ import QuizAddView from '../components/QuizAddView';
 import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { message } from 'antd';
-import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-
+import { CurrentUserWrapper } from '@gqlapp/user-client-react';
 // import CONTACT from '../graphql/QuizAdd.graphql';
 // import { QuizAddForm } from '../types';
-import QUIZ_ADD from '../graphql/QuizAdd.graphql';
+import QUIZ_EDIT from '../graphql/QuizEdit.graphql';
+import ADD_QUIZ_QUERY from '../graphql/AddQuizQuery.graphql';
 
 
-const QuizAdd = (props) => {
-  const onSubmit =  async (values) => {
+const QuizAddContainer = (props) => {
+  const onSubmit = async (values) => {
     const { t, addQuiz, currentUserLoading, currentUser, history } = props;
     const userId = !currentUserLoading && currentUser && currentUser.id;
     values.userId = userId;
     try {
-      const newQ = await addQuiz(values);
+      const newQ = await editQuiz(values);
       console.log('newww', newQ);
       history.push(`/quiz/${newQ.data.addQuiz.id}`)
     } catch (e) {
@@ -27,23 +27,32 @@ const QuizAdd = (props) => {
     }
   };
 
+
+  console.log('quiz add form', props);
   return (
-    
-     <QuizAddView {...props} onSubmit={onSubmit} />
-      
+
+    <QuizAddView {...props} onSubmit={onSubmit} />
+
   );
 };
 
-export default compose(
-  graphql(CURRENT_USER_QUERY, {
-    props({ data: { loading, error, currentUser } }) {
+const QuizAddWithoutCurrentUser = compose(
+  graphql(ADD_QUIZ_QUERY, {
+    options: props => {
+      const currentUserId = !props.currentUserLoading && props.currentUser && props.currentUser.id;
+
+      return {
+        variables: { userId: Number(currentUserId) }
+      };
+    },
+    props({ data: { loading, error, quiz, refetch } }) {
       if (error) throw new Error(error);
-      return { currentUserLoading:loading, currentUser };
+      return { quizLoading: loading, quiz, refetch };
     }
   }),
-  graphql(QUIZ_ADD, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      addQuiz: async values => {
+  graphql(QUIZ_EDIT, {
+    props: ({ ownProps: { history, navigation, refetch }, mutate }) => ({
+      editQuiz: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
         try {
@@ -53,17 +62,15 @@ export default compose(
             },
             optimisticResponse: {
               __typename: 'Mutation',
-              addQuiz: {
+              editQuiz: {
                 __typename: 'Quiz',
                 ...values
               }
             }
           });
-
-          
+          refetch();
           message.destroy();
-          message.success('Quiz added.');
-          return quizData;
+          message.success('Quiz edited.');
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");
@@ -71,4 +78,16 @@ export default compose(
         }
       }
     })
-  }))(translate('contact')(QuizAdd));
+  }),
+)(translate('contact')(QuizAddContainer));
+
+
+const QuizAdd = (props) => {
+  return (
+    <CurrentUserWrapper>
+      <QuizAddWithoutCurrentUser {...props} />
+    </CurrentUserWrapper>
+  )
+}
+
+export default QuizAdd;
