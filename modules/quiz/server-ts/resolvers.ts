@@ -227,18 +227,18 @@ export default (pubsub: any) => ({
         // }
         // const id = await Quiz.addQuiz(input);
         // console.log("quiz added", id);
-        // var newQuiz = await Quiz.getQuiz(id);
-        // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
-        // newQuiz.user = getUser;
         // console.log("neee", newQuiz);
         // const quiz = await Quiz.getQuiz(id);
         // console.log('user profile', userProfile);
-        // pubsub.publish(QUIZ_SUBSCRIPTION, {
-        //   quizzesUpdated: {
-        //     mutation: "CREATED",
-        //     node: newQuiz,
-        //   },
-        // });
+        var newQuiz = await Quiz.getQuiz(quizId);
+        const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+        newQuiz.user = getUser;
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: "UPDATED",
+            node: newQuiz,
+          },
+        });
         return section;
       } catch (e) {
         return null;
@@ -285,23 +285,31 @@ export default (pubsub: any) => ({
       }
     }),
 
-    async deleteSection (obj: any, { id }: any, { Quiz }: any)  {
+    async deleteSection(obj: any, { id }: any, { Quiz, User }: any) {
       try {
         const data = await Quiz.getSection(id);
         await Quiz.deleteSection(id);
-        // pubsub.publish(QUIZ_SUBSCRIPTION, {
-        //   quizzesUpdated: {
-        //     mutation: "DELETED",
-        //     node: data,
-        //   },
-        // });
+        var newQuiz;
+        if (data) {
+          newQuiz = await Quiz.getQuiz(data.quizId);
+          const getUser = await User.getUserForQuizSubscription(
+            newQuiz && newQuiz.userId
+          );
+          newQuiz.user = getUser;
+        }
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizzesUpdated: {
+            mutation: "UPDATED",
+            node: newQuiz,
+          },
+        });
         return data;
       } catch (e) {
         return e;
       }
     },
 
-    async deleteQuestion (obj: any, { id }: any, { Quiz }: any)  {
+    async deleteQuestion(obj: any, { id }: any, { Quiz }: any) {
       try {
         const data = await Quiz.getQuestionItem(id);
         await Quiz.deleteQuestion(id);

@@ -26,9 +26,24 @@ const withAddQuizQuery = (Component) =>
         variables: { userId: Number(currentUserId) },
       };
     },
-    props({ data: { loading, error, addQuizQuery, refetch } }) {
+    props({
+      data: {
+        loading,
+        error,
+        addQuizQuery,
+        refetch,
+        updateQuery,
+        subscribeToMore,
+      },
+    }) {
       if (error) throw new Error(error);
-      return { quizLoading: loading, quiz:addQuizQuery, refetch };
+      return {
+        quizLoading: loading,
+        quiz: addQuizQuery,
+        refetch,
+        updateQuery,
+        subscribeToMore,
+      };
     },
   })(Component);
 
@@ -175,6 +190,34 @@ const withAddSection = (Component) =>
 //     })
 //   })(Component);
 
+const updateQuizState = (quizUpdated, updateQuery) => {
+  console.log("quiz updated");
+  const { mutation, node } = quizUpdated;
+  updateQuery((prev) => {
+    console.log("prev update", prev);
+    switch (mutation) {
+      case "UPDATED":
+        return updateQuiz(prev, node);
+      default:
+        return prev;
+    }
+  });
+};
+
+function updateQuiz(prev, node) {
+  var updatedQuiz = prev.quiz;
+  const prevId = prev && prev.quiz && prev.quiz.id;
+  const newId = node && node.id
+  if (prevId === newId) {
+    updatedQuiz = node;
+  }
+  return update(prev, {
+    quiz: {
+      ...updatedQuiz,
+    },
+  });
+}
+
 const updateQuizzesState = (quizzesUpdated, updateQuery) => {
   console.log("quiz updated");
   const { mutation, node } = quizzesUpdated;
@@ -232,5 +275,6 @@ export {
   withSectionDeleting,
   withQuestionDeleting,
   withQuestionSubmitting,
-  withAddSection
+  withAddSection,
+  updateQuizState,
 };

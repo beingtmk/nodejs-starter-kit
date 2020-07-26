@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 // import { Mutation, FetchResult, MutationFn } from 'react-apollo';
 import { FormError } from "@gqlapp/forms-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
@@ -7,8 +7,7 @@ import { graphql } from "react-apollo";
 import { compose } from "@gqlapp/core-common";
 import { message } from "antd";
 import { CurrentUserWrapper } from "@gqlapp/user-client-react";
-// import CONTACT from '../graphql/QuizAdd.graphql';
-// import { QuizAddForm } from '../types';
+import { useQuizzesWithSubscription } from './withSubscription';
 import {
   withAddQuizQuery,
   withQuizEditing,
@@ -16,9 +15,22 @@ import {
   withQuestionDeleting,
   withQuestionSubmitting,
   withAddSection,
+  updateQuizState
 } from "./QuizOperations";
 
 const QuizAddContainer = (props) => {
+  const { t
+    , updateQuery, subscribeToMore
+  } = props;
+  // const filter = { isActive: true };
+  const quizUpdated = useQuizzesWithSubscription(subscribeToMore);
+
+  useEffect(() => {
+    if (quizUpdated) {
+      updateQuizState(quizUpdated, updateQuery);
+    }
+  });
+
   const onSubmit = async (values) => {
     const { t, addQuiz, currentUserLoading, currentUser, history } = props;
     const userId = !currentUserLoading && currentUser && currentUser.id;
