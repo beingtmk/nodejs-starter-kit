@@ -22,7 +22,7 @@ import RenderSectionsField from "./RenderSectionsField";
 //   onSubmit: (values: QuizAddForm) => void;
 // }
 
-const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
+const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion }) => {
   const handleSections = (data) => (values.sections = data);
   // const [load, setload] = React.useState(false);
   console.log('form values', values);
@@ -79,6 +79,11 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors }) => {
             arrayHelpers={arrayHelpers}
             values={values.sections}
             name='sections'
+            quizId={values.id}
+            addSection={addSection}
+            deleteSection={deleteSection}
+            submitQuestion={submitQuestion}
+            deleteQuestion={deleteQuestion}
           />
         )}
         sectionsVal={values.sections}

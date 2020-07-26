@@ -1,0 +1,7 @@
+
+mutation addSection($quizId: Int!) {
+  addSection(quizId: $quizId) {
+    id
+    quizId
+  }
+}

@@ -243,6 +243,50 @@ export default class Quiz extends Model {
     return res;
   }
 
+  public async submitQuestion(input: any) {
+    const res = camelizeKeys(
+      await Question.query().insertGraph(decamelizeKeys(input))
+    );
+    console.log("question submitted", res);
+    return res;
+  }
+
+  public async getSection(id: number) {
+    const res = camelizeKeys(
+      await Section.query()
+        .findById(id)
+        .first()
+        // .withGraphFetched(eager)
+      // .eager(eager)
+      // .orderBy('id', 'desc')
+    );
+    return res;
+  }
+
+  public async deleteSection(id: number) {
+    return knex("section")
+      .where("id", "=", id)
+      .del();
+  }
+
+  public async getQuestionItem(id: number) {
+    const res = camelizeKeys(
+      await Question.query()
+        .findById(id)
+        .first()
+        // .withGraphFetched(eager)
+      // .eager(eager)
+      // .orderBy('id', 'desc')
+    );
+    return res;
+  }
+
+  public async deleteQuestion(id: number) {
+    return knex("question")
+      .where("id", "=", id)
+      .del();
+  }
+
   public async editQuiz(input: any) {
     console.log("quiz edit sql", decamelizeKeys(input));
 

@@ -25,14 +25,14 @@ export default (pubsub: any) => ({
     async addQuizQuery(obj: any, { userId }: any, context: any) {
       try {
         var quiz = await context.Quiz.getCurrentQuiz(userId);
-        console.log('current quiz exists', quiz);
+        console.log("current quiz exists", quiz);
         if (!quiz) {
           const quizData = {
             userId,
             state: QuizStates.CURRENT,
           };
           quiz = await context.Quiz.addCurrentQuiz(quizData);
-          console.log('current quiz added', quiz);
+          console.log("current quiz added", quiz);
         }
         return quiz;
       } catch (e) {
@@ -219,27 +219,51 @@ export default (pubsub: any) => ({
     },
 
     async addSection(obj: any, { quizId }: any, { Quiz, User }: any) {
-      try{
-      console.log("input in res", quizId);
-      const section = await Quiz.addSection(quizId);
-      if(section){
-        await Quiz.changeQuizState(quizId, QuizStates.UPDATED)
-      }
-      // const id = await Quiz.addQuiz(input);
-      // console.log("quiz added", id);
-      // var newQuiz = await Quiz.getQuiz(id);
-      // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
-      // newQuiz.user = getUser;
-      // console.log("neee", newQuiz);
-      // const quiz = await Quiz.getQuiz(id);
-      // console.log('user profile', userProfile);
-      // pubsub.publish(QUIZ_SUBSCRIPTION, {
-      //   quizzesUpdated: {
-      //     mutation: "CREATED",
-      //     node: newQuiz,
-      //   },
-      // });
+      try {
+        console.log("input in res", quizId);
+        const section = await Quiz.addSection(quizId);
+        // if (section) {
+        //   await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
+        // }
+        // const id = await Quiz.addQuiz(input);
+        // console.log("quiz added", id);
+        // var newQuiz = await Quiz.getQuiz(id);
+        // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+        // newQuiz.user = getUser;
+        // console.log("neee", newQuiz);
+        // const quiz = await Quiz.getQuiz(id);
+        // console.log('user profile', userProfile);
+        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        //   quizzesUpdated: {
+        //     mutation: "CREATED",
+        //     node: newQuiz,
+        //   },
+        // });
         return section;
+      } catch (e) {
+        return null;
+      }
+    },
+
+    async submitQuestion(obj: any, { input }: any, { Quiz, User }: any) {
+      try {
+        console.log("input in res", input);
+        const question = await Quiz.submitQuestion(input);
+        // const id = await Quiz.addQuiz(input);
+        // console.log("quiz added", id);
+        // var newQuiz = await Quiz.getQuiz(id);
+        // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+        // newQuiz.user = getUser;
+        // console.log("neee", newQuiz);
+        // const quiz = await Quiz.getQuiz(id);
+        // console.log('user profile', userProfile);
+        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        //   quizzesUpdated: {
+        //     mutation: "CREATED",
+        //     node: newQuiz,
+        //   },
+        // });
+        return question;
       } catch (e) {
         return null;
       }
@@ -260,6 +284,39 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
+
+    async deleteSection (obj: any, { id }: any, { Quiz }: any)  {
+      try {
+        const data = await Quiz.getSection(id);
+        await Quiz.deleteSection(id);
+        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        //   quizzesUpdated: {
+        //     mutation: "DELETED",
+        //     node: data,
+        //   },
+        // });
+        return data;
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async deleteQuestion (obj: any, { id }: any, { Quiz }: any)  {
+      try {
+        const data = await Quiz.getQuestionItem(id);
+        await Quiz.deleteQuestion(id);
+        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        //   quizzesUpdated: {
+        //     mutation: "DELETED",
+        //     node: data,
+        //   },
+        // });
+        return data;
+      } catch (e) {
+        return e;
+      }
+    },
+
     editQuiz: withAuth(async (obj: any, { input }: any, { Quiz }: any) => {
       try {
         const inputId = input.id;

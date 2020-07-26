@@ -1,0 +1,7 @@
+mutation deleteSection($id: Int!) {
+  deleteSection(id: $id) {
+      id
+      quizId
+    
+  }
+}

@@ -13,16 +13,16 @@ const FormItem = Form.Item;
 
 
 export default class RenderSectionsField extends React.Component {
-  add = () => {
-    const arrayHelpers = this.props.arrayHelpers;
-    let obj = {};
-    obj["title"] = "";
-    obj["description"] = "";
-    obj["isActive"] = true
-    obj["questions"] = [];
+  // add = () => {
+  //   const arrayHelpers = this.props.arrayHelpers;
+  //   let obj = {};
+  //   obj["title"] = "";
+  //   obj["description"] = "";
+  //   obj["isActive"] = true
+  //   obj["questions"] = [];
 
-    arrayHelpers.push(obj);
-  };
+  //   arrayHelpers.push(obj);
+  // };
 
   render() {
     // const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -41,7 +41,7 @@ export default class RenderSectionsField extends React.Component {
     console.log("keys", keys);
     // const handleChoices = (data) => (values.choices = data);
     const handleQuestions = (data) => (values.questions = data);
-
+    const {addSection, deleteSection, submitQuestion, deleteQuestion, quizId} = this.props;
     if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
         <Card
@@ -55,7 +55,7 @@ export default class RenderSectionsField extends React.Component {
                   title="Remove "
                   className="dynamic-delete-button"
                   type="minus-circle-o"
-                  onClick={() => arrayHelpers.remove(indexv)}
+                  onClick={() => deleteSection(v.id)}
                 />
               ) : null}
             </>
@@ -116,7 +116,7 @@ export default class RenderSectionsField extends React.Component {
         <FormItem label={this.props.label}>
           {formItems}
           <FormItem>
-            <Button style={{ width: "100%" }} onClick={this.add}>
+            <Button style={{ width: "100%" }} onClick={()=> addSection(quizId)}>
               {/* <Icon type="plus" /> */}
               {"Add Section"}
             </Button>
