@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 // import { Mutation, FetchResult, MutationFn } from 'react-apollo';
 import { FormError } from "@gqlapp/forms-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
@@ -7,7 +7,7 @@ import { graphql } from "react-apollo";
 import { compose } from "@gqlapp/core-common";
 import { message } from "antd";
 import { CurrentUserWrapper } from "@gqlapp/user-client-react";
-import { useQuizzesWithSubscription } from './withSubscription';
+import QUIZ_SUBSCRIPTION from '../graphql/QuizSubscription.graphql';
 import {
   withAddQuizQuery,
   withQuizEditing,
@@ -15,21 +15,58 @@ import {
   withQuestionDeleting,
   withQuestionSubmitting,
   withAddSection,
-  updateQuizState
+  // updateQuizState,
 } from "./QuizOperations";
 
-const QuizAddContainer = (props) => {
-  const { t
-    , updateQuery, subscribeToMore
-  } = props;
-  // const filter = { isActive: true };
-  const quizUpdated = useQuizzesWithSubscription(subscribeToMore);
 
-  useEffect(() => {
-    if (quizUpdated) {
-      updateQuizState(quizUpdated, updateQuery);
+const subscribeToQuizAdd = (subscribeToMore, quizId, history, navigation) =>
+  subscribeToMore({
+    document: QUIZ_SUBSCRIPTION,
+    variables: { id: quizId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            quizUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      console.log(quizUpdated);
+      if (mutation === 'UPDATED') {
+        return node
+      }
+      return prev;
     }
   });
+
+const QuizAddContainer = (props) => {
+  // const { t, updateQuery, subscribeToMore, quiz, quizLoading } = props;
+
+
+  useEffect(() => {
+    if (props.quiz) {
+      const {
+        subscribeToMore,
+        quiz: { id },
+        history,
+        navigation
+      } = props;
+      const subscribe = subscribeToQuizAdd(subscribeToMore, id, history, navigation);
+      return () => subscribe();
+    }
+  });
+
+  // const quizId = !quizLoading && quiz && quiz.id;
+  // const quizUpdated = useQuizWithSubscription(subscribeToMore, quizId);
+  // console.log("quiz updated container", quizUpdated);
+  // useEffect(() => {
+  //   if (quizUpdated) {
+  //     console.log("quiz updated container use effect", quizUpdated);
+  //     updateQuizState(quizUpdated, updateQuery);
+  //   }
+  // });
 
   const onSubmit = async (values) => {
     const { t, addQuiz, currentUserLoading, currentUser, history } = props;

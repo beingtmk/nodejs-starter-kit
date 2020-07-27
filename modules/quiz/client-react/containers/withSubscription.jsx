@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Subscription } from 'react-apollo';
 
+import QUIZZES_SUBSCRIPTION from '../graphql/QuizzesSubscription.graphql';
 import QUIZ_SUBSCRIPTION from '../graphql/QuizSubscription.graphql';
 
 export const useQuizzesWithSubscription = (subscribeToMore, filter) => {
@@ -14,7 +15,7 @@ export const useQuizzesWithSubscription = (subscribeToMore, filter) => {
 
   const subscribeToQuizzes = () => {
     return subscribeToMore({
-      document: QUIZ_SUBSCRIPTION,
+      document: QUIZZES_SUBSCRIPTION,
       variables: { filter },
       updateQuery: (
         prev,
@@ -32,11 +33,40 @@ export const useQuizzesWithSubscription = (subscribeToMore, filter) => {
   return quizzesUpdated;
 };
 
+export const useQuizWithSubscription = (subscribeToMore, quizId) => {
+  const [quizUpdated, setQuizUpdated] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToQuiz();
+    return () => unsubscribe();
+  });
+
+  const subscribeToQuiz = () => {
+    return subscribeToMore({
+      document: QUIZ_SUBSCRIPTION,
+      variables: { id:quizId },
+      updateQuery: (
+        prev,
+        {
+          subscriptionData: {
+            data: { quizUpdated: newData }
+          }
+        }
+      ) => {
+        console.log('quiz updated with', newData)
+        setQuizUpdated(newData);
+      }
+    });
+  };
+  console.log('quiz updated with subscription', quizUpdated)
+  return quizUpdated;
+};
+
 export default Component => {
   const QuizzesWithSubscription = props => {
     const { filter } = props;
     return (
-      <Subscription subscription={QUIZ_SUBSCRIPTION} variables={{ filter }}>
+      <Subscription subscription={QUIZZES_SUBSCRIPTION} variables={{ filter }}>
         {({ data, loading }) => {
           if (!loading && data.quizzesUpdated) {
             return <Component {...props} quizzesUpdated={data.quizzesUpdated} />;

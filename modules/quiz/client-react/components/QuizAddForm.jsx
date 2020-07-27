@@ -111,7 +111,6 @@ const QuizAddFormWithFormik = withFormik({
         description: (question && question.description) || '',
         choiceType: (question && question.choiceType) || '',
         isActive: (question && question.isActive) || true,
-        choiceDependenceDescription: (question && question.choiceDependenceDescription) || null,
         choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }

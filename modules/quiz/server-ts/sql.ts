@@ -243,6 +243,19 @@ export default class Quiz extends Model {
     return res;
   }
 
+  public async addQuestion(sectionId: number) {
+    const input = {
+      sectionId: sectionId
+    }
+    console.log("section added11", input);
+
+    const res = camelizeKeys(
+      await Question.query().insertGraph(decamelizeKeys(input))
+    );
+    console.log("section added", res);
+    return res;
+  }
+
   public async submitQuestion(input: any) {
     const res = camelizeKeys(
       await Question.query().insertGraph(decamelizeKeys(input))

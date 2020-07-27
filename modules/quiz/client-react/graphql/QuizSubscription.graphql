@@ -1,41 +1,11 @@
-subscription quizzesUpdated($filter: FilterQuizInput) {
-  quizzesUpdated(filter: $filter) {
+#import "./Quiz.graphql"
+
+subscription onQuizUpdated($id: Int!) {
+  quizUpdated(id: $id) {
     mutation
+    id
     node {
-      id
-      userId
-      active
-      title
-      isEditableByUser
-      description
-      user {
-        id
-        username
-      }
-      sections {
-        id
-        quizId
-        title
-        description
-        isActive
-        questions {
-          id
-          description
-          choiceType
-          isActive
-          answers {
-            id
-            content
-            questionId
-            choiceId
-            userId
-          }
-          choices {
-            id
-            description
-          }
-        }
-      }
+      ...QuizFragment
     }
   }
 }

@@ -96,7 +96,9 @@ export default class RenderSectionsField extends React.Component {
               name={`sections[${indexv}].questions`}
               render={arrayHelpersQ => (
                 <RenderQuestionsField
-                  // setload={setload}
+                  sectionId={v.id}
+                  submitQuestion={submitQuestion}
+                  deleteQuestion={deleteQuestion}
                   sectionIndex={indexv}
                   arrayHelpers={arrayHelpersQ}
                   values={v.questions}

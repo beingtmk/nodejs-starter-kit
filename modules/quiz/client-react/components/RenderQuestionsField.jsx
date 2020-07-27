@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
-import { Form, Icon, Row, Col } from "antd";
+import { Form, Icon, Row, Col} from "antd";
 import {
   RenderField,
   RenderUpload,
@@ -19,17 +19,35 @@ const FormItem = Form.Item;
 
 export default class RenderQuestionsField extends React.Component {
   add = () => {
-    const arrayHelpers = this.props.arrayHelpers;
+    const { arrayHelpers, sectionId } = this.props;
     let obj = {};
 
     obj["description"] = "";
     obj["choiceType"] = "";
     obj["isActive"] = true;
     obj["choices"] = [];
-    obj["choiceDependenceDescription"] = null;
 
     arrayHelpers.push(obj);
   };
+
+
+  handleSubmitQuestion = (item) => {
+    const { submitQuestion, sectionId, values } = this.props;
+    var questionInput = values.find((val) => val === item);
+    questionInput.sectionId = sectionId;
+    submitQuestion(questionInput);
+  };
+
+  handleDeleteQuestion = (index) => {
+    const { deleteQuestion, arrayHelpers, values } = this.props;
+    const existingValue = values[index];
+    arrayHelpers.remove(index)
+    if(existingValue && existingValue.id){
+      deleteQuestion(existingValue.id);
+    }
+  }
+
+
 
   render() {
     // const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -47,17 +65,19 @@ export default class RenderQuestionsField extends React.Component {
     const sectionIndex = this.props.sectionIndex;
     let formItems = null;
     console.log("valllll", values);
-    let dependentQ =
-      values.length !== 0 &&
-      values.find((ques) => ques.choiceType === QuestionTypes.DEPENDENCE);
     // const handleChoices = (data) => (values.choices = data);
-    console.log("dependent CHoices", dependentQ);
+    const { submitQuestion, deleteQuestion, sectionId } = this.props;
 
     if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
         <FormItem required={false} key={indexv} style={{ margin: "0px" }}>
           <Card
             type="inner"
+            actions={[
+              <Button onClick={() => this.handleSubmitQuestion(v)}>
+                Submit Question
+              </Button>,
+            ]}
             style={{ background: "#f3f3f3", marginBottom: "20px" }}
             title={
               <Row>
@@ -83,7 +103,7 @@ export default class RenderQuestionsField extends React.Component {
                         title="Remove "
                         className="dynamic-delete-button"
                         type="minus-circle-o"
-                        onClick={() => arrayHelpers.remove(indexv)}
+                        onClick={() => this.handleDeleteQuestion(indexv)}
                       />
                     ) : null}
                   </>
@@ -132,6 +152,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.RADIO}
+                      key={QuestionTypes.RADIO}
                     >
                       {QuestionTypes.RADIO}
                     </Option>
@@ -142,6 +163,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.SELECT}
+                      key={QuestionTypes.SELECT}
                     >
                       {QuestionTypes.SELECT}
                     </Option>
@@ -152,6 +174,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.MSELECT}
+                      key={QuestionTypes.MSELECT}
                     >
                       {QuestionTypes.MSELECT}
                     </Option>
@@ -162,6 +185,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.TEXTBOX}
+                      key={QuestionTypes.TEXTBOX}
                     >
                       {QuestionTypes.TEXTBOX}
                     </Option>
@@ -172,6 +196,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.TEXTAREA}
+                      key={QuestionTypes.TEXTAREA}
                     >
                       {QuestionTypes.TEXTAREA}
                     </Option>
@@ -181,17 +206,8 @@ export default class RenderQuestionsField extends React.Component {
                         height: "30px",
                         lineHeight: "30px",
                       }}
-                      value={QuestionTypes.DEPENDENCE}
-                    >
-                      {QuestionTypes.DEPENDENCE}
-                    </Option>
-                    <Option
-                      style={{
-                        display: "block",
-                        height: "30px",
-                        lineHeight: "30px",
-                      }}
                       value={QuestionTypes.SLIDER}
+                      key={QuestionTypes.SLIDER}
                     >
                       {QuestionTypes.SLIDER}
                     </Option>
@@ -202,6 +218,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.COUNTRIES}
+                      key={QuestionTypes.COUNTRIES}
                     >
                       {QuestionTypes.COUNTRIES}
                     </Option>
@@ -212,6 +229,7 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.CHECKBOX}
+                      key={QuestionTypes.CHECKBOX}
                     >
                       {QuestionTypes.CHECKBOX}
                     </Option>
@@ -223,49 +241,15 @@ export default class RenderQuestionsField extends React.Component {
                         lineHeight: "30px",
                       }}
                       value={QuestionTypes.MCHECKBOX}
+                      key={QuestionTypes.MCHECKBOX}
                     >
                       {QuestionTypes.MCHECKBOX}
                     </Option>
                   </Field>
                 </Col>
-                {dependentQ &&
-                  dependentQ.choices &&
-                  v.choiceType !== QuestionTypes.DEPENDENCE && (
-                    <Col span={12}>
-                      <Field
-                        name={`${name}[${indexv}].choiceDependenceDescription`}
-                        component={RenderSelect}
-                        placeholder={"Choice Dependency"}
-                        type="select"
-                        label={
-                          <h5 style={{ marginBottom: "0", display: "inline" }}>
-                            Choice Dependency
-                          </h5>
-                        }
-                        // label={`${k.label || k.key} #${indexv + 1}`}
-                        value={v.choiceDependenceDescription}
-                        //   key={indexv}
-                        // style={{ display: 'inline-block', margin: '0px 5px' }}
-                      >
-                        {dependentQ.choices.map((choice) => (
-                          <Option
-                            style={{
-                              display: "block",
-                              height: "30px",
-                              lineHeight: "30px",
-                            }}
-                            value={choice.description}
-                          >
-                            {choice.description}
-                          </Option>
-                        ))}
-                      </Field>
-                    </Col>
-                  )}
               </Row>
               {v.choiceType !== "" &&
                 (v.choiceType === QuestionTypes.SELECT ||
-                  v.choiceType === QuestionTypes.DEPENDENCE ||
                   v.choiceType === QuestionTypes.RADIO ||
                   v.choiceType === QuestionTypes.SLIDER ||
                   v.choiceType === QuestionTypes.MSELECT ||

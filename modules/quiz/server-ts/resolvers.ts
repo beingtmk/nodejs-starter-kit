@@ -1,6 +1,8 @@
 import withAuth from "graphql-auth";
 import { PubSub, withFilter } from "graphql-subscriptions";
 import QuizStates from "@gqlapp/quiz-common/constants/QuizState";
+
+const QUIZZES_SUBSCRIPTION = "quizzes_subscription";
 const QUIZ_SUBSCRIPTION = "quiz_subscription";
 
 export default (pubsub: any) => ({
@@ -205,7 +207,7 @@ export default (pubsub: any) => ({
       console.log("neee", newQuiz);
       // const quiz = await Quiz.getQuiz(id);
       // console.log('user profile', userProfile);
-      pubsub.publish(QUIZ_SUBSCRIPTION, {
+      pubsub.publish(QUIZZES_SUBSCRIPTION, {
         quizzesUpdated: {
           mutation: "CREATED",
           node: newQuiz,
@@ -234,8 +236,9 @@ export default (pubsub: any) => ({
         const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
         newQuiz.user = getUser;
         pubsub.publish(QUIZ_SUBSCRIPTION, {
-          quizzesUpdated: {
+          quizUpdated: {
             mutation: "UPDATED",
+            id: newQuiz && newQuiz.id,
             node: newQuiz,
           },
         });
@@ -248,24 +251,32 @@ export default (pubsub: any) => ({
     async submitQuestion(obj: any, { input }: any, { Quiz, User }: any) {
       try {
         console.log("input in res", input);
-        const question = await Quiz.submitQuestion(input);
+        const questionSubmitted = await Quiz.submitQuestion(input);
+        const sectionItem = await Quiz.getSection(
+          questionSubmitted && questionSubmitted.sectionId
+        );
+
+        // if (section) {
+        //   await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
+        // }
         // const id = await Quiz.addQuiz(input);
         // console.log("quiz added", id);
-        // var newQuiz = await Quiz.getQuiz(id);
-        // const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
-        // newQuiz.user = getUser;
         // console.log("neee", newQuiz);
         // const quiz = await Quiz.getQuiz(id);
         // console.log('user profile', userProfile);
-        // pubsub.publish(QUIZ_SUBSCRIPTION, {
-        //   quizzesUpdated: {
-        //     mutation: "CREATED",
-        //     node: newQuiz,
-        //   },
-        // });
-        return question;
+        var newQuiz = await Quiz.getQuiz(sectionItem && sectionItem.quizId);
+        const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+        newQuiz.user = getUser;
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizUpdated: {
+            mutation: "UPDATED",
+            id: newQuiz && newQuiz.id,
+            node: newQuiz,
+          },
+        });
+        return questionSubmitted;
       } catch (e) {
-        return null;
+        return e;
       }
     },
 
@@ -273,7 +284,7 @@ export default (pubsub: any) => ({
       try {
         const data = await Quiz.getQuiz(id);
         await Quiz.deleteQuiz(id);
-        pubsub.publish(QUIZ_SUBSCRIPTION, {
+        pubsub.publish(QUIZZES_SUBSCRIPTION, {
           quizzesUpdated: {
             mutation: "DELETED",
             node: data,
@@ -298,8 +309,9 @@ export default (pubsub: any) => ({
           newQuiz.user = getUser;
         }
         pubsub.publish(QUIZ_SUBSCRIPTION, {
-          quizzesUpdated: {
+          quizUpdated: {
             mutation: "UPDATED",
+            id: newQuiz && newQuiz.id,
             node: newQuiz,
           },
         });
@@ -309,16 +321,24 @@ export default (pubsub: any) => ({
       }
     },
 
-    async deleteQuestion(obj: any, { id }: any, { Quiz }: any) {
+    async deleteQuestion(obj: any, { id }: any, { Quiz, User }: any) {
       try {
         const data = await Quiz.getQuestionItem(id);
         await Quiz.deleteQuestion(id);
-        // pubsub.publish(QUIZ_SUBSCRIPTION, {
-        //   quizzesUpdated: {
-        //     mutation: "DELETED",
-        //     node: data,
-        //   },
-        // });
+        const sectionItem = await Quiz.getSection(data && data.sectionId);
+
+        var newQuiz = await Quiz.getQuiz(sectionItem && sectionItem.quizId);
+        const getUser = await User.getUserForQuizSubscription(
+          newQuiz && newQuiz.userId
+        );
+        newQuiz.user = getUser;
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizUpdated: {
+            mutation: "UPDATED",
+            id: newQuiz && newQuiz.id,
+            node: newQuiz,
+          },
+        });
         return data;
       } catch (e) {
         return e;
@@ -337,7 +357,7 @@ export default (pubsub: any) => ({
         // delete input.tags;
         const isDeleted = await Quiz.editQuiz(input);
         var item = await Quiz.getQuiz(inputId);
-        // pubsub.publish(QUIZ_SUBSCRIPTION, {
+        // pubsub.publish(QUIZZES_SUBSCRIPTION, {
         //   quizzesUpdated: {
         //     mutation: 'UPDATED',
         //     node: item
@@ -345,7 +365,7 @@ export default (pubsub: any) => ({
         // });
         // const getUser = await Quiz.getQuiz(item.userId)
         // item.user = getUser;
-        pubsub.publish(QUIZ_SUBSCRIPTION, {
+        pubsub.publish(QUIZZES_SUBSCRIPTION, {
           quizzesUpdated: {
             mutation: "UPDATED",
             node: item,
@@ -387,7 +407,7 @@ export default (pubsub: any) => ({
         const id = quizI && quizI.id;
         const item = await Quiz.getQuizWithAnswersByUser(id, userId);
 
-        pubsub.publish(QUIZ_SUBSCRIPTION, {
+        pubsub.publish(QUIZZES_SUBSCRIPTION, {
           quizzesUpdated: {
             mutation: "UPDATED",
             node: item,
@@ -452,7 +472,7 @@ export default (pubsub: any) => ({
           // const getUser = await context.User.getUserForQuizSubscription(res.userId)
           // res.user = getUser;
           console.log("copiiiied", getQuiz);
-          pubsub.publish(QUIZ_SUBSCRIPTION, {
+          pubsub.publish(QUIZZES_SUBSCRIPTION, {
             quizzesUpdated: {
               mutation: "CREATED",
               node: getQuiz,
@@ -468,10 +488,10 @@ export default (pubsub: any) => ({
   Subscription: {
     quizzesUpdated: {
       subscribe: withFilter(
-        () => pubsub.asyncIterator(QUIZ_SUBSCRIPTION),
+        () => pubsub.asyncIterator(QUIZZES_SUBSCRIPTION),
         (payload, variables) => {
           const { mutation, node } = payload.quizzesUpdated;
-          console.log("subsss", node);
+          console.log("subsss", node && node.sections, node);
           const {
             // filter: { searchText }
           } = variables;
@@ -491,6 +511,20 @@ export default (pubsub: any) => ({
             case "UPDATED":
               return true;
           }
+        }
+      ),
+    },
+    quizUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(QUIZ_SUBSCRIPTION),
+        (payload, variables) => {
+          console.log("quizUpdatedddd variables", variables);
+          console.log("quizUpdatedddd", payload);
+          return (
+            payload &&
+            payload.quizUpdated &&
+            payload.quizUpdated.id === variables.id
+          );
         }
       ),
     },
