@@ -4,18 +4,21 @@ import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 import { Form, Icon, Row, Col, Radio, Button, Progress, Affix } from "antd";
-import { RenderField, RenderUpload, RenderSelect, Option, Card } from "@gqlapp/look-client-react";
+import {
+  RenderField,
+  RenderUpload,
+  RenderSelect,
+  Option,
+  Card,
+} from "@gqlapp/look-client-react";
 import RenderDynamicField from "@gqlapp/look-client-react/ui-antd/components/RenderDynamicField";
 import RenderRadioGroup from "@gqlapp/look-client-react/ui-antd/components/RenderRadioGroup";
-import QuestionTypes from '@gqlapp/quiz-common/constants/QuestionTypes';
-import RenderQuizQuestionField from './RenderQuizQuestionField';
+import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import RenderQuizQuestionField from "./RenderQuizQuestionField";
 const FormItem = Form.Item;
 
-
-
-
-const SectionComponent = ({ sec, currentSection, currentUserId }) => {
-  console.log('sectionC', sec)
+const SectionComponent = ({ sec, currentSection, currentUserId, questionList }) => {
+  console.log("sectionC", sec);
   const handleResults = (data) => (values.results = data);
 
   return (
@@ -24,15 +27,11 @@ const SectionComponent = ({ sec, currentSection, currentUserId }) => {
         name="results"
         render={(arrayHelpers) => (
           <RenderQuizQuestionField
-            // setload={setload}
             sectionIndex={currentSection}
             arrayHelpers={arrayHelpers}
             values={sec && sec.questions}
-            // label={"Answer Following QUestions"}
             name="quiz-results"
-            // buttonText='Add Question'
-            // keys={{type:'text', label:'question', key:'description'}}
-            // quiz={quiz}
+            questionList={questionList}
             currentUserId={currentUserId}
           />
         )}
@@ -40,16 +39,19 @@ const SectionComponent = ({ sec, currentSection, currentUserId }) => {
         // resultsVal={values.results}
         handleResults={handleResults}
       />
-    </>)
-}
-
+    </>
+  );
+};
 
 export default class RenderSectionsField extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sectionLength: this.props.values && this.props.values.sections && this.props.values.sections.length,
-      currentSection: 0
+      sectionLength:
+        this.props.values &&
+        this.props.values.sections &&
+        this.props.values.sections.length,
+      currentSection: 0,
     };
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
@@ -108,37 +110,73 @@ export default class RenderSectionsField extends React.Component {
 
     const { currentSection, sectionLength } = this.state;
 
-
-    console.log('section component', values.sections);
-
-
-
+    console.log("section component", values.sections);
+    var questionsList = [];
+      values.sections &&
+      values.sections.map((secI, keySec) => {
+        secI &&
+          secI.questions &&
+          secI.questions.map((queItem, queKey) => {
+            questionsList.push(queItem);
+          });
+      });
     return (
       <>
-        <Card style={{ marginBottom: '30px' }}>
+        <Card style={{ marginBottom: "30px" }}>
           <h3>{this.props.quizTitle}</h3>
           <Affix offsetTop={45}>
-            <Progress percent={Math.round(((currentSection) / sectionLength) * 100)} style={{color:'black', background:'white', padding:'5px', borderRadius:'5px'}} />
+            <Progress
+              percent={Math.round((currentSection / sectionLength) * 100)}
+              style={{
+                color: "black",
+                background: "white",
+                padding: "5px",
+                borderRadius: "5px",
+              }}
+            />
           </Affix>
         </Card>
-        <Card title={
-          <h4>{values.sections[currentSection] && values.sections[currentSection].title}</h4>
-        }>
-          <SectionComponent strokeLinecap="square" sec={values.sections[currentSection]} currentSection={currentSection} currentUserId={currentUserId} />
+        <Card
+          title={
+            <h4>
+              {values.sections[currentSection] &&
+                values.sections[currentSection].title}
+            </h4>
+          }
+        >
+          <SectionComponent
+            questionList={questionsList}
+            strokeLinecap="square"
+            sec={values.sections[currentSection]}
+            currentSection={currentSection}
+            currentUserId={currentUserId}
+          />
           <Row>
             <Col span={12}>
-              {this.state.currentSection === 0 ? <></> : (<Button type='primary' shape='circle' icon='arrow-left' onClick={this.prevStep}>
-
-              </Button>)}
+              {this.state.currentSection === 0 ? (
+                <></>
+              ) : (
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon="arrow-left"
+                  onClick={this.prevStep}
+                ></Button>
+              )}
             </Col>
-            <Col span={12} align='right'>
-              {this.state.currentSection + 1 === this.state.sectionLength ?
-                <><SubmitButton /></>
-                :
-                (
-                  <Button type='primary' shape='circle' icon='arrow-right' onClick={this.nextStep} />
-                )
-              }
+            <Col span={12} align="right">
+              {this.state.currentSection + 1 === this.state.sectionLength ? (
+                <>
+                  <SubmitButton />
+                </>
+              ) : (
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon="arrow-right"
+                  onClick={this.nextStep}
+                />
+              )}
             </Col>
           </Row>
         </Card>

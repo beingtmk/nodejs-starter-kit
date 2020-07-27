@@ -1,35 +1,7 @@
+#import './QuizWithAnswers.graphql'
+
 query quizWithAnswers($id: Int!, $userId: Int!) {
   quizWithAnswers(id: $id, userId: $userId) {
-    id
-    userId
-    active
-    title
-    isEditableByUser
-    description
-    sections {
-      id
-      title
-      quizId
-      description
-      isActive
-      questions {
-        id
-        description
-        choiceType
-        isActive
-        choiceDependenceDescription
-        answers {
-          id
-          content
-          questionId
-          choiceId
-          userId
-        }
-        choices {
-          id
-          description
-        }
-      }
-    }
+    ...QuizWithAnswersFragment
   }
 }

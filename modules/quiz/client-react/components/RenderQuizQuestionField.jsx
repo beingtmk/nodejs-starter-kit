@@ -52,19 +52,7 @@ export default class RenderQuestionsField extends React.Component {
     console.log("keys", values);
     // const handleChoices = (data) => (values.choices = data);
     // this.add
-    const { sectionIndex } = this.props;
-    const choiceDep =
-      this.props.values &&
-      this.props.values.find(
-        (va) => va.choiceType === QuestionTypes.DEPENDENCE
-      );
-    var depChoice;
-    if (choiceDep) {
-      const ch = choiceDep.answers[0] && choiceDep.answers[0].choiceId;
-      const choi = choiceDep.choices.find((c) => c.id === ch);
-      depChoice = choi && choi.description;
-    }
-    console.log("ch dep", choiceDep, depChoice);
+    const { sectionIndex, questionList } = this.props;
     if (values) {
       formItems =
         values.length !== 0 &&
@@ -82,199 +70,199 @@ export default class RenderQuestionsField extends React.Component {
                   ] = { label: cho.description })
               );
           }
+          var dependence = false;
+          const dependentQuestion =
+            v.dependentQuestionId &&
+            questionList.find((queL) => queL.id === v.dependentQuestionId);
+          dependentQuestion &&
+            dependentQuestion.answers &&
+            dependentQuestion.answers.map((ansW) => {
+              dependence = ansW.choiceId === v.dependentChoiceId;
+            });
+
+          if (v.dependentQuestionId && !dependence) {
+            return null;
+          }
           return (
             <Row>
-              {((choiceDep &&
-                ((depChoice && depChoice === v.choiceDependenceDescription) ||
-                  v.choiceType === QuestionTypes.DEPENDENCE)) ||
-                !choiceDep) && (
-                  <>
-                    <h3>{v.description}</h3>
-                    <Col span={24}>
-                      <FormItem
-                        required={false}
-                        key={indexv}
-                        style={{ margin: "0px" }}
-                      >
-                        {v.choiceType === QuestionTypes.SELECT && (
-                          <Field
-                            name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
-                            component={RenderSelect}
-                            placeholder={"none"}
-                            type="select"
-                            label={""}
-                            // label={`${k.label || k.key} #${indexv + 1}`}
-                            value={v.answers && v.answers[0].choiceId}
-                          //   key={indexv}
-                          // style={{ display: 'inline-block', margin: '0px 5px' }}
-                          >
-                            {v.choices.map((choice, key) => (
-                              <Option
-                                style={{
-                                  display: "block",
-                                  height: "30px",
-                                  lineHeight: "30px",
-                                }}
-                                value={choice.id}
-                              >
-                                {choice.description}
-                              </Option>
-                            ))}
-                          </Field>
-                        )}
-                        {v.choiceType === QuestionTypes.CHECKBOX && (
-                          <>
-                            <FieldArray
-                              name={`sections[${sectionIndex}].questions[${indexv}].answers`}
-                              render={(arrayHelpers) => (
-                                <RenderCheckBoxQuiz
-                                  // setload={setload}
-                                  sectionIndex={sectionIndex}
-                                  arrayHelpers={arrayHelpers}
-                                  value={v.answers}
-                                  // label={"Answer Following QUestions"}
-                                  name={`sections[${sectionIndex}].questions[${indexv}].answers`}
-                                  data={v}
-                                  // buttonText='Add Question'
-                                  // keys={{type:'text', label:'question', key:'description'}}
-                                  // quiz={quiz}
-                                  currentUserId={currentUserId}
-                                />
-                              )}
-                            // skills={skills}
-                            // resultsVal={values.results}
-                            // handleResults={handleResults}
-                            />
-                          </>
-                        )}
-
-                        {v.choiceType === QuestionTypes.MSELECT && (
-                          <>
-                            <FieldArray
-                              name={`sections[${sectionIndex}].questions[${indexv}].answers`}
-                              render={(arrayHelpers) => (
-                                <RenderSelectMultipleQuiz
-                                  // setload={setload}
-                                  sectionIndex={sectionIndex}
-                                  arrayHelpers={arrayHelpers}
-                                  value={v.answers}
-                                  // label={"Answer Following QUestions"}
-                                  name={`sections[${sectionIndex}].questions[${indexv}].answers`}
-                                  data={v}
-                                  // buttonText='Add Question'
-                                  // keys={{type:'text', label:'question', key:'description'}}
-                                  // quiz={quiz}
-                                  currentUserId={currentUserId}
-                                />
-                              )}
-                            // skills={skills}
-                            // resultsVal={values.results}
-                            // handleResults={handleResults}
-                            />
-                          </>
-                        )}
-                        {v.choiceType === QuestionTypes.TEXTBOX && (
-                          <Field
-                            name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
-                            component={RenderField}
-                            placeholder={"none"}
-                            type="text"
-                            label={""}
-                            // label={`${k.label || k.key} #${indexv + 1}`}
-                            value={v.answers && v.answers[0].content}
-                          //   key={indexv}
-                          // style={{ display: 'inline-block', margin: '0px 5px' }}
-                          />
-                        )}
-                        {v.choiceType === QuestionTypes.TEXTAREA && (
-                          <Field
-                            name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
-                            component={RenderField}
-                            placeholder={"none"}
-                            type="textarea"
-                            label={""}
-                            // label={`${k.label || k.key} #${indexv + 1}`}
-                            value={v.answers && v.answers[0].content}
-                          //   key={indexv}
-                          // style={{ display: 'inline-block', margin: '0px 5px' }}
-                          />
-                        )}
-                        {(v.choiceType === QuestionTypes.RADIO ||
-                          v.choiceType === QuestionTypes.DEPENDENCE) && (
-                            <Field
-                              name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
-                              component={RenderRadioGroup}
-                              placeholder={"none"}
-                              type="radio"
-                              label={""}
-                              // label={`${k.label || k.key} #${indexv + 1}`}
-                              value={v.answers && v.answers[0].choiceId}
-                            //   key={indexv}
-                            // style={{ display: 'inline-block', margin: '0px 5px' }}
-                            >
-                              {v.choices.map((choice, key) => (
-                                <Radio
-                                  style={{ display: "block" }}
-                                  value={choice.id}
-                                >
-                                  {choice.description}
-                                </Radio>
-                              ))}
-                            </Field>
-                          )}
-                        {v.choiceType === QuestionTypes.SLIDER && (
-                          <Field
-                            name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
-                            component={SliderFormComponent}
-                            placeholder={"none"}
-                            type="radio"
-                            label={""}
-                            marks={marks}
-                            // label={`${k.label || k.key} #${indexv + 1}`}
-                            value={
-                              v.answers &&
-                              v.answers.length !== 0 &&
-                              v.answers[0].content
-                            }
-                          //   key={indexv}
-                          // style={{ display: 'inline-block', margin: '0px 5px' }}
-                          />
-                        )}
-                      </FormItem>
-                    </Col>
-                    {v.choiceType === QuestionTypes.COUNTRIES && (
-                      <Field
-                        name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
-                        component={RenderSelect}
-                        placeholder={"none"}
-                        type="select"
-                        label={""}
-                        // label={`${k.label || k.key} #${indexv + 1}`}
-                        value={
-                          v.answers &&
-                          v.answers.length !== 0 &&
-                          v.answers[0].content
-                        }
+              <h3>{v.description}</h3>
+              <Col span={24}>
+                <FormItem
+                  required={false}
+                  key={indexv}
+                  style={{ margin: "0px" }}
+                >
+                  {v.choiceType === QuestionTypes.SELECT && (
+                    <Field
+                      name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
+                      component={RenderSelect}
+                      placeholder={"none"}
+                      type="select"
+                      label={""}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={v.answers && v.answers[0].choiceId}
                       //   key={indexv}
                       // style={{ display: 'inline-block', margin: '0px 5px' }}
-                      >
-                        {countries.map((country, key) => (
-                          <Option
-                            style={{
-                              display: "block",
-                              height: "30px",
-                              lineHeight: "30px",
-                            }}
-                            key={key}
-                            value={country}
-                          >
-                            {country}
-                          </Option>
-                        ))}
-                      </Field>
-                    )}
-                  </>
-                )}
+                    >
+                      {v.choices.map((choice, key) => (
+                        <Option
+                          style={{
+                            display: "block",
+                            height: "30px",
+                            lineHeight: "30px",
+                          }}
+                          value={choice.id}
+                        >
+                          {choice.description}
+                        </Option>
+                      ))}
+                    </Field>
+                  )}
+                  {v.choiceType === QuestionTypes.CHECKBOX && (
+                    <>
+                      <FieldArray
+                        name={`sections[${sectionIndex}].questions[${indexv}].answers`}
+                        render={(arrayHelpers) => (
+                          <RenderCheckBoxQuiz
+                            // setload={setload}
+                            sectionIndex={sectionIndex}
+                            arrayHelpers={arrayHelpers}
+                            value={v.answers}
+                            // label={"Answer Following QUestions"}
+                            name={`sections[${sectionIndex}].questions[${indexv}].answers`}
+                            data={v}
+                            // buttonText='Add Question'
+                            // keys={{type:'text', label:'question', key:'description'}}
+                            // quiz={quiz}
+                            currentUserId={currentUserId}
+                          />
+                        )}
+                        // skills={skills}
+                        // resultsVal={values.results}
+                        // handleResults={handleResults}
+                      />
+                    </>
+                  )}
+
+                  {v.choiceType === QuestionTypes.MSELECT && (
+                    <>
+                      <FieldArray
+                        name={`sections[${sectionIndex}].questions[${indexv}].answers`}
+                        render={(arrayHelpers) => (
+                          <RenderSelectMultipleQuiz
+                            // setload={setload}
+                            sectionIndex={sectionIndex}
+                            arrayHelpers={arrayHelpers}
+                            value={v.answers}
+                            // label={"Answer Following QUestions"}
+                            name={`sections[${sectionIndex}].questions[${indexv}].answers`}
+                            data={v}
+                            // buttonText='Add Question'
+                            // keys={{type:'text', label:'question', key:'description'}}
+                            // quiz={quiz}
+                            currentUserId={currentUserId}
+                          />
+                        )}
+                        // skills={skills}
+                        // resultsVal={values.results}
+                        // handleResults={handleResults}
+                      />
+                    </>
+                  )}
+                  {v.choiceType === QuestionTypes.TEXTBOX && (
+                    <Field
+                      name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
+                      component={RenderField}
+                      placeholder={"none"}
+                      type="text"
+                      label={""}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={v.answers && v.answers[0].content}
+                      //   key={indexv}
+                      // style={{ display: 'inline-block', margin: '0px 5px' }}
+                    />
+                  )}
+                  {v.choiceType === QuestionTypes.TEXTAREA && (
+                    <Field
+                      name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
+                      component={RenderField}
+                      placeholder={"none"}
+                      type="textarea"
+                      label={""}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={v.answers && v.answers[0].content}
+                      //   key={indexv}
+                      // style={{ display: 'inline-block', margin: '0px 5px' }}
+                    />
+                  )}
+                  {v.choiceType === QuestionTypes.RADIO && (
+                    <Field
+                      name={`sections[${sectionIndex}].questions[${indexv}].answers[0].choiceId`}
+                      component={RenderRadioGroup}
+                      placeholder={"none"}
+                      type="radio"
+                      label={""}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={v.answers && v.answers[0].choiceId}
+                      //   key={indexv}
+                      // style={{ display: 'inline-block', margin: '0px 5px' }}
+                    >
+                      {v.choices.map((choice, key) => (
+                        <Radio style={{ display: "block" }} value={choice.id}>
+                          {choice.description}
+                        </Radio>
+                      ))}
+                    </Field>
+                  )}
+                  {v.choiceType === QuestionTypes.SLIDER && (
+                    <Field
+                      name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
+                      component={SliderFormComponent}
+                      placeholder={"none"}
+                      type="radio"
+                      label={""}
+                      marks={marks}
+                      // label={`${k.label || k.key} #${indexv + 1}`}
+                      value={
+                        v.answers &&
+                        v.answers.length !== 0 &&
+                        v.answers[0].content
+                      }
+                      //   key={indexv}
+                      // style={{ display: 'inline-block', margin: '0px 5px' }}
+                    />
+                  )}
+                </FormItem>
+              </Col>
+              {v.choiceType === QuestionTypes.COUNTRIES && (
+                <Field
+                  name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
+                  component={RenderSelect}
+                  placeholder={"none"}
+                  type="select"
+                  label={""}
+                  // label={`${k.label || k.key} #${indexv + 1}`}
+                  value={
+                    v.answers && v.answers.length !== 0 && v.answers[0].content
+                  }
+                  //   key={indexv}
+                  // style={{ display: 'inline-block', margin: '0px 5px' }}
+                >
+                  {countries.map((country, key) => (
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
+                      key={key}
+                      value={country}
+                    >
+                      {country}
+                    </Option>
+                  ))}
+                </Field>
+              )}
             </Row>
           );
         });
