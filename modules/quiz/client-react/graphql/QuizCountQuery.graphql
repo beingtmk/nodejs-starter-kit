@@ -17,6 +17,11 @@ query getQuizCount($id: Int!) {
           description
           count
         }
+        countries{
+          id
+          description
+          count
+        }
       }
     }
   }

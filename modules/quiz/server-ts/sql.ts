@@ -19,7 +19,7 @@ const eager = "[user, sections.[questions.[choices]]]";
 // const eagerWithCount = "[user, questions.[choices]]";
 const withAnswersEager = "[user, sections.[questions.[choices, answers]]]";
 const withChoiceAnswersEager =
-  "[user, sections.[questions.[choices.[answers]]]]";
+  "[user, sections.[questions.[choices.[answers], answers]]]";
 
 export default class Quiz extends Model {
   static get tableName() {

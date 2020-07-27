@@ -34,8 +34,15 @@ type Question {
   dependentChoiceId: Int
   isActive: Boolean
   choices: [Choice]
+  countries:[CountryItem]
   createdAt: String
   updatedAt: String
+}
+
+type CountryItem {
+  id: Int!
+  description: String!
+  count: Int
 }
 
 type Choice {

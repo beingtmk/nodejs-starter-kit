@@ -1,6 +1,8 @@
 import withAuth from "graphql-auth";
 import { PubSub, withFilter } from "graphql-subscriptions";
 import QuizStates from "@gqlapp/quiz-common/constants/QuizState";
+import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 
 const QUIZZES_SUBSCRIPTION = "quizzes_subscription";
 const QUIZ_SUBSCRIPTION = "quiz_subscription";
@@ -164,35 +166,38 @@ export default (pubsub: any) => ({
             sec &&
               sec.questions &&
               sec.questions.map((qu, quI) => {
-                qu &&
-                  qu.choices &&
-                  qu.choices.map((cho, choI) => {
-                    // cho &&
-                    //   cho.answers &&
-                    //   cho.answers.map((answerItem, anInt) => {
-                    //     var ansCount = false;
-                    //     const repeatAns = cho.answers.filter(
-                    //       (anI) =>
-                    //         anI.choiceId === answerItem.choiceId &&
-                    //         anI.questionId === answerItem.questionId &&
-                    //         anI.userId === answerItem.userId
-                    //     );
-                    //     repeatAns.map((repeA, repI) => {
-                    //       if (repI !== 0) {
-                    //         cho.answers.pop(repeA);
-                    //       }
-                    //     });
-                    //   });
-                    quiz.sections[secI].questions[quI].choices[choI].count =
-                      cho && cho.answers && cho.answers.length;
-                    delete quiz.sections[secI].questions[quI].choices[choI]
-                      .answers;
+                if (qu.choiceType === QuestionTypes.COUNTRIES) {
+                  console.log('question choices', qu.answers);
+                  var countryChoices = [];
+                  countries.map((couN, couKey) => {
+                    const answerLists =
+                      qu.answers &&
+                      qu.answers.filter((ansW) => ansW.content === couN);
+                    countryChoices.push({
+                      id: couKey,
+                      description: couN,
+                      count: (answerLists && answerLists.length) || 0,
+                    });
                   });
+                  console.log('question choicesc', countryChoices)
+                  quiz.sections[secI].questions[quI].countries = countryChoices;
+                } else {
+                  qu &&
+                    qu.choices &&
+                    qu.choices.map((cho, choI) => {
+                
+                      quiz.sections[secI].questions[quI].choices[choI].count =
+                        cho && cho.answers && cho.answers.length;
+                      delete quiz.sections[secI].questions[quI].choices[choI]
+                        .answers;
+                    });
+                }
               });
           });
+          console.log('quiz.sections[]', quiz.sections[0].questions[2].countries) 
         return quiz;
       } catch (e) {
-        return null;
+        return e;
       }
     },
   },

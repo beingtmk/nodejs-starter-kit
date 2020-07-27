@@ -1,11 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { Spin as Loader, Badge } from "antd";
+import { Spin as Loader, Badge, Tree } from "antd";
 import { PageLayout, Card } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
 // import QuizForm from "./QuizForm";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+
+const { TreeNode } = Tree;
 
 const renderMetaData = (t) => (
   <Helmet
@@ -18,6 +20,7 @@ const renderMetaData = (t) => (
 
 const QuizCountComponent = (props) => {
   const sections = props.quiz && props.quiz.sections;
+  console.log("countries", props.quiz.sections[0].questions[2].choices);
   return (
     <>
       {sections &&
@@ -33,15 +36,37 @@ const QuizCountComponent = (props) => {
                   {question &&
                     question.choiceType &&
                     question.choiceType !== QuestionTypes.SLIDER &&
-                    question.choices &&
-                    question.choices.map((choice) => (
-                      <div>
-                        <h5 style={{ display: "inline" }}>
-                          {choice.description} -
-                        </h5>
-                        <Badge showZero count={choice.count} />
-                      </div>
-                    ))}
+                    ((question.choiceType === QuestionTypes.COUNTRIES && (
+                      <Tree>
+                        <TreeNode key="0" title="countries">
+                          {question.countries &&
+                            question.countries.map((couN) => (
+                              <>
+                                <TreeNode
+                                  key={couN.description}
+                                  title={
+                                    <>
+                                      <h5 style={{ display: "inline" }}>
+                                        {couN.description} -
+                                      </h5>
+                                      <Badge showZero count={couN.count} />
+                                    </>
+                                  }
+                                />
+                              </>
+                            ))}
+                        </TreeNode>
+                      </Tree>
+                    )) ||
+                      (question.choices &&
+                        question.choices.map((choice) => (
+                          <div>
+                            <h5 style={{ display: "inline" }}>
+                              {choice.description} -
+                            </h5>
+                            <Badge showZero count={choice.count} />
+                          </div>
+                        ))))}
                 </div>
               ))}
           </div>
