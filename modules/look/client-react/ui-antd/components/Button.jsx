@@ -1,22 +1,20 @@
+  
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button as ADButton } from 'antd';
 
 class Button extends React.Component {
   render() {
-    const { children, color, type, size, ...props } = this.props;
-
-    let buttonSize = 'default';
-
-    if (size === 'sm') {
-      buttonSize = 'small';
-    } else if (size === 'lg') {
-      buttonSize = 'large';
+    const props = this.props;
+    var type;
+    var buttonType = this.props.type;
+    if(this.props.type === 'submit'){
+      type = this.props.type;
+      buttonType = 'primary';
     }
-
     return (
-      <ADButton type={color} htmlType={type} size={buttonSize} {...props}>
-        {children}
+      <ADButton {...props} htmlType = {type} type ={buttonType}>
+        {props.children}
       </ADButton>
     );
   }

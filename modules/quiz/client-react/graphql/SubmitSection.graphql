@@ -1,0 +1,7 @@
+
+mutation submitSection($input: SectionInput!) {
+  submitSection(input: $input) {
+    id
+    quizId
+  }
+}

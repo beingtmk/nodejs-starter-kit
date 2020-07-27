@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FieldArray } from "formik";
 
 import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
-import { Form, Icon, Row, Col} from "antd";
+import { Form, Icon, Row, Col } from "antd";
 import {
   RenderField,
   RenderUpload,
@@ -30,7 +30,6 @@ export default class RenderQuestionsField extends React.Component {
     arrayHelpers.push(obj);
   };
 
-
   handleSubmitQuestion = (item) => {
     const { submitQuestion, sectionId, values } = this.props;
     var questionInput = values.find((val) => val === item);
@@ -41,13 +40,11 @@ export default class RenderQuestionsField extends React.Component {
   handleDeleteQuestion = (index) => {
     const { deleteQuestion, arrayHelpers, values } = this.props;
     const existingValue = values[index];
-    arrayHelpers.remove(index)
-    if(existingValue && existingValue.id){
+    arrayHelpers.remove(index);
+    if (existingValue && existingValue.id) {
       deleteQuestion(existingValue.id);
     }
-  }
-
-
+  };
 
   render() {
     // const { getFieldDecorator, getFieldValue } = this.props.form;
@@ -66,7 +63,26 @@ export default class RenderQuestionsField extends React.Component {
     let formItems = null;
     console.log("valllll", values);
     // const handleChoices = (data) => (values.choices = data);
-    const { submitQuestion, deleteQuestion, sectionId } = this.props;
+    const { submitQuestion, deleteQuestion, sectionId, quizItem } = this.props;
+    var questionsList = [];
+
+    quizItem &&
+      quizItem.sections &&
+      quizItem.sections.map((secI, keySec) => {
+        secI &&
+          secI.questions &&
+          secI.questions.map((queItem, queKey) => {
+            questionsList.push(queItem);
+          });
+      });
+
+    const getDependentQuestionChoices = (que) => {
+      const dependentQuestion = questionsList.find(
+        (queLi) => queLi.id === que.dependentQuestionId
+      );
+      return dependentQuestion && dependentQuestion.choices;
+    };
+
 
     if (values && values.length !== 0) {
       formItems = values.map((v, indexv) => (
@@ -247,45 +263,106 @@ export default class RenderQuestionsField extends React.Component {
                     </Option>
                   </Field>
                 </Col>
+                <Col span={24}>
+                  <Field
+                    name={`${name}[${indexv}].dependentQuestionId`}
+                    component={RenderSelect}
+                    placeholder={"Dependent Question"}
+                    type="select"
+                    label={
+                      <h5 style={{ marginBottom: "0", display: "inline" }}>
+                        Dependent Question
+                      </h5>
+                    }
+                    value={v.dependentQuestionId}
+                  >
+                    {questionsList.map((queList, qlKey) => (
+                      <Option
+                        style={{
+                          display: "block",
+                          height: "30px",
+                          lineHeight: "30px",
+                        }}
+                        value={queList.id}
+                        key={queList.id}
+                      >
+                        {queList.description}
+                      </Option>
+                    ))}
+                  </Field>
+                  {getDependentQuestionChoices(v) && (
+                    <Field
+                      name={`${name}[${indexv}].dependentChoiceId`}
+                      component={RenderSelect}
+                      placeholder={"Dependent Choice"}
+                      type="select"
+                      label={
+                        <h5 style={{ marginBottom: "0", display: "inline" }}>
+                          Dependent Choice
+                        </h5>
+                      }
+                      value={v.dependentChoiceId}
+                    >
+                      {getDependentQuestionChoices(v).map((choiItem, chKey) => (
+                        <Option
+                          style={{
+                            display: "block",
+                            height: "30px",
+                            lineHeight: "30px",
+                          }}
+                          value={choiItem.id}
+                          key={choiItem.id}
+                        >
+                          {choiItem.description}
+                        </Option>
+                      ))}
+                    </Field>
+                  )}
+                </Col>
               </Row>
-              {v.choiceType !== "" &&
-                (v.choiceType === QuestionTypes.SELECT ||
-                  v.choiceType === QuestionTypes.RADIO ||
-                  v.choiceType === QuestionTypes.SLIDER ||
-                  v.choiceType === QuestionTypes.MSELECT ||
-                  v.choiceType === QuestionTypes.CHECKBOX ||
-                  v.choiceType === QuestionTypes.MCHECKBOX) && (
-                  <FieldArray
-                    name={`${name}[${indexv}].choices`}
-                    render={(arrayHelpersA) => (
-                      <RenderDynamicField
-                        // setload={setload}
-                        arrayHelpers={arrayHelpersA}
-                        values={v.choices}
-                        // label={"Add Choices"}
+              <Row>
+                <Col span={12}>
+                  {v.choiceType !== "" &&
+                    (v.choiceType === QuestionTypes.SELECT ||
+                      v.choiceType === QuestionTypes.RADIO ||
+                      v.choiceType === QuestionTypes.SLIDER ||
+                      v.choiceType === QuestionTypes.MSELECT ||
+                      v.choiceType === QuestionTypes.CHECKBOX ||
+                      v.choiceType === QuestionTypes.MCHECKBOX) && (
+                      <FieldArray
                         name={`${name}[${indexv}].choices`}
-                        buttonText={
-                          v.choiceType === QuestionTypes.SLIDER
-                            ? "Add Slider Milestones"
-                            : "Add Choices"
-                        }
-                        keys={[
-                          {
-                            type: "text",
-                            label:
+                        render={(arrayHelpersA) => (
+                          <RenderDynamicField
+                            // setload={setload}
+                            arrayHelpers={arrayHelpersA}
+                            values={v.choices}
+                            // label={"Add Choices"}
+                            name={`${name}[${indexv}].choices`}
+                            buttonText={
                               v.choiceType === QuestionTypes.SLIDER
-                                ? "enter label"
-                                : "choices",
-                            key: "description",
-                          },
-                        ]}
+                                ? "Add Slider Milestones"
+                                : "Add Choices"
+                            }
+                            keys={[
+                              {
+                                type: "text",
+                                label:
+                                  v.choiceType === QuestionTypes.SLIDER
+                                    ? "enter label"
+                                    : "choices",
+                                key: "description",
+                              },
+                            ]}
+                          />
+                        )}
+                        // skills={skills}
+                        values={v.choices}
+                        //   handleQuestions={handleChoices}
                       />
                     )}
-                    // skills={skills}
-                    values={v.choices}
-                    //   handleQuestions={handleChoices}
-                  />
-                )}
+                </Col>
+                <Col span={12}></Col>
+              </Row>
             </Col>
           </Card>
         </FormItem>

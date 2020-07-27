@@ -223,7 +223,7 @@ export default (pubsub: any) => ({
     async addSection(obj: any, { quizId }: any, { Quiz, User }: any) {
       try {
         console.log("input in res", quizId);
-        const section = await Quiz.addSection(quizId);
+        const section = await Quiz.addEmptySection(quizId);
         // if (section) {
         //   await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
         // }
@@ -248,22 +248,53 @@ export default (pubsub: any) => ({
       }
     },
 
+    async submitSection(obj: any, { input }: any, { Quiz, User }: any) {
+      try {
+        console.log("input in res", input);
+        var sectionExists = null;
+        var sectionSubmitted = null;
+        if (input.id) {
+          sectionExists = await Quiz.getSection(input.id);
+        }
+        if (sectionExists) {
+          sectionSubmitted = await Quiz.updateSection(input);
+        } else {
+          sectionSubmitted = await Quiz.addSection(input);
+        }
+        var newQuiz = await Quiz.getQuiz(input.quizId);
+        const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
+        newQuiz.user = getUser;
+        console.log("submit sectionssss", newQuiz);
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizUpdated: {
+            mutation: "UPDATED",
+            id: newQuiz && newQuiz.id,
+            node: newQuiz,
+          },
+        });
+        return sectionSubmitted;
+      } catch (e) {
+        return e;
+      }
+    },
+
     async submitQuestion(obj: any, { input }: any, { Quiz, User }: any) {
       try {
         console.log("input in res", input);
-        const questionSubmitted = await Quiz.submitQuestion(input);
+        var questionExists = null;
+        var questionSubmitted = null;
+        if (input.id) {
+          questionExists = await Quiz.getQuestionItem(input.id);
+        }
+        if (questionExists) {
+          questionSubmitted = await Quiz.updateQuestion(input);
+        } else {
+          questionSubmitted = await Quiz.addQuestion(input);
+        }
         const sectionItem = await Quiz.getSection(
           questionSubmitted && questionSubmitted.sectionId
         );
-
-        // if (section) {
-        //   await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
-        // }
-        // const id = await Quiz.addQuiz(input);
-        // console.log("quiz added", id);
-        // console.log("neee", newQuiz);
-        // const quiz = await Quiz.getQuiz(id);
-        // console.log('user profile', userProfile);
+        console.log("subMit questions", questionSubmitted);
         var newQuiz = await Quiz.getQuiz(sectionItem && sectionItem.quizId);
         const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
         newQuiz.user = getUser;
@@ -368,6 +399,13 @@ export default (pubsub: any) => ({
         pubsub.publish(QUIZZES_SUBSCRIPTION, {
           quizzesUpdated: {
             mutation: "UPDATED",
+            node: item,
+          },
+        });
+        pubsub.publish(QUIZ_SUBSCRIPTION, {
+          quizUpdated: {
+            mutation: "UPDATED",
+            id: item && item.id,
             node: item,
           },
         });

@@ -230,7 +230,7 @@ export default class Quiz extends Model {
     return isUpdated;
   }
 
-  public async addSection(quizId: number) {
+  public async addEmptySection(quizId: number) {
     const input = {
       quizId: quizId
     }
@@ -243,26 +243,41 @@ export default class Quiz extends Model {
     return res;
   }
 
-  public async addQuestion(sectionId: number) {
-    const input = {
-      sectionId: sectionId
-    }
+  public async addSection(input: any) {
     console.log("section added11", input);
-
     const res = camelizeKeys(
-      await Question.query().insertGraph(decamelizeKeys(input))
+      await Section.query().insertGraph(decamelizeKeys(input))
     );
     console.log("section added", res);
     return res;
   }
 
-  public async submitQuestion(input: any) {
+  public async updateSection(input: any) {
+    console.log("section updateed11", input);
+    const res = camelizeKeys(
+      await Section.query().upsertGraph(decamelizeKeys(input))
+    );
+    console.log("section updateed", res);
+    return res;
+  }
+
+  public async addQuestion(input: any) {
     const res = camelizeKeys(
       await Question.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("question submitted", res);
+    console.log("question added", res);
     return res;
   }
+
+  public async updateQuestion(input: any) {
+    const res = camelizeKeys(
+      await Question.query().upsertGraph(decamelizeKeys(input))
+    );
+    console.log("question updated", res);
+    return res;
+  }
+
+
 
   public async getSection(id: number) {
     const res = camelizeKeys(

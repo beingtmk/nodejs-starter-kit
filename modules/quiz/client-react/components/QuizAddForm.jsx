@@ -22,7 +22,7 @@ import RenderSectionsField from "./RenderSectionsField";
 //   onSubmit: (values: QuizAddForm) => void;
 // }
 
-const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion }) => {
+const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion, submitSection }) => {
   const handleSections = (data) => (values.sections = data);
   // const [load, setload] = React.useState(false);
   console.log('form values', values);
@@ -76,6 +76,7 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
         name='sections'
         render={arrayHelpers => (
           <RenderSectionsField
+            quizItem={values}
             arrayHelpers={arrayHelpers}
             values={values.sections}
             name='sections'
@@ -84,6 +85,7 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
             deleteSection={deleteSection}
             submitQuestion={submitQuestion}
             deleteQuestion={deleteQuestion}
+            submitSection={submitSection}
           />
         )}
         sectionsVal={values.sections}
@@ -108,16 +110,20 @@ const QuizAddFormWithFormik = withFormik({
     function getQuestions(question) {
       return {
         id: (question && question.id) || null,
+        sectionId: (question && question.sectionId) || null,
         description: (question && question.description) || '',
         choiceType: (question && question.choiceType) || '',
         isActive: (question && question.isActive) || true,
-        choices: question && question.choices && question.choices.map(getChoices) || []
+        choices: question && question.choices && question.choices.map(getChoices) || [],
+        dependentQuestionId: (question && question.dependentQuestionId) || null,
+        dependentChoiceId: (question && question.dependentChoiceId) || null
       };
     }
     function getSections(section) {
       return {
         id: (section && section.id) || null,
         title: (section && section.title) || '',
+        quizId:(section && section.quizId) || null,
         description: (section && section.description) || '',
         isActive: (section && section.isActive) || true,
         questions: section && section.questions && section.questions.map(getQuestions) || []

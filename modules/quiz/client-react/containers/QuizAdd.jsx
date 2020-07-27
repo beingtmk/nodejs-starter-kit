@@ -15,6 +15,7 @@ import {
   withQuestionDeleting,
   withQuestionSubmitting,
   withAddSection,
+  withSectionSubmitting
   // updateQuizState,
 } from "./QuizOperations";
 
@@ -69,7 +70,7 @@ const QuizAddContainer = (props) => {
   // });
 
   const onSubmit = async (values) => {
-    const { t, addQuiz, currentUserLoading, currentUser, history } = props;
+    const { t, editQuiz, currentUserLoading, currentUser, history } = props;
     const userId = !currentUserLoading && currentUser && currentUser.id;
     values.userId = userId;
     try {
@@ -91,7 +92,8 @@ const QuizAddWithoutCurrentUser = compose(
   withSectionDeleting,
   withQuestionDeleting,
   withQuestionSubmitting,
-  withAddSection
+  withAddSection,
+  withSectionSubmitting
 )(translate("contact")(QuizAddContainer));
 
 const QuizAdd = (props) => {

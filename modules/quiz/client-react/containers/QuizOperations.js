@@ -8,6 +8,7 @@ import DELETE_SECTION from "../graphql/DeleteSection.graphql";
 import DELETE_QUESTION from "../graphql/DeleteQuestion.graphql";
 import ADD_SECTION from "../graphql/AddSection.graphql";
 import SUBMIT_QUESTION from "../graphql/SubmitQuestion.graphql";
+import SUBMIT_SECTION from "../graphql/SubmitSection.graphql";
 
 // const withUsersState = Component =>
 //   graphql(USERS_STATE_QUERY, {
@@ -144,6 +145,28 @@ const withQuestionSubmitting = (Component) =>
     }),
   })(Component);
 
+  const withSectionSubmitting = (Component) =>
+  graphql(SUBMIT_SECTION, {
+    props: ({ mutate }) => ({
+      submitSection: async (input) => {
+        try {
+          const {
+            data: { submitSection },
+          } = await mutate({
+            variables: { input },
+          });
+          message.destroy();
+          message.success("Submit Section.");
+        } catch (e) {
+          console.log(e);
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      },
+    }),
+  })(Component);
+
 const withAddSection = (Component) =>
   graphql(ADD_SECTION, {
     props: ({ mutate }) => ({
@@ -269,4 +292,5 @@ export {
   withQuestionSubmitting,
   withAddSection,
   updateQuizState,
+  withSectionSubmitting,
 };

@@ -98,6 +98,8 @@ extend type Mutation {
   addSection(quizId: Int!): Section
   # Add section in existing quiz
   submitQuestion(input: QuestionInput): Question
+  # Add section in existing quiz
+  submitSection(input: SectionInput): Section
   # Delete section
   deleteSection(id: Int): Section
   # Delete quiz
@@ -137,7 +139,7 @@ input EditQuizInput {
 
 input EditSectionInput {
   id: Int
-  quizid: Int
+  quizId: Int
   title: String!
   description: String
   isActive: Boolean
@@ -174,6 +176,7 @@ input AddQuizInput {
 input SectionInput {
   id: Int
   title: String
+  quizId: Int
   description: String
   isActive: Boolean
   questions: [QuestionInput]

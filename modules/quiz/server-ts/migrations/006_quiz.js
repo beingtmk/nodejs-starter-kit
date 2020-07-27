@@ -37,8 +37,8 @@ exports.up = function(knex) {
         .inTable("section")
         .onDelete("CASCADE");
       table.string("description");
-      table.integer("dependentQuestionId");
-      table.integer("dependentChoiceId");
+      table.integer("dependent_question_id");
+      table.integer("dependent_choice_id");
       table.string("choice_type");
       table.boolean("is_active").defaultTo(true);
       table.timestamps(false, true);
