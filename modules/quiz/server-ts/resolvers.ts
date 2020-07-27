@@ -229,14 +229,9 @@ export default (pubsub: any) => ({
       try {
         console.log("input in res", quizId);
         const section = await Quiz.addEmptySection(quizId);
-        // if (section) {
-        //   await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
-        // }
-        // const id = await Quiz.addQuiz(input);
-        // console.log("quiz added", id);
-        // console.log("neee", newQuiz);
-        // const quiz = await Quiz.getQuiz(id);
-        // console.log('user profile', userProfile);
+        if (section) {
+          await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
+        }
         var newQuiz = await Quiz.getQuiz(quizId);
         const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
         newQuiz.user = getUser;

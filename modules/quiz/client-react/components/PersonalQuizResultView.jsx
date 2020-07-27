@@ -25,7 +25,7 @@ export const ResultComponent = (props) => {
     props.quiz.sections &&
     props.quiz.sections.map((sect) => {
       var dependencyExists = sect.questions.find(
-        (qu) => qu.choiceType === QuestionTypes.DEPENDENCE
+        (qu) => qu.dependentQuestionType !== null
       );
       sect.questions.map((question, key) => {
         const getAnswers = () => {
