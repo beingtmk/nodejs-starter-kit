@@ -76,7 +76,9 @@ export default class RenderQuestionsField extends React.Component {
           dependentQuestion &&
             dependentQuestion.answers &&
             dependentQuestion.answers.map((ansW) => {
-              dependence = ansW.choiceId === v.dependentChoiceId;
+              if (ansW.choiceId === v.dependentChoiceId) {
+                dependence = true;
+              }
             });
 
           if (v.dependentQuestionId && !dependence) {
