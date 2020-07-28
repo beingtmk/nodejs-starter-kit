@@ -46,16 +46,19 @@ const RenderSelectMultipleQuiz = (props) => {
   //     arrayHelpers.remove(file.uid);
   //   }
   // };
+  console.log('array helper', arrayHelpers);
 
+  console.log('valueeee', value);
   const handleChange = (e) => {
+    console.log('handle change', e);
     value && value.map((val, valI) => {
-      var valExists = e.find((eA) => eA === val.choiceId);
+      const valExists = e.find((eA) => eA === val.choiceId);
       if(!valExists){
-        arrayHelpers.pop(val);
+        arrayHelpers.remove(valI);
       }
     });
     e.map((eItem, eI) => {
-      var checkExists = value && value.find((va) => va.choiceId === eItem);
+      const checkExists = value && value.find((va) => va.choiceId === eItem);
       if (!checkExists) {
         var obj = {};
         obj["choiceId"] = eItem;
