@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form,Select } from 'antd';
+import { Form, Select } from 'antd';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -47,7 +47,7 @@ const RenderSelectMultipleQuiz = props => {
   //   }
   // };
 
-  const handleSelect = (e) =>{
+  const handleSelect = (e) => {
     var obj = {};
     obj['choiceId'] = e;
     obj['userId'] = currentUserId;
@@ -55,19 +55,22 @@ const RenderSelectMultipleQuiz = props => {
     obj['content'] = '';
     arrayHelpers.push(obj)
   }
-  const handleDeSelect = (e) =>{
-    const item = value.find(v=> v.choiceId === e);
-    arrayHelpers.pop(item);
+  const handleDeSelect = (e) => {
+    value.map((v, vI) => {
+      if (v.choiceId === e) {
+        arrayHelpers.remove(vI);
+      }
+    })
 
 
   }
   var defaultValues = [];
-  data && data.answers && data.answers.map((item, key)=>{
+  data && data.answers && data.answers.map((item, key) => {
     defaultValues.push(item.choiceId)
   })
   console.log('multiple select', data && data.answers)
   return (
-    <FormItem label={label} validateStatus={validateStatus} 
+    <FormItem label={label} validateStatus={validateStatus}
     // help={error}
     >
       <div>
@@ -82,8 +85,8 @@ const RenderSelectMultipleQuiz = props => {
           onSelect={handleSelect}
           onDeselect={handleDeSelect}
         >
-          {data.choices.map((d, i)=>(
-            <Option value = {d.id} key={i}>{d.description}</Option>
+          {data.choices.map((d, i) => (
+            <Option value={d.id} key={i}>{d.description}</Option>
           ))}
         </Select>
       </div>
