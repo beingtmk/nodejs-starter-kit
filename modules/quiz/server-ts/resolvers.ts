@@ -43,6 +43,7 @@ export default (pubsub: any) => ({
     },
     async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
+      console.log('quizzzzzz', quiz.sections[0].questions);
       return quiz;
     },
     // async answer(obj: any, { input }: any, context: any) {

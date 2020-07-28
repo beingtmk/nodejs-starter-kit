@@ -47,6 +47,7 @@ const QuizForm = ({
       </Button>
     );
   };
+  console.log('form values', values);
   return (
     <>
       <Form name="quizAdd" onSubmit={handleSubmit}>

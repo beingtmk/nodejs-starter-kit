@@ -48,14 +48,14 @@ const RenderSelectMultipleQuiz = (props) => {
   // };
 
   const handleChange = (e) => {
-    value.map((val, valI) => {
+    value && value.map((val, valI) => {
       var valExists = e.find((eA) => eA === val.choiceId);
       if(!valExists){
         arrayHelpers.pop(val);
       }
     });
     e.map((eItem, eI) => {
-      var checkExists = value.find((va) => va.choiceId === eItem);
+      var checkExists = value && value.find((va) => va.choiceId === eItem);
       if (!checkExists) {
         var obj = {};
         obj["choiceId"] = eItem;
