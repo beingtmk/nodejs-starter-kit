@@ -124,7 +124,6 @@ class RenderAddress extends React.Component {
   render() {
     const { arrayHelpers, name, addresses, t, label, onSubmit } = this.props;
     function cancel(e) {
-      console.log(e);
       message.error('Click on No');
     }
     const isSelectable = this.props.isSelectable || false;

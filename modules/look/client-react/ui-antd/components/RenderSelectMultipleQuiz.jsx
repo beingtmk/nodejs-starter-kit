@@ -48,7 +48,6 @@ const RenderSelectMultipleQuiz = props => {
   // };
 
   const handleSelect = (e) =>{
-    console.log('selec', e)
     var obj = {};
     obj['choiceId'] = e;
     obj['userId'] = currentUserId;
@@ -57,13 +56,11 @@ const RenderSelectMultipleQuiz = props => {
     arrayHelpers.push(obj)
   }
   const handleDeSelect = (e) =>{
-    console.log('deselec', e)
     const item = value.find(v=> v.choiceId === e);
     arrayHelpers.pop(item);
 
 
   }
-  console.log('mselect', arrayHelpers)
   var defaultValues = [];
   data && data.answers && data.answers.map((item, key)=>{
     defaultValues.push(item.choiceId)

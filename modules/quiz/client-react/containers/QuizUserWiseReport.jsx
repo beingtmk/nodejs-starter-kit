@@ -14,11 +14,9 @@ import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
 //To Do - Query after state.visible is true
 const QuizUserWiseReport = (props) => {
   const QuizUserWiseReportComponent = props.QuizUserWiseReportComponent;
-  console.log('groupsss', props.groupId,  props.quiz && props.quiz.attendees);
 
   const setGroupId = (e) => {
     props.setGroupId(e);
-    console.log('refetch comencing');
   }
   props.refetchResult()
 

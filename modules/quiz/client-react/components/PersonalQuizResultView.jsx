@@ -54,7 +54,6 @@ export const ResultComponent = (props) => {
             );
           }
         };
-        console.log("get annnnnn", getAnswers());
         if (dependencyExists) {
           if (
             question &&
@@ -75,7 +74,6 @@ export const ResultComponent = (props) => {
         }
       });
     });
-  console.log("qans", queAnsArray);
   return (
     <>
       <h3>Result:</h3>

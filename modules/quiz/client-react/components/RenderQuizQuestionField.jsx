@@ -49,7 +49,6 @@ export default class RenderQuestionsField extends React.Component {
     const currentUserId = this.props.currentUserId;
     let formItems = null;
     const questionsQ = this.props.quiz && this.props.quiz.questions;
-    console.log("keys", values);
     // const handleChoices = (data) => (values.choices = data);
     // this.add
     const { sectionIndex, questionList } = this.props;
@@ -287,9 +286,7 @@ RenderQuestionsField.propTypes = {
 };
 
 const SliderFormComponent = (props) => {
-  console.log("slider", props);
   const handleChange = (e) => {
-    console.log(e);
     props.formik && props.formik.setFieldValue(props.name, `${e}`);
   };
   return (

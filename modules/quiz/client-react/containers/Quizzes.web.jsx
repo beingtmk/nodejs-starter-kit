@@ -49,7 +49,6 @@ const Quizzes = props => {
       ]}
     />
   );
-  console.log('quizzes list', props)
   return (
     <PageLayout>
       {renderMetaData()}
@@ -112,7 +111,6 @@ export default compose(
           message.destroy();
           message.success('Quiz deleted.');
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -142,7 +140,6 @@ export default compose(
           });
 
           if (quizData && quizData.data && quizData.data.duplicateQuiz && quizData.data.duplicateQuiz.id) {
-            console.log('redirect url', `/quiz/edit/${quizData.data.duplicateQuiz.id}`);
             history.push(`/quiz/edit/${quizData.data.duplicateQuiz.id}`)
             message.destroy();
             message.success('Quiz duplicateed.');

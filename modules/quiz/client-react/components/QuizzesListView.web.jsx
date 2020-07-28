@@ -92,7 +92,6 @@ const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, curr
       key: 'username',
       render: (text, record) => (
         <h5>
-          {console.log('record', record)}
           {record.user && record.user.username}
         </h5>
       )

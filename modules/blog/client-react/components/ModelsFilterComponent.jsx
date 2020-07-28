@@ -5,7 +5,6 @@ import { Form, FormItem, Input } from '@gqlapp/look-client-react';
 
 const ModelsFilterComponent = ({ filter: { searchText, gearCategory }, onSearchTextChange }) => (
   <Form layout="inline">
-    {console.log('searchText', searchText, gearCategory)}
     <FormItem label="Search">
       <DebounceInput
         minLength={1}

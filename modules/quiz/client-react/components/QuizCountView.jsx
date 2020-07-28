@@ -20,7 +20,6 @@ const renderMetaData = (t) => (
 
 const QuizCountComponent = (props) => {
   const sections = props.quiz && props.quiz.sections;
-  console.log("countries", props.quiz.sections[0].questions[2].choices);
   return (
     <>
       {sections &&

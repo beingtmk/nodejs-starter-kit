@@ -20,7 +20,6 @@ const RenderSelect = (props) => {
   }
 
   const onChange = (value) => {
-    console.log("forrrrmik", formik);
     const { formik, name } = props;
     formik.handleChange({ target: { value, name } });
   };

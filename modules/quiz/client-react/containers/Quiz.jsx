@@ -29,7 +29,6 @@ const Quiz = (props) => {
       throw new FormError(t('serverError'), e);
     }
   };
-  console.log('quiz', props);
   
   return (
     
@@ -44,7 +43,6 @@ export default compose(
       addAnswer: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
-        console.log('adddd answer', values);
         try {
           let ansData = await mutate({
             variables: {

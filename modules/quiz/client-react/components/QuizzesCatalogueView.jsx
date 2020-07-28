@@ -34,7 +34,6 @@ const QuizzesCatalogueView = (props) => {
           <a href={`/quiz/${quiz.id}`}>
             <Col xs={24} md={12} lg={8}>
               <Card title={<h3>{quiz.title}</h3>}>
-                {console.log(quizzes[0])}
                 <h4>{quiz.description}</h4>
 
               </Card>

@@ -45,7 +45,6 @@ export default class HomeView extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     // const renderMetaData = t => (
     //   <Helmet
     //     title={`${settings.app.name} - ${t('title')}`}

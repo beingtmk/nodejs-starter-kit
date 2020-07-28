@@ -53,12 +53,10 @@ export const useQuizWithSubscription = (subscribeToMore, quizId) => {
           }
         }
       ) => {
-        console.log('quiz updated with', newData)
         setQuizUpdated(newData);
       }
     });
   };
-  console.log('quiz updated with subscription', quizUpdated)
   return quizUpdated;
 };
 

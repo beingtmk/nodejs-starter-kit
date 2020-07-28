@@ -61,7 +61,6 @@ export default class RenderQuestionsField extends React.Component {
     const arrayHelpers = this.props.arrayHelpers;
     const sectionIndex = this.props.sectionIndex;
     let formItems = null;
-    console.log("valllll", values);
     // const handleChoices = (data) => (values.choices = data);
     const { submitQuestion, deleteQuestion, sectionId, quizItem } = this.props;
     var questionsList = [];

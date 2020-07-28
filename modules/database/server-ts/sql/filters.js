@@ -3,7 +3,6 @@ export default function filterBuilder(queryBuilder, args) {
   // add filter conditions
   if (filters) {
     if (args.debug && args.debug.filters) {
-      console.log('filterBuilder args', args);
     }
 
     let first = true;

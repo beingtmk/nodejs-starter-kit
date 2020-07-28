@@ -8,7 +8,6 @@ class DropDown extends React.Component {
     type: PropTypes.string
   };
   componentDidMOunt() {
-    console.log(this.props);
   }
 
   render() {

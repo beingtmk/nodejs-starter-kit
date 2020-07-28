@@ -92,7 +92,6 @@ const withSectionDeleting = (Component) =>
           message.destroy();
           message.success("Section deleted.");
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -114,7 +113,6 @@ const withQuestionDeleting = (Component) =>
           message.destroy();
           message.success("Question deleted.");
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -136,7 +134,6 @@ const withQuestionSubmitting = (Component) =>
           message.destroy();
           message.success("Submit Question.");
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -158,7 +155,6 @@ const withQuestionSubmitting = (Component) =>
           message.destroy();
           message.success("Submit Section.");
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -180,7 +176,6 @@ const withAddSection = (Component) =>
           message.destroy();
           message.success("Section Added.");
         } catch (e) {
-          console.log(e);
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
@@ -214,10 +209,8 @@ const withAddSection = (Component) =>
 //   })(Component);
 
 const updateQuizState = (quizUpdated, updateQuery) => {
-  console.log("quiz updated", quizUpdated, updateQuery);
   const { mutation, node } = quizUpdated;
   updateQuery((prev) => {
-    console.log("prev update", prev);
     var updatedQuiz = prev && prev.addQuizQuery;
     const prevId = prev && prev.addQuizQuery && prev.addQuizQuery.id;
     const newId = node && node.id;
@@ -234,17 +227,13 @@ const updateQuizState = (quizUpdated, updateQuery) => {
 };
 
 const updateQuizzesState = (quizzesUpdated, updateQuery) => {
-  console.log("quiz updated");
   const { mutation, node } = quizzesUpdated;
   updateQuery((prev) => {
-    console.log("prev update", prev);
     switch (mutation) {
       case "CREATED":
-        console.log("quiz created");
         return addQuiz(prev, node);
 
       case "DELETED":
-        console.log("quiz deleted");
 
         return deleteQuiz(prev, node.id);
       case "UPDATED":
@@ -260,7 +249,6 @@ function addQuiz(prev, node) {
   if (prev.quizzes.some((quiz) => quiz.id === node.id)) {
     return prev;
   }
-  console.log("add quiz", prev, node);
   return update(prev, {
     quizzes: {
       $set: [...prev.quizzes, node],
@@ -269,7 +257,6 @@ function addQuiz(prev, node) {
 }
 
 function deleteQuiz(prev, id) {
-  console.log("prevv", prev);
   const index = prev.quizzes.findIndex((quiz) => quiz.id === id);
   // ignore if not found
   if (index < 0) {

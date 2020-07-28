@@ -29,14 +29,12 @@ export default (pubsub: any) => ({
     async addQuizQuery(obj: any, { userId }: any, context: any) {
       try {
         var quiz = await context.Quiz.getCurrentQuiz(userId);
-        console.log("current quiz exists", quiz);
         if (!quiz) {
           const quizData = {
             userId,
             state: QuizStates.CURRENT,
           };
           quiz = await context.Quiz.addCurrentQuiz(quizData);
-          console.log("current quiz added", quiz);
         }
         return quiz;
       } catch (e) {
@@ -45,7 +43,6 @@ export default (pubsub: any) => ({
     },
     async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
-      console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqq", quiz);
       return quiz;
     },
     // async answer(obj: any, { input }: any, context: any) {
@@ -79,22 +76,17 @@ export default (pubsub: any) => ({
               questionIdArray.push(question.id);
             });
         });
-      console.log("ggggg", questionIdArray);
 
       const params = { questionIdArray: questionIdArray };
       const result = await context.Quiz.getAnswersByQuestionArray(params);
-      console.log("ggggggggggggg", result);
       let userIdArray = [];
       result.map((item, key) => {
         const found = userIdArray.find((id) => id === item.userId);
-        console.log("found", found);
         if (!found || (found && found.length === 0)) {
           userIdArray.push(item.userId);
         }
       });
-      console.log("userIddd", userIdArray);
       const users = await context.User.getUsersWithIdArray(userIdArray);
-      console.log("usersss", users);
       return {
         users: users,
       };
@@ -124,17 +116,13 @@ export default (pubsub: any) => ({
                 });
             });
         });
-      console.log("ggggggggggggg", result);
       result.map((item, key) => {
         const found = userIdArray.find((id) => id === item.userId);
-        console.log("found", found);
         if (!found || (found && found.length === 0)) {
           userIdArray.push(item.userId);
         }
       });
-      console.log("userIddd", userIdArray);
       const users = await context.User.getUsersWithIdArray(userIdArray);
-      console.log("usersss", users);
       let quizOut = {
         id: quiz.id,
         userId: quiz.userId,
@@ -153,13 +141,11 @@ export default (pubsub: any) => ({
       //       console.log('result pushed', quiz.questions[key1].results);
       //     });
       //   });
-      console.log("quizOut", quizOut);
       return quizOut;
     },
     async getQuizCount(obj: any, { id }: any, context: any) {
       try {
         let quiz = await context.Quiz.getQuizWithChoiceAnswers(id);
-        console.log(quiz);
         quiz &&
           quiz.sections &&
           quiz.sections.map((sec, secI) => {
@@ -167,7 +153,6 @@ export default (pubsub: any) => ({
               sec.questions &&
               sec.questions.map((qu, quI) => {
                 if (qu.choiceType === QuestionTypes.COUNTRIES) {
-                  console.log('question choices', qu.answers);
                   var countryChoices = [];
                   countries.map((couN, couKey) => {
                     const answerLists =
@@ -179,7 +164,6 @@ export default (pubsub: any) => ({
                       count: (answerLists && answerLists.length) || 0,
                     });
                   });
-                  console.log('question choicesc', countryChoices)
                   quiz.sections[secI].questions[quI].countries = countryChoices;
                 } else {
                   qu &&
@@ -194,7 +178,6 @@ export default (pubsub: any) => ({
                 }
               });
           });
-          console.log('quiz.sections[]', quiz.sections[0].questions[2].countries) 
         return quiz;
       } catch (e) {
         return e;
@@ -203,13 +186,10 @@ export default (pubsub: any) => ({
   },
   Mutation: {
     async addQuiz(obj: any, { input }: any, { Quiz, User }: any) {
-      console.log("input in res", input);
       const id = await Quiz.addQuiz(input);
-      console.log("quiz added", id);
       var newQuiz = await Quiz.getQuiz(id);
       const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
       newQuiz.user = getUser;
-      console.log("neee", newQuiz);
       // const quiz = await Quiz.getQuiz(id);
       // console.log('user profile', userProfile);
       pubsub.publish(QUIZZES_SUBSCRIPTION, {
@@ -227,7 +207,6 @@ export default (pubsub: any) => ({
 
     async addSection(obj: any, { quizId }: any, { Quiz, User }: any) {
       try {
-        console.log("input in res", quizId);
         const section = await Quiz.addEmptySection(quizId);
         if (section) {
           await Quiz.changeQuizState(quizId, QuizStates.UPDATED);
@@ -250,7 +229,6 @@ export default (pubsub: any) => ({
 
     async submitSection(obj: any, { input }: any, { Quiz, User }: any) {
       try {
-        console.log("input in res", input);
         var sectionExists = null;
         var sectionSubmitted = null;
         if (input.id) {
@@ -264,7 +242,6 @@ export default (pubsub: any) => ({
         var newQuiz = await Quiz.getQuiz(input.quizId);
         const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
         newQuiz.user = getUser;
-        console.log("submit sectionssss", newQuiz);
         pubsub.publish(QUIZ_SUBSCRIPTION, {
           quizUpdated: {
             mutation: "UPDATED",
@@ -280,7 +257,6 @@ export default (pubsub: any) => ({
 
     async submitQuestion(obj: any, { input }: any, { Quiz, User }: any) {
       try {
-        console.log("input in res", input);
         var questionExists = null;
         var questionSubmitted = null;
         if (input.id) {
@@ -294,7 +270,6 @@ export default (pubsub: any) => ({
         const sectionItem = await Quiz.getSection(
           questionSubmitted && questionSubmitted.sectionId
         );
-        console.log("subMit questions", questionSubmitted);
         var newQuiz = await Quiz.getQuiz(sectionItem && sectionItem.quizId);
         const getUser = await User.getUserForQuizSubscription(newQuiz.userId);
         newQuiz.user = getUser;
@@ -379,7 +354,6 @@ export default (pubsub: any) => ({
     editQuiz: withAuth(async (obj: any, { input }: any, { Quiz }: any) => {
       try {
         const inputId = input.id;
-        console.log("quiz edit resolvers1", input);
 
         // if (input.authorId) {
         //   input.authorId = await Profile.getProfileId(input.authorId);
@@ -415,7 +389,6 @@ export default (pubsub: any) => ({
       }
     }),
     async addAnswers(obj: any, { input }: any, { Quiz }: any) {
-      console.log("iinnppuutt", input);
       try {
         var userId;
         var sectionId;
@@ -427,12 +400,10 @@ export default (pubsub: any) => ({
         // }
         input.results.map(async (result, item) => {
           const ansExists = await Quiz.getAnswerByParams(result);
-          console.log("ansexists", ansExists);
           var isDone;
           const questionItem = await Quiz.getQuestion(
             input.results && input.results[0].questionId
           );
-          console.log("question existss", questionItem);
           if (ansExists && ansExists.length !== 0) {
             isDone = await Quiz.updateAnswer(result);
           } else {
@@ -506,10 +477,8 @@ export default (pubsub: any) => ({
             input.quizId
           );
           const getQuiz = await context.Quiz.getQuiz(res.id);
-          console.log("ressssss", getQuiz);
           // const getUser = await context.User.getUserForQuizSubscription(res.userId)
           // res.user = getUser;
-          console.log("copiiiied", getQuiz);
           pubsub.publish(QUIZZES_SUBSCRIPTION, {
             quizzesUpdated: {
               mutation: "CREATED",
@@ -529,7 +498,6 @@ export default (pubsub: any) => ({
         () => pubsub.asyncIterator(QUIZZES_SUBSCRIPTION),
         (payload, variables) => {
           const { mutation, node } = payload.quizzesUpdated;
-          console.log("subsss", node && node.sections, node);
           const {
             // filter: { searchText }
           } = variables;
@@ -556,8 +524,6 @@ export default (pubsub: any) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(QUIZ_SUBSCRIPTION),
         (payload, variables) => {
-          console.log("quizUpdatedddd variables", variables);
-          console.log("quizUpdatedddd", payload);
           return (
             payload &&
             payload.quizUpdated &&

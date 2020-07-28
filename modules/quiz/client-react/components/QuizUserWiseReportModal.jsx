@@ -13,7 +13,6 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 //To Do - Query after state.visible is true
 
 const QuizUserWiseReportComponent = (quiz) => {
-  console.log("quizzzz", quiz);
   const resultQuiz = quiz.quiz;
   var questionsData = [];
   resultQuiz &&
@@ -64,7 +63,6 @@ const QuizUserWiseReportComponent = (quiz) => {
       render: (text, record) => <p> {record.description} </p>,
     },
   ];
-  console.log(resultQuiz);
   resultQuiz &&
     resultQuiz.attendees &&
     resultQuiz.attendees.users &&
@@ -104,14 +102,12 @@ class QuizUserWiseReportModal extends React.Component {
   // };
 
   handleCancel = (e) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   setGroupId = (e) => {
-    console.log("setting", e);
     this.setState({
       groupId: e,
     });

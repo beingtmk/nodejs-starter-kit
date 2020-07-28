@@ -48,7 +48,6 @@ const RenderSelectMultipleQuiz = (props) => {
   // };
 
   const handleChange = (e) => {
-    console.log("checked", e);
     value.map((val, valI) => {
       var valExists = e.find((eA) => eA === val.choiceId);
       if(!valExists){
@@ -73,7 +72,6 @@ const RenderSelectMultipleQuiz = (props) => {
   //   arrayHelpers.pop(item);
 
   // }
-  console.log("checkbox", arrayHelpers);
   var defaultValues = [];
   value &&
     value.map((item, key) => {

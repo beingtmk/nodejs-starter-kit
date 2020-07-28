@@ -25,7 +25,6 @@ import RenderSectionsField from "./RenderSectionsField";
 const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion, submitSection }) => {
   const handleSections = (data) => (values.sections = data);
   // const [load, setload] = React.useState(false);
-  console.log('form values', values);
   return (
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
@@ -99,7 +98,6 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
 const QuizAddFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    console.log('map props', props);
     function getChoices(choice) {
       return {
         id: (choice && choice.id) || null,
@@ -148,7 +146,6 @@ const QuizAddFormWithFormik = withFormik({
       // })
     );
     // values.questions = (values.questions.map)
-    console.log('on submit', values)
     try {
       await onSubmit(values);
       resetForm();

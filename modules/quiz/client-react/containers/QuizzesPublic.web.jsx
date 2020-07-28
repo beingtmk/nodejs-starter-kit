@@ -48,7 +48,6 @@ const Quizzes = (props) => {
       ]}
     />
   );
-  console.log("quizzes list", props);
   return (
     <PageLayout>
       {renderMetaData()}

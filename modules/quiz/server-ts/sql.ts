@@ -115,7 +115,6 @@ export default class Quiz extends Model {
         .whereIn("answer.question_id", questionsIdArray)
         .where("answer.user_id", userId)
     );
-    console.log("cccccccccccccccccccccc", answers);
 
     if (!answers || (answers && answers.length === 0)) {
       return res;
@@ -126,7 +125,6 @@ export default class Quiz extends Model {
         sect.questions.map((ques, quI) => {
           const answs = answers.filter((anss) => anss.questionId === ques.id);
           res.sections[secI].questions[quI].answers = answs;
-          console.log("resresres", res.sections[secI].questions[quI].answers);
         });
       });
 
@@ -138,7 +136,6 @@ export default class Quiz extends Model {
     //     q.answers.push(ans);
     //     res.questions[index] = q;
     //   });
-    console.log("bbbbbbbbbbb", res);
 
     return res;
   }
@@ -167,7 +164,6 @@ export default class Quiz extends Model {
       .leftJoin("user", "user.email", "group_member.email")
       .select("user.id as userId")
       .where("group_member.group_id", groupId);
-    console.log("usersBygroup", usersByGroup);
     if (usersByGroup && usersByGroup.length === 0) {
       return res;
     }
@@ -186,7 +182,6 @@ export default class Quiz extends Model {
         .whereIn("answer.question_id", questionsIdArray)
         .whereIn("answer.user_id", userIdArray)
     );
-    console.log("answers", answers);
     if (answers && answers.length === 0) {
       return res;
     }
@@ -204,7 +199,6 @@ export default class Quiz extends Model {
   }
 
   public async addQuiz(input: any) {
-    console.log("quizzz added11", input);
 
     const res = camelizeKeys(
       await Quiz.query().insertGraph(decamelizeKeys(input))
@@ -214,12 +208,9 @@ export default class Quiz extends Model {
   }
 
   public async addCurrentQuiz(input: any) {
-    console.log("quizzz added11", input);
-
     const res = camelizeKeys(
       await Quiz.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("quizzz added", res);
     return res;
   }
 
@@ -234,30 +225,23 @@ export default class Quiz extends Model {
     const input = {
       quizId: quizId
     }
-    console.log("section added11", input);
-
     const res = camelizeKeys(
       await Section.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("section added", res);
     return res;
   }
 
   public async addSection(input: any) {
-    console.log("section added11", input);
     const res = camelizeKeys(
       await Section.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("section added", res);
     return res;
   }
 
   public async updateSection(input: any) {
-    console.log("section updateed11", input);
     const res = camelizeKeys(
       await Section.query().upsertGraph(decamelizeKeys(input))
     );
-    console.log("section updateed", res);
     return res;
   }
 
@@ -265,7 +249,6 @@ export default class Quiz extends Model {
     const res = camelizeKeys(
       await Question.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("question added", res);
     return res;
   }
 
@@ -273,7 +256,6 @@ export default class Quiz extends Model {
     const res = camelizeKeys(
       await Question.query().upsertGraph(decamelizeKeys(input))
     );
-    console.log("question updated", res);
     return res;
   }
 
@@ -316,11 +298,7 @@ export default class Quiz extends Model {
   }
 
   public async editQuiz(input: any) {
-    console.log("quiz edit sql", decamelizeKeys(input));
-
     const res = await Quiz.query().upsertGraph(decamelizeKeys(input));
-    console.log("sql res", res);
-
     return res;
   }
 
@@ -334,13 +312,11 @@ export default class Quiz extends Model {
     const res = await knex("answer")
       .returning("id")
       .insert(decamelizeKeys(input));
-    console.log("resssssss", res);
     return res;
   }
   public async addAnswers(input: any) {
     const res = await Answer.query()
       .insertWithRelated(decamelizeKeys(input));
-    console.log("resssssss", res);
     return res;
   }
 
@@ -447,7 +423,6 @@ export default class Quiz extends Model {
         .insertGraphAndFetch(insertData)
         .first()
     );
-    console.log("sql ress", res);
     return res;
   }
 

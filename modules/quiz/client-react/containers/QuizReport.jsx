@@ -25,14 +25,12 @@ class QuizReport extends React.Component {
   };
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
@@ -50,7 +48,6 @@ class QuizReport extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          {console.log(this.props)}
           {this.props.quizzLoading ? <Loader /> :(this.props.quiz ? (<ResultComponent {...this.props} />): 'No result queried')}
         </Modal>
       </div>

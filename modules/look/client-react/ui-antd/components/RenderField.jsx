@@ -10,7 +10,6 @@ const RenderField = ({ rows, input, label, type, meta: { touched, error }, place
   if (touched && error) {
     validateStatus = 'error';
   }
-  console.log(style);
   return (
     <FormItem label={label} hasFeedback={type != 'textarea'} validateStatus={validateStatus} help={touched && error} style={style}>
       {type != 'textarea' ? <Input {...input} placeholder={placeholder || label} type={type}  /> : null}

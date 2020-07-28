@@ -34,7 +34,6 @@ const QuizForm = ({
   errors,
 }) => {
   // const [load, setload] = React.useState(false);
-  console.log("form values", values);
 
   const SubmitButton = () => {
     return (
@@ -81,7 +80,6 @@ const QuizForm = ({
 const QuizFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    console.log("props", props);
     const currentUserId = props.currentUser && props.currentUser.id;
     var sections = props.quiz && props.quiz.sections;
     sections.length !== 0 &&
@@ -107,7 +105,6 @@ const QuizFormWithFormik = withFormik({
                 userId: currentUserId,
               },
             ];
-            console.log("answers", answers);
             questions[index].answers = answers;
           }
           section.questions = questions;
@@ -122,7 +119,6 @@ const QuizFormWithFormik = withFormik({
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }
   ) {
-    console.log("submit", values);
     var results = [];
     values.sections &&
       values.sections.map((sect) => {
@@ -142,7 +138,6 @@ const QuizFormWithFormik = withFormik({
       });
     values.results = results;
     // values.results = (results.map);
-    console.log("rreeeeeee", results);
     var val = { results: results };
     const inputValues = { results: values.results };
     try {

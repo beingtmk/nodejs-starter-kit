@@ -250,7 +250,6 @@ class CatalogueCardComponent extends React.Component {
 class Content5 extends React.PureComponent {
   getChildrenToRender = (data) =>
     data.map((item, keyC) => {
-      console.log("render key", keyC);
       return <CatalogueCardComponent item={item} keyC={keyC} />;
     });
 

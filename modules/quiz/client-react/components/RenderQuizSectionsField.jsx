@@ -18,7 +18,6 @@ import RenderQuizQuestionField from "./RenderQuizQuestionField";
 const FormItem = Form.Item;
 
 const SectionComponent = ({ sec, currentSection, currentUserId, questionList }) => {
-  console.log("sectionC", sec);
   const handleResults = (data) => (values.results = data);
 
   return (
@@ -59,7 +58,6 @@ export default class RenderSectionsField extends React.Component {
 
   nextStep = async () => {
     const { currentSection, sectionLength } = this.state;
-    console.log(currentSection, sectionLength);
     if (currentSection + 1 === sectionLength) {
       return false;
     }
@@ -102,7 +100,6 @@ export default class RenderSectionsField extends React.Component {
     const currentUserId = this.props.currentUserId;
     let formItems = null;
     const questionsQ = this.props.quiz && this.props.quiz.questions;
-    console.log("keys", values);
     // const handleChoices = (data) => (values.choices = data);
     // this.add
     var sectionComponents = [];
@@ -110,7 +107,6 @@ export default class RenderSectionsField extends React.Component {
 
     const { currentSection, sectionLength } = this.state;
 
-    console.log("section component", values.sections);
     var questionsList = [];
       values.sections &&
       values.sections.map((secI, keySec) => {

@@ -7,7 +7,6 @@ import UserBlogsView from '../components/UserBlogsView';
 
 class UserBlogs extends React.Component {
   render() {
-    console.log(this.props.match);
     let author = user;
     author['blogs'] = moreBlogs;
     author.blogs.map(obj => (obj.author = user));

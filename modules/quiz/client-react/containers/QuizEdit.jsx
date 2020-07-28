@@ -34,7 +34,6 @@ const subscribeToQuizEdit = (subscribeToMore, quizId, history, navigation) =>
         }
       }
     ) => {
-      console.log(quizUpdated);
       if (mutation === 'UPDATED') {
         return node
       }
@@ -75,14 +74,12 @@ const QuizEditContainer = (props) => {
     values.userId = userId;
     try {
       const newQ = await editQuiz(values);
-      console.log("newww", newQ);
       history.push(`/quiz/${newQ.data.addQuiz.id}`);
     } catch (e) {
       throw new FormError(t("serverError"), e);
     }
   };
 
-  console.log("quiz add form", props);
   return <QuizEditView {...props} onSubmit={onSubmit} />;
 };
 

@@ -30,7 +30,6 @@ const resolvers = {
           __type: TYPE_LOC
         }
       });
-      console.log('client res2', cache.readQuery({ query: LOCATION_STATE_QUERY }));
       return null;
     }
   }

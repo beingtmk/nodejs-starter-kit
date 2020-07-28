@@ -45,7 +45,6 @@ export default class RenderSectionsField extends React.Component {
     const values = this.props.values;
     const arrayHelpers = this.props.arrayHelpers;
     let formItems = null;
-    console.log("keys", keys);
     // const handleChoices = (data) => (values.choices = data);
     const handleQuestions = (data) => (values.questions = data);
     const {

@@ -28,7 +28,6 @@ const Quiz = (props) => {
   //     throw new FormError(t('serverError'), e);
   //   }
   // };
-  console.log('quiz att', props);
   return (
     <QuizAttendeesView {...props}  />
     );

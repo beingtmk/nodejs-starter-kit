@@ -28,7 +28,6 @@ const Quiz = (props) => {
   //     throw new FormError(t('serverError'), e);
   //   }
   // };
-  console.log('quiz', props);
   return (
         <QuizCountView {...props}  />
     );
@@ -83,7 +82,6 @@ export default compose(
     },
     props({ data: { loading, error, getQuizCount} }) {
       if (error) throw new Error(error);
-      console.log('quizzz count', getQuizCount && getQuizCount.sections[0].questions[2].choices);
       return { quizLoading: loading, quiz:getQuizCount};
     }
   }),
