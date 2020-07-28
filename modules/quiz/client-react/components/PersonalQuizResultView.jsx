@@ -35,7 +35,7 @@ export const ResultComponent = (props) => {
             question.choiceType === QuestionTypes.SLIDER ||
             question.choiceType === QuestionTypes.COUNTRIES
           ) {
-            return question.answers && question.answers[0].content;
+            return question.answers && question.answers.length !==0 && question.answers[0].content;
           } else {
             let choiceIdArray = [];
             question.answers &&
@@ -58,6 +58,7 @@ export const ResultComponent = (props) => {
           if (
             question &&
             question.answers &&
+            question.answers.length !==0 && 
             (question.answers[0].content !== "" ||
               question.answers[0].choiceId !== null)
           ) {

@@ -30,7 +30,7 @@ const Quiz = (props) => {
     }
   };
   
-  
+  console.log('quiz result', props);
   return (
     
     <QuizView {...props} onSubmit={onSubmit} />
