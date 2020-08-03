@@ -7,6 +7,7 @@ import { knex, returnId } from '@gqlapp/database-server-ts';
 Model.knex(knex);
 
 interface FilterDynamicCarousel {
+  searchText: string;
   isActive: boolean;
 }
 
@@ -40,6 +41,13 @@ export default class Home extends Model {
       if (has(filter, 'isActive') && filter.isActive !== false) {
         queryBuilder.where(function() {
           this.where('is_active', filter.isActive);
+        });
+      }
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['label', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['link', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['image_url', `%${filter.searchText}%`]));
         });
       }
     }

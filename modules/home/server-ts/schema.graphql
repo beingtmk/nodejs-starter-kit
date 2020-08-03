@@ -19,6 +19,7 @@ extend type Mutation {
 
 # Input for filter
 input FilterDynamicCarouselInput {
+  searchText: String
   # filter by isActive
   isActive: Boolean
 }
