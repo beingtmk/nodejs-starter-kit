@@ -1,16 +1,42 @@
 # Entity
-type TypeName {
-  typeName: String!
+type DynamicCarousel {
+  id: Int
+  label: String
+  link: String
+  imageUrl: String!
 }
 
 extend type Query {
-  queryName: TypeName
+  dynamicCarousels(filter: FilterDynamicCarouselInput): [DynamicCarousel]
+  dynamicCarousel(id: Int!): DynamicCarousel
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addDynamicCarousel(input: AddDynamicCarouselInput!): Boolean
+  editDynamicCarousel(input: EditDynamicCarouselInput!): Boolean
+  deleteDynamicCarousel(id: Int!): Boolean
 }
 
-extend type Subscription {
-  subscriptionName: TypeName
+# Input for filter
+input FilterDynamicCarouselInput {
+  # filter by isActive
+  isActive: Boolean
 }
+
+input AddDynamicCarouselInput {
+  id: Int
+  label: String
+  link: String
+  imageUrl: String!
+}
+
+input EditDynamicCarouselInput {
+  id: Int!
+  label: String
+  link: String
+  imageUrl: String!
+}
+
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }

@@ -1,0 +1,16 @@
+exports.up = function(knex) {
+  return Promise.all([
+    knex.schema.createTable('dynamic_carousel', table => {
+      table.increments();
+      table.string('link');
+      table.string('label');
+      table.string('image_url');
+      table.boolean('is_active');
+      table.timestamps(false, true);
+    })
+  ]);
+};
+
+exports.down = function(knex) {
+  return Promise.all([knex.schema.dropTable('dynamic_carousel')]);
+};
