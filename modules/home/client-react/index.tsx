@@ -16,6 +16,12 @@ import resources from './locales';
 //   </NavLink>
 // ));
 
+const NavLinkDynamicCarouselComponentWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to="/component/dynamic-carousel" className="nav-link" activeClassName="active">
+    Dynamic Carousel Component
+  </NavLink>
+));
+
 const NavLinkDynamicCarouselWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/dynamic-carousel" className="nav-link" activeClassName="active">
     Dynamic Carousel
@@ -31,6 +37,7 @@ export default new ClientModule({
     <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
     <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />,
 
+    // Dynamic Carousel
     <AuthRoute
       exact
       path="/dynamic-carousel"
@@ -47,7 +54,22 @@ export default new ClientModule({
       exact
       path="/edit/dynamic-carousel/:id"
       component={loadable(() => import('./containers/EditDynamicCarousel').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path="/component/dynamic-carousel"
+      component={loadable(() => import('./containers/DynamicCarouselComponent').then(c => c.default))}
     />
+  ],
+
+  navItemTest: [
+    <SubMenu title="Home">
+      <MenuItem key="/component/dynamic-carousel">
+        <MenuItem>
+          <NavLinkDynamicCarouselComponentWithI18n />
+        </MenuItem>
+      </MenuItem>
+    </SubMenu>
   ],
   navItemAdmin: [
     <IfLoggedIn key="/dynamic-carousel" role="admin">
