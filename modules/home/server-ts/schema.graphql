@@ -4,6 +4,8 @@ type DynamicCarousel {
   label: String
   link: String
   imageUrl: String!
+  createdAt: String
+  updatedAt: String
 }
 
 extend type Query {
@@ -38,6 +40,12 @@ input EditDynamicCarouselInput {
   imageUrl: String!
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  dynamicCarouselUpdated(endCursor: Int): UpdateDynamicCarouselPayload
+}
+
+type UpdateDynamicCarouselPayload {
+  mutation: String!
+  id: Int
+  node: DynamicCarousel
+}

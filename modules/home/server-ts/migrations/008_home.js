@@ -5,7 +5,7 @@ exports.up = function(knex) {
       table.string('link');
       table.string('label');
       table.string('image_url');
-      table.boolean('is_active');
+      table.boolean('is_active').default(true);
       table.timestamps(false, true);
     })
   ]);

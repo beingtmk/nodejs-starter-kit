@@ -1,4 +1,5 @@
 import React from 'react';
+import { Popconfirm, Row, Col, message } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -10,12 +11,7 @@ const DynamicCarouselListView = ({ deleteDynamicCarousel, dynamicCarousels }) =>
       title: <>Carousel Id</>,
       dataIndex: 'id',
       key: 'id',
-      render: (text, record) => (
-        <>
-          {record.id}
-          {console.log(record)}
-        </>
-      ),
+      render: (text, record) => <>{record.id}</>
     },
     {
       title: <>Image</>,
@@ -24,33 +20,47 @@ const DynamicCarouselListView = ({ deleteDynamicCarousel, dynamicCarousels }) =>
       render: (text, record) => (
         <>
           <img src={record.imageUrl} width="200px" />
-          {console.log(record)}
         </>
-      ),
+      )
     },
     {
       title: <>Link</>,
       dataIndex: 'link',
       key: 'link',
-      render: (text, record) => <>{record.link}</>,
+      render: (text, record) => <>{record.link}</>
     },
     {
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <>
-          <Link to={`/edit/dynamic-carousel/${record.id}`}>
-            <Button color="primary" size="sm">
-              Edit
-            </Button>
-          </Link>
-          <Button color="primary" size="sm" onClick={() => deleteDynamicCarousel(record.id)}>
-            Delete
-          </Button>
-        </>
-      ),
-    },
+        <Row type="flex" justify="space-around" align="middle">
+          <Col span={12}>
+            <Link to={`/edit/dynamic-carousel/${record.id}`}>
+              <Button color="primary" size="sm">
+                Edit
+              </Button>
+            </Link>
+          </Col>
+          <Col span={12}>
+            <Popconfirm
+              title="Are you sure delete this listing?"
+              onConfirm={() => deleteDynamicCarousel(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button color="primary" size="sm">
+                Delete
+              </Button>
+            </Popconfirm>
+          </Col>
+        </Row>
+      )
+    }
   ];
+  const cancel = () => {
+    message.error('Click on No');
+  };
   return (
     <>
       <div style={{ overflowX: 'auto' }}>
@@ -64,7 +74,7 @@ DynamicCarouselListView.propTypes = {
   loading: PropTypes.bool.isRequired,
   deleteDynamicCarousel: PropTypes.func,
   dynamicCarousels: PropTypes.array,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate('user')(DynamicCarouselListView);

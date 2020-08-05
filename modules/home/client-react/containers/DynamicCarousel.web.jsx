@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
@@ -9,9 +10,24 @@ import settings from '@gqlapp/config';
 
 import DynamicCarouselListView from '../components/DynamicCarouselListView';
 
-import { withDynamicCarousels, withDeleteDynamicCarousel } from './DynamicCarouselOperations';
+import {
+  withDynamicCarousels,
+  withDeleteDynamicCarousel,
+  subscribeToDynamicCarousels
+} from './DynamicCarouselOperations';
 
 const DynamicCarousel = props => {
+  const {
+    // refetch,
+    subscribeToMore
+  } = props;
+
+  useEffect(() => {
+    const subscribe = subscribeToDynamicCarousels(subscribeToMore);
+    // refetch();
+    return () => subscribe();
+  });
+
   const renderMetaData = () => (
     <Helmet
       title={`${settings.app.name} - ${'DynamicCarousel-Admin'}`}
@@ -38,6 +54,11 @@ const DynamicCarousel = props => {
       <DynamicCarouselListView {...props} />
     </PageLayout>
   );
+};
+
+DynamicCarousel.propTypes = {
+  refetch: PropTypes.func,
+  subscribeToMore: PropTypes.func
 };
 
 export default compose(withDynamicCarousels, withDeleteDynamicCarousel, translate('home'))(DynamicCarousel);

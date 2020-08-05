@@ -18,7 +18,7 @@ import resources from './locales';
 
 const NavLinkDynamicCarouselComponentWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/component/dynamic-carousel" className="nav-link" activeClassName="active">
-    Dynamic Carousel Component
+    {'Dynamic Carousel Component'}
   </NavLink>
 ));
 
@@ -63,7 +63,7 @@ export default new ClientModule({
   ],
 
   navItemTest: [
-    <SubMenu title="Home">
+    <SubMenu title="Home" key="/home">
       <MenuItem key="/component/dynamic-carousel">
         <MenuItem>
           <NavLinkDynamicCarouselComponentWithI18n />
@@ -72,9 +72,9 @@ export default new ClientModule({
     </SubMenu>
   ],
   navItemAdmin: [
-    <IfLoggedIn key="/dynamic-carousel" role="admin">
+    <IfLoggedIn key="/home" role="admin">
       <SubMenu title="Home">
-        <MenuItem>
+        <MenuItem key="/dynamic-carousel">
           <NavLinkDynamicCarouselWithI18n />
         </MenuItem>
       </SubMenu>

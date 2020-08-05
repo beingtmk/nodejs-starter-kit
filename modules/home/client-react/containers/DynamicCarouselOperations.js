@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import update from 'immutability-helper';
 import { graphql } from 'react-apollo';
 
 // Query
@@ -10,13 +11,17 @@ import ADD_DYNAMIC_CAROUSEL from '../graphql/AddDynamicCarousel.graphql';
 import DELETE_DYNAMIC_CAROUSEL from '../graphql/DeleteDynamicCarousel.graphql';
 import EDIT_DYNAMIC_CAROUSEL from '../graphql/EditDynamicCarousel.graphql';
 
+// Subscription
+import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../graphql/DynamicCarouselSubscription.graphql';
+
+// Query
 const withDynamicCarousels = Component =>
   graphql(DYNAMIC_CAROUSELS_QUERY, {
-    props({ data: { loading, error, dynamicCarousels } }) {
+    props({ data: { loading, error, dynamicCarousels, subscribeToMore, updateQuery, refetch } }) {
       if (error) {
         throw new Error(error);
       }
-      return { loading, dynamicCarousels };
+      return { loading, dynamicCarousels, subscribeToMore, updateQuery, refetch };
     }
   })(Component);
 
@@ -41,6 +46,7 @@ const withDynamicCarousel = Component =>
     }
   })(Component);
 
+// Mutation
 const withDeleteDynamicCarousel = Component =>
   graphql(DELETE_DYNAMIC_CAROUSEL, {
     props: ({ mutate }) => ({
@@ -121,10 +127,117 @@ const withEditDynamicCarousel = Component =>
     })
   })(Component);
 
+// Subscription
+const subscribeToDynamicCarousels = subscribeToMore =>
+  subscribeToMore({
+    document: DYNAMIC_CAROUSEL_SUBSCRIPTION,
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            dynamicCarouselUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      if (mutation === 'CREATED') {
+        newResult = onAddDynamicCarousels(prev, node);
+      } else if (mutation === 'UPDATED') {
+        newResult = onEditDynamicCarousels(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteDynamicCarousels(prev, node.id);
+      }
+      return newResult;
+    }
+  });
+
+function onAddDynamicCarousels(prev, node) {
+  // check if it is duplicate
+  if (prev.dynamicCarousels.some(dC => dC.id === node.id)) {
+    return prev;
+  }
+
+  return update(prev, {
+    dynamicCarousels: {
+      $set: [...prev.dynamicCarousels, node]
+    }
+  });
+}
+
+function onEditDynamicCarousels(prev, node) {
+  const index = prev.dynamicCarousels.findIndex(x => x.id === node.id);
+  prev.dynamicCarousels.splice(index, 1, node);
+
+  return update(prev, {
+    dynamicCarousels: {
+      $set: [...prev.dynamicCarousels]
+    }
+  });
+}
+
+const onDeleteDynamicCarousels = (prev, id) => {
+  const index = prev.dynamicCarousels.findIndex(x => x.id === id);
+
+  // ignore if not found
+  if (index < 0) {
+    return prev;
+  }
+  return update(prev, {
+    dynamicCarousels: {
+      $splice: [[index, 1]]
+    }
+  });
+};
+
+const subscribeToDynamicCarousel = (subscribeToMore, history) =>
+  subscribeToMore({
+    document: DYNAMIC_CAROUSEL_SUBSCRIPTION,
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            dynamicCarouselUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      if (mutation === 'UPDATED') {
+        newResult = onEditDynamicCarousel(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteDynamicCarousel(prev, node.id, history);
+      }
+      return newResult;
+    }
+  });
+
+function onEditDynamicCarousel(prev, node) {
+  return update(prev, {
+    dynamicCarousel: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteDynamicCarousel = (prev, id, history) => {
+  if (prev.dynamicCarousel.id === id) {
+    message.error('Banner was deleted');
+    history.push('/dynamic-carousel');
+  }
+};
+
 export {
+  // Query
   withDynamicCarousels,
   withDynamicCarousel,
+  // Mutation
   withDeleteDynamicCarousel,
   withAddDynamicCarousel,
-  withEditDynamicCarousel
+  withEditDynamicCarousel,
+  // Subscription
+  subscribeToDynamicCarousels,
+  subscribeToDynamicCarousel
 };
