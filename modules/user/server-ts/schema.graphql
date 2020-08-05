@@ -6,12 +6,32 @@ type User {
   email: String!
   profile: UserProfile
   auth: UserAuth
+
+  verification: UserVerification
+  mobile: UserMobile
 }
 
 type UserProfile {
   firstName: String
   lastName: String
   fullName: String
+  mobile: String
+}
+
+type UserVerification {
+  id: Int
+  isEmailVerified: Boolean
+  isMobileVerified: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type UserMobile {
+  id: Int
+  mobile: String!
+  otpSent: Boolean
+  isVerified: Boolean
+  error: String
 }
 
 # Additional authentication service info
@@ -84,6 +104,9 @@ extend type Mutation {
   editUser(input: EditUserInput!): UserPayload!
   # Delete a user
   deleteUser(id: Int!): UserPayload!
+
+  # Add Mobile for a user
+  addUserMobile(input: AddMobileInput!): UserMobile!
 }
 
 # Input for ordering users
@@ -163,6 +186,13 @@ input EditUserInput {
 input ProfileInput {
   firstName: String
   lastName: String
+}
+
+# Input for Mobile Verificaton Mutation
+input AddMobileInput {
+  id: Int
+  mobile: String!
+  otp: Int
 }
 
 extend type Subscription {
