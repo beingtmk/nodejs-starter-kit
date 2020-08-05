@@ -66,7 +66,7 @@ export default class Home extends Model {
   }
 
   public deleteDynamicCarousel(id: number) {
-    return knex('home_banner')
+    return knex('dynamic_carousel')
       .where('id', '=', id)
       .del();
   }

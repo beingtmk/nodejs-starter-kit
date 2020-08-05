@@ -1,0 +1,3 @@
+mutation editDynamicCarousel($input: EditDynamicCarouselInput!) {
+  editDynamicCarousel(input: $input)
+}

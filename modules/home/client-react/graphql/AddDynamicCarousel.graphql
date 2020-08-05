@@ -1,0 +1,3 @@
+mutation addDynamicCarousel($input: AddDynamicCarouselInput!) {
+  addDynamicCarousel(input: $input)
+}
