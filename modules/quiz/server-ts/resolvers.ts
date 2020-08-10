@@ -389,45 +389,66 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    async addAnswers(obj: any, { input }: any, { Quiz }: any) {
-      try {
-        var userId;
-        var sectionId;
-        // const editedResult = Quiz.addAnswers(input.results);
-        // if(editedResult)
-        // {
-        //   sectionId = questionItem.sectionId;
-        //   userId = input && input.results[0].userId;
-        // }
-        input.results.map(async (result, item) => {
-          const ansExists = await Quiz.getAnswerByParams(result);
-          var isDone;
-          const questionItem = await Quiz.getQuestion(
-            input.results && input.results[0].questionId
-          );
-          if (ansExists && ansExists.length !== 0) {
-            isDone = await Quiz.updateAnswer(result);
-          } else {
-            isDone = await Quiz.addAnswer(result);
-          }
-          sectionId = questionItem.sectionId;
-          userId = result.userId;
-        });
-        const quizI = await Quiz.getQuizBySectionId(sectionId);
-        const id = quizI && quizI.id;
-        const item = await Quiz.getQuizWithAnswersByUser(id, userId);
+    async addAttempt(obj: any, { input }: any, { Quiz }: any) {
+      console.log('addAttemptInput', input);
+      try{
+        const {quizId, userId} = input;
+        var attempt =  await Quiz.getAttemptByParams({quizId, userId});
+        console.log('addAttemptAttemptExists', attempt);
+        if(attempt){
+          attempt = await Quiz.editAttempt(input);
+          console.log('editAttemptttttt', attempt);
+          
+        }else{
+          input.id = attempt.id;
+          attempt = await Quiz.addAttempt(input);
+          console.log('addAttemptttttt', attempt);
 
-        pubsub.publish(QUIZZES_SUBSCRIPTION, {
-          quizzesUpdated: {
-            mutation: "UPDATED",
-            node: item,
-          },
-        });
-        return true;
-      } catch (e) {
+        }
+        return attempt;
+      } catch(e){
         return e;
       }
     },
+    // async addAnswers(obj: any, { input }: any, { Quiz }: any) {
+    //   try {
+    //     var userId;
+    //     var sectionId;
+    //     // const editedResult = Quiz.addAnswers(input.results);
+    //     // if(editedResult)
+    //     // {
+    //     //   sectionId = questionItem.sectionId;
+    //     //   userId = input && input.results[0].userId;
+    //     // }
+    //     input.results.map(async (result, item) => {
+    //       const ansExists = await Quiz.getAnswerByParams(result);
+    //       var isDone;
+    //       const questionItem = await Quiz.getQuestion(
+    //         input.results && input.results[0].questionId
+    //       );
+    //       if (ansExists && ansExists.length !== 0) {
+    //         isDone = await Quiz.updateAnswer(result);
+    //       } else {
+    //         isDone = await Quiz.addAnswer(result);
+    //       }
+    //       sectionId = questionItem.sectionId;
+    //       userId = result.userId;
+    //     });
+    //     const quizI = await Quiz.getQuizBySectionId(sectionId);
+    //     const id = quizI && quizI.id;
+    //     const item = await Quiz.getQuizWithAnswersByUser(id, userId);
+
+    //     pubsub.publish(QUIZZES_SUBSCRIPTION, {
+    //       quizzesUpdated: {
+    //         mutation: "UPDATED",
+    //         node: item,
+    //       },
+    //     });
+    //     return true;
+    //   } catch (e) {
+    //     return e;
+    //   }
+    // },
     // async addAnswer(obj: any, { input }: any, { Quiz }: any) {
     //   console.log("input in res", input);
     //   const ansExists = await Quiz.getAnswerByParams(input);

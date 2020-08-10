@@ -20,6 +20,7 @@ const eager = "[user, sections.[questions.[choices]]]";
 const withAnswersEager = "[user, sections.[questions.[choices, answers]]]";
 const withChoiceAnswersEager =
   "[user, sections.[questions.[choices.[answers], answers]]]";
+const attemptEager = '[answers, user]'
 
 export default class Quiz extends Model {
   static get tableName() {
@@ -46,6 +47,14 @@ export default class Quiz extends Model {
         join: {
           from: "quiz.id",
           to: "section.quiz_id",
+        },
+      },
+      attempts: {
+        relation: Model.HasManyRelation,
+        modelClass: Attempt,
+        join: {
+          from: "quiz.id",
+          to: "attempt.quiz_id",
         },
       },
     };
@@ -80,6 +89,7 @@ export default class Quiz extends Model {
     );
     return res;
   }
+
   public async getQuizWithChoiceAnswers(id: number) {
     const res = camelizeKeys(
       await Quiz.query()
@@ -111,9 +121,9 @@ export default class Quiz extends Model {
         });
       });
     const answers = camelizeKeys(
-      await knex("answer")
+      await Answer.query().leftJoin('attempt as AT', 'AT.id', 'answer.attempt_id')
         .whereIn("answer.question_id", questionsIdArray)
-        .where("answer.user_id", userId)
+        .where("AT.user_id", userId)
     );
 
     if (!answers || (answers && answers.length === 0)) {
@@ -306,6 +316,31 @@ export default class Quiz extends Model {
     return knex("quiz")
       .where("id", "=", id)
       .del();
+  }
+
+  public async getAttemptByParams(input:any) {
+    const {quizId, userId} = input;
+    const res = camelizeKeys(
+      await Attempt.query()
+        .where('quiz_id', quizId)
+        .andWhere('user_id', userId)
+        .withGraphFetched(attemptEager)
+        .first()
+    );
+    return res;
+  }
+
+  public async editAttempt(input: any) {
+    const res = camelizeKeys(await Attempt.query().upsertGraph(decamelizeKeys(input)));
+    console.log('editAttemptRes', res)
+    return res;
+  }
+
+  public async addAttempt(input: any) {
+    const res = camelizeKeys(await Attempt.query().insertGraph(decamelizeKeys(input)));
+    console.log('addAttemptRes', res)
+
+    return res;
   }
 
   public async addAnswer(input: any) {
@@ -558,9 +593,9 @@ export class Choice extends Model {
   }
 }
 
-export class Answer extends Model {
+export class Attempt extends Model {
   static get tableName() {
-    return "answer";
+    return "attempt";
   }
 
   static get idColumn() {
@@ -573,8 +608,48 @@ export class Answer extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: "answer.user_id",
+          from: "attempt.user_id",
           to: "user.id",
+        },
+      },
+      quiz: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Quiz,
+        join: {
+          from: "attempt.quiz_id",
+          to: "quiz.id",
+        },
+      },
+      answers: {
+        relation: Model.HasManyRelation,
+        modelClass: Answer,
+        join: {
+          from: "attempt.id",
+          to: "answer.attempt_id",
+        },
+      },
+    };
+  }
+}
+
+
+export class Answer extends Model {
+  static get tableName() {
+    return "answer";
+  }
+
+  static get idColumn() {
+    return "id";
+  }
+
+  static get relationMappings() {
+    return {
+      attempt: {
+        relation: Model.BelongsToOneRelation,
+        modelClass:Attempt,
+        join: {
+          from: "answer.attempt_id",
+          to: "attempt.id",
         },
       },
       question: {

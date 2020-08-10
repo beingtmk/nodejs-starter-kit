@@ -11,6 +11,7 @@ type Quiz {
   user: User
   isEditableByUser: Boolean
   sections: [Section]
+  attempts: [Attempt]
 }
 
 type Section {
@@ -34,7 +35,7 @@ type Question {
   dependentChoiceId: Int
   isActive: Boolean
   choices: [Choice]
-  countries:[CountryItem]
+  countries: [CountryItem]
   createdAt: String
   updatedAt: String
 }
@@ -54,10 +55,17 @@ type Choice {
   updatedAt: String
 }
 
+type Attempt {
+  id: Int!
+  userId: Int
+  quizId: Int
+  answers: [Answer]
+}
+
 type Answer {
   id: Int!
-  questionId: Int!
-  userId: Int
+  attemptId: Int
+  questionId: Int
   choiceId: Int
   content: String
   createdAt: String
@@ -116,22 +124,34 @@ extend type Mutation {
   # Delete quiz
   deleteQuiz(id: Int): Quiz
   # Add answers
-  addAnswers(input: AnswersInput!): Boolean
+  # addAnswers(input: AnswersInput!): Boolean
+  # Add Attempt
+  addAttempt(input: AddAttemptInput!): Attempt
+  # Edit Attempt
+  # editAttempt(input: EditAttemptInput!): Attempt
   # Duplicate quiz
   duplicateQuiz(userId: Int!, quizId: Int!): Quiz
 }
 
-input AnswersInput {
-  results: [AnswerInput]!
+input AddAttemptInput {
+  id:Int
+  userId: Int!
+  quizId: Int!
+  answers: [AnswerInput]
 }
 
 input AnswerInput {
   id: Int
   questionId: Int!
-  userId: Int!
   choiceId: Int
   content: String
 }
+
+# input AnswersInput {
+#   results: [AnswerInput]!
+# }
+
+
 
 input EditQuizInput {
   id: Int!
