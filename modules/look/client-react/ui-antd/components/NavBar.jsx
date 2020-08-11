@@ -44,6 +44,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const {layoutType} = this.props;
     const isMobile = this.props && this.props.isMobile;
     return (
       <ScrollParallax
@@ -55,7 +56,7 @@ class NavBar extends React.Component {
         }}
       >
         <Header className="no-print">
-          <Row className="navbar-wrapper">
+          <Row className={`navbar-wrapper-${layoutType}`}>
             <Col lg={24} xs={0}>
               <div align="right" className="navbar-contact-menu">
                 <Row style={{ lineHeight: '37px' }}>

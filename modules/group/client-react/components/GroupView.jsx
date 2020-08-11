@@ -1,7 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { PageLayout, Loading } from '@gqlapp/look-client-react';
+import { Loading } from '@gqlapp/look-client-react';
+import GroupLayout from '@gqlapp/look-client-react/ui-antd/components/GroupLayout';
 import settings from '@gqlapp/config';
 import GroupComponent from './GroupComponent';
 
@@ -21,10 +22,10 @@ class GroupView extends React.Component {
 
   render() {
     return (
-      <PageLayout>
+      <GroupLayout>
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.groupLoading ? <GroupComponent {...this.props} /> : <Loading />}
-      </PageLayout>
+      </GroupLayout>
     );
   }
 }
