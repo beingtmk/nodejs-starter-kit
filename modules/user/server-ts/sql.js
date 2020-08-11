@@ -184,17 +184,15 @@ export class User extends Model {
     return res;
   }
 
-  async register(params) {
+  async register({ username, email, role = 'user', isActive }, passwordHash) {
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
     const res = await User.query()
       .eager(user_eager)
-      .insertGraph(decamelizeKeys(params));
-    console.log(res);
+      .insertGraph(decamelizeKeys({ username, email, role, passwordHash, isActive }));
     // Add Profile
-    const profile_id = await returnId(knex('user_profile')).insert({
+    await returnId(knex('user_profile')).insert({
       user_id: res.id
     });
-    console.log(profile_id);
     return res.id;
   }
 
@@ -231,10 +229,12 @@ export class User extends Model {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
@@ -261,7 +261,6 @@ export class User extends Model {
     const mobile = await user.$relatedQuery('mobile').insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);
