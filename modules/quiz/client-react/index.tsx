@@ -62,8 +62,19 @@ export default new ClientModule({
       )}
     />,
     <Route
+    exact
+    role={['user', 'admin']}
+    redirect="/login"
+    path="/quiz/report/:id"
+    component={loadable(() =>
+      import("./containers/QuizUserWiseReportPage").then((c) => c.default)
+    )}
+  />,
+    <Route
       exact
       path="/quiz-list"
+      role={['user', 'admin']}
+      redirect="/login"
       component={loadable(() =>
         import("./containers/Quizzes.web").then((c) => c.default)
       )}
@@ -76,6 +87,8 @@ export default new ClientModule({
       )}
     />,
     <Route
+    role={['user', 'admin']}
+    redirect="/login"
       exact
       path="/quiz/attendees/:id"
       component={loadable(() =>

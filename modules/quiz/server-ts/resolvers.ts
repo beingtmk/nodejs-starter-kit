@@ -97,7 +97,7 @@ export default (pubsub: any) => ({
       console.log('getUserWiseResultInput', id, groupId);
       const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
       
-      quiz.sections.map(see=>see.questions.map(qu=>console.log('userwiseresultres', qu)));
+      quiz && quiz.sections.map(see=>see.questions.map(qu=>console.log('userwiseresultres', qu)));
       // ToDo replace attendees with attempts
       const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
       console.log('attempsattempts', attempts);
@@ -111,9 +111,9 @@ export default (pubsub: any) => ({
       });
       const users = await context.User.getUsersWithIdArray(userIdArray);
       let quizOut = {
-        id: quiz.id,
-        userId: quiz.userId,
-        sections: quiz.sections,
+        id: quiz && quiz.id,
+        userId: quiz && quiz.userId,
+        sections: quiz && quiz.sections,
         attendees: { users: users },
         attempts:attempts
       };

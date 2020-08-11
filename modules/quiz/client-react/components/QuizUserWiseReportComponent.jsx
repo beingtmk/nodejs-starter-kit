@@ -65,6 +65,7 @@ export const QuizUserWiseReportComponent = (props) => {
       dataIndex: "question",
       key: "question",
       fixed: "left",
+      width:'150',
       render: (text, record) => <p> {record.description} </p>,
     },
   ];
@@ -81,7 +82,6 @@ export const QuizUserWiseReportComponent = (props) => {
           render: (text, record) => <a>{getResult(record, attem)}</a>,
         });
       } else {
-        console.log('resultquizelse', attem, props.userFId);
         if (attem.userId === props.userFId) {
           columns.push({
             width: 100,
@@ -105,66 +105,5 @@ export const QuizUserWiseReportComponent = (props) => {
     </div>
   );
 };
-class QuizUserWiseReportModal extends React.Component {
-  constructor(props) {
-    super(props);
-    // this.subscription = null;
-    this.state = { visible: false, groupId: null };
-  }
 
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  // handleClose = (e) => {
-  //   console.log(e);
-  //   this.setState({
-  //     visible: false,
-  //   });
-  // };
-
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  setGroupId = (e) => {
-    this.setState({
-      groupId: e,
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <Button type="primary" size="small" onClick={this.showModal}>
-          UserWiseReport
-        </Button>
-
-        <Modal
-          className="quiz-result-modal"
-          title={this.props.title}
-          visible={this.state.visible}
-          footer={null}
-          onClose={this.handleClose}
-          // onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <QuizUserWiseReport
-            quizId={this.props.quizId}
-            groupId={this.state.groupId}
-            setGroupId={this.setGroupId}
-            QuizUserWiseReportComponent={QuizUserWiseReportComponent}
-          />
-
-          {/* {this.props.quizzLoading || this.props.answersLoading ? <Loader /> :(<ResultComponent {...this.props} />)} */}
-        </Modal>
-      </div>
-    );
-  }
-}
-
-export default QuizUserWiseReportModal;
+export default QuizUserWiseReportComponent;

@@ -42,7 +42,14 @@ const GroupComponent = ({ group, changeGroupMemberType }) => {
   return (
     <Row gutter={24}>
       <Col span={24}>
-        <Title>Members</Title>
+        <Row>
+          <Col span={18}>
+            <Title>Members</Title>
+          </Col>
+          <Col span={6} align="right">
+            <AddInviteModal groupId={group && group.id} />
+          </Col>
+        </Row>
         <Divider />
         {joinees.length > 0 ? (
           joinees.map((item) => (
@@ -83,7 +90,7 @@ const GroupComponent = ({ group, changeGroupMemberType }) => {
                 <br />
                 <Select
                   value={item.type}
-                  style={{ display: "block", marginBottom:'20px' }}
+                  style={{ display: "block", marginBottom: "20px" }}
                   onChange={(e) => handleMemberTypeChange(e, item.email)}
                 >
                   <SelectOption key={MemberType.ADMIN} value={MemberType.ADMIN}>
@@ -106,14 +113,8 @@ const GroupComponent = ({ group, changeGroupMemberType }) => {
       </Col>
       <Col span={24}>
         <Divider />
-        <Row>
-          <Col span={18}>
-            <Title level={2}>Invites</Title>
-          </Col>
-          <Col span={6} align="right">
-            <AddInviteModal groupId={group && group.id} />
-          </Col>
-        </Row>
+
+        <Title level={2}>Invites</Title>
         <Divider />
         {invites.length > 0 ? (
           invites.map((item) => (

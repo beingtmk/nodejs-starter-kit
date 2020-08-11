@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button } from '@gqlapp/look-client-react';
 import { Spin as Loader, Tooltip, Popconfirm } from 'antd';
-import QuizUserWiseReportModal from './QuizUserWiseReportModal';
 
 const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, currentUser }) => {
   // 
@@ -118,7 +117,9 @@ const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, curr
       title: 'View Userwise Result',
       key: 'userWiseResult',
       render: (text, record) => (
-        <QuizUserWiseReportModal quizId={record.id} title={record.title} />
+        <Button color="primary" size="sm" href={`/quiz/report/${record.id}`}>
+          View Report
+        </Button>
       )
     },
     {

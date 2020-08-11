@@ -51,10 +51,16 @@ const QuizUserWiseReport = (props) => {
 
 export default compose(
   graphql(USER_WISE_RESULT_QUERY, {
-    options: (props) => {
+    options: props => {
+      let id = 0;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
+
       return {
-        variables: { id: Number(props.quizId), groupId: Number(props.groupId) },
-      };
+        variables: { id: Number(id), groupId: Number(props.groupId) },      };
     },
     props({ data: { loading, error, getUserWiseResult, refetch } }) {
       if (error) throw new Error(error);

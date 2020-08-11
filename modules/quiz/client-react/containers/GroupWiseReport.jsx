@@ -2,7 +2,7 @@ import React from "react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import { graphql } from "react-apollo";
 import { compose } from "@gqlapp/core-common";
-import {QuizUserWiseReportComponent} from '../components/QuizUserWiseReportModal';
+import QuizUserWiseReportComponent from '../components/QuizUserWiseReportComponent';
 import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
 
 //To Do - Query after state.visible is true

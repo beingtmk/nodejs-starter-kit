@@ -29,6 +29,20 @@ class AddInviteModal extends React.Component {
     });
   };
 
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
   render() {
     console.log("addInviteModalprops", this.props);
     return (
@@ -44,6 +58,8 @@ class AddInviteModal extends React.Component {
           visible={this.state.visible}
           okText="Invite"
           footer={null}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
         >
           <InviteFormComponent onSubmit={this.handleSubmit} />
         </Modal>
