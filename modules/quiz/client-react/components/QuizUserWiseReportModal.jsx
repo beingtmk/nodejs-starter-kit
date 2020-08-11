@@ -22,7 +22,6 @@ export const QuizUserWiseReportComponent = (quiz) => {
     });
   const data = questionsData;
 
-
   const getResult = (record, attempt) => {
     if (
       record.choiceType === QuestionTypes.TEXTBOX ||
@@ -31,16 +30,18 @@ export const QuizUserWiseReportComponent = (quiz) => {
       record.choiceType === QuestionTypes.COUNTRIES
     ) {
       const result =
-      attempt.answers && attempt.answers.find(anS=>anS.questionId === record.id);
-        // record &&
-        // record.answers &&
-        // record.answers.length !== 0 &&
-        // record.answers.find((res) => res.userId === id);
-        // console.log('result', result);
+        attempt.answers &&
+        attempt.answers.find((anS) => anS.questionId === record.id);
+      // record &&
+      // record.answers &&
+      // record.answers.length !== 0 &&
+      // record.answers.find((res) => res.userId === id);
+      // console.log('result', result);
       return result && result.content;
     } else {
       const result =
-      attempt.answers && attempt.answers.filter((res) => res.questionId === record.id);
+        attempt.answers &&
+        attempt.answers.filter((res) => res.questionId === record.id);
       let choiceIdArray = [];
 
       result.forEach((answer) => {
@@ -48,7 +49,7 @@ export const QuizUserWiseReportComponent = (quiz) => {
       });
       const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
       const choiceLength = choice.length;
-      console.log('result', choice);
+      console.log("result", choice);
 
       return choice.map(
         (ch, i) =>
@@ -63,19 +64,22 @@ export const QuizUserWiseReportComponent = (quiz) => {
       title: "Question",
       dataIndex: "question",
       key: "question",
+      fixed: "left",
       render: (text, record) => <p> {record.description} </p>,
     },
   ];
 
-
-  resultQuiz && resultQuiz.attempts && resultQuiz.attempts.map((attem)=>{
-    columns.push({
-      title: attem && attem.user && attem.user.username,
-      dataIndex: attem && attem.user && attem.user.username,
-      key: attem && attem.user && attem.user.username,
-      render: (text, record) => <a>{getResult(record, attem)}</a>,
+  resultQuiz &&
+    resultQuiz.attempts &&
+    resultQuiz.attempts.map((attem) => {
+      columns.push({
+        width: 100,
+        title: attem && attem.user && attem.user.username,
+        dataIndex: attem && attem.user && attem.user.username,
+        key: attem && attem.user && attem.user.username,
+        render: (text, record) => <a>{getResult(record, attem)}</a>,
+      });
     });
-  })
 
   // resultQuiz &&
   //   resultQuiz.attempts &&
@@ -89,12 +93,16 @@ export const QuizUserWiseReportComponent = (quiz) => {
   //       render: (text, record) => <a>{getResult(record, user.id)}</a>,
   //     });
   //   });
-    
-    console.log('resultQuiz', columns);
-    console.log('quizuserwisereportmodal', resultQuiz);
+
+  console.log("resultQuiz", columns);
+  console.log("quizuserwisereportmodal", resultQuiz);
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{ x: 100*(columns && columns.length), y: 700 }}
+      />
     </div>
   );
 };

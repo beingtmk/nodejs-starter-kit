@@ -18,6 +18,9 @@ import RenderCheckBoxQuiz from "@gqlapp/look-client-react/ui-antd/components/Ren
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 
+
+
+//ToDo pop answers if their dependence is unchecked.
 const FormItem = Form.Item;
 export default class RenderQuestionsField extends React.Component {
   // add = () => {
