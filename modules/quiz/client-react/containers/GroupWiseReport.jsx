@@ -10,7 +10,7 @@ const QuizUserWiseReport = (props) => {
   console.log('quizuserwisereport', props);
   return (
     <>
-    <QuizUserWiseReportComponent quiz={props.quiz} />
+    <QuizUserWiseReportComponent quiz={props.quiz} userFId={props.userFId} />
     </>
   );
 };

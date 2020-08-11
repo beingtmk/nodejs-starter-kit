@@ -15,9 +15,21 @@ class GroupQuizReportComponent extends React.Component {
     console.log(e);
     this.setState({ quizId: e });
   };
+
+  handleSelectUser = (e) => {
+    console.log(e);
+    this.setState({ userId: e });
+  };
+
   render() {
-    const { quizzes, groupId } = this.props;
+    const { quizzes, groupId, group } = this.props;
     console.log("groupquizreportcomponent", this.props);
+
+    let joinees = [];
+
+    group && group.members && group.members.map((item) => {
+    if (item.member){ joinees.push(item);}
+  });
     return (
       <div style={{ width: "100%" }}>
         <Row gutter={24}>
@@ -40,10 +52,26 @@ class GroupQuizReportComponent extends React.Component {
             )}
             
           </Col>
+          {this.state.quizId && (
+          <Col  md={12} xs={24}>
+            <Title level={4}>Select User:</Title>
+              <Select
+              value={this.state.userId}
+              style={{ width: "100%" }}
+              onChange={this.handleSelectUser}
+            >
+              {joinees.map((j, key) => (
+                <SelectOption value={j.member.id} key={key}>
+                  {j.member.username}
+                </SelectOption>
+              ))}
+            </Select>
+          </Col>
+            )}
         </Row>
         <Divider />
             {this.state.quizId && (
-              <GroupWiseReport quizId={this.state.quizId} groupId={groupId} />
+              <GroupWiseReport quizId={this.state.quizId} groupId={groupId} userFId={this.state.userId}  />
             )}
       </div>
     );

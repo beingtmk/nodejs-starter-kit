@@ -54,7 +54,7 @@ class GroupView extends React.Component {
           <>
           {this.state.current === 'info' && (<GroupComponent {...this.props} />)}
           {this.state.current === 'members' && (<MembersComponent {...this.props} />)}
-          {this.state.current === 'quiz-report' && (<GroupQuizReport groupId={group && group.id} />)}
+          {this.state.current === 'quiz-report' && (<GroupQuizReport groupId={group && group.id}  group={group}/>)}
           </>
         ) : (
           <Loading />

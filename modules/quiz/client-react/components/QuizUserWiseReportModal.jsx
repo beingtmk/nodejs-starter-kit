@@ -12,8 +12,9 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 
 //To Do - Query after state.visible is true
 
-export const QuizUserWiseReportComponent = (quiz) => {
-  const resultQuiz = quiz.quiz;
+export const QuizUserWiseReportComponent = (props) => {
+  console.log('quizuserwisereportcomponent', props);
+  const resultQuiz = props.quiz;
   var questionsData = [];
   resultQuiz &&
     resultQuiz.sections &&
@@ -49,7 +50,6 @@ export const QuizUserWiseReportComponent = (quiz) => {
       });
       const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
       const choiceLength = choice.length;
-      console.log("result", choice);
 
       return choice.map(
         (ch, i) =>
@@ -72,36 +72,35 @@ export const QuizUserWiseReportComponent = (quiz) => {
   resultQuiz &&
     resultQuiz.attempts &&
     resultQuiz.attempts.map((attem) => {
-      columns.push({
-        width: 100,
-        title: attem && attem.user && attem.user.username,
-        dataIndex: attem && attem.user && attem.user.username,
-        key: attem && attem.user && attem.user.username,
-        render: (text, record) => <a>{getResult(record, attem)}</a>,
-      });
+      if (!props.userFId) {
+        columns.push({
+          width: 100,
+          title: attem && attem.user && attem.user.username,
+          dataIndex: attem && attem.user && attem.user.username,
+          key: attem && attem.user && attem.user.username,
+          render: (text, record) => <a>{getResult(record, attem)}</a>,
+        });
+      } else {
+        console.log('resultquizelse', attem, props.userFId);
+        if (attem.userId === props.userFId) {
+          columns.push({
+            width: 100,
+            title: attem && attem.user && attem.user.username,
+            dataIndex: attem && attem.user && attem.user.username,
+            key: attem && attem.user && attem.user.username,
+            render: (text, record) => <a>{getResult(record, attem)}</a>,
+          });
+        }
+      }
     });
 
-  // resultQuiz &&
-  //   resultQuiz.attempts &&
-  //   resultQuiz.attempts.users &&
-  //   resultQuiz.attempts.users.length !== 0 &&
-  //   resultQuiz.attempts.users.map((user, key) => {
-  //     columns.push({
-  //       title: user.username,
-  //       dataIndex: user.username,
-  //       key: user.username,
-  //       render: (text, record) => <a>{getResult(record, user.id)}</a>,
-  //     });
-  //   });
 
-  console.log("resultQuiz", columns);
-  console.log("quizuserwisereportmodal", resultQuiz);
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
       <Table
         columns={columns}
         dataSource={data}
-        scroll={{ x: 100*(columns && columns.length), y: 700 }}
+        scroll={{ x: 100 * (columns && columns.length), y: 700 }}
       />
     </div>
   );

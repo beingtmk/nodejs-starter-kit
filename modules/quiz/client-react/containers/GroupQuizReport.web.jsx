@@ -6,8 +6,6 @@ import { graphql } from "react-apollo";
 import { Spin as Loader, Typography, Divider } from "antd";
 import { compose } from "@gqlapp/core-common";
 import { translate } from "@gqlapp/i18n-client-react";
-import { Button, PageLayout } from "@gqlapp/look-client-react";
-import settings from "@gqlapp/config";
 import QUIZZES_QUERY from "../graphql/QuizzesQuery.graphql";
 import GroupQuizReportComponent from "../components/GroupQuizReportComponent";
 
