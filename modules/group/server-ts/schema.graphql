@@ -52,12 +52,27 @@ input FilterGroupInput {
 }
 
 extend type Mutation {
+  addGroupMemberInvite(input: AddGroupMemberInviteInput!): Boolean
   addGroupMember(input: AddGroupMemberInput!): GroupMember
   editGroupMember(input: EditGroupMemberInput!): GroupMember
+  changeGroupMemberType(input: ChangeGroupMemberTypeInput!): GroupMember
   deleteGroupMember(id: Int!): GroupMember
   addGroup(input: AddGroupInput!): Group
   updateGroup(input: UpdateGroupInput!): Group
   deleteGroup(id: Int!): Group
+}
+
+input AddGroupMemberInviteInput {
+  groupId: Int!
+  userEmail: String!
+  type: String!
+  status: String!
+}
+
+input ChangeGroupMemberTypeInput {
+  groupId: Int!
+  userEmail: String!
+  type: String!
 }
 
 input AddGroupInput {
@@ -101,6 +116,13 @@ input EditGroupMemberInput {
 extend type Subscription {
   groupsUpdated(endCursor: Int!, filter: FilterGroupInput): UpdateGroupPayload
   groupMembersUpdated: UpdateGroupMembersPayload
+  groupItemUpdated(id: Int):GroupItemPayload
+}
+
+type GroupItemPayload {
+  mutation: String!
+  node: Group!
+  id:Int!
 }
 
 type UpdateGroupMembersPayload {

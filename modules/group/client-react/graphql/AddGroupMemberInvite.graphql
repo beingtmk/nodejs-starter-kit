@@ -1,0 +1,4 @@
+
+mutation addGroupMemberInvite($input: AddGroupMemberInviteInput!) {
+  addGroupMemberInvite(input: $input) 
+}

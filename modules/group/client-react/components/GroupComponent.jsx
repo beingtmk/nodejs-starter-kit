@@ -1,21 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { translate } from '@gqlapp/i18n-client-react';
-import { Link } from 'react-router-dom';
-import { Col, Row, Card, Divider, Alert, Button, Empty } from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { translate } from "@gqlapp/i18n-client-react";
+import { Link } from "react-router-dom";
+import { Col, Row, Card, Divider, Alert, Button, Empty, Typography } from "antd";
 
-import MiniBlogImageComponent from '@gqlapp/blog-client-react/components/MiniBlogImageComponent';
+import MiniBlogImageComponent from "@gqlapp/blog-client-react/components/MiniBlogImageComponent";
 
-import moment from 'moment';
-import { Name, emptyCover } from '../constants';
+import moment from "moment";
+import { Name, emptyCover } from "../constants";
 
 const { Meta } = Card;
-
+const { Title, Text, Paragraph} = Typography;
 const GroupComponent = ({ group }) => {
   let invites = [],
     joinees = [];
 
-  group.members.map(item => {
+  group.members.map((item) => {
     if (item.member) joinees.push(item);
     else invites.push(item);
   });
@@ -23,57 +23,53 @@ const GroupComponent = ({ group }) => {
   return (
     <Row>
       <Col
-        xs={{ span: 22, offset: 1 }}
-        sm={{ span: 22, offset: 1 }}
-        md={{ span: 22, offset: 1 }}
-        lg={{ span: 20, offset: 2 }}
+      // xs={{ span: 22, offset: 1 }}
+      // sm={{ span: 22, offset: 1 }}
+      // md={{ span: 22, offset: 1 }}
+      // lg={{ span: 20, offset: 2 }}
       >
-        <Card className="blog-detailview-card" bodyStyle={{ padding: '10px' }}>
-          <Row gutter={32}>
-            <Col xs={24} sm={23} md={12} lg={12}>
-              <MiniBlogImageComponent title={group.title} image={group.avatar} />
-              <br />
-            </Col>
-            <Col xs={24} sm={23} md={12} lg={12}>
-              <>
-                <h1
-                  style={{
-                    padding: '0 20px'
-                  }}
-                >
-                  {group.title}
-                </h1>
-                <h2
-                  style={{
-                    fontSize: '20px',
-                    color: 'rgba(0, 0, 0, 0.44)',
-                    padding: '0 20px'
-                  }}
-                >
-                  {group.description}
-                </h2>
-                <br />
-                <h3
-                  style={{
-                    color: 'rgba(0, 0, 0, 0.54)',
-                    padding: '0 20px'
-                  }}
-                >
-                  {`Group Type: ${group.groupType}`}
-                </h3>
-                <br />
-                <Meta
-                  style={{ padding: '10px 20px' }}
-                  description={<>{`Created on ${moment(group.createdAt).format('MMM DD, YYYY')}`}</>}
-                />
-                <Link to={`/group/edit/${group.id}`}>
-                  <Button icon="edit" type="primary" size="small" ghost style={{ margin: '10px 20px' }}>
-                    Edit
-                  </Button>
-                </Link>
-              </>
-            </Col>
-            <Divider />
+        <Title>Group Info</Title>
+        <Divider />
+        <Card
+          cover={
+            <div align='center'>
+            <img alt='' src={group.avatar}  className='group-info-avatar' />
+            </div>
+          }
+          className="blog-detailview-card"
+          style={{position:'relative'}}
+          bodyStyle={{ padding: "10px", background:'transparent' }}
+        >
+          <Title level={2}>
+          {group.title}
+          </Title>
+          <Paragraph>
+          {group.description}
+          </Paragraph>
+
+          <br />
+
+            <Text>Group Type: <Text mark>{group.groupType}</Text></Text>
+
+
+          <br />
+          <Text>Created At: <Text >{moment(group.createdAt).format(
+                "MMM DD, YYYY"
+              )}</Text></Text>
+
+          <Link to={`/group/edit/${group.id}`}>
+            <Button
+              icon="edit"
+              type="primary"
+              size="small"
+              ghost
+              style={{ position:'absolute', top:'0', right:'0' }}
+            >
+              Edit
+            </Button>
+          </Link>
+
+          {/* <Divider />
             <h1
               style={{
                 padding: '0 20px'
@@ -141,8 +137,7 @@ const GroupComponent = ({ group }) => {
               ))
             ) : (
               <Empty />
-            )}
-          </Row>
+            )} */}
         </Card>
       </Col>
     </Row>
@@ -151,7 +146,7 @@ const GroupComponent = ({ group }) => {
 
 GroupComponent.propTypes = {
   group: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
-export default translate('group')(GroupComponent);
+export default translate("group")(GroupComponent);

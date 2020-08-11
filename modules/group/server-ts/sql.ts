@@ -1,19 +1,19 @@
 import {
   camelizeKeys,
-  decamelizeKeys
+  decamelizeKeys,
   //  decamelize
-} from 'humps';
+} from "humps";
 import {
-  Model
+  Model,
   // raw
-} from 'objection';
+} from "objection";
 import {
-  knex
+  knex,
   // returnId
   //  orderedFor
-} from '@gqlapp/database-server-ts';
-import { User } from '@gqlapp/user-server-ts/sql';
-import { has } from 'lodash';
+} from "@gqlapp/database-server-ts";
+import { User } from "@gqlapp/user-server-ts/sql";
+import { has } from "lodash";
 
 Model.knex(knex);
 
@@ -52,16 +52,16 @@ export interface EmailIdentifier {
 }
 
 // const eager = '[author.[profile], group]';
-const eager = '[member, group]';
-const gEager = '[members.[member]]';
+const eager = "[member, group]";
+const gEager = "[members.[member]]";
 
 export default class Group extends Model {
   static get tableName() {
-    return 'group';
+    return "group";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -70,33 +70,68 @@ export default class Group extends Model {
         relation: Model.HasManyRelation,
         modelClass: GroupMember,
         join: {
-          from: 'group.id',
-          to: 'group_member.group_id'
-        }
-      }
+          from: "group.id",
+          to: "group_member.group_id",
+        },
+      },
     };
   }
 
   public async groups(filter: FilterInput, limit: number, after: number) {
     const queryBuilder = Group.query()
       .eager(gEager)
-      .orderBy('id', 'desc');
+      .orderBy("id", "desc");
 
     if (filter) {
-      if (has(filter, 'searchText') && filter.searchText !== '') {
+      if (has(filter, "searchText") && filter.searchText !== "") {
         queryBuilder
-          .from('group as g')
-          .leftJoin('group_member as gp', 'g.id', 'gp.group_id')
-          .leftJoin('user as u', 'u.email', 'gp.email')
-          .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+          .from("group as g")
+          .leftJoin("group_member as gp", "g.id", "gp.group_id")
+          .leftJoin("user as u", "u.email", "gp.email")
+          .leftJoin("user_profile AS up", "up.user_id", "u.id")
           .where(function() {
-            this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.title', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.description', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['g.group_type', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['gp.email', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
-              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
+            this.where(
+              knex.raw("LOWER(??) LIKE LOWER(?)", [
+                "g.title",
+                `%${filter.searchText}%`,
+              ])
+            )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "g.description",
+                  `%${filter.searchText}%`,
+                ])
+              )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "g.group_type",
+                  `%${filter.searchText}%`,
+                ])
+              )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "gp.email",
+                  `%${filter.searchText}%`,
+                ])
+              )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "u.username",
+                  `%${filter.searchText}%`,
+                ])
+              )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "up.first_name",
+                  `%${filter.searchText}%`,
+                ])
+              )
+              .orWhere(
+                knex.raw("LOWER(??) LIKE LOWER(?)", [
+                  "up.last_name",
+                  `%${filter.searchText}%`,
+                ])
+              );
           });
       }
     }
@@ -130,10 +165,10 @@ export default class Group extends Model {
     const res = camelizeKeys(
       await Group.query()
         .eager(gEager)
-        .from('group as g')
-        .leftJoin('group_member as gp', 'g.id', 'gp.group_id')
+        .from("group as g")
+        .leftJoin("group_member as gp", "g.id", "gp.group_id")
         .where({ email })
-        .orderBy('id', 'desc')
+        .orderBy("id", "desc")
     );
     return res;
   }
@@ -149,7 +184,7 @@ export default class Group extends Model {
   }
 
   public async deleteGroup(id: number) {
-    return knex('group')
+    return knex("group")
       .where({ id })
       .del();
   }
@@ -159,11 +194,11 @@ export class GroupMember extends Model {
   // private id: any;
 
   static get tableName() {
-    return 'group_member';
+    return "group_member";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -172,18 +207,18 @@ export class GroupMember extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'group_member.email',
-          to: 'user.email'
-        }
+          from: "group_member.email",
+          to: "user.email",
+        },
       },
       group: {
         relation: Model.BelongsToOneRelation,
         modelClass: Group,
         join: {
-          from: 'group_member.group_id',
-          to: 'group.id'
-        }
-      }
+          from: "group_member.group_id",
+          to: "group.id",
+        },
+      },
     };
   }
 
@@ -191,7 +226,7 @@ export class GroupMember extends Model {
     return camelizeKeys(
       await GroupMember.query()
         .eager(eager)
-        .orderBy('id', 'desc')
+        .orderBy("id", "desc")
     );
   }
 
@@ -200,7 +235,7 @@ export class GroupMember extends Model {
       await GroupMember.query()
         .where({ group_id: id })
         .eager(eager)
-        .orderBy('id', 'desc')
+        .orderBy("id", "desc")
     );
   }
 
@@ -224,8 +259,19 @@ export class GroupMember extends Model {
   }
 
   public async deleteGroupMember(id: number) {
-    return knex('group_member')
+    return knex("group_member")
       .where({ id })
       .del();
+  }
+
+  public async changeGroupMemberType(input: any) {
+    console.log('changeGroupMemberTypeSQLINPUT', input);
+    const res = await GroupMember.query()
+      .patch({ type: input.type })
+      .where("email", input.userEmail)
+      .andWhere("group_id", input.groupId);
+
+      console.log('changeGroupMemberTYpeSQLOUTPUT', res)
+    return res;
   }
 }

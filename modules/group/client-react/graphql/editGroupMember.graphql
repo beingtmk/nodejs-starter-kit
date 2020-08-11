@@ -1,0 +1,9 @@
+#import "./Group.graphql"
+
+mutation editGroupMember($input: AddGroupMemberInput!) {
+  editGroupMember(input: $input) {
+    id
+    email
+    type
+  }
+}

@@ -1,0 +1,13 @@
+#import "./Group.graphql"
+
+
+
+subscription onGroupItemUpdated($id: Int!) {
+  groupItemUpdated(id: $id) {
+    mutation
+    id
+    node {
+    ...GroupInfo
+    }
+  }
+}

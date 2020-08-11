@@ -1,0 +1,8 @@
+
+mutation changeGroupMemberType($input: ChangeGroupMemberTypeInput!) {
+  changeGroupMemberType(input: $input) {
+    id
+    email
+    type
+  }
+}

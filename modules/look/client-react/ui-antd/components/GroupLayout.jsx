@@ -14,19 +14,13 @@ export const onAppCreateGroupLayout = async (modules) =>
 
 class GroupLayout extends React.Component {
   render() {
-    const { children } = this.props;
+    const { children, siderMenu } = this.props;
 
     const renderContent = () => {
       return (
         <Layout className="group-layout-inner">
-          <Sider width={200} style={{ background: "#fff" }}>
-            <Menu
-              mode="inline"
-              theme="light"
-              // className="navbar-menu"
-            >
-              {ref.modules.navItems}
-            </Menu>
+          <Sider width={200} style={{ background: "#fff", paddingTop:'24px' }}>
+            {siderMenu}
           </Sider>
           <Layout>
             <Content className="group-layout-content">{children}</Content>
