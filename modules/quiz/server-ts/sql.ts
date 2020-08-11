@@ -188,23 +188,21 @@ export default class Quiz extends Model {
       res.questions.map((qu) => {
         questionsIdArray.push(qu.id);
       });
-    const answers = camelizeKeys(
-      await knex("answer")
-        .whereIn("answer.question_id", questionsIdArray)
-        .whereIn("answer.user_id", userIdArray)
-    );
+      const answers = camelizeKeys(
+        await Answer.query()
+          .leftJoin("attempt as AT", "AT.id", "answer.attempt_id")
+          .whereIn("answer.question_id", questionsIdArray)
+          .where("AT.user_id", userIdArray)
+      );
     if (answers && answers.length === 0) {
       return res;
     }
-    answers &&
-      answers.map((ans) => {
-        var q = res.questions.find((ques) => ques.id === ans.questionId);
-        const index = res.questions.indexOf(q);
-        if (!q.answers) {
-          q.answers = [];
-        }
-        q.answers.push(ans);
-        res.questions[index] = q;
+    res.sections &&
+      res.sections.map((sect, secI) => {
+        sect.questions.map((ques, quI) => {
+          const answs = answers.filter((anss) => anss.questionId === ques.id);
+          res.sections[secI].questions[quI].answers = answs;
+        });
       });
     return res;
   }

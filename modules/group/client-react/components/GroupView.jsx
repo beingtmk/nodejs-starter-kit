@@ -5,6 +5,7 @@ import { Menu } from "antd";
 import { Loading, MenuItem } from "@gqlapp/look-client-react";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import settings from "@gqlapp/config";
+import GroupQuizReport from '@gqlapp/quiz-client-react/containers/GroupQuizReport.web';
 import GroupComponent from "./GroupComponent";
 import MembersComponent from "./MembersComponent";
 
@@ -33,6 +34,7 @@ class GroupView extends React.Component {
   }
 
   render() {
+    const {group} = this.props;
     return (
       <GroupLayout siderMenu={
         <Menu
@@ -52,6 +54,7 @@ class GroupView extends React.Component {
           <>
           {this.state.current === 'info' && (<GroupComponent {...this.props} />)}
           {this.state.current === 'members' && (<MembersComponent {...this.props} />)}
+          {this.state.current === 'quiz-report' && (<GroupQuizReport groupId={group && group.id} />)}
           </>
         ) : (
           <Loading />

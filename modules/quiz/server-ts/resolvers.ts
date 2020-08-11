@@ -95,14 +95,9 @@ export default (pubsub: any) => ({
     },
     async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
+      // ToDo replace attendees with attempts
+      // const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
 
-      // let questionIdArray = [];
-      // quiz.questions.map((question, key) => {
-      //   questionIdArray.push(question.id);
-      // });
-      // console.log("ggggg", questionIdArray);
-
-      // const params = { questionIdArray: questionIdArray };
       var result = [];
       let userIdArray = [];
       quiz &&

@@ -16,7 +16,6 @@ query getUserWiseResult($id: Int!, $groupId: Int) {
         }
         answers {
           id
-          userId
           questionId
           choiceId
           content

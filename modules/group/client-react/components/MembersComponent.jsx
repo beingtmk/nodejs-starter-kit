@@ -83,7 +83,7 @@ const GroupComponent = ({ group, changeGroupMemberType }) => {
                 <br />
                 <Select
                   value={item.type}
-                  style={{ display: "block" }}
+                  style={{ display: "block", marginBottom:'20px' }}
                   onChange={(e) => handleMemberTypeChange(e, item.email)}
                 >
                   <SelectOption key={MemberType.ADMIN} value={MemberType.ADMIN}>
