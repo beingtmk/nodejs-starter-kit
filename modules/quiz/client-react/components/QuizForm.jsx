@@ -47,7 +47,7 @@ const QuizForm = ({
       </Button>
     );
   };
-  console.log('form values', values);
+  console.log("form values", values);
   return (
     <>
       <Form name="quizAdd" onSubmit={handleSubmit}>
@@ -103,7 +103,6 @@ const QuizFormWithFormik = withFormik({
                 choiceId: null,
                 questionId: q.id,
                 content: "",
-                userId: currentUserId,
               },
             ];
             questions[index].answers = answers;
@@ -118,29 +117,31 @@ const QuizFormWithFormik = withFormik({
   },
   async handleSubmit(
     values,
-    { resetForm, setErrors, setStatus, props: { onSubmit } }
+    { resetForm, setErrors, setStatus, props: { onSubmit, quiz, currentUser } }
   ) {
-    var results = [];
+    var answers = [];
     values.sections &&
       values.sections.map((sect) => {
         sect.questions &&
           sect.questions.map((ques) => {
             ques.answers &&
               ques.answers.map((ans) => {
-                results.push({
+                answers.push({
                   id: ans.id,
                   questionId: ans.questionId,
-                  userId: ans.userId,
                   choiceId: ans.choiceId,
                   content: ans.content,
                 });
               });
           });
       });
-    values.results = results;
-    // values.results = (results.map);
-    var val = { results: results };
-    const inputValues = { results: values.results };
+    values.answers = answers;
+    // values.answers = (answers.map);
+    var val = {
+      userId: currentUser && currentUser.id,
+      quizId: quiz && quiz.id,
+      answers: answers,
+    };
     try {
       await onSubmit(val);
       resetForm();

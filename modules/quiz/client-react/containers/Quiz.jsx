@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // import { Mutation, FetchResult, MutationFn } from 'react-apollo';
 import { FormError } from '@gqlapp/forms-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -9,20 +9,59 @@ import { message } from 'antd';
 
 // import CONTACT from '../graphql/Quiz.graphql';
 // import { QuizForm } from '../types';
-import ADD_ANSWER from '../graphql/AddAnswers.graphql';
+import ADD_ATTEMPT from '../graphql/AddAttempt.graphql';
 import QUIZ_WITH_RESULT_QUERY from '../graphql/QuizWithResultQuery.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
+import QUIZ_WITH_ANSWERS_SUBSCRIPTION from '../graphql/QuizWithAnswersSubscription.graphql';
+
+const subscribeToQuizPage = (subscribeToMore, quizId, history, navigation) =>
+  subscribeToMore({
+    document: QUIZ_WITH_ANSWERS_SUBSCRIPTION,
+    variables: { id: quizId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            quizWithAnswersUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      console.log('subscriptionOfQuiz', mutation, node);
+      if (mutation === 'UPDATED') {
+        return {quizWithAnswers:node}
+      }
+      return prev;
+    }
+  });
 
 
 const Quiz = (props) => {
+
+
+  useEffect(() => {
+    if (props.quiz) {
+      const {
+        subscribeToMore,
+        quiz: { id },
+        history,
+        navigation
+      } = props;
+      const subscribe = subscribeToQuizPage(subscribeToMore, id, history, navigation);
+      return () => subscribe();
+    }
+  });
+
+
   const onSubmit =  async (values) => {
-    const { t, addAnswer, quiz, quizLoading, history } = props; 
+    const { t, addAttempt, quiz, quizLoading, history } = props; 
+    console.log('onSubmit', values);
     try {
-      await addAnswer(values);
+      await addAttempt(values);
       message.destroy();
-          message.success('Answers Submitted');
-          history.push(`/quiz/result/${quiz.id}`);
+          message.success('Attempt Submitted');
+          // history.push(`/quiz/result/${quiz.id}`);
     } catch (e) {
       message.destroy();
           message.error("Couldn't perform the action");
@@ -39,9 +78,9 @@ const Quiz = (props) => {
   // <h1>quiz</h1>
 
 export default compose(
-  graphql(ADD_ANSWER, {
+  graphql(ADD_ATTEMPT, {
     props: ({ ownProps: { history, navigation }, mutate }) => ({
-      addAnswer: async values => {
+      addAttempt: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
         try {
@@ -51,8 +90,8 @@ export default compose(
             },
             optimisticResponse: {
               __typename: 'Mutation',
-              addAnswer: {
-                __typename: 'Quiz',
+              addAttempt: {
+                __typename: 'AttemptInput',
                 ...values
               }
             }
@@ -86,9 +125,9 @@ export default compose(
         variables: { id: Number(id), userId: Number(currentUserId) }
       };
     },
-    props({ data: { loading, error, quizWithAnswers } }) {
+    props({ data: { loading, error, quizWithAnswers, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
-      return { quizLoading: loading, quiz:quizWithAnswers };
+      return { quizLoading: loading, quiz:quizWithAnswers, subscribeToMore, updateQuery };
     }
   })
   )(translate('quiz')(Quiz));

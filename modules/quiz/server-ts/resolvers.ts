@@ -6,6 +6,7 @@ import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 
 const QUIZZES_SUBSCRIPTION = "quizzes_subscription";
 const QUIZ_SUBSCRIPTION = "quiz_subscription";
+const QUIZ_WITH_ANSWERS_SUBSCRIPTION = "quiz_with_answers_subscription";
 
 export default (pubsub: any) => ({
   Query: {
@@ -43,7 +44,7 @@ export default (pubsub: any) => ({
     },
     async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
-      console.log('quizzzzzz', quiz.sections[0].questions);
+      console.log("quizzzzzz", quiz.sections[0].questions);
       return quiz;
     },
     // async answer(obj: any, { input }: any, context: any) {
@@ -170,7 +171,6 @@ export default (pubsub: any) => ({
                   qu &&
                     qu.choices &&
                     qu.choices.map((cho, choI) => {
-                
                       quiz.sections[secI].questions[quI].choices[choI].count =
                         cho && cho.answers && cho.answers.length;
                       delete quiz.sections[secI].questions[quI].choices[choI]
@@ -390,23 +390,41 @@ export default (pubsub: any) => ({
       }
     }),
     async addAttempt(obj: any, { input }: any, { Quiz }: any) {
-      console.log('addAttemptInput', input);
-      try{
-        const {quizId, userId} = input;
-        var attempt =  await Quiz.getAttemptByParams({quizId, userId});
-        console.log('addAttemptAttemptExists', attempt);
-        if(attempt){
-          attempt = await Quiz.editAttempt(input);
-          console.log('editAttemptttttt', attempt);
-          
-        }else{
+      console.log("addAttemptInput", input);
+      try {
+        const { quizId, userId } = input;
+        var attempt = await Quiz.getAttemptByParams({ quizId, userId });
+        console.log("addAttemptAttemptExists", attempt);
+        if (attempt) {
           input.id = attempt.id;
+          attempt = await Quiz.editAttempt(input);
+          console.log("editAttemptttttt", attempt);
+        } else {
           attempt = await Quiz.addAttempt(input);
-          console.log('addAttemptttttt', attempt);
-
+          console.log("addAttemptttttt", attempt);
         }
+        const quiz =
+          attempt &&
+          (await Quiz.getQuizWithAnswersByUser(attempt.quizId, attempt.userId));
+        quiz &&
+          quiz.sections &&
+          quiz.sections.map(
+            (Sec) =>
+              Sec &&
+              Sec.questions &&
+              Sec.questions.map((Que) => {
+                console.log("quizAttemptedQuestions", Que);
+              })
+          );
+        pubsub.publish(QUIZ_WITH_ANSWERS_SUBSCRIPTION, {
+          quizWithAnswersUpdated: {
+            mutation: "UPDATED",
+            id: quiz && quiz.id,
+            node: quiz,
+          },
+        });
         return attempt;
-      } catch(e){
+      } catch (e) {
         return e;
       }
     },
@@ -550,6 +568,18 @@ export default (pubsub: any) => ({
             payload &&
             payload.quizUpdated &&
             payload.quizUpdated.id === variables.id
+          );
+        }
+      ),
+    },
+    quizWithAnswersUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(QUIZ_WITH_ANSWERS_SUBSCRIPTION),
+        (payload, variables) => {
+          return (
+            payload &&
+            payload.quizWithAnswersUpdated &&
+            payload.quizWithAnswersUpdated.id === variables.id
           );
         }
       ),

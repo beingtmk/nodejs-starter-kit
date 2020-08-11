@@ -50,7 +50,6 @@ const RenderSelectMultipleQuiz = props => {
   const handleSelect = (e) => {
     var obj = {};
     obj['choiceId'] = e;
-    obj['userId'] = currentUserId;
     obj['questionId'] = data.id;
     obj['content'] = '';
     arrayHelpers.push(obj)

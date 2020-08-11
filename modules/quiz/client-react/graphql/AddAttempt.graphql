@@ -1,0 +1,8 @@
+
+mutation addAttempt($input: AddAttemptInput!) {
+  addAttempt(input: $input){
+    id
+    userId
+    quizId
+  }
+}

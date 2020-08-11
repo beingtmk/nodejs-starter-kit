@@ -62,7 +62,6 @@ const RenderSelectMultipleQuiz = (props) => {
       if (!checkExists) {
         var obj = {};
         obj["choiceId"] = eItem;
-        obj["userId"] = currentUserId;
         obj["questionId"] = data.id;
         obj["content"] = "";
         arrayHelpers.push(obj);

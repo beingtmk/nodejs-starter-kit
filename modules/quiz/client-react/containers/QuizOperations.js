@@ -50,7 +50,7 @@ const withAddQuizQuery = (Component) =>
 
 const withQuizEditing = (Component) =>
   graphql(QUIZ_EDIT, {
-    props: ({ ownProps: { history, navigation, refetch }, mutate }) => ({
+    props: ({ ownProps: { history, navigation }, mutate }) => ({
       editQuiz: async (values) => {
         message.destroy();
         message.loading("Please wait...", 0);
@@ -59,17 +59,10 @@ const withQuizEditing = (Component) =>
             variables: {
               input: values,
             },
-            optimisticResponse: {
-              __typename: "Mutation",
-              editQuiz: {
-                __typename: "Quiz",
-                ...values,
-              },
-            },
           });
-          refetch();
           message.destroy();
           message.success("Quiz edited.");
+          return quizData;
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

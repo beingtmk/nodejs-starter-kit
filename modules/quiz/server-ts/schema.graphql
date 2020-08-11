@@ -229,6 +229,7 @@ extend type Subscription {
   # modelUpdated: UpdateModelPayload
   quizzesUpdated(filter: FilterQuizInput): UpdateQuizzesPayload
   quizUpdated(id: Int): UpdateQuizPayload
+  quizWithAnswersUpdated(id: Int): UpdateQuizPayload
 }
 
 type UpdateQuizzesPayload {

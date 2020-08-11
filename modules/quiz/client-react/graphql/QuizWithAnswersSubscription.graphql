@@ -1,0 +1,11 @@
+#import './QuizWithAnswers.graphql'
+
+subscription onQuizWithAnswersUpdated($id: Int!) {
+  quizWithAnswersUpdated(id: $id) {
+    mutation
+    id
+    node {
+    ...QuizWithAnswersFragment
+    }
+  }
+}

@@ -9,9 +9,7 @@ import { message } from 'antd';
 
 // import CONTACT from '../graphql/Quiz.graphql';
 // import { QuizForm } from '../types';
-import ADD_ANSWER from '../graphql/AddAnswers.graphql';
 import QUIZ_WITH_RESULT_QUERY from '../graphql/QuizWithResultQuery.graphql';
-import ANSWERS_QUERY from '../graphql/AnswersQuery.graphql';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 
 
