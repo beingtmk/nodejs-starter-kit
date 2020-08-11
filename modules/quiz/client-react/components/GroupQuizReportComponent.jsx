@@ -38,12 +38,13 @@ class GroupQuizReportComponent extends React.Component {
                 ))}
               </Select>
             )}
-            <Divider />
+            
+          </Col>
+        </Row>
+        <Divider />
             {this.state.quizId && (
               <GroupWiseReport quizId={this.state.quizId} groupId={groupId} />
             )}
-          </Col>
-        </Row>
       </div>
     );
   }

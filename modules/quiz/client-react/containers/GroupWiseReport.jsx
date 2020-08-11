@@ -2,7 +2,7 @@ import React from "react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import { graphql } from "react-apollo";
 import { compose } from "@gqlapp/core-common";
-
+import {QuizUserWiseReportComponent} from '../components/QuizUserWiseReportModal';
 import USER_WISE_RESULT_QUERY from "../graphql/UserWiseResultQuery.graphql";
 
 //To Do - Query after state.visible is true
@@ -10,12 +10,12 @@ const QuizUserWiseReport = (props) => {
   console.log('quizuserwisereport', props);
   return (
     <>
-    <h3>GroupWiseReport</h3>
+    <QuizUserWiseReportComponent quiz={props.quiz} />
     </>
   );
 };
-{/* <QuizUserWiseReportComponent quiz={props.quiz} /> */}
 
+{/* <h3>GroupWiseReport</h3> */}
 export default compose(
   graphql(USER_WISE_RESULT_QUERY, {
     options: (props) => {

@@ -151,6 +151,33 @@ export default class Quiz extends Model {
     return res;
   }
 
+
+  public async getAttemptByQuizAndGroup(id: number, groupId: number) {
+    if(!groupId){
+      return camelizeKeys(await Attempt.query().withGraphFetched('[answers, user]').where('quiz_id', id));
+    }
+
+    const usersByGroup = camelizeKeys(
+      await knex("group_member")
+        .leftJoin("user", "user.email", "group_member.email")
+        .select("user.id as userId")
+        .where("group_member.group_id", groupId)
+    );
+    console.log("userByGroupSQL", usersByGroup);
+    var userIdArray = [];
+    usersByGroup &&
+      usersByGroup.map((uu) => {
+        uu.userId && userIdArray.push(uu.userId);
+      });
+    console.log("userIdArray", userIdArray);
+
+
+    const attempts = camelizeKeys(await Attempt.query().withGraphFetched('[answers, user]').where('quiz_id', id).whereIn('user_id', userIdArray));
+
+    return attempts;
+  }
+
+
   public async getQuizWithAnswers(id: number, groupId: number) {
     if (!groupId) {
       const res = camelizeKeys(
@@ -171,29 +198,37 @@ export default class Quiz extends Model {
       // .orderBy('id', 'desc')
     );
 
-    const usersByGroup = await knex("group_member")
-      .leftJoin("user", "user.email", "group_member.email")
-      .select("user.id as userId")
-      .where("group_member.group_id", groupId);
+    const usersByGroup = camelizeKeys(
+      await knex("group_member")
+        .leftJoin("user", "user.email", "group_member.email")
+        .select("user.id as userId")
+        .where("group_member.group_id", groupId)
+    );
+    console.log("userByGroupSQL", usersByGroup);
     if (usersByGroup && usersByGroup.length === 0) {
       return res;
     }
     var userIdArray = [];
     usersByGroup &&
       usersByGroup.map((uu) => {
-        userIdArray.push(uu.userId);
+        uu.userId && userIdArray.push(uu.userId);
       });
+    console.log("userIdArray", userIdArray);
+
     var questionsIdArray = [];
-    res.questions &&
-      res.questions.map((qu) => {
-        questionsIdArray.push(qu.id);
+    res.sections &&
+      res.sections.map((sect, secI) => {
+        sect.questions.map((ques, quI) => {
+          questionsIdArray.push(ques.id);
+        });
       });
-      const answers = camelizeKeys(
-        await Answer.query()
-          .leftJoin("attempt as AT", "AT.id", "answer.attempt_id")
-          .whereIn("answer.question_id", questionsIdArray)
-          .where("AT.user_id", userIdArray)
-      );
+
+    const answers = camelizeKeys(
+      await Answer.query()
+        .leftJoin("attempt as AT", "AT.id", "answer.attempt_id")
+        .whereIn("answer.question_id", questionsIdArray)
+        .whereIn("AT.user_id", userIdArray)
+    );
     if (answers && answers.length === 0) {
       return res;
     }

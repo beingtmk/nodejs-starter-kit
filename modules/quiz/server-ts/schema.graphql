@@ -59,6 +59,7 @@ type Attempt {
   id: Int!
   userId: Int
   quizId: Int
+  user:User
   answers: [Answer]
 }
 
@@ -81,6 +82,7 @@ type UserWiseResult {
   userId: Int!
   attendees: AttendeesOutput
   sections: [Section]
+  attempts:[Attempt]
 }
 
 extend type Query {

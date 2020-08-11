@@ -12,7 +12,7 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 
 //To Do - Query after state.visible is true
 
-const QuizUserWiseReportComponent = (quiz) => {
+export const QuizUserWiseReportComponent = (quiz) => {
   const resultQuiz = quiz.quiz;
   var questionsData = [];
   resultQuiz &&
@@ -21,7 +21,9 @@ const QuizUserWiseReportComponent = (quiz) => {
       questionsData = [...questionsData, ...sec.questions];
     });
   const data = questionsData;
-  const getResult = (record, id) => {
+
+
+  const getResult = (record, attempt) => {
     if (
       record.choiceType === QuestionTypes.TEXTBOX ||
       record.choiceType === QuestionTypes.TEXTAREA ||
@@ -29,17 +31,16 @@ const QuizUserWiseReportComponent = (quiz) => {
       record.choiceType === QuestionTypes.COUNTRIES
     ) {
       const result =
-        record &&
-        record.answers &&
-        record.answers.length !== 0 &&
-        record.answers.find((res) => res.userId === id);
-      return result.content;
+      attempt.answers && attempt.answers.find(anS=>anS.questionId === record.id);
+        // record &&
+        // record.answers &&
+        // record.answers.length !== 0 &&
+        // record.answers.find((res) => res.userId === id);
+        // console.log('result', result);
+      return result && result.content;
     } else {
       const result =
-        record &&
-        record.answers &&
-        record.answers.length !== 0 &&
-        record.answers.filter((res) => res.userId === id);
+      attempt.answers && attempt.answers.filter((res) => res.questionId === record.id);
       let choiceIdArray = [];
 
       result.forEach((answer) => {
@@ -47,6 +48,8 @@ const QuizUserWiseReportComponent = (quiz) => {
       });
       const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
       const choiceLength = choice.length;
+      console.log('result', choice);
+
       return choice.map(
         (ch, i) =>
           `${ch.description}${
@@ -63,18 +66,32 @@ const QuizUserWiseReportComponent = (quiz) => {
       render: (text, record) => <p> {record.description} </p>,
     },
   ];
-  resultQuiz &&
-    resultQuiz.attendees &&
-    resultQuiz.attendees.users &&
-    resultQuiz.attendees.users.length !== 0 &&
-    resultQuiz.attendees.users.map((user, key) => {
-      columns.push({
-        title: user.username,
-        dataIndex: user.username,
-        key: user.username,
-        render: (text, record) => <a>{getResult(record, user.id)}</a>,
-      });
+
+
+  resultQuiz && resultQuiz.attempts && resultQuiz.attempts.map((attem)=>{
+    columns.push({
+      title: attem && attem.user && attem.user.username,
+      dataIndex: attem && attem.user && attem.user.username,
+      key: attem && attem.user && attem.user.username,
+      render: (text, record) => <a>{getResult(record, attem)}</a>,
     });
+  })
+
+  // resultQuiz &&
+  //   resultQuiz.attempts &&
+  //   resultQuiz.attempts.users &&
+  //   resultQuiz.attempts.users.length !== 0 &&
+  //   resultQuiz.attempts.users.map((user, key) => {
+  //     columns.push({
+  //       title: user.username,
+  //       dataIndex: user.username,
+  //       key: user.username,
+  //       render: (text, record) => <a>{getResult(record, user.id)}</a>,
+  //     });
+  //   });
+    
+    console.log('resultQuiz', columns);
+    console.log('quizuserwisereportmodal', resultQuiz);
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
       <Table columns={columns} dataSource={data} />

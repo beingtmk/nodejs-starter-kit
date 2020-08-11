@@ -94,29 +94,19 @@ export default (pubsub: any) => ({
       };
     },
     async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
+      console.log('getUserWiseResultInput', id, groupId);
       const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
+      
+      quiz.sections.map(see=>see.questions.map(qu=>console.log('userwiseresultres', qu)));
       // ToDo replace attendees with attempts
-      // const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
-
-      var result = [];
+      const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
+      console.log('attempsattempts', attempts);
       let userIdArray = [];
-      quiz &&
-        quiz.sections &&
-        quiz.sections.map((section) => {
-          section &&
-            section.questions &&
-            section.questions.map((ques) => {
-              ques &&
-                ques.answers &&
-                ques.answers.map((ans) => {
-                  result.push(ans);
-                });
-            });
-        });
-      result.map((item, key) => {
+
+      attempts.map((item, key) => {
         const found = userIdArray.find((id) => id === item.userId);
         if (!found || (found && found.length === 0)) {
-          userIdArray.push(item.userId);
+          item.userId && userIdArray.push(item.userId);
         }
       });
       const users = await context.User.getUsersWithIdArray(userIdArray);
@@ -125,6 +115,7 @@ export default (pubsub: any) => ({
         userId: quiz.userId,
         sections: quiz.sections,
         attendees: { users: users },
+        attempts:attempts
       };
       // quizOut.questions &&
       //   quizOut.questions.length !== 0 &&

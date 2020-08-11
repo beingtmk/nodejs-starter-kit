@@ -22,6 +22,22 @@ query getUserWiseResult($id: Int!, $groupId: Int) {
         }
       }
     }
+    attempts {
+      id
+      quizId
+      userId
+      user{
+        id
+        username
+        email
+      }
+      answers {
+        id
+        questionId
+        choiceId
+        content
+      }
+    }
     attendees {
       users {
         id
