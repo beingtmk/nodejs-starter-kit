@@ -28,7 +28,7 @@ const { Content } = Layout;
 class PageLayout extends React.Component {
 
   render() {
-    const { children, navBar, type } = this.props;
+    const { children, navBar, type, footerType, noNavbar } = this.props;
     const contentStyle = layoutTypes.filter((item) => item.type === type);
 
     const renderContent = () => {
@@ -44,7 +44,7 @@ class PageLayout extends React.Component {
         </Content>
       );
     };
-    return <CoreLayout layoutType='narrow'>{renderContent()}</CoreLayout>;
+    return <CoreLayout layoutType='narrow' noNavbar={noNavbar} footerType={footerType}>{renderContent()}</CoreLayout>;
   }
 }
 

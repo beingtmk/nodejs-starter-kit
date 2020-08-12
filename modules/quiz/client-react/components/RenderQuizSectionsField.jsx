@@ -120,7 +120,7 @@ export default class RenderSectionsField extends React.Component {
       <>
         <Card style={{ marginBottom: "30px" }}>
           <h3>{this.props.quizTitle}</h3>
-          <Affix offsetTop={45}>
+          <Affix offsetTop={24} >
             <Progress
               percent={Math.round((currentSection / sectionLength) * 100)}
               style={{
@@ -147,14 +147,15 @@ export default class RenderSectionsField extends React.Component {
             currentSection={currentSection}
             currentUserId={currentUserId}
           />
-          <Row>
+          <div className='quiz-form-arrow-keys-bottom-wrapper'>
+          <Row className='quiz-form-arrow-keys-bottom'>
             <Col span={12}>
               {this.state.currentSection === 0 ? (
                 <></>
               ) : (
                 <Button
                   type="primary"
-                  shape="circle"
+                  size='large'
                   icon="arrow-left"
                   onClick={this.prevStep}
                 ></Button>
@@ -168,13 +169,13 @@ export default class RenderSectionsField extends React.Component {
               ) : (
                 <Button
                   type="primary"
-                  shape="circle"
+                  size='large'
                   icon="arrow-right"
                   onClick={this.nextStep}
                 />
               )}
             </Col>
-          </Row>
+          </Row></div>
         </Card>
       </>
     );

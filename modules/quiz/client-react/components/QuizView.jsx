@@ -20,14 +20,14 @@ const QuizView = (props) => {
     props.history.push('/login');
   }
   return (
-    <PageLayout type="forms">
+    <PageLayout type="forms" footerType={'small'} noNavbar={true}>
       {renderMetaData(props.t)}
       {props.quizLoading || props.currentUserLoading ? (
         <div style={{ marginTop: "10vh" }} align="center">
           <Loader />
         </div>
       ) : (
-        <div style={{maxWidth:'800px', margin:'auto'}}>
+        <div style={{maxWidth:'800px', margin:'0 auto 60px', }}>
           {props.quiz ? (<QuizForm {...props} />): <h4>Quiz doesn't exists</h4>}
         </div>
       )}
