@@ -39,9 +39,13 @@ class GroupQuizReportComponent extends React.Component {
               "No Quizzes To Show"
             ) : (
               <Select
+              showSearch
                 value={this.state.quizId}
                 style={{ width: "100%" }}
                 onChange={this.handleSelectQuiz}
+                filterOption={(input, option) =>
+                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
               >
                 {quizzes.map((quiz, key) => (
                   <SelectOption value={quiz.id} key={key}>
@@ -56,9 +60,13 @@ class GroupQuizReportComponent extends React.Component {
           <Col  md={12} xs={24}>
             <Title level={4}>Select User:</Title>
               <Select
+              showSearch
               value={this.state.userId}
               style={{ width: "100%" }}
               onChange={this.handleSelectUser}
+              filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
             >
               {joinees.map((j, key) => (
                 <SelectOption value={j.member.id} key={key}>

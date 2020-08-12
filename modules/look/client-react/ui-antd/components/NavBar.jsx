@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter, NavLink } from 'react-router-dom';
-import { Drawer, Menu, Icon, Row, Col, Layout } from 'antd';
-import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
-import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter, NavLink } from "react-router-dom";
+import { Drawer, Menu, Icon, Row, Col, Layout } from "antd";
+import UserAvatar from "@gqlapp/user-client-react/containers/UserAvatar";
+import ScrollParallax from "rc-scroll-anim/lib/ScrollParallax";
 
-import MenuItem from './MenuItem';
-import LoggedIn from '../auth/LoggedIn';
-import DropDown from './Dropdown';
+import MenuItem from "./MenuItem";
+import LoggedIn from "../auth/LoggedIn";
+import DropDown from "./Dropdown";
 
 const { SubMenu } = Menu;
 
@@ -15,84 +15,52 @@ const ref = { modules: null };
 
 const { Header } = Layout;
 
-export const onAppCreate = async modules => (ref.modules = modules);
+export const onAppCreate = async (modules) => (ref.modules = modules);
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: '/'
+      current: "/",
     };
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
     this.setState({
-      current: e.key
+      current: e.key,
     });
   };
 
   showDrawer = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
 
   onClose = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
   render() {
-    const {layoutType} = this.props;
+    const { layoutType } = this.props;
     const isMobile = this.props && this.props.isMobile;
     return (
-      <ScrollParallax
-        location="page-layout"
-        className="navbar-parallex"
-        animation={{
-          playScale: [1, 1.1],
-          translateY: this.state.isMobile ? '' : '-40px'
-        }}
-      >
-        <Header className="no-print">
+        <Header className="no-print navbar-header">
           <Row className={`navbar-wrapper-${layoutType}`}>
-            <Col lg={24} xs={0}>
-              <div align="right" className="navbar-contact-menu">
-                <Row style={{ lineHeight: '37px' }}>
-                  <Col span={10} />
-                  <Col span={6}>
-                    <Icon type="phone" /> +918888888888
-                  </Col>
-                  <Col span={8}>
-                    <Icon type="mail" /> nodejs-starterkit@approxyma.com
-                  </Col>
-                </Row>
-              </div>
-            </Col>
             <Col span={24}>
               <Row>
                 <Col align="left" xs={12} md={12} lg={7}>
                   <NavLink to="/" className="nav-link">
-                    <ScrollParallax
-                      location="page-layout"
-                      className="navbar-logo-lg"
-                      animation={{
-                        playScale: [1, 1.1],
-                        scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-45px',
-                        translateY: isMobile ? '' : '20px'
-                      }}
-                    >
-                      <img
-                        height="100%"
-                        src={
-                          'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
-                        }
-                        className="navbar-logo-img"
-                        alt="Mountain"
-                      />
-                    </ScrollParallax>
+                    <div className='navbar-logo-wrapper'>
+                    <img
+                      src={
+                        "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
+                      }
+                      className="navbar-logo-img"
+                      alt="Mountain"
+                    /></div>
                   </NavLink>
                 </Col>
                 <Col xs={0} md={0} lg={2}>
@@ -116,7 +84,9 @@ class NavBar extends React.Component {
 
                     <LoggedIn role="admin">
                       <MenuItem>
-                        <DropDown type="safety-certificate">{ref.modules.navItemsAdmin}</DropDown>
+                        <DropDown type="safety-certificate">
+                          {ref.modules.navItemsAdmin}
+                        </DropDown>
                       </MenuItem>
                     </LoggedIn>
                   </Menu>
@@ -128,7 +98,7 @@ class NavBar extends React.Component {
                     selectedKeys={[this.props.location.pathname]}
                     mode="horizontal"
                     theme="light"
-                    style={{ lineHeight: '39px' }}
+                    className="navbar-menu"
                   >
                     {ref.modules.navItems}
                     {ref.modules.navItemsRight}
@@ -146,11 +116,11 @@ class NavBar extends React.Component {
                     <Icon
                       type="menu"
                       style={{
-                        color: 'inherit',
-                        fontSize: '20px',
-                        position: 'absolute',
-                        top: '10px',
-                        right: '0px'
+                        color: "inherit",
+                        fontSize: "20px",
+                        position: "absolute",
+                        top: "10px",
+                        right: "0px",
                       }}
                     />
                   </div>
@@ -158,16 +128,20 @@ class NavBar extends React.Component {
               </Row>
             </Col>
 
-            <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>
+            <Drawer
+              placement="right"
+              onClose={this.onClose}
+              visible={this.state.visible}
+            >
               <Menu
                 mode="inline"
                 selectedKeys={[this.props.location.pathname]}
                 theme="light"
-                style={{ lineHeight: '50px' }}
+                style={{ lineHeight: "50px" }}
               >
                 {ref.modules.navItemsRight}
                 <LoggedIn>
-                  <div style={{ height: '100px' }} align="center">
+                  <div style={{ height: "100px" }} align="center">
                     <UserAvatar shape="square" size={100} />
                   </div>
                 </LoggedIn>
@@ -176,7 +150,7 @@ class NavBar extends React.Component {
                 {__DEV__ && (
                   <SubMenu
                     key="test"
-                    style={{ color: 'black !important' }}
+                    style={{ color: "black !important" }}
                     title={
                       <MenuItem>
                         <Icon type="deployment-unit" /> Dev
@@ -205,15 +179,14 @@ class NavBar extends React.Component {
               </Menu>
             </Drawer>
           </Row>
-        </Header>{' '}
-      </ScrollParallax>
+        </Header>
     );
   }
 }
 
 NavBar.propTypes = {
   location: PropTypes.object.isRequired,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
 };
 
 export default withRouter(NavBar);

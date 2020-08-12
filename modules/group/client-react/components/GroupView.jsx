@@ -39,14 +39,14 @@ class GroupView extends React.Component {
       <GroupLayout siderMenu={
         <Menu
           mode="inline"
-          theme="light"
+          theme="dark"
           selectedKeys={[this.state.current]}
           onClick={this.handleClick}
           // className="navbar-menu"
         >
-          <MenuItem key="info">Info</MenuItem>,
-          <MenuItem key="members">Members</MenuItem>,
-          <MenuItem key="quiz-report">Quiz Report</MenuItem>,
+          <MenuItem key="info">Info</MenuItem>
+          <MenuItem key="members">Members</MenuItem>
+          <MenuItem key="quiz-report">Quiz Report</MenuItem>
         </Menu>
       }>
         {renderMetaData(this.props.t)}

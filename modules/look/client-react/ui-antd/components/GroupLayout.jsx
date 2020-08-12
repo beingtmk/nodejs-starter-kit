@@ -19,16 +19,19 @@ class GroupLayout extends React.Component {
     const renderContent = () => {
       return (
         <Layout className="group-layout-inner">
-          <Sider width={200} style={{ background: "#fff", paddingTop:'24px' }}>
+          <Sider
+            width={200}
+            className='group-layout-sider'
+          >
             {siderMenu}
           </Sider>
-          <Layout>
+          <Layout style={{marginLeft:'200px'}}>
             <Content className="group-layout-content">{children}</Content>
           </Layout>
         </Layout>
       );
     };
-    return <CoreLayout layoutType='wide'>{renderContent()}</CoreLayout>;
+    return <CoreLayout layoutType="wide">{renderContent()}</CoreLayout>;
   }
 }
 
