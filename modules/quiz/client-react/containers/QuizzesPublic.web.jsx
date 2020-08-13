@@ -3,13 +3,10 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 import { graphql } from "react-apollo";
-import { Spin as Loader } from "antd";
 import { compose } from "@gqlapp/core-common";
 import { translate } from "@gqlapp/i18n-client-react";
-import { Button, PageLayout } from "@gqlapp/look-client-react";
 import settings from "@gqlapp/config";
 import QUIZZES_QUERY from "../graphql/QuizzesQuery.graphql";
-import DELETE_QUIZ from "../graphql/DeleteQuiz.graphql";
 import QuizzesCatalogueView from "../components/QuizzesCatalogueView";
 
 // import QuizzesFilterView from '../components/QuizzesFilterView';
@@ -48,26 +45,7 @@ const Quizzes = (props) => {
       ]}
     />
   );
-  return (
-    <PageLayout>
-      {renderMetaData()}
-      <h1>Quizzes</h1>
-
-      <hr />
-
-      {/* <QuizzesFilterView {...props} filter={filter} />
-      <hr />*/}
-      {props.loadingQuizzes || !props.quizzes ? (
-        <div align="center">
-          <Loader />
-        </div>
-      ) : (
-        <>
-          <QuizzesCatalogueView {...props} />
-        </>
-      )}
-    </PageLayout>
-  );
+  return <QuizzesCatalogueView {...props} />;
 };
 
 Quizzes.propTypes = {
@@ -88,7 +66,7 @@ export default compose(
         fetchPolicy: "network-only",
         variables: {
           // orderBy,
-          filter: {searchText:''},
+          filter: { searchText: "" },
         },
       };
     },

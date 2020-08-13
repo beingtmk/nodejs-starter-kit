@@ -61,10 +61,8 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
-      role={['user', 'admin']}
       path="/group/:id"
-      redirect="/profile"
-      component={loadable(() => import('./containers/Group').then(c => c.default))}
+      component={loadable(() => import('./containers/GroupInfo').then(c => c.default))}
     />
   ],
   navItemUser: [

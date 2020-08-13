@@ -1,5 +1,5 @@
-import React from 'react';
-import BaseModule, { BaseModuleShape } from './BaseModule';
+import React from "react";
+import BaseModule, { BaseModuleShape } from "./BaseModule";
 
 /**
  * React client feature modules interface.
@@ -21,6 +21,8 @@ export interface ClientModuleShape extends BaseModuleShape {
   navItemAccount?: Array<React.ReactElement<any>>;
   // Blog specific
   navItemsBlog?: Array<React.ReactElement<any>>;
+  // Group View specific
+  navItemGroupView?: Array<React.ReactElement<any>>;
 }
 
 interface ClientModule extends ClientModuleShape {}
@@ -45,8 +47,15 @@ class ClientModule extends BaseModule {
   get routes() {
     return (
       this.route || []
-    ).map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-      React.cloneElement(component, { key: component.key || idx + items.length })
+    ).map(
+      (
+        component: React.ReactElement<any>,
+        idx: number,
+        items: Array<React.ReactElement<any>>
+      ) =>
+        React.cloneElement(component, {
+          key: component.key || idx + items.length,
+        })
     );
   }
 
@@ -55,10 +64,15 @@ class ClientModule extends BaseModule {
    */
   get navItems() {
     return this.navItem
-      ? this.navItem.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-          React.cloneElement(component, {
-            key: component.key || idx + items.length
-          })
+      ? this.navItem.map(
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length,
+            })
         )
       : null;
   }
@@ -66,9 +80,13 @@ class ClientModule extends BaseModule {
   get navItemsRight() {
     return this.navItemRight
       ? this.navItemRight.map(
-          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
             React.cloneElement(component, {
-              key: component.key || idx + items.length
+              key: component.key || idx + items.length,
             })
         )
       : false;
@@ -76,20 +94,30 @@ class ClientModule extends BaseModule {
 
   get navItemsTest() {
     return this.navItemTest
-      ? this.navItemTest.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-          React.cloneElement(component, {
-            key: component.key || idx + items.length
-          })
+      ? this.navItemTest.map(
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length,
+            })
         )
       : false;
   }
 
   get navItemsUser() {
     return this.navItemUser
-      ? this.navItemUser.map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-          React.cloneElement(component, {
-            key: component.key || idx + items.length
-          })
+      ? this.navItemUser.map(
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length,
+            })
         )
       : false;
   }
@@ -97,9 +125,13 @@ class ClientModule extends BaseModule {
   get navItemsAdmin() {
     return this.navItemAdmin
       ? this.navItemAdmin.map(
-          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
             React.cloneElement(component, {
-              key: component.key || idx + items.length
+              key: component.key || idx + items.length,
             })
         )
       : false;
@@ -108,9 +140,28 @@ class ClientModule extends BaseModule {
   get navItemsAccount() {
     return this.navItemAccount
       ? this.navItemAccount.map(
-          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
             React.cloneElement(component, {
-              key: component.key || idx + items.length
+              key: component.key || idx + items.length,
+            })
+        )
+      : null;
+  }
+
+  get navItemsGroupView() {
+    return this.navItemGroupView
+      ? this.navItemGroupView.map(
+          (
+            component: React.ReactElement<any>,
+            idx: number,
+            items: Array<React.ReactElement<any>>
+          ) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length,
             })
         )
       : null;

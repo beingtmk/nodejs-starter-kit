@@ -5,6 +5,7 @@ query quizzes($filter: FilterQuizInput) {
     active
     title
     description
+    cover
     user {
       id
       username

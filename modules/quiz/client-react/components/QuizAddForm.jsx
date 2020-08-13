@@ -12,7 +12,8 @@ import {
   Alert,
   Icon,
   RenderCheckBox,
-  Card
+  Card,
+  RenderUpload
 } from "@gqlapp/look-client-react";
 import RenderSectionsField from "./RenderSectionsField";
 // import { QuizAddForm } from '../types';
@@ -24,7 +25,7 @@ import RenderSectionsField from "./RenderSectionsField";
 
 const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion, submitSection }) => {
   const handleSections = (data) => (values.sections = data);
-  // const [load, setload] = React.useState(false);
+  const [load, setload] = React.useState(false);
   return (
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
@@ -49,6 +50,7 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
           label={"Title"}
           value={values.title}
         />
+
         <Field
           name="description"
           component={RenderField}
@@ -56,6 +58,14 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
           label={"Description"}
           value={values.description}
         />
+                      <Field
+                name="cover"
+                component={RenderUpload}
+                type="text"
+                setload={setload}
+                label={'Quiz Avatar'}
+                value={values.cover}
+              />
         <Field
           name="active"
           component={RenderCheckBox}
@@ -133,6 +143,7 @@ const QuizAddFormWithFormik = withFormik({
       description: (props.quiz && props.quiz.description) || "",
       active: (props.quiz && props.quiz.active) || true,
       isEditableByUser: (props.quiz && props.quiz.isEditableByUser) || false,
+      cover: (props.quiz && props.quiz.cover) || "",
       sections: (props.quiz && props.quiz.sections && props.quiz.sections.map(getSections)) || [],
     }
   },

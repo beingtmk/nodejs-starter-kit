@@ -14,7 +14,7 @@ export async function seed(knex) {
       return returnId(knex('group')).insert({
         title: `Group ${i + 1}`,
         avatar:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_yHrpo9HrvefMGkn6NSCwmVUDICnDMQYF79oFMl6Z316p-XwXAQ&s',
+          'https://res.cloudinary.com/approxyma/image/upload/v1597239739/download_rph33w.jpg',
         group_type: `Type ${Math.floor(Math.random() * 10)}`,
         description: `Lorem Ipsum ${i + 1} is simply dummy text of the printing and typesetting industry.`
       });

@@ -1,13 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
-import { Menu } from "antd";
-import { Loading, MenuItem } from "@gqlapp/look-client-react";
+import { Menu, Icon, Spin as Loader } from "antd";
+import { MenuItem } from "@gqlapp/look-client-react";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import settings from "@gqlapp/config";
-import GroupQuizReport from '@gqlapp/quiz-client-react/containers/GroupQuizReport.web';
+import GroupInfoQuizReport from '../containers/GroupInfoQuizReport';
 import GroupComponent from "./GroupComponent";
-import MembersComponent from "./MembersComponent";
+import GroupInfoMembers from "../containers/GroupInfoMembers";
 
 const renderMetaData = (t) => (
   <Helmet
@@ -18,7 +18,7 @@ const renderMetaData = (t) => (
   />
 );
 
-class GroupView extends React.Component {
+class GroupInfoView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { flag: false, current: "info" };
@@ -44,29 +44,29 @@ class GroupView extends React.Component {
           onClick={this.handleClick}
           // className="navbar-menu"
         >
-          <MenuItem key="info">Info</MenuItem>
-          <MenuItem key="members">Members</MenuItem>
-          <MenuItem key="quiz-report">Quiz Report</MenuItem>
+          <MenuItem key="info"><Icon type="file-text" />Info</MenuItem>
+          <MenuItem key="members"><Icon type="team" />Members</MenuItem>
+          <MenuItem key="quiz-report"><Icon type="bar-chart" />Quiz Report</MenuItem>
         </Menu>
       }>
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.groupLoading ? (
           <>
           {this.state.current === 'info' && (<GroupComponent {...this.props} />)}
-          {this.state.current === 'members' && (<MembersComponent {...this.props} />)}
-          {this.state.current === 'quiz-report' && (<GroupQuizReport groupId={group && group.id}  group={group}/>)}
+          {this.state.current === 'members' && (<GroupInfoMembers groupId={group && group.id} />)}
+          {this.state.current === 'quiz-report' && (<GroupInfoQuizReport groupId={group && group.id}/>)}
           </>
         ) : (
-          <Loading />
+          <div align='center'><Loader /></div>
         )}
       </GroupLayout>
     );
   }
 }
 
-GroupView.propTypes = {
+GroupInfoView.propTypes = {
   groupLoading: PropTypes.bool,
   t: PropTypes.func,
 };
 
-export default GroupView;
+export default GroupInfoView;

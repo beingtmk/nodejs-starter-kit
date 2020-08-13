@@ -9,6 +9,7 @@ exports.up = function(knex) {
         .inTable("user")
         .onDelete("CASCADE");
       table.string('state');
+      table.string('cover');
       table.boolean("active").defaultTo(false);
       table.string("title");
       table.string("description");

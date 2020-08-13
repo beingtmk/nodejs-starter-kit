@@ -1,13 +1,12 @@
 
 .form-layout-outer {
-  background-image: url("https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
   width: 100%;
   min-height: 100vh;
   height: fit-content;
-  padding-top: 24px;
+  padding-top: calc(@navbar-height-large + 24px);
   padding-bottom: 24px;
 }
 .content-layout {
@@ -30,6 +29,7 @@
   margin:24px;
   padding:24px;
   background: white;
+  min-height: (100vh-@navbar-height-large - 24px);
 }
 .group-layout-sider{
   background:@secondary-color !important;
@@ -53,8 +53,3 @@
   }
 }
 
-//Overriding antd
-.ant-card {
-  border-radius: 10px !important;
-  overflow: hidden;
-}

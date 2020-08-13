@@ -5,6 +5,7 @@ type Quiz {
   active: Boolean
   title: String
   state: String
+  cover:String
   description: String
   createdAt: String
   updatedAt: String
@@ -161,7 +162,7 @@ input EditQuizInput {
   active: Boolean
   title: String
   description: String
-
+  cover:String
   isEditableByUser: Boolean
   sections: [EditSectionInput]
 }
@@ -198,6 +199,7 @@ input AddQuizInput {
   active: Boolean
   title: String
   description: String
+    cover:String
   isEditableByUser: Boolean
   sections: [SectionInput]
 }

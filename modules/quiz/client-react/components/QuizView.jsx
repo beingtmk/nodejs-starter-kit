@@ -20,7 +20,7 @@ const QuizView = (props) => {
     props.history.push('/login');
   }
   return (
-    <PageLayout type="forms" footerType={'small'} noNavbar={true}>
+    <PageLayout type="forms" footerType={'small'}>
       {renderMetaData(props.t)}
       {props.quizLoading || props.currentUserLoading ? (
         <div style={{ marginTop: "10vh" }} align="center">

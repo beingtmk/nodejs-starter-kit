@@ -5,6 +5,7 @@ fragment QuizFragment on Quiz {
   title
   description
   isEditableByUser
+  cover
   sections {
     id
     quizId

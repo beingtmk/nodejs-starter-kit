@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 import { translate } from '@gqlapp/i18n-client-react';
-import GroupView from '../components/GroupView';
+import GroupInfoView from '../components/GroupInfoView';
 import GROUP_QUERY from '../graphql/GroupQuery.graphql';
 import ADD_GROUP_MEMBER from '../graphql/AddGroupMember.graphql';
 import EDIT_GROUP_MEMBER from '../graphql/EditGroupMember.graphql';
@@ -48,7 +48,7 @@ const Group = (props)=>{
     }
   });
   return(
-<GroupView {...props} />
+<GroupInfoView {...props} />
   )
 }
 
@@ -76,65 +76,5 @@ export default compose(
       if (error) throw new Error(error);
       return { groupLoading: loading, group, subscribeToMore, updateQuery };
     }
-  }),
-  graphql(ADD_GROUP_MEMBER, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      addGroupMember: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
-        try {
-          let ansData = await mutate({
-            variables: {
-              input: values
-            },
-          });
-
-          
-        } catch (e) {
-          
-          console.error(e);
-        }
-      }
-    })
-  }),
-  graphql(EDIT_GROUP_MEMBER, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      editGroupMember: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
-        try {
-          let ansData = await mutate({
-            variables: {
-              input: values
-            },
-          });
-
-          
-        } catch (e) {
-          
-          console.error(e);
-        }
-      }
-    })
-  }),
-  graphql(CHANGE_GROUP_MEMBER_TYPE, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      changeGroupMemberType: async values => {
-        // message.destroy();
-        // message.loading('Please wait...', 0);
-        try {
-          let ansData = await mutate({
-            variables: {
-              input: values
-            },
-          });
-
-          
-        } catch (e) {
-          
-          console.error(e);
-        }
-      }
-    })
-  }),
+  })
 )(translate('blog')(Group));
