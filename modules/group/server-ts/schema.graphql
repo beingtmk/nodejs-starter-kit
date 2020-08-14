@@ -59,6 +59,7 @@ extend type Mutation {
   deleteGroupMember(id: Int!): GroupMember
   addGroup(input: AddGroupInput!): Group
   updateGroup(input: UpdateGroupInput!): Group
+  upsertGroup(input: UpsertGroupInput!): Group
   deleteGroup(id: Int!): Group
 }
 
@@ -96,6 +97,10 @@ input UpdateGroupInput {
   avatar: String
   description: String
   groupType: String
+}
+
+input UpsertGroupInput {
+  id: Int!
   members: [MemberInput]
 }
 
@@ -116,13 +121,13 @@ input EditGroupMemberInput {
 extend type Subscription {
   groupsUpdated(endCursor: Int!, filter: FilterGroupInput): UpdateGroupPayload
   groupMembersUpdated: UpdateGroupMembersPayload
-  groupItemUpdated(id: Int):GroupItemPayload
+  groupItemUpdated(id: Int): GroupItemPayload
 }
 
 type GroupItemPayload {
   mutation: String!
   node: Group!
-  id:Int!
+  id: Int!
 }
 
 type UpdateGroupMembersPayload {

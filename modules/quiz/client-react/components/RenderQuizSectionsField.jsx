@@ -17,7 +17,12 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import RenderQuizQuestionField from "./RenderQuizQuestionField";
 const FormItem = Form.Item;
 
-const SectionComponent = ({ sec, currentSection, currentUserId, questionList }) => {
+const SectionComponent = ({
+  sec,
+  currentSection,
+  currentUserId,
+  questionList,
+}) => {
   const handleResults = (data) => (values.results = data);
 
   return (
@@ -108,7 +113,7 @@ export default class RenderSectionsField extends React.Component {
     const { currentSection, sectionLength } = this.state;
 
     var questionsList = [];
-      values.sections &&
+    values.sections &&
       values.sections.map((secI, keySec) => {
         secI &&
           secI.questions &&
@@ -120,15 +125,20 @@ export default class RenderSectionsField extends React.Component {
       <>
         <Card style={{ marginBottom: "30px" }}>
           <h3>{this.props.quizTitle}</h3>
-          <Affix offsetTop={24} >
+          <Affix offsetTop={24}>
             <Progress
               percent={Math.round((currentSection / sectionLength) * 100)}
+              strokeColor={{
+                from: "#434242",
+                to: "#97C240",
+              }}
               style={{
                 color: "black",
                 background: "white",
                 padding: "5px",
                 borderRadius: "5px",
               }}
+              status="active"
             />
           </Affix>
         </Card>
@@ -147,35 +157,36 @@ export default class RenderSectionsField extends React.Component {
             currentSection={currentSection}
             currentUserId={currentUserId}
           />
-          <div className='quiz-form-arrow-keys-bottom-wrapper'>
-          <Row className='quiz-form-arrow-keys-bottom'>
-            <Col span={12}>
-              {this.state.currentSection === 0 ? (
-                <></>
-              ) : (
-                <Button
-                  type="primary"
-                  size='large'
-                  icon="arrow-left"
-                  onClick={this.prevStep}
-                ></Button>
-              )}
-            </Col>
-            <Col span={12} align="right">
-              {this.state.currentSection + 1 === this.state.sectionLength ? (
-                <>
-                  <SubmitButton />
-                </>
-              ) : (
-                <Button
-                  type="primary"
-                  size='large'
-                  icon="arrow-right"
-                  onClick={this.nextStep}
-                />
-              )}
-            </Col>
-          </Row></div>
+          <div className="quiz-form-arrow-keys-bottom-wrapper">
+            <Row className="quiz-form-arrow-keys-bottom">
+              <Col span={12}>
+                {this.state.currentSection === 0 ? (
+                  <></>
+                ) : (
+                  <Button
+                    type="primary"
+                    size="large"
+                    icon="arrow-left"
+                    onClick={this.prevStep}
+                  ></Button>
+                )}
+              </Col>
+              <Col span={12} align="right">
+                {this.state.currentSection + 1 === this.state.sectionLength ? (
+                  <>
+                    <SubmitButton />
+                  </>
+                ) : (
+                  <Button
+                    type="primary"
+                    size="large"
+                    icon="arrow-right"
+                    onClick={this.nextStep}
+                  />
+                )}
+              </Col>
+            </Row>
+          </div>
         </Card>
       </>
     );

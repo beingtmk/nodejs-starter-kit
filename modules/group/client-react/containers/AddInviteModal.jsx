@@ -50,7 +50,7 @@ class AddInviteModal extends React.Component {
         <Button
           type="primary"
           onClick={this.showModal}
-          icon="plus"
+          icon="user-add"
           size="large"
         />
         <Modal

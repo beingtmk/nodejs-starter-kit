@@ -1,0 +1,7 @@
+#import "./Group.graphql"
+
+mutation upsertGroup($input: UpsertGroupInput!) {
+  upsertGroup(input: $input) {
+    ...GroupInfo
+  }
+}

@@ -179,8 +179,16 @@ export default class Group extends Model {
   }
 
   public async updateGroup(input: GroupInput & Identifier) {
-    const res = await Group.query().upsertGraph(decamelizeKeys(input));
+    const res = await Group.query().patch(decamelizeKeys(input)).findById(input.id);
     return res.id;
+  }
+
+  public async upsertGroup(input: GroupInput & Identifier) {
+    console.log('updateGroupSQL', input);
+    const res = await Group.query().upsertGraph(decamelizeKeys(input));
+    // const newGroup = await Group.query
+    console.log()
+    return res;
   }
 
   public async deleteGroup(id: number) {

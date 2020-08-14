@@ -54,11 +54,14 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
-      role={['user', 'admin']}
-      redirect="/profile"
       path="/group/edit/:id"
       component={loadable(() => import('./containers/EditGroup').then(c => c.default))}
     />,
+    <AuthRoute
+    exact
+    path="/group/members-edit/:id"
+    component={loadable(() => import('./containers/EditGroupMembers').then(c => c.default))}
+  />,
     <AuthRoute
       exact
       path="/group/:id"

@@ -62,20 +62,6 @@ class GroupFormComponent extends React.Component {
                 value={values.groupType}
               />
 
-              <FieldArray
-                name="members"
-                render={arrayHelpers => (
-                  <RenderDynamicField
-                    buttonText="Add Member"
-                    keys={[{ key: 'email', type: 'text' }]}
-                    arrayHelpers={arrayHelpers}
-                    values={values.members}
-                    name="members"
-                    label={'Members'}
-                  />
-                )}
-              />
-
               <Button color="primary" type="submit" disabled={this.state.load || submitting}>
                 {'Submit'}
               </Button>
@@ -104,30 +90,10 @@ const GroupFormComponentWithFormik = withFormik({
     description: props.group && props.group.description,
     groupType: props.group && props.group.groupType,
     avatar: props.group && props.group.avatar,
-    members: (props.group && props.group.members) || []
   }),
   validate: values => validate(values, GroupFormComponentSchema),
   handleSubmit(values, { props: { onSubmit, group, currentUser } }) {
     if (group) values['id'] = group.id;
-    let members = [];
-    let val = {};
-    values.members.map(item => {
-      val = {
-        email: item.email,
-        type: item.type || MemberType.MEMBER,
-        status: item.status || MemberStatus.ADDED
-      };
-      if (item.id) val.id = item.id;
-      members.push(val);
-    });
-    if (!members.some(item => item.email === currentUser.email)) {
-      members.push({
-        email: currentUser.email,
-        type: MemberType.ADMIN,
-        status: MemberStatus.ADDED
-      });
-    }
-    values.members = members;
     onSubmit(values);
   },
   enableReinitialize: true,
