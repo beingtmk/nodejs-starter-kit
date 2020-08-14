@@ -207,12 +207,8 @@ export const QuizUserWiseReportComponent = (props) => {
       <Table
         onRow={(record, rowIndex) => {
           return {
-            onClick: (event) => handleRowClick(record, event), // click row
-            // onDoubleClick: event => {}, // double click row
-            // onContextMenu: event => {}, // right button click row
-            // onMouseEnter: event => {}, // mouse enter row
-            // onMouseLeave: event => {}, // mouse leave row
-          };
+            onClick: (event) => handleRowClick(record, event),
+            };
         }}
         columns={columns}
         dataSource={data}

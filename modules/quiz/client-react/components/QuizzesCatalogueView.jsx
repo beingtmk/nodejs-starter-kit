@@ -1,10 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { Spin as Loader, Row, Col, Card, Empty } from "antd";
+import { Spin as Loader, Row, Col, Card, Empty, Typography } from "antd";
 import { PageLayout } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
 import QuizForm from "./QuizForm";
+
+const { Title, Text } = Typography;
+const { Meta } = Card;
 
 const renderMetaData = (t) => (
   <Helmet
@@ -40,14 +43,20 @@ const QuizzesCatalogueView = (props) => {
               <a href={`/quiz/${quiz.id}`}>
                 <Col xs={24} md={12} lg={8}>
                   <Card
-                    title={<h3>{quiz.title}</h3>}
+                    hoverable
                     cover={
-                      <div align='center' style={{ height: "200px", overflow:'hidden' }}>
+                      <div
+                        align="center"
+                        style={{ height: "200px", overflow: "hidden" }}
+                      >
                         <img src={quiz.cover} height="100%" alt="" />
                       </div>
                     }
                   >
-                    <h4>{quiz.description}</h4>
+                    <Meta
+                      title={<Title level={3}>{quiz.title}</Title>}
+                      description={<Text>{quiz.description}</Text>}
+                    />
                   </Card>
                 </Col>
               </a>

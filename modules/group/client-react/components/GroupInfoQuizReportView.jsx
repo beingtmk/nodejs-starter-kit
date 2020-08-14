@@ -30,6 +30,7 @@ class GroupInfoQuizView extends React.Component {
 
   render() {
     const {group} = this.props;
+    console.log('groupInfoQUizView', this.props)
     return (
       <>
       {this.state.flag && (<GroupQuizReport groupId={group && group.id}  group={group}/>)}

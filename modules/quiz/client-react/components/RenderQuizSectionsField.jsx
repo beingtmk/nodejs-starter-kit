@@ -129,7 +129,7 @@ export default class RenderSectionsField extends React.Component {
             <Progress
               percent={Math.round((currentSection / sectionLength) * 100)}
               strokeColor={{
-                from: "#434242",
+                from: "#97C240",
                 to: "#97C240",
               }}
               style={{

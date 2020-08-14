@@ -19,7 +19,7 @@ const Footer10DataSource = {
         title: {
           className: 'logo',
           children:
-            'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
+            'https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png'
         },
         childWrapper: {
           className: 'slogan',
@@ -90,7 +90,7 @@ const Footer10DataSource = {
     children: (
       <>
         <span>
-          <a href="https://approxyma.com">Approxyma</a>
+          <a href="https://approxyma.com">Powered By Approxyma</a>
         </span>
       </>
     )
