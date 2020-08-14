@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import { translate } from '@gqlapp/i18n-client-react';
 import GroupInfoView from '../components/GroupInfoView';
 import GROUP_QUERY from '../graphql/GroupQuery.graphql';
-import ADD_GROUP_MEMBER from '../graphql/AddGroupMember.graphql';
+import ADD_GROUP_MEMBER from '../graphql/AddGroupMemberInvite.graphql';
 import EDIT_GROUP_MEMBER from '../graphql/EditGroupMember.graphql';
 import CHANGE_GROUP_MEMBER_TYPE from '../graphql/ChangeGroupMemberType.graphql';
 import GROUP_ITEM_SUBSCRIPTION from '../graphql/GroupItemSubscription.graphql';
