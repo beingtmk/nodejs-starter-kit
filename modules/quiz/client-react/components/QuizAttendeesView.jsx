@@ -1,11 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { Spin as Loader } from "antd";
-import { PageLayout, Card } from "@gqlapp/look-client-react";
+import { Spin as Loader, Card, Row, Col, Divider } from "antd";
+import { PageLayout } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
 // import QuizForm from "./QuizForm";
 import QuizReport from "../containers/QuizReport";
+
+const { Meta } = Card;
 const renderMetaData = (t) => (
   <Helmet
     title={`${settings.app.name} - ${t("title")}`}
@@ -34,15 +36,23 @@ const QuizAttendeesView = (props) => {
           style={{ maxWidth: "500px", margin: "auto" }}
           title={<h1>Attendees</h1>}
         >
-          {props.users.users.length === 0 ? (
+          {props.attempts && props.attempts.attempts && props.attempts.attempts.length === 0 ? (
             <h4>No Attempts</h4>
           ) : (
-            props.users.users.map((item, key) => (
-              <>
-                <h4 style={{ display: "inline" }}>{item.username}</h4>
-                <QuizReport quizId={id} userId={item.id} />
-                <br />
-              </>
+            props.attempts && props.attempts.attempts && props.attempts.attempts.map((item, key) => (
+              <Row>
+                <Col span={12}>
+                  <h4 style={{ display: "inline" }}>
+                    {item && item.user && item.user.username}
+                  </h4>
+                </Col>
+                <Col span={12} align='right'>
+                  <QuizReport
+                    quizId={id}
+                    userId={item && item.user && item.user.id}
+                  />
+                </Col>
+              </Row>
             ))
           )}
         </Card>

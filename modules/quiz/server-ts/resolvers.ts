@@ -67,40 +67,22 @@ export default (pubsub: any) => ({
     //   };
     // },
     async getAttendees(obj: any, { id }: any, context: any) {
-      const quiz = await context.Quiz.getQuiz(id);
-      let questionIdArray = [];
-      quiz &&
-        quiz.sections &&
-        quiz.sections.map((sect) => {
-          sect &&
-            sect.questions &&
-            sect.questions.map((question, key) => {
-              questionIdArray.push(question.id);
-            });
-        });
-
-      const params = { questionIdArray: questionIdArray };
-      const result = await context.Quiz.getAnswersByQuestionArray(params);
-      let userIdArray = [];
-      result.map((item, key) => {
-        const found = userIdArray.find((id) => id === item.userId);
-        if (!found || (found && found.length === 0)) {
-          userIdArray.push(item.userId);
-        }
-      });
-      const users = await context.User.getUsersWithIdArray(userIdArray);
+      const attempts = await context.Quiz.getAttemptByQuizAndGroup(id);
       return {
-        users: users,
+        attempts: attempts,
       };
     },
     async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
-      console.log('getUserWiseResultInput', id, groupId);
+      console.log("getUserWiseResultInput", id, groupId);
       const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
-      
-      quiz && quiz.sections.map(see=>see.questions.map(qu=>console.log('userwiseresultres', qu)));
+
+      quiz &&
+        quiz.sections.map((see) =>
+          see.questions.map((qu) => console.log("userwiseresultres", qu))
+        );
       // ToDo replace attendees with attempts
       const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
-      console.log('attempsattempts', attempts);
+      console.log("attempsattempts", attempts);
       let userIdArray = [];
 
       attempts.map((item, key) => {
@@ -115,7 +97,7 @@ export default (pubsub: any) => ({
         userId: quiz && quiz.userId,
         sections: quiz && quiz.sections,
         attendees: { users: users },
-        attempts:attempts
+        attempts: attempts,
       };
       // quizOut.questions &&
       //   quizOut.questions.length !== 0 &&

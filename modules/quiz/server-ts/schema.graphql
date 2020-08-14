@@ -75,13 +75,12 @@ type Answer {
 }
 
 type AttendeesOutput {
-  users: [User]
+  attempts: [Attempt]
 }
 
 type UserWiseResult {
   id: Int!
   userId: Int!
-  attendees: AttendeesOutput
   sections: [Section]
   attempts:[Attempt]
 }

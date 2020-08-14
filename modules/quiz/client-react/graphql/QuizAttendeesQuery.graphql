@@ -1,10 +1,14 @@
-
-query  getAttendees($id: Int!) {
-   getAttendees(id: $id) {
-  users{
-    id
-    username
-    email
-  }
+query getAttendees($id: Int!) {
+  getAttendees(id: $id) {
+    attempts {
+      id
+      quizId
+      user {
+        id
+        role
+        username
+        email
+      }
+    }
   }
 }

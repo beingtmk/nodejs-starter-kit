@@ -38,11 +38,5 @@ query getUserWiseResult($id: Int!, $groupId: Int) {
         content
       }
     }
-    attendees {
-      users {
-        id
-        username
-      }
-    }
   }
 }

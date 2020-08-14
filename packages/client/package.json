@@ -100,6 +100,7 @@
         "rc-scroll-anim": "^2.7.4",
         "rc-texty": "^0.2.0",
         "rc-tween-one": "^2.6.8",
+        "recharts": "^1.8.5",
         "react": "16.9.0",
         "react-apollo": "^3.0.0",
         "react-art": "^16.9.0",
