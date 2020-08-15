@@ -60,9 +60,11 @@ export default compose(
   graphql(GROUP_QUERY, {
     options: (props) => {
       let id = 0;
-      if (props.groupId) {
-        id = props.groupId;
-      } 
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
       console.log("groupquery", props);
 
       return {

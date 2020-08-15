@@ -88,11 +88,25 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
-      path="/group/:id"
+      path="/group/:id/info"
       component={loadable(() =>
         import("./containers/GroupInfo").then((c) => c.default)
       )}
     />,
+    <AuthRoute
+      exact
+      path="/group/:id/members"
+      component={loadable(() =>
+        import("./containers/GroupInfoMembers").then((c) => c.default)
+      )}
+    />,
+    <AuthRoute
+    exact
+    path="/group/:id/quiz-report"
+    component={loadable(() =>
+      import("./containers/GroupInfoQuizReport").then((c) => c.default)
+    )}
+  />,
   ],
   navItemUser: [
     <IfLoggedIn key="/my-groups">

@@ -47,20 +47,39 @@ class NavBar extends React.Component {
     const { layoutType } = this.props;
     const isMobile = this.props && this.props.isMobile;
     return (
+      <ScrollParallax
+        location="page-layout"
+        className="navbar-parallex"
+        animation={{
+          playScale: [1, 1.1],
+          translateY: this.state.isMobile ? "" : "-40px",
+        }}
+      >
+        <div className="navbar-top-layer-wrapper">
+          <Row className='navbar-top-layer'>
+            <Col span={12}>
+            </Col>
+            <Col span={12} align='right'>
+              <span style={{paddingRight:'20px'}}><Icon type="phone" /> {"+91 999 999 9999"}</span>
+            <Icon type="mail" /> {'aaaaa@aaa.com'}
+            </Col>
+          </Row>
+        </div>
         <Header className="no-print navbar-header">
           <Row className={`navbar-wrapper-${layoutType}`}>
             <Col span={24}>
               <Row>
                 <Col align="left" xs={12} md={12} lg={7}>
                   <NavLink to="/" className="nav-link">
-                    <div className='navbar-logo-wrapper'>
-                    <img
-                      src={
-                        "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
-                      }
-                      className="navbar-logo-img"
-                      alt="Mountain"
-                    /></div>
+                    <div className="navbar-logo-wrapper">
+                      <img
+                        src={
+                          "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
+                        }
+                        className="navbar-logo-img"
+                        alt="Mountain"
+                      />
+                    </div>
                   </NavLink>
                 </Col>
                 <Col xs={0} md={0} lg={2}>
@@ -117,9 +136,8 @@ class NavBar extends React.Component {
                       type="menu"
                       style={{
                         color: "inherit",
-                        fontSize: "20px",
                         position: "absolute",
-                        top: "10px",
+                        top: "13px",
                         right: "0px",
                       }}
                     />
@@ -180,6 +198,7 @@ class NavBar extends React.Component {
             </Drawer>
           </Row>
         </Header>
+      </ScrollParallax>
     );
   }
 }

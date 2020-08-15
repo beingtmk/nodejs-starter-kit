@@ -17,6 +17,7 @@ import {
 } from "antd";
 
 import moment from "moment";
+import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import { Name, emptyCover } from "../constants";
 import AddInviteModal from "../containers/AddInviteModal";
 import { MemberStatus, MemberType } from "../constants";
@@ -26,7 +27,13 @@ const { Title, Text, Paragraph } = Typography;
 const SelectOption = Select.Option;
 const { TabPane } = Tabs;
 
-const GroupInfoMembersView = ({ group, changeGroupMemberType }) => {
+const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation }) => {
+  let gid = 0;
+  if (match) {
+    gid = match.params.id;
+  } else if (navigation) {
+    gid = navigation.state.params.id;
+  }
   const handleMemberTypeChange = async (e, userEmail) => {
     const { id } = group;
     console.log(e);
@@ -36,14 +43,14 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType }) => {
   let invites = [],
     joinees = [];
 
-  group.members.map((item) => {
+    group && group.members && group.members.map((item) => {
     if (item.member) joinees.push(item);
     else invites.push(item);
   });
   console.log("groupComponent", group);
   return (
-    <div>
-      <Tabs
+    <GroupLayout id={gid} path={match && match.path}>
+      {(<Tabs
         defaultActiveKey="1"
         tabBarExtraContent={
           <Row gutter={24}>
@@ -158,8 +165,8 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType }) => {
             )}
           </Row>
         </TabPane>
-      </Tabs>
-    </div>
+      </Tabs>)}
+    </GroupLayout>
   );
 };
 

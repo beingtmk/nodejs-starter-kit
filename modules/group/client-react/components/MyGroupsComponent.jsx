@@ -56,7 +56,7 @@ const MyGroupsComponent = ({ groups }) => {
                 <br />
                 <Row gutter={16}>
                   <Col span={12}>
-                    <Link to={`/group/${item.id}`}>
+                    <Link to={`/group/${item.id}/info`}>
                       <Button icon="eye" block type="primary" ghost>
                         Details
                       </Button>

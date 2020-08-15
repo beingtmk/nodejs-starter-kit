@@ -1,10 +1,31 @@
-@navbar-height-large:55px;
+@navbar-height:55px;
+@navbar-height-large:95px;
 
+.navbar-parallex{
+  z-index: 100;
+  position:fixed;
+  width:100vw;
+  height: @navbar-height-large !important;
+  overflow: hidden;
+}
+
+.navbar-top-layer-wrapper{
+  height: 40px;
+  background: @primary-color;
+  position: relative;
+}
+
+.navbar-top-layer{
+  color: @secondary-color;
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px;
+}
 
 .navbar-header{
   position: fixed;
   z-index: 10;
-  height: @navbar-height-large;
+  height: @navbar-height;
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
   padding: 0 !important;
   width:100%;
@@ -13,7 +34,7 @@
 }
 
 .navbar-logo-wrapper{
-  height: @navbar-height-large;
+  height: @navbar-height;
 }
 
 .navbar-logo-img{
@@ -41,11 +62,11 @@
 
 @media only screen and (max-width: 769px) {
   .ant-layout-header {
-    height: @navbar-height-large !important;
+    height: @navbar-height !important;
     z-index: 100;
   }
   .navbar-logo-lg{
-    height:@navbar-height-large !important;
+    height:@navbar-height !important;
     padding: 0 !important;
     margin-top:-0px !important;
   }
@@ -55,11 +76,12 @@
   .content-layout{
     margin:0;
     padding: 5px ;
-    margin-top: @navbar-height-large; 
+    margin-top: @navbar-height; 
 
   }
   .navbar-drawer-logo{
-    height:@navbar-height-large;
+    font-size: 28px;
+    height:@navbar-height;
     color: @primary-color;
   }
 
@@ -76,7 +98,7 @@
   background:transparent;
   // border-radius: 10px;
   // margin-top: -39px;
-  height: @navbar-height-large;
+  height: @navbar-height;
   overflow: hidden;
   // padding-top:2px;
   width: fit-content

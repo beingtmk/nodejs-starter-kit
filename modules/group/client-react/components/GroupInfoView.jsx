@@ -5,7 +5,7 @@ import { Menu, Icon, Spin as Loader } from "antd";
 import { MenuItem } from "@gqlapp/look-client-react";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import settings from "@gqlapp/config";
-import GroupInfoQuizReport from '../containers/GroupInfoQuizReport';
+import GroupInfoQuizReport from "../containers/GroupInfoQuizReport";
 import GroupComponent from "./GroupComponent";
 import GroupInfoMembers from "../containers/GroupInfoMembers";
 
@@ -28,36 +28,28 @@ class GroupInfoView extends React.Component {
     this.setState({ flag: true });
   }
 
-  handleClick=(e)=>{
+  handleClick = (e) => {
     console.log(e);
     this.setState({ current: e.key });
-  }
+  };
 
   render() {
-    const {group} = this.props;
+    const { group, match, navigation } = this.props;
+    let id = 0;
+    if (match) {
+      id = match.params.id;
+    } else if (navigation) {
+      id = navigation.state.params.id;
+    }
     return (
-      <GroupLayout siderMenu={
-        <Menu
-          mode="inline"
-          theme="dark"
-          selectedKeys={[this.state.current]}
-          onClick={this.handleClick}
-          // className="navbar-menu"
-        >
-          <MenuItem key="info"><Icon type="file-text" />Info</MenuItem>
-          <MenuItem key="members"><Icon type="team" />Members</MenuItem>
-          <MenuItem key="quiz-report"><Icon type="bar-chart" />Quiz Report</MenuItem>
-        </Menu>
-      }>
+      <GroupLayout id={id} path={match && match.path}>
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.groupLoading ? (
-          <>
-          {this.state.current === 'info' && (<GroupComponent {...this.props} />)}
-          {this.state.current === 'members' && (<GroupInfoMembers groupId={group && group.id} />)}
-          {this.state.current === 'quiz-report' && (<GroupInfoQuizReport groupId={group && group.id}/>)}
-          </>
+          <GroupComponent {...this.props} />
         ) : (
-          <div align='center'><Loader /></div>
+          <div align="center">
+            <Loader />
+          </div>
         )}
       </GroupLayout>
     );
