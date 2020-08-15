@@ -1,13 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
-import { Spin as Loader, Collapse } from "antd";
+import { Spin as Loader, Typography, Divider } from "antd";
 import { PageLayout, Card } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
-// import QuizForm from './QuizForm';
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import { getResult } from "../helpers";
 
-const { Panel } = Collapse;
+const { Text, Title, Paragraph } = Typography;
 
 const renderMetaData = (t) => (
   <Helmet
@@ -77,15 +77,17 @@ export const ResultComponent = (props) => {
     });
   return (
     <>
-      <h3>Result:</h3>
       <br />
-      <Collapse>
         {queAnsArray.map((qan, key) => (
-          <Panel header={qan.question} key={key}>
-            <p>{qan.answer}</p>
-          </Panel>
+          <>
+          <Title level={4} id={key}>
+            {`${key + 1} -> ${qan.question}`}
+          </Title>
+          <Text>{`A -> ${qan.answer}`}</Text>
+          <Divider />
+
+          </>
         ))}
-      </Collapse>
     </>
   );
 };

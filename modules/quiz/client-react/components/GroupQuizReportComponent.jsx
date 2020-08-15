@@ -79,6 +79,9 @@ class GroupQuizReportComponent extends React.Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
+                <SelectOption value={null} key={'all'}>
+                    All
+                  </SelectOption>
                 {joinees.map((j, key) => (
                   <SelectOption value={j.member.id} key={key}>
                     {j.member.username}

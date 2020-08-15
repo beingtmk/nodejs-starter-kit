@@ -43,7 +43,7 @@ class QuizReport extends React.Component {
           View Answers
         </Button>
         <Modal
-          title="Basic Modal"
+          title="Individual Result"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -58,7 +58,6 @@ class QuizReport extends React.Component {
 export default compose(
   graphql(QUIZ_WITH_RESULT_QUERY, {
     options: props => {
-      
       return {
         variables: { id: Number(props.quizId), userId: Number(props.userId) }
       };

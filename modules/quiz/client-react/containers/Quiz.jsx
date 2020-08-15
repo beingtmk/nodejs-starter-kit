@@ -61,7 +61,7 @@ const Quiz = (props) => {
       await addAttempt(values);
       message.destroy();
           message.success('Attempt Submitted');
-          // history.push(`/quiz/result/${quiz.id}`);
+          history.push(`/quiz/result/${quiz.id}`);
     } catch (e) {
       message.destroy();
           message.error("Couldn't perform the action");

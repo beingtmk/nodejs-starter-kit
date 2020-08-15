@@ -52,6 +52,7 @@ const QuizAttendeesView = (props) => {
                     userId={item && item.user && item.user.id}
                   />
                 </Col>
+                <Divider />
               </Row>
             ))
           )}
