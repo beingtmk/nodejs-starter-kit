@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Menu, Icon } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -8,6 +8,8 @@ import loadable from '@loadable/component';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
+
+const { SubMenu } = Menu;
 
 import resources from './locales';
 const MyListingsNavItemAccount = () => {
@@ -107,15 +109,23 @@ export default new ClientModule({
     </MenuItem>
   ],
   navItemUser: [
-    <IfLoggedIn key="/my-listings">
-      <MenuItem>
-        <MyListingsNavItemAccount />
-      </MenuItem>
-    </IfLoggedIn>,
-    <IfLoggedIn key="/my-listings-bookmark">
-      <MenuItem>
-        <NavLinkMyListingsBookmark />
-      </MenuItem>
+    <IfLoggedIn key="/listings">
+      <SubMenu
+        key="/listing"
+        title={
+          <span>
+            <Icon type="solution" />
+            <span>Listing</span>
+          </span>
+        }
+      >
+        <MenuItem>
+          <MyListingsNavItemAccount />
+        </MenuItem>
+        <MenuItem>
+          <NavLinkMyListingsBookmark />
+        </MenuItem>
+      </SubMenu>
     </IfLoggedIn>
   ],
   navItemAccount: [

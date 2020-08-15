@@ -1,4 +1,5 @@
 import React from 'react';
+import { Menu, Icon } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -10,6 +11,8 @@ import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import resources from './locales';
 
 import NavItemCart from './containers/NavItemCart.web';
+
+const { SubMenu } = Menu;
 
 const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/orders" className="nav-link" activeClassName="active">
@@ -80,14 +83,22 @@ export default new ClientModule({
       </NavLink>
     </MenuItem>,
     <IfLoggedIn key="/my-orders">
-      <MenuItem>
-        <NavLinkMyOrdersWithI18n />
-      </MenuItem>
-    </IfLoggedIn>,
-    <IfLoggedIn key="/my-delivery">
-      <MenuItem>
-        <NavLinkMyDeliveriesWithI18n />
-      </MenuItem>
+      <SubMenu
+        key="/order"
+        title={
+          <span>
+            <Icon type="solution" />
+            <span>Order</span>
+          </span>
+        }
+      >
+        <MenuItem>
+          <NavLinkMyOrdersWithI18n />
+        </MenuItem>
+        <MenuItem>
+          <NavLinkMyDeliveriesWithI18n />
+        </MenuItem>
+      </SubMenu>
     </IfLoggedIn>
   ],
   navItemAdmin: [
