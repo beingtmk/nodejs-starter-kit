@@ -12,16 +12,40 @@ import {
   NextIcon,
   NextButton,
   ViewButton,
-  ViewIcon
+  ViewIcon,
+  SubmitIcon,
+  SubmitButton,
+  RemoveIcon,
+  RemoveButton,
+  ActiveIcon,
+  ActiveButton,
+  PublishIcon,
+  PublishButton
 } from '@gqlapp/look-client-react';
 import { Row, Col } from 'antd';
 
 class Demo extends Component {
-  state = {};
+  state = {
+    active: 'false',
+    publish: 'false'
+  };
   handleClick = item => {
     console.log(item);
   };
+  handleActive = item => {
+    console.log(item);
+    if (this.state.active === 'false') {
+      this.setState({ active: 'true' });
+    } else this.setState({ active: 'false' });
+  };
+  handlePublish = item => {
+    console.log(item);
+    if (this.state.publish === 'false') {
+      this.setState({ publish: 'true' });
+    } else this.setState({ publish: 'false' });
+  };
   render() {
+    const { active, publish } = this.state;
     return (
       <PageLayout>
         <LayoutCenter>
@@ -67,6 +91,44 @@ class Demo extends Component {
               </Col>
               <Col span={12}>
                 <ViewButton onClick={() => this.handleClick('ViewButton')}>View</ViewButton>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ padding: 10 }}>
+              <Col span={12}>
+                <SubmitIcon confirm={true} onClick={() => this.handleClick('SubmitIcon')} />
+              </Col>
+              <Col span={12}>
+                <SubmitButton confirm={true} onClick={() => this.handleClick('SubmitButton')}>
+                  Submit
+                </SubmitButton>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ padding: 10 }}>
+              <Col span={12}>
+                <RemoveIcon onClick={() => this.handleClick('RemoveIcon')} />
+              </Col>
+              <Col span={12}>
+                <RemoveButton onClick={() => this.handleClick('RemoveButton')}>Remove</RemoveButton>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ padding: 10 }}>
+              <Col span={12}>
+                <ActiveIcon active={active} onClick={() => this.handleActive('ActiveIcon')} />
+              </Col>
+              <Col span={12}>
+                <ActiveButton active={active} onClick={() => this.handleActive('ActiveButton')}>
+                  Active
+                </ActiveButton>
+              </Col>
+            </Row>
+            <Row justify="center" style={{ padding: 10 }}>
+              <Col span={12}>
+                <PublishIcon publish={publish} onClick={() => this.handlePublish('PublishIcon')} />
+              </Col>
+              <Col span={12}>
+                <PublishButton publish={publish} onClick={() => this.handlePublish('PublishButton')}>
+                  Publish
+                </PublishButton>
               </Col>
             </Row>
           </Card>

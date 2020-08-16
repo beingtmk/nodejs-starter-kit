@@ -5,7 +5,6 @@ import { Button } from 'antd';
 class ViewIcon extends React.Component {
   render() {
     const { color = 'default', type, size, ...props } = this.props;
-    console.log(this.props);
     let buttonSize = 'default';
 
     if (size === 'sm') {
