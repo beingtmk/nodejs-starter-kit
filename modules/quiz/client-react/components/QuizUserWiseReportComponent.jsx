@@ -19,20 +19,10 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import IndividualQuizReport from "./IndividualQuizReport";
 import { getResult } from "../helpers";
 
-const ChartComponent = (props) => {
+const GraphChartComponent = (props) => {
   console.log("chart component", props);
 
   const { graphQuestion } = props;
-  if (
-    !graphQuestion ||
-    (graphQuestion && !graphQuestion.choices) ||
-    (graphQuestion &&
-      graphQuestion.choices &&
-      graphQuestion.choices.length === 0)
-  ) {
-    return <h4>Graphical Representation doesn't exist</h4>;
-  }
-
   const getCount = (ans, currentChoice) => {
     var choiceAnswers = ans.filter((an) => an.choiceId === currentChoice.id);
     return choiceAnswers && choiceAnswers.length;
@@ -54,7 +44,7 @@ const ChartComponent = (props) => {
       const totalAnswersCount = graphQuestion && graphQuestion.answers.length;
       const amount = payload && payload[0].payload && payload[0].payload.amt;
       return (
-        <div style={{ background: "white", padding:'24px' }}>
+        <div style={{ background: "white", padding: "24px" }}>
           <p className="label">{`${label} : ${amount}`}</p>
           <p className="desc">
             {((amount * 100) / totalAnswersCount).toFixed(2)}%
@@ -186,11 +176,17 @@ export const QuizUserWiseReportComponent = (props) => {
 
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
-      {graphQuestion && (
-        <div align="center">
-          <ChartComponent graphQuestion={graphQuestion} />
-        </div>
-      )}
+      {graphQuestion &&
+        (graphQuestion.choiceType === QuestionTypes.RADIO ||
+          graphQuestion.choiceType === QuestionTypes.SELECT ||
+          graphQuestion.choiceType === QuestionTypes.MSELECT ||
+          graphQuestion.choiceType === QuestionTypes.CHECKBOX) && (
+          <div align="center">
+            <GraphChartComponent graphQuestion={graphQuestion} />
+          </div>
+        )}
+
+        
       <Table
         columns={columns}
         dataSource={resultQuiz && resultQuiz.attempts}

@@ -21,8 +21,8 @@
 
 .group-layout-inner{
   min-height: 100vh;
-  margin-top: @navbar-height;
-  padding-top: calc(@navbar-height-large - @navbar-height);
+  margin-top: @navbar-height-large;
+  // padding-top: @navbar-height-large;
 
 }
 
@@ -37,7 +37,8 @@
   overflow: auto;
   height: 100vh;
   position: fixed;
-  padding-top:10px;
+  top:calc(@navbar-height-large - @navbar-height);
+  padding-top:calc(@navbar-height + 24px);
   left: 0;
 }
 
