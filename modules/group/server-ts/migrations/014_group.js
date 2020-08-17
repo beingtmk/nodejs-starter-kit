@@ -6,6 +6,12 @@ exports.up = function(knex) {
         table.string('title');
         table.string('avatar');
         table.string('description');
+        table
+          .integer('group_id')
+          .unsigned()
+          .references('id')
+          .inTable('group')
+          .onDelete('CASCADE');
         table.string('group_type');
         table.timestamps(false, true);
       })
@@ -14,6 +20,7 @@ exports.up = function(knex) {
         table.string('email');
         table.string('type');
         table.string('status');
+        table.boolean('is_email_sent').defaultTo(false)
         table
           .integer('group_id')
           .unsigned()

@@ -17,17 +17,18 @@ import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import QuizUserWiseReport from "../containers/QuizUserWiseReport";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import IndividualQuizReport from "./IndividualQuizReport";
-import {getResult} from '../helpers';
-
+import { getResult } from "../helpers";
 
 const ChartComponent = (props) => {
   console.log("chart component", props);
 
-  const { currentRow } = props;
+  const { graphQuestion } = props;
   if (
-    !currentRow ||
-    (currentRow && !currentRow.choices) ||
-    (currentRow && currentRow.choices && currentRow.choices.length === 0)
+    !graphQuestion ||
+    (graphQuestion && !graphQuestion.choices) ||
+    (graphQuestion &&
+      graphQuestion.choices &&
+      graphQuestion.choices.length === 0)
   ) {
     return <h4>Graphical Representation doesn't exist</h4>;
   }
@@ -38,14 +39,33 @@ const ChartComponent = (props) => {
   };
 
   var graphData = [];
-  currentRow &&
-    currentRow.choices &&
-    currentRow.choices.map((choi) => {
+  graphQuestion &&
+    graphQuestion.choices &&
+    graphQuestion.choices.map((choi) => {
       graphData.push({
         name: choi.description,
-        amt: getCount(currentRow.answers, choi),
+        amt: getCount(graphQuestion.answers, choi),
       });
     });
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active) {
+      console.log("customTooltip", payload[0]);
+      const totalAnswersCount = graphQuestion && graphQuestion.answers.length;
+      const amount = payload && payload[0].payload && payload[0].payload.amt;
+      return (
+        <div style={{ background: "white", padding:'24px' }}>
+          <p className="label">{`${label} : ${amount}`}</p>
+          <p className="desc">
+            {((amount * 100) / totalAnswersCount).toFixed(2)}%
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <BarChart
       width={800}
@@ -61,7 +81,7 @@ const ChartComponent = (props) => {
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
       <YAxis />
-      <Tooltip />
+      <Tooltip content={<CustomTooltip />} />
       <Legend />
       <Bar dataKey="amt" fill="#97C240" />
     </BarChart>
@@ -71,7 +91,7 @@ const ChartComponent = (props) => {
 //To Do - Query after state.visible is true
 
 export const QuizUserWiseReportComponent = (props) => {
-  const [currentRow, seTCurrentRow] = React.useState(null);
+  const [graphQuestion, seTGraphQuestion] = React.useState(null);
 
   console.log("quizuserwisereportcomponent", props);
   const resultQuiz = props.quiz;
@@ -85,14 +105,25 @@ export const QuizUserWiseReportComponent = (props) => {
 
   var columns = [
     {
-      title: "Question",
-      dataIndex: "question",
-      key: "question",
+      title: "Users",
+      dataIndex: "user",
+      key: "user",
       fixed: "left",
       width: "150",
-      render: (text, record) => <p> {record.description} </p>,
+      render: (text, record) => <p> {record.id} </p>,
     },
   ];
+
+  // var columns = [
+  //   {
+  //     title: "Question",
+  //     dataIndex: "question",
+  //     key: "question",
+  //     fixed: "left",
+  //     width: "150",
+  //     render: (text, record) => <p> {record.description} </p>,
+  //   },
+  // ];
 
   if (props.userFId) {
     const currentAttempt =
@@ -108,37 +139,61 @@ export const QuizUserWiseReportComponent = (props) => {
     );
   }
 
-  resultQuiz &&
-    resultQuiz.attempts &&
-    resultQuiz.attempts.map((attem) => {
+  questionsData &&
+    questionsData.map((que, i) => {
       columns.push({
-        width: 100,
-        title: attem && attem.user && attem.user.username,
-        dataIndex: attem && attem.user && attem.user.username,
-        key: attem && attem.user && attem.user.username,
-        render: (text, record) => <a>{getResult(record, attem)}</a>,
+        width: 200,
+        title: (
+          <a onClick={(e) => handleColumnClick(que)}>
+            {que && que.description}
+          </a>
+        ),
+        dataIndex: `question.description`,
+        key: `question.description-${i}`,
+        render: (text, record) => <>{getResult(que, record)}</>,
       });
     });
 
-  const handleRowClick = (record, event) => {
-    seTCurrentRow(record);
+  // resultQuiz &&
+  //   resultQuiz.attempts &&
+  //   resultQuiz.attempts.map((attem) => {
+  //     columns.push({
+  //       width: 100,
+  //       title: attem && attem.user && attem.user.username,
+  //       dataIndex: attem && attem.user && attem.user.username,
+  //       key: attem && attem.user && attem.user.username,
+  //       render: (text, record) => <a>{getResult(record, attem)}</a>,
+  //     });
+  //   });
+
+  const handleColumnClick = (ques) => {
+    // console.log('handleColumnClick', ques);
+    var currentQ = questionsData.find((qu) => qu.id === ques.id);
+    var answersArray = [];
+    resultQuiz &&
+      resultQuiz.attempts &&
+      resultQuiz.attempts.map((attem, key) => {
+        answersArray = [
+          ...answersArray,
+          ...(attem &&
+            attem.answers.filter((ans) => ans.questionId === currentQ.id)),
+        ];
+      });
+    currentQ.answers = answersArray;
+    console.log("currentQ", currentQ);
+    seTGraphQuestion(currentQ);
   };
 
   return (
     <div style={{ width: "100%", overflowX: "auto" }}>
-      {currentRow && (
+      {graphQuestion && (
         <div align="center">
-          <ChartComponent currentRow={currentRow} />
+          <ChartComponent graphQuestion={graphQuestion} />
         </div>
       )}
       <Table
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => handleRowClick(record, event),
-          };
-        }}
         columns={columns}
-        dataSource={data}
+        dataSource={resultQuiz && resultQuiz.attempts}
         scroll={{ x: 100 * (columns && columns.length), y: 700 }}
       />
     </div>
