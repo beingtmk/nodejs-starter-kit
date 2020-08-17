@@ -27,7 +27,9 @@ import { Row, Col } from 'antd';
 class Demo extends Component {
   state = {
     active: 'false',
-    publish: 'false'
+    publish: 'false',
+    publishName: 'Not Publish',
+    activeName: 'Deactive'
   };
   handleClick = item => {
     console.log(item);
@@ -35,17 +37,17 @@ class Demo extends Component {
   handleActive = item => {
     console.log(item);
     if (this.state.active === 'false') {
-      this.setState({ active: 'true' });
-    } else this.setState({ active: 'false' });
+      this.setState({ active: 'true', activeName: 'Active' });
+    } else this.setState({ active: 'false', activeName: 'Deactive' });
   };
   handlePublish = item => {
     console.log(item);
     if (this.state.publish === 'false') {
-      this.setState({ publish: 'true' });
-    } else this.setState({ publish: 'false' });
+      this.setState({ publish: 'true', publishName: 'Published' });
+    } else this.setState({ publish: 'false', publishName: 'Not Publish' });
   };
   render() {
-    const { active, publish } = this.state;
+    const { active, publish, publishName, activeName } = this.state;
     return (
       <PageLayout>
         <LayoutCenter>
@@ -117,7 +119,7 @@ class Demo extends Component {
               </Col>
               <Col span={12}>
                 <ActiveButton active={active} onClick={() => this.handleActive('ActiveButton')}>
-                  Active
+                  {activeName}
                 </ActiveButton>
               </Col>
             </Row>
@@ -127,7 +129,7 @@ class Demo extends Component {
               </Col>
               <Col span={12}>
                 <PublishButton publish={publish} onClick={() => this.handlePublish('PublishButton')}>
-                  Publish
+                  {publishName}
                 </PublishButton>
               </Col>
             </Row>
