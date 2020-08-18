@@ -58,7 +58,7 @@ const GraphChartComponent = (props) => {
 
   return (
     <BarChart
-      width={800}
+      width={1000}
       height={300}
       data={graphData}
       margin={{
@@ -99,7 +99,7 @@ export const QuizUserWiseReportComponent = (props) => {
       dataIndex: "user",
       key: "user",
       fixed: "left",
-      width: "150",
+      width: 200,
       render: (text, record) => <p> {record.id} </p>,
     },
   ];
@@ -132,7 +132,7 @@ export const QuizUserWiseReportComponent = (props) => {
   questionsData &&
     questionsData.map((que, i) => {
       columns.push({
-        width: 200,
+        width: 150,
         title: (
           <a onClick={(e) => handleColumnClick(que)}>
             {que && que.description}

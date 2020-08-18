@@ -10,7 +10,7 @@ const IndividualQuizReport = (props) => {
 
   return (
     <>
-      {props.questionsData.map((queData, i) => (
+      {props.questionsData && props.questionsData.map((queData, i) => (
         <>
           <Title level={4} id={queData.id}>
             {`${i + 1} -> ${queData.description}`}

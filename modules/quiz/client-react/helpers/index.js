@@ -9,7 +9,7 @@ export const getResult = (record, attempt) => {
       record.choiceType === QuestionTypes.COUNTRIES
     ) {
       const result =
-        attempt.answers &&
+      attempt && attempt.answers &&
         attempt.answers.find((anS) => anS.questionId === record.id);
       // record &&
       // record.answers &&
@@ -19,11 +19,11 @@ export const getResult = (record, attempt) => {
       return result && result.content;
     } else {
       const result =
-        attempt.answers &&
+      attempt && attempt.answers &&
         attempt.answers.filter((res) => res.questionId === record.id);
       let choiceIdArray = [];
 
-      result.forEach((answer) => {
+      result && result.forEach((answer) => {
         choiceIdArray.push(answer.choiceId);
       });
       const choice = record.choices.filter((c) => choiceIdArray.includes(c.id));
