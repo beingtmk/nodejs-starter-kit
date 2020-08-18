@@ -80,7 +80,7 @@ const QuizEditContainer = (props) => {
       throw new FormError(t("serverError"), e);
     }
   };
-
+  console.log('Quiz Edit', props);
   return <QuizEditView {...props} onSubmit={onSubmit} />;
 };
 

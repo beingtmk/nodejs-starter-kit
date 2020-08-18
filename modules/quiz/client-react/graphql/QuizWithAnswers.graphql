@@ -5,6 +5,7 @@ fragment QuizWithAnswersFragment on Quiz {
     title
     isEditableByUser
     description
+    cover
     sections {
       id
       title
