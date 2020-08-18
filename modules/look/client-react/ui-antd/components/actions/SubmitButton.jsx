@@ -13,18 +13,9 @@ class SubmitButton extends React.Component {
     } else if (size === 'lg') {
       buttonSize = 'large';
     }
-    let style = { ...props.style, padding: '0 20px' };
-
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
     const ADButton = ({ onClick }) => {
       return (
-        <Button type={color} htmlType={type} size={buttonSize} icon="enter" {...props} style={style} onClick={onClick}>
+        <Button type={color} htmlType={type} size={buttonSize} icon="enter" {...props} onClick={onClick}>
           {children}
         </Button>
       );

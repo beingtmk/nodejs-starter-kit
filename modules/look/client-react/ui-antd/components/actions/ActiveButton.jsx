@@ -13,15 +13,7 @@ class ActiveButton extends React.Component {
     } else if (size === 'lg') {
       buttonSize = 'large';
     }
-    let style = { ...props.style, padding: '0 20px' };
 
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
     let icon = 'close';
     if (active !== 'false') {
       icon = 'check';
@@ -32,7 +24,7 @@ class ActiveButton extends React.Component {
         icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
         onConfirm={onClick}
       >
-        <Button type={color} htmlType={type} size={buttonSize} icon={icon} {...props} style={style}>
+        <Button type={color} htmlType={type} size={buttonSize} icon={icon} {...props}>
           {children}
         </Button>
       </Popconfirm>

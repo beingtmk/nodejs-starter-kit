@@ -13,15 +13,6 @@ class SubmitIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    let style = { ...props.style };
-
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
     const ADButton = ({ onClick }) => {
       return (
         <Button
@@ -32,7 +23,6 @@ class SubmitIcon extends React.Component {
           shape="circle"
           onClick={onClick}
           {...props}
-          style={style}
         />
       );
     };

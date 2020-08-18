@@ -13,18 +13,9 @@ class RemoveButton extends React.Component {
     } else if (size === 'lg') {
       buttonSize = 'large';
     }
-    let style = { ...props.style, padding: '0 20px' };
-
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
     const ADButton = ({ onClick }) => {
       return (
-        <Button type={color} htmlType={type} size={buttonSize} icon="minus" {...props} onClick={onClick} style={style}>
+        <Button type={color} htmlType={type} size={buttonSize} icon="minus" {...props} onClick={onClick}>
           {children}
         </Button>
       );

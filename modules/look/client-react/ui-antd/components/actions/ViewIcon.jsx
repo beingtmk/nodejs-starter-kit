@@ -12,17 +12,8 @@ class ViewIcon extends React.Component {
     } else if (size === 'lg') {
       buttonSize = 'large';
     }
-    let style = { ...props.style };
 
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
-
-    return <Button type={color} htmlType={type} size={buttonSize} icon="eye" shape="circle" {...props} style={style} />;
+    return <Button type={color} htmlType={type} size={buttonSize} icon="eye" shape="circle" {...props} />;
   }
 }
 

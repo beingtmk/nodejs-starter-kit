@@ -14,15 +14,6 @@ class RemoveIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    let style = { ...props.style };
-
-    if (color === 'default') {
-      style = {
-        ...style,
-        border: '1px solid #1890ff',
-        color: '#1890ff'
-      };
-    }
     const ADButton = ({ onClick }) => {
       return (
         <Button
@@ -32,7 +23,6 @@ class RemoveIcon extends React.Component {
           icon="minus"
           shape="circle"
           {...props}
-          style={style}
           onClick={onClick}
         />
       );
