@@ -26,7 +26,7 @@ class AdminGroupsView extends React.Component {
         {renderMetaData(this.props.t)}
         {this.props.filter && (
           <>
-            <Link to="/group/new">
+            <Link to="/group/admin/new">
               <Button color="primary">{'Add New Group'}</Button>
             </Link>
             <br />

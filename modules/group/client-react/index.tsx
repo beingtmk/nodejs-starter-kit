@@ -65,11 +65,29 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
+      role={["admin"]}
+      path="/group/admin/new"
+      redirect="/profile"
+      component={loadable(() =>
+        import("./containers/AdminAddNewGroup").then((c) => c.default)
+      )}
+    />,
+    <AuthRoute
+      exact
       role={["user", "admin"]}
       path="/group/new"
       redirect="/profile"
       component={loadable(() =>
         import("./containers/AddNewGroup").then((c) => c.default)
+      )}
+    />,
+    <AuthRoute
+      exact
+      role={["admin"]}
+      redirect="/profile"
+      path="/group/admin/edit/:id"
+      component={loadable(() =>
+        import("./containers/AdminEditGroup").then((c) => c.default)
       )}
     />,
     <AuthRoute
@@ -101,12 +119,12 @@ export default new ClientModule({
       )}
     />,
     <AuthRoute
-    exact
-    path="/group/:id/quiz-report"
-    component={loadable(() =>
-      import("./containers/GroupInfoQuizReport").then((c) => c.default)
-    )}
-  />,
+      exact
+      path="/group/:id/quiz-report"
+      component={loadable(() =>
+        import("./containers/GroupInfoQuizReport").then((c) => c.default)
+      )}
+    />,
   ],
   navItemUser: [
     <IfLoggedIn key="/my-groups">

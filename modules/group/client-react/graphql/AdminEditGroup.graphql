@@ -1,0 +1,7 @@
+#import "./Group.graphql"
+
+mutation adminEditGroup($input: AdminEditGroupInput!) {
+  adminEditGroup(input: $input) {
+    ...GroupInfo
+  }
+}

@@ -60,7 +60,17 @@ extend type Mutation {
   addGroup(input: AddGroupInput!): Group
   updateGroup(input: UpdateGroupInput!): Group
   upsertGroup(input: UpsertGroupInput!): Group
+  adminEditGroup(input: AdminEditGroupInput!): Group
   deleteGroup(id: Int!): Group
+}
+
+input AdminEditGroupInput {
+  id: Int!
+  title: String!
+  avatar: String
+  description: String
+  groupType: String!
+  members: [MemberInput]
 }
 
 input AddGroupMemberInviteInput {

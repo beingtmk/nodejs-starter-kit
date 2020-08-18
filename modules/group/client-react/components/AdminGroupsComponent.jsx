@@ -55,13 +55,13 @@ class AdminGroupsComponent extends React.Component {
         title: <a href="#">{'Members'}</a>,
         dataIndex: 'members',
         key: 'members',
-        sorter: (a, b) => a.members.filter(item => item.member).length - b.members.filter(item => item.member).length,
+        sorter: (a, b) => a.members.filter(item => item.member).length - b.members.filter(item => item && item.member).length,
         sortDirections: ['descend', 'ascend'],
         render: text => {
           let mem = text.filter(item => item.member);
           return (
             <div>
-              <strong>{mem.some(item => item.member.id === currentUser.id) ? 'You' : mem[0].member.username}</strong>
+              <strong>{mem.some(item => item.member.id === currentUser.id) ? 'You' : mem && mem.length !==0 && mem[0].member.username}</strong>
               {mem.length > 1 ? <span>{` and ${mem.length - 1} other${mem.length === 2 ? '' : 's'}`}</span> : null}
             </div>
           );
@@ -74,7 +74,7 @@ class AdminGroupsComponent extends React.Component {
         render: text => (
           <>
             <Tooltip title="Details">
-              <Link to={`/group/${text}`}>
+              <Link to={`/group/${text}/info`}>
                 <Button
                   shape="circle"
                   icon="eye"
@@ -85,7 +85,7 @@ class AdminGroupsComponent extends React.Component {
               </Link>
             </Tooltip>
             <Tooltip title="Edit">
-              <Link to={`/group/edit/${text}`}>
+              <Link to={`/group/admin/edit/${text}`}>
                 <Button
                   shape="circle"
                   icon="edit"

@@ -101,7 +101,7 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${id}`;
 
           let user;
-          await input.members.map(async (item) => {
+          await input.members && input.members.map(async (item) => {
             user = await User.getUserByEmail(item.email);
             if (mailer) {
               const sent = await mailer.sendMail({
@@ -147,28 +147,28 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
 
           let user;
-          // await input.members.map(async (item) => {
-          //   if (!item.id && mailer) {
-          //     user = await User.getUserByEmail(item.email);
-          //     const sent = await mailer.sendMail({
-          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //         process.env.EMAIL_USER}>`,
-          //       to: item.email,
-          //       subject: "NodeJs-Starterkit Registration",
-          //       html: user
-          //         ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //         : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          //     });
-          //     log.info(`Sent mail to: ${item.email}`);
-          //     if (!sent) {
-          //       throw new Error("Email couldn't be sent");
-          //     } else {
-          //       return true;
-          //     }
-          //   }
-          // });
+          await input.members.map(async (item) => {
+            if (!item.id && mailer) {
+              user = await User.getUserByEmail(item.email);
+              const sent = await mailer.sendMail({
+                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+                  process.env.EMAIL_USER}>`,
+                to: item.email,
+                subject: "NodeJs-Starterkit Registration",
+                html: user
+                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`,
+              });
+              log.info(`Sent mail to: ${item.email}`);
+              if (!sent) {
+                throw new Error("Email couldn't be sent");
+              } else {
+                return true;
+              }
+            }
+          });
 
           pubsub.publish(GROUP_SUBSCRIPTION, {
             groupsUpdated: {
@@ -189,7 +189,59 @@ export default (pubsub: PubSub) => ({
         }
       }
     ),
+    adminEditGroup: withAuth(
+      async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
+        try {
+          await Group.upsertGroup(input);
+          const data = await Group.group(input.id);
+          console.log('dataaaaaa', data);
 
+          const url1 = `${__WEBSITE_URL__}/register`;
+          const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
+
+          let user;
+          await input.members.map(async (item) => {
+            if (!item.id && mailer) {
+              user = await User.getUserByEmail(item.email);
+              const sent = await mailer.sendMail({
+                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+                  process.env.EMAIL_USER}>`,
+                to: item.email,
+                subject: "NodeJs-Starterkit Registration",
+                html: user
+                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`,
+              });
+              log.info(`Sent mail to: ${item.email}`);
+              if (!sent) {
+                throw new Error("Email couldn't be sent");
+              } else {
+                return true;
+              }
+            }
+          });
+
+          pubsub.publish(GROUP_SUBSCRIPTION, {
+            groupsUpdated: {
+              mutation: "UPDATED",
+              node: data,
+            },
+          });
+          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+            groupItemUpdated: {
+              mutation: "UPDATED",
+              id:data.id,
+              node: data,
+            },
+          });
+          return data;
+        } catch (e) {
+          return e;
+        }
+      }
+    ),
     upsertGroup: withAuth(
       async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
         try {
@@ -201,28 +253,28 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
 
           let user;
-          // await input.members.map(async (item) => {
-          //   if (!item.id && mailer) {
-          //     user = await User.getUserByEmail(item.email);
-          //     const sent = await mailer.sendMail({
-          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //         process.env.EMAIL_USER}>`,
-          //       to: item.email,
-          //       subject: "NodeJs-Starterkit Registration",
-          //       html: user
-          //         ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //         : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          //     });
-          //     log.info(`Sent mail to: ${item.email}`);
-          //     if (!sent) {
-          //       throw new Error("Email couldn't be sent");
-          //     } else {
-          //       return true;
-          //     }
-          //   }
-          // });
+          await input.members.map(async (item) => {
+            if (!item.id && mailer) {
+              user = await User.getUserByEmail(item.email);
+              const sent = await mailer.sendMail({
+                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+                  process.env.EMAIL_USER}>`,
+                to: item.email,
+                subject: "NodeJs-Starterkit Registration",
+                html: user
+                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`,
+              });
+              log.info(`Sent mail to: ${item.email}`);
+              if (!sent) {
+                throw new Error("Email couldn't be sent");
+              } else {
+                return true;
+              }
+            }
+          });
 
           pubsub.publish(GROUP_SUBSCRIPTION, {
             groupsUpdated: {
@@ -267,17 +319,17 @@ export default (pubsub: PubSub) => ({
           let user;
 
           user = await User.getUserByEmail(currentGroup.email);
-          // const sent = await mailer.sendMail({
-          //   from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //     process.env.EMAIL_USER}>`,
-          //   to: currentGroup.email,
-          //   subject: "NodeJs-Starterkit Registration",
-          //   html: user
-          //     ? `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //     : `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          // });
+          const sent = await mailer.sendMail({
+            from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+              process.env.EMAIL_USER}>`,
+            to: currentGroup.email,
+            subject: "NodeJs-Starterkit Registration",
+            html: user
+              ? `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Group Link - <a href="${url2}">${url2}</a></p>`
+              : `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
+                <p>Register - <a href="${url1}">${url1}</a></p>`,
+          });
           log.info(`Sent mail to: ${currentGroup.email}`);
 
           pubsub.publish(GROUP_SUBSCRIPTION, {

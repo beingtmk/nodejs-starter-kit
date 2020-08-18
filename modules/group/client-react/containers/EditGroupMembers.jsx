@@ -53,7 +53,7 @@ export default compose(
           message.destroy();
           message.success('Success!');
           if (history) {
-            return history.push('/group/' + upsertGroup.id, {
+            return history.push('/group/' + upsertGroup.id +'/members', {
               group: upsertGroup
             });
           } else if (navigation) {

@@ -4,19 +4,19 @@ import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { message } from 'antd';
-import EditGroupView from '../components/EditGroupView';
-import EDIT_GROUP from '../graphql/UpdateGroup.graphql';
+import AdminEditGroupView from '../components/AdminEditGroupView';
+import EDIT_GROUP from '../graphql/AdminEditGroup.graphql';
 import GROUP_QUERY from '../graphql/GroupQuery.graphql';
 import { removeTypename } from '../constants';
 
-class EditGroup extends React.Component {
+class AdminEditGroup extends React.Component {
   render() {
-    return <EditGroupView onSubmit={this.props.updateGroup} {...this.props} />;
+    return <AdminEditGroupView onSubmit={this.props.adminEditGroup} {...this.props} />;
   }
 }
 
-EditGroup.propTypes = {
-  updateGroup: PropTypes.func
+AdminEditGroup.propTypes = {
+  adminEditGroup: PropTypes.func
 };
 
 export default compose(
@@ -40,12 +40,12 @@ export default compose(
   }),
   graphql(EDIT_GROUP, {
     props: ({ ownProps: { history, navigation }, mutate }) => ({
-      updateGroup: async values => {
+      adminEditGroup: async values => {
         message.destroy();
         message.loading('Please wait...', 0);
         try {
           const {
-            data: { updateGroup }
+            data: { adminEditGroup }
           } = await mutate({
             variables: { input: removeTypename(values) }
           });
@@ -53,12 +53,12 @@ export default compose(
           message.destroy();
           message.success('Success!');
           if (history) {
-            return history.push('/group/' + updateGroup.id + '/info', {
-              group: updateGroup
+            return history.push('/group/' + adminEditGroup.id + '/info', {
+              group: adminEditGroup
             });
           } else if (navigation) {
             return navigation.navigate('Group', {
-              id: updateGroup.id
+              id: adminEditGroup.id
             });
           }
         } catch (e) {
@@ -69,4 +69,4 @@ export default compose(
       }
     })
   })
-)(translate('group')(EditGroup));
+)(translate('group')(AdminEditGroup));
