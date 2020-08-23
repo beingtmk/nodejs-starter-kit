@@ -4,8 +4,8 @@ import { Button, Popconfirm, Icon } from 'antd';
 
 class PublishIcon extends React.Component {
   render() {
-    const { color = 'default', type, size, publish = 'false', onClick, ...props } = this.props;
-
+    const { type, size, publish = 'false', onClick, ...props } = this.props;
+    let { color = 'default' } = this.props;
     let buttonSize = 'default';
 
     if (size === 'sm') {
@@ -17,7 +17,7 @@ class PublishIcon extends React.Component {
     let icon = 'stop';
     if (publish !== 'false') {
       icon = 'export';
-    }
+    } else color = 'danger';
     return (
       <Popconfirm
         title="Are you sure？"

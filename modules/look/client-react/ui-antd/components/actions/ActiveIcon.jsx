@@ -4,7 +4,8 @@ import { Button, Popconfirm, Icon } from 'antd';
 
 class ActiveIcon extends React.Component {
   render() {
-    const { color = 'default', type, size, active = 'false', onClick, ...props } = this.props;
+    const { type, size, active = 'false', onClick, ...props } = this.props;
+    let { color = 'default' } = this.props;
 
     let buttonSize = 'default';
 
@@ -17,7 +18,7 @@ class ActiveIcon extends React.Component {
     let icon = 'close';
     if (active !== 'false') {
       icon = 'check';
-    }
+    } else color = 'danger';
     return (
       <Popconfirm
         title="Are you sure？"

@@ -4,7 +4,7 @@ import { Button, Popconfirm, Icon } from 'antd';
 
 class SubmitButton extends React.Component {
   render() {
-    const { children = 'Submit', confirm = false, type, color = 'default', size, onClick, ...props } = this.props;
+    const { children = 'Submit', confirm = false, type, color = 'primary', size, onClick, ...props } = this.props;
 
     let buttonSize = 'default';
 

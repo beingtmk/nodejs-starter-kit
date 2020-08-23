@@ -4,7 +4,7 @@ import { Button, Popconfirm, Icon } from 'antd';
 
 class RemoveIcon extends React.Component {
   render() {
-    const { confirm = false, color = 'default', type, size, onClick, ...props } = this.props;
+    const { confirm = false, color = 'danger', type, size, onClick, ...props } = this.props;
 
     let buttonSize = 'default';
 
