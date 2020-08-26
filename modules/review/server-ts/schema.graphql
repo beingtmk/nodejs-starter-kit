@@ -1,16 +1,111 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Reviews {
+  totalCount: Int
+  edges: [ReviewEdges]
+  pageInfo: ReviewPageInfo
+}
+type ReviewPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+type ReviewEdges {
+  node: Review
+  cursor: Int
+}
+# type Node {
+#   id: Int
+#   modal: Modal
+#   review: Review
+# }
+type Review {
+  id: Int
+  user: User
+  rating: String
+  feedback: String
+  isActive: Boolean
+  # reviewImages: [ReviewImage]
+  createdAt: String!
+  updatedAt: String!
+}
+type ReviewImage {
+  id: Int
+  imageUrl: String
+}
+# type Modal {
+#   # Add new modal here
+#   event: Event
+#   # blog: Blog
+# }
+
+# type Event {
+#   title: String
+# }
+
+# Input for filtering users
+input FilterReviewInput {
+  searchText: String
+  # filter by isActive
+  isActive: Boolean
 }
 
 extend type Query {
-  queryName: TypeName
+  review(id: Int): Review
+  reviews(
+    limit: Int
+    after: Int
+    orderBy: OrderByUserInput
+    filter: FilterReviewInput
+  ): Reviews
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  # Create new Review
+  addReview(input: AddModalReviewInput!): Review
+  # Edit a review
+  editReview(input: EditModalReviewInput!): Review
+  # Delete a review
+  deleteReview(input: DeleteModalReviewInput): Boolean
+}
+input AddModalReviewInput {
+  modal: String
+  modalId: Int
+  moduleId: Int
+  review: AddReviewInput
+}
+input EditModalReviewInput {
+  modal: String
+  modalId: Int!
+  moduleId: Int
+  review: EditReviewInput
+}
+input AddReviewInput {
+  id: Int
+  userId: Int
+  rating: String
+  feedback: String
+  isActive: Boolean
+  # reviewImages: [ReviewImagesInput]
+}
+input EditReviewInput {
+  id: Int!
+  userId: Int
+  rating: String
+  feedback: String
+  isActive: Boolean
+  # reviewImages: [ReviewImagesInput]
+}
+input DeleteModalReviewInput {
+  modalId: Int
+  reviewId: Int
+  modal: String
 }
 
 extend type Subscription {
-  subscriptionName: TypeName
+  reviewUpdated(endCursor: Int): UpdateReviewPayload
+}
+
+type UpdateReviewPayload {
+  mutation: String!
+  id: Int
+  node: Review
 }

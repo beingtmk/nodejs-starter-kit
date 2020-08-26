@@ -5,11 +5,13 @@ exports.up = function(knex) {
       .createTable('event', table => {
         table.increments();
         table.string('title');
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
       .createTable('blog', table => {
         table.increments();
         table.string('title');
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
 
@@ -17,7 +19,7 @@ exports.up = function(knex) {
       .createTable('event_review', table => {
         table.increments();
         table
-          .integer('event_id')
+          .integer('module_id')
           .unsigned()
           .references('id')
           .inTable('event')
@@ -28,12 +30,13 @@ exports.up = function(knex) {
           .references('id')
           .inTable('review')
           .onDelete('CASCADE');
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
       .createTable('blog_review', table => {
         table.increments();
         table
-          .integer('blog_id')
+          .integer('module_id')
           .unsigned()
           .references('id')
           .inTable('blog')
@@ -44,6 +47,7 @@ exports.up = function(knex) {
           .references('id')
           .inTable('review')
           .onDelete('CASCADE');
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
 
@@ -58,6 +62,7 @@ exports.up = function(knex) {
           .onDelete('CASCADE');
         table.string('feedback');
         table.integer('rating');
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
     // .createTable('review_image', table => {
