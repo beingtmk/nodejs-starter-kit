@@ -24,13 +24,13 @@ const NavLinkAdminWithI18n = translate('review')(({ t }: { t: TranslateFunction 
 
 export default new ClientModule({
   route: [
-    // <Route exact path={ROUTES.add} component={loadable(() => import('./containers/AddReview').then(c => c.default))} />,
-    // <Route
-    //   exact
-    //   path={ROUTES.edit}
-    //   component={loadable(() => import('./containers/EditReview').then(c => c.default))}
-    // />,
-    // <Route exact path="/review" component={loadable(() => import('./containers/Review').then(c => c.default))} />,
+    <Route exact path={ROUTES.add} component={loadable(() => import('./containers/AddReview').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.edit}
+      component={loadable(() => import('./containers/EditReview').then(c => c.default))}
+    />,
+    <Route exact path="/review" component={loadable(() => import('./containers/Review').then(c => c.default))} />,
     <AuthRoute
       exact
       role={['admin']}

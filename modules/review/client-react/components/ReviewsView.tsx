@@ -21,7 +21,7 @@ export interface ReviewViewProps {
   t: TranslateFunction;
 }
 
-const ReviewView: React.SFC<ReviewViewProps> = props => {
+const ReviewView: React.FC<ReviewViewProps> = props => {
   const { t } = props;
 
   return (

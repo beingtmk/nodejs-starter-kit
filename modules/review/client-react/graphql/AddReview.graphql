@@ -1,0 +1,7 @@
+#import "./Review.graphql"
+
+mutation addReview($input: AddModalReviewInput!) {
+  addReview(input: $input) {
+    ...ReviewInfo
+  }
+}

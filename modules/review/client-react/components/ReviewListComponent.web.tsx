@@ -35,7 +35,7 @@ export interface ReviewListComponentProps {
   history: object;
 }
 
-const ReviewListComponent: React.SFC<ReviewListComponentProps> = props => {
+const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   const { orderBy, onOrderBy, loading, reviews, t, loadData, deleteReview } = props;
 
   const renderOrderByArrow = (name: string) => {

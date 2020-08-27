@@ -13,7 +13,8 @@ Model.knex(knex);
 const user_eager = `[
   verification,
   mobile,
-  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate
+  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate,
+  profile
 ]`;
 
 // Actual query fetching and transformation in DB
@@ -231,10 +232,12 @@ export class User extends Model {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
@@ -261,7 +264,6 @@ export class User extends Model {
     const mobile = await user.$relatedQuery('mobile').insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);
@@ -462,6 +464,57 @@ export class User extends Model {
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
+  }
+  async getUserItems(limit, after, orderBy, filter) {
+    const queryBuilder = User.query().eager(user_eager);
+
+    // add filter conditions
+    if (filter) {
+      if (has(filter, 'role') && filter.role !== '') {
+        queryBuilder.where(function() {
+          this.where('role', filter.role);
+        });
+      }
+
+      if (has(filter, 'isActive') && filter.isActive !== null) {
+        queryBuilder.where(function() {
+          this.where('is_active', filter.isActive);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder
+          .from('user AS u')
+          .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+          .where(function() {
+            this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+              .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
+          });
+      }
+    }
+
+    const allUserItems = camelizeKeys(await queryBuilder);
+    const total = allUserItems.length;
+    var res = {};
+
+    // queryBuilder.leftJoin('profile AS up', 'up.user_id', 'u.id')
+    if (limit && after) {
+      res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      res = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      res = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      res = camelizeKeys(await queryBuilder);
+    }
+
+    // console.log('sql userList', res);
+    return {
+      userItems: res,
+      total: total
+    };
   }
 }
 const userDAO = new User();

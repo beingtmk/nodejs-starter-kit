@@ -1,0 +1,17 @@
+#import "./User.graphql"
+
+query userList($limit: Int!, $after: Int, $filter: FilterUserInput) {
+  userList(limit: $limit, after: $after, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...UserInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

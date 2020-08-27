@@ -18,7 +18,12 @@ export async function seed(knex) {
     role: 'admin',
     is_active: true
   });
-
+  await returnId(knex('user_profile')).insert({
+    first_name: 'admin',
+    last_name: 'admin',
+    mobile: '9999988888',
+    user_id: 1
+  });
   await returnId(
     knex('auth_certificate').insert({
       serial: 'admin-123',
@@ -32,5 +37,11 @@ export async function seed(knex) {
     password_hash: await bcrypt.hash('user1234', 12),
     role: 'user',
     is_active: true
+  });
+  await returnId(knex('user_profile')).insert({
+    first_name: 'user',
+    last_name: 'user',
+    mobile: '9999988888',
+    user_id: 2
   });
 }

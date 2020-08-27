@@ -55,7 +55,7 @@ export interface ReviewProps {
   filter: object;
 }
 
-const Review: React.SFC<ReviewProps> = props => {
+const Review: React.FC<ReviewProps> = props => {
   // const { updateQuery, subscribeToMore, filter } = props;
   // const reviewsUpdated = useReviewsWithSubscription(subscribeToMore, filter);
 
