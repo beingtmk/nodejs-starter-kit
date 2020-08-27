@@ -26,15 +26,15 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
   return (
     <PageLayout>
       {renderMetaData(t)}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       {loading ? (
         <Spin />
       ) : (
         <Row type="flex" justify="center">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <ReviewFormComponent cardTitle={'Add Review'} t={t} onSubmit={addReview} />
         </Row>
       )}

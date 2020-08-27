@@ -40,19 +40,20 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
       }
     >
       <Form onSubmit={handleSubmit}>
-        <br />
         <UserAutoCompleteComponent
           name="username"
           label="username"
           userType="user"
           defaultValue={
-            props.review && props.review.user && props.review.user.profile && props.review.user.profile.fullName
+            (props.review &&
+              props.review.user &&
+              `${props.review.user.profile.firstName} ${props.review.user.profile.lastName}`) ||
+            ''
           }
           value={values.userId}
           setValue={e => setFieldValue('userId', e)}
           onSearchTextChange={onSearchTextChange}
         />
-        {console.log(parseInt(values.rating))}
         <FormItem label={'Rate'}>
           <Rate
             // allowHalf
