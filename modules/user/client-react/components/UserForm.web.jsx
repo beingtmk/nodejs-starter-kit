@@ -61,20 +61,20 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         />
       )}
       <Field
-        name="firstName"
+        name="profile.firstName"
         component={RenderField}
         type="text"
         label={t('userEdit.form.field.firstName')}
         value={profile.firstName}
-        onChange={value => setFieldValue('profile', { ...profile, firstName: value })}
+        // onChange={value => setFieldValue('profile', { ...profile, firstName: value })}
       />
       <Field
-        name="lastName"
+        name="profile.lastName"
         component={RenderField}
         type="text"
         label={t('userEdit.form.field.lastName')}
         value={profile.lastName}
-        onChange={value => setFieldValue('profile', { ...profile, lastName: value })}
+        // onChange={value => setFieldValue('profile', { ...profile, lastName: value })}
       />
       {settings.auth.certificate.enabled && (
         <Field
