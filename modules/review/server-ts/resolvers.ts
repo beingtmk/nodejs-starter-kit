@@ -60,9 +60,9 @@ export default (pubsub: any) => ({
             node: review
           }
         });
-        return review;
+        return true;
       } catch (e) {
-        return e;
+        return false;
       }
     }),
     editReview: withAuth(async (obj: any, { input }: ModalReviewInput, context: any) => {
@@ -75,9 +75,9 @@ export default (pubsub: any) => ({
             node: review
           }
         });
-        return review;
+        return true;
       } catch (e) {
-        return e;
+        return false;
       }
     }),
     deleteReview: withAuth(async (obj: any, { input }: DeleteModalReviewInput, context: any) => {

@@ -1,0 +1,10 @@
+#import "./Review.graphql"
+
+subscription onReviewUpdated {
+  reviewUpdated {
+    mutation
+    node {
+      ...ReviewInfo
+    }
+  }
+}

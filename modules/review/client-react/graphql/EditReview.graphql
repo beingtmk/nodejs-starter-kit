@@ -1,7 +1,3 @@
-#import "./Review.graphql"
-
 mutation editReview($input: EditModalReviewInput!) {
-  editReview(input: $input) {
-    ...ReviewInfo
-  }
+  editReview(input: $input)
 }

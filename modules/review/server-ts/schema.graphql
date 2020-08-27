@@ -60,9 +60,9 @@ extend type Query {
 
 extend type Mutation {
   # Create new Review
-  addReview(input: AddModalReviewInput!): Review
+  addReview(input: AddModalReviewInput!): Boolean
   # Edit a review
-  editReview(input: EditModalReviewInput!): Review
+  editReview(input: EditModalReviewInput!): Boolean
   # Delete a review
   deleteReview(input: DeleteModalReviewInput): Boolean
 }
