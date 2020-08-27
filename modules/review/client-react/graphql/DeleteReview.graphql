@@ -1,0 +1,3 @@
+mutation deleteReview($input: DeleteModalReviewInput) {
+  deleteReview(input: $input)
+}
