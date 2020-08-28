@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
 
-import { PageLayout, Table, Button, Alert } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Alert, DeleteButton } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile, t }) => {
@@ -42,9 +42,9 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
       width: 50,
       render(text, record) {
         return (
-          <Button color="primary" size="sm" onClick={() => handleRemoveFile(record.id)}>
+          <DeleteButton color="primary" size="sm" onClick={() => handleRemoveFile(record.id)}>
             {t('table.btnDel')}
-          </Button>
+          </DeleteButton>
         );
       }
     }

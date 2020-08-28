@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Table, Button } from '@gqlapp/look-client-react';
+import { Table, DeleteButton } from '@gqlapp/look-client-react';
 
 const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
   const [errors, setErrors] = useState([]);
@@ -95,9 +95,9 @@ const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
       title: t('users.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => handleDeleteUser(record.id)}>
+        <DeleteButton color="primary" size="sm" onClick={() => handleDeleteUser(record.id)}>
           {t('users.btn.delete')}
-        </Button>
+        </DeleteButton>
       )
     }
   ];

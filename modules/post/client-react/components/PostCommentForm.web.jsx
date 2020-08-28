@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, RenderField, Row, Col, Label, Button } from '@gqlapp/look-client-react';
+import { Form, RenderField, Row, Col, Label, SubmitButton } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 
@@ -28,9 +28,9 @@ const PostCommentForm = ({ values, handleSubmit, comment, t }) => {
         </Col>
         <Col xs={2}>
           <br />
-          <Button color="primary" type="submit" className="float-right">
+          <SubmitButton color="primary" type="submit" className="float-right">
             {t('comment.btn.submit')}
-          </Button>
+          </SubmitButton>
         </Col>
       </Row>
     </Form>
@@ -52,13 +52,7 @@ const PostCommentFormWithFormik = withFormik({
   mapPropsToValues: props => ({
     content: props.comment && props.comment.content
   }),
-  async handleSubmit(
-    values,
-    {
-      resetForm,
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { resetForm, props: { onSubmit } }) {
     await onSubmit(values);
     resetForm({ content: '' });
   },

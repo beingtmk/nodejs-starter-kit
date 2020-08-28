@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Pagination, DeleteButton, AddButton } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -30,9 +30,9 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
       key: 'actions',
       width: 50,
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => deletePost(record.id)}>
+        <DeleteButton color="primary" size="sm" onClick={() => deletePost(record.id)}>
           {t('post.btn.del')}
-        </Button>
+        </DeleteButton>
       )
     }
   ];
@@ -63,7 +63,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
     <>
       <h2>{t('list.subTitle')}</h2>
       <Link to="/post/new">
-        <Button color="primary">{t('list.btn.add')}</Button>
+        <AddButton color="primary">{t('list.btn.add')}</AddButton>
       </Link>
       {/* Render loader */}
       {loading && !posts && <Loading t={t} />}

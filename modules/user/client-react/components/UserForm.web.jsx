@@ -6,7 +6,15 @@ import { isEmpty } from 'lodash';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, RenderSelect, RenderCheckBox, Option, Button, Alert } from '@gqlapp/look-client-react';
+import {
+  Form,
+  RenderField,
+  RenderSelect,
+  RenderCheckBox,
+  Option,
+  Alert,
+  SubmitButton
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const userFormSchema = {
@@ -101,9 +109,9 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         value={passwordConfirmation}
       />
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <Button color="primary" type="submit">
+      <SubmitButton color="primary" type="submit">
         {t('userEdit.form.btnSubmit')}
-      </Button>
+      </SubmitButton>
     </Form>
   );
 };
@@ -143,13 +151,7 @@ const UserFormWithFormik = withFormik({
       }
     };
   },
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { setErrors, props: { onSubmit } }) {
     await onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);
