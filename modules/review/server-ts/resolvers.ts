@@ -9,6 +9,9 @@ interface Edges {
   cursor: number;
   node: Reviews & Identifier;
 }
+interface ModalEditReviewInput {
+  input: EditReview;
+}
 interface ModalReviewInput {
   input: ModalReview;
 }
@@ -65,7 +68,7 @@ export default (pubsub: any) => ({
         return false;
       }
     }),
-    editReview: withAuth(async (obj: any, { input }: ModalReviewInput, context: any) => {
+    editReview: withAuth(async (obj: any, { input }: ModalEditReviewInput, context: any) => {
       try {
         const id = await context.Review.editReview(input);
         const review = await context.Review.review(id);

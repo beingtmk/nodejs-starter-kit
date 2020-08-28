@@ -16,6 +16,11 @@ import DELETE_REVIEW from '../graphql/DeleteReview.graphql';
 // Subscription
 import REVIEWS_SUBSCRIPTION from '../graphql/ReviewSubscription.graphql';
 
+// Filter
+import UPDATE_REVIEWS_FILTER from '../graphql/UpdateReviewsFilter.client.graphql';
+import REVIEWS_STATE_QUERY from '../graphql/ReviewsStateQuery.client.graphql';
+import UPDATE_REVIEWS_ORDER_BY from '../graphql/UpdateReviewsOrderBy.client.graphql';
+
 import settings from '../../../../settings';
 import ROUTES from '../routes';
 
@@ -47,6 +52,7 @@ export const withReview = Component =>
 export const withReviews = Component =>
   graphql(REVIEWS_QUERY, {
     options: ({ orderBy, filter }) => {
+      console.log('filter', filter);
       return {
         variables: {
           limit,
@@ -296,6 +302,39 @@ const onDeleteReviews = (prev, id) => {
     }
   });
 };
+
+// Filter
+export const withReviewsStateQuery = Component =>
+  graphql(REVIEWS_STATE_QUERY, {
+    props({ data: { reviewsState } }) {
+      return removeTypename(reviewsState);
+    }
+  })(Component);
+
+export const withReviewsOrderByUpdating = Component =>
+  graphql(UPDATE_REVIEWS_ORDER_BY, {
+    props: ({ mutate }) => ({
+      onReviewsOrderBy: orderBy => {
+        // console.log('orderBy', orderBy);
+        mutate({ variables: { orderBy } });
+      }
+    })
+  })(Component);
+
+export const withUpdateReviewsFilter = Component =>
+  graphql(UPDATE_REVIEWS_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onIsActiveChange(isActive) {
+        mutate({ variables: { filter: { isActive } } });
+      },
+      onModalNameChange(modalName) {
+        mutate({ variables: { filter: { modalName } } });
+      }
+    })
+  })(Component);
 
 // export const with = Component =>
 // (Component)

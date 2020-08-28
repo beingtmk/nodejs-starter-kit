@@ -15,32 +15,11 @@ exports.up = function(knex) {
         table.timestamps(false, true);
       })
 
-      // Modals
-      .createTable('event_review', table => {
+      // Modal
+      .createTable('modal_review', table => {
         table.increments();
-        table
-          .integer('module_id')
-          .unsigned()
-          .references('id')
-          .inTable('event')
-          .onDelete('CASCADE');
-        table
-          .integer('review_id')
-          .unsigned()
-          .references('id')
-          .inTable('review')
-          .onDelete('CASCADE');
-        table.boolean('is_active').defaultTo(true);
-        table.timestamps(false, true);
-      })
-      .createTable('blog_review', table => {
-        table.increments();
-        table
-          .integer('module_id')
-          .unsigned()
-          .references('id')
-          .inTable('blog')
-          .onDelete('CASCADE');
+        table.string('modal_name');
+        table.integer('modal_id');
         table
           .integer('review_id')
           .unsigned()

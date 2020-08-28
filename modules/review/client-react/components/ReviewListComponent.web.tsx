@@ -29,14 +29,14 @@ export interface ReviewListComponentProps {
     column: string;
     order: string;
   };
-  onOrderBy: ({ column, order }: { column: string; order: string }) => null;
+  onReviewsOrderBy: ({ column, order }: { column: string; order: string }) => null;
   deleteReview: (input: DeleteReview) => boolean;
   t: TranslateFunction;
   history: object;
 }
 
 const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
-  const { orderBy, onOrderBy, loading, reviews, t, loadData, deleteReview } = props;
+  const { orderBy, onReviewsOrderBy, loading, reviews, t, loadData, deleteReview } = props;
 
   const renderOrderByArrow = (name: string) => {
     if (orderBy && orderBy.column === name) {
@@ -56,13 +56,13 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       if (orderBy.order === 'asc') {
         order = 'desc';
       } else if (orderBy.order === 'desc') {
-        return onOrderBy({
+        return onReviewsOrderBy({
           column: '',
           order: ''
         });
       }
     }
-    return onOrderBy({ column: name, order });
+    return onReviewsOrderBy({ column: name, order });
   };
 
   const columns = [
@@ -84,22 +84,6 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
         </Link>
       )
     },
-    // {
-    //   title: (
-    //     <a
-    //       // onClick={e => handleOrderBy(e, "baker")}
-    //       href="#"
-    //     >
-    //       {'Reviewed baker'}
-    //       {/* {renderOrderByArrow("baker")} */}
-    //     </a>
-    //   ),
-    //   dataIndex: 'baker',
-    //   key: 'baker',
-    //   render: (text: string, record: Review) => (
-    //     <Link to={`/baker/${record && record.userId}`}>{record && record.baker && record.baker.username}</Link>
-    //   ),
-    // },
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'rating')} href="#">
@@ -120,7 +104,6 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       key: 'feedback',
       render: (text: string) => <div>{text}</div>
     },
-
     {
       title: t('list.column.actions'),
       key: 'actions',
@@ -158,15 +141,20 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   const RenderReviews = () => (
     <Fragment>
       <Table dataSource={reviews.edges.map(({ node }: { node: Review }) => node)} columns={columns} />
-      <Pagination
-        itemsPerPage={reviews.edges.length}
-        handlePageChange={handlePageChange}
-        hasNextPage={reviews.pageInfo.hasNextPage}
-        pagination={type}
-        total={reviews.totalCount}
-        loadMoreText={t('list.btn.more')}
-        defaultPageSize={itemsNumber}
-      />
+      <hr />
+      <br />
+      <div align="center">
+        <Pagination
+          itemsPerPage={reviews.edges.length}
+          handlePageChange={handlePageChange}
+          hasNextPage={reviews.pageInfo.hasNextPage}
+          pagination={type}
+          total={reviews.totalCount}
+          loadMoreText={t('list.btn.more')}
+          defaultPageSize={itemsNumber}
+        />
+      </div>
+      <br />
     </Fragment>
   );
 

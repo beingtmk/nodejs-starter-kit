@@ -1,5 +1,6 @@
 import { Model } from 'objection';
-import { camelizeKeys, decamelizeKeys } from 'humps';
+import { has } from 'lodash';
+import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
@@ -18,7 +19,7 @@ export interface Identifier {
 }
 
 export interface ModalReview {
-  modal: string;
+  modalName: string;
   modalId: number;
   moduleId: number;
   review: Reviews & Identifier;
@@ -26,7 +27,7 @@ export interface ModalReview {
 export interface DeleteModalReview {
   modalId: number;
   reviewId: number;
-  modal: string;
+  modalName: string;
 }
 const eager = '[user.[profile]]';
 
@@ -54,38 +55,45 @@ export default class Review extends Model {
   }
 
   public async reviews(limit: number, after: number, orderBy: any, filter: any) {
-    const queryBuilder = Review.query()
-      .orderBy('id', 'desc')
-      .eager(eager);
-    // if (orderBy && orderBy.column) {
-    //   const column = orderBy.column;
-    //   let order = 'asc';
-    //   if (orderBy.order) {
-    //     order = orderBy.order;
-    //   }
+    const queryBuilder = Review.query().eager(eager);
 
-    //   queryBuilder.orderBy(decamelize(column), order);
-    // } else {
-    //   queryBuilder.orderBy('id', 'desc');
-    // }
+    if (orderBy && orderBy.column) {
+      const column = orderBy.column;
+      let order = 'asc';
+      if (orderBy.order) {
+        order = orderBy.order;
+      }
+
+      queryBuilder.orderBy(decamelize(column), order);
+    } else {
+      queryBuilder.orderBy('id', 'desc');
+    }
 
     if (filter) {
-      // if (has(filter, 'isActive') && filter.isActive !== '') {
-      //   queryBuilder.where(function() {
-      //     this.where('is_active', filter.isActive);
-      //   });
-      // }
-      // if (has(filter, 'searchText') && filter.searchText !== '') {
-      //   queryBuilder
-      //     .from('listing')
-      //     .leftJoin('listing_cost AS ld', 'ld.listing_id', 'listing.id')
-      //     .where(function() {
-      //       this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
-      //         .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
-      //         .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['ld.cost', `%${filter.searchText}%`]));
-      //     });
-      // }
+      if (has(filter, 'isActive') && filter.isActive !== '') {
+        queryBuilder.where(function() {
+          this.where('review.is_active', filter.isActive);
+        });
+      }
+      if (has(filter, 'modalName') && filter.modalName !== '') {
+        queryBuilder.where(function() {
+          this.where('modal_review.modal_name', filter.modalName);
+        });
+      }
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
+          //   .orWhere(
+          //   knex.raw('LOWER(??) LIKE LOWER(?)', ['u.up.last_name', `%${filter.searchText}%`])
+          // );
+        });
+      }
     }
+
+    queryBuilder
+      .from('review')
+      .leftJoin('user', 'user.id', 'review.user_id')
+      .leftJoin('modal_review', 'modal_review.review_id', 'review.id');
 
     const allReviews = camelizeKeys(await queryBuilder);
     const total = allReviews.length;
@@ -103,32 +111,32 @@ export default class Review extends Model {
     return res;
   }
 
-  public async addReview({ modal, moduleId, review }: ModalReview) {
+  public async addReview({ modalName, modalId, review }: ModalReview) {
     const res = await Review.query().insert(decamelizeKeys(review));
     if (res.id) {
       // const res1 =
-      await knex(modal).insert(decamelizeKeys({ moduleId, reviewId: res.id }));
-      // console.log('res for modal table', res1);
+      await knex('modal_review').insert(decamelizeKeys({ modalName, modalId, reviewId: res.id }));
+      // console.log('res for modalName table', res1);
     }
     // console.log('res for review', res);
     return res.id;
   }
 
-  public async editReview({ modal, modalId, moduleId, review }: ModalReview) {
-    const res = await Review.query().upsertGraph(decamelizeKeys(review));
-    if (res.id) {
-      // const res1 =
-      await knex(modal)
-        .where({ id: modalId })
-        .update(decamelizeKeys({ id: modalId, moduleId, reviewId: res.id }));
-      // console.log('res for modal table', res1);
-    }
+  public async editReview(input: Reviews & Identifier) {
+    const res = await Review.query().upsertGraph(decamelizeKeys(input));
+    // if (res.id) {
+    //   // const res1 =
+    //   await knex('modal_review')
+    //     .where({ id: modalId })
+    //     .update(decamelizeKeys({ id: modalId, moduleId, reviewId: res.id }));
+    //   // console.log('res for modalName table', res1);
+    // }
     // console.log('res for review', res);
     return res.id;
   }
 
-  public async deleteReview({ modalId, reviewId, modal }: DeleteModalReview) {
-    await knex(modal)
+  public async deleteReview({ modalId, reviewId, modalName }: DeleteModalReview) {
+    await knex(modalName)
       .where('id', '=', modalId)
       .update(decamelizeKeys({ isActive: false }));
     return knex('review')

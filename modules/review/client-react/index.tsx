@@ -7,6 +7,8 @@ import loadable from '@loadable/component';
 import { Route, NavLink } from 'react-router-dom';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 import { MenuItem } from '@gqlapp/look-client-react';
+
+import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
@@ -50,5 +52,6 @@ export default new ClientModule({
     //   <NavLinkWithI18n />
     // </MenuItem>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'review', resources }]
 });

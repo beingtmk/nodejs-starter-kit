@@ -4,7 +4,14 @@ import { compose } from '@gqlapp/core-common';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
 import ReviewsView from '../components/ReviewsView';
-import { withReviews, withReviewsDeleting, subscribeToReviews } from './ReviewOperations';
+import {
+  withReviewsStateQuery,
+  withReviewsOrderByUpdating,
+  withUpdateReviewsFilter,
+  withReviews,
+  withReviewsDeleting,
+  subscribeToReviews
+} from './ReviewOperations';
 
 export interface Reviews {
   totalCount: number;
@@ -58,4 +65,11 @@ export interface DeleteReview {
   modal: string;
 }
 
-export default compose(withReviews, withReviewsDeleting, translate('Review'))(Review);
+export default compose(
+  withReviewsStateQuery,
+  withReviewsOrderByUpdating,
+  withUpdateReviewsFilter,
+  withReviews,
+  withReviewsDeleting,
+  translate('Review')
+)(Review);

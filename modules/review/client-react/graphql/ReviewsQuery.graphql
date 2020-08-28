@@ -3,7 +3,7 @@
 query reviews(
   $limit: Int!
   $after: Int
-  $orderBy: OrderByUserInput
+  $orderBy: OrderByReviewInput
   $filter: FilterReviewInput
 ) {
   reviews(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {

@@ -499,7 +499,7 @@ export class User extends Model {
     const total = allUserItems.length;
     var res = {};
 
-    // queryBuilder.leftJoin('profile AS up', 'up.user_id', 'u.id')
+    // queryBuilder.leftJoin('user_profile AS up', 'up.user_id', 'u.id')
     if (limit && after) {
       res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
     } else if (limit && !after) {

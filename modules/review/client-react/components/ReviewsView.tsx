@@ -1,12 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 
+import ReviewFilterComponent from './ReviewFilterComponent.web';
 import ReviewListComponent from './ReviewListComponent.web';
 import ROUTES from '../routes';
 
@@ -27,12 +28,21 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   return (
     <PageLayout>
       {renderMetaData(t)}
-      <h2>{t('review.subTitle')}</h2>
-      <Link to={ROUTES.add}>
-        <Button color="primary">{t('review.btn.add')}</Button>
-      </Link>
-      {/* <hr />
-      <ReviewFilterComponent {...props} /> */}
+      <Row>
+        <Col span={12}>
+          <h2>{t('review.subTitle')}</h2>
+        </Col>
+        <Col span={12}>
+          <Row type="flex" justify="end">
+            <Link to={ROUTES.add}>
+              <Button color="primary">{t('review.btn.add')}</Button>
+            </Link>
+          </Row>
+        </Col>
+      </Row>
+      <br />
+      <hr />
+      <ReviewFilterComponent {...props} />
       <hr />
       <ReviewListComponent {...props} />
     </PageLayout>

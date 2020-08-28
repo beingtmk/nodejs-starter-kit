@@ -14,7 +14,7 @@ type ReviewEdges {
 }
 # type Node {
 #   id: Int
-#   modal: Modal
+#   modalName: Modal
 #   review: Review
 # }
 type Review {
@@ -32,7 +32,7 @@ type ReviewImage {
   imageUrl: String
 }
 # type Modal {
-#   # Add new modal here
+#   # Add new modalName here
 #   event: Event
 #   # blog: Blog
 # }
@@ -41,11 +41,20 @@ type ReviewImage {
 #   title: String
 # }
 
+# Input for ordering users
+input OrderByReviewInput {
+  # id | username | role | isActive | email
+  column: String
+  # asc | desc
+  order: String
+}
+
 # Input for filtering users
 input FilterReviewInput {
   searchText: String
-  # filter by isActive
   isActive: Boolean
+  # filter by isActive
+  modalName: String
 }
 
 extend type Query {
@@ -53,7 +62,7 @@ extend type Query {
   reviews(
     limit: Int
     after: Int
-    orderBy: OrderByUserInput
+    orderBy: OrderByReviewInput
     filter: FilterReviewInput
   ): Reviews
 }
@@ -62,22 +71,22 @@ extend type Mutation {
   # Create new Review
   addReview(input: AddModalReviewInput!): Boolean
   # Edit a review
-  editReview(input: EditModalReviewInput!): Boolean
+  editReview(input: EditReviewInput!): Boolean
   # Delete a review
   deleteReview(input: DeleteModalReviewInput): Boolean
 }
 input AddModalReviewInput {
-  modal: String
+  modalName: String
   modalId: Int
-  moduleId: Int
+  # moduleId: Int
   review: AddReviewInput
 }
-input EditModalReviewInput {
-  modal: String
-  modalId: Int!
-  moduleId: Int
-  review: EditReviewInput
-}
+# input EditModalReviewInput {
+#   modalName: String
+#   modalId: Int!
+#   moduleId: Int
+#   review: EditReviewInput
+# }
 input AddReviewInput {
   id: Int
   userId: Int
@@ -97,7 +106,7 @@ input EditReviewInput {
 input DeleteModalReviewInput {
   modalId: Int
   reviewId: Int
-  modal: String
+  modalName: String
 }
 
 extend type Subscription {

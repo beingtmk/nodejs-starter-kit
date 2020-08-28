@@ -33,17 +33,11 @@ exports.seed = async function(knex) {
       //     });
       //   })
       // );
-      if (Math.random() >= 0.5) {
-        return returnId(knex('event_review')).insert({
-          module_id: Math.floor(Math.random() * (50 - 1 + 1) + 1),
-          review_id: review[0]
-        });
-      } else {
-        return returnId(knex('blog_review')).insert({
-          module_id: Math.floor(Math.random() * (50 - 1 + 1) + 1),
-          review_id: review[0]
-        });
-      }
+      return returnId(knex('modal_review')).insert({
+        modal_name: Math.random() >= 0.5 ? 'event' : 'blog',
+        modal_id: Math.floor(Math.random() * (50 - 1 + 1) + 1),
+        review_id: review[0]
+      });
     })
   );
   // await Promise.all(
