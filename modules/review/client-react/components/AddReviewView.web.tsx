@@ -35,7 +35,7 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
         <Spin />
       ) : (
         <Row type="flex" justify="center">
-          <ReviewFormComponent cardTitle={'Add Review'} t={t} onSubmit={addReview} />
+          <ReviewFormComponent cardTitle={'Add Review'} t={t} onSubmit={addReview} showModal={true} />
         </Row>
       )}
     </PageLayout>

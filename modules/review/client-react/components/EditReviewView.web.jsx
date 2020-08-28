@@ -31,6 +31,7 @@ const EditReviewView = props => {
             review={review}
             onSubmit={editReview}
             currentUser={currentUser}
+            showModal={false}
           />
         ) : (
           <Spin />

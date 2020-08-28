@@ -120,8 +120,8 @@ export const withReviewAdding = Component =>
     props: ({ ownProps: { match, navigation, history }, mutate }) => ({
       addReview: async values => {
         const input = {
-          modal: 'event_review',
-          moduleId: 1,
+          modalName: values.modalName,
+          modalId: values.modalId,
           review: {
             userId: values.userId,
             rating: values.rating,
@@ -174,16 +174,11 @@ export const withReviewEditing = Component =>
         try {
           values = removeTypename(values);
           const input = {
-            modal: 'event_review',
-            modalId: 107,
-            moduleId: 1,
-            review: {
-              id: values.id,
-              userId: values.userId,
-              rating: values.rating,
-              feedback: values.feedback,
-              isActive: values.isActive
-            }
+            id: values.id,
+            userId: values.userId,
+            rating: values.rating,
+            feedback: values.feedback,
+            isActive: values.isActive
           };
           // input.reviewImages = Object.values(input.reviewImages);
 

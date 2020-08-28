@@ -4,22 +4,28 @@ import { withFormik, FieldArray } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, RenderUploadMultiple, Button } from '@gqlapp/look-client-react';
+import { RenderField, RenderUploadMultiple, Button, Select, Option } from '@gqlapp/look-client-react';
 
 import UserAutoCompleteComponent from './UserAutoCompleteComponent';
+import { Review } from '../containers/Reviews.web';
+import { MODAL } from '../containers/Modal';
 
 const ReviewFormSchema = { rating: [required], feedback: [required] };
 const FormItem = Form.Item;
 
 interface FormValues {
   id: number;
+  modalName: string;
+  modalId: number;
   userId: number;
   rating: string;
   feedback: string;
 }
 
 export interface ReviewFormComponentProps {
+  review: Review;
   dirty: boolean;
+  showModal: boolean;
   cardTitle: string;
   values: FormValues;
   onSearchTextChange: () => null;
@@ -28,7 +34,7 @@ export interface ReviewFormComponentProps {
 }
 
 const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
-  const { dirty, cardTitle, values, onSearchTextChange, handleSubmit, setFieldValue } = props;
+  const { dirty, cardTitle, values, onSearchTextChange, handleSubmit, setFieldValue, showModal } = props;
   // const [load, setLoad] = useState(true);
 
   return (
@@ -40,6 +46,25 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
       }
     >
       <Form onSubmit={handleSubmit}>
+        {showModal && (
+          <>
+            <FormItem label={'Modal'}>
+              <Select
+                name="modal"
+                defaultValue={MODAL[0].value}
+                style={{ width: '100px' }}
+                onChange={(e: string) => setFieldValue('modalName', e)}
+              >
+                {MODAL.map((m, i) => (
+                  <Option key={i} value={m.value}>
+                    {m.label}
+                  </Option>
+                ))}
+              </Select>
+            </FormItem>
+            <Field name="modalId" component={RenderField} placeholder="Modal id" type="number" value={values.modalId} />
+          </>
+        )}
         <UserAutoCompleteComponent
           name="username"
           label="username"
@@ -107,6 +132,8 @@ const ReviewWithFormik = withFormik({
     // }
     return {
       id: (props.review && props.review.id) || null,
+      modalName: '',
+      modalId: 1,
       userId: (props.review && props.review.user && props.review.user.id) || null,
       rating: (props.review && props.review.rating) || null,
       feedback: (props.review && props.review.feedback) || ''
