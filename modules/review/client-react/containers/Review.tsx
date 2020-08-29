@@ -1,16 +1,17 @@
 import React from 'react';
 
+import { compose } from '@gqlapp/core-common';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import ReviewView from '../components/ReviewView';
 
+import ReviewView from '../components/ReviewView';
+import { withReviews, withReviewsDeleting } from './ReviewOperations';
 interface ReviewProps {
   t: TranslateFunction;
 }
 
-class Review extends React.Component<ReviewProps> {
-  public render() {
-    return <ReviewView {...this.props} />;
-  }
-}
+const Review: React.FC<ReviewProps> = props => {
+  console.log('props', props);
+  return <ReviewView {...props} />;
+};
 
-export default translate('review')(Review);
+export default compose(withReviews, withReviewsDeleting, translate('review'))(Review);

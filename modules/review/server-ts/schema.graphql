@@ -52,9 +52,10 @@ input OrderByReviewInput {
 # Input for filtering users
 input FilterReviewInput {
   searchText: String
-  isActive: Boolean
   # filter by isActive
+  isActive: Boolean
   modalName: String
+  modalId: Int
 }
 
 extend type Query {

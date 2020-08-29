@@ -12,11 +12,11 @@ import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
-// const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
-//   <NavLink to="/review" className="nav-link" activeClassName="active">
-//     {t('review:navLink')}
-//   </NavLink>
-// ));
+const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to={ROUTES.review} className="nav-link" activeClassName="active">
+    {t('review:navLink')}
+  </NavLink>
+));
 
 const NavLinkAdminWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
@@ -32,7 +32,7 @@ export default new ClientModule({
       path={ROUTES.edit}
       component={loadable(() => import('./containers/EditReview').then(c => c.default))}
     />,
-    <Route exact path="/review" component={loadable(() => import('./containers/Review').then(c => c.default))} />,
+    <Route exact path={ROUTES.review} component={loadable(() => import('./containers/Review').then(c => c.default))} />,
     <AuthRoute
       exact
       role={['admin']}
@@ -47,10 +47,10 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
-  navItem: [
-    // <MenuItem key="/review">
-    //   <NavLinkWithI18n />
-    // </MenuItem>
+  navItemTest: [
+    <MenuItem key={ROUTES.review}>
+      <NavLinkWithI18n />
+    </MenuItem>
   ],
   resolver: [resolvers],
   localization: [{ ns: 'review', resources }]

@@ -11,6 +11,8 @@ import ReviewFilterComponent from './ReviewFilterComponent.web';
 import ReviewListComponent from './ReviewListComponent.web';
 import ROUTES from '../routes';
 
+import Review from '../containers/Review';
+
 const renderMetaData = (t: TranslateFunction) => (
   <Helmet
     title={`${settings.app.name} - ${t('title')}`}
@@ -22,8 +24,12 @@ export interface ReviewViewProps {
   t: TranslateFunction;
 }
 
-const ReviewView: React.FC<ReviewViewProps> = props => {
+const ReviewsView: React.FC<ReviewViewProps> = props => {
   const { t } = props;
+  const filter = {
+    modalId: 1,
+    modalName: 'event'
+  };
 
   return (
     <PageLayout>
@@ -45,8 +51,9 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
       <ReviewFilterComponent {...props} />
       <hr />
       <ReviewListComponent {...props} />
+      <Review filter={filter} t={t} />
     </PageLayout>
   );
 };
 
-export default ReviewView;
+export default ReviewsView;

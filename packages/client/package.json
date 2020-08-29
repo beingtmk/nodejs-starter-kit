@@ -152,6 +152,7 @@
         "jsdom": "^11.5.1",
         "mkdirp": "^0.5.1",
         "react-addons-test-utils": "^16.0.0-alpha.3",
+        "react-infinite-scroll-component": "^5.0.4",
         "react-test-renderer": "16.9.0",
         "request": "^2.83.0",
         "rimraf": "^2.6.2",
