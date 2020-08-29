@@ -10,7 +10,7 @@ interface Edges {
   node: Reviews & Identifier;
 }
 interface ModalEditReviewInput {
-  input: EditReview;
+  input: Reviews & Identifier;
 }
 interface ModalReviewInput {
   input: ModalReview;

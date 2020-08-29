@@ -29,6 +29,7 @@ const BtnDiv = styled.div`
 
 interface ReviewViewProps {
   t: TranslateFunction;
+  handleHelpful: (id: number, value: number) => null;
 }
 
 const renderMetaData = (t: TranslateFunction) => (
@@ -39,10 +40,16 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, onSubmit, loading, ratings } = props;
+  const { reviews, loading, ratings, handleHelpful } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key, review) => (
-    <ReviewsItemComponent key={key} review={review} showPhotos={photo} onSubmit={onSubmit} />
+    <ReviewsItemComponent
+      key={key}
+      review={review}
+      showPhotos={photo}
+      handleHelpful={handleHelpful}
+      history={history}
+    />
   );
   // const renderBtn = setVisible => (
   //   <Button type="primary" block onClick={setVisible}>

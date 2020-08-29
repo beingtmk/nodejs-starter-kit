@@ -160,48 +160,13 @@ export const withReviewAdding = Component =>
 
 export const withReviewEditing = Component =>
   graphql(EDIT_REVIEW, {
-    props: ({
-      ownProps: {
-        history,
-        navigation
-        // currentUser: { role }
-      },
-      mutate
-    }) => ({
-      editReview: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
-        try {
-          values = removeTypename(values);
-          const input = {
-            id: values.id,
-            userId: values.userId,
-            rating: values.rating,
-            feedback: values.feedback,
-            isActive: values.isActive
-          };
-          // input.reviewImages = Object.values(input.reviewImages);
-
-          console.log('input', input);
-          await mutate({
-            variables: {
-              input
-            }
-          });
-          message.destroy();
-          message.success('Changes Saved.');
-          if (history) {
-            return history.push(ROUTES.adminPanel);
+    props: ({ mutate }) => ({
+      editReview: async input => {
+        await mutate({
+          variables: {
+            input
           }
-          // if (navigation) {
-          //   if (role === 'admin') return navigation.navigate('ListingCatalogue');
-          //   else return navigation.navigate('MyReviews');
-          // }
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
+        });
       }
     })
   })(Component);

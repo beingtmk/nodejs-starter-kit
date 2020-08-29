@@ -11,7 +11,7 @@ export interface Reviews {
   userId: number;
   feedback: string;
   rating: number;
-  listingId: number;
+  helpful: number;
   // reviewImages: ReviewImage[];
 }
 export interface Identifier {

@@ -8,7 +8,7 @@ import settings from '@gqlapp/config';
 import ReviewFormComponent from './ReviewFormComponent';
 
 const EditReviewView = props => {
-  const { review, editReview, currentUser, t } = props;
+  const { review, onSubmit, currentUser, t } = props;
   const renderMetaData = t => (
     <Helmet
       title={`${settings.app.name} - ${t('title')}`}
@@ -29,7 +29,7 @@ const EditReviewView = props => {
             cardTitle="Edit Review"
             t={t}
             review={review}
-            onSubmit={editReview}
+            onSubmit={onSubmit}
             currentUser={currentUser}
             showModal={false}
           />

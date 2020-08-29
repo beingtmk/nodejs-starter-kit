@@ -41,7 +41,7 @@ exports.up = function(knex) {
           .onDelete('CASCADE');
         table.string('feedback');
         table.integer('rating');
-        table.integer('helpful');
+        table.integer('helpful').defaultTo(0);
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })

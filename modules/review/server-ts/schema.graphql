@@ -23,6 +23,7 @@ type Review {
   rating: String
   feedback: String
   isActive: Boolean
+  helpful: Int
   # reviewImages: [ReviewImage]
   createdAt: String!
   updatedAt: String!
@@ -102,6 +103,7 @@ input EditReviewInput {
   rating: String
   feedback: String
   isActive: Boolean
+  helpful: Int
   # reviewImages: [ReviewImagesInput]
 }
 input DeleteModalReviewInput {

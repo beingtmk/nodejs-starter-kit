@@ -3,11 +3,9 @@ import moment from 'moment';
 import styled from 'styled-components';
 import { Row, Col, Icon, Card, Rate, Menu, Button } from 'antd';
 import { PropTypes } from 'prop-types';
-// import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
+import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 
-// import WriteReviewComponent from './WriteReviewComponent';
 // import ImagesSlickComponent from './ImagesSlickComponent';
-// import { Text, DropDownButton } from './StyledComponents';
 
 const Avatar = styled.img`
   border-radius: 50%;
@@ -19,8 +17,14 @@ const Avatar = styled.img`
 `;
 
 const ReviewsItemComponent = props => {
-  const { review, showPhotos, onSubmit } = props;
-  // console.log('props', props);
+  const { review, showPhotos, onSubmit, handleHelpful, history } = props;
+  const [disabled, setDisabled] = React.useState(false);
+
+  const foundHelpful = () => {
+    handleHelpful(review.id, review.helpful + 1);
+    setDisabled(true);
+  };
+
   return (
     <Row>
       <Avatar
@@ -34,44 +38,30 @@ const ReviewsItemComponent = props => {
           borderRadius: '8px'
         }}
       >
-        <Row>
-          <Col span={10}>
-            <h3>
-              <strong>{review.user.profile.fullName}</strong>
-            </h3>
-          </Col>
-          <Col span={12}>
-            <Row type="flex" justify="end">
-              <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
-            </Row>
-          </Col>
-          <Col span={2}>
-            <Row type="flex" justify="end">
-              {/* <DropDown type="more">
-                <Menu.Item key="0">
-                  <WriteReviewComponent
-                    type="EDIT"
-                    onSubmit={onSubmit}
-                    review={review}
-                    renderBtn={func => (
-                      <DropDownButton block type="link" onClick={func}>
-                        Edit
-                      </DropDownButton>
-                    )}
-                  />
-                </Menu.Item>
-                <Menu.Item key="1">
-                  <DropDownButton block type="link" onClick={() => onSubmit(review.id, 'DELETE')}>
-                    Delete
-                  </DropDownButton>
-                </Menu.Item>
-              </DropDown> */}
-            </Row>
-          </Col>
-        </Row>
+        <Col span={10}>
+          <h3>
+            <strong>{review.user.profile.fullName}</strong>
+          </h3>
+        </Col>
         <Col span={12}>
-          <Row type="flex" justify="end" align="middle">
-            {/* <Text>{moment(`${review.createdAt}`).format('LL')}</Text> */}
+          <Row type="flex" justify="end">
+            <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
+          </Row>
+        </Col>
+        <Col span={2}>
+          <Row type="flex" justify="end">
+            <DropDown type="more">
+              <Menu.Item key="0">
+                <Button style={{ color: 'black' }} type="link" href={`/edit/review/${review.id}`}>
+                  {'Edit'}
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="1">
+                <Button style={{ color: 'black' }} type="link" disabled onClick={() => onSubmit(review.id, 'DELETE')}>
+                  Delete
+                </Button>
+              </Menu.Item>
+            </DropDown>
           </Row>
         </Col>
         <Col span={24}>
@@ -80,12 +70,17 @@ const ReviewsItemComponent = props => {
           </div>
         </Col>
         {showPhotos && <Col span={24}>{/* <ImagesSlickComponent images={review.reviewImages} /> */}</Col>}
-        <Col span={24}>
+        <Col span={12}>
+          <>{moment(`${review.createdAt}`).format('LL')}</>
+        </Col>
+        <Col span={12}>
           <Row type="flex" justify="end" align="middle">
-            <Button type="link" onClick={() => console.log('called')}>
+            <Button type="link" disabled={disabled} onClick={foundHelpful} style={{ color: 'black' }}>
               <strong>
-                Helpful &nbsp;
+                Found helpful &nbsp;
                 <Icon type="like" theme="filled" />
+                &nbsp;
+                {`(${review.helpful})`}
               </strong>
             </Button>
           </Row>

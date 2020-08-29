@@ -8,6 +8,7 @@ fragment ReviewInfo on Review {
   rating
   feedback
   isActive
+  helpful
   # reviewImages {
   #   id
   #   imageUrl

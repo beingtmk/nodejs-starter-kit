@@ -55,7 +55,7 @@ export default compose(
   }),
   graphql(USER_LIST_QUERY, {
     options: ({ orderBy, filter, userType }) => {
-      filter.role = userType;
+      filter && (filter.role = userType);
       return {
         // eslint-disable-next-line prettier/prettier
         variables: {

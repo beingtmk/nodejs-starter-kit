@@ -144,13 +144,7 @@ const ReviewWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { setErrors, props: { onSubmit } }) {
-    await onSubmit(values).catch(e => {
-      if (isFormError(e)) {
-        setErrors(e.errors);
-      } else {
-        throw e;
-      }
-    });
+    onSubmit(values);
   },
   validate: values => validate(values, ReviewFormSchema),
   displayName: 'Review Form' // helps with React DevTools
