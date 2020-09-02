@@ -16,6 +16,7 @@ import { Table } from "@gqlapp/look-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import QuizUserWiseReport from "../containers/QuizUserWiseReport";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 import IndividualQuizReport from "./IndividualQuizReport";
 import { getResult } from "../helpers";
 
@@ -29,14 +30,24 @@ const GraphChartComponent = (props) => {
   };
 
   var graphData = [];
-  graphQuestion &&
-    graphQuestion.choices &&
-    graphQuestion.choices.map((choi) => {
+  if (graphQuestion && graphQuestion.choiceType === QuestionTypes.COUNTRIES) {
+    countries.map((cou) => {
       graphData.push({
-        name: choi.description,
-        amt: getCount(graphQuestion.answers, choi),
+        name: cou,
+        amt:
+          graphQuestion.answers &&
+          graphQuestion.answers.filter((ann) => ann.content === cou).length,
       });
     });
+  } else if (graphQuestion) {
+    graphQuestion.choices &&
+      graphQuestion.choices.map((choi) => {
+        graphData.push({
+          name: choi.description,
+          amt: getCount(graphQuestion.answers, choi),
+        });
+      });
+  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
@@ -180,13 +191,13 @@ export const QuizUserWiseReportComponent = (props) => {
         (graphQuestion.choiceType === QuestionTypes.RADIO ||
           graphQuestion.choiceType === QuestionTypes.SELECT ||
           graphQuestion.choiceType === QuestionTypes.MSELECT ||
-          graphQuestion.choiceType === QuestionTypes.CHECKBOX) && (
+          graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
+          graphQuestion.choiceType === QuestionTypes.COUNTRIES) && (
           <div align="center">
             <GraphChartComponent graphQuestion={graphQuestion} />
           </div>
         )}
 
-        
       <Table
         columns={columns}
         dataSource={resultQuiz && resultQuiz.attempts}
