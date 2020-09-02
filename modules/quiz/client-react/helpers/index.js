@@ -5,6 +5,7 @@ export const getResult = (record, attempt) => {
     if (
       record.choiceType === QuestionTypes.TEXTBOX ||
       record.choiceType === QuestionTypes.TEXTAREA ||
+      record.choiceType === QuestionTypes.NUMBER ||
       record.choiceType === QuestionTypes.SLIDER ||
       record.choiceType === QuestionTypes.COUNTRIES
     ) {

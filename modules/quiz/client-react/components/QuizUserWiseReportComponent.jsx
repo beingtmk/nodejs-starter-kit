@@ -23,7 +23,15 @@ import { getResult } from "../helpers";
 const GraphChartComponent = (props) => {
   console.log("chart component", props);
 
-  const { graphQuestion } = props;
+  const { graphQuestion, attempts } = props;
+
+  const getUserName = (answer) => {
+    const userAttempt =
+      attempts && attempts.find((att) => att.answers && att.answers.find(an=>an===answer));
+    console.log("getUserName", userAttempt);
+    return userAttempt && userAttempt.user && userAttempt.user.username;
+  };
+
   const getCount = (ans, currentChoice) => {
     var choiceAnswers = ans.filter((an) => an.choiceId === currentChoice.id);
     return choiceAnswers && choiceAnswers.length;
@@ -39,6 +47,14 @@ const GraphChartComponent = (props) => {
           graphQuestion.answers.filter((ann) => ann.content === cou).length,
       });
     });
+  } else if (
+    graphQuestion &&
+    graphQuestion.choiceType === QuestionTypes.NUMBER
+  ) {
+    graphQuestion.answers &&
+      graphQuestion.answers.map((annn) => {
+        graphData.push({ name: getUserName(annn), amt: annn.content });
+      });
   } else if (graphQuestion) {
     graphQuestion.choices &&
       graphQuestion.choices.map((choi) => {
@@ -111,7 +127,7 @@ export const QuizUserWiseReportComponent = (props) => {
       key: "user",
       fixed: "left",
       width: 200,
-      render: (text, record) => <p> {record.id} </p>,
+      render: (text, record) => <p> {record.user && record.user.username} </p>,
     },
   ];
 
@@ -192,9 +208,13 @@ export const QuizUserWiseReportComponent = (props) => {
           graphQuestion.choiceType === QuestionTypes.SELECT ||
           graphQuestion.choiceType === QuestionTypes.MSELECT ||
           graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
+          graphQuestion.choiceType === QuestionTypes.NUMBER ||
           graphQuestion.choiceType === QuestionTypes.COUNTRIES) && (
           <div align="center">
-            <GraphChartComponent graphQuestion={graphQuestion} />
+            <GraphChartComponent
+              graphQuestion={graphQuestion}
+              attempts={resultQuiz && resultQuiz.attempts}
+            />
           </div>
         )}
 

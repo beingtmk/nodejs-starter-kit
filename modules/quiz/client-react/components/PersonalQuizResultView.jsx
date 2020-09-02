@@ -31,11 +31,16 @@ export const ResultComponent = (props) => {
         const getAnswers = () => {
           if (
             question.choiceType === QuestionTypes.TEXTAREA ||
+            question.choiceType === QuestionTypes.NUMBER ||
             question.choiceType === QuestionTypes.TEXTBOX ||
             question.choiceType === QuestionTypes.SLIDER ||
             question.choiceType === QuestionTypes.COUNTRIES
           ) {
-            return question.answers && question.answers.length !==0 && question.answers[0].content;
+            return (
+              question.answers &&
+              question.answers.length !== 0 &&
+              question.answers[0].content
+            );
           } else {
             let choiceIdArray = [];
             question.answers &&
@@ -58,7 +63,7 @@ export const ResultComponent = (props) => {
           if (
             question &&
             question.answers &&
-            question.answers.length !==0 && 
+            question.answers.length !== 0 &&
             (question.answers[0].content !== "" ||
               question.answers[0].choiceId !== null)
           ) {
@@ -78,16 +83,15 @@ export const ResultComponent = (props) => {
   return (
     <>
       <br />
-        {queAnsArray.map((qan, key) => (
-          <>
+      {queAnsArray.map((qan, key) => (
+        <>
           <Title level={4} id={key}>
             {`${key + 1} -> ${qan.question}`}
           </Title>
           <Text>{`A -> ${qan.answer}`}</Text>
           <Divider />
-
-          </>
-        ))}
+        </>
+      ))}
     </>
   );
 };
