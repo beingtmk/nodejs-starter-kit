@@ -108,11 +108,11 @@ export default (pubsub: PubSub) => ({
                 from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
                   process.env.EMAIL_USER}>`,
                 to: item.email,
-                subject: "NodeJs-Starterkit Registration",
+                subject: `${settings.app.name} Registration`,
                 html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
               });
               log.info(`Sent mail to: ${item.email}`);
@@ -154,11 +154,11 @@ export default (pubsub: PubSub) => ({
                 from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
                   process.env.EMAIL_USER}>`,
                 to: item.email,
-                subject: "NodeJs-Starterkit Registration",
+                subject: `${settings.app.name} Registration`,
                 html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
               });
               log.info(`Sent mail to: ${item.email}`);
@@ -207,11 +207,11 @@ export default (pubsub: PubSub) => ({
                 from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
                   process.env.EMAIL_USER}>`,
                 to: item.email,
-                subject: "NodeJs-Starterkit Registration",
+                subject: `${settings.app.name} Registration`,
                 html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
               });
               log.info(`Sent mail to: ${item.email}`);
@@ -260,11 +260,11 @@ export default (pubsub: PubSub) => ({
                 from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
                   process.env.EMAIL_USER}>`,
                 to: item.email,
-                subject: "NodeJs-Starterkit Registration",
+                subject: `${settings.app.name} Registration`,
                 html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in NodeJs-StarterKit.<p>
+                  : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
               });
               log.info(`Sent mail to: ${item.email}`);
@@ -323,11 +323,11 @@ export default (pubsub: PubSub) => ({
             from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
               process.env.EMAIL_USER}>`,
             to: currentGroup.email,
-            subject: "NodeJs-Starterkit Registration",
+            subject: `${settings.app.name} Registration`,
             html: user
-              ? `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
+              ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-              : `<p>You have been added to <strong>${data.title}</strong> in NodeJs-StarterKit.<p>
+              : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
           });
           log.info(`Sent mail to: ${currentGroup.email}`);
