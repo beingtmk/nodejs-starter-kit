@@ -27,7 +27,10 @@ const GraphChartComponent = (props) => {
 
   const getUserName = (answer) => {
     const userAttempt =
-      attempts && attempts.find((att) => att.answers && att.answers.find(an=>an===answer));
+      attempts &&
+      attempts.find(
+        (att) => att.answers && att.answers.find((an) => an === answer)
+      );
     console.log("getUserName", userAttempt);
     return userAttempt && userAttempt.user && userAttempt.user.username;
   };
@@ -73,9 +76,11 @@ const GraphChartComponent = (props) => {
       return (
         <div style={{ background: "white", padding: "24px" }}>
           <p className="label">{`${label} : ${amount}`}</p>
-          <p className="desc">
-            {((amount * 100) / totalAnswersCount).toFixed(2)}%
-          </p>
+          {graphQuestion.choiceType !== QuestionTypes.NUMBER && (
+            <p className="desc">
+              {`${((amount * 100) / totalAnswersCount).toFixed(2)} %`}
+            </p>
+          )}
         </div>
       );
     }
