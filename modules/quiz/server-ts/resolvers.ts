@@ -44,7 +44,6 @@ export default (pubsub: any) => ({
     },
     async quizWithAnswers(obj: any, { id, userId }: any, context: any) {
       const quiz = await context.Quiz.getQuizWithAnswersByUser(id, userId);
-      console.log("quizzzzzz", quiz.sections[0].questions);
       return quiz;
     },
     // async answer(obj: any, { input }: any, context: any) {
@@ -73,16 +72,11 @@ export default (pubsub: any) => ({
       };
     },
     async getUserWiseResult(obj: any, { id, groupId }: any, context: any) {
-      console.log("getUserWiseResultInput", id, groupId);
       const quiz = await context.Quiz.getQuizWithAnswers(id, groupId);
 
-      quiz &&
-        quiz.sections.map((see) =>
-          see.questions.map((qu) => console.log("userwiseresultres", qu))
-        );
+      
       // ToDo replace attendees with attempts
       const attempts = await context.Quiz.getAttemptByQuizAndGroup(id, groupId);
-      console.log("attempsattempts", attempts);
       let userIdArray = [];
 
       attempts.map((item, key) => {
@@ -358,18 +352,14 @@ export default (pubsub: any) => ({
       }
     }),
     async addAttempt(obj: any, { input }: any, { Quiz }: any) {
-      console.log("addAttemptInput", input);
       try {
         const { quizId, userId } = input;
         var attempt = await Quiz.getAttemptByParams({ quizId, userId });
-        console.log("addAttemptAttemptExists", attempt);
         if (attempt) {
           input.id = attempt.id;
           attempt = await Quiz.editAttempt(input);
-          console.log("editAttemptttttt", attempt);
         } else {
           attempt = await Quiz.addAttempt(input);
-          console.log("addAttemptttttt", attempt);
         }
         const quiz =
           attempt &&
@@ -381,7 +371,6 @@ export default (pubsub: any) => ({
               Sec &&
               Sec.questions &&
               Sec.questions.map((Que) => {
-                console.log("quizAttemptedQuestions", Que);
               })
           );
         pubsub.publish(QUIZ_WITH_ANSWERS_SUBSCRIPTION, {

@@ -141,7 +141,6 @@ export default (pubsub: PubSub) => ({
         try {
           await Group.updateGroup(input);
           const data = await Group.group(input.id);
-          console.log('dataaaaaa', data);
 
           const url1 = `${__WEBSITE_URL__}/register`;
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
@@ -194,7 +193,6 @@ export default (pubsub: PubSub) => ({
         try {
           await Group.upsertGroup(input);
           const data = await Group.group(input.id);
-          console.log('dataaaaaa', data);
 
           const url1 = `${__WEBSITE_URL__}/register`;
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
@@ -247,7 +245,6 @@ export default (pubsub: PubSub) => ({
         try {
           await Group.upsertGroup(input);
           const data = await Group.group(input.id);
-          console.log('dataaaaaa', data);
 
           const url1 = `${__WEBSITE_URL__}/register`;
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
@@ -306,7 +303,6 @@ export default (pubsub: PubSub) => ({
           var modifiedInput = input;
           modifiedInput.email = input.userEmail;
           delete modifiedInput.userEmail
-          console.log('modifiedInputModified', modifiedInput);
           const groupMemberId = await GroupMember.addGroupMember(modifiedInput);
           const data = await Group.group(input.groupId);
 
@@ -449,7 +445,6 @@ export default (pubsub: PubSub) => ({
       async (obj: any, { input }: any, { GroupMember, Group }: any) => {
         try {
           const inputId = await GroupMember.changeGroupMemberType(input);
-          console.log('inputIDCHANGEMEMBER', inputId, inputId);
           const data = await GroupMember.groupMember(input.groupId);
           pubsub.publish(GMEMBER_SUBSCRIPTION, {
             groupMembersUpdated: {
@@ -556,7 +551,6 @@ export default (pubsub: PubSub) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(GROUP_ITEM_SUBSCRIPTION),
         (payload, variables) => {
-          console.log('groupItemSubscription', payload, variables);
           return payload.groupItemUpdated && payload.groupItemUpdated.node && payload.groupItemUpdated.node.id === variables.id;
         }
       ),

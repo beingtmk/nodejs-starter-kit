@@ -27,7 +27,6 @@ const PersonalQuizResult = (props) => {
   //   }
   // };
   props.refetch();
-  console.log('personal quiz result', props);
   return (
     
     <PersonalQuizResultView {...props} />

@@ -74,13 +74,11 @@ const QuizEditContainer = (props) => {
     values.userId = userId;
     try {
       const newQ = await editQuiz(values);
-      console.log('onSubmit', newQ);
       // history.push(`/quiz/${newQ.data.editQuiz.id}`);
     } catch (e) {
       throw new FormError(t("serverError"), e);
     }
   };
-  console.log('Quiz Edit', props);
   return <QuizEditView {...props} onSubmit={onSubmit} />;
 };
 

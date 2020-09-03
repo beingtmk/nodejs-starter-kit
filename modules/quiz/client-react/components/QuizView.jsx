@@ -19,7 +19,6 @@ const QuizView = (props) => {
   if(!props.currentUserLoading && !props.currentUser){
     props.history.push('/login');
   }
-  console.log('quizViewwww', props);
   return (
     <PageLayout type="forms" footerType={'small'}>
       {renderMetaData(props.t)}

@@ -184,10 +184,8 @@ export default class Group extends Model {
   }
 
   public async upsertGroup(input: GroupInput & Identifier) {
-    console.log('updateGroupSQL', input);
     const res = await Group.query().upsertGraph(decamelizeKeys(input));
     // const newGroup = await Group.query
-    console.log()
     return res;
   }
 
@@ -273,13 +271,11 @@ export class GroupMember extends Model {
   }
 
   public async changeGroupMemberType(input: any) {
-    console.log('changeGroupMemberTypeSQLINPUT', input);
     const res = await GroupMember.query()
       .patch({ type: input.type })
       .where("email", input.userEmail)
       .andWhere("group_id", input.groupId);
 
-      console.log('changeGroupMemberTYpeSQLOUTPUT', res)
     return res;
   }
 }

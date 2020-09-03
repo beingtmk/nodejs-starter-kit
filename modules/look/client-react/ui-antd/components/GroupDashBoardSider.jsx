@@ -12,7 +12,6 @@ import styles from "../styles/index.less";
 class GroupDashBoardSider extends React.Component {
   render() {
     const { path, id } = this.props;
-    console.log("GroupDashBoardSiderLayout", this.props);
     return (
       <Menu
         mode="inline"
