@@ -5,7 +5,6 @@ import { getResult } from "../helpers";
 const { Text, Title, Paragraph } = Typography;
 
 const IndividualQuizReport = (props) => {
-  console.log("Individual Quiz Report", props);
   const { questionsData, currentAttempt } = props;
 
   return (

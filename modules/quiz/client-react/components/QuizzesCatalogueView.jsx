@@ -28,7 +28,6 @@ const QuizzesCatalogueView = (props) => {
     });
     return qCount;
   };
-  console.log(quizzes);
   return (
     <PageLayout>
       <Row gutter={24}>

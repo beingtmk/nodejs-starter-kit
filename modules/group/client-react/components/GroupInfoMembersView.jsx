@@ -36,7 +36,6 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
   }
   const handleMemberTypeChange = async (e, userEmail) => {
     const { id } = group;
-    console.log(e);
     await changeGroupMemberType({ groupId: id, userEmail, type: e });
   };
 
@@ -47,7 +46,6 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
     if (item.member) joinees.push(item);
     else invites.push(item);
   });
-  console.log("groupComponent", group);
   return (
     <GroupLayout id={gid} path={match && match.path}>
       {(<Tabs

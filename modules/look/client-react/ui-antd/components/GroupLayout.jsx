@@ -49,8 +49,6 @@ class GroupLayout extends React.Component {
   }
   render() {
     const { children, id, navBar, type, path } = this.props;
-    console.log("GroupLayoutLayout", this.props);
-
     
     return (
       <Layout id="page-layout">

@@ -46,11 +46,8 @@ const RenderSelectMultipleQuiz = (props) => {
   //     arrayHelpers.remove(file.uid);
   //   }
   // };
-  console.log('array helper', arrayHelpers);
 
-  console.log('valueeee', value);
   const handleChange = (e) => {
-    console.log('handle change', e);
     value && value.map((val, valI) => {
       const valExists = e.find((eA) => eA === val.choiceId);
       if(!valExists){

@@ -12,7 +12,6 @@ class GroupQuizReportComponent extends React.Component {
   }
 
   handleSelectQuiz = (e) => {
-    console.log(e);
     this.setState({ quizId: e });
   };
 
@@ -21,14 +20,11 @@ class GroupQuizReportComponent extends React.Component {
   }
 
   handleSelectUser = (e) => {
-    console.log(e);
     this.setState({ userId: e });
   };
 
   render() {
     const { quizzes, groupId, group } = this.props;
-    console.log("groupquizreportcomponent", this.props);
-    console.log('groupState', this.state);
     let joinees = [];
 
     group &&

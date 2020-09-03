@@ -29,7 +29,6 @@ class GroupInfoView extends React.Component {
   }
 
   handleClick = (e) => {
-    console.log(e);
     this.setState({ current: e.key });
   };
 

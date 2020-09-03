@@ -28,7 +28,6 @@ const subscribeToQuizPage = (subscribeToMore, quizId, history, navigation) =>
         }
       }
     ) => {
-      console.log('subscriptionOfQuiz', mutation, node);
       if (mutation === 'UPDATED') {
         return {quizWithAnswers:node}
       }
@@ -56,7 +55,6 @@ const Quiz = (props) => {
 
   const onSubmit =  async (values) => {
     const { t, addAttempt, quiz, quizLoading, history } = props; 
-    console.log('onSubmit', values);
     try {
       await addAttempt(values);
       message.destroy();
@@ -69,7 +67,6 @@ const Quiz = (props) => {
     }
   };
   
-  console.log('quiz result', props);
   return (
     
     <QuizView {...props} onSubmit={onSubmit} />

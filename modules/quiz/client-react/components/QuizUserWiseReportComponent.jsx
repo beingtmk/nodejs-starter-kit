@@ -21,7 +21,6 @@ import IndividualQuizReport from "./IndividualQuizReport";
 import { getResult } from "../helpers";
 
 const GraphChartComponent = (props) => {
-  console.log("chart component", props);
 
   const { graphQuestion, attempts } = props;
 
@@ -31,7 +30,6 @@ const GraphChartComponent = (props) => {
       attempts.find(
         (att) => att.answers && att.answers.find((an) => an === answer)
       );
-    console.log("getUserName", userAttempt);
     return userAttempt && userAttempt.user && userAttempt.user.username;
   };
 
@@ -70,7 +68,6 @@ const GraphChartComponent = (props) => {
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
-      console.log("customTooltip", payload[0]);
       const totalAnswersCount = graphQuestion && graphQuestion.answers.length;
       const amount = payload && payload[0].payload && payload[0].payload.amt;
       return (
@@ -115,7 +112,6 @@ const GraphChartComponent = (props) => {
 export const QuizUserWiseReportComponent = (props) => {
   const [graphQuestion, seTGraphQuestion] = React.useState(null);
 
-  console.log("quizuserwisereportcomponent", props);
   const resultQuiz = props.quiz;
   var questionsData = [];
   resultQuiz &&
@@ -202,7 +198,6 @@ export const QuizUserWiseReportComponent = (props) => {
         ];
       });
     currentQ.answers = answersArray;
-    console.log("currentQ", currentQ);
     seTGraphQuestion(currentQ);
   };
 
