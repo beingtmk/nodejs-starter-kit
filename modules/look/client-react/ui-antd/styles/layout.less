@@ -32,6 +32,10 @@
   background: white;
   min-height: (100vh-@navbar-height-large - 24px);
 }
+
+.group-layout-content-wrapper{
+  margin-left: 200px;
+}
 .group-layout-sider{
   background:@secondary-color !important;
   overflow: auto;
@@ -52,6 +56,15 @@
   .form-layout-outer {
     padding-left: 5px;
     padding-right: 5px;
+  }
+  .group-layout-sider{
+    display: none;
+  }
+  .group-layout-content-wrapper{
+    margin-left: 0;
+  }
+  .group-layout-content{
+    margin: 10px;
   }
 }
 

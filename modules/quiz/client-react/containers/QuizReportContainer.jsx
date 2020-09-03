@@ -19,7 +19,6 @@ class QuizReport extends React.Component {
 
 
   render() {
-    console.log('quizreportrender', this.props);
     return (
       <div>
           {this.props.quizzLoading ? <Loader /> :(this.props.quiz ? (<ResultComponent {...this.props} />): 'No result queried')}

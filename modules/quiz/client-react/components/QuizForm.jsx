@@ -47,7 +47,6 @@ const QuizForm = ({
       </Button>
     );
   };
-  console.log("form values", values);
   return (
     <>
       <Form name="quizAdd" onSubmit={handleSubmit}>
@@ -89,6 +88,7 @@ const QuizFormWithFormik = withFormik({
         let ques = questions.filter(
           (quest) =>
             quest.choiceType === QuestionTypes.TEXTAREA ||
+            quest.choiceType === QuestionTypes.NUMBER ||
             quest.choiceType === QuestionTypes.TEXTBOX ||
             quest.choiceType === QuestionTypes.RADIO ||
             quest.choiceType === QuestionTypes.SELECT ||
@@ -130,7 +130,10 @@ const QuizFormWithFormik = withFormik({
                   id: ans.id,
                   questionId: ans.questionId,
                   choiceId: ans.choiceId,
-                  content: ans.content,
+                  content:
+                    ques.choiceType === QuestionTypes.NUMBER
+                      ? `${ans.content}`
+                      : ans.content,
                 });
               });
           });

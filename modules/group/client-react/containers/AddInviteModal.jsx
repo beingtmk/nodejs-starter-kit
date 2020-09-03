@@ -17,7 +17,6 @@ class AddInviteModal extends React.Component {
 
   handleSubmit = (e) => {
     const { addGroupMemberInvite, groupId } = this.props;
-    console.log("handleSubmit", e);
     addGroupMemberInvite({
       groupId,
       userEmail: e.userEmail,
@@ -30,21 +29,18 @@ class AddInviteModal extends React.Component {
   };
 
   handleOk = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   handleCancel = e => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   render() {
-    console.log("addInviteModalprops", this.props);
     return (
       <div>
         <Button

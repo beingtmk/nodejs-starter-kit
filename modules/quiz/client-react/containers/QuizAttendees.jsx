@@ -13,7 +13,6 @@ const Quiz = (props) => {
   if (props.currentUser && props.currentUser.role !== "admin") {
     props.history.push("/profile");
   }
-  console.log("attendees", props);
   return <QuizAttendeesView {...props} />;
 };
 

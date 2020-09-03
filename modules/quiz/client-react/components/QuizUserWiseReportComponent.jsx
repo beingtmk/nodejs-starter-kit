@@ -16,39 +16,68 @@ import { Table } from "@gqlapp/look-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import QuizUserWiseReport from "../containers/QuizUserWiseReport";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
+import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 import IndividualQuizReport from "./IndividualQuizReport";
 import { getResult } from "../helpers";
 
 const GraphChartComponent = (props) => {
-  console.log("chart component", props);
 
-  const { graphQuestion } = props;
+  const { graphQuestion, attempts } = props;
+
+  const getUserName = (answer) => {
+    const userAttempt =
+      attempts &&
+      attempts.find(
+        (att) => att.answers && att.answers.find((an) => an === answer)
+      );
+    return userAttempt && userAttempt.user && userAttempt.user.username;
+  };
+
   const getCount = (ans, currentChoice) => {
     var choiceAnswers = ans.filter((an) => an.choiceId === currentChoice.id);
     return choiceAnswers && choiceAnswers.length;
   };
 
   var graphData = [];
-  graphQuestion &&
-    graphQuestion.choices &&
-    graphQuestion.choices.map((choi) => {
+  if (graphQuestion && graphQuestion.choiceType === QuestionTypes.COUNTRIES) {
+    countries.map((cou) => {
       graphData.push({
-        name: choi.description,
-        amt: getCount(graphQuestion.answers, choi),
+        name: cou,
+        amt:
+          graphQuestion.answers &&
+          graphQuestion.answers.filter((ann) => ann.content === cou).length,
       });
     });
+  } else if (
+    graphQuestion &&
+    graphQuestion.choiceType === QuestionTypes.NUMBER
+  ) {
+    graphQuestion.answers &&
+      graphQuestion.answers.map((annn) => {
+        graphData.push({ name: getUserName(annn), amt: annn.content });
+      });
+  } else if (graphQuestion) {
+    graphQuestion.choices &&
+      graphQuestion.choices.map((choi) => {
+        graphData.push({
+          name: choi.description,
+          amt: getCount(graphQuestion.answers, choi),
+        });
+      });
+  }
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
-      console.log("customTooltip", payload[0]);
       const totalAnswersCount = graphQuestion && graphQuestion.answers.length;
       const amount = payload && payload[0].payload && payload[0].payload.amt;
       return (
         <div style={{ background: "white", padding: "24px" }}>
           <p className="label">{`${label} : ${amount}`}</p>
-          <p className="desc">
-            {((amount * 100) / totalAnswersCount).toFixed(2)}%
-          </p>
+          {graphQuestion.choiceType !== QuestionTypes.NUMBER && (
+            <p className="desc">
+              {`${((amount * 100) / totalAnswersCount).toFixed(2)} %`}
+            </p>
+          )}
         </div>
       );
     }
@@ -83,7 +112,6 @@ const GraphChartComponent = (props) => {
 export const QuizUserWiseReportComponent = (props) => {
   const [graphQuestion, seTGraphQuestion] = React.useState(null);
 
-  console.log("quizuserwisereportcomponent", props);
   const resultQuiz = props.quiz;
   var questionsData = [];
   resultQuiz &&
@@ -100,7 +128,7 @@ export const QuizUserWiseReportComponent = (props) => {
       key: "user",
       fixed: "left",
       width: 200,
-      render: (text, record) => <p> {record.id} </p>,
+      render: (text, record) => <p> {record.user && record.user.username} </p>,
     },
   ];
 
@@ -170,7 +198,6 @@ export const QuizUserWiseReportComponent = (props) => {
         ];
       });
     currentQ.answers = answersArray;
-    console.log("currentQ", currentQ);
     seTGraphQuestion(currentQ);
   };
 
@@ -180,13 +207,17 @@ export const QuizUserWiseReportComponent = (props) => {
         (graphQuestion.choiceType === QuestionTypes.RADIO ||
           graphQuestion.choiceType === QuestionTypes.SELECT ||
           graphQuestion.choiceType === QuestionTypes.MSELECT ||
-          graphQuestion.choiceType === QuestionTypes.CHECKBOX) && (
+          graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
+          graphQuestion.choiceType === QuestionTypes.NUMBER ||
+          graphQuestion.choiceType === QuestionTypes.COUNTRIES) && (
           <div align="center">
-            <GraphChartComponent graphQuestion={graphQuestion} />
+            <GraphChartComponent
+              graphQuestion={graphQuestion}
+              attempts={resultQuiz && resultQuiz.attempts}
+            />
           </div>
         )}
 
-        
       <Table
         columns={columns}
         dataSource={resultQuiz && resultQuiz.attempts}

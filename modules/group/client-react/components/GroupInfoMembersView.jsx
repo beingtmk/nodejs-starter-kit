@@ -36,7 +36,6 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
   }
   const handleMemberTypeChange = async (e, userEmail) => {
     const { id } = group;
-    console.log(e);
     await changeGroupMemberType({ groupId: id, userEmail, type: e });
   };
 
@@ -47,7 +46,6 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
     if (item.member) joinees.push(item);
     else invites.push(item);
   });
-  console.log("groupComponent", group);
   return (
     <GroupLayout id={gid} path={match && match.path}>
       {(<Tabs
@@ -68,7 +66,7 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
         <TabPane
           tab={
             <span>
-              <Title level={4}>
+              <Title className='group-members-tabs-heading' level={4}>
                 <Icon type="idcard" />
                 Registered Users
               </Title>
@@ -82,6 +80,7 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
                 <Col xs={24} sm={12} md={12} lg={8}>
                   <Card
                     hoverable
+                    style={{ marginBottom:'10px' }}
                     cover={
                       <img
                         style={{ height: "200px" }}
@@ -144,7 +143,7 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
         <TabPane
           tab={
             <span>
-              <Title level={4}>
+              <Title className='group-members-tabs-heading' level={4}>
                 <Icon type="arrow-right" /> Invitees
               </Title>
             </span>

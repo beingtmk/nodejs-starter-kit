@@ -199,6 +199,17 @@ export default class RenderQuestionsField extends React.Component {
                         height: "30px",
                         lineHeight: "30px",
                       }}
+                      value={QuestionTypes.NUMBER}
+                      key={QuestionTypes.NUMBER}
+                    >
+                      {QuestionTypes.NUMBER}
+                    </Option>
+                    <Option
+                      style={{
+                        display: "block",
+                        height: "30px",
+                        lineHeight: "30px",
+                      }}
                       value={QuestionTypes.TEXTBOX}
                       key={QuestionTypes.TEXTBOX}
                     >
@@ -249,17 +260,7 @@ export default class RenderQuestionsField extends React.Component {
                       {QuestionTypes.CHECKBOX}
                     </Option>
 
-                    <Option
-                      style={{
-                        display: "block",
-                        height: "30px",
-                        lineHeight: "30px",
-                      }}
-                      value={QuestionTypes.MCHECKBOX}
-                      key={QuestionTypes.MCHECKBOX}
-                    >
-                      {QuestionTypes.MCHECKBOX}
-                    </Option>
+
                   </Field>
                 </Col>
                 <Col span={24}>

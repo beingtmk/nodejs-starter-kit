@@ -22,6 +22,8 @@ class NavBar extends React.Component {
     super(props);
     this.state = {
       current: "/",
+      visible: false,
+      visibleLeftSider: false,
     };
   }
 
@@ -43,9 +45,22 @@ class NavBar extends React.Component {
     });
   };
 
+  showDrawerLeft = () => {
+    this.setState({
+      visibleLeftSider: true,
+    });
+  };
+
+  onCloseLeft = () => {
+    this.setState({
+      visibleLeftSider: false,
+    });
+  };
+
   render() {
     const { layoutType } = this.props;
     const isMobile = this.props && this.props.isMobile;
+    const { leftSiderComponent } = this.props;
     return (
       <ScrollParallax
         location="page-layout"
@@ -56,12 +71,13 @@ class NavBar extends React.Component {
         }}
       >
         <div className="navbar-top-layer-wrapper">
-          <Row className='navbar-top-layer'>
-            <Col span={12}>
-            </Col>
-            <Col span={12} align='right'>
-              <span style={{paddingRight:'20px'}}><Icon type="phone" /> {"+91 999 999 9999"}</span>
-            <Icon type="mail" /> {'aaaaa@aaa.com'}
+          <Row className="navbar-top-layer">
+            <Col md={12} xs={0}></Col>
+            <Col md={12} xs={24} align="right">
+              <span style={{ paddingRight: "20px" }}>
+                <Icon type="phone" /> {"+91 999 999 9999"}
+              </span>
+              <Icon type="mail" /> {"aaaaa@aaa.com"}
             </Col>
           </Row>
         </div>
@@ -69,18 +85,38 @@ class NavBar extends React.Component {
           <Row className={`navbar-wrapper-${layoutType}`}>
             <Col span={24}>
               <Row>
-                <Col align="left" xs={12} md={12} lg={7}>
-                  <NavLink to="/" className="nav-link">
-                    <div className="navbar-logo-wrapper">
-                      <img
-                        src={
-                          "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
-                        }
-                        className="navbar-logo-img"
-                        alt="Mountain"
-                      />
-                    </div>
-                  </NavLink>
+                <Col align="left" xs={18} md={12} lg={7}>
+                  {leftSiderComponent && (
+                    <Col md={0} xs={4}>
+                      <div
+                        className="navbar-drawer-logo"
+                        onClick={this.showDrawerLeft}
+                      >
+                        <Icon
+                          type="menu-unfold"
+                          style={{
+                            color: "inherit",
+                            position: "absolute",
+                            top: "13px",
+                            // right: "0px",
+                          }}
+                        />
+                      </div>
+                    </Col>
+                  )}
+                  <Col md={24} xs={4}>
+                    <NavLink to="/" className="nav-link">
+                      <div className="navbar-logo-wrapper">
+                        <img
+                          src={
+                            "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
+                          }
+                          className="navbar-logo-img"
+                          alt="Mountain"
+                        />
+                      </div>
+                    </NavLink>
+                  </Col>
                 </Col>
                 <Col xs={0} md={0} lg={2}>
                   <Menu
@@ -130,7 +166,7 @@ class NavBar extends React.Component {
                     </LoggedIn>
                   </Menu>
                 </Col>
-                <Col xs={12} md={12} lg={0}>
+                <Col xs={6} md={12} lg={0}>
                   <div onClick={this.showDrawer} className="navbar-drawer-logo">
                     <Icon
                       type="menu"
@@ -146,6 +182,14 @@ class NavBar extends React.Component {
               </Row>
             </Col>
 
+            <Drawer
+              placement="left"
+              className="navbar-left-sider"
+              onClose={this.onCloseLeft}
+              visible={this.state.visibleLeftSider}
+            >
+              {leftSiderComponent}
+            </Drawer>
             <Drawer
               placement="right"
               onClose={this.onClose}

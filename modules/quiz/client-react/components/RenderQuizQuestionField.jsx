@@ -18,8 +18,6 @@ import RenderCheckBoxQuiz from "@gqlapp/look-client-react/ui-antd/components/Ren
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { countries } from "@gqlapp/quiz-common/constants/CountriesList";
 
-
-
 //ToDo pop answers if their dependence is unchecked.
 const FormItem = Form.Item;
 export default class RenderQuestionsField extends React.Component {
@@ -173,12 +171,17 @@ export default class RenderQuestionsField extends React.Component {
                       />
                     </>
                   )}
-                  {v.choiceType === QuestionTypes.TEXTBOX && (
+                  {(v.choiceType === QuestionTypes.TEXTBOX ||
+                    v.choiceType === QuestionTypes.NUMBER) && (
                     <Field
                       name={`sections[${sectionIndex}].questions[${indexv}].answers[0].content`}
                       component={RenderField}
                       placeholder={"none"}
-                      type="text"
+                      type={
+                        v.choiceType === QuestionTypes.NUMBER
+                          ? "number"
+                          : "text"
+                      }
                       label={""}
                       // label={`${k.label || k.key} #${indexv + 1}`}
                       value={v.answers && v.answers[0].content}

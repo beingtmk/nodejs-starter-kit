@@ -1,6 +1,7 @@
 module.exports = Object.freeze({
   RADIO: "RADIO",
   SELECT: "SELECT",
+  NUMBER: "NUMBER",
   MSELECT: "MSELECT",
   TEXTBOX: "TEXTBOX",
   TEXTAREA: "TEXTAREA",

@@ -1,105 +1,109 @@
-@navbar-height:55px;
-@navbar-height-large:95px;
+@navbar-height: 55px;
+@navbar-height-large: 95px;
 
-.navbar-parallex{
+.navbar-parallex {
   z-index: 100;
-  position:fixed;
-  width:100vw;
+  position: fixed;
+  width: 100vw;
   height: @navbar-height-large !important;
   overflow: hidden;
 }
 
-.navbar-top-layer-wrapper{
+.navbar-top-layer-wrapper {
   height: 40px;
   background: @primary-color;
   position: relative;
 }
 
-.navbar-top-layer{
+.navbar-top-layer {
   color: white;
   max-width: 1200px;
   margin: auto;
   padding: 10px 24px;
 }
 
-.navbar-header{
+.navbar-header {
   position: fixed;
   z-index: 10;
   height: @navbar-height;
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
   padding: 0 !important;
-  width:100%;
+  width: 100%;
   background: white;
   overflow: hidden;
 }
 
-.navbar-logo-wrapper{
+.navbar-logo-wrapper {
   height: @navbar-height;
+  width: fit-content;
+  // display: inline;
 }
 
-.navbar-logo-img{
-  padding:3px 0 ;
+.navbar-logo-img {
+  padding: 3px 0;
   height: 90%;
   margin-top: -9px;
 }
 
-
-
-
-.navbar-wrapper{
-  &-narrow{
+.navbar-wrapper {
+  &-narrow {
     padding: 0 24px;
     position: relative;
     margin: auto;
     max-width: 1200px;
   }
-  &-wide{
-    width:100%;
+  &-wide {
+    width: 100%;
     padding: 0 24px;
   }
 }
 
+.navbar-left-sider {
+  .ant-drawer-content-wrapper {
+    .ant-drawer-content {
+      .ant-drawer-wrapper-body {
+        background: @secondary-color;
+      }
+    }
+  }
+}
 
 @media only screen and (max-width: 769px) {
   .ant-layout-header {
     height: @navbar-height !important;
     z-index: 100;
   }
-  .navbar-logo-lg{
-    height:@navbar-height !important;
+  .navbar-logo-lg {
+    height: @navbar-height !important;
     padding: 0 !important;
-    margin-top:-0px !important;
+    margin-top: -0px !important;
   }
-  .navbar-wrapper{
+  .navbar-wrapper {
     padding: 0 5px;
   }
-  .content-layout{
-    margin:0;
-    padding: 5px ;
-    margin-top: @navbar-height; 
-
+  .content-layout {
+    margin: 0;
+    padding: 5px;
+    margin-top: @navbar-height;
   }
-  .navbar-drawer-logo{
+  .navbar-drawer-logo {
     font-size: 28px;
-    height:@navbar-height;
+    height: @navbar-height;
     color: @primary-color;
   }
-
-
-
 }
 
-.navbar-menu{
+.navbar-menu {
   line-height: 54px;
 }
 
-.navbar-logo-lg{
+.navbar-logo-lg {
   // border: 2px solid @primary-color;
-  background:transparent;
+  background: transparent;
   // border-radius: 10px;
   // margin-top: -39px;
   height: @navbar-height;
   overflow: hidden;
   // padding-top:2px;
-  width: fit-content
+  width: fit-content;
 }

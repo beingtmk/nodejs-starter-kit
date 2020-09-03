@@ -21,7 +21,6 @@ const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
         },
       }
     ) => {
-      console.log("subscriptionOfQuiz", mutation, node);
       if (mutation === "UPDATED") {
         return { group: node };
       }
@@ -31,7 +30,6 @@ const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
 
 const GroupInfoQuizReport = (props) => {
   useEffect(() => {
-    console.log("useEffectGroup", props);
     if (props.group) {
       const {
         subscribeToMore,
@@ -48,7 +46,6 @@ const GroupInfoQuizReport = (props) => {
       return () => subscribe();
     }
   });
-  console.log('groupInfoQUizReportContainer', props);
   return <GroupInfoQuizReportView {...props} />;
 };
 
@@ -65,8 +62,6 @@ export default compose(
       } else if (props.navigation) {
         id = props.navigation.state.params.id;
       }
-      console.log("groupquery", props);
-
       return {
         variables: { id: Number(id) },
       };

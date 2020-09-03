@@ -24,7 +24,6 @@ const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
         }
       }
     ) => {
-      console.log('subscriptionOfQuiz', mutation, node);
       if (mutation === 'UPDATED') {
         return {group:node}
       }
@@ -35,7 +34,6 @@ const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
 
 const Group = (props)=>{
   useEffect(() => {
-    console.log('useEffectGroup', props);
     if (props.group) {
       const {
         subscribeToMore,
@@ -66,8 +64,6 @@ export default compose(
       } else if (props.navigation) {
         id = props.navigation.state.params.id;
       }
-      console.log('groupquery', props);
-
       return {
         variables: { id: Number(id) }
       };

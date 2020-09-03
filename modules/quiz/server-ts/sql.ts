@@ -163,13 +163,11 @@ export default class Quiz extends Model {
         .select("user.id as userId")
         .where("group_member.group_id", groupId)
     );
-    console.log("userByGroupSQL", usersByGroup);
     var userIdArray = [];
     usersByGroup &&
       usersByGroup.map((uu) => {
         uu.userId && userIdArray.push(uu.userId);
       });
-    console.log("userIdArray", userIdArray);
 
 
     const attempts = camelizeKeys(await Attempt.query().withGraphFetched('[answers, user]').where('quiz_id', id).whereIn('user_id', userIdArray));
@@ -204,7 +202,6 @@ export default class Quiz extends Model {
         .select("user.id as userId")
         .where("group_member.group_id", groupId)
     );
-    console.log("userByGroupSQL", usersByGroup);
     if (usersByGroup && usersByGroup.length === 0) {
       return res;
     }
@@ -213,7 +210,6 @@ export default class Quiz extends Model {
       usersByGroup.map((uu) => {
         uu.userId && userIdArray.push(uu.userId);
       });
-    console.log("userIdArray", userIdArray);
 
     var questionsIdArray = [];
     res.sections &&
@@ -365,7 +361,6 @@ export default class Quiz extends Model {
     const res = camelizeKeys(
       await Attempt.query().upsertGraph(decamelizeKeys(input), { relate: true })
     );
-    console.log("editAttemptRes", res);
     return res;
   }
 
@@ -373,7 +368,6 @@ export default class Quiz extends Model {
     const res = camelizeKeys(
       await Attempt.query().insertGraph(decamelizeKeys(input))
     );
-    console.log("addAttemptRes", res);
 
     return res;
   }

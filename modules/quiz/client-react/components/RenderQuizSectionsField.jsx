@@ -125,7 +125,7 @@ export default class RenderSectionsField extends React.Component {
       <>
         <Card style={{ marginBottom: "30px" }}>
           <h3>{this.props.quizTitle}</h3>
-          <Affix offsetTop={24}>
+          <Affix offsetTop={60}>
             <Progress
               percent={Math.round((currentSection / sectionLength) * 100)}
               strokeColor={{

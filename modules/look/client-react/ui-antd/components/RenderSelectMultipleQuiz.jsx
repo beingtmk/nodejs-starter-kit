@@ -67,7 +67,6 @@ const RenderSelectMultipleQuiz = props => {
   data && data.answers && data.answers.map((item, key) => {
     defaultValues.push(item.choiceId)
   })
-  console.log('multiple select', data && data.answers)
   return (
     <FormItem label={label} validateStatus={validateStatus}
     // help={error}
