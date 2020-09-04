@@ -21,7 +21,6 @@ import IndividualQuizReport from "./IndividualQuizReport";
 import { getResult } from "../helpers";
 
 const GraphChartComponent = (props) => {
-
   const { graphQuestion, attempts } = props;
 
   const getUserName = (answer) => {
@@ -87,13 +86,20 @@ const GraphChartComponent = (props) => {
 
   class CustomizedAxisTick extends React.PureComponent {
     render() {
-      const {
-        x, y, stroke, payload,
-      } = this.props;
-  
+      const { x, y, stroke, payload } = this.props;
+
       return (
         <g transform={`translate(${x},${y})`}>
-          <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-90)">{payload.value}</text>
+          <text
+            x={0}
+            y={0}
+            dy={16}
+            textAnchor="end"
+            fill="#666"
+            transform="rotate(-90)"
+          >
+            {payload.value}
+          </text>
         </g>
       );
     }
@@ -101,8 +107,8 @@ const GraphChartComponent = (props) => {
 
   return (
     <BarChart
-      className='quiz-user-wise-report-chart'
-      width={1000}
+      className="quiz-user-wise-report-chart"
+      width={graphData.length * 100}
       height={500}
       data={graphData}
       margin={{
@@ -113,7 +119,13 @@ const GraphChartComponent = (props) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" interval={0} height={200} width={300} tick={<CustomizedAxisTick />}/>
+      <XAxis
+        dataKey="name"
+        interval={0}
+        height={200}
+        width={100}
+        tick={<CustomizedAxisTick />}
+      />
       <YAxis />
       <Tooltip content={<CustomTooltip />} />
       <Legend />
@@ -142,7 +154,7 @@ export const QuizUserWiseReportComponent = (props) => {
       dataIndex: "user",
       key: "user",
       fixed: "left",
-      width: 200,
+      width: 150,
       render: (text, record) => <p> {record.user && record.user.username} </p>,
     },
   ];
@@ -217,7 +229,7 @@ export const QuizUserWiseReportComponent = (props) => {
   };
 
   return (
-    <div style={{ width: "100%", overflowX: "auto" }}>
+    <div >
       {graphQuestion &&
         (graphQuestion.choiceType === QuestionTypes.RADIO ||
           graphQuestion.choiceType === QuestionTypes.SELECT ||
@@ -225,19 +237,19 @@ export const QuizUserWiseReportComponent = (props) => {
           graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
           graphQuestion.choiceType === QuestionTypes.NUMBER ||
           graphQuestion.choiceType === QuestionTypes.COUNTRIES) && (
-          <div align="center">
+          <div style={{ width: "100%", overflowX: "auto" }}>
             <GraphChartComponent
               graphQuestion={graphQuestion}
               attempts={resultQuiz && resultQuiz.attempts}
             />
           </div>
         )}
-
+      <div style={{ width: "100%", overflowX: "auto" }}>
       <Table
         columns={columns}
         dataSource={resultQuiz && resultQuiz.attempts}
         scroll={{ x: 100 * (columns && columns.length), y: 700 }}
-      />
+      /></div>
     </div>
   );
 };
