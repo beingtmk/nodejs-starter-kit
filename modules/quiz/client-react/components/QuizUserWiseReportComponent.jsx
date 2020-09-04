@@ -85,10 +85,25 @@ const GraphChartComponent = (props) => {
     return null;
   };
 
+  class CustomizedAxisTick extends React.PureComponent {
+    render() {
+      const {
+        x, y, stroke, payload,
+      } = this.props;
+  
+      return (
+        <g transform={`translate(${x},${y})`}>
+          <text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-90)">{payload.value}</text>
+        </g>
+      );
+    }
+  }
+
   return (
     <BarChart
+      className='quiz-user-wise-report-chart'
       width={1000}
-      height={300}
+      height={500}
       data={graphData}
       margin={{
         top: 5,
@@ -98,7 +113,7 @@ const GraphChartComponent = (props) => {
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
+      <XAxis dataKey="name" interval={0} height={200} width={300} tick={<CustomizedAxisTick />}/>
       <YAxis />
       <Tooltip content={<CustomTooltip />} />
       <Legend />
