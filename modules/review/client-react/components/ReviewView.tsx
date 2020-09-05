@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-// import { Link } from 'react-router-dom';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
-// import styled from 'styled-components';
-import { Icon, Button, Row, Col, Checkbox, Spin } from 'antd';
+import { Row, Col, Checkbox, Spin } from 'antd';
 
+import { Reviews } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
-// import { PgTitle } from './StyledComponents';
-
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
 import AvgRatingComponent from './AvgRatingComponent';
 
-// const BtnDiv = styled.div`
-//   position: fixed;
-//   bottom: 0;
-//   right: 0;
-
-//   width: 100%;
-//   height: 120px;
-
-//   background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, #ffffff 77.6%);
-//   z-index: 1;
-// `;
-
 interface ReviewViewProps {
   t: TranslateFunction;
+  reviews: Reviews;
+  loading: boolean;
+  modalName: string;
+  modalId: number;
+  ratingAverage: {
+    id: number;
+    one: string;
+    two: string;
+    three: string;
+    four: string;
+    five: string;
+  };
+  addReview: () => null;
+  deleteReview: (id: number) => null;
   handleHelpful: (id: number, value: number) => null;
 }
 
@@ -39,7 +38,7 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, loading, ratingAverage, handleHelpful, addReview, t, modalName, modalId } = props;
+  const { reviews, loading, ratingAverage, handleHelpful, addReview, deleteReview, t, modalName, modalId } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
@@ -47,7 +46,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
       review={review}
       showPhotos={photo}
       handleHelpful={handleHelpful}
-      history={history}
+      deleteReview={deleteReview}
     />
   );
   // const renderBtn = setVisible => (
@@ -73,6 +72,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
   );
   return (
     <>
+      {renderMetaData(t)}
       <Row>
         <Col span={8}>
           <div align="center">
@@ -109,11 +109,6 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
         </Col>
         <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading ? <Spin /> : null}</Col>
       </Row>
-      {/* <BtnDiv>
-        <Col span={12} style={{ position: 'absolute', bottom: '10px', right: '17px' }}>
-          <WriteReviewComponent onSubmit={onSubmit} renderBtn={renderBtn} type="ADD" />
-        </Col>
-      </BtnDiv> */}
     </>
   );
 };

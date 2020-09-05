@@ -17,9 +17,9 @@ const renderMetaData = t => (
   />
 );
 const MyReviewView = props => {
-  const { t, reviews, loading, history, setModalName } = props;
+  const { t, reviews, loading, setModalName } = props;
 
-  const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} history={history} />;
+  const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} />;
   const RenderReviews = () => (
     <div>
       <SuggestedListComponent

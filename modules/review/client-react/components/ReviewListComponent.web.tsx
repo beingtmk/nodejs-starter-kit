@@ -7,7 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Table, Button, Pagination } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
-import { Reviews, Review, DeleteReview } from '../containers/Reviews.web';
+import { Reviews, Review } from '../containers/Reviews.web';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -38,7 +38,7 @@ export interface ReviewListComponentProps {
     order: string;
   };
   onReviewsOrderBy: ({ column, order }: { column: string; order: string }) => null;
-  deleteReview: (input: DeleteReview) => boolean;
+  deleteReview: (id: number) => boolean;
   t: TranslateFunction;
   history: object;
 }
@@ -125,7 +125,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
           </Link>
           <Popconfirm
             title="Are you sure delete this review?"
-            onConfirm={() => deleteReview({ modalId: null, reviewId: record.id, modal: '' })}
+            onConfirm={() => deleteReview(record.id)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"

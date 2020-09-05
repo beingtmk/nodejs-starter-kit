@@ -59,12 +59,6 @@ const Review: React.FC<ReviewProps> = props => {
   return <ReviewsView {...props} />;
 };
 
-export interface DeleteReview {
-  modalId: number;
-  reviewId: number;
-  modal: string;
-}
-
 export default compose(
   withReviewsStateQuery,
   withReviewsOrderByUpdating,

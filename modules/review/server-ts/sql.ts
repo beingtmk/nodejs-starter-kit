@@ -25,11 +25,7 @@ export interface ModalReview {
   moduleId: number;
   review: Reviews & Identifier;
 }
-export interface DeleteModalReview {
-  modalId: number;
-  reviewId: number;
-  modalName: string;
-}
+
 const eager = '[user.[profile]]';
 
 export default class Review extends Model {
@@ -161,13 +157,15 @@ export default class Review extends Model {
     return res.id;
   }
 
-  public async deleteReview({ modalId, reviewId, modalName }: DeleteModalReview) {
-    await knex(modalName)
-      .where('id', '=', modalId)
-      .update(decamelizeKeys({ isActive: false }));
-    return Review.query()
-      .where('id', '=', reviewId)
-      .update(decamelizeKeys({ isActive: false }));
+  public async deleteReview(id: number) {
+    try {
+      await Review.query().upsertGraph(decamelizeKeys({ id, isActive: false }));
+      const res = camelizeKeys(await ModalReview.query().where('review_id', '=', id))[0];
+      await ModalReview.query().upsertGraph(decamelizeKeys({ id: res.id, isActive: false }));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   // Rating

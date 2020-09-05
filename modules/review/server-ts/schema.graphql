@@ -92,7 +92,7 @@ extend type Mutation {
   # Edit a review
   editReview(input: EditReviewInput!): Boolean
   # Delete a review
-  deleteReview(input: DeleteModalReviewInput): Boolean
+  deleteReview(id: Int): Boolean
   refresh: Boolean
 }
 input AddModalReviewInput {
@@ -123,11 +123,6 @@ input EditReviewInput {
   isActive: Boolean
   helpful: Int
   # reviewImages: [ReviewImagesInput]
-}
-input DeleteModalReviewInput {
-  modalId: Int
-  reviewId: Int
-  modalName: String
 }
 
 extend type Subscription {

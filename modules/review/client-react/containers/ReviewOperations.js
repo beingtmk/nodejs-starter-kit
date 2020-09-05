@@ -118,18 +118,18 @@ export const withReviews = Component =>
 export const withReviewsDeleting = Component =>
   graphql(DELETE_REVIEW, {
     props: ({ mutate }) => ({
-      deleteReview: input => {
+      deleteReview: id => {
         mutate({
-          variables: { input },
+          variables: { id },
           optimisticResponse: {
             __typename: 'Mutation',
             deleteReview: {
-              input,
+              id,
               __typename: 'Review'
             }
           }
         });
-        message.warning('Review deleted.');
+        message.error('Review deleted.');
       }
     })
   })(Component);

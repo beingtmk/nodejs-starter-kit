@@ -27,7 +27,7 @@ const DropDownPosition = styled.div`
 `;
 
 const ReviewsItemComponent = props => {
-  const { review, showPhotos, onSubmit, handleHelpful, history } = props;
+  const { review, showPhotos, handleHelpful, deleteReview } = props;
   const [disabled, setDisabled] = React.useState(false);
 
   const foundHelpful = () => {
@@ -44,7 +44,7 @@ const ReviewsItemComponent = props => {
           </Button>
         </Menu.Item>
         <Menu.Item key="1">
-          <Button style={{ color: 'black' }} type="link" disabled onClick={() => onSubmit(review.id, 'DELETE')}>
+          <Button style={{ color: 'black' }} type="link" onClick={() => deleteReview(review.id)}>
             Delete
           </Button>
         </Menu.Item>
@@ -118,7 +118,9 @@ const ReviewsItemComponent = props => {
 
 ReviewsItemComponent.propTypes = {
   review: PropTypes.object,
-  showPhotos: PropTypes.bool
+  showPhotos: PropTypes.bool,
+  handleHelpful: PropTypes.func,
+  deleteReview: PropTypes.func
 };
 
 export default ReviewsItemComponent;

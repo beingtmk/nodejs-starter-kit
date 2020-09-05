@@ -1,7 +1,7 @@
 import { withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
 
-import { Reviews, Identifier, ModalReview, DeleteModalReview } from './sql';
+import { Reviews, Identifier, ModalReview } from './sql';
 
 const REVIEW_SUBSCRIPTION = 'review_subscription';
 
@@ -14,9 +14,6 @@ interface ModalEditReviewInput {
 }
 interface ModalReviewInput {
   input: ModalReview;
-}
-interface DeleteModalReviewInput {
-  input: DeleteModalReview;
 }
 
 export default (pubsub: any) => ({
@@ -86,9 +83,9 @@ export default (pubsub: any) => ({
         return false;
       }
     }),
-    deleteReview: withAuth(async (obj: any, { input }: DeleteModalReviewInput, context: any) => {
-      const review = await context.Review.review(input.reviewId);
-      const isDeleted = await context.Review.deleteReview(input);
+    deleteReview: withAuth(async (obj: any, { id }: { id: number }, context: any) => {
+      const review = await context.Review.review(id);
+      const isDeleted = await context.Review.deleteReview(id);
       if (isDeleted) {
         // console.log('called isDelete', review);
         pubsub.publish(REVIEW_SUBSCRIPTION, {

@@ -26,10 +26,6 @@ export interface ReviewViewProps {
 
 const ReviewsView: React.FC<ReviewViewProps> = props => {
   const { t } = props;
-  const filter = {
-    modalId: 1,
-    modalName: 'event'
-  };
 
   return (
     <PageLayout>
@@ -51,7 +47,16 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       <ReviewFilterComponent {...props} />
       <hr />
       <ReviewListComponent {...props} />
-      <Review filter={filter} modalName={'event'} modalId={1} t={t} />
+      <Review
+        filter={{
+          isActive: true,
+          modalId: 1,
+          modalName: 'event'
+        }}
+        modalName={'event'}
+        modalId={1}
+        t={t}
+      />
     </PageLayout>
   );
 };
