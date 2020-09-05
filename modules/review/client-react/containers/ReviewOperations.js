@@ -136,7 +136,7 @@ export const withReviewsDeleting = Component =>
 
 export const withReviewAdding = Component =>
   graphql(ADD_REVIEW, {
-    props: ({ ownProps: { match, navigation, history }, mutate }) => ({
+    props: ({ ownProps: { history }, mutate }) => ({
       addReview: async values => {
         const input = {
           modalName: values.modalName,
@@ -167,7 +167,7 @@ export const withReviewAdding = Component =>
           message.destroy();
           message.success('Review added.');
           // console.log('addreview', values);
-          history.push(ROUTES.adminPanel);
+          history && history.push(ROUTES.adminPanel);
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

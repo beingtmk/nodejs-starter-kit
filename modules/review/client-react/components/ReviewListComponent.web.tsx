@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Popconfirm, Icon, message, Spin } from 'antd';
+import { Empty, Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Table, Button, Pagination } from '@gqlapp/look-client-react';
@@ -11,10 +11,18 @@ import { Reviews, Review, DeleteReview } from '../containers/Reviews.web';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }: { t: TranslateFunction }) => <Spin text={t('review.loadMsg')} />;
+const Loading = ({ t }: { t: TranslateFunction }) => (
+  <div align="center">
+    <br />
+    <br />
+    <Spin text={t('review.loadMsg')} />
+  </div>
+);
 
 const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
-  <div className="text-center">{t('review.noReviewsMsg')}</div>
+  <div style={{ margin: '50px' }}>
+    <Empty />
+  </div>
 );
 
 const cancel = () => {

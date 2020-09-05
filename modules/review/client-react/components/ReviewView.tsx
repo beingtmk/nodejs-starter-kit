@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-// import { PageLayout } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 // import styled from 'styled-components';
 import { Icon, Button, Row, Col, Checkbox, Spin } from 'antd';
 
-// import WriteReviewComponent from './WriteReviewComponent';
+import ReviewModal from './ReviewModal';
 // import { PgTitle } from './StyledComponents';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
 import AvgRatingComponent from './AvgRatingComponent';
-import ROUTES from '../routes';
 
 // const BtnDiv = styled.div`
 //   position: fixed;
@@ -41,7 +39,7 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, loading, ratingAverage, handleHelpful } = props;
+  const { reviews, loading, ratingAverage, handleHelpful, addReview, t, modalName, modalId } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
@@ -86,11 +84,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
         <Col span={4}>
           <br />
           <div align="center">
-            <Link to={ROUTES.add}>
-              <Button type={'primary'}>
-                <Icon type="plus-circle" /> {'Add review'}
-              </Button>
-            </Link>
+            <ReviewModal cardTitle={'Add Review'} t={t} addReview={addReview} modalName={modalName} modalId={modalId} />
             <br />
             <br />
             <Checkbox onChange={() => setPhoto(!photo)}>

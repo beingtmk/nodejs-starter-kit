@@ -51,7 +51,7 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       <ReviewFilterComponent {...props} />
       <hr />
       <ReviewListComponent {...props} />
-      <Review filter={filter} t={t} />
+      <Review filter={filter} modalName={'event'} modalId={1} t={t} />
     </PageLayout>
   );
 };

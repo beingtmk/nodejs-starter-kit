@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Spin } from 'antd';
+import { Row, Card, Spin } from 'antd';
 import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -35,7 +35,15 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
         <Spin />
       ) : (
         <Row type="flex" justify="center">
-          <ReviewFormComponent cardTitle={'Add Review'} t={t} onSubmit={addReview} showModal={true} />
+          <Card
+            title={
+              <h1>
+                <strong>{'Add Review'}</strong>
+              </h1>
+            }
+          >
+            <ReviewFormComponent t={t} onSubmit={addReview} showModal={true} />
+          </Card>
         </Row>
       )}
     </PageLayout>

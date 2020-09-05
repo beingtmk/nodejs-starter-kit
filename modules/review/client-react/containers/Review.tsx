@@ -1,10 +1,11 @@
 import React from 'react';
+import { Spin } from 'antd';
 
 import { compose } from '@gqlapp/core-common';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
 import ReviewView from '../components/ReviewView';
-import { withRating, withReviews, withReviewEditing, withReviewsDeleting } from './ReviewOperations';
+import { withRating, withReviews, withReviewAdding, withReviewEditing, withReviewsDeleting } from './ReviewOperations';
 interface ReviewProps {
   t: TranslateFunction;
 }
@@ -21,7 +22,27 @@ const Review: React.FC<ReviewProps> = props => {
   };
   console.log('props', props);
   // return <h1>hello</h1>;
-  return props.ratingAverage ? <ReviewView {...props} handleHelpful={handleHelpful} /> : null;
+  return props.reviews ? (
+    props.reviews.totalCount > 0 ? (
+      <ReviewView {...props} handleHelpful={handleHelpful} />
+    ) : null
+  ) : (
+    <div align="center">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Spin />
+    </div>
+  );
 };
 
-export default compose(withRating, withReviews, withReviewEditing, withReviewsDeleting, translate('review'))(Review);
+export default compose(
+  withRating,
+  withReviews,
+  withReviewAdding,
+  withReviewEditing,
+  withReviewsDeleting,
+  translate('review')
+)(Review);

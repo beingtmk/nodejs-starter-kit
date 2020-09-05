@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { Row, Spin } from 'antd';
+import { Row, Card, Spin } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
@@ -25,20 +26,33 @@ const EditReviewView = props => {
       <br />
       <Row type="flex" justify="center">
         {review ? (
-          <ReviewFormComponent
-            cardTitle="Edit Review"
-            t={t}
-            review={review}
-            onSubmit={onSubmit}
-            currentUser={currentUser}
-            showModal={false}
-          />
+          <Card
+            title={
+              <h1>
+                <strong>{'Edit Review'}</strong>
+              </h1>
+            }
+          >
+            <ReviewFormComponent
+              t={t}
+              review={review}
+              onSubmit={onSubmit}
+              currentUser={currentUser}
+              showModal={false}
+            />
+          </Card>
         ) : (
           <Spin />
         )}
       </Row>
     </PageLayout>
   );
+};
+EditReviewView.propTypes = {
+  review: PropTypes.object,
+  currentUser: PropTypes.object,
+  onSubmit: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default EditReviewView;
