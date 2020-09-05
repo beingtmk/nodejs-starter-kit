@@ -60,12 +60,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             name="username"
             label="username"
             userType="user"
-            defaultValue={
-              (props.review &&
-                props.review.user &&
-                `${props.review.user.profile.firstName} ${props.review.user.profile.lastName}`) ||
-              ''
-            }
+            defaultValue={(props.review && props.review.user && `${props.review.user.username}`) || ''}
             value={values.userId}
             setValue={e => setFieldValue('userId', e)}
             onSearchTextChange={onSearchTextChange}
@@ -80,7 +75,13 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           onChange={e => setFieldValue('rating', String(e))}
         />
       </FormItem>
-      <Field name="feedback" component={RenderField} placeholder="Your review" type="textarea" value={values.feedback} />
+      <Field
+        name="feedback"
+        component={RenderField}
+        placeholder="Your review"
+        type="textarea"
+        value={values.feedback}
+      />
       {/* <FieldArray
           name="reviewImages"
           label={'Add photo'}
@@ -122,7 +123,7 @@ const ReviewWithFormik = withFormik({
       modalId: (props.modalData && props.modalData.modalId) || 1,
       userId: (props.review && props.review.user && props.review.user.id) || null,
       rating: (props.review && props.review.rating) || null,
-      feedback: (props.review && props.review.feedback) || '',
+      feedback: (props.review && props.review.feedback) || ''
       // reviewImages:
       //   props.review && props.review.reviewImages && props.review.reviewImages.length !== 0
       //     ? props.review.reviewImages.map(getImg)
@@ -134,7 +135,7 @@ const ReviewWithFormik = withFormik({
     hideModal && hideModal();
   },
   validate: values => validate(values, ReviewFormSchema),
-  displayName: 'Review Form', // helps with React DevTools
+  displayName: 'Review Form' // helps with React DevTools
 });
 
 export default ReviewWithFormik(ReviewFormComponent);
