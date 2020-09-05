@@ -76,14 +76,19 @@ export default class Review extends Model {
           this.where('review.is_active', filter.isActive);
         });
       }
+      if (has(filter, 'modalName') && filter.modalName !== '') {
+        queryBuilder.where(function() {
+          this.where('modal_review.modal_name', filter.modalName);
+        });
+      }
       if (has(filter, 'modalId') && filter.modalId !== '') {
         queryBuilder.where(function() {
           this.where('modal_review.modal_id', filter.modalId);
         });
       }
-      if (has(filter, 'modalName') && filter.modalName !== '') {
+      if (has(filter, 'userId') && filter.userId !== '') {
         queryBuilder.where(function() {
-          this.where('modal_review.modal_name', filter.modalName);
+          this.where('review.user_id', filter.userId);
         });
       }
       if (has(filter, 'searchText') && filter.searchText !== '') {

@@ -6,6 +6,15 @@ import UPDATE_ORDER_BY from '../graphql/UpdateOrderBy.client.graphql';
 import USERS_QUERY from '../graphql/UsersQuery.graphql';
 import DELETE_USER from '../graphql/DeleteUser.graphql';
 import UPDATE_FILTER from '../graphql/UpdateFilter.client.graphql';
+import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
+
+export const withCurrentUser = Component =>
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { loading, currentUser };
+    }
+  })(Component);
 
 const withUsersState = Component =>
   graphql(USERS_STATE_QUERY, {

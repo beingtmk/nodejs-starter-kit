@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon, Row, Col, Spin } from 'antd';
 import Helmet from 'react-helmet';
 
 import settings from '@gqlapp/config';
+import { Form, FormItem, Select, Option } from '@gqlapp/look-client-react';
 
+import { MODAL } from '../containers/Modal';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
 
@@ -14,7 +17,7 @@ const renderMetaData = t => (
   />
 );
 const MyReviewView = props => {
-  const { t, reviews, loading, history } = props;
+  const { t, reviews, loading, history, setModalName } = props;
 
   const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} history={history} />;
   const RenderReviews = () => (
@@ -37,9 +40,34 @@ const MyReviewView = props => {
   return (
     <>
       {renderMetaData(t)}
-      <h1>
-        <Icon type="book" /> &nbsp; My Reviews
-      </h1>
+      <Row>
+        <Col span={12}>
+          <h1>
+            <Icon type="book" /> &nbsp; My Reviews
+          </h1>
+        </Col>
+        <Col span={12}>
+          <Row type="flex" justify="end">
+            <Form layout="inline">
+              <FormItem label={t('users.list.item.role.label')}>
+                <Select
+                  name="modal"
+                  defaultValue={MODAL[0].value}
+                  style={{ width: '100px' }}
+                  onChange={e => setModalName(e)}
+                >
+                  {MODAL.map((m, i) => (
+                    <Option key={i} value={m.value}>
+                      {m.label}
+                    </Option>
+                  ))}
+                </Select>
+              </FormItem>
+            </Form>
+          </Row>
+        </Col>
+      </Row>
+      <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
       <br />
       <Row>
         <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading ? <Spin /> : null}</Col>
@@ -47,5 +75,11 @@ const MyReviewView = props => {
     </>
   );
 };
-
+MyReviewView.propTypes = {
+  t: PropTypes.func,
+  setModalName: PropTypes.func,
+  reviews: PropTypes.object,
+  history: PropTypes.object,
+  loading: PropTypes.bool
+};
 export default MyReviewView;

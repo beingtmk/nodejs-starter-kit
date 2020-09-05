@@ -67,7 +67,10 @@ input FilterReviewInput {
   # filter by isActive
   isActive: Boolean
   modalName: String
+  # for listing review
   modalId: Int
+  # for myReview
+  userId: Int
 }
 
 extend type Query {
