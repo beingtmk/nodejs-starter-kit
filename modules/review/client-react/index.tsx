@@ -6,11 +6,18 @@ import loadable from '@loadable/component';
 
 import { Route, NavLink } from 'react-router-dom';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
-import { MenuItem } from '@gqlapp/look-client-react';
+import { MenuItem, Icon } from '@gqlapp/look-client-react';
 
 import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
+
+const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
+  <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">
+    <Icon type="book" /> &nbsp;
+    {t('review:navUser')}
+  </NavLink>
+));
 
 const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.review} className="nav-link" activeClassName="active">
@@ -33,12 +40,25 @@ export default new ClientModule({
       component={loadable(() => import('./containers/EditReview').then(c => c.default))}
     />,
     <Route exact path={ROUTES.review} component={loadable(() => import('./containers/Review').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.myReview}
+      component={loadable(() => import('./containers/MyReview').then(c => c.default))}
+      something={'this is something'}
+    />,
     <AuthRoute
       exact
       role={['admin']}
       path={ROUTES.adminPanel}
       component={loadable(() => import('./containers/Reviews.web').then(c => c.default))}
     />
+  ],
+  navItemUser: [
+    <IfLoggedIn key={ROUTES.myReview}>
+      <MenuItem>
+        <NavLinkUserWithI18n />
+      </MenuItem>
+    </IfLoggedIn>
   ],
   navItemAdmin: [
     <IfLoggedIn>
