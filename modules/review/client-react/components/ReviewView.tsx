@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+// import { PageLayout } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
+// import styled from 'styled-components';
+import { Icon, Button, Row, Col, Checkbox, Spin } from 'antd';
 
-import styled from 'styled-components';
-import { Button, Row, Col, Checkbox, Spin } from 'antd';
-
-import ReviewsItemComponent from './ReviewsItemComponent';
 // import WriteReviewComponent from './WriteReviewComponent';
 // import { PgTitle } from './StyledComponents';
 
+import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
-// import AvgRatingComponent from './AvgRatingComponent';
+import AvgRatingComponent from './AvgRatingComponent';
+import ROUTES from '../routes';
 
-const BtnDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
+// const BtnDiv = styled.div`
+//   position: fixed;
+//   bottom: 0;
+//   right: 0;
 
-  width: 100%;
-  height: 120px;
+//   width: 100%;
+//   height: 120px;
 
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, #ffffff 77.6%);
-  z-index: 1;
-`;
+//   background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, #ffffff 77.6%);
+//   z-index: 1;
+// `;
 
 interface ReviewViewProps {
   t: TranslateFunction;
@@ -40,7 +41,7 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, loading, ratings, handleHelpful } = props;
+  const { reviews, loading, ratingAverage, handleHelpful } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
@@ -75,30 +76,42 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
   return (
     <>
       <Row>
-        <Col span={24}>
-          <h1>{'Rating & Reviews'}</h1>
+        <Col span={8}>
+          <div align="center">
+            <h1>{'Rating'}</h1>
+            <h1>{' & '}</h1>
+            <h1>{'Reviews'}</h1>
+          </div>
+        </Col>
+        <Col span={4}>
           <br />
+          <div align="center">
+            <Link to={ROUTES.add}>
+              <Button type={'primary'}>
+                <Icon type="plus-circle" /> {'Add review'}
+              </Button>
+            </Link>
+            <br />
+            <br />
+            <Checkbox onChange={() => setPhoto(!photo)}>
+              <strong>With photo</strong>
+            </Checkbox>
+          </div>
+        </Col>
+        <Col span={12}>
+          {ratingAverage && (
+            <>
+              <AvgRatingComponent rating={ratingAverage} />
+            </>
+          )}
         </Col>
         <Col span={24}>
-          {/* {ratings && (
-                <div style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-                  <AvgRatingComponent ratings={ratings} />
-                </div>
-              )} */}
-        </Col>
-        <Col span={24}>
+          <br />
           <Col span={12}>
             <h3>
               <strong>{`${reviews && reviews.totalCount} reviews`}</strong>
             </h3>
           </Col>
-          {/* <Col span={12}>
-            <Row type="flex" justify="end" align="bottom">
-              <Checkbox onChange={() => setPhoto(!photo)}>
-                <strong>With photo</strong>
-              </Checkbox>
-            </Row>
-          </Col> */}
         </Col>
         <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading ? <Spin /> : null}</Col>
       </Row>

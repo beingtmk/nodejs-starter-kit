@@ -7,6 +7,7 @@ import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 // Query
 import REVIEW_QUERY from '../graphql/ReviewQuery.graphql';
 import REVIEWS_QUERY from '../graphql/ReviewsQuery.graphql';
+import RATING_QUERY from '../graphql/RatingQuery.graphql';
 
 // Mutation
 import ADD_REVIEW from '../graphql/AddReview.graphql';
@@ -28,6 +29,24 @@ const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
+
+export const withRating = Component =>
+  graphql(RATING_QUERY, {
+    options: ({ filter }) => {
+      console.log('filter', filter);
+      return {
+        variables: {
+          modalName: filter.modalName,
+          modalId: filter.modalId
+        },
+        fetchPolicy: 'network-only'
+      };
+    },
+    props({ data: { loading, error, ratingAverage, subscribeToMore, updateQuery } }) {
+      if (error) throw new Error(error);
+      return { loading, ratingAverage, subscribeToMore, updateQuery };
+    }
+  })(Component);
 
 export const withReview = Component =>
   graphql(REVIEW_QUERY, {

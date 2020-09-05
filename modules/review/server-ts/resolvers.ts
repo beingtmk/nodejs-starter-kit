@@ -46,6 +46,9 @@ export default (pubsub: any) => ({
           hasNextPage
         }
       };
+    },
+    async ratingAverage(obj: any, { modalName, modalId }: { modalName: string; modalId: number }, context: any) {
+      return context.Review.ratingAverage(modalName, modalId);
     }
   },
   Mutation: {
@@ -98,7 +101,10 @@ export default (pubsub: any) => ({
       } else {
         return false;
       }
-    })
+    }),
+    refresh: async (obj: any, { input }: DeleteModalReviewInput, context: any) => {
+      await context.Review.refresh();
+    }
   },
   Subscription: {
     reviewUpdated: {

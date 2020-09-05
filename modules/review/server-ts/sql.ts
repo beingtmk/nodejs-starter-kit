@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import { has } from 'lodash';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
+import _ from 'lodash';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
@@ -123,12 +124,27 @@ export default class Review extends Model {
       await knex('modal_review').insert(decamelizeKeys({ modalName, modalId, reviewId: res.id }));
       // console.log('res for modalName table', res1);
     }
+    if (res.rating) {
+      await this.addRating({ modalName, modalId, review: res });
+    }
     // console.log('res for review', res);
     return res.id;
   }
 
   public async editReview(input: Reviews & Identifier) {
+    // console.log('bleh')
+    const review = camelizeKeys(
+      await ModalReview.query()
+        .eager('[review]')
+        .where('review_id', '=', input.id)
+    )[0];
+    if (input.rating) {
+      await this.deleteRating(review);
+    }
     const res = await Review.query().upsertGraph(decamelizeKeys(input));
+    if (input.rating) {
+      await this.addRating({ modalName: review.modalName, modalId: review.modalId, review: input });
+    }
     // if (res.id) {
     //   // const res1 =
     //   await knex('modal_review')
@@ -144,8 +160,144 @@ export default class Review extends Model {
     await knex(modalName)
       .where('id', '=', modalId)
       .update(decamelizeKeys({ isActive: false }));
-    return knex('review')
+    return Review.query()
       .where('id', '=', reviewId)
       .update(decamelizeKeys({ isActive: false }));
+  }
+
+  // Rating
+  public async ratingAverage(modalName: string, modalId: number) {
+    return camelizeKeys(
+      await Rating.query()
+        .where('modal_name', '=', modalName)
+        .where('modal_id', '=', modalId)
+    )[0];
+  }
+
+  public async addRating(modal: ModalReview) {
+    // console.log('modal', modal);
+    const rating = camelizeKeys(
+      await Rating.query()
+        .where('modal_name', '=', modal.modalName)
+        .where('modal_id', '=', modal.modalId)
+    )[0];
+    const rate = parseInt(modal.review.rating);
+    const input = {
+      id: rating && rating.id,
+      modalName: modal.modalName,
+      modalId: modal.modalId
+    };
+    switch (rate) {
+      case 5:
+        input.five = rating && rating.five ? rating.five + 1 : 1;
+        break;
+      case 4:
+        input.four = rating && rating.four ? rating.four + 1 : 1;
+        break;
+      case 3:
+        input.three = rating && rating.three ? rating.three + 1 : 1;
+        break;
+      case 2:
+        input.two = rating && rating.two ? rating.two + 1 : 1;
+        break;
+      default:
+        input.one = rating && rating.one ? rating.one + 1 : 1;
+    }
+    // console.log('input', input);
+    await Rating.query().upsertGraph(decamelizeKeys(input));
+  }
+  public async deleteRating(modal: ModalReview) {
+    // console.log('modal', modal);
+    const rating = decamelizeKeys(
+      await Rating.query()
+        .where('modal_name', '=', modal.modalName)
+        .where('modal_id', '=', modal.modalId)
+    )[0];
+    const rate = parseInt(modal.review.rating);
+    const input = {
+      id: rating && rating.id,
+      modalName: modal.modalName,
+      modalId: modal.modalId
+    };
+    switch (rate) {
+      case 5:
+        input.five = rating && rating.five ? rating.five - 1 : 0;
+        break;
+      case 4:
+        input.four = rating && rating.four ? rating.four - 1 : 0;
+        break;
+      case 3:
+        input.three = rating && rating.three ? rating.three - 1 : 0;
+        break;
+      case 2:
+        input.two = rating && rating.two ? rating.two - 1 : 0;
+        break;
+      default:
+        input.one = rating && rating.one ? rating.one - 1 : 0;
+    }
+    // console.log('input', input);
+    await Rating.query().upsertGraph(decamelizeKeys(input));
+  }
+
+  public async refresh() {
+    // await knex('average_rating').where('id', '=', 5).del();
+    const modal = camelizeKeys(await ModalReview.query().eager('[review]'));
+    // await this.addRating(modal[0]);
+    // const rating = decamelizeKeys(await Rating.query()
+    //   .where('modal_name', '=', modal[0].modalName)
+    //   .where('modal_id', '=', modal[0].modalId))[0];
+    // console.log('average_rating', rating && rating.id);
+    modal.map(mod => this.addRating(mod));
+    // // const modalName = new Set(modal.map(m => m.modalName));
+    // // const modalId = new Set(modal.map(m => m.modalId));
+    // // const ar = _.uniqBy(modal, 'modalId');
+    // // console.log('modalName', modalName, 'ar', ar);
+    // console.log('modal');
+
+    return true;
+  }
+}
+
+export class ModalReview extends Model {
+  static get tableName() {
+    return 'modal_review';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+  static get relationMappings() {
+    return {
+      review: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Review,
+        join: {
+          from: 'modal_review.review_id',
+          to: 'review.id'
+        }
+      }
+    };
+  }
+}
+
+export class Rating extends Model {
+  static get tableName() {
+    return 'average_rating';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+  static get relationMappings() {
+    return {
+      review: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Review,
+        join: {
+          from: 'average_rating.review_id',
+          to: 'review.id'
+        }
+      }
+    };
   }
 }

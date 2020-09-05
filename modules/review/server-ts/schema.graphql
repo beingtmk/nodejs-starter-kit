@@ -42,6 +42,17 @@ type ReviewImage {
 #   title: String
 # }
 
+type Rating {
+  id: Int
+  modalName: String
+  modalId: Int
+  one: Int
+  two: Int
+  three: Int
+  four: Int
+  five: Int
+}
+
 # Input for ordering users
 input OrderByReviewInput {
   # id | username | role | isActive | email
@@ -67,6 +78,9 @@ extend type Query {
     orderBy: OrderByReviewInput
     filter: FilterReviewInput
   ): Reviews
+
+  # Rating
+  ratingAverage(modalName: String!, modalId: Int!): Rating
 }
 
 extend type Mutation {
@@ -76,6 +90,7 @@ extend type Mutation {
   editReview(input: EditReviewInput!): Boolean
   # Delete a review
   deleteReview(input: DeleteModalReviewInput): Boolean
+  refresh: Boolean
 }
 input AddModalReviewInput {
   modalName: String
