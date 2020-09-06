@@ -4,7 +4,7 @@ type Group {
   avatar: String
   description: String!
   groupId: Int
-  groups:[Group]
+  subGroups:[Group]
   members: [GroupMember]
   groupQuizzes:[GroupModalQuiz]
   groupType: String!

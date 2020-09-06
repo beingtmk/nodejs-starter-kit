@@ -2,9 +2,9 @@ export default {
   name: 'MApp',
   logo: 'logo.svg', // Loaded via webpack and stored in favicon/common/assets
   logging: {
-    level: 'info',//(process.env.npm_config_argv || '').search(/(watch|start)/) >= 0 ? 'debug' : 'info',
+    level: (process.env.npm_config_argv || '').search(/(watch|start)/) >= 0 ? 'debug' : 'info',
     debugSQL: false,
-    apolloLogging: false//(process.env.npm_config_argv || '').search(/(watch|start)/) >= 0
+    apolloLogging: (process.env.npm_config_argv || '').search(/(watch|start)/) >= 0
   },
 
   // Check here for Windows and Mac OS X: https://code.visualstudio.com/docs/editor/command-line#_opening-vs-code-with-urls

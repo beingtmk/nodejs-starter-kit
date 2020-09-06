@@ -113,6 +113,13 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
+      path="/group/:id/sub-groups"
+      component={loadable(() =>
+        import("./containers/GroupInfoSubGroups").then((c) => c.default)
+      )}
+    />,
+    <AuthRoute
+      exact
       path="/group/:id/members"
       component={loadable(() =>
         import("./containers/GroupInfoMembers").then((c) => c.default)

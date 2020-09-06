@@ -75,7 +75,7 @@ export default class Group extends Model {
           to: "group_member.group_id",
         },
       },
-      groups:{
+      subGroups:{
         relation: Model.HasManyRelation,
         modelClass: Group,
         join: {
@@ -83,14 +83,14 @@ export default class Group extends Model {
           to: "group.group_id",
         },
       },
-      groupQuizzes:{
-        relation: Model.HasManyRelation,
-        modelClass: GroupModel,
-        join: {
-          from: "group.id",
-          to: "group_model.group_id",
-        },
-      },
+      // groupQuizzes:{
+      //   relation: Model.HasManyRelation,
+      //   modelClass: GroupModel,
+      //   join: {
+      //     from: "group.id",
+      //     to: "group_model.group_id",
+      //   },
+      // },
     };
   }
 
