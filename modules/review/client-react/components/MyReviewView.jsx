@@ -17,9 +17,9 @@ const renderMetaData = t => (
   />
 );
 const MyReviewView = props => {
-  const { t, reviews, loading, setModalName } = props;
+  const { t, reviews, loading, setModalName, deleteReview } = props;
 
-  const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} />;
+  const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} deleteReview={deleteReview} />;
   const RenderReviews = () => (
     <div>
       <SuggestedListComponent
@@ -78,6 +78,7 @@ const MyReviewView = props => {
 MyReviewView.propTypes = {
   t: PropTypes.func,
   setModalName: PropTypes.func,
+  deleteReview: PropTypes.func,
   reviews: PropTypes.object,
   history: PropTypes.object,
   loading: PropTypes.bool
