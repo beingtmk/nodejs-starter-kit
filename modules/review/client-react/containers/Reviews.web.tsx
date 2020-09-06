@@ -48,10 +48,10 @@ export interface ReviewProps {
 }
 
 const Review: React.FC<ReviewProps> = props => {
-  const { subscribeToMore } = props;
+  const { subscribeToMore, filter } = props;
 
   useEffect(() => {
-    const subscribe = subscribeToReviews(subscribeToMore);
+    const subscribe = subscribeToReviews(subscribeToMore, filter);
     return () => subscribe();
   });
 

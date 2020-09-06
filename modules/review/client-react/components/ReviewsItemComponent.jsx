@@ -22,8 +22,16 @@ const Avatar = styled.img`
 const DropDownPosition = styled.div`
   position: absolute;
   right: 0;
-  margin: 60px;
   z-index: 1;
+  margin: 60px;
+`;
+
+const HelpfulPosition = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  margin: 20px 40px;
 `;
 
 const ReviewsItemComponent = props => {
@@ -66,6 +74,18 @@ const ReviewsItemComponent = props => {
       <DropDownPosition>
         <DropDown type="more">{dropDownOpts()}</DropDown>
       </DropDownPosition>
+      <HelpfulPosition>
+        {handleHelpful && (
+          <Button type="link" disabled={disabled} onClick={foundHelpful} style={{ color: 'black' }}>
+            <strong>
+              Found helpful &nbsp;
+              <Icon type="like" theme="filled" />
+              &nbsp;
+              {`(${review.helpful})`}
+            </strong>
+          </Button>
+        )}
+      </HelpfulPosition>
       <Link to={`/todo`}>
         <Card
           style={{
@@ -96,20 +116,7 @@ const ReviewsItemComponent = props => {
           <Col span={12}>
             <>{moment(`${review.createdAt}`).format('LL')}</>
           </Col>
-          <Col span={12}>
-            {handleHelpful && (
-              <Row type="flex" justify="end" align="middle">
-                <Button type="link" disabled={disabled} onClick={foundHelpful} style={{ color: 'black' }}>
-                  <strong>
-                    Found helpful &nbsp;
-                    <Icon type="like" theme="filled" />
-                    &nbsp;
-                    {`(${review.helpful})`}
-                  </strong>
-                </Button>
-              </Row>
-            )}
-          </Col>
+          <Col span={12}></Col>
         </Card>
       </Link>
     </Row>

@@ -5,7 +5,7 @@ import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 import { Row, Col, Checkbox, Spin } from 'antd';
 
-import { Reviews } from '../containers/Reviews.web';
+import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
@@ -13,10 +13,12 @@ import AvgRatingComponent from './AvgRatingComponent';
 
 interface ReviewViewProps {
   t: TranslateFunction;
+  filter: {
+    modalName: string;
+    modalId: number;
+  };
   reviews: Reviews;
   loading: boolean;
-  modalName: string;
-  modalId: number;
   ratingAverage: {
     id: number;
     one: string;
@@ -27,7 +29,7 @@ interface ReviewViewProps {
   };
   addReview: () => null;
   deleteReview: (id: number) => null;
-  handleHelpful: (id: number, value: number) => null;
+  handleHelpful: (id: number, value: number) => Promise<void>;
 }
 
 const renderMetaData = (t: TranslateFunction) => (
@@ -38,9 +40,9 @@ const renderMetaData = (t: TranslateFunction) => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, loading, ratingAverage, handleHelpful, addReview, deleteReview, t, modalName, modalId } = props;
+  const { reviews, filter, loading, ratingAverage, handleHelpful, addReview, deleteReview, t } = props;
   const [photo, setPhoto] = useState(false);
-  const renderFunc = (key, review) => (
+  const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
       key={key}
       review={review}
@@ -49,11 +51,6 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
       deleteReview={deleteReview}
     />
   );
-  // const renderBtn = setVisible => (
-  //   <Button type="primary" block onClick={setVisible}>
-  //     <img alt="" src={Pen} style={{ paddingRight: '5px' }} /> Write a review
-  //   </Button>
-  // );
 
   const RenderReviews = () => (
     <div>
@@ -84,7 +81,13 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
         <Col span={4}>
           <br />
           <div align="center">
-            <ReviewModal cardTitle={'Add Review'} t={t} addReview={addReview} modalName={modalName} modalId={modalId} />
+            <ReviewModal
+              cardTitle={'Add Review'}
+              t={t}
+              addReview={addReview}
+              modalName={filter.modalName}
+              modalId={filter.modalId}
+            />
             <br />
             <br />
             <Checkbox onChange={() => setPhoto(!photo)}>
