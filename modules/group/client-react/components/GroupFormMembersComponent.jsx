@@ -5,7 +5,7 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import { Form, RenderField, Button, RenderUpload, Col, Row, Card, RenderDynamicField } from '@gqlapp/look-client-react';
 
-import { MemberStatus, MemberType } from '../constants';
+import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 
 class GroupFormMembersComponent extends React.Component {

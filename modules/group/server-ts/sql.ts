@@ -13,6 +13,7 @@ import {
   //  orderedFor
 } from "@gqlapp/database-server-ts";
 import { User } from "@gqlapp/user-server-ts/sql";
+import Quiz from "@gqlapp/quiz-server-ts/sql";
 import { has } from "lodash";
 
 Model.knex(knex);
@@ -72,6 +73,22 @@ export default class Group extends Model {
         join: {
           from: "group.id",
           to: "group_member.group_id",
+        },
+      },
+      groups:{
+        relation: Model.HasManyRelation,
+        modelClass: Group,
+        join: {
+          from: "group.id",
+          to: "group.group_id",
+        },
+      },
+      groupQuizzes:{
+        relation: Model.HasManyRelation,
+        modelClass: GroupModel,
+        join: {
+          from: "group.id",
+          to: "group_model.group_id",
         },
       },
     };
@@ -277,5 +294,38 @@ export class GroupMember extends Model {
       .andWhere("group_id", input.groupId);
 
     return res;
+  }
+}
+
+export class GroupModel extends Model {
+  // private id: any;
+
+  static get tableName() {
+    return "group_model";
+  }
+
+  static get idColumn() {
+    return "id";
+  }
+
+  static get relationMappings() {
+    return {
+      quiz: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Quiz,
+        join: {
+          from: "group_model.model_id",
+          to: "quiz.id",
+        },
+      },
+      group: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Group,
+        join: {
+          from: "group_model.group_id",
+          to: "group.id",
+        },
+      },
+    };
   }
 }

@@ -14,7 +14,7 @@ import {
   RenderDynamicField,
 } from "@gqlapp/look-client-react";
 
-import { MemberStatus, MemberType } from "../constants";
+import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 const GroupFormComponentSchema = {
   title: [required],

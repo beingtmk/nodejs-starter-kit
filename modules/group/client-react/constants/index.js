@@ -1,13 +1,4 @@
-export const MemberStatus = {
-  WAITING: 'WAITING',
-  ADDED: 'ADDED',
-  REJECTED: 'REJECTED'
-};
 
-export const MemberType = {
-  ADMIN: 'ADMIN',
-  MEMBER: 'MEMBER'
-};
 
 export const Name = profile => {
   if (profile && (profile.firstName || profile.lastName)) {

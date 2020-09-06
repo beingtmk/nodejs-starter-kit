@@ -20,7 +20,7 @@ import moment from "moment";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import { Name, emptyCover } from "../constants";
 import AddInviteModal from "../containers/AddInviteModal";
-import { MemberStatus, MemberType } from "../constants";
+import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 const { Meta } = Card;
 const { Title, Text, Paragraph } = Typography;

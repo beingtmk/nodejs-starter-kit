@@ -10,9 +10,9 @@ import {
 import settings from "@gqlapp/config";
 import { log } from "@gqlapp/core-common";
 
+const GROUPS_SUBSCRIPTION = "groups_subscription";
 const GROUP_SUBSCRIPTION = "group_subscription";
-const GROUP_ITEM_SUBSCRIPTION = "group_item_subscription";
-const GMEMBER_SUBSCRIPTION = "groupMembers_subscription";
+// // const GMEMBER_SUBSCRIPTION = "groupMembers_subscription";
 
 interface AddGroup {
   input: GroupInput;
@@ -101,32 +101,34 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${id}`;
 
           let user;
-          await input.members && input.members.map(async (item) => {
-            user = await User.getUserByEmail(item.email);
-            if (mailer) {
-              const sent = await mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-                  process.env.EMAIL_USER}>`,
-                to: item.email,
-                subject: `${settings.app.name} Registration`,
-                html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
+          (await input.members) &&
+            input.members.map(async (item) => {
+              user = await User.getUserByEmail(item.email);
+              if (mailer) {
+                const sent = await mailer.sendMail({
+                  from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+                    process.env.EMAIL_USER}>`,
+                  to: item.email,
+                  subject: `${settings.app.name} Registration`,
+                  html: user
+                    ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
                 <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
+                    : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
                 <p>Register - <a href="${url1}">${url1}</a></p>`,
-              });
-              log.info(`Sent mail to: ${item.email}`);
-              if (!sent) {
-                throw new Error("Email couldn't be sent");
-              } else {
-                return true;
+                });
+                log.info(`Sent mail to: ${item.email}`);
+                if (!sent) {
+                  throw new Error("Email couldn't be sent");
+                } else {
+                  return true;
+                }
               }
-            }
-          });
+            });
 
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "CREATED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
@@ -146,39 +148,40 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
 
           let user;
-          await input.members.map(async (item) => {
-            if (!item.id && mailer) {
-              user = await User.getUserByEmail(item.email);
-              const sent = await mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-                  process.env.EMAIL_USER}>`,
-                to: item.email,
-                subject: `${settings.app.name} Registration`,
-                html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-                <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-                <p>Register - <a href="${url1}">${url1}</a></p>`,
-              });
-              log.info(`Sent mail to: ${item.email}`);
-              if (!sent) {
-                throw new Error("Email couldn't be sent");
-              } else {
-                return true;
-              }
-            }
-          });
+          // await input.members.map(async (item) => {
+          //   if (!item.id && mailer) {
+          //     user = await User.getUserByEmail(item.email);
+          //     const sent = await mailer.sendMail({
+          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+          //         process.env.EMAIL_USER}>`,
+          //       to: item.email,
+          //       subject: `${settings.app.name} Registration`,
+          //       html: user
+          //         ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
+          //         : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
+          //     });
+          //     log.info(`Sent mail to: ${item.email}`);
+          //     if (!sent) {
+          //       throw new Error("Email couldn't be sent");
+          //     } else {
+          //       return true;
+          //     }
+          //   }
+          // });
 
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:data.id,
+              id: data.id,
               node: data,
             },
           });
@@ -221,16 +224,17 @@ export default (pubsub: PubSub) => ({
             }
           });
 
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:data.id,
+              id: data.id,
               node: data,
             },
           });
@@ -273,16 +277,17 @@ export default (pubsub: PubSub) => ({
             }
           });
 
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:data.id,
+              id: data.id,
               node: data,
             },
           });
@@ -302,9 +307,10 @@ export default (pubsub: PubSub) => ({
         try {
           var modifiedInput = input;
           modifiedInput.email = input.userEmail;
-          delete modifiedInput.userEmail
+          delete modifiedInput.userEmail;
           const groupMemberId = await GroupMember.addGroupMember(modifiedInput);
           const data = await Group.group(input.groupId);
+          const dataGroupMember = await GroupMember.groupMember(groupMemberId);
 
           const url1 = `${__WEBSITE_URL__}/register`;
           const url2 = `${__WEBSITE_URL__}/group/${input.groupId}`;
@@ -328,16 +334,24 @@ export default (pubsub: PubSub) => ({
           });
           log.info(`Sent mail to: ${currentGroup.email}`);
 
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "CREATED",
+          //     groupId: dataGroupMember.groupId,
+          //     node: dataGroupMember,
+          //   },
+          // });
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:data.id,
+              id: data.id,
               node: data,
             },
           });
@@ -353,15 +367,17 @@ export default (pubsub: PubSub) => ({
         try {
           const data = await Group.group(id);
           await Group.deleteGroup(id);
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "DELETED",
+              parentGroupId: data.groupId,
               node: data,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "DELETED",
+              id: data.id,
               node: data,
             },
           });
@@ -380,23 +396,25 @@ export default (pubsub: PubSub) => ({
         try {
           const id = await GroupMember.addGroupMember(input);
           const data = await GroupMember.groupMember(id);
-          pubsub.publish(GMEMBER_SUBSCRIPTION, {
-            groupMembersUpdated: {
-              mutation: "CREATED",
-              node: data,
-            },
-          });
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "CREATED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
           const item = await Group.group(data.groupId);
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: item.groupId,
               node: item,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:item.id,
+              id: item.id,
               node: item,
             },
           });
@@ -409,29 +427,31 @@ export default (pubsub: PubSub) => ({
     editGroupMember: withAuth(
       async (
         obj: any,
-        { input }:EditGroupMember,
+        { input }: EditGroupMember,
         { GroupMember, Group }: any
       ) => {
         try {
           const inputId = await GroupMember.editGroupMember(input);
           const data = await GroupMember.groupMember(inputId);
-          pubsub.publish(GMEMBER_SUBSCRIPTION, {
-            groupMembersUpdated: {
-              mutation: "UPDATED",
-              node: data,
-            },
-          });
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "UPDATED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
           const item = await Group.group(data.groupId);
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: item.groupId,
               node: item,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:item.id,
+              id: item.id,
               node: item,
             },
           });
@@ -446,23 +466,25 @@ export default (pubsub: PubSub) => ({
         try {
           const inputId = await GroupMember.changeGroupMemberType(input);
           const data = await GroupMember.groupMember(input.groupId);
-          pubsub.publish(GMEMBER_SUBSCRIPTION, {
-            groupMembersUpdated: {
-              mutation: "UPDATED",
-              node: data,
-            },
-          });
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "UPDATED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
           const item = await Group.group(data.groupId);
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: item.groupId,
               node: item,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:item.id,
+              id: item.id,
               node: item,
             },
           });
@@ -477,23 +499,25 @@ export default (pubsub: PubSub) => ({
         try {
           const data = await GroupMember.groupMember(id);
           await GroupMember.deleteGroupMember(id);
-          pubsub.publish(GMEMBER_SUBSCRIPTION, {
-            groupMembersUpdated: {
-              mutation: "DELETED",
-              node: data,
-            },
-          });
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "DELETED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
           const item = await Group.group(data.groupId);
-          pubsub.publish(GROUP_SUBSCRIPTION, {
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
+              parentGroupId: item.groupId,
               node: item,
             },
           });
-          pubsub.publish(GROUP_ITEM_SUBSCRIPTION, {
+          pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id:item.id,
+              id: item.id,
               node: item,
             },
           });
@@ -507,11 +531,12 @@ export default (pubsub: PubSub) => ({
   Subscription: {
     groupsUpdated: {
       subscribe: withFilter(
-        () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
+        () => pubsub.asyncIterator(GROUPS_SUBSCRIPTION),
         (payload, variables) => {
           const { mutation, node } = payload.groupsUpdated;
           const {
             endCursor,
+            parentGroupId,
             filter: { searchText },
           } = variables;
           const checkByFilter =
@@ -532,26 +557,40 @@ export default (pubsub: PubSub) => ({
 
           switch (mutation) {
             case "UPDATED":
-              return !checkByFilter && endCursor <= node.id;
+              return (
+                !checkByFilter &&
+                (parentGroupId
+                  ? parentGroupId === payload.parentGroupId
+                  : true) &&
+                endCursor <= node.id
+              );
             default:
-              return endCursor <= node.id;
+              return (
+                (parentGroupId
+                  ? parentGroupId === payload.parentGroupId
+                  : true) && endCursor <= node.id
+              );
           }
         }
       ),
     },
-    groupMembersUpdated: {
-      subscribe: withFilter(
-        () => pubsub.asyncIterator(GMEMBER_SUBSCRIPTION),
-        (payload, variables) => {
-          return payload.groupMembersUpdated.id === variables.id;
-        }
-      ),
-    },
+    // groupMembersUpdated: {
+    //   subscribe: withFilter(
+    // //     () => pubsub.asyncIterator(GMEMBER_SUBSCRIPTION),
+    // //     (payload, variables) => {
+    // //       return payload.groupMembersUpdated.groupId === variables.groupId;
+    // //     }
+    // //   ),
+    // // },
     groupItemUpdated: {
       subscribe: withFilter(
-        () => pubsub.asyncIterator(GROUP_ITEM_SUBSCRIPTION),
+        () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.groupItemUpdated && payload.groupItemUpdated.node && payload.groupItemUpdated.node.id === variables.id;
+          return (
+            payload.groupItemUpdated &&
+            payload.groupItemUpdated.node &&
+            payload.groupItemUpdated.node.id === variables.id
+          );
         }
       ),
     },

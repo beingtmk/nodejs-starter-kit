@@ -29,6 +29,18 @@ exports.up = function(knex) {
           .onDelete('CASCADE');
         table.timestamps(false, true);
       })
+      .createTable('group_model', table => {
+        table.increments('id');
+        table
+          .integer('group_id')
+          .unsigned()
+          .references('id')
+          .inTable('group')
+          .onDelete('CASCADE');
+        table.string('model');
+        table.integer('model_id');
+        table.timestamps(false, true);
+      })
   ]);
 };
 

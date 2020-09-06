@@ -10,7 +10,7 @@ import {
   Button,
   RenderSelect,
 } from "@gqlapp/look-client-react";
-import { MemberStatus, MemberType } from "../constants";
+import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 const { Text } = Typography;
 

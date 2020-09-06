@@ -9,6 +9,7 @@ import { Model } from "objection";
 import { has } from "lodash";
 
 import { User } from "@gqlapp/user-server-ts/sql";
+import { GroupModel } from "@gqlapp/group-server-ts/sql";
 import { GroupMember } from "@gqlapp/group-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
@@ -39,6 +40,14 @@ export default class Quiz extends Model {
         join: {
           from: "quiz.user_id",
           to: "user.id",
+        },
+      },
+      quizGroups: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: GroupModel,
+        join: {
+          from: "quiz.id",
+          to: "group_model.model_id",
         },
       },
       sections: {
@@ -151,10 +160,13 @@ export default class Quiz extends Model {
     return res;
   }
 
-
   public async getAttemptByQuizAndGroup(id: number, groupId: number) {
-    if(!groupId){
-      return camelizeKeys(await Attempt.query().withGraphFetched('[answers, user]').where('quiz_id', id));
+    if (!groupId) {
+      return camelizeKeys(
+        await Attempt.query()
+          .withGraphFetched("[answers, user]")
+          .where("quiz_id", id)
+      );
     }
 
     const usersByGroup = camelizeKeys(
@@ -169,12 +181,15 @@ export default class Quiz extends Model {
         uu.userId && userIdArray.push(uu.userId);
       });
 
-
-    const attempts = camelizeKeys(await Attempt.query().withGraphFetched('[answers, user]').where('quiz_id', id).whereIn('user_id', userIdArray));
+    const attempts = camelizeKeys(
+      await Attempt.query()
+        .withGraphFetched("[answers, user]")
+        .where("quiz_id", id)
+        .whereIn("user_id", userIdArray)
+    );
 
     return attempts;
   }
-
 
   public async getQuizWithAnswers(id: number, groupId: number) {
     if (!groupId) {

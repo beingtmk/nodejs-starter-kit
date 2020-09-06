@@ -4,7 +4,7 @@ import { compose } from "@gqlapp/core-common";
 import { graphql } from "react-apollo";
 import InviteFormComponent from "../components/InviteFormComponent";
 import ADD_GROUP_MEMBER_INVITE from "../graphql/AddGroupMemberInvite.graphql";
-import { MemberStatus, MemberType } from "../constants";
+import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 class AddInviteModal extends React.Component {
   state = { visible: false };

@@ -3,7 +3,10 @@ type Group {
   title: String!
   avatar: String
   description: String!
+  groupId: Int
+  groups:[Group]
   members: [GroupMember]
+  groupQuizzes:[GroupModalQuiz]
   groupType: String!
   createdAt: String!
   updatedAt: String!
@@ -14,8 +17,19 @@ type GroupMember {
   email: String!
   type: String!
   status: String!
+  groupId:Int
   group: Group!
   member: User
+  createdAt: String!
+  updatedAt: String!
+}
+
+type GroupModalQuiz {
+  id: Int!
+  groupId: Int
+  modelId:Int
+  model: String
+  quiz:Quiz
   createdAt: String!
   updatedAt: String!
 }
@@ -129,8 +143,8 @@ input EditGroupMemberInput {
 }
 
 extend type Subscription {
-  groupsUpdated(endCursor: Int!, filter: FilterGroupInput): UpdateGroupPayload
-  groupMembersUpdated: UpdateGroupMembersPayload
+  groupsUpdated(endCursor: Int!, parentGroupId: Int filter: FilterGroupInput): UpdateGroupPayload
+  # groupMembersUpdated: UpdateGroupMembersPayload
   groupItemUpdated(id: Int): GroupItemPayload
 }
 
@@ -140,12 +154,13 @@ type GroupItemPayload {
   id: Int!
 }
 
-type UpdateGroupMembersPayload {
-  mutation: String!
-  node: GroupMember!
-}
+# type UpdateGroupMembersPayload {
+#   mutation: String!
+#   node: GroupMember!
+# }
 
 type UpdateGroupPayload {
   mutation: String!
+  parentGroupId: Int
   node: Group!
 }
