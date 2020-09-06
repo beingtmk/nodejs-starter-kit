@@ -25,6 +25,12 @@ class GroupDashBoardSider extends React.Component {
             Info
           </NavLink>
         </MenuItem>
+        <MenuItem key="/group/:id/sub-groups">
+          <NavLink to={`/group/${id}/sub-groups`}>
+          <Icon type="apartment" />
+            Sub Groups
+          </NavLink>
+        </MenuItem>
 
         <MenuItem key="/group/:id/members">
           <NavLink to={`/group/${id}/members`}>

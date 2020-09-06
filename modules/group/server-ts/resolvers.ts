@@ -539,6 +539,7 @@ export default (pubsub: PubSub) => ({
             parentGroupId,
             filter: { searchText },
           } = variables;
+          console.log(payload, endCursor);
           const checkByFilter =
             !searchText ||
             node.title.toUpperCase().includes(searchText.toUpperCase()) ||
