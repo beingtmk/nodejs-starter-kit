@@ -26,7 +26,7 @@ export async function seed(knex) {
       return returnId(knex('group_member')).insert({
         group_id: i + 1,
         email: users[Math.floor(Math.random() * 11)],
-        type: 'ADMIN',
+        type: 'MANAGER',
         status: 'ADDED'
       });
     })

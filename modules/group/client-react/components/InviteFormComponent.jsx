@@ -45,8 +45,8 @@ class InviteForm extends React.Component {
           label={"User Type"}
           value={values.type}
         >
-          <Select.Option key={MemberType.ADMIN} value={MemberType.ADMIN}>
-            {MemberType.ADMIN}
+          <Select.Option key={MemberType.MANAGER} value={MemberType.MANAGER}>
+            {MemberType.MANAGER}
           </Select.Option>
           <Select.Option key={MemberType.MEMBER} value={MemberType.MEMBER}>
             {MemberType.MEMBER}

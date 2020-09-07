@@ -1,5 +1,5 @@
 const MemberType = {
-  ADMIN: "ADMIN",
+  MANAGER: "MANAGER",
   MEMBER: "MEMBER",
 };
 

@@ -142,7 +142,7 @@ const GroupFormComponentWithFormik = withFormik({
     if (!members.some((item) => item.email === currentUser.email)) {
       members.push({
         email: currentUser.email,
-        type: MemberType.ADMIN,
+        type: MemberType.MANAGER,
         status: MemberStatus.ADDED,
       });
     }

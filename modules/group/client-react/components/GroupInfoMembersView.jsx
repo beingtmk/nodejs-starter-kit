@@ -119,10 +119,10 @@ const GroupInfoMembersView = ({ group, changeGroupMemberType, match, navigation 
                       onChange={(e) => handleMemberTypeChange(e, item.email)}
                     >
                       <SelectOption
-                        key={MemberType.ADMIN}
-                        value={MemberType.ADMIN}
+                        key={MemberType.MANAGER}
+                        value={MemberType.MANAGER}
                       >
-                        {MemberType.ADMIN}
+                        {MemberType.MANAGER}
                       </SelectOption>
                       <SelectOption
                         key={MemberType.MEMBER}
