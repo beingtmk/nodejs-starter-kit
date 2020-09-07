@@ -50,6 +50,7 @@ class AddNewGroup extends React.Component {
           Add Group
         </Button>
         <Modal
+          centered
           destroyOnClose
           bodyStyle={{ padding: "0" }}
           title=""
@@ -83,9 +84,9 @@ export default compose(
         message.loading("Please wait...", 0);
         try {
           const {
-            data: { addGroup }
+            data: { addGroup },
           } = await mutate({
-            variables: { input: removeTypename(values) }
+            variables: { input: removeTypename(values) },
           });
 
           message.destroy();
