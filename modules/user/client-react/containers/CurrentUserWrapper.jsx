@@ -7,6 +7,7 @@ import CURRENT_USER_QUERY from "../graphql/CurrentUserQuery.graphql";
 const Profile = (props) => {
   const { currentUser, currentUserLoading, children } = props;
   const childrenWithProps = Children.map(children, (child) => {
+    console.log(child);
     if (isValidElement(child)) {
       return cloneElement(child, { currentUser, currentUserLoading });
     }

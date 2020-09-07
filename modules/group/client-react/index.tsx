@@ -13,7 +13,7 @@ import {
   AuthRoute,
   IfLoggedIn,
 } from "@gqlapp/user-client-react/containers/Auth.web";
-
+import UserOrganisationsNavItem from "./containers/UserOrganisationsNavItem";
 const NavLinkMyGroupsWithI18n = translate("group")(
   ({ t }: { t: TranslateFunction }) => (
     <NavLink to="/my-groups" className="nav-link" activeClassName="active">
@@ -135,18 +135,7 @@ export default new ClientModule({
   ],
   navItemUser: [
     <IfLoggedIn key="/my-groups">
-      <Menu.SubMenu
-        title={
-          <span>
-            <Icon type="team" />
-            {"Group "}
-          </span>
-        }
-      >
-        <MenuItem>
-          <NavLinkMyGroupsWithI18n />
-        </MenuItem>
-      </Menu.SubMenu>
+      <UserOrganisationsNavItem />
     </IfLoggedIn>,
   ],
   navItemAdmin: [
