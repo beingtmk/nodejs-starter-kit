@@ -476,8 +476,10 @@ export default (pubsub: PubSub) => ({
     changeGroupMemberType: withAuth(
       async (obj: any, { input }: any, { GroupMember, Group }: any) => {
         try {
-          const inputId = await GroupMember.changeGroupMemberType(input);
-          const data = await GroupMember.groupMember(input.groupId);
+          console.log('changeGroupMemberType', input);
+          const updated = await GroupMember.changeGroupMemberType(input);
+
+          const data = await GroupMember.groupMember(input.id);
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {
           //     mutation: "UPDATED",
@@ -609,6 +611,7 @@ export default (pubsub: PubSub) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
         (payload, variables) => {
+          console.log('groupItemSubsRes', payload, variables);
           return (
             payload.groupItemUpdated &&
             payload.groupItemUpdated.node &&

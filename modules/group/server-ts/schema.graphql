@@ -100,8 +100,7 @@ input AddGroupMemberInviteInput {
 }
 
 input ChangeGroupMemberTypeInput {
-  groupId: Int!
-  userEmail: String!
+  id:Int!
   type: String!
 }
 

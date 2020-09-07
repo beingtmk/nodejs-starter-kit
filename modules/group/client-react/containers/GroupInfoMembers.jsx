@@ -10,10 +10,10 @@ import EDIT_GROUP_MEMBER from '../graphql/EditGroupMember.graphql';
 import CHANGE_GROUP_MEMBER_TYPE from '../graphql/ChangeGroupMemberType.graphql';
 import GROUP_ITEM_SUBSCRIPTION from '../graphql/GroupItemSubscription.graphql';
 
-const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
+const subscribeToGroupPage = (subscribeToMore, id, history, navigation) =>
   subscribeToMore({
     document: GROUP_ITEM_SUBSCRIPTION,
-    variables: { id: groupId },
+    variables: { id },
     updateQuery: (
       prev,
       {
@@ -24,6 +24,7 @@ const subscribeToGroupPage = (subscribeToMore, groupId, history, navigation) =>
         }
       }
     ) => {
+      console.log('subscribe', mutation, node);
       if (mutation === 'UPDATED') {
         return {group:node}
       }

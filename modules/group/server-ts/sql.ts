@@ -199,7 +199,7 @@ export default class Group extends Model {
         .from("group")
         .leftJoin("group_member", "group.id", "group_member.group_id")
         .where({ email })
-        .whereNull('group.group_id')
+        .whereNull("group.group_id")
         .orderBy("id", "desc")
     );
     return res;
@@ -307,8 +307,7 @@ export class GroupMember extends Model {
   public async changeGroupMemberType(input: any) {
     const res = await GroupMember.query()
       .patch({ type: input.type })
-      .where("email", input.userEmail)
-      .andWhere("group_id", input.groupId);
+      .findById(input.id);
 
     return res;
   }
