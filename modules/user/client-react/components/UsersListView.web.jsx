@@ -95,9 +95,7 @@ const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
       title: t('users.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <DeleteIcon size="sm" onClick={() => handleDeleteUser(record.id)}>
-          {/* {t('users.btn.delete')} */}
-        </DeleteIcon>
+        <DeleteIcon onClick={() => handleDeleteUser(record.id)}>{/* {t('users.btn.delete')} */}</DeleteIcon>
       )
     }
   ];

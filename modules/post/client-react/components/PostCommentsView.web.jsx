@@ -36,12 +36,7 @@ const PostCommentsView = ({
             onClick={() => onCommentSelect({ id: record.id, content: record.content })}
           />
           &nbsp;&nbsp;
-          <DeleteIcon
-            color="primary"
-            // size="sm"
-            className="delete-comment"
-            onClick={() => handleDeleteComment(record.id)}
-          />
+          <DeleteIcon className="delete-comment" onClick={() => handleDeleteComment(record.id)} />
         </div>
       )
     }
