@@ -196,9 +196,10 @@ export default class Group extends Model {
     const res = camelizeKeys(
       await Group.query()
         .eager(gEager)
-        .from("group as g")
-        .leftJoin("group_member as gp", "group.id", "group_member.group_id")
+        .from("group")
+        .leftJoin("group_member", "group.id", "group_member.group_id")
         .where({ email })
+        .whereNull('group.group_id')
         .orderBy("id", "desc")
     );
     return res;

@@ -1,7 +1,7 @@
 #import "./Group.graphql"
 
-query userGroups {
-  userGroups {
+query userGroups($userId:Int) {
+  userGroups(userId:$userId) {
     ...GroupInfo
   }
 }

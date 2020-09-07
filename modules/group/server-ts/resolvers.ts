@@ -54,9 +54,14 @@ export default (pubsub: PubSub) => ({
       { filter, limit, after, groupId }: GroupFilter,
       context: any
     ) {
-      console.log('GorupsResol', groupId);
+      console.log("GorupsResol", groupId);
       // return context.Group.groups();
-      const GroupOutput = await context.Group.groups(filter, limit, after, groupId);
+      const GroupOutput = await context.Group.groups(
+        filter,
+        limit,
+        after,
+        groupId
+      );
       const { groups, total } = GroupOutput;
 
       const hasNextPage = total > after + limit;
@@ -83,9 +88,14 @@ export default (pubsub: PubSub) => ({
 
     async userGroups(
       obj: any,
-      { email }: EmailIdentifier,
-      { Group, req: { identity } }: any
+      { userId }: EmailIdentifier,
+      { Group, User, req: { identity } }: any
     ) {
+      var email;
+      if (userId) {
+        const user = await User.getUser(userId);
+        email = user.email;
+      }
       return Group.userGroups(email || identity.email);
     },
     async group(obj: any, { id }: Identifier, context: any) {
@@ -541,8 +551,8 @@ export default (pubsub: PubSub) => ({
             parentGroupId,
             filter: { searchText },
           } = variables;
-          console.log('variablesSubs', variables);
-          console.log('payloadSUbs', payload)
+          console.log("variablesSubs", variables);
+          console.log("payloadSUbs", payload);
           console.log(payload, endCursor);
           const checkByFilter =
             !searchText ||
@@ -568,7 +578,7 @@ export default (pubsub: PubSub) => ({
                   ? parentGroupId === payload.groupsUpdated.parentGroupId
                   : true) &&
                 endCursor <= node.id
-              )
+              );
             case "CREATED":
               return (
                 checkByFilter &&
@@ -576,7 +586,7 @@ export default (pubsub: PubSub) => ({
                   ? parentGroupId === payload.groupsUpdated.parentGroupId
                   : true) &&
                 endCursor <= node.id
-              );;
+              );
             default:
               return (
                 (parentGroupId

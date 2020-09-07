@@ -41,7 +41,7 @@ extend type Query {
     groupId: Int
     filter: FilterGroupInput
   ): GroupList
-  userGroups(email: String): [Group]
+  userGroups(userId: Int): [Group]
   group(id: Int!): Group
   allGroupMembers: [GroupMember]
   groupMember(id: Int!): GroupMember

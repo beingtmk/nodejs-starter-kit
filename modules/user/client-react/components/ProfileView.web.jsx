@@ -1,23 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
-import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
-import { translate } from '@gqlapp/i18n-client-react';
+import React from "react";
+import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+import { Link } from "react-router-dom";
+import { StripeSubscriptionProfile } from "@gqlapp/payments-client-react";
+import { translate } from "@gqlapp/i18n-client-react";
 import {
   Card,
   //  CardGroup,
   CardText,
   //  CardTitle,
-  PageLayout
-} from '@gqlapp/look-client-react';
-import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
+  PageLayout,
+} from "@gqlapp/look-client-react";
+import { Row, Col, Divider, Icon, Button, Spin as Loader } from "antd";
 // import UserVerificationsComponent from './verification/UserVerificationsComponent';
-import ProfileHeadComponent from './components/ProfileHeadComponent';
+import ProfileHeadComponent from "./components/ProfileHeadComponent";
 // import UsersCardComponent from './UsersCardComponent';
-import settings from '../../../../settings';
-import AddressCardComponent from './components/AddressCardComponent';
-import userCardData from '../helpers/userCardData';
+import settings from "../../../../settings";
+import AddressCardComponent from "./components/AddressCardComponent";
+import userCardData from "../helpers/userCardData";
 
 // To Do Abstract Out
 
@@ -33,15 +33,15 @@ class ProfileView extends React.Component {
   };
 
   render() {
-    const renderMetaData = t => {
+    const renderMetaData = (t) => {
       return (
         <Helmet
-          title={`${settings.app.name} - ${t('profile.title')}`}
+          title={`${settings.app.name} - ${t("profile.title")}`}
           meta={[
             {
-              name: 'description',
-              content: `${settings.app.name} - ${t('profile.meta')}`
-            }
+              name: "description",
+              content: `${settings.app.name} - ${t("profile.meta")}`,
+            },
           ]}
         />
       );
@@ -53,7 +53,7 @@ class ProfileView extends React.Component {
       return (
         <PageLayout select="/profile">
           {renderMetaData(t)}
-          <Loader text={t('profile.loadMsg')} />
+          <Loader text={t("profile.loadMsg")} />
         </PageLayout>
       );
     } else if (currentUser) {
@@ -63,18 +63,21 @@ class ProfileView extends React.Component {
 
           <Row gutter={5}>
             <Col xs={{ span: 24 }} lg={{ span: 24 }}>
-              <Card style={{ display: 'block' }}>
+              <Card style={{ display: "block" }}>
                 <h2
                   style={{
-                    fontSize: '23px',
-                    fontWeight: 'bold',
-                    height: '61px',
-                    marginBottom: '0px',
-                    position: 'relative'
+                    fontSize: "23px",
+                    fontWeight: "bold",
+                    height: "61px",
+                    marginBottom: "0px",
+                    position: "relative",
                   }}
                 >
                   <Icon type="user" /> My Profile
-                  <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
+                  <div
+                    align="right"
+                    style={{ position: "absolute", top: "0px", right: "10px" }}
+                  >
                     <Link to={`/users/${currentUser.id}`}>
                       <Button shape="circle" size="large">
                         <Icon type="edit" />
@@ -84,41 +87,55 @@ class ProfileView extends React.Component {
                 </h2>
 
                 <ProfileHeadComponent
+                  userId={this.getUserId() || currentUser.id}
                   profile={currentUser.profile && currentUser.profile}
-                  description={userCardData(t, currentUser, this.getUserId()).profileHead}
+                  description={
+                    userCardData(t, currentUser, this.getUserId()).profileHead
+                  }
                 />
                 <Divider />
                 <Row type="flex" justify="space-around" align="middle">
-                  <Col align="left" style={{ borderRight: '2px solid #23B195' }} span={12}>
+                  <Col
+                    align="left"
+                    style={{ borderRight: "2px solid #23B195" }}
+                    span={12}
+                  >
                     <div>
                       <h2>
-                        <Icon type="user" /> {t('profile.card.group.name')}:
+                        <Icon type="user" /> {t("profile.card.group.name")}:
                       </h2>
                       <CardText>{currentUser.username}</CardText>
                     </div>
                     <div>
                       <h2>
-                        <Icon type="solution" /> {t('profile.card.group.about')}:
+                        <Icon type="solution" /> {t("profile.card.group.about")}
+                        :
                       </h2>
 
                       <CardText>
-                        {currentUser.profile && currentUser.profile.about ? currentUser.profile.about : 'Not Provided'}
+                        {currentUser.profile && currentUser.profile.about
+                          ? currentUser.profile.about
+                          : "Not Provided"}
                       </CardText>
                     </div>
 
                     <div>
                       <h2>
-                        <Icon type="team" /> {t('profile.card.group.role')}:
+                        <Icon type="team" /> {t("profile.card.group.role")}:
                       </h2>
 
-                      <CardText>{currentUser.role ? currentUser.role : 'Not Provided'}</CardText>
+                      <CardText>
+                        {currentUser.role ? currentUser.role : "Not Provided"}
+                      </CardText>
                     </div>
 
                     {/* Portfolios */}
                     <h2>
-                      <Icon type="paper-clip" /> {t('profile.card.group.portfolios.title')}
+                      <Icon type="paper-clip" />{" "}
+                      {t("profile.card.group.portfolios.title")}
                     </h2>
-                    {currentUser.portfolios && currentUser.portfolios.length !== 0
+                    {currentUser.portfolios &&
+                    currentUser.portfolios.length !== 0
                       ? currentUser.portfolios.map((portfolio, key) => (
                           <div key={key}>
                             <CardText>
@@ -126,15 +143,17 @@ class ProfileView extends React.Component {
                             </CardText>
                           </div>
                         ))
-                      : 'Not Provided'}
+                      : "Not Provided"}
                   </Col>
                   <Col align="right" span={12}>
                     <div>
                       <h2>
-                        <Icon type="mail" /> {t('profile.card.group.email')}:
+                        <Icon type="mail" /> {t("profile.card.group.email")}:
                       </h2>
 
-                      <CardText>{currentUser.email ? currentUser.email : 'Not Provided'}</CardText>
+                      <CardText>
+                        {currentUser.email ? currentUser.email : "Not Provided"}
+                      </CardText>
                     </div>
 
                     <div>
@@ -144,14 +163,15 @@ class ProfileView extends React.Component {
                       <CardText>
                         {currentUser.profile && currentUser.profile.mobile
                           ? currentUser.profile.mobile
-                          : 'Not Provided'}
+                          : "Not Provided"}
                       </CardText>
                     </div>
                   </Col>
                 </Row>
                 <Divider />
                 <h2>
-                  <Icon type="contacts" /> {t('profile.card.group.addresses.title')}
+                  <Icon type="contacts" />{" "}
+                  {t("profile.card.group.addresses.title")}
                 </h2>
                 <Row gutter={10}>
                   {currentUser.addresses && currentUser.addresses.length !== 0
@@ -159,18 +179,20 @@ class ProfileView extends React.Component {
                         <Col xs={{ span: 24 }} md={{ span: 12 }} key={key}>
                           <AddressCardComponent
                             address={address}
-                            subTitle={t('profile.card.group.addresses.subTitle')}
+                            subTitle={t(
+                              "profile.card.group.addresses.subTitle"
+                            )}
                             index={key}
                           />
                         </Col>
                       ))
-                    : 'Not Provided'}
+                    : "Not Provided"}
                 </Row>
 
                 {/* Credit card info (Stripe subscription module)*/}
                 {settings.stripe.subscription.enabled &&
                   settings.stripe.subscription.publicKey &&
-                  currentUser.role === 'user' && <StripeSubscriptionProfile />}
+                  currentUser.role === "user" && <StripeSubscriptionProfile />}
               </Card>
             </Col>
             {/* <Col xs={{ span: 24 }} lg={{ span: 8 }}>
@@ -191,7 +213,7 @@ class ProfileView extends React.Component {
       return (
         <PageLayout>
           {renderMetaData(t)}
-          <h2>{t('profile.errorMsg')}</h2>
+          <h2>{t("profile.errorMsg")}</h2>
         </PageLayout>
       );
     }
@@ -203,6 +225,6 @@ ProfileView.propTypes = {
   currentUser: PropTypes.object,
   t: PropTypes.func,
   match: PropTypes.object,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
 };
-export default translate('user')(ProfileView);
+export default translate("user")(ProfileView);
