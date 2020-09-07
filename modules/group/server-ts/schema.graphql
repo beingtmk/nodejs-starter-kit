@@ -4,9 +4,9 @@ type Group {
   avatar: String
   description: String!
   groupId: Int
-  subGroups:[Group]
+  subGroups: [Group]
   members: [GroupMember]
-  groupQuizzes:[GroupModalQuiz]
+  groupQuizzes: [GroupModalQuiz]
   groupType: String!
   createdAt: String!
   updatedAt: String!
@@ -17,7 +17,7 @@ type GroupMember {
   email: String!
   type: String!
   status: String!
-  groupId:Int
+  groupId: Int
   group: Group!
   member: User
   createdAt: String!
@@ -27,15 +27,20 @@ type GroupMember {
 type GroupModalQuiz {
   id: Int!
   groupId: Int
-  modelId:Int
+  modelId: Int
   model: String
-  quiz:Quiz
+  quiz: Quiz
   createdAt: String!
   updatedAt: String!
 }
 
 extend type Query {
-  groups(limit: Int, after: Int, filter: FilterGroupInput): GroupList
+  groups(
+    limit: Int
+    after: Int
+    groupId: Int
+    filter: FilterGroupInput
+  ): GroupList
   userGroups(email: String): [Group]
   group(id: Int!): Group
   allGroupMembers: [GroupMember]
@@ -104,7 +109,8 @@ input AddGroupInput {
   title: String!
   avatar: String
   description: String
-  groupType: String!
+  groupType: String
+  groupId: Int
   members: [MemberInput]
 }
 
@@ -119,6 +125,7 @@ input UpdateGroupInput {
   id: Int!
   title: String
   avatar: String
+  groupId: Int
   description: String
   groupType: String
 }
@@ -143,7 +150,11 @@ input EditGroupMemberInput {
 }
 
 extend type Subscription {
-  groupsUpdated(endCursor: Int!, parentGroupId: Int filter: FilterGroupInput): UpdateGroupPayload
+  groupsUpdated(
+    endCursor: Int!
+    parentGroupId: Int
+    filter: FilterGroupInput
+  ): UpdateGroupPayload
   # groupMembersUpdated: UpdateGroupMembersPayload
   groupItemUpdated(id: Int): GroupItemPayload
 }

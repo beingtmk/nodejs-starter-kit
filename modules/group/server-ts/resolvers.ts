@@ -34,6 +34,7 @@ interface GroupFilter {
   filter: FilterInput;
   limit: number;
   after: number;
+  groupId: number;
 }
 
 export default (pubsub: PubSub) => ({
@@ -50,11 +51,12 @@ export default (pubsub: PubSub) => ({
 
     async groups(
       obj: any,
-      { filter, limit, after }: GroupFilter,
+      { filter, limit, after, groupId }: GroupFilter,
       context: any
     ) {
+      console.log('GorupsResol', groupId);
       // return context.Group.groups();
-      const GroupOutput = await context.Group.groups(filter, limit, after);
+      const GroupOutput = await context.Group.groups(filter, limit, after, groupId);
       const { groups, total } = GroupOutput;
 
       const hasNextPage = total > after + limit;
@@ -539,6 +541,8 @@ export default (pubsub: PubSub) => ({
             parentGroupId,
             filter: { searchText },
           } = variables;
+          console.log('variablesSubs', variables);
+          console.log('payloadSUbs', payload)
           console.log(payload, endCursor);
           const checkByFilter =
             !searchText ||
@@ -561,14 +565,22 @@ export default (pubsub: PubSub) => ({
               return (
                 !checkByFilter &&
                 (parentGroupId
-                  ? parentGroupId === payload.parentGroupId
+                  ? parentGroupId === payload.groupsUpdated.parentGroupId
                   : true) &&
                 endCursor <= node.id
-              );
+              )
+            case "CREATED":
+              return (
+                checkByFilter &&
+                (parentGroupId
+                  ? parentGroupId === payload.groupsUpdated.parentGroupId
+                  : true) &&
+                endCursor <= node.id
+              );;
             default:
               return (
                 (parentGroupId
-                  ? parentGroupId === payload.parentGroupId
+                  ? parentGroupId === payload.groupsUpdated.parentGroupId
                   : true) && endCursor <= node.id
               );
           }

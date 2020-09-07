@@ -1,7 +1,15 @@
 #import "./Group.graphql"
 
-subscription onGroupsUpdated($endCursor: Int!, $filter: FilterGroupInput) {
-  groupsUpdated(endCursor: $endCursor, filter: $filter) {
+subscription onGroupsUpdated(
+  $endCursor: Int!
+  $filter: FilterGroupInput
+  $parentGroupId: Int
+) {
+  groupsUpdated(
+    endCursor: $endCursor
+    filter: $filter
+    parentGroupId: $parentGroupId
+  ) {
     mutation
     node {
       ...GroupInfo

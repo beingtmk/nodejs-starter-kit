@@ -1,7 +1,12 @@
 #import "./Group.graphql"
 
-query groups($limit: Int!, $after: Int, $filter: FilterGroupInput) {
-  groups(limit: $limit, after: $after, filter: $filter) {
+query groups(
+  $limit: Int!
+  $after: Int
+  $filter: FilterGroupInput
+  $groupId: Int
+) {
+  groups(limit: $limit, after: $after, filter: $filter, groupId: $groupId) {
     totalCount
     edges {
       cursor
