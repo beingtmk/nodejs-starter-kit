@@ -20,7 +20,7 @@ import GroupInfoQuizReport from "../containers/GroupInfoQuizReport";
 import GroupComponent from "./GroupComponent";
 import GroupInfoMembers from "../containers/GroupInfoMembers";
 import { GroupCatalogueComponent } from "./MyGroupsComponent";
-import AddGroupModal from '../containers/AddGroupModal';
+import AddGroupModal from "../containers/AddGroupModal";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -61,21 +61,20 @@ class GroupInfoView extends React.Component {
     } else if (navigation) {
       id = navigation.state.params.id;
     }
+    const hasMore = groups && groups.pageInfo && groups.pageInfo.hasNextPage;
     console.log("GroupInfoSubGroupsView", this.props);
     return (
       <GroupLayout id={id} path={match && match.path}>
         {renderMetaData(this.props.t)}
         <PageHeader
-      ghost={false}
-      backIcon={<Icon type="apartment" />}
-      title={<Title>Sub Groups</Title>}
-      extra={[
-        <AddGroupModal groupId={id} />,
-      ]}
-    />
-        
-        <Divider style={{marginTop:'0'}} />
-        {this.state.flag && this.props.groupLoading  ? (
+          ghost={false}
+          backIcon={<Icon type="apartment" />}
+          title={<Title>Sub Groups</Title>}
+          extra={[<AddGroupModal groupId={id} />]}
+        />
+
+        <Divider style={{ marginTop: "0" }} />
+        {this.state.flag && this.props.groupLoading ? (
           <div align="center">
             <Loader />
           </div>
@@ -83,14 +82,16 @@ class GroupInfoView extends React.Component {
           <>
             <Row gutter={24}>
               {groups.edges.map((edge, key) => (
-                  <Col xs={24} md={12} lg={8}>
-                    <GroupCatalogueComponent item={edge.node} key={key} />
-                  </Col>
-                ))}
+                <Col xs={24} md={12} lg={8}>
+                  <GroupCatalogueComponent item={edge.node} key={key} />
+                </Col>
+              ))}
             </Row>
-            <div align="center">
-              <Button onClick={this.fetchMoreData}>Load More</Button>
-            </div>
+            {hasMore && (
+              <div align="center">
+                <Button onClick={this.fetchMoreData}>Load More</Button>
+              </div>
+            )}
           </>
         ) : (
           <Empty />
