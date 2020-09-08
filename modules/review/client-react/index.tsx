@@ -15,36 +15,42 @@ import ROUTES from './routes';
 const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">
     <Icon type="book" /> &nbsp;
-    {t('review:navUser')}
+    {t('review:navLinkUser')}
   </NavLink>
 ));
 
 const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.review} className="nav-link" activeClassName="active">
-    {t('review:navLink')}
+    {t('review:navLinkTest')}
   </NavLink>
 ));
 
 const NavLinkAdminWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
-    {t('review:navLink')}
+    {t('review:navLinkAdmin')}
   </NavLink>
 ));
 
 export default new ClientModule({
   route: [
-    <Route exact path={ROUTES.add} component={loadable(() => import('./containers/AddReview').then(c => c.default))} />,
-    <Route
+    <Route exact path={ROUTES.review} component={loadable(() => import('./containers/Review').then(c => c.default))} />,
+    <AuthRoute
       exact
+      role={['admin']}
+      path={ROUTES.add}
+      component={loadable(() => import('./containers/AddReview').then(c => c.default))}
+    />,
+    <AuthRoute
+      exact
+      role={['admin']}
       path={ROUTES.edit}
       component={loadable(() => import('./containers/EditReview').then(c => c.default))}
     />,
-    <Route exact path={ROUTES.review} component={loadable(() => import('./containers/Review').then(c => c.default))} />,
-    <Route
+    <AuthRoute
       exact
+      role={['admin', 'user']}
       path={ROUTES.myReview}
       component={loadable(() => import('./containers/MyReview').then(c => c.default))}
-      something={'this is something'}
     />,
     <AuthRoute
       exact
@@ -67,11 +73,11 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
-  navItemTest: [
-    <MenuItem key={ROUTES.review}>
-      <NavLinkWithI18n />
-    </MenuItem>
-  ],
+  // navItemTest: [
+  //   <MenuItem key={ROUTES.review}>
+  //     <NavLinkWithI18n />
+  //   </MenuItem>
+  // ],
   resolver: [resolvers],
   localization: [{ ns: 'review', resources }]
 });

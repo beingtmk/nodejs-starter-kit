@@ -32,7 +32,12 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
       <br />
       <br />
       {loading ? (
-        <Spin />
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin />
+        </div>
       ) : (
         <Row type="flex" justify="center">
           <Card

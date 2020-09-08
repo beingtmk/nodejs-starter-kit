@@ -42,7 +42,12 @@ const EditReviewView = props => {
             />
           </Card>
         ) : (
-          <Spin />
+          <div align="center">
+            <br />
+            <br />
+            <br />
+            <Spin />
+          </div>
         )}
       </Row>
     </PageLayout>

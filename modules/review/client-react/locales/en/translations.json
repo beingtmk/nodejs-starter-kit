@@ -1,7 +1,31 @@
 {
   "navLink": "Review",
-  "navUser": "My review",
+  "navLinkAdmin": "Review",
+  "navLinkTest": "Review",
+  "navLinkUser": "My review",
+
   "title": "Review module",
   "meta": "Review example",
-  "welcomeText": "Hello, This is the Review module"
+  "welcomeText": "Hello, This is the Review module",
+  "loadMsg": "Loading",
+
+  "adminPanel": {
+    "title": "Reviews",
+    "btn": {
+      "add": "Add review",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "filter": {
+      "field1": "UserName",
+      "field2": "Modal",
+      "field3": "Is active"
+    },
+    "list": {
+      "column1": "Owner",
+      "column2": "Rating",
+      "column3": "Feedback",
+      "column4": "Actions"
+    }
+  }
 }

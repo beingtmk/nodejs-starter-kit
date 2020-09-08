@@ -39,7 +39,7 @@ const renderMetaData = (t: TranslateFunction) => (
   />
 );
 
-const NoReviews: React.FC = () => (
+export const NoReviews: React.FC = () => (
   <div align="center">
     <br />
     Not review yet
@@ -120,6 +120,9 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
         <Col span={24}>
           {loading && (
             <div align="center">
+              <br />
+              <br />
+              <br />
               <Spin text="Loading" />
             </div>
           )}

@@ -32,6 +32,9 @@ const SuggestedListComponent = props => {
       hasMore={hasMore}
       loader={
         <div align="center">
+          <br />
+          <br />
+          <br />
           <Spin />
         </div>
       }

@@ -9,6 +9,7 @@ import { Form, FormItem, Select, Option } from '@gqlapp/look-client-react';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
+import { NoReviews } from './ReviewView';
 
 const renderMetaData = t => (
   <Helmet
@@ -69,8 +70,19 @@ const MyReviewView = props => {
       </Row>
       <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
       <br />
+
       <Row>
-        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading ? <Spin /> : null}</Col>
+        <Col span={24}>
+          {loading && (
+            <div align="center">
+              <br />
+              <br />
+              <br />
+              <Spin text={t('review.loadMsg')} />
+            </div>
+          )}
+        </Col>
+        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : <NoReviews />}</Col>
       </Row>
     </>
   );

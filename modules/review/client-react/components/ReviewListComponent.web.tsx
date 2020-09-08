@@ -1,13 +1,14 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Empty, Popconfirm, Icon, message, Spin } from 'antd';
+import { Divider, Empty, Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Table, Button, Pagination } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
+import ROUTES from '../routes/index';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -80,7 +81,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
           // onClick={e => handleOrderBy(e, "owner")}
           href="#"
         >
-          {'Owner'}
+          {t('adminPanel.list.column1')}
           {/* {renderOrderByArrow("owner")} */}
         </a>
       ),
@@ -95,17 +96,20 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'rating')} href="#">
-          Rating {renderOrderByArrow('rating')}
+          {t('adminPanel.list.column2')} &nbsp;
+          {renderOrderByArrow('rating')}
         </a>
       ),
       dataIndex: 'rating',
       key: 'rating',
+      width: 100,
       render: (text: string) => <div>{text}</div>
     },
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'feedback')} href="#">
-          Review {renderOrderByArrow('feedback')}
+          {t('adminPanel.list.column3')}&nbsp;
+          {renderOrderByArrow('feedback')}
         </a>
       ),
       dataIndex: 'feedback',
@@ -113,16 +117,17 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       render: (text: string) => <div>{text}</div>
     },
     {
-      title: t('list.column.actions'),
+      title: t('adminPanel.list.column4'),
       key: 'actions',
       width: 200,
       render: (text: string, record: Review) => (
         <div>
-          <Link className="review-link" to={`/edit/review/${record.id}`}>
-            <Button color="primary" size="sm">
-              Edit
+          <Link className="review-link" to={`${ROUTES.editLink}/${record.id}`}>
+            <Button color="primary" shape="circle">
+              <Icon type="edit" />
             </Button>
           </Link>
+          <Divider type="vertical" />
           <Popconfirm
             title="Are you sure delete this review?"
             onConfirm={() => deleteReview(record.id)}
@@ -130,7 +135,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="danger" shape="circle" size="sm">
+            <Button type="danger" shape="circle">
               <Icon type="delete" />
             </Button>
           </Popconfirm>

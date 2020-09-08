@@ -14,18 +14,18 @@ const ReviewsFilterView = ({
   t
 }) => (
   <Form layout="inline">
-    <FormItem label="Username">
+    <FormItem label={t('adminPanel.filter.field1')}>
       <DebounceInput
         minLength={2}
         debounceTimeout={300}
-        placeholder="Username"
+        placeholder={t('adminPanel.filter.field1')}
         element={Input}
         value={searchText}
         onChange={e => onSearchTextChange(e.target.value)}
       />
     </FormItem>
-    &nbsp;
-    <FormItem label={t('users.list.item.role.label')}>
+    &nbsp; &nbsp;
+    <FormItem label={t('adminPanel.filter.field2')}>
       <Select
         name="modal"
         defaultValue={MODAL[0].value}
@@ -39,11 +39,12 @@ const ReviewsFilterView = ({
         ))}
       </Select>
     </FormItem>
-    &nbsp;
+    &nbsp; &nbsp;
     <FormItem>
       <Label>
         <Input type="checkbox" defaultChecked={isActive} onChange={() => onIsActiveChange(!isActive)} />
-        {t('users.list.item.active')}
+        &nbsp; &nbsp;
+        {t('adminPanel.filter.field3')}
       </Label>
     </FormItem>
   </Form>

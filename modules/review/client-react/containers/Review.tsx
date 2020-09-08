@@ -14,6 +14,7 @@ import {
 } from './ReviewOperations';
 interface ReviewProps {
   t: TranslateFunction;
+  filter: object;
   subscribeToMore: () => null;
 }
 

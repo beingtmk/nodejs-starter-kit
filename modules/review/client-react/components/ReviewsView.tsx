@@ -1,11 +1,11 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col } from 'antd';
+import { Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { TranslateFunction } from '@gqlapp/i18n-client-react';
+import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';
@@ -33,12 +33,15 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       {renderMetaData(t)}
       <Row>
         <Col span={12}>
-          <h2>{t('review.subTitle')}</h2>
+          <h2>{t('adminPanel.title')}</h2>
         </Col>
         <Col span={12}>
           <Row type="flex" justify="end">
             <Link to={ROUTES.add}>
-              <Button color="primary">{t('review.btn.add')}</Button>
+              <Button color="primary">
+                <Icon type="plus" />
+                {t('adminPanel.btn.add')}
+              </Button>
             </Link>
           </Row>
         </Col>
@@ -60,4 +63,4 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
   );
 };
 
-export default ReviewsView;
+export default translate('review')(ReviewsView);
