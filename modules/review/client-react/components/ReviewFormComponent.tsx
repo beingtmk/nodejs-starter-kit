@@ -5,10 +5,10 @@ import { withFormik } from 'formik';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import { RenderField, Button, Select, Option } from '@gqlapp/look-client-react';
+import { MODAL } from '@gqlapp/review-common';
 
 import UserAutoCompleteComponent from './UserAutoCompleteComponent';
 import { Review } from '../containers/Reviews.web';
-import { MODAL } from '../containers/Modal';
 
 const ReviewFormSchema = { rating: [required], feedback: [required] };
 const FormItem = Form.Item;

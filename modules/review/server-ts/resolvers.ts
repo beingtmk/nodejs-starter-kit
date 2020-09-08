@@ -99,7 +99,7 @@ export default (pubsub: any) => ({
         return false;
       }
     }),
-    refresh: async (obj: any, { input }: DeleteModalReviewInput, context: any) => {
+    refresh: async (obj: any, {}: object, context: any) => {
       await context.Review.refresh();
     }
   },

@@ -4,9 +4,9 @@ import { Icon, Row, Col, Spin } from 'antd';
 import Helmet from 'react-helmet';
 
 import settings from '@gqlapp/config';
+import { MODAL } from '@gqlapp/review-common';
 import { Form, FormItem, Select, Option } from '@gqlapp/look-client-react';
 
-import { MODAL } from '../containers/Modal';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import SuggestedListComponent from './SuggestedListComponent';
 

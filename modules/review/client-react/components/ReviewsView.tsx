@@ -6,6 +6,7 @@ import { Button, Row, Col } from 'antd';
 import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
+import { MODAL } from '@gqlapp/review-common';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';
 import ReviewListComponent from './ReviewListComponent.web';
@@ -51,10 +52,8 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
         filter={{
           isActive: true,
           modalId: 1,
-          modalName: 'event'
+          modalName: MODAL[1]
         }}
-        modalName={'event'}
-        modalId={1}
         t={t}
       />
     </PageLayout>

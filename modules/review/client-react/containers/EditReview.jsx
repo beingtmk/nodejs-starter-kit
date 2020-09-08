@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { message } from 'antd';
 import { PropTypes } from 'prop-types';
 
@@ -8,7 +8,6 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { withReview, withReviewEditing } from './ReviewOperations';
 
 import EditReviewView from '../components/EditReviewView.web';
-// import { useReviewWithSubscription } from './withSubscriptions';
 import ROUTES from '../routes';
 
 const EditReview = props => {
@@ -48,6 +47,7 @@ const EditReview = props => {
 EditReview.propTypes = {
   updateQuery: PropTypes.func,
   subscribeToMore: PropTypes.func,
+  editReview: PropTypes.func,
   review: PropTypes.object,
   history: PropTypes.object
 };
