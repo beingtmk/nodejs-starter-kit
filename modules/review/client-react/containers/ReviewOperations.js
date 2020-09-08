@@ -71,7 +71,7 @@ export const withReview = Component =>
 export const withReviews = Component =>
   graphql(REVIEWS_QUERY, {
     options: ({ orderBy, filter }) => {
-      // console.log('filter', filter);
+      console.log('filter', filter);
       return {
         variables: {
           limit,
@@ -190,9 +190,10 @@ export const withReviewEditing = Component =>
     })
   })(Component);
 
-export const subscribeToReviews = subscribeToMore =>
+export const subscribeToReviews = (subscribeToMore, filter) =>
   subscribeToMore({
     document: REVIEWS_SUBSCRIPTION,
+    variables: { filter },
     updateQuery: (
       prev,
       {
@@ -280,6 +281,81 @@ const onDeleteReviews = (prev, id) => {
       }
     }
   });
+};
+
+export const subscribeToReview = (subscribeToMore, history) =>
+  subscribeToMore({
+    document: REVIEWS_SUBSCRIPTION,
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            reviewUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      // if (mutation === 'CREATED') {
+      //   newResult = onAddReview(prev, node);
+      // } else
+      if (mutation === 'UPDATED') {
+        newResult = onEditReview(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteReview(history);
+      }
+      return newResult;
+    }
+  });
+
+// function onAddReview(prev, node) {
+//   // console.log('prev', prev, node);
+//   if (prev.reviews.edges.some(review => node.id === review.cursor)) {
+//     return update(prev, {
+//       reviews: {
+//         totalCount: {
+//           $set: prev.reviews.totalCount - 1
+//         },
+//         edges: {
+//           $set: prev.reviews.edges
+//         }
+//       }
+//     });
+//   }
+
+//   const filteredReviews = prev.reviews.edges.filter(review => review.node.id !== null);
+
+//   const edge = {
+//     cursor: node.id,
+//     node: node,
+//     __typename: 'ReviewEdges'
+//   };
+
+//   return update(prev, {
+//     reviews: {
+//       totalCount: {
+//         $set: prev.reviews.totalCount + 1
+//       },
+//       edges: {
+//         $set: [edge, ...filteredReviews]
+//       }
+//     }
+//   });
+// }
+
+function onEditReview(prev, node) {
+  console.log(prev);
+  return update(prev, {
+    review: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteReview = history => {
+  message.error('Review was deleted!');
+  return history.push(ROUTES.adminPanel);
 };
 
 // Filter

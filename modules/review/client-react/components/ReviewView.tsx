@@ -39,6 +39,13 @@ const renderMetaData = (t: TranslateFunction) => (
   />
 );
 
+const NoReviews: React.FC = () => (
+  <div align="center">
+    <br />
+    Not review yet
+  </div>
+);
+
 const ReviewView: React.SFC<ReviewViewProps> = props => {
   const { reviews, filter, loading, ratingAverage, handleHelpful, addReview, deleteReview, t } = props;
   const [photo, setPhoto] = useState(false);
@@ -110,7 +117,14 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
             </h3>
           </Col>
         </Col>
-        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading ? <Spin /> : null}</Col>
+        <Col span={24}>
+          {loading && (
+            <div align="center">
+              <Spin text="Loading" />
+            </div>
+          )}
+        </Col>
+        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : <NoReviews />}</Col>
       </Row>
     </>
   );

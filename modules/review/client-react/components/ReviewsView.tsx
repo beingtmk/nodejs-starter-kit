@@ -52,7 +52,7 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
         filter={{
           isActive: true,
           modalId: 1,
-          modalName: MODAL[1]
+          modalName: MODAL[1].value
         }}
         t={t}
       />

@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { message } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import { compose, removeTypename } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withReview, withReviewEditing } from './ReviewOperations';
+import { withReview, withReviewEditing, subscribeToReview } from './ReviewOperations';
 
 import EditReviewView from '../components/EditReviewView.web';
 import ROUTES from '../routes';
 
 const EditReview = props => {
+  const { subscribeToMore, history } = props;
+
+  useEffect(() => {
+    const subscribe = subscribeToReview(subscribeToMore, history);
+    return () => subscribe();
+  });
+
   const onSubmit = async values => {
     message.destroy();
     message.loading('Please wait...', 0);

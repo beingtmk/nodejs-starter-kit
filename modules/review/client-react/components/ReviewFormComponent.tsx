@@ -37,6 +37,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
   const { dirty, values, onSearchTextChange, handleSubmit, setFieldValue, showModal } = props;
   // const [load, setLoad] = useState(true);
 
+  // console.log('props', props);
   return (
     <Form onSubmit={handleSubmit}>
       {showModal && (
