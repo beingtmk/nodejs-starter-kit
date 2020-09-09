@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 class AddButton extends React.Component {
   render() {
-    const { children = 'Add', type, color = 'default', size, ...props } = this.props;
+    const { children = 'Add', type, color = 'primary', size, ...props } = this.props;
 
     let buttonSize = 'default';
 

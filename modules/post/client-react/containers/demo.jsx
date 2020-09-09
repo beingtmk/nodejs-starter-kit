@@ -65,9 +65,7 @@ class Demo extends Component {
                 <EditIcon onClick={() => this.handleClick('EditIcon')} />
               </Col>
               <Col span={12}>
-                <EditButton color="primary" onClick={() => this.handleClick('EditButton')}>
-                  Edit
-                </EditButton>
+                <EditButton onClick={() => this.handleClick('EditButton')}>Edit</EditButton>
               </Col>
             </Row>
             <Row justify="center" style={{ padding: 10 }}>

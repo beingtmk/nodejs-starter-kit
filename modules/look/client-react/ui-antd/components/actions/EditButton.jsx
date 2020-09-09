@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 class EditButton extends React.Component {
   render() {
-    const { children = 'Edit', type, color = 'default', size, ...props } = this.props;
+    const { children = 'Edit', type, color = 'primary', size, ...props } = this.props;
 
     let buttonSize = 'default';
     if (size === 'sm') {
