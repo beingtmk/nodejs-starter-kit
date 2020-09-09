@@ -35,8 +35,18 @@ const UserOrganisationsNavItem = (props) => {
       } else if (userGroups && userGroups.length === 1) {
         return (
           <MenuItem key={`my-organisations-${userGroups[0].title}`}>
-            <Avatar size={15} style={{marginTop:'-5px', marginRight:'5px'}} src={userGroups[0].avatar} />
-            {userGroups[0].title}
+            <NavLink
+              to={`/group/${userGroups[0].id}/info`}
+              className="nav-link"
+              activeClassName="active"
+            >
+              <Avatar
+                size={15}
+                style={{ marginTop: "-5px", marginRight: "5px" }}
+                src={userGroups[0].avatar}
+              />
+              {userGroups[0].title}
+            </NavLink>
           </MenuItem>
         );
       } else {
@@ -54,8 +64,18 @@ const UserOrganisationsNavItem = (props) => {
           >
             {userGroups.map((group, key) => (
               <MenuItem key={`my-organisations-${group.title}`}>
-                <Avatar size={15} style={{marginTop:'-5px', marginRight:'5px'}} src={group.avatar} />
-                {group.title}
+                <NavLink
+                  to={`/group/${group.id}/info`}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <Avatar
+                    size={15}
+                    style={{ marginTop: "-5px", marginRight: "5px" }}
+                    src={group.avatar}
+                  />
+                  {group.title}
+                </NavLink>
               </MenuItem>
             ))}
           </SubMenu>
