@@ -20,7 +20,7 @@ class DeleteButton extends React.Component {
         icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
         onConfirm={onClick}
       >
-        <Button type={color} htmlType={type} size={buttonSize} icon="delete" {...props}>
+        <Button type={color} htmlType={type} block size={buttonSize} icon="delete" {...props}>
           {children}
         </Button>
       </Popconfirm>

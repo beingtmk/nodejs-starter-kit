@@ -15,7 +15,7 @@ class AddButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} size={buttonSize} icon="plus" {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon="plus" {...props}>
         {children}
       </Button>
     );

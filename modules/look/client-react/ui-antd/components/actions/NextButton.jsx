@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 class NextButton extends React.Component {
   render() {
-    const { children = 'Next', color = 'default', type, size, ...props } = this.props;
+    const { children = 'Next', color = 'primary', type, size, ...props } = this.props;
 
     let buttonSize = 'default';
 
@@ -15,7 +15,7 @@ class NextButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} size={buttonSize} icon="arrow-right" {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon="arrow-right" {...props}>
         {children}
       </Button>
     );

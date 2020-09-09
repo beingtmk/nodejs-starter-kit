@@ -5,7 +5,7 @@ import { Button, Popconfirm, Icon } from 'antd';
 class PublishIcon extends React.Component {
   render() {
     const { type, size, publish = 'false', onClick, ...props } = this.props;
-    let { color = 'default' } = this.props;
+    let { color = 'primary' } = this.props;
     let buttonSize = 'default';
 
     if (size === 'sm') {

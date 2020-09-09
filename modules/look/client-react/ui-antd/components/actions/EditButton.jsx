@@ -14,7 +14,7 @@ class EditButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} size={buttonSize} icon="edit" {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon="edit" {...props}>
         {children}
       </Button>
     );

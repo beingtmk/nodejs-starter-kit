@@ -5,7 +5,7 @@ import { Button, Popconfirm, Icon } from 'antd';
 class ActiveIcon extends React.Component {
   render() {
     const { type, size, active = 'false', onClick, ...props } = this.props;
-    let { color = 'default' } = this.props;
+    let { color = 'primary' } = this.props;
 
     let buttonSize = 'default';
 

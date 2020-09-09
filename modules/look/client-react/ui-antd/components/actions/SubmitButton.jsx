@@ -15,7 +15,7 @@ class SubmitButton extends React.Component {
     }
     const ADButton = ({ onClick }) => {
       return (
-        <Button type={color} htmlType={type} size={buttonSize} icon="enter" {...props} onClick={onClick}>
+        <Button type={color} htmlType={type} block size={buttonSize} icon="enter" {...props} onClick={onClick}>
           {children}
         </Button>
       );

@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 class NextIcon extends React.Component {
   render() {
-    const { color = 'default', type, size, ...props } = this.props;
+    const { color = 'primary', type, size, ...props } = this.props;
 
     let buttonSize = 'default';
 

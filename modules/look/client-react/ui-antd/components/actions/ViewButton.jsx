@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 class ViewButton extends React.Component {
   render() {
-    const { children = 'View', type, color = 'default', size, ...props } = this.props;
+    const { children = 'View', type, color = 'primary', size, ...props } = this.props;
 
     let buttonSize = 'default';
 
@@ -15,7 +15,7 @@ class ViewButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} size={buttonSize} icon="eye" {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon="eye" {...props}>
         {children}
       </Button>
     );

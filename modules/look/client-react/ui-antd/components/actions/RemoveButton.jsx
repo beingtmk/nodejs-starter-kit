@@ -15,7 +15,7 @@ class RemoveButton extends React.Component {
     }
     const ADButton = ({ onClick }) => {
       return (
-        <Button type={color} htmlType={type} size={buttonSize} icon="minus" {...props} onClick={onClick}>
+        <Button type={color} htmlType={type} block size={buttonSize} icon="minus" {...props} onClick={onClick}>
           {children}
         </Button>
       );
