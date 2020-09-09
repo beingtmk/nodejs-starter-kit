@@ -56,7 +56,7 @@ exports.up = function(knex) {
       //   table.string('image_url');
       //   table.timestamps(false, true);
       // })
-      .createTable('rating_rating', table => {
+      .createTable('average_rating', table => {
         table.increments();
         table.string('modal_name');
         table.integer('modal_id');
