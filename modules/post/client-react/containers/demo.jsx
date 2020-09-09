@@ -22,7 +22,7 @@ import {
   PublishIcon,
   PublishButton
 } from '@gqlapp/look-client-react';
-import { Row, Col } from 'antd';
+import { Row, Col, message } from 'antd';
 
 class Demo extends Component {
   state = {
@@ -33,15 +33,19 @@ class Demo extends Component {
   };
   handleClick = item => {
     console.log(item);
+    message.info(item);
   };
   handleActive = item => {
     console.log(item);
+    message.info(item);
     if (this.state.active === 'false') {
       this.setState({ active: 'true', activeName: 'Active' });
     } else this.setState({ active: 'false', activeName: 'Deactive' });
   };
   handlePublish = item => {
     console.log(item);
+    message.info(item);
+
     if (this.state.publish === 'false') {
       this.setState({ publish: 'true', publishName: 'Published' });
     } else this.setState({ publish: 'false', publishName: 'Not Publish' });
