@@ -12,7 +12,7 @@ import {
   PageLayout
 } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
-// import UserVerificationsComponent from './verification/UserVerificationsComponent';
+import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
 import settings from '../../../../settings';
@@ -63,7 +63,7 @@ class ProfileView extends React.Component {
           {renderMetaData(t)}
 
           <Row gutter={5}>
-            <Col xs={{ span: 24 }} lg={{ span: 24 }}>
+            <Col xs={{ span: 24 }} lg={{ span: 16 }}>
               <Card style={{ display: 'block' }}>
                 <h2
                   style={{
@@ -174,9 +174,8 @@ class ProfileView extends React.Component {
                   currentUser.role === 'user' && <StripeSubscriptionProfile />}
               </Card>
             </Col>
-            {/* <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+            <Col xs={{ span: 24 }} lg={{ span: 8 }}>
               <Row gutter={10} type="flex" justify="space-around" align="middle">
-                
                 <Col xs={{ span: 24 }} md={{ span: 8 }} lg={{ span: 24 }} style={{ height: '100%' }}>
                   <UserVerificationsComponent
                     data={currentUser.verification}
@@ -184,7 +183,7 @@ class ProfileView extends React.Component {
                   />
                 </Col>
               </Row>
-            </Col> */}
+            </Col>
           </Row>
         </PageLayout>
       );

@@ -13,6 +13,33 @@ exports.up = function(knex) {
       table.increments();
       table.string('first_name');
       table.string('last_name');
+      table.string('mobile');
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('user')
+        .onDelete('CASCADE');
+      table.timestamps(false, true);
+    }),
+    knex.schema.createTable('user_verification', table => {
+      table.increments();
+      table.boolean('is_email_verified').defaultTo(false);
+      table.boolean('is_mobile_verified').defaultTo(false);
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('user')
+        .onDelete('CASCADE');
+      table.timestamps(false, true);
+    }),
+    knex.schema.createTable('user_mobile', table => {
+      table.increments();
+      table.string('mobile');
+      table.integer('otp');
+      table.boolean('is_verified').defaultTo(false);
+
       table
         .integer('user_id')
         .unsigned()
@@ -90,6 +117,8 @@ exports.down = function(knex) {
     knex.schema.dropTable('auth_google'),
     knex.schema.dropTable('auth_github'),
     knex.schema.dropTable('auth_linkedin'),
+    knex.schema.dropTable('user_mobile'),
+    knex.schema.dropTable('user_verification'),
     knex.schema.dropTable('user_profile'),
     knex.schema.dropTable('user')
   ]);
