@@ -368,7 +368,39 @@ export default (pubsub: PubSub) => ({
             data && data.members.find((meM) => meM.id === groupMemberId);
 
           let user;
-
+          const addMemberToParentGroup = async (groupId, parentGroupId) => {
+            const currentGroup = await Group.group(groupId);
+            const parentGroup = await Group.group(parentGroupId);
+            const comparer = (otherArray) => {
+              return function(current) {
+                return (
+                  otherArray.filter(function(other) {
+                    return other.email == current.email;
+                  }).length == 0
+                );
+              };
+            };
+            var onlyInCurrentGroup = currentGroup.members.filter(
+              comparer(parentGroup.members)
+            );
+            onlyInCurrentGroup.map(async (ii) => {
+              var addMemberInput = ii;
+              delete addMemberInput.id;
+              delete addMemberInput.createdAt;
+              delete addMemberInput.updatedAt;
+              delete addMemberInput.member;
+              addMemberInput.groupId = parentGroupId;
+              addMemberInput.type = MemberType.MEMBER;
+              addMemberInput.status = MemberStatus.ADDED;
+              await GroupMember.addGroupMember(addMemberInput);
+            });
+            if (parentGroup.groupId) {
+              addMemberToParentGroup(parentGroup.id, parentGroup.groupId);
+            }
+          };
+          if (data.groupId) {
+            addMemberToParentGroup(data.id, data.groupId);
+          }
           user = await User.getUserByEmail(currentGroup.email);
           const sent = await mailer.sendMail({
             from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
