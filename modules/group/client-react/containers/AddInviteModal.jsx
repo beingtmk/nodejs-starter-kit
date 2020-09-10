@@ -19,7 +19,7 @@ class AddInviteModal extends React.Component {
     const { addGroupMemberInvite, groupId } = this.props;
     addGroupMemberInvite({
       groupId,
-      userEmail: e.userEmail,
+      email: e.userEmail,
       type: e.type,
       status: MemberStatus.ADDED,
     });
@@ -28,13 +28,13 @@ class AddInviteModal extends React.Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = (e) => {
     this.setState({
       visible: false,
     });
   };
 
-  handleCancel = e => {
+  handleCancel = (e) => {
     this.setState({
       visible: false,
     });
@@ -42,13 +42,14 @@ class AddInviteModal extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <Button
-          type="primary"
           onClick={this.showModal}
           icon="user-add"
           size="large"
-        />
+        >
+          Add Single Member
+        </Button>
         <Modal
           title="Enter User Email"
           visible={this.state.visible}
@@ -59,7 +60,7 @@ class AddInviteModal extends React.Component {
         >
           <InviteFormComponent onSubmit={this.handleSubmit} />
         </Modal>
-      </div>
+      </>
     );
   }
 }
@@ -78,10 +79,9 @@ export default compose(
           });
           message.destroy();
         } catch (e) {
-            message.destroy();
+          message.destroy();
           message.error(`${e}`);
           console.error(e);
-
         }
       },
     }),

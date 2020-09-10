@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import {message} from 'antd';
 import { compose } from "@gqlapp/core-common";
 import { graphql } from "react-apollo";
 import { translate } from "@gqlapp/i18n-client-react";
-import GroupInfoMembersView from "../components/GroupInfoMembersView";
+import AddMembersFromParentGroupComponent from "../components/AddMembersFromParentGroupComponent";
 import GROUP_QUERY from "../graphql/GroupQuery.graphql";
 import ADD_GROUP_MEMBER from "../graphql/AddGroupMemberInvite.graphql";
-import EDIT_GROUP_MEMBER from "../graphql/EditGroupMember.graphql";
+import ADD_GROUP_MEMBERS from "../graphql/AddGroupMembers.graphql";
 import CHANGE_GROUP_MEMBER_TYPE from "../graphql/ChangeGroupMemberType.graphql";
 import GROUP_ITEM_SUBSCRIPTION from "../graphql/GroupItemSubscription.graphql";
 
@@ -33,6 +34,21 @@ const subscribeToGroupPage = (subscribeToMore, id, history, navigation) =>
   });
 
 const ParentGroupMembers = (props) => {
+  const { childGroup, group } = props;
+  const comparer = (otherArray) => {
+    return function(current) {
+      return (
+        otherArray.filter(function(other) {
+          return other.email == current.email;
+        }).length == 0
+      );
+    };
+  };
+  var onlyInParentGroup =
+    group &&
+    group.members &&
+    group.members.filter(comparer(childGroup.members));
+
   useEffect(() => {
     if (props.group) {
       const {
@@ -50,12 +66,18 @@ const ParentGroupMembers = (props) => {
       return () => subscribe();
     }
   });
-  console.log('parentGroupMembers');
-  return <h1>ParentGroupMembers</h1>;
+  console.log("childGroupMembers", group, childGroup);
+  return (
+    <>
+      {onlyInParentGroup && onlyInParentGroup.length !== 0 && (
+        <AddMembersFromParentGroupComponent
+          {...props}
+          onlyInParentGroup={onlyInParentGroup}
+        />
+      )}
+    </>
+  );
 };
-{
-  /* <GroupInfoMembersView {...props} /> */
-}
 
 ParentGroupMembers.propTypes = {
   match: PropTypes.object,
@@ -65,7 +87,9 @@ export default compose(
   graphql(GROUP_QUERY, {
     options: (props) => {
       return {
-        variables: { id: Number(props.parentGroupId) },
+        variables: {
+          id: Number(props.childGroup && props.childGroup.groupId),
+        },
       };
     },
     props({ data: { loading, error, group, subscribeToMore, updateQuery } }) {
@@ -79,46 +103,38 @@ export default compose(
         message.destroy();
         message.loading("Please wait...", 0);
         try {
-          let ansData = await mutate({
+          let addData = await mutate({
             variables: {
               input: values,
             },
           });
+          message.destroy();
+          message.success("Success!");
         } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
           console.error(e);
         }
       },
     }),
   }),
-  graphql(EDIT_GROUP_MEMBER, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      editGroupMember: async (values) => {
+  graphql(ADD_GROUP_MEMBERS, {
+    props: ({ mutate }) => ({
+      addGroupMembers: async (values) => {
         message.destroy();
         message.loading("Please wait...", 0);
         try {
-          let ansData = await mutate({
-            variables: {
-              input: values,
-            },
+          const {
+            data: { addGroupMembers },
+          } = await mutate({
+            variables: { input: values },
           });
+
+          message.destroy();
+          message.success("Success!");
         } catch (e) {
-          console.error(e);
-        }
-      },
-    }),
-  }),
-  graphql(CHANGE_GROUP_MEMBER_TYPE, {
-    props: ({ ownProps: { history, navigation }, mutate }) => ({
-      changeGroupMemberType: async (values) => {
-        // message.destroy();
-        // message.loading('Please wait...', 0);
-        try {
-          let ansData = await mutate({
-            variables: {
-              input: values,
-            },
-          });
-        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
           console.error(e);
         }
       },

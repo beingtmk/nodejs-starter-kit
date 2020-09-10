@@ -355,8 +355,7 @@ export default (pubsub: PubSub) => ({
       ) => {
         try {
           var modifiedInput = input;
-          modifiedInput.email = input.userEmail;
-          delete modifiedInput.userEmail;
+
           const groupMemberId = await GroupMember.addGroupMember(modifiedInput);
           const data = await Group.group(input.groupId);
           const dataGroupMember = await GroupMember.groupMember(groupMemberId);
@@ -402,18 +401,85 @@ export default (pubsub: PubSub) => ({
             addMemberToParentGroup(data.id, data.groupId);
           }
           user = await User.getUserByEmail(currentGroup.email);
-          const sent = await mailer.sendMail({
-            from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-              process.env.EMAIL_USER}>`,
-            to: currentGroup.email,
-            subject: `${settings.app.name} Registration`,
-            html: user
-              ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-                <p>Group Link - <a href="${url2}">${url2}</a></p>`
-              : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-                <p>Register - <a href="${url1}">${url1}</a></p>`,
+          // const sent = await mailer.sendMail({
+          //   from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+          //     process.env.EMAIL_USER}>`,
+          //   to: currentGroup.email,
+          //   subject: `${settings.app.name} Registration`,
+          //   html: user
+          //     ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
+          //     : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
+          // });
+          // log.info(`Sent mail to: ${currentGroup.email}`);
+
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
+            groupsUpdated: {
+              mutation: "UPDATED",
+              parentGroupId: data.groupId,
+              node: data,
+            },
           });
-          log.info(`Sent mail to: ${currentGroup.email}`);
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "CREATED",
+          //     groupId: dataGroupMember.groupId,
+          //     node: dataGroupMember,
+          //   },
+          // });
+          pubsub.publish(GROUP_SUBSCRIPTION, {
+            groupItemUpdated: {
+              mutation: "UPDATED",
+              id: data.id,
+              node: data,
+            },
+          });
+          return true;
+        } catch (e) {
+          return e;
+        }
+      }
+    ),
+
+    addGroupMembers: withAuth(
+      async (
+        obj: any,
+        { input }: any,
+        { Group, GroupMember, mailer, User }: any
+      ) => {
+        try {
+          var users = [];
+          input.members.map(async (inputItem) => {
+            var modifiedInput = inputItem;
+            const groupMemberId = await GroupMember.addGroupMember(
+              modifiedInput
+            );
+            const dataGroupMember = await GroupMember.groupMember(
+              groupMemberId
+            );
+            const u = await User.getUserByEmail(dataGroupMember.email);
+            users.push(dataGroupMember);
+          });
+          const data = await Group.group(input.groupId);
+
+          const url1 = `${__WEBSITE_URL__}/register`;
+          const url2 = `${__WEBSITE_URL__}/group/${input.groupId}`;
+
+          // users.map(async (userData) => {
+          //   const sent = await mailer.sendMail({
+          //     from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+          //       process.env.EMAIL_USER}>`,
+          //     to: userData.email,
+          //     subject: `${settings.app.name} Registration`,
+          //     html: userData.member
+          //       ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //         <p>Group Link - <a href="${url2}">${url2}</a></p>`
+          //       : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //         <p>Register - <a href="${url1}">${url1}</a></p>`,
+          //   });
+          //   log.info(`Sent mail to: ${userData.email}`);
+          // });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {

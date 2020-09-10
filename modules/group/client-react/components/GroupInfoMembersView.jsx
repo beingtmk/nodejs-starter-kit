@@ -20,12 +20,15 @@ import moment from "moment";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import { Name, emptyCover } from "../constants";
 import AddInviteModal from "../containers/AddInviteModal";
+import AddMembersFromParentGroup from "../containers/AddMembersFromParentGroup";
+
 import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 const { Meta } = Card;
 const { Title, Text, Paragraph } = Typography;
 const SelectOption = Select.Option;
 const { TabPane } = Tabs;
+const ButtonGroup = Button.Group;
 
 const GroupInfoMembersView = ({
   group,
@@ -55,21 +58,7 @@ const GroupInfoMembersView = ({
   return (
     <GroupLayout id={gid} path={match && match.path}>
       {
-        <Tabs
-          defaultActiveKey="1"
-          tabBarExtraContent={
-            <Row gutter={24}>
-              <Col span={12}>
-                <Link to={`/group/members-edit/${group && group.id}`}>
-                  <Button type="primary" icon="usergroup-add" size="large" />
-                </Link>
-              </Col>
-              <Col span={12}>
-                <AddInviteModal groupId={group && group.id} />
-              </Col>
-            </Row>
-          }
-        >
+        <Tabs defaultActiveKey="1">
           <TabPane
             tab={
               <span>
@@ -171,6 +160,34 @@ const GroupInfoMembersView = ({
                 <Empty />
               )}
             </Row>
+          </TabPane>
+          <TabPane
+            tab={
+              <span>
+                <Title className="group-members-tabs-heading" level={4}>
+                  <Icon type="plus" /> Add Members
+                </Title>
+              </span>
+            }
+            key="3"
+          >
+            <Button.Group size="large">
+              <Button
+                type="primary"
+                href={`/group/members-edit/${group && group.id}`}
+                icon="usergroup-add"
+                size="large"
+              >
+                Manage Multiple
+              </Button>
+
+              <AddInviteModal groupId={group && group.id} />
+            </Button.Group>
+            {group && group.groupId && (
+              <>
+                <AddMembersFromParentGroup childGroup={group} />
+              </>
+            )}
           </TabPane>
         </Tabs>
       }
