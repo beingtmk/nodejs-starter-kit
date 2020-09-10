@@ -9,7 +9,7 @@ import {
 } from "./sql";
 import settings from "@gqlapp/config";
 import { log } from "@gqlapp/core-common";
-
+import { MemberType, MemberStatus } from "@gqlapp/group-common";
 const GROUPS_SUBSCRIPTION = "groups_subscription";
 const GROUP_SUBSCRIPTION = "group_subscription";
 // // const GMEMBER_SUBSCRIPTION = "groupMembers_subscription";
@@ -257,7 +257,11 @@ export default (pubsub: PubSub) => ({
       }
     ),
     upsertGroup: withAuth(
-      async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
+      async (
+        obj: any,
+        { input }: EditGroup,
+        { Group, mailer, User, GroupMember }: any
+      ) => {
         try {
           await Group.upsertGroup(input);
           const data = await Group.group(input.id);
@@ -266,28 +270,61 @@ export default (pubsub: PubSub) => ({
           const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
 
           let user;
-          await input.members.map(async (item) => {
-            if (!item.id && mailer) {
-              user = await User.getUserByEmail(item.email);
-              const sent = await mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-                  process.env.EMAIL_USER}>`,
-                to: item.email,
-                subject: `${settings.app.name} Registration`,
-                html: user
-                  ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-                <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-                <p>Register - <a href="${url1}">${url1}</a></p>`,
-              });
-              log.info(`Sent mail to: ${item.email}`);
-              if (!sent) {
-                throw new Error("Email couldn't be sent");
-              } else {
-                return true;
-              }
+          const addMemberToParentGroup = async (groupId, parentGroupId) => {
+            const currentGroup = await Group.group(groupId);
+            const parentGroup = await Group.group(parentGroupId);
+            const comparer = (otherArray) => {
+              return function(current) {
+                return (
+                  otherArray.filter(function(other) {
+                    return other.email == current.email;
+                  }).length == 0
+                );
+              };
+            };
+            var onlyInCurrentGroup = currentGroup.members.filter(
+              comparer(parentGroup.members)
+            );
+            onlyInCurrentGroup.map(async (ii) => {
+              var addMemberInput = ii;
+              delete addMemberInput.id;
+              delete addMemberInput.createdAt;
+              delete addMemberInput.updatedAt;
+              delete addMemberInput.member;
+              addMemberInput.groupId = parentGroupId;
+              addMemberInput.type = MemberType.MEMBER;
+              addMemberInput.status = MemberStatus.ADDED;
+              await GroupMember.addGroupMember(addMemberInput);
+            });
+            if (parentGroup.groupId) {
+              addMemberToParentGroup(parentGroup.id, parentGroup.groupId);
             }
-          });
+          };
+          if (data.groupId) {
+            addMemberToParentGroup(data.id, data.groupId);
+          }
+          // await input.members.map(async (item) => {
+          //   if (!item.id && mailer) {
+          //     user = await User.getUserByEmail(item.email);
+          //     const sent = await mailer.sendMail({
+          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+          //         process.env.EMAIL_USER}>`,
+          //       to: item.email,
+          //       subject: `${settings.app.name} Registration`,
+          //       html: user
+          //         ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
+          //         : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
+          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
+          //     });
+          //     log.info(`Sent mail to: ${item.email}`);
+          //     if (!sent) {
+          //       throw new Error("Email couldn't be sent");
+          //     } else {
+          //       return true;
+          //     }
+          //   }
+          // });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -476,7 +513,7 @@ export default (pubsub: PubSub) => ({
     changeGroupMemberType: withAuth(
       async (obj: any, { input }: any, { GroupMember, Group }: any) => {
         try {
-          console.log('changeGroupMemberType', input);
+          console.log("changeGroupMemberType", input);
           const updated = await GroupMember.changeGroupMemberType(input);
 
           const data = await GroupMember.groupMember(input.id);
@@ -611,7 +648,7 @@ export default (pubsub: PubSub) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(GROUP_SUBSCRIPTION),
         (payload, variables) => {
-          console.log('groupItemSubsRes', payload, variables);
+          console.log("groupItemSubsRes", payload, variables);
           return (
             payload.groupItemUpdated &&
             payload.groupItemUpdated.node &&

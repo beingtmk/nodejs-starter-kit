@@ -33,7 +33,7 @@ class GroupInfoView extends React.Component {
   };
 
   render() {
-    const { group, match, navigation } = this.props;
+    const { group, match, navigation, history } = this.props;
     let id = 0;
     if (match) {
       id = match.params.id;

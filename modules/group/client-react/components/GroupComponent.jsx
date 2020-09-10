@@ -1,8 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { translate } from "@gqlapp/i18n-client-react";
-import { Link } from "react-router-dom";
-import { Col, Row, Card, Divider, Alert, Button, Empty, Typography } from "antd";
+import { Link, NavLink } from "react-router-dom";
+import {
+  Col,
+  Row,
+  Card,
+  Divider,
+  Alert,
+  Button,
+  Empty,
+  Typography,
+  PageHeader,
+  Icon,
+} from "antd";
 
 import MiniBlogImageComponent from "@gqlapp/blog-client-react/components/MiniBlogImageComponent";
 
@@ -10,8 +21,8 @@ import moment from "moment";
 import { Name, emptyCover } from "../constants";
 
 const { Meta } = Card;
-const { Title, Text, Paragraph} = Typography;
-const GroupComponent = ({ group }) => {
+const { Title, Text, Paragraph } = Typography;
+const GroupComponent = ({ group, history }) => {
   let invites = [],
     joinees = [];
 
@@ -28,117 +39,54 @@ const GroupComponent = ({ group }) => {
       // md={{ span: 22, offset: 1 }}
       // lg={{ span: 20, offset: 2 }}
       >
-        <Title>Group Info</Title>
-        <Divider />
-        <Card
-          cover={
-            <div align='center'>
-            <img alt='' src={group.avatar}  className='group-info-avatar' />
-            </div>
+        <PageHeader
+          style={{ padding: 0 }}
+          title={
+            <Title style={{ display: "inline" }} level={2}>
+              {group.title}
+            </Title>
           }
-          className="blog-detailview-card"
-          style={{position:'relative'}}
-          bodyStyle={{ padding: "10px", background:'transparent' }}
+          backIcon={
+            group.groupId ? (
+              <Icon type="arrow-left" style={{ fontSize: "25px" }} />
+            ) : (
+              <Icon type="team" style={{ fontSize: "25px" }} />
+            )
+          }
+          onBack={() =>
+            group.groupId ? history.push(`/group/${group.groupId}/info`) : null
+          }
+          extra={[
+            <Link to={`/group/edit/${group.id}`}>
+              <Button icon="edit" type="primary" size="small" ghost>
+                Edit
+              </Button>
+            </Link>,
+          ]}
         >
-          <Title level={2}>
-          {group.title}
-          </Title>
-          <Paragraph>
-          {group.description}
-          </Paragraph>
+          <Row type="flex">
+            <Col xs={{span:24, order:2}} md={{span:16, order:1}} lg={{span:18, order:1}}>
+              <Paragraph style={{ display: "inline" }}>
+                {group.description}
+              </Paragraph>
 
-          <br />
+              <Text>
+                Group Type: <Text mark>{group.groupType}</Text>
+              </Text>
 
-            <Text>Group Type: <Text mark>{group.groupType}</Text></Text>
-
-
-          <br />
-          <Text>Created At: <Text >{moment(group.createdAt).format(
-                "MMM DD, YYYY"
-              )}</Text></Text>
-
-          <Link to={`/group/edit/${group.id}`}>
-            <Button
-              icon="edit"
-              type="primary"
-              size="small"
-              ghost
-              style={{ position:'absolute', top:'0', right:'0' }}
-            >
-              Edit
-            </Button>
-          </Link>
-
-          {/* <Divider />
-            <h1
-              style={{
-                padding: '0 20px'
-              }}
-            >
-              Members
-            </h1>
-            <Divider />
-            {joinees.length > 0 ? (
-              joinees.map(item => (
-                <Col xs={24} sm={12} md={12} lg={8}>
-                  <Card
-                    hoverable
-                    cover={
-                      <img
-                        style={{ height: '200px' }}
-                        alt={item.email}
-                        src={(item.member.profile && item.member.profile.avatar) || emptyCover}
-                      />
-                    }
-                  >
-                    <Meta
-                      title={
-                        <span
-                          style={{
-                            fontSize: '15px'
-                          }}
-                        >
-                          <strong>{item.member.email}</strong>
-                          <br />
-                          <span>{Name(item.member.profile)}</span>
-                          <br />
-                          <span>
-                            Username: <i>{item.member.username} </i>
-                          </span>
-                        </span>
-                      }
-                      description={`Added on ${moment(item.createdAt).format('MMM DD, YYYY')}`}
-                    />
-                    <br />
-                    <Alert type="success" message={item.type} />
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <Empty />
-            )}
-            <br />
-            <Divider />
-            <h1
-              style={{
-                padding: '0 20px'
-              }}
-            >
-              Invites
-            </h1>
-            <Divider />
-            {invites.length > 0 ? (
-              invites.map(item => (
-                <Col xs={24} sm={12} md={12} lg={8}>
-                  <Card hoverable title={item.email}>
-                    <Alert type="warning" message="Invited" />
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <Empty />
-            )} */}
-        </Card>
+              <br />
+              <Text>
+                Created At:{" "}
+                <Text>{moment(group.createdAt).format("MMM DD, YYYY")}</Text>
+              </Text>
+            </Col>
+            <Col xs={{span:24, order:1}} md={{span:8, order:2}} lg={{span:6, order:2}} align="right">
+              <div align="center" style={{ overflow: "hidden" }}>
+                <img alt="" src={group.avatar} className="group-info-avatar" />
+              </div>
+            </Col>
+          </Row>
+        </PageHeader>
       </Col>
     </Row>
   );

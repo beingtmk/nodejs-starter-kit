@@ -4,6 +4,7 @@ fragment GroupInfo on Group {
   avatar
   description
   groupType
+  groupId
   members {
     id
     email
