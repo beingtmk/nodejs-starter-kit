@@ -12,9 +12,11 @@ import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 const { SubMenu } = Menu;
 
 import resources from './locales';
+import ROUTES from './routes';
+
 const MyListingsNavItemAccount = () => {
   return (
-    <NavLink to="/my-listings">
+    <NavLink to={ROUTES.myListing}>
       <div>
         <Icon type="solution" /> {'My Listings'}
       </div>
@@ -24,7 +26,7 @@ const MyListingsNavItemAccount = () => {
 
 const NavLinkMyListingsBookmark = () => {
   return (
-    <NavLink to="/my-listings-bookmark">
+    <NavLink to={ROUTES.listingBookmark}>
       <div>
         <Icon type="star" /> {'My Listings Bookmarks'}
       </div>
@@ -33,83 +35,85 @@ const NavLinkMyListingsBookmark = () => {
 };
 
 const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
-  <NavLink to="/my-listings" className=" AccDetItem" activeClassName="AccDetItemSelected">
+  <NavLink to={ROUTES.myListing} className=" AccDetItem" activeClassName="AccDetItemSelected">
     <Icon style={{ paddingRight: '5px' }} type="solution" />
     {t('listing:navLinkMyListings')}
   </NavLink>
 ));
 
 const NavLinkTestWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/listing_catalogue" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.listingCatalogue} className="nav-link" activeClassName="active">
     {t('listing:navLink')}
   </NavLink>
 ));
 
 const NavLinkAdminWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/listings" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     {t('listing:navLink')}
   </NavLink>
 ));
 
 export default new ClientModule({
   route: [
-    <Route
-      exact
-      path="/listing-detail/:id"
-      component={loadable(() => import('./containers/ListingDetail').then(c => c.default))}
-    />,
     <AuthRoute
       exact
       role={['admin']}
-      path="/listings"
+      path={ROUTES.adminPanel}
       component={loadable(() => import('./containers/Listing.web').then(c => c.default))}
     />,
-    <AuthRoute
-      exact
-      role={['admin', 'user']}
-      path="/edit/listing/:id"
-      component={loadable(() => import('./containers/EditListing.web').then(c => c.default))}
-    />,
-    <AuthRoute
-      exact
-      role={['admin', 'user']}
-      path="/new/listing"
-      component={loadable(() => import('./containers/AddListing.web').then(c => c.default))}
-    />,
+
     <Route
       exact
-      path="/listing_catalogue"
+      path={ROUTES.listingCatalogue}
       component={loadable(() => import('./containers/ListingCatalogue.web').then(c => c.default))}
     />,
     <AuthRoute
       redirect="/profile"
       role={['user', 'admin']}
       exact
-      path="/my-listings"
+      path={ROUTES.myListing}
       component={loadable(() => import('./containers/MyListings').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path={ROUTES.listingDetail}
+      component={loadable(() => import('./containers/ListingDetail').then(c => c.default))}
     />,
     <AuthRoute
       redirect="/profile"
       role={['user', 'admin']}
       exact
-      path="/my-listings-bookmark"
+      path={ROUTES.listingBookmark}
       component={loadable(() => import('./containers/MyListingBookmarks').then(c => c.default))}
+    />,
+
+    <AuthRoute
+      exact
+      role={['admin', 'user']}
+      path={ROUTES.add}
+      component={loadable(() => import('./containers/AddListing.web').then(c => c.default))}
+    />,
+    <AuthRoute
+      exact
+      role={['admin', 'user']}
+      path={ROUTES.edit}
+      component={loadable(() => import('./containers/EditListing.web').then(c => c.default))}
     />
   ],
   navItemAdmin: [
     <IfLoggedIn>
-      <MenuItem key="/listings">
+      <MenuItem key={ROUTES.adminPanel}>
         <NavLinkAdminWithI18n />
       </MenuItem>
     </IfLoggedIn>
   ],
   navItemTest: [
-    <MenuItem key="/listing_catalogue">
+    <MenuItem key={ROUTES.listingCatalogue}>
       <NavLinkTestWithI18n />
     </MenuItem>
   ],
   navItemUser: [
-    <IfLoggedIn key="/listings">
+    <IfLoggedIn>
       <SubMenu
         key="/listing"
         title={
@@ -129,7 +133,7 @@ export default new ClientModule({
     </IfLoggedIn>
   ],
   navItemAccount: [
-    <IfLoggedIn key="/my-listings">
+    <IfLoggedIn key={ROUTES.myListing}>
       <MenuItem>
         <NavLinkMyListingsWithI18n />
       </MenuItem>
