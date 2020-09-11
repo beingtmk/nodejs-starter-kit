@@ -210,14 +210,6 @@ export default class ListingDAO extends Model {
       .del();
   }
 
-  public async toggleListingIsActive(id: number, isActive: any) {
-    return returnId(
-      knex('listing')
-        .where({ id })
-        .update({ is_active: isActive })
-    );
-  }
-
   public async myListingBookmark(userId: number, limit: number, after: number, orderBy: any, filter: any) {
     const queryBuilder = ListingBookmark.query()
       .where('user_id', userId)

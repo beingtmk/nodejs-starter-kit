@@ -8,7 +8,6 @@ import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQue
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_QUERY from '../graphql/MyListingsQuery.graphql';
-import USER_LISTINGS from '../graphql/UserListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
 
@@ -16,7 +15,6 @@ import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
 import ADD_LISTING from '../graphql/AddListing.graphql';
 import EDIT_LISTING from '../graphql/EditListing.graphql';
 import DELETE_LISTING from '../graphql/DeleteListing.graphql';
-import TOGGLE_LISTING_IS_ACTIVE from '../graphql/ToggleListingIsActive.graphql';
 import TOOGLE_LISTING_BOOKMARK from '../graphql/ToggleListingBookmark.graphql';
 
 import settings from '../../../../settings';
@@ -26,7 +24,7 @@ const limit =
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 
-const withCurrentUser = Component =>
+export const withCurrentUser = Component =>
   graphql(CURRENT_USER_QUERY, {
     props({ data: { loading, error, currentUser } }) {
       if (error) throw new Error(error);
@@ -34,7 +32,7 @@ const withCurrentUser = Component =>
     }
   })(Component);
 
-const withListings = Component =>
+export const withListings = Component =>
   graphql(LISTINGS_QUERY, {
     options: ({ orderBy, filter }) => {
       return {
@@ -73,7 +71,7 @@ const withListings = Component =>
     }
   })(Component);
 
-const updateListingsState = (ListingsUpdated, updateQuery) => {
+export const updateListingsState = (ListingsUpdated, updateQuery) => {
   const { mutation, node } = ListingsUpdated;
   updateQuery(prev => {
     switch (mutation) {
@@ -123,7 +121,7 @@ const onDeleteListings = (prev, id) => {
   });
 };
 
-const updateMyListingsState = (ListingsUpdated, updateQuery) => {
+export const updateMyListingsState = (ListingsUpdated, updateQuery) => {
   const { mutation, node } = ListingsUpdated;
   updateQuery(prev => {
     switch (mutation) {
@@ -167,7 +165,7 @@ const onDeleteMyListing = (prev, id) => {
   });
 };
 
-const updateListingState = (ListingUpdated, updateQuery, history) => {
+export const updateListingState = (ListingUpdated, updateQuery, history) => {
   const { mutation, node } = ListingUpdated;
   updateQuery(prev => {
     switch (mutation) {
@@ -196,7 +194,7 @@ const onDeleteListing = history => {
   return history.push('./listing_catalogue');
 };
 
-const updateMyListingsBookmarkState = (ListingsUpdated, updateQuery) => {
+export const updateMyListingsBookmarkState = (ListingsUpdated, updateQuery) => {
   const { mutation, node } = ListingsUpdated;
   updateQuery(prev => {
     console.log('prev', prev, 'node', node);
@@ -260,7 +258,7 @@ const onDeleteMyListingBookmark = (prev, id) => {
     }
   });
 };
-const withListingsDeleting = Component =>
+export const withListingsDeleting = Component =>
   graphql(DELETE_LISTING, {
     props: ({ mutate }) => ({
       deleteListing: id => {
@@ -307,33 +305,7 @@ const withListingsDeleting = Component =>
     })
   })(Component);
 
-const withToogleListingActive = Component =>
-  graphql(TOGGLE_LISTING_IS_ACTIVE, {
-    props: ({ mutate }) => ({
-      toggleListingIsActive: async id => {
-        message.loading('Please wait...', 0);
-        try {
-          message.destroy();
-          const {
-            data: { toggleListingIsActive }
-          } = await mutate({
-            variables: { id }
-          });
-
-          if (toggleListingIsActive.errors) {
-            return { errors: toggleListingIsActive.errors };
-          }
-
-          message.success('Success!');
-        } catch (e) {
-          message.error("Couldn't perform the action");
-          throw Error(e);
-        }
-      }
-    })
-  })(Component);
-
-const withMyListing = Component =>
+export const withMyListing = Component =>
   graphql(MY_LISTINGS_QUERY, {
     props({ data: { loading, error, userListings, subscribeToMore, updateQuery, refetch } }) {
       if (error) throw new Error(error);
@@ -341,7 +313,7 @@ const withMyListing = Component =>
     }
   })(Component);
 
-const withAddListing = Component =>
+export const withAddListing = Component =>
   graphql(ADD_LISTING, {
     props: ({ ownProps: { history }, mutate }) => ({
       addListing: async values => {
@@ -374,7 +346,7 @@ const withAddListing = Component =>
     })
   })(Component);
 
-const withListing = Component =>
+export const withListing = Component =>
   graphql(LISTING_QUERY, {
     options: props => {
       let id = 0;
@@ -394,7 +366,7 @@ const withListing = Component =>
     }
   })(Component);
 
-const withEditListing = Component =>
+export const withEditListing = Component =>
   graphql(EDIT_LISTING, {
     props: ({
       ownProps: {
@@ -436,20 +408,7 @@ const withEditListing = Component =>
     })
   })(Component);
 
-const withUserListing = Component =>
-  graphql(USER_LISTINGS, {
-    options: props => {
-      return {
-        variables: { userId: props.user && props.user.id }
-      };
-    },
-    props({ data: { loading, error, userListings, updateQuery, subscribeToMore } }) {
-      if (error) throw new Error(error);
-      return { loading, userListings, updateQuery, subscribeToMore };
-    }
-  })(Component);
-
-const withMyListingsBookmark = Component =>
+export const withMyListingsBookmark = Component =>
   graphql(MY_LISTINGS_BOOKMARK_QUERY, {
     options: props => {
       console.log('props from operation', props.currentUser.id);
@@ -493,7 +452,7 @@ const withMyListingsBookmark = Component =>
     }
   })(Component);
 
-const withToogleListingBookmark = Component =>
+export const withToogleListingBookmark = Component =>
   graphql(TOOGLE_LISTING_BOOKMARK, {
     props: ({ mutate }) => ({
       addOrRemoveListingBookmark: async (listingId, userId) => {
@@ -517,7 +476,7 @@ const withToogleListingBookmark = Component =>
     })
   })(Component);
 
-const withListingBookmarkStatus = Component =>
+export const withListingBookmarkStatus = Component =>
   graphql(LISTING_BOOKMARK_STATUS, {
     options: props => {
       let id;
@@ -540,22 +499,3 @@ const withListingBookmarkStatus = Component =>
       return { loading, listingBookmarkStatus };
     }
   })(Component);
-
-export {
-  withCurrentUser,
-  withListing,
-  withListings,
-  withMyListing,
-  withAddListing,
-  withEditListing,
-  withListingsDeleting,
-  withToogleListingActive,
-  updateListingState,
-  updateMyListingsBookmarkState,
-  updateMyListingsState,
-  updateListingsState,
-  withUserListing,
-  withMyListingsBookmark,
-  withToogleListingBookmark,
-  withListingBookmarkStatus
-};

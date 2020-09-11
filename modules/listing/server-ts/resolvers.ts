@@ -135,26 +135,6 @@ export default (pubsub: any) => ({
         return false;
       }
     }),
-    toggleListingIsActive: withAuth(async (obj: any, { id }: Identifier, context: any) => {
-      const listing = await context.Listing.listing(id);
-      const isActive = !listing.isActive;
-
-      const isToggled = await context.Listing.toggleListingIsActive(id, isActive);
-
-      if (isToggled) {
-        const list = await context.Listing.listing(id);
-        pubsub.publish(LISTINGS_SUBSCRIPTION, {
-          listingsUpdated: {
-            mutation: 'UPDATED',
-            id: list.id,
-            node: list
-          }
-        });
-        return true;
-      } else {
-        return false;
-      }
-    }),
     addOrRemoveListingBookmark: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
       // console.log('listingId resolvers', listingId, 'userId', userId);
       const status = await context.Listing.addOrRemoveListingBookmark(listingId, userId);

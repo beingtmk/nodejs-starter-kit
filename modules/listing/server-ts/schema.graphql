@@ -94,9 +94,6 @@ extend type Mutation {
   # # Delete a listing
   deleteListing(id: Int!): Boolean
 
-  # Activating a Listing
-  toggleListingIsActive(id: Int!): Boolean
-
   # Bookmark
   addOrRemoveListingBookmark(listingId: Int, userId: Int): String
 }
@@ -124,11 +121,18 @@ input FilterListInput {
 input AddListingInput {
   id: Int
   userId: Int
+
   title: String
   description: String
-  isActive: Boolean
+  inventoryCount: Int
+
   listingMedias: [ListingMediaInput]
   listingCost: ListingCostInput
+
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
 }
 
 # Input for addListing Mutation
@@ -145,11 +149,18 @@ input ListingCostInput {
 input EditListingInput {
   id: Int!
   userId: Int
+
   title: String
   description: String
-  isActive: Boolean
+  inventoryCount: Int
+
   listingMedia: [ListingMediaInput]
   listingCost: ListingCostInput
+
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
 }
 
 extend type Subscription {
