@@ -100,6 +100,7 @@ export default class ListingDAO extends Model {
       if (has(filter, 'isActive') && filter.isActive !== '') {
         queryBuilder.where(function() {
           this.where('listing.is_active', filter.isActive);
+          // .andWhere('listing_cost.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {

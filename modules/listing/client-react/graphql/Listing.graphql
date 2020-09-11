@@ -1,18 +1,34 @@
+#import "@gqlapp/user-client-react/graphql/User.graphql"
+
 fragment ListingInfo on Listing {
   id
-  userId
+  user {
+    ...UserInfo
+  }
+
   title
   description
-  isActive
-  createdAt
-  updatedAt
-  isActive
-  listingImages {
+  inventoryCount
+
+  listingMedias {
     id
-    imageUrl
+    listingId
+
+    url
   }
   listingCost {
     id
+    listingId
+
     cost
+    dailyDiscount
   }
+
+  isFeatured
+  isNew
+  isDiscount
+  isActive
+
+  createdAt
+  updatedAt
 }

@@ -4,7 +4,7 @@ exports.seed = async function(knex) {
   await truncateTables(knex, Promise, ['listing', 'listing_media', 'listing_cost']);
 
   await Promise.all(
-    [...Array(50).keys()].map(async ii => {
+    [...Array(100).keys()].map(async ii => {
       const isDiscount = Math.random() < 0.6 ? false : true;
       const isActive = Math.random() < 0.6 ? false : true;
       const listing = await returnId(knex('listing')).insert({
@@ -24,7 +24,7 @@ exports.seed = async function(knex) {
           return returnId(knex('listing_media')).insert({
             listing_id: listing[0],
             url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
-            is_active: isActive
+            is_active: Math.random() < 0.6 ? false : true
           });
         })
       );

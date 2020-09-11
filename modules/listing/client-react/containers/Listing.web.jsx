@@ -6,7 +6,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import ListingView from '../components/ListingView';
 
 import { useListingsWithSubscription } from './withSubscriptions';
-import { withListings, withListingsDeleting, updateListingsState, withToogleListingActive } from './ListingOperations';
+import { withListings, withListingsDeleting, updateListingsState } from './ListingOperations';
 
 const Listing = props => {
   const { updateQuery, subscribeToMore, filter } = props;
@@ -27,4 +27,4 @@ Listing.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(withListings, withListingsDeleting, withToogleListingActive, translate('listing'))(Listing);
+export default compose(withListings, withListingsDeleting, translate('listing'))(Listing);

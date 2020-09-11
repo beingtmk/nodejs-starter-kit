@@ -2,7 +2,7 @@
 
 query listings(
   $limit: Int!
-  $after: Int
+  $after: Int!
   $orderBy: OrderByListInput
   $filter: FilterListInput
 ) {
@@ -17,6 +17,10 @@ query listings(
     pageInfo {
       endCursor
       hasNextPage
+    }
+    rangeValues {
+      maxCost
+      minCost
     }
   }
 }

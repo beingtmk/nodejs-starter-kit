@@ -88,7 +88,7 @@ export default (pubsub: any) => ({
         }
         const id = await context.Listing.addListing(input);
         const listing = await context.Listing.listing(id);
-        // publish for liswting list
+        // publish for listing list
         pubsub.publish(LISTINGS_SUBSCRIPTION, {
           listingsUpdated: {
             mutation: 'CREATED',
