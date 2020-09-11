@@ -242,7 +242,7 @@ export default compose(
             return { errors: deleteGroup.errors };
           }
           message.destroy();
-          message.success("Success!");
+          message.success("Deleted Group!");
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

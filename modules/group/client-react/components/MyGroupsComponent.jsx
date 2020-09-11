@@ -1,29 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Col, Row, Card, Button, Tooltip, Empty } from "antd";
+import { Col, Row, Card, Button, Tooltip, Empty, Popconfirm } from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import MiniBlogImageComponent from "@gqlapp/blog-client-react/components/MiniBlogImageComponent";
 
 export const GroupCatalogueComponent = (props) => {
-  const { item, key } = props;
+  const { item, key, deleteGroup } = props;
+
+  const cancel = () => {
+    message.error("Task cancelled");
+  };
+
   return (
     <Card
       key={key}
       hoverable
-      cover={<MiniBlogImageComponent title={item.title} image={item.avatar} />}
-      className="blog-catalogue-card"
-      style={{ marginBottom: "20px" }}
-    >
-      <div style={{ height: "220px", width: "100%" }}>
+      title={
         <Tooltip placement="bottomLeft" title={item.title}>
-          <h1>
+          <h4 style={{ fontSize: "20px" }}>
             <p>{`${item.title.substring(0, 20)}${
               item.description.length > 20 ? "..." : ""
             }`}</p>
-          </h1>
+          </h4>
         </Tooltip>
+      }
+      cover={<MiniBlogImageComponent title={item.title} image={item.avatar} />}
+      className="blog-catalogue-card"
+      style={{ marginBottom: "20px" }}
+      extra={
+        <Popconfirm
+          title="Delete Group"
+          onConfirm={() => deleteGroup(item.id)}
+          onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button icon="delete" />
+        </Popconfirm>
+      }
+      actions={[
+        <Link to={`/group/${item.id}/info`}>Details</Link>,
+        <Link to={`/group/edit/${item.id}`}>Edit</Link>,
+      ]}
+    >
+      <div style={{ height: "100px", width: "100%" }}>
         <Tooltip placement="bottomLeft" title={item.description}>
           <h2
             style={{
@@ -44,25 +66,6 @@ export const GroupCatalogueComponent = (props) => {
         >
           {`Group Type: ${item.groupType}`}
         </h3>
-        <br />
-        <h3>{`Created on ${moment(item.createdAt).format("MMM DD, YYYY")}`}</h3>
-        <br />
-        <Row gutter={16}>
-          <Col span={12}>
-            <Link to={`/group/${item.id}/info`}>
-              <Button icon="eye" block type="primary" ghost>
-                Details
-              </Button>
-            </Link>
-          </Col>
-          <Col span={12}>
-            <Link to={`/group/edit/${item.id}`}>
-              <Button icon="edit" block type="primary">
-                Edit
-              </Button>
-            </Link>
-          </Col>
-        </Row>
       </div>
     </Card>
   );

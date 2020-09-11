@@ -54,7 +54,7 @@ class GroupInfoView extends React.Component {
   };
 
   render() {
-    const { groups, match, navigation } = this.props;
+    const { groups, match, navigation, deleteGroup } = this.props;
     let id = 0;
     if (match) {
       id = match.params.id;
@@ -83,7 +83,7 @@ class GroupInfoView extends React.Component {
             <Row gutter={24}>
               {groups.edges.map((edge, key) => (
                 <Col xs={24} md={12} lg={8}>
-                  <GroupCatalogueComponent item={edge.node} key={key} />
+                  <GroupCatalogueComponent item={edge.node} key={key} deleteGroup={deleteGroup} />
                 </Col>
               ))}
             </Row>
