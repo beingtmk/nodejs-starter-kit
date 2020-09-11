@@ -1,32 +1,59 @@
 # Entity
 type Listing {
   id: Int
-  userId: Int!
+  user: User
+
   title: String!
   description: String
-  isActive: Boolean
-  listingImages: [ListingImages]
+  inventoryCount: Int
+
+  listingMedias: [ListingMedia]
   listingCost: ListingCost
+
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
+
   createdAt: String!
   updatedAt: String!
 }
 
-type ListingImages {
+type ListingMedia {
   id: Int
   listingId: Int
-  imageUrl: String
+
+  url: String
+
+  isActive: Boolean
+
+  createdAt: String!
+  updatedAt: String!
 }
 
 type ListingCost {
   id: Int
   listingId: Int
+
   cost: Int
+  dailyDiscount: Float
+
+  isActive: Boolean
+
+  createdAt: String!
+  updatedAt: String!
+}
+
+type RangeValues {
+  maxCost: Float
+  minCost: Float
 }
 
 type Listings {
   totalCount: Int
   edges: [ListingEdges]
   pageInfo: ListingPageInfo
+  rangeValues: RangeValues
 }
 
 type ListingEdges {
@@ -40,39 +67,28 @@ type ListingPageInfo {
 }
 
 extend type Query {
+  listing(id: Int!): Listing
   listings(
-    limit: Int
-    after: Int
+    limit: Int!
+    after: Int!
     orderBy: OrderByListInput
     filter: FilterListInput
   ): Listings
-  listing(id: Int!): Listing
-  userListings(userId: Int): [Listing]
 
   #Bookmark
   myListingsBookmark(
     userId: Int
     limit: Int
     after: Int
+    orderBy: OrderByListInput
+    filter: FilterListInput
   ): Listings
   listingBookmarkStatus(listingId: Int, userId: Int): Boolean
 }
 
-# Input for ordering listings
-input OrderByListInput {
-  column: String
-  # asc | desc
-  order: String
-}
-
-input FilterListInput {
-  isActive: Boolean
-  searchText: String
-}
-
 extend type Mutation {
   # Create new listing
-  addListing(input: AddListingInput!): Listing
+  addListing(input: AddListingInput!): Boolean
   # # Edit a listing
   editListing(input: EditListingInput!): Boolean
   # # Delete a listing
@@ -85,20 +101,40 @@ extend type Mutation {
   addOrRemoveListingBookmark(listingId: Int, userId: Int): String
 }
 
+# Input for ordering listings
+input OrderByListInput {
+  column: String
+  # asc | desc
+  order: String
+}
+
+input FilterListInput {
+  userId: Int
+  searchText: String
+
+  lowerCost: Float
+  upperCost: Float
+
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
+}
+
 input AddListingInput {
   id: Int
   userId: Int
   title: String
   description: String
   isActive: Boolean
-  listingImages: [ListingImagesInput]
+  listingMedias: [ListingMediaInput]
   listingCost: ListingCostInput
 }
 
 # Input for addListing Mutation
-input ListingImagesInput {
+input ListingMediaInput {
   id: Int
-  imageUrl: String!
+  url: String!
 }
 input ListingCostInput {
   id: Int
@@ -112,16 +148,13 @@ input EditListingInput {
   title: String
   description: String
   isActive: Boolean
-  listingImages: [ListingImagesInput]
+  listingMedia: [ListingMediaInput]
   listingCost: ListingCostInput
 }
 
 extend type Subscription {
   # Subscription for listing list
   listingsUpdated(endCursor: Int, filter: FilterListInput): UpdateListingPayload
-
-  # Subscription for when editing a listing
-  listingUpdated(id: Int): UpdateListingPayload
 
   # Bookmark
   listingsBookmarkUpdated(endCursor: Int): UpdateListingPayload

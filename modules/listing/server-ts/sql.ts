@@ -3,7 +3,7 @@ import { Model, raw } from 'objection';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
-// import { User } from '@gqlapp/user-server-ts/sql';
+import { User } from '@gqlapp/user-server-ts/sql';
 
 Model.knex(knex);
 
@@ -12,14 +12,14 @@ export interface Listing {
   title: string;
   description: string;
   isActive: boolean;
-  listingImages: ListingImage[];
+  listingMedias: ListingMedia[];
   listingCost: ListingCost;
 }
 
-interface ListingImage {
+interface ListingMedia {
   listingId: number;
-  imageUrl: string;
-  description: string;
+  url: string;
+  isActive: boolean;
 }
 
 interface ListingCost {
@@ -31,7 +31,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[listing_images, listing_cost]';
+const eager = '[user, listing_medias, listing_cost]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -46,20 +46,20 @@ export default class ListingDAO extends Model {
 
   static get relationMappings() {
     return {
-      // user: {
-      //   relation: Model.BelongsToOneRelation,
-      //   modelClass: User,
-      //   join: {
-      //     from: 'listing.user_id',
-      //     to: 'user.id'
-      //   }
-      // },
-      listing_images: {
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'listing.user_id',
+          to: 'user.id'
+        }
+      },
+      listing_medias: {
         relation: Model.HasManyRelation,
-        modelClass: ListingImage,
+        modelClass: ListingMedia,
         join: {
           from: 'listing.id',
-          to: 'listing_image.listing_id'
+          to: 'listing_media.listing_id'
         }
       },
       listing_cost: {
@@ -99,27 +99,88 @@ export default class ListingDAO extends Model {
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
         queryBuilder.where(function() {
-          this.where('is_active', filter.isActive);
+          this.where('listing.is_active', filter.isActive);
+        });
+      }
+      if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_featured', filter.isFeatured);
+        });
+      }
+      if (has(filter, 'isNew') && filter.isNew !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_new', filter.isNew);
+        });
+      }
+      if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_discount', filter.isDiscount);
+        });
+      }
+
+      if (has(filter, 'userId') && filter.userId !== '') {
+        queryBuilder.where(function() {
+          this.where('user.id', filter.userId);
+        });
+      }
+
+      if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
+        queryBuilder.where(function() {
+          this.where('listing_cost.cost', '>', filter.lowerCost);
+        });
+      }
+
+      if (has(filter, 'upperCost') && filter.upperCost !== 0) {
+        queryBuilder.where(function() {
+          this.where('listing_cost.cost', '<', filter.upperCost);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder
-          .from('listing')
-          .leftJoin('listing_cost AS ld', 'ld.listing_id', 'listing.id')
-          .where(function() {
-            this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
-              .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
-              .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['ld.cost', `%${filter.searchText}%`]));
-          });
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['listing_cost.cost', `%${filter.searchText}%`]));
+        });
       }
     }
+
+    const rangeQueryBuilder = ListingDAO.query();
+
+    const maxCost = camelizeKeys(
+      await rangeQueryBuilder
+        .from('listing')
+        .leftJoin('listing_cost AS list_cost', 'list_cost.listing_id', 'listing.id')
+        .max('list_cost.cost as var')
+        .first()
+    );
+
+    const minCost = camelizeKeys(
+      await rangeQueryBuilder
+        .from('listing')
+        .leftJoin('listing_cost AS list_cost1', 'list_cost1.listing_id', 'listing.id')
+        .min('list_cost1.cost as var')
+        .first()
+    );
+
+    queryBuilder
+      .from('listing')
+      .leftJoin('user', 'user.id', 'listing.user_id')
+      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
 
     const allListings = camelizeKeys(await queryBuilder);
     const total = allListings.length;
     const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
-    console.log(res);
-    return { listings: res, total };
+    // console.log(res);
+    return {
+      listings: res,
+      total,
+      rangeValues: {
+        maxCost: maxCost.var,
+        minCost: minCost.var
+      }
+    };
   }
 
   public async listing(id: number) {
@@ -157,32 +218,110 @@ export default class ListingDAO extends Model {
     );
   }
 
-  public async userListings(userId: number) {
-    const res = camelizeKeys(
-      await ListingDAO.query()
-        .where('user_id', userId)
-        .eager(eager)
-        .orderBy('id', 'desc')
-    );
-    // console.log(query[0]);
-    return res;
-  }
+  public async myListingBookmark(userId: number, limit: number, after: number, orderBy: any, filter: any) {
+    const queryBuilder = ListingBookmark.query()
+      .where('user_id', userId)
+      .eager('[listing.[user, listing_medias, listing_cost]]');
+    if (orderBy && orderBy.column) {
+      const column = orderBy.column;
+      let order = 'asc';
+      if (orderBy.order) {
+        order = orderBy.order;
+      }
 
-  public async myListingBookmark(userId: number, limit: number, after: number) {
-    const res = camelizeKeys(
-      await ListingBookmark.query()
-        .where('user_id', userId)
-        .eager('[listing.[listing_images, listing_cost]]')
-        .orderBy('id', 'desc')
-        .limit(limit)
-        .offset(after)
+      queryBuilder.orderBy(decamelize(column), order);
+    } else {
+      queryBuilder.orderBy('id', 'desc');
+    }
+
+    if (filter) {
+      if (has(filter, 'isActive') && filter.isActive !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_active', filter.isActive);
+        });
+      }
+      if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_featured', filter.isFeatured);
+        });
+      }
+      if (has(filter, 'isNew') && filter.isNew !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_new', filter.isNew);
+        });
+      }
+      if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
+        queryBuilder.where(function() {
+          this.where('listing.is_discount', filter.isDiscount);
+        });
+      }
+
+      if (has(filter, 'userId') && filter.userId !== '') {
+        queryBuilder.where(function() {
+          this.where('user.id', filter.userId);
+        });
+      }
+
+      if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
+        queryBuilder.where(function() {
+          this.where('listing_cost.cost', '>', filter.lowerCost);
+        });
+      }
+
+      if (has(filter, 'upperCost') && filter.upperCost !== 0) {
+        queryBuilder.where(function() {
+          this.where('listing_cost.cost', '<', filter.upperCost);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]))
+            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['listing_cost.cost', `%${filter.searchText}%`]));
+        });
+      }
+    }
+
+    const rangeQueryBuilder = ListingBookmark.query().where('user_id', userId);
+
+    const maxCost = camelizeKeys(
+      await rangeQueryBuilder
+        .from('listing_bookmark')
+        .leftJoin('listing_cost AS list_cost', 'list_cost.listing_id', 'listing_bookmark.listing_id')
+        .max('list_cost.cost as var')
+        .first()
     );
+
+    const minCost = camelizeKeys(
+      await rangeQueryBuilder
+        .from('listing_bookmark')
+        .leftJoin('listing_cost AS list_cost1', 'list_cost1.listing_id', 'listing_bookmark.listing_id')
+        .min('list_cost1.cost as var')
+        .first()
+    );
+
+    queryBuilder
+      .from('listing_bookmark')
+      .leftJoin('user', 'user.id', 'listing_bookmark.user_id')
+      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing_bookmark.listing_id');
+
+    const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+
     const allListings = res.map(item => {
       return item.listing;
     });
+
     const total = allListings.length;
-    // console.log(res);
-    return { listings: allListings, total };
+    return {
+      listings: allListings,
+      total,
+      rangeValues: {
+        maxCost: maxCost.var,
+        minCost: minCost.var
+      }
+    };
   }
 
   public async listingBookmarkStatus(listingId: number, userId: number) {
@@ -201,7 +340,7 @@ export default class ListingDAO extends Model {
 
   public async addOrRemoveListingBookmark(listingId: number, userId: number) {
     const status = await this.listingBookmarkStatus(listingId, userId);
-    console.log('status1', status);
+    // console.log('status1', status);
     if (status) {
       await ListingBookmark.query()
         .where('listing_id', '=', listingId)
@@ -215,10 +354,10 @@ export default class ListingDAO extends Model {
   }
 }
 
-// ListingImage model.
-class ListingImage extends Model {
+// ListingMedia model.
+class ListingMedia extends Model {
   static get tableName() {
-    return 'listing_image';
+    return 'listing_media';
   }
 
   static get idColumn() {
@@ -231,7 +370,7 @@ class ListingImage extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: ListingDAO,
         join: {
-          from: 'listing_image.listing_id',
+          from: 'listing_media.listing_id',
           to: 'listing.id'
         }
       }

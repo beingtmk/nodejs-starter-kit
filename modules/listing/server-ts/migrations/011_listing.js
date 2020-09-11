@@ -45,7 +45,7 @@ exports.up = function(knex) {
           .onDelete('CASCADE');
 
         table.integer('cost');
-        table.float('daily_discount');
+        table.float('daily_discount').defaultTo(0.0);
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);

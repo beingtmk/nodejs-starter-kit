@@ -15,7 +15,6 @@ interface ListingInputWithId {
   input: Listing & Identifier;
 }
 
-const LISTING_SUBSCRIPTION = 'listing_subscription';
 const LISTINGS_SUBSCRIPTION = 'listings_subscription';
 const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
 
@@ -23,7 +22,7 @@ export default (pubsub: any) => ({
   Query: {
     async listings(obj: any, { limit, after, orderBy, filter }: any, context: any) {
       const edgesArray: Edges[] = [];
-      const { total, listings } = await context.Listing.listingsPagination(limit, after, orderBy, filter);
+      const { total, listings, rangeValues } = await context.Listing.listingsPagination(limit, after, orderBy, filter);
 
       const hasNextPage = total > after + limit;
 
@@ -41,21 +40,21 @@ export default (pubsub: any) => ({
         pageInfo: {
           endCursor,
           hasNextPage
-        }
+        },
+        rangeValues
       };
     },
     async listing(obj: any, { id }: Identifier, context: any) {
       return context.Listing.listing(id);
     },
-    userListings: withAuth(['user:view:self'], async (obj: any, { userId }: any, context: any) => {
-      return context.Listing.userListings(userId || context.req.identity.id);
-    }),
-    myListingsBookmark: withAuth(async (obj: any, { userId, limit, after }: any, context: any) => {
+    myListingsBookmark: withAuth(async (obj: any, { userId, limit, after, orderBy, filter }: any, context: any) => {
       const edgesArray: Edges[] = [];
-      const { total, listings } = await context.Listing.myListingBookmark(
+      const { total, listings, rangeValues } = await context.Listing.myListingBookmark(
         userId || context.req.identity.id,
         limit,
-        after
+        after,
+        orderBy,
+        filter
       );
 
       const hasNextPage = total > after + limit;
@@ -73,7 +72,8 @@ export default (pubsub: any) => ({
         pageInfo: {
           endCursor,
           hasNextPage
-        }
+        },
+        rangeValues
       };
     }),
     listingBookmarkStatus: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
@@ -81,29 +81,26 @@ export default (pubsub: any) => ({
     })
   },
   Mutation: {
-    addListing: withAuth(
-      // ["stripe:*"],
-      async (obj: any, { input }: ListingInput, context: any) => {
-        try {
-          if (!input.userId) {
-            input.userId = context.identity.id;
-          }
-          const id = await context.Listing.addListing(input);
-          const listing = await context.Listing.listing(id);
-          // publish for liswting list
-          pubsub.publish(LISTINGS_SUBSCRIPTION, {
-            listingsUpdated: {
-              mutation: 'CREATED',
-              id,
-              node: listing
-            }
-          });
-          return listing;
-        } catch (e) {
-          return e;
+    addListing: withAuth(async (obj: any, { input }: ListingInput, context: any) => {
+      try {
+        if (!input.userId) {
+          input.userId = context.identity.id;
         }
+        const id = await context.Listing.addListing(input);
+        const listing = await context.Listing.listing(id);
+        // publish for liswting list
+        pubsub.publish(LISTINGS_SUBSCRIPTION, {
+          listingsUpdated: {
+            mutation: 'CREATED',
+            id,
+            node: listing
+          }
+        });
+        return true;
+      } catch (e) {
+        return e;
       }
-    ),
+    }),
     editListing: withAuth(async (obj: any, { input }: ListingInputWithId, context: any) => {
       try {
         await context.Listing.editListing(input);
@@ -111,14 +108,6 @@ export default (pubsub: any) => ({
         // publish for listing list
         pubsub.publish(LISTINGS_SUBSCRIPTION, {
           listingsUpdated: {
-            mutation: 'UPDATED',
-            id: listing.id,
-            node: listing
-          }
-        });
-        // publish for edit listing page
-        pubsub.publish(LISTING_SUBSCRIPTION, {
-          listingUpdated: {
             mutation: 'UPDATED',
             id: listing.id,
             node: listing
@@ -141,18 +130,8 @@ export default (pubsub: any) => ({
             node: listing
           }
         });
-        // publish for edit listing page
-        pubsub.publish(LISTING_SUBSCRIPTION, {
-          listingUpdated: {
-            mutation: 'DELETED',
-            id, // import { ONSHELF, ONRENT } from "../common/constants/ListingStates";
-            node: listing
-          }
-        });
-        // return { id: listing.id };
         return true;
       } else {
-        // return { id: null };
         return false;
       }
     }),
@@ -171,25 +150,15 @@ export default (pubsub: any) => ({
             node: list
           }
         });
-        // // publish for edit listing page
-        pubsub.publish(LISTING_SUBSCRIPTION, {
-          listingUpdated: {
-            mutation: 'UPDATED',
-            id: list.id,
-            node: list
-          }
-        });
-        // return { id: list.id };
         return true;
       } else {
-        // return { id: null };
         return false;
       }
     }),
     addOrRemoveListingBookmark: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
-      console.log('listingId resolvers', listingId, 'userId', userId);
+      // console.log('listingId resolvers', listingId, 'userId', userId);
       const status = await context.Listing.addOrRemoveListingBookmark(listingId, userId);
-      console.log('status', status);
+      // console.log('status', status);
 
       const list = await context.Listing.listing(listingId);
       if (status) {
@@ -223,14 +192,6 @@ export default (pubsub: any) => ({
           } else {
             return true;
           }
-        }
-      )
-    },
-    listingUpdated: {
-      subscribe: withFilter(
-        () => pubsub.asyncIterator(LISTING_SUBSCRIPTION),
-        (payload, variables) => {
-          return payload.listingUpdated.id === variables.id;
         }
       )
     },
