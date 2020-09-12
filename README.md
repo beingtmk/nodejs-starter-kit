@@ -4,7 +4,7 @@
 
 ## Official Website
 
-You can test the deployment [demo application].
+You can test the deployment [demo application](https://mapp.mithileshkohale.com).
 
 ## Description
 
@@ -137,14 +137,6 @@ For Windows 10:
 - Click **Update & Security**
 - Click the **For Developers** tab
 - In the **Use developer features** window, switch to **Developer Mode**
-
-**NOTE**: You can remove the unnecessary stacks from Nodejs Starter Kit by using the CLI. Consult a
-[respective CLI section]. Alternatively, you can use the capabilities of your operating system. For example, by running
-the command below, you can remove all Scala server files:
-
-```bash
-find . -name server-scala | xargs rm -rf
-```
 
 If you don't need the ready-made modules, you can also remove them using the [custom CLI].
 
