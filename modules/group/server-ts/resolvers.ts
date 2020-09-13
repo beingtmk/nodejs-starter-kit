@@ -45,6 +45,12 @@ export default (pubsub: PubSub) => ({
     async groupMembers(obj: any, { id }: Identifier, { GroupMember }: any) {
       return GroupMember.groupMembers(id);
     },
+    async groupQuizzes(obj: any, { groupId }: any, { GroupModel }: any) {
+      console.log('groupQuizzesInput', groupId, GroupModel);
+      return GroupModel.groupQuizzes(groupId);
+      // const arr = [];
+      // return arr;
+    },
     async groupMember(obj: any, { id }: Identifier, context: any) {
       return context.GroupMember.groupMember(id);
     },
@@ -571,6 +577,50 @@ export default (pubsub: PubSub) => ({
         }
       }
     ),
+    addQuizToGroup: withAuth(
+      async (
+        obj: any,
+        { input }: any,
+        { Group, GroupModel }: any
+      ) => {
+        try {
+          var modifiedInput = input;
+          modifiedInput.model = 'quiz'; 
+          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams({...input})
+          if(!groupQuizAlreadyExists){
+            
+            const added = await GroupModel.addGroupQuiz(input);
+          }
+          const groupQuiz = await GroupModel.groupQuizByParams({...input})
+
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "CREATED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
+          const item = await Group.group(input.groupId);
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
+            groupsUpdated: {
+              mutation: "UPDATED",
+              parentGroupId: item.groupId,
+              node: item,
+            },
+          });
+          pubsub.publish(GROUP_SUBSCRIPTION, {
+            groupItemUpdated: {
+              mutation: "UPDATED",
+              id: item.id,
+              node: item,
+            },
+          });
+          return true;
+        } catch (e) {
+          return e;
+        }
+      }
+    ),
     editGroupMember: withAuth(
       async (
         obj: any,
@@ -648,6 +698,40 @@ export default (pubsub: PubSub) => ({
         try {
           const data = await GroupMember.groupMember(id);
           await GroupMember.deleteGroupMember(id);
+          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
+          //   groupMembersUpdated: {
+          //     mutation: "DELETED",
+          //     groupId: data.groupId,
+          //     node: data,
+          //   },
+          // });
+          const item = await Group.group(data.groupId);
+          pubsub.publish(GROUPS_SUBSCRIPTION, {
+            groupsUpdated: {
+              mutation: "UPDATED",
+              parentGroupId: item.groupId,
+              node: item,
+            },
+          });
+          pubsub.publish(GROUP_SUBSCRIPTION, {
+            groupItemUpdated: {
+              mutation: "UPDATED",
+              id: item.id,
+              node: item,
+            },
+          });
+          return data;
+        } catch (e) {
+          return e;
+        }
+      }
+    ),
+    deleteQuizFromGroup: withAuth(
+      async (obj: any, { quizGroupId }: any, { GroupModel, Group }: any) => {
+        try {
+
+          const data = await GroupModel.groupQuiz(quizGroupId);
+          await GroupModel.deleteGroupQuiz(quizGroupId);
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {
           //     mutation: "DELETED",

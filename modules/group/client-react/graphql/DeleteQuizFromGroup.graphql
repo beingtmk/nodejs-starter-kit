@@ -1,0 +1,3 @@
+mutation deleteQuizFromGroup($quizGroupId: Int!) {
+  deleteQuizFromGroup(quizGroupId: $quizGroupId)
+}

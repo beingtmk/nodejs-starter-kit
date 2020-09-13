@@ -46,6 +46,7 @@ extend type Query {
   allGroupMembers: [GroupMember]
   groupMember(id: Int!): GroupMember
   groupMembers(id: Int!): [GroupMember]
+  groupQuizzes(groupId: Int!): [GroupModalQuiz]
 }
 
 type GroupEdges {
@@ -82,6 +83,13 @@ extend type Mutation {
   upsertGroup(input: UpsertGroupInput!): Group
   adminEditGroup(input: AdminEditGroupInput!): Group
   deleteGroup(id: Int!): Group
+  addQuizToGroup(input: AddQuizToGroupInput!): Boolean
+  deleteQuizFromGroup(quizGroupId: Int!): Boolean
+}
+
+input AddQuizToGroupInput {
+  groupId: Int
+  modelId: Int
 }
 
 input AdminEditGroupInput {
@@ -101,7 +109,7 @@ input AddGroupMemberInviteInput {
 }
 
 input ChangeGroupMemberTypeInput {
-  id:Int!
+  id: Int!
   type: String!
 }
 
@@ -136,8 +144,8 @@ input UpsertGroupInput {
 }
 
 input AddGroupMembersInput {
-  groupId:Int!
-  members:[AddGroupMemberInput]!
+  groupId: Int!
+  members: [AddGroupMemberInput]!
 }
 
 input AddGroupMemberInput {

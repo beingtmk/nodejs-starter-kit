@@ -83,14 +83,14 @@ export default class Group extends Model {
           to: "group.group_id",
         },
       },
-      // groupQuizzes:{
-      //   relation: Model.HasManyRelation,
-      //   modelClass: GroupModel,
-      //   join: {
-      //     from: "group.id",
-      //     to: "group_model.group_id",
-      //   },
-      // },
+      groupQuizzes:{
+        relation: Model.HasManyRelation,
+        modelClass: GroupModel,
+        join: {
+          from: "group.id",
+          to: "group_model.group_id",
+        },
+      },
     };
   }
 
@@ -230,7 +230,7 @@ export default class Group extends Model {
   }
 }
 
-export class GroupMember extends Model {
+class GroupMember extends Model {
   // private id: any;
 
   static get tableName() {
@@ -313,7 +313,7 @@ export class GroupMember extends Model {
   }
 }
 
-export class GroupModel extends Model {
+class GroupModel extends Model {
   // private id: any;
 
   static get tableName() {
@@ -344,4 +344,40 @@ export class GroupModel extends Model {
       },
     };
   }
+  public async groupQuizzes(groupId: number) {
+    return camelizeKeys(
+      await GroupModel.query()
+        .where({ group_id: groupId })
+        .andWhere({model:'quiz'})
+        .withGraphFetched("[quiz]")
+        .orderBy("id", "desc")
+    );
+  }
+  public async groupQuiz(id: number) {
+    return camelizeKeys(
+      await GroupModel.query()
+        .findById(id).first()
+    );
+  }
+  public async groupQuizByParams(groupId: number, modelId:number, model:string) {
+    return camelizeKeys(
+      await GroupModel.query()
+        .where({ group_id: groupId })
+        .andWhere({model_id: modelId})
+        .andWhere({model:model})
+        .first()
+    );
+  }
+  public async addGroupQuiz(input: GroupMemberInput) {
+    const res = await GroupMember.query().insertGraph(decamelizeKeys(input));
+    return res.id;
+  }
+
+  public async deleteGroupQuiz(id: number) {
+    return knex("group_model")
+      .where({ id })
+      .del();
+  }
 }
+
+export {GroupMember, GroupModel};

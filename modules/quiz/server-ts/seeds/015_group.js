@@ -7,7 +7,7 @@ export async function seed(knex) {
   await truncateTables(knex, Promise, ['quiz', 'question', 'choice', 'answer']);
 
   await Promise.all(
-    [...Array(3).keys()].map(async i => {
+    [...Array(30).keys()].map(async i => {
       return returnId(knex('quiz')).insert({
         user_id:1,
         active:true,

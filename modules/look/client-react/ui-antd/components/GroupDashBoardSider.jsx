@@ -39,10 +39,10 @@ class GroupDashBoardSider extends React.Component {
           </NavLink>
         </MenuItem>
 
-        <MenuItem key="/group/:id/quiz-report">
-          <NavLink to={`/group/${id}/quiz-report`}>
-            <Icon type="bar-chart" />
-            Quiz Report
+        <MenuItem key="/group/:id/quizzes">
+          <NavLink to={`/group/${id}/quizzes`}>
+          <Icon type="question" />
+            Quizzes
           </NavLink>
         </MenuItem>
       </Menu>

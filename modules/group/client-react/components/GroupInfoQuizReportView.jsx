@@ -1,10 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
 import PropTypes from "prop-types";
-import { Spin as Loader } from "antd";
+import { Spin as Loader, Tabs, Typography, Icon } from "antd";
 import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayout";
 import settings from "@gqlapp/config";
 import GroupQuizReport from "@gqlapp/quiz-client-react/containers/GroupQuizReport.web";
+import GroupQuizzes from "../containers/GroupQuizzes";
+const { TabPane } = Tabs;
+const { Title, Text, Paragraph } = Typography;
 
 const renderMetaData = (t) => (
   <Helmet
@@ -35,13 +38,45 @@ class GroupInfoQuizView extends React.Component {
     }
     return (
       <GroupLayout id={id} path={match && match.path}>
-        {groupLoading && (
+        {groupLoading ? (
           <div>
             <Loader />
           </div>
-        )}
-        {this.state.flag && !groupLoading && (
-          <GroupQuizReport groupId={group && group.id} group={group} />
+        ) : (
+          <>
+            <Tabs defaultActiveKey="1">
+              <TabPane
+                tab={
+                  <span>
+                    <Title className="group-members-tabs-heading" level={4}>
+                      <Icon type="question" />
+                      Quizzes
+                    </Title>
+                  </span>
+                }
+                key="1"
+              >
+                {this.state.flag && !groupLoading && (
+                  <GroupQuizzes groupId={group && group.id} group={group} />
+                )}
+              </TabPane>
+              <TabPane
+                tab={
+                  <span>
+                    <Title className="group-members-tabs-heading" level={4}>
+                      <Icon type="area-chart" />
+                      Reports
+                    </Title>
+                  </span>
+                }
+                key="2"
+              >
+                {this.state.flag && !groupLoading && (
+                  <GroupQuizReport groupId={group && group.id} group={group} />
+                )}
+              </TabPane>
+            </Tabs>
+          </>
         )}
       </GroupLayout>
     );

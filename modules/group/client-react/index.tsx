@@ -127,7 +127,7 @@ export default new ClientModule({
     />,
     <AuthRoute
       exact
-      path="/group/:id/quiz-report"
+      path="/group/:id/quizzes"
       component={loadable(() =>
         import("./containers/GroupInfoQuizReport").then((c) => c.default)
       )}

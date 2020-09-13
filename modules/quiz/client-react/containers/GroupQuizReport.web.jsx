@@ -19,8 +19,6 @@ const GroupQuizReport = (props) => {
 
   return (
     <>
-      <Title level={2}>Quiz Report</Title>
-      <Divider />
       {props.loadingQuizzes || !props.quizzes ? (
         <div align="center">
           <Loader />

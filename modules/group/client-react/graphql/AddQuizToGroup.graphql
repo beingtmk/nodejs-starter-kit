@@ -1,0 +1,4 @@
+
+mutation addQuizToGroup($input: AddQuizToGroupInput!) {
+  addQuizToGroup(input: $input)
+}
