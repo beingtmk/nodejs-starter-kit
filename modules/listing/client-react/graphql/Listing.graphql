@@ -8,27 +8,39 @@ fragment ListingInfo on Listing {
 
   title
   description
-  inventoryCount
 
-  listingMedias {
+  listingFlags {
     id
-    listingId
+    isFeatured
+    isNew
+    isDiscount
+  }
 
+  listingOptions {
+    id
+    fixedQuantity
+  }
+
+  listingDetail {
+    id
+    inventoryCount
+  }
+
+  listingMedia {
+    id
     url
+    type
+
+    isActive
   }
-  listingCost {
+
+  listingCostArray {
     id
-    listingId
-
     cost
-    dailyDiscount
+    discount
+    type
+    label
   }
-
-  isFeatured
-  isNew
-  isDiscount
-  isActive
-
   createdAt
   updatedAt
 }

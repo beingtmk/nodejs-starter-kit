@@ -12,7 +12,6 @@ type Listing {
   listingDetail: ListingDetail
   listingMedia: [ListingMedium]
   listingCostArray: [ListingCost]
-
   isActive: Boolean
   createdAt: String!
   updatedAt: String!

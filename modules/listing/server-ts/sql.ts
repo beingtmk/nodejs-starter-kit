@@ -11,9 +11,9 @@ export interface Listing {
   userId: number;
   title: string;
   description: string;
-  isActive: boolean;
   listingMedias: ListingMedium[];
-  listingCost: ListingCost;
+  listingCost: ListingCost[];
+  isActive: boolean;
 }
 
 interface ListingMedium {
@@ -31,7 +31,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost]';
+const eager = '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost_array]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -86,8 +86,8 @@ export default class ListingDAO extends Model {
           to: 'listing_medium.listing_id'
         }
       },
-      listing_cost: {
-        relation: Model.HasOneRelation,
+      listing_cost_array: {
+        relation: Model.HasManyRelation,
         modelClass: ListingCost,
         join: {
           from: 'listing.id',
@@ -218,7 +218,7 @@ export default class ListingDAO extends Model {
         .eager(eager)
         .orderBy('id', 'desc')
     );
-    // console.log(query[0]);
+    // console.log(res);
     return res;
   }
 
@@ -241,7 +241,7 @@ export default class ListingDAO extends Model {
   public async myListingBookmark(userId: number, limit: number, after: number, orderBy: any, filter: any) {
     const queryBuilder = ListingBookmark.query()
       .where('user_id', userId)
-      .eager('[listing.[user, listing_media, listing_cost]]');
+      .eager('[listing.[user, listing_media, listing_cost_array]]');
     if (orderBy && orderBy.column) {
       const column = orderBy.column;
       let order = 'asc';
