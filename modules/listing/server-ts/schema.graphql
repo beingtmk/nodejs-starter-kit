@@ -5,41 +5,52 @@ type Listing {
 
   title: String!
   description: String
-  inventoryCount: Int
+  sku: String
 
-  listingMedias: [ListingMedia]
-  listingCost: ListingCost
+  listingFlags: ListingFlag
+  listingOptions: ListingOption
+  listingDetail: ListingDetail
+  listingMedia: [ListingMedium]
+  listingCostArray: [ListingCost]
 
-  isFeatured: Boolean
-  isNew: Boolean
-  isDiscount: Boolean
   isActive: Boolean
-
   createdAt: String!
   updatedAt: String!
 }
 
-type ListingMedia {
+type ListingFlag {
   id: Int
-  listingId: Int
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+}
 
+type ListingOption {
+  id: Int
+  fixedQuantity: Int
+}
+
+type ListingDetail {
+  id: Int
+  inventoryCount: Int
+}
+
+type ListingMedium {
+  id: Int
   url: String
-
+  type: String
   isActive: Boolean
-
   createdAt: String!
   updatedAt: String!
 }
 
 type ListingCost {
   id: Int
-  listingId: Int
-
   cost: Int
-  dailyDiscount: Float
-
+  discount: Float
+  type: String
+  label: String
   isActive: Boolean
-
   createdAt: String!
   updatedAt: String!
 }
@@ -124,25 +135,49 @@ input AddListingInput {
 
   title: String
   description: String
-  inventoryCount: Int
+  sku: String
 
-  listingMedias: [ListingMediaInput]
-  listingCost: ListingCostInput
+  listingFlags: ListingFlagInput
+  listingOptions: ListingOptionInput
+  listingDetail: ListingDetailInput
+  listingMedia: [ListingMediumInput]
+  listingCostArray: [ListingCostInput]
+  isActive: Boolean
+}
 
+input ListingFlagInput {
+  id: Int
   isFeatured: Boolean
   isNew: Boolean
   isDiscount: Boolean
   isActive: Boolean
 }
+input ListingOptionInput {
+  id: Int
+  fixedQuantity: Int
+  isActive: Boolean
+}
+input ListingDetailInput {
+  id: Int
+  inventoryCount: Int
+  isActive: Boolean
+}
 
 # Input for addListing Mutation
-input ListingMediaInput {
+input ListingMediumInput {
   id: Int
   url: String!
+  type: String
+  isActive: Boolean
 }
+
 input ListingCostInput {
   id: Int
   cost: Int
+  discount: Float
+  type: String
+  label: String
+  isActive: Boolean
 }
 
 # Input for editListing Mutation
@@ -152,14 +187,13 @@ input EditListingInput {
 
   title: String
   description: String
-  inventoryCount: Int
+  sku: String
 
-  listingMedia: [ListingMediaInput]
-  listingCost: ListingCostInput
-
-  isFeatured: Boolean
-  isNew: Boolean
-  isDiscount: Boolean
+  listingFlags: ListingFlagInput
+  listingOptions: ListingOptionInput
+  listingDetail: ListingDetailInput
+  listingMedia: [ListingMediumInput]
+  listingCostArray: [ListingCostInput]
   isActive: Boolean
 }
 

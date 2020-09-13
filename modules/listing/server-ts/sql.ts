@@ -12,11 +12,11 @@ export interface Listing {
   title: string;
   description: string;
   isActive: boolean;
-  listingMedias: ListingMedia[];
+  listingMedias: ListingMedium[];
   listingCost: ListingCost;
 }
 
-interface ListingMedia {
+interface ListingMedium {
   listingId: number;
   url: string;
   isActive: boolean;
@@ -31,7 +31,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[user, listing_medias, listing_cost]';
+const eager = '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -54,12 +54,36 @@ export default class ListingDAO extends Model {
           to: 'user.id'
         }
       },
-      listing_medias: {
-        relation: Model.HasManyRelation,
-        modelClass: ListingMedia,
+      listing_flags: {
+        relation: Model.HasOneRelation,
+        modelClass: ListingFlag,
         join: {
           from: 'listing.id',
-          to: 'listing_media.listing_id'
+          to: 'listing_flag.listing_id'
+        }
+      },
+      listing_options: {
+        relation: Model.HasOneRelation,
+        modelClass: ListingOption,
+        join: {
+          from: 'listing.id',
+          to: 'listing_option.listing_id'
+        }
+      },
+      listing_detail: {
+        relation: Model.HasOneRelation,
+        modelClass: ListingDetail,
+        join: {
+          from: 'listing.id',
+          to: 'listing_detail.listing_id'
+        }
+      },
+      listing_media: {
+        relation: Model.HasManyRelation,
+        modelClass: ListingMedium,
+        join: {
+          from: 'listing.id',
+          to: 'listing_medium.listing_id'
         }
       },
       listing_cost: {
@@ -105,17 +129,17 @@ export default class ListingDAO extends Model {
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_featured', filter.isFeatured);
+          this.where('listing_flag.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_new', filter.isNew);
+          this.where('listing_flag.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_discount', filter.isDiscount);
+          this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
 
@@ -168,6 +192,9 @@ export default class ListingDAO extends Model {
     queryBuilder
       .from('listing')
       .leftJoin('user', 'user.id', 'listing.user_id')
+      .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
+      .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
+      .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
       .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
 
     const allListings = camelizeKeys(await queryBuilder);
@@ -214,7 +241,7 @@ export default class ListingDAO extends Model {
   public async myListingBookmark(userId: number, limit: number, after: number, orderBy: any, filter: any) {
     const queryBuilder = ListingBookmark.query()
       .where('user_id', userId)
-      .eager('[listing.[user, listing_medias, listing_cost]]');
+      .eager('[listing.[user, listing_media, listing_cost]]');
     if (orderBy && orderBy.column) {
       const column = orderBy.column;
       let order = 'asc';
@@ -347,10 +374,10 @@ export default class ListingDAO extends Model {
   }
 }
 
-// ListingMedia model.
-class ListingMedia extends Model {
+// ListingFlag model.
+class ListingFlag extends Model {
   static get tableName() {
-    return 'listing_media';
+    return 'listing_flag';
   }
 
   static get idColumn() {
@@ -363,7 +390,76 @@ class ListingMedia extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: ListingDAO,
         join: {
-          from: 'listing_media.listing_id',
+          from: 'listing_flag.listing_id',
+          to: 'listing.id'
+        }
+      }
+    };
+  }
+}
+// ListingOption model.
+class ListingOption extends Model {
+  static get tableName() {
+    return 'listing_option';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      listing: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingDAO,
+        join: {
+          from: 'listing_option.listing_id',
+          to: 'listing.id'
+        }
+      }
+    };
+  }
+}
+// ListingDetail model.
+class ListingDetail extends Model {
+  static get tableName() {
+    return 'listing_detail';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      listing: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingDAO,
+        join: {
+          from: 'listing_detail.listing_id',
+          to: 'listing.id'
+        }
+      }
+    };
+  }
+}
+// ListingMedium model.
+class ListingMedium extends Model {
+  static get tableName() {
+    return 'listing_medium';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      listing: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingDAO,
+        join: {
+          from: 'listing_medium.listing_id',
           to: 'listing.id'
         }
       }
