@@ -755,7 +755,7 @@ export default (pubsub: PubSub) => ({
               node: item,
             },
           });
-          return data;
+          return true;
         } catch (e) {
           return e;
         }

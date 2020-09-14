@@ -15,6 +15,7 @@ import {
 // import InfiniteScroll from 'react-infinite-scroll-component';
 import { MemberStatus, MemberType } from "@gqlapp/group-common";
 import { Name } from "../constants";
+import GroupQuizzes from "../containers/GroupQuizzes";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -23,71 +24,75 @@ class AddMembersFromParentGroupComponent extends React.Component {
     selectedRows: [], // Check here to configure the default column
   };
 
-  addUser = async (e) => {
-    const { addGroupMember, childGroup } = this.props;
-    console.log(e);
-    const input = {
-      email: e,
-      groupId: childGroup.id,
-      type: MemberType.MEMBER,
-      status: MemberStatus.ADDED,
-    };
-    addGroupMember(input);
-  };
+  // addUser = async (e) => {
+  //   const { addGroupMember, childGroup } = this.props;
+  //   console.log(e);
+  //   const input = {
+  //     email: e,
+  //     groupId: childGroup.id,
+  //     type: MemberType.MEMBER,
+  //     status: MemberStatus.ADDED,
+  //   };
+  //   addGroupMember(input);
+  // };
 
-  addUsers = async () => {
-    const { selectedRows } = this.state;
-    const { addGroupMembers, childGroup } = this.props;
-    const input = {
-      groupId: childGroup.id,
-      members: selectedRows.map((sR) => {
-        return {
-          email: sR.email,
-          groupId: childGroup.id,
-          type: MemberType.MEMBER,
-          status: MemberStatus.ADDED,
-        };
-      }),
-    };
-    console.log(input);
-    addGroupMembers(input);
-  };
+  // addUsers = async () => {
+  //   const { selectedRows } = this.state;
+  //   const { addGroupMembers, childGroup } = this.props;
+  //   const input = {
+  //     groupId: childGroup.id,
+  //     members: selectedRows.map((sR) => {
+  //       return {
+  //         email: sR.email,
+  //         groupId: childGroup.id,
+  //         type: MemberType.MEMBER,
+  //         status: MemberStatus.ADDED,
+  //       };
+  //     }),
+  //   };
+  //   console.log(input);
+  //   addGroupMembers(input);
+  // };
 
-  onSelectChange = (selectedRowKeys, selectedRows) => {
-    console.log("selectedRows changed: ", selectedRows);
-    this.setState({ selectedRows });
-  };
+  // onSelectChange = (selectedRowKeys, selectedRows) => {
+  //   console.log("selectedRows changed: ", selectedRows);
+  //   this.setState({ selectedRows });
+  // };
 
   render() {
-    console.log('GroupQuizzes', this.props);
-    const { groupQuizzesLoading, onlyInParentGroup } = this.props;
-    const { selectedRows } = this.state;
-    const rowSelection = {
-      selectedRows,
-      onChange: this.onSelectChange,
+    console.log("GroupQuizzes", this.props);
+    const {
+      groupQuizzesLoading,
+      groupQuizzes,
+      deleteQuizFromGroup,
+    } = this.props;
+    // const { selectedRows } = this.state;
+    // const rowSelection = {
+    //   selectedRows,
+    //   onChange: this.onSelectChange,
+    // };
+    // const hasSelected = selectedRows.length > 0;
+
+
+    const cancel = () => {
+      message.error("Task cancelled");
     };
-    const hasSelected = selectedRows.length > 0;
 
     const columns = [
       {
-        title: <a href="#">{"Email"}</a>,
-        dataIndex: "email",
-        key: "email",
-      },
-      {
-        title: <a href="#">{"username"}</a>,
-        dataIndex: "username",
-        key: "username",
+        title: <a href="#">{"Title"}</a>,
+        dataIndex: "title",
+        key: "title",
         render: (text, record) => (
-          <>{record && record.member && record.member.username}</>
+          <>{record && record.quiz && record.quiz.title}</>
         ),
       },
       {
-        title: <a href="#">{"Name"}</a>,
-        dataIndex: "name",
-        key: "name",
+        title: <a href="#">{"Description"}</a>,
+        dataIndex: "description",
+        key: "description",
         render: (text, record) => (
-          <>{Name(record && record.member && record.member.profile)}</>
+          <>{record && record.quiz && record.quiz.description}</>
         ),
       },
       // {
@@ -115,16 +120,20 @@ class AddMembersFromParentGroupComponent extends React.Component {
         dataIndex: "id",
         key: "actions",
         render: (text, record) => (
-          <Button
-            icon="import"
-            type="primary"
-            size="medium"
-            style={{ marginBottom: "10px", marginRight: "3px" }}
-            ghost
-            onClick={() => this.addUser(record.email)}
+          <Popconfirm
+            title="Delete Quiz from Group?"
+            onConfirm={() => deleteQuizFromGroup(record.id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
           >
-            Import
-          </Button>
+          <Button
+            icon="delete"
+            type="danger"
+            size="medium"
+            shape="circle"
+            style={{ marginBottom: "10px", marginRight: "3px" }}
+          /></Popconfirm>
         ),
       },
     ];
@@ -167,14 +176,14 @@ class AddMembersFromParentGroupComponent extends React.Component {
               >
                 Import Selected {selectedRows.length}
               </Button>
-            )}
+            )}*/}
             <div style={{ width: "100%", overflowX: "scroll" }}>
               <Table
-                rowSelection={rowSelection}
-                dataSource={onlyInParentGroup.map((node) => node)}
+                // rowSelection={rowSelection}
+                dataSource={groupQuizzes && groupQuizzes.map((node) => node)}
                 columns={columns}
               />
-            </div> */}
+            </div>
           </Fragment>
         )}
       </>

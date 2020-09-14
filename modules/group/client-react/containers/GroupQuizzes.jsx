@@ -264,12 +264,12 @@ export default compose(
   }),
   graphql(DELETE_QUIZ_GROUP, {
     props: ({ mutate }) => ({
-      deleteQuizFromGroup: async (id) => {
+      deleteQuizFromGroup: async (quizGroupId) => {
         message.loading("Please wait...", 0);
         try {
           const {
             data: { deleteQuizFromGroup },
-          } = await mutate({ variables: { id } });
+          } = await mutate({ variables: { quizGroupId } });
 
           if (deleteQuizFromGroup.errors) {
             return { errors: deleteQuizFromGroup.errors };

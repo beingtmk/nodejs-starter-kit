@@ -58,8 +58,23 @@ class AddPublicQuizToGroupComponent extends React.Component {
 
   render() {
     console.log('GroupQuizzes', this.props);
-    const { loadingQuizzes, quizzes,  } = this.props;
+    const { loadingQuizzes, quizzes, groupQuizzes } = this.props;
     const { selectedRows } = this.state;
+
+    const comparer = (otherArray) => {
+      return function(current) {
+        return (
+          otherArray.filter(function(other) {
+            return other.modelId == current.id;
+          }).length == 0
+        );
+      };
+    };
+    var notInGroup =
+      quizzes &&
+
+      quizzes.filter(comparer(groupQuizzes));
+    console.log('notiNgROUP', notInGroup)
     // const rowSelection = {
     //   selectedRows,
     //   onChange: this.onSelectChange,
@@ -167,7 +182,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
             <div style={{ width: "100%", overflowX: "scroll" }}>
               <Table
                 // rowSelection={rowSelection}
-                dataSource={quizzes.map((node) => node)}
+                dataSource={notInGroup.map((node) => node)}
                 columns={columns}
               />
             </div>

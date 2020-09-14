@@ -7,7 +7,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button } from '@gqlapp/look-client-react';
 import { Spin as Loader, Tooltip, Popconfirm } from 'antd';
 
-const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, currentUser }) => {
+const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, currentUser }) => {
   // 
 
 
@@ -197,7 +197,7 @@ const UsersView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, curr
   );
 };
 
-UsersView.propTypes = {
+QuizzesView.propTypes = {
   loadingQuizzes: PropTypes.bool.isRequired,
   quizzes: PropTypes.array,
   // orderBy: PropTypes.object,
@@ -206,4 +206,4 @@ UsersView.propTypes = {
   t: PropTypes.func
 };
 
-export default translate('quiz')(UsersView);
+export default translate('quiz')(QuizzesView);
