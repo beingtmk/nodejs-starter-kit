@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import _ from 'lodash';
 import { PropTypes } from 'prop-types';
 
 import { compose, removeTypename } from '@gqlapp/core-common';
@@ -25,7 +25,7 @@ const Listing = props => {
   const handleToggle = (field, value, id) => {
     const input = {};
     input.id = id;
-    input[field] = value;
+    _.set(input, field, value);
     try {
       editListing(input);
     } catch (e) {

@@ -144,11 +144,23 @@ const ListingListComponent = props => {
           {'Featured'} {renderOrderByArrow('listing_flag.isFeatured')}
         </a>
       ),
-      width: 100,
+      width: 120,
       dataIndex: 'listingFlags.isFeatured',
       key: 'listing_flag.isFeatured',
       render: (text, record) => (
-        <>{record.listingFlags && record.listingFlags.isFeatured ? 'Featured' : 'Not featured'}</>
+        <Select
+          name="role"
+          defaultValue={record.listingFlags && record.listingFlags.isFeatured}
+          style={{ width: '110px' }}
+          onChange={e => onToggle('listingFlags', { id: record.listingFlags.id, isFeatured: e }, record.id)}
+        >
+          <Option key={0} value={true}>
+            Featured
+          </Option>
+          <Option key={1} value={false}>
+            Not featured
+          </Option>
+        </Select>
       )
     },
     {
@@ -160,7 +172,23 @@ const ListingListComponent = props => {
       width: 100,
       dataIndex: 'listingFlags.isNew',
       key: 'listing_flag.isNew',
-      render: (text, record) => <>{record.listingFlags && record.listingFlags.isNew ? 'New' : 'Old'}</>
+      render: (text, record) => (
+        <>
+          <Select
+            name="role"
+            defaultValue={record.listingFlags && record.listingFlags.isNew}
+            style={{ width: '80px' }}
+            onChange={e => onToggle('listingFlags', { id: record.listingFlags.id, isNew: e }, record.id)}
+          >
+            <Option key={0} value={true}>
+              New
+            </Option>
+            <Option key={1} value={false}>
+              Old
+            </Option>
+          </Select>
+        </>
+      )
     },
     {
       title: (
@@ -168,7 +196,7 @@ const ListingListComponent = props => {
           {'Discount'} {renderOrderByArrow('listing_flag.isDiscount')}
         </a>
       ),
-      width: 100,
+      width: 120,
       dataIndex: 'listingFlags.isDiscount',
       key: 'listing_flag.isDiscount',
       render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>
@@ -200,7 +228,7 @@ const ListingListComponent = props => {
           {'Fixed Quantity'} {renderOrderByArrow('listing_option.fixedQuantity')}
         </a>
       ),
-      width: 200,
+      width: 180,
       dataIndex: 'listingOptions.fixedQuantity',
       key: 'listing_option.fixedQuantity',
       render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>
