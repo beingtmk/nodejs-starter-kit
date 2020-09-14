@@ -1,0 +1,9 @@
+fragment QuizMiniFragment on Quiz {
+  id
+  userId
+  active
+  title
+  description
+  isEditableByUser
+  cover
+}

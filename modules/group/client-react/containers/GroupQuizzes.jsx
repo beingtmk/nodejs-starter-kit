@@ -4,15 +4,19 @@ import { compose, removeTypename, PLATFORM } from "@gqlapp/core-common";
 import { graphql } from "react-apollo";
 import update from "immutability-helper";
 import { translate } from "@gqlapp/i18n-client-react";
-import { message } from "antd";
+import { message, Tabs, Typography } from "antd";
 
 import settings from "@gqlapp/config";
 import GROUP_SUBSCRIPTION from "../graphql/GroupsSubscription.graphql";
 import GROUP_QUIZZES_QUERY from "../graphql/GroupQuizzesQuery.graphql";
 import DELETE_QUIZ_GROUP from "../graphql/DeleteQuizFromGroup.graphql";
+import ADD_QUIZ_TO_GROUP from "../graphql/AddQuizToGroup.graphql";
 import UPDATE_FILTER from "../graphql/UpdateGroupFilter.client.graphql";
 import GROUP_STATE_QUERY from "../graphql/GroupStateQuery.client.graphql";
 import GroupQuizzesView from "../components/GroupQuizzesView";
+import AddPublicQuizToGroup from "@gqlapp/quiz-client-react/containers/AddPublicQuizToGroup.web";
+const { TabPane } = Tabs;
+const { Title, Text, Paragraph } = Typography;
 
 const limit =
   PLATFORM === "web" || PLATFORM === "server"
@@ -88,7 +92,18 @@ class GroupQuizzes extends React.Component {
   // };
 
   render() {
-    return <GroupQuizzesView {...this.props} />;
+    return (
+      <>
+        <Tabs defaultActiveKey="1">
+          <TabPane tab={"Group Quizzes"} key="1">
+            <GroupQuizzesView {...this.props} />
+          </TabPane>
+          <TabPane tab={"Add From Public"} key="2">
+            <AddPublicQuizToGroup {...this.props} />
+          </TabPane>
+        </Tabs>
+      </>
+    );
   }
 }
 
@@ -171,13 +186,14 @@ export default compose(
   //   }),
   // }),
   graphql(GROUP_QUIZZES_QUERY, {
-    options: (props) => {
+    options: ({groupId}) => {
       return {
         fetchPolicy: "network-only",
-        variables: { groupId: Number(props.groupId) },
+        variables: { groupId: Number(groupId) },
       };
     },
     props({ data }) {
+      console.log('groupQuizzesQuerydata', data)
       const {
         groupQuizzesLoading,
         error,
@@ -222,6 +238,29 @@ export default compose(
         errors: error ? error.graphQLErrors : null,
       };
     },
+  }),
+  graphql(ADD_QUIZ_TO_GROUP, {
+    props: ({ mutate }) => ({
+      addQuizToGroup: async (input) => {
+        message.loading("Please wait...", 0);
+        console.log(input);
+        try {
+          const {
+            data: { addQuizToGroup },
+          } = await mutate({ variables: {input} });
+
+          if (addQuizToGroup.errors) {
+            return { errors: addQuizToGroup.errors };
+          }
+          message.destroy();
+          message.success("Added Quiz To Group!");
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      },
+    }),
   }),
   graphql(DELETE_QUIZ_GROUP, {
     props: ({ mutate }) => ({

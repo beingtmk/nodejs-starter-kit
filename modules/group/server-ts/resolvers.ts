@@ -584,14 +584,15 @@ export default (pubsub: PubSub) => ({
         { Group, GroupModel }: any
       ) => {
         try {
+          console.log('addQuizToGroup', input);
           var modifiedInput = input;
           modifiedInput.model = 'quiz'; 
-          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams({...input})
+          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams(input)
           if(!groupQuizAlreadyExists){
             
             const added = await GroupModel.addGroupQuiz(input);
           }
-          const groupQuiz = await GroupModel.groupQuizByParams({...input})
+          const groupQuiz = await GroupModel.groupQuizByParams(input)
 
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {

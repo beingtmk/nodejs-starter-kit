@@ -1,7 +1,13 @@
-#import "./Group.graphql"
+#import "@gqlapp/quiz-client-react/graphql/QuizMini.graphql"
 
-query groupQuizzes($groupId:Int) {
+query groupQuizzes($groupId:Int!) {
   groupQuizzes(groupId:$groupId) {
-    ...GroupInfo
+    id
+    groupId
+    modelId
+    model
+    quiz{
+      ...QuizMiniFragment
+    }
   }
 }

@@ -359,17 +359,18 @@ class GroupModel extends Model {
         .findById(id).first()
     );
   }
-  public async groupQuizByParams(groupId: number, modelId:number, model:string) {
+  public async groupQuizByParams(params:any) {
+    console.log('groupQuizByParams sql', params);
     return camelizeKeys(
       await GroupModel.query()
-        .where({ group_id: groupId })
-        .andWhere({model_id: modelId})
-        .andWhere({model:model})
+        .where({ group_id: params.groupId })
+        .andWhere({model_id: params.modelId})
+        .andWhere({model: params.model})
         .first()
     );
   }
-  public async addGroupQuiz(input: GroupMemberInput) {
-    const res = await GroupMember.query().insertGraph(decamelizeKeys(input));
+  public async addGroupQuiz(input: any) {
+    const res = await GroupModel.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
