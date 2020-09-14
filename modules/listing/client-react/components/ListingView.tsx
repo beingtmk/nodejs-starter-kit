@@ -1,12 +1,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import { Row, Col, Button, Icon } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
+import ROUTES from '../routes';
 import ListingListComponent from './ListingListComponent.web';
 
 const renderMetaData = (t: TranslateFunction) => (
@@ -16,24 +17,29 @@ const renderMetaData = (t: TranslateFunction) => (
   />
 );
 
-const ListingView = props => {
+export interface ListingViewProps {
+  t: TranslateFunction;
+}
+
+const ListingView: React.SFC<ListingViewProps> = props => {
   const { t } = props;
   return (
     <PageLayout>
       {renderMetaData(t)}
-      <Helmet
-        title={`${settings.app.name} - ${t('list.title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('list.meta')}`
-          }
-        ]}
-      />
-      <h2>{t('list.subTitle')}</h2>
-      <Link to="/new/listing">
-        <Button color="primary">{t('list.btn.add')}</Button>
-      </Link>
+      <Row>
+        <Col span={12}>
+          <h2>
+            <Icon type="solution" /> &nbsp;
+            {t('list.subTitle')}
+          </h2>
+        </Col>
+        <Col span={12} align="right">
+          <Link to={ROUTES.add}>
+            <Button color="primary">{t('list.btn.add')}</Button>
+          </Link>
+        </Col>
+      </Row>
+      <br />
       {/* <hr />
       <ListingFilterComponent {...props} /> */}
       <hr />

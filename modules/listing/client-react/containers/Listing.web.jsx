@@ -18,6 +18,7 @@ const Listing = props => {
     }
   });
 
+  console.log('props', props);
   return <ListingView {...props} />;
 };
 

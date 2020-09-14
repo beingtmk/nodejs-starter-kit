@@ -8,10 +8,18 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Button, Pagination } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
+import ROUTES from '../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => <Spin text={t('listing.loadMsg')} />;
+const Loading = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    <br />
+    <Spin text={t('listing.loadMsg')} />
+  </div>
+);
 Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => <div className="text-center">{t('listing.noListingsMsg')}</div>;
@@ -22,7 +30,7 @@ const cancel = () => {
 };
 
 const ListingListComponent = props => {
-  const { orderBy, onOrderBy, loading, listings, t, loadData, deleteListing, toggleListingIsActive } = props;
+  const { orderBy, onOrderBy, loading, listings, t, loadData, deleteListing } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -53,32 +61,26 @@ const ListingListComponent = props => {
 
   const handleToggleisActive = async (event, record, isActive) => {
     event.persist();
-    const result = await toggleListingIsActive(record.id);
-    if (result) {
-      record.isActive = isActive;
-      event.target.innerHTML = isActive ? 'Active' : 'InActive';
-    }
+    message.warning('Todo');
+    // const result = await toggleListingIsActive(record.id);
+    // if (result) {
+    //   record.isActive = isActive;
+    //   event.target.innerHTML = isActive ? 'Active' : 'InActive';
+    // }
   };
 
   const columns = [
     {
       title: (
-        <a
-          // onClick={e => handleOrderBy(e, "owner")}
-          href="#"
-        >
-          {'Owner'}
-          {/* {renderOrderByArrow("owner")} */}
+        <a onClick={e => handleOrderBy(e, 'owner')} href="#">
+          Created by {renderOrderByArrow('owner')}
         </a>
       ),
+      width: 130,
+      fixed: 'left',
       dataIndex: 'owner',
       key: 'owner',
-      render: (text, record) => (
-        <Link to={`/public-profile/${record && record.userId}`}>
-          {console.log('record', record)}
-          {record && record.user && record.user.username}
-        </Link>
-      )
+      render: (text, record) => <div>{record.user && record.user.username}</div>
     },
     {
       title: (
@@ -86,16 +88,20 @@ const ListingListComponent = props => {
           Title {renderOrderByArrow('title')}
         </a>
       ),
+      width: 100,
+      fixed: 'left',
       dataIndex: 'title',
       key: 'title',
       render: text => <div>{text}</div>
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'isActive')} href="#">
-          {t('Is active')} {renderOrderByArrow('isActive')}
+        <a onClick={e => handleOrderBy(e, 'is_active')} href="#">
+          {t('Is active')} {renderOrderByArrow('is_active')}
         </a>
       ),
+      width: 120,
+      fixed: 'left',
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
@@ -103,16 +109,112 @@ const ListingListComponent = props => {
       )
     },
     {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listing_cost.cost')} href="#">
+          {'Cost'} {renderOrderByArrow('listing_cost.cost')}
+        </a>
+      ),
+      width: 100,
+      fixed: 'left',
+      dataIndex: 'listingCostArray.cost',
+      key: 'listing_cost.cost',
+      render: (text, record) => (
+        <>
+          {/* {console.log('record', record)} */}
+          &#8377;{' '}
+          {record.listingCostArray && record.listingCostArray.length > 0 && record.listingCostArray[0].cost.toFixed(2)}
+        </>
+      )
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listing_flags.isFeatured')} href="#">
+          {'Featured'} {renderOrderByArrow('listing_flags.isFeatured')}
+        </a>
+      ),
+      width: 100,
+      dataIndex: 'listingFlags.isFeatured',
+      key: 'listing_flags.isFeatured',
+      render: (text, record) => (
+        <>{record.listingFlags && record.listingFlags.isFeatured ? 'Featured' : 'Not featured'}</>
+      )
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listing_flags.isNew')} href="#">
+          {'Featured'} {renderOrderByArrow('listing_flags.isNew')}
+        </a>
+      ),
+      width: 100,
+      dataIndex: 'listingFlags.isNew',
+      key: 'listing_flags.isNew',
+      render: (text, record) => <>{record.listingFlags && record.listingFlags.isNew ? 'New' : 'Old'}</>
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listing_flags.isDiscount')} href="#">
+          {'Featured'} {renderOrderByArrow('listing_flags.isDiscount')}
+        </a>
+      ),
+      width: 100,
+      dataIndex: 'listingFlags.isDiscount',
+      key: 'listing_flags.isDiscount',
+      render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listingCostArray.discount')} href="#">
+          {'Discount'} {renderOrderByArrow('listingCostArray.discount')}
+        </a>
+      ),
+      width: 100,
+      dataIndex: 'listingCostArray.discount',
+      key: 'listingCostArray.discount',
+      render: (text, record) => (
+        <>
+          {record.listingFlags && record.listingFlags.isDiscount
+            ? record.listingCostArray &&
+              record.listingCostArray.length > 0 &&
+              (record.listingCostArray[0].discount
+                ? record.listingCostArray[0].discount.toFixed(2)
+                : 'Discount not provided')
+            : 'No Discount'}
+        </>
+      )
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listing_options.fixedQuantity')} href="#">
+          {'Fixed Quantity'} {renderOrderByArrow('listing_options.fixedQuantity')}
+        </a>
+      ),
+      width: 200,
+      dataIndex: 'listingOptions.fixedQuantity',
+      key: 'listing_options.fixedQuantity',
+      render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'listingDetail.inventoryCount')} href="#">
+          {'Inventory Count'} {renderOrderByArrow('listingDetail.inventoryCount')}
+        </a>
+      ),
+      width: 200,
+      dataIndex: 'listingDetail.inventoryCount',
+      key: 'listingDetail.inventoryCount',
+      render: (text, record) => <>{record.listingDetail && record.listingDetail.inventoryCount}</>
+    },
+    {
       title: t('list.column.actions'),
       key: 'actions',
       width: 200,
+      fixed: 'right',
       render: (text, record) => (
         <div>
-          <Link className="listing-link" to={`/edit/listing/${record.id}`}>
-            <Button color="primary" size="sm">
-              Edit
-            </Button>
+          <Link className="listing-link" to={`${ROUTES.editLink}/${record.id}`}>
+            <Button color="primary" shape="circle" icon="edit" />
           </Link>
+          &nbsp;
           <Popconfirm
             title="Are you sure delete this listing?"
             onConfirm={() => deleteListing(record.id)}
@@ -120,9 +222,7 @@ const ListingListComponent = props => {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="danger" shape="circle" size="sm">
-              <Icon type="delete" />
-            </Button>
+            <Button color="danger" shape="circle" icon="delete" />
           </Popconfirm>
         </div>
       )
@@ -138,16 +238,18 @@ const ListingListComponent = props => {
 
   const RenderListings = () => (
     <Fragment>
-      <Table dataSource={listings.edges.map(({ node }) => node)} columns={columns} />
-      <Pagination
-        itemsPerPage={listings.edges.length}
-        handlePageChange={handlePageChange}
-        hasNextPage={listings.pageInfo.hasNextPage}
-        pagination={type}
-        total={listings.totalCount}
-        loadMoreText={t('list.btn.more')}
-        defaultPageSize={itemsNumber}
-      />
+      <Table scroll={{ x: 1300 }} dataSource={listings.edges.map(({ node }) => node)} columns={columns} />
+      <div align="center">
+        <Pagination
+          itemsPerPage={listings.edges.length}
+          handlePageChange={handlePageChange}
+          hasNextPage={listings.pageInfo.hasNextPage}
+          pagination={type}
+          total={listings.totalCount}
+          loadMoreText={t('list.btn.more')}
+          defaultPageSize={itemsNumber}
+        />
+      </div>
     </Fragment>
   );
 
