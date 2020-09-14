@@ -143,7 +143,7 @@ export default class ListingDAO extends Model {
         });
       }
 
-      if (has(filter, 'userId') && filter.userId !== '') {
+      if (has(filter, 'userId') && filter.userId !== 0) {
         queryBuilder.where(function() {
           this.where('user.id', filter.userId);
         });

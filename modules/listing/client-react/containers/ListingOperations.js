@@ -10,6 +10,7 @@ import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_QUERY from '../graphql/MyListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
+import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
 
 // Mutation
 import ADD_LISTING from '../graphql/AddListing.graphql';
@@ -17,12 +18,23 @@ import EDIT_LISTING from '../graphql/EditListing.graphql';
 import DELETE_LISTING from '../graphql/DeleteListing.graphql';
 import TOOGLE_LISTING_BOOKMARK from '../graphql/ToggleListingBookmark.graphql';
 
+// Filter
+import UPDATE_ORDER_BY_LISTING from '../graphql/UpdateOrderByListing.client.graphql';
+import UPDATE_LISTING_FILTER from '../graphql/UpdateListingFilter.client.graphql';
+
 import settings from '../../../../settings';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
+
+export const withListingsState = Component =>
+  graphql(LISTINGS_STATE_QUERY, {
+    props({ data: { listingsState, loading } }) {
+      return { ...removeTypename(listingsState), loadingState: loading };
+    }
+  })(Component);
 
 export const withCurrentUser = Component =>
   graphql(CURRENT_USER_QUERY, {
@@ -376,13 +388,10 @@ export const withEditListing = Component =>
       },
       mutate
     }) => ({
-      editListing: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+      editListing: async input => {
         try {
-          const input = removeTypename(values);
-          input.listingImages = Object.values(input.listingImages);
-
+          message.destroy();
+          message.loading('Please wait...', 0);
           console.log('input', input);
           await mutate({
             variables: {
@@ -498,4 +507,50 @@ export const withListingBookmarkStatus = Component =>
       if (error) throw new Error(error);
       return { loading, listingBookmarkStatus };
     }
+  })(Component);
+
+// Filter
+export const withOrderByUpdating = Component =>
+  graphql(UPDATE_ORDER_BY_LISTING, {
+    props: ({ mutate }) => ({
+      onOrderBy: orderBy => {
+        // console.log('orderby', mutate);
+        mutate({ variables: { orderBy } });
+      }
+    })
+  })(Component);
+
+export const withFilterUpdating = Component =>
+  graphql(UPDATE_LISTING_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        // console.log("searchtext", searchText);
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onUpperCostChange(cost) {
+        mutate({ variables: { filter: { upperCost: cost } } });
+      },
+      onLowerCostChange(cost) {
+        mutate({ variables: { filter: { lowerCost: cost } } });
+      },
+      onIsActiveChange(isActive) {
+        mutate({ variables: { filter: { isActive } } });
+      },
+      onIsFeaturedChange(isFeatured) {
+        mutate({ variables: { filter: { isFeatured } } });
+      },
+      onIsDiscount(isDiscount) {
+        mutate({ variables: { filter: { isDiscount } } });
+      },
+      onIsNewChange(isNew) {
+        mutate({ variables: { filter: { isNew } } });
+      },
+      onFiltersRemove(filter) {
+        mutate({
+          variables: {
+            filter
+          }
+        });
+      }
+    })
   })(Component);

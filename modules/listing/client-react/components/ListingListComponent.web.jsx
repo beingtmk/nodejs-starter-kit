@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { Select, Option, Table, Button, Pagination } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
@@ -30,7 +30,7 @@ const cancel = () => {
 };
 
 const ListingListComponent = props => {
-  const { orderBy, onOrderBy, loading, listings, t, loadData, deleteListing } = props;
+  const { onToggle, orderBy, onOrderBy, loading, listings, t, loadData, deleteListing } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -72,14 +72,14 @@ const ListingListComponent = props => {
   const columns = [
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'owner')} href="#">
-          Created by {renderOrderByArrow('owner')}
+        <a onClick={e => handleOrderBy(e, 'user.username')} href="#">
+          Created by {renderOrderByArrow('user.username')}
         </a>
       ),
       width: 130,
       fixed: 'left',
-      dataIndex: 'owner',
-      key: 'owner',
+      dataIndex: 'user.username',
+      key: 'user.username',
       render: (text, record) => <div>{record.user && record.user.username}</div>
     },
     {
@@ -97,7 +97,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'is_active')} href="#">
-          {t('Is active')} {renderOrderByArrow('is_active')}
+          {t('Active')} {renderOrderByArrow('is_active')}
         </a>
       ),
       width: 120,
@@ -105,7 +105,19 @@ const ListingListComponent = props => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <a onClick={e => handleToggleisActive(e, record, text ? false : true)}>{text ? 'Active' : 'Inactive'}</a>
+        <Select
+          name="role"
+          defaultValue={text}
+          style={{ width: '90px' }}
+          onChange={e => onToggle('isActive', e, record.id)}
+        >
+          <Option key={0} value={true}>
+            Active
+          </Option>
+          <Option key={1} value={false}>
+            In-active
+          </Option>
+        </Select>
       )
     },
     {
@@ -128,48 +140,48 @@ const ListingListComponent = props => {
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'listing_flags.isFeatured')} href="#">
-          {'Featured'} {renderOrderByArrow('listing_flags.isFeatured')}
+        <a onClick={e => handleOrderBy(e, 'listing_flag.isFeatured')} href="#">
+          {'Featured'} {renderOrderByArrow('listing_flag.isFeatured')}
         </a>
       ),
       width: 100,
       dataIndex: 'listingFlags.isFeatured',
-      key: 'listing_flags.isFeatured',
+      key: 'listing_flag.isFeatured',
       render: (text, record) => (
         <>{record.listingFlags && record.listingFlags.isFeatured ? 'Featured' : 'Not featured'}</>
       )
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'listing_flags.isNew')} href="#">
-          {'Featured'} {renderOrderByArrow('listing_flags.isNew')}
+        <a onClick={e => handleOrderBy(e, 'listing_flag.isNew')} href="#">
+          {'New'} {renderOrderByArrow('listing_flag.isNew')}
         </a>
       ),
       width: 100,
       dataIndex: 'listingFlags.isNew',
-      key: 'listing_flags.isNew',
+      key: 'listing_flag.isNew',
       render: (text, record) => <>{record.listingFlags && record.listingFlags.isNew ? 'New' : 'Old'}</>
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'listing_flags.isDiscount')} href="#">
-          {'Featured'} {renderOrderByArrow('listing_flags.isDiscount')}
+        <a onClick={e => handleOrderBy(e, 'listing_flag.isDiscount')} href="#">
+          {'Discount'} {renderOrderByArrow('listing_flag.isDiscount')}
         </a>
       ),
       width: 100,
       dataIndex: 'listingFlags.isDiscount',
-      key: 'listing_flags.isDiscount',
+      key: 'listing_flag.isDiscount',
       render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'listingCostArray.discount')} href="#">
-          {'Discount'} {renderOrderByArrow('listingCostArray.discount')}
+        <a onClick={e => handleOrderBy(e, 'listing_cost.discount')} href="#">
+          {'Discount'} {renderOrderByArrow('listing_cost.discount')}
         </a>
       ),
       width: 100,
       dataIndex: 'listingCostArray.discount',
-      key: 'listingCostArray.discount',
+      key: 'listing_cost.discount',
       render: (text, record) => (
         <>
           {record.listingFlags && record.listingFlags.isDiscount
@@ -184,13 +196,13 @@ const ListingListComponent = props => {
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'listing_options.fixedQuantity')} href="#">
-          {'Fixed Quantity'} {renderOrderByArrow('listing_options.fixedQuantity')}
+        <a onClick={e => handleOrderBy(e, 'listing_option.fixedQuantity')} href="#">
+          {'Fixed Quantity'} {renderOrderByArrow('listing_option.fixedQuantity')}
         </a>
       ),
       width: 200,
       dataIndex: 'listingOptions.fixedQuantity',
-      key: 'listing_options.fixedQuantity',
+      key: 'listing_option.fixedQuantity',
       render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>
     },
     {
@@ -270,7 +282,7 @@ ListingListComponent.propTypes = {
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
   deleteListing: PropTypes.func.isRequired,
-  toggleListingIsActive: PropTypes.func,
+  onToggle: PropTypes.func,
   t: PropTypes.func,
   history: PropTypes.object
 };

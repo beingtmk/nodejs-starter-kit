@@ -41,6 +41,8 @@ fragment ListingInfo on Listing {
     type
     label
   }
+
+  isActive
   createdAt
   updatedAt
 }

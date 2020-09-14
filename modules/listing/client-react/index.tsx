@@ -11,6 +11,7 @@ import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 
 const { SubMenu } = Menu;
 
+import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
@@ -139,5 +140,6 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'listing', resources }]
 });
