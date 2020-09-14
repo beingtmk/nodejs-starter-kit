@@ -2,5 +2,58 @@
   "navLink": "Home nav link",
   "title": "Home module",
   "meta": "Home example",
-  "welcomeText": "Hello, This is the Home module"
+  "welcomeText": "Hello, This is the Home module",
+  "feature0":{
+    "titleWrapper":"products and services",
+    "childWrapper":{
+      "block0":{
+        "title":"One-stop business access",
+        "content":"Four times the efficiency of payment, settlement, and accounting access products"
+      },
+      "block1":{
+        "title":"One-stop in-event risk monitoring",
+        "content":"Prior risk control and quality control capabilities in all requirements configuration links"
+      },
+      "block2":{
+        "title":"One-stop data operation",
+        "content":"Accumulate product access efficiency and operational efficiency data"
+      }
+    }
+  },
+  "content5":{
+    "titleWrapper":{
+      "title":"Customer case",
+      "content":"Here is a paragraph to introduce the case of the service"
+    }
+  },
+  "feature3":{
+    "titleWrapper":{
+      "title":"Ant Financial Cloud provides professional services",
+      "content":"Based on Alibaba Cloud's powerful basic resources"
+    },
+    "block0":{
+      "title":"Enterprise Resource Management",
+      "content":"Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance."
+    },
+    "block1":{
+      "title":"Cloud security",
+      "content":"A complete cloud-based security system built in accordance with the security requirements of financial enterprises to fully protect financial applications and data security."
+    },
+    "block2":{
+      "title":"Cloud monitoring",
+      "content":"Distributed cloud environment centralized monitoring, unified resource and application status view, intelligent analysis and fault location."
+    },
+    "block3":{
+      "title":"mobile",
+      "content":"One-stop mobile financial APP development and comprehensive monitoring; abundant available components, dynamic release and fault hot repair."
+    },
+    "block4":{
+      "title":"Distributed middleware",
+      "content":"Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data."
+    },
+    "block5":{
+      "title":"Big Data",
+      "content":"One-stop, full-cycle big data collaborative work platform, PB-level data processing, millisecond-level data analysis tools."
+    }
+  }
 }
