@@ -4,18 +4,17 @@ import { compose, removeTypename, PLATFORM } from "@gqlapp/core-common";
 import { graphql } from "react-apollo";
 import update from "immutability-helper";
 import { translate } from "@gqlapp/i18n-client-react";
-import { message, Tabs, Typography, Spin as Loader } from "antd";
+import { message, Tabs, Typography } from "antd";
 
 import settings from "@gqlapp/config";
 import GROUP_SUBSCRIPTION from "../graphql/GroupsSubscription.graphql";
 import GROUP_QUIZZES_QUERY from "../graphql/GroupQuizzesQuery.graphql";
-import DELETE_QUIZ_GROUP from "../graphql/DeleteQuizFromGroup.graphql";
-import ADD_QUIZ_TO_GROUP from "../graphql/AddQuizToGroup.graphql";
+// import DELETE_QUIZ_GROUP from "../graphql/DeleteQuizFromGroup.graphql";
+// import ADD_QUIZ_TO_GROUP from "../graphql/AddQuizToGroup.graphql";
 import UPDATE_FILTER from "../graphql/UpdateGroupFilter.client.graphql";
 import GROUP_STATE_QUERY from "../graphql/GroupStateQuery.client.graphql";
-import GroupQuizzesView from "../components/GroupQuizzesView";
+// import QuizImportFromParentGroupView from "../components/QuizImportFromParentGroupView";
 import AddPublicQuizToGroup from "@gqlapp/quiz-client-react/containers/AddPublicQuizToGroup.web";
-import QuizImportFromParentGroup from "./QuizImportFromParentGroup";
 const { TabPane } = Tabs;
 const { Title, Text, Paragraph } = Typography;
 
@@ -24,7 +23,7 @@ const limit =
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 
-class GroupQuizzes extends React.Component {
+class QuizImportFromParentGroup extends React.Component {
   constructor(props) {
     super(props);
     this.subscription = null;
@@ -93,44 +92,25 @@ class GroupQuizzes extends React.Component {
   // };
 
   render() {
-    console.log("groupQuizzesContainer", this.props);
-    const {
-      addQuizToGroup,
-      group,
-      groupQuizzes,
-      groupQuizzesLoading,
-    } = this.props;
     return (
       <>
-        {!groupQuizzesLoading ? (
-          <Tabs defaultActiveKey="1">
-            <TabPane tab={"Group Quizzes"} key="1">
-              <GroupQuizzesView {...this.props} />
-            </TabPane>
-            <TabPane tab={"Add From Public"} key="2">
-              <AddPublicQuizToGroup {...this.props} />
-            </TabPane>
-            {group && group.groupId && (
-              <TabPane tab={"Import From Parent Group"} key="3">
-                <QuizImportFromParentGroup
-                  childGroup={group}
-                  childGroupQuizzes={groupQuizzes}
-                  addQuizToGroup={addQuizToGroup}
-                />
-              </TabPane>
-            )}
-          </Tabs>
-        ) : (
-          <div align="center">
-            <Loader />
-          </div>
-        )}
+        {/* <Tabs defaultActiveKey="1">
+          <TabPane tab={"Group Quizzes"} key="1">
+            <GroupQuizzesView {...this.props} />
+          </TabPane>
+          <TabPane tab={"Add From Public"} key="2">
+            <AddPublicQuizToGroup {...this.props} />
+          </TabPane>
+          <TabPane tab={"Import From Parent Group"} key="3">
+            <AddPublicQuizToGroup {...this.props} />
+          </TabPane>
+        </Tabs> */}
       </>
     );
   }
 }
 
-GroupQuizzes.propTypes = {
+QuizImportFromParentGroup.propTypes = {
   subscribeToMore: PropTypes.func,
   filter: PropTypes.object,
   groupLoading: PropTypes.bool,
@@ -209,14 +189,14 @@ export default compose(
   //   }),
   // }),
   graphql(GROUP_QUIZZES_QUERY, {
-    options: ({ groupId }) => {
+    options: ({childGroup}) => {
       return {
         fetchPolicy: "network-only",
-        variables: { groupId: Number(groupId) },
+        variables: { groupId: Number(childGroup.groupId) },
       };
     },
     props({ data }) {
-      console.log("groupQuizzesQuerydata", data);
+      console.log('groupQuizzesQuerydata', data)
       const {
         groupQuizzesLoading,
         error,
@@ -262,49 +242,49 @@ export default compose(
       };
     },
   }),
-  graphql(ADD_QUIZ_TO_GROUP, {
-    props: ({ mutate }) => ({
-      addQuizToGroup: async (input) => {
-        message.loading("Please wait...", 0);
-        console.log(input);
-        try {
-          const {
-            data: { addQuizToGroup },
-          } = await mutate({ variables: { input } });
+  // graphql(ADD_QUIZ_TO_GROUP, {
+  //   props: ({ mutate }) => ({
+  //     addQuizToGroup: async (input) => {
+  //       message.loading("Please wait...", 0);
+  //       console.log(input);
+  //       try {
+  //         const {
+  //           data: { addQuizToGroup },
+  //         } = await mutate({ variables: {input} });
 
-          if (addQuizToGroup.errors) {
-            return { errors: addQuizToGroup.errors };
-          }
-          message.destroy();
-          message.success("Added Quiz To Group!");
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
-      },
-    }),
-  }),
-  graphql(DELETE_QUIZ_GROUP, {
-    props: ({ mutate }) => ({
-      deleteQuizFromGroup: async (quizGroupId) => {
-        message.loading("Please wait...", 0);
-        try {
-          const {
-            data: { deleteQuizFromGroup },
-          } = await mutate({ variables: { quizGroupId } });
+  //         if (addQuizToGroup.errors) {
+  //           return { errors: addQuizToGroup.errors };
+  //         }
+  //         message.destroy();
+  //         message.success("Added Quiz To Group!");
+  //       } catch (e) {
+  //         message.destroy();
+  //         message.error("Couldn't perform the action");
+  //         console.error(e);
+  //       }
+  //     },
+  //   }),
+  // }),
+  // graphql(DELETE_QUIZ_GROUP, {
+  //   props: ({ mutate }) => ({
+  //     deleteQuizFromGroup: async (quizGroupId) => {
+  //       message.loading("Please wait...", 0);
+  //       try {
+  //         const {
+  //           data: { deleteQuizFromGroup },
+  //         } = await mutate({ variables: { quizGroupId } });
 
-          if (deleteQuizFromGroup.errors) {
-            return { errors: deleteQuizFromGroup.errors };
-          }
-          message.destroy();
-          message.success("Deleted Quiz From Group!");
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
-      },
-    }),
-  })
-)(translate("group")(GroupQuizzes));
+  //         if (deleteQuizFromGroup.errors) {
+  //           return { errors: deleteQuizFromGroup.errors };
+  //         }
+  //         message.destroy();
+  //         message.success("Deleted Quiz From Group!");
+  //       } catch (e) {
+  //         message.destroy();
+  //         message.error("Couldn't perform the action");
+  //         console.error(e);
+  //       }
+  //     },
+  //   }),
+  // })
+)(translate("group")(QuizImportFromParentGroup));
