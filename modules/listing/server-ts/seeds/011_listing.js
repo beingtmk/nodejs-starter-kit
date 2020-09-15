@@ -3,7 +3,7 @@ import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 const MEDIA = [
   {
     url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
-    type: 'img'
+    type: 'image'
   },
   {
     url: 'https://www.youtube.com/watch?v=ScMzIvxBSi4&ab_channel=BenMarquezTX',
