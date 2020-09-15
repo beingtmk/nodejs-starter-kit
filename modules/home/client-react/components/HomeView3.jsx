@@ -7,11 +7,11 @@ import { PageLayout } from '@gqlapp/look-client-react';
 import { enquireScreen } from 'enquire-js';
 
 import Banner3 from './AntdLanding/Banner3';
+import Teams4 from './AntdLanding/Teams4';
 import Content9 from './AntdLanding/Content9';
 import Content11 from './AntdLanding/Content11';
 import Content12 from './AntdLanding/Content12';
 import Contact0 from './AntdLanding/Contact0';
-import Teams4 from './AntdLanding/Teams4';
 
 let isMobile;
 enquireScreen(b => {
