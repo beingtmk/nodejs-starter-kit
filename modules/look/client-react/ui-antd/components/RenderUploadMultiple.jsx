@@ -16,12 +16,16 @@ export default class RenderUpload extends React.Component {
     if (file.status == 'done') {
       this.props.setload(false);
       if (file.response) {
+        console.log('response', file.response);
         let url = file.response.secure_url;
         if (url) {
           //set value in form
           const dictKey = this.props.dictKey;
           let obj = {};
           obj[dictKey] = url;
+          if (this.props.getType) {
+            obj.type = file.response.resource_type;
+          }
           arrayHelpers.push(obj);
         }
       }
@@ -91,6 +95,7 @@ RenderUpload.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   setload: PropTypes.func,
+  getType: PropTypes.bool,
   defaultFileList: PropTypes.arrayOf(
     PropTypes.shape({
       uid: PropTypes.number,

@@ -134,7 +134,10 @@ const ListingListComponent = props => {
         <>
           {/* {console.log('record', record)} */}
           &#8377;{' '}
-          {record.listingCostArray && record.listingCostArray.length > 0 && record.listingCostArray[0].cost.toFixed(2)}
+          {record.listingCostArray &&
+            record.listingCostArray.length > 0 &&
+            record.listingCostArray[0].cost &&
+            record.listingCostArray[0].cost.toFixed(2)}
         </>
       )
     },
