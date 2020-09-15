@@ -61,41 +61,130 @@
       "content": "One-stop, full-cycle big data collaborative work platform, PB-level data processing, millisecond-level data analysis tools."
     }
   },
-  "banner5":{
-    "title":"product name",
-    "explain":"Product slogan introduction",
-    "content":"A detailed description of the product, such as text",
-    "button":"start using"
+  "banner5": {
+    "title": "product name",
+    "explain": "Product slogan introduction",
+    "content": "A detailed description of the product, such as text",
+    "button": "start using"
   },
-  "feature6":{
-    "block0":{
-      "title":"Service index",
-      "child0":{
-        "unit":"million",
-        "children":"Model data"
+  "feature6": {
+    "block0": {
+      "title": "Service index",
+      "child0": {
+        "unit": "million",
+        "children": "Model data"
       },
-      "child1":{
-        "unit":"billion",
-        "children":"Number of model iterations"
+      "child1": {
+        "unit": "billion",
+        "children": "Number of model iterations"
       },
-      "child2":{
-        "unit":"billion",
-        "children":"Number of training samples"
+      "child2": {
+        "unit": "billion",
+        "children": "Number of training samples"
       }
     },
-    "block1":{
-      "title":"Service index",
-      "child0":{
-        "unit":"million",
-        "children":"Model data"
+    "block1": {
+      "title": "Service index",
+      "child0": {
+        "unit": "million",
+        "children": "Model data"
       },
-      "child1":{
-        "unit":"billion",
-        "children":"Number of model iterations"
+      "child1": {
+        "unit": "billion",
+        "children": "Number of model iterations"
       },
-      "child2":{
-        "unit":"billion",
-        "children":"Number of training samples"
+      "child2": {
+        "unit": "billion",
+        "children": "Number of training samples"
+      }
+    }
+  },
+  "feature7": {
+    "titleWrapper": {
+      "title": "Image online service",
+      "content": "You can directly and quickly access image capabilities"
+    },
+    "blockWrapper": {
+      "block0": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block1": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block2": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block3": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block4": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block5": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block6": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block7": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      }
+    }
+  },
+  "feature8": {
+    "titleWrapper": {
+      "title": "manual",
+      "content": "The process is simple and clear, and quickly respond to demand"
+    },
+    "childWrapper": {
+      "button": "Experience now"
+    },
+    "carousel": {
+      "block0": {
+        "title": "Platform independent training process",
+        "child0": {
+          "title": "Demand communication",
+          "content": "Communicate with business needs, match-maker: Chengfan, Yuncai"
+        },
+        "child1": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child2": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child3": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        }
+      },
+      "block1": {
+        "title": "Platform independent training process",
+        "child0": {
+          "title": "Demand communication",
+          "content": "Communicate with business needs, match-maker: Chengfan, Yuncai"
+        },
+        "child1": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child2": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child3": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        }
       }
     }
   }
