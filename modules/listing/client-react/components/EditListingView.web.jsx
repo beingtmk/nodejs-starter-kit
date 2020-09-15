@@ -1,12 +1,14 @@
 import React from 'react';
-import { Spin } from 'antd';
+import { Steps, Spin } from 'antd';
 import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
 
-import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
+import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ListingFormComponent from './ListingFormComponent.web';
+
+const { Step } = Steps;
 
 const EditListingView = props => {
   const renderMetaData = t => (
@@ -15,25 +17,53 @@ const EditListingView = props => {
       meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
     />
   );
-  const { t, listing, loading, editListing, currentUser } = props;
+  const { t, listing, loading, onSubmit, currentUser } = props;
+  const [step, setStep] = React.useState(0);
+  const steps = [
+    {
+      title: 'Details',
+    },
+    {
+      title: 'Flags',
+    },
+    {
+      title: 'Media',
+    },
+  ];
 
   return (
     <>
       <PageLayout>
         {renderMetaData(t)}
         {loading ? (
-          <Spin />
+          <div align="center">
+            <br />
+            <br />
+            <br />
+            <Spin text={t('listing.loadMsg')} />
+          </div>
         ) : (
           <>
-            <LayoutCenter>
+            <br />
+            <br />
+            <Steps current={step}>
+              {steps.map(item => (
+                <Step key={item.title} title={item.title} />
+              ))}
+            </Steps>
+            <br />
+            <br />
+            <div align="center">
               <ListingFormComponent
+                step={step}
+                setStep={setStep}
                 cardTitle="Edit Listing"
                 t={t}
                 listing={listing}
-                onSubmit={editListing}
+                onSubmit={onSubmit}
                 currentUser={currentUser}
               />
-            </LayoutCenter>
+            </div>
           </>
         )}
       </PageLayout>
@@ -46,7 +76,7 @@ EditListingView.propTypes = {
   loading: PropTypes.bool,
   listing: PropTypes.object,
   currentUser: PropTypes.object,
-  editListing: PropTypes.func
+  editListing: PropTypes.func,
 };
 
 export default EditListingView;

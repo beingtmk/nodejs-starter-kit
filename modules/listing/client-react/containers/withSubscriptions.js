@@ -22,12 +22,12 @@ const useListingsWithSubscription = (subscribeToMore, filter) => {
         prev,
         {
           subscriptionData: {
-            data: { listingsUpdated: newData }
-          }
+            data: { listingsUpdated: newData },
+          },
         }
       ) => {
         setListingsUpdated(newData);
-      }
+      },
     });
   };
 
@@ -50,12 +50,12 @@ const useListingWithSubscription = (subscribeToMore, listingId) => {
         prev,
         {
           subscriptionData: {
-            data: { listingUpdated: newData }
-          }
+            data: { listingUpdated: newData },
+          },
         }
       ) => {
         setListingUpdated(newData);
-      }
+      },
     });
   };
 
@@ -100,12 +100,12 @@ const useListingListWithSubscription = subscribeToMore => {
         prev,
         {
           subscriptionData: {
-            data: { listingsUpdated: newData }
-          }
+            data: { listingsUpdated: newData },
+          },
         }
       ) => {
         setListingsUpdated(newData);
-      }
+      },
     });
   };
 
@@ -127,12 +127,12 @@ const useMyListingBookmarkWithSubscription = subscribeToMore => {
         prev,
         {
           subscriptionData: {
-            data: { listingsBookmarkUpdated: newData }
-          }
+            data: { listingsBookmarkUpdated: newData },
+          },
         }
       ) => {
         setListingsUpdated(newData);
-      }
+      },
     });
   };
 
@@ -142,5 +142,5 @@ export {
   useListingListWithSubscription,
   useListingsWithSubscription,
   useListingWithSubscription,
-  useMyListingBookmarkWithSubscription
+  useMyListingBookmarkWithSubscription,
 };
