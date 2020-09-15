@@ -15,6 +15,7 @@ interface ListingInputWithId {
   input: Listing & Identifier;
 }
 
+const LISTING_SUBSCRIPTION = 'listing_subscription';
 const LISTINGS_SUBSCRIPTION = 'listings_subscription';
 const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
 
@@ -172,6 +173,14 @@ export default (pubsub: any) => ({
           } else {
             return true;
           }
+        }
+      )
+    },
+    listingUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(LISTING_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.listingUpdated.id === variables.id;
         }
       )
     },
