@@ -3,6 +3,7 @@ import { Icon, Button, Row, Col, Card, Avatar, Divider, Popconfirm, message, Too
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+import ROUTES from '../routes';
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 const { Meta } = Card;
@@ -79,7 +80,7 @@ class ListingItemComponent extends Component {
             currentUser.id === item.user.id && (
               <Row>
                 <Col span={12}>
-                  <BorderListzero block onClick={() => history.push(`/edit/listing/${item.id}`)}>
+                  <BorderListzero block onClick={() => history.push(`${ROUTES.listingDetailLink}${item.id}`)}>
                     <Icon type="edit" />
                   </BorderListzero>
                 </Col>
