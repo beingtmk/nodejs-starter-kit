@@ -8,6 +8,7 @@ import { compose } from '@gqlapp/core-common';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
+import ROUTES from '../routes';
 import BookmarkComponent from './BookmarkComponent';
 import CurrencyDisplay from './CurrencyDisplay';
 
@@ -80,7 +81,7 @@ class RelatedCardComponent extends Component {
             <Icon type="shopping" /> Book Now
           </Button>
         </div>
-        <Link className="listing-link" to={`/listing-detail/${listing_id}`}>
+        <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
           <Card
             bodyStyle={{ margin: '0px' }}
             hoverable
