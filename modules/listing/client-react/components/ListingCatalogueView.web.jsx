@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Spin, Divider } from 'antd';
+import { Icon, Spin, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout } from '@gqlapp/look-client-react';
@@ -21,7 +21,7 @@ const ListingCatalogueView = props => {
   const RenderListings = () => (
     <div>
       <h2 className="headingTop">
-        <strong>All Listings</strong>
+        <Icon type="solution" /> &nbsp; All Listings
       </h2>
       <Divider style={{ margin: '5px 0px 10px' }} />
       <SuggestedCardListComponent {...props} />
@@ -39,7 +39,14 @@ const ListingCatalogueView = props => {
           }
         ]}
       />
-      {loading && <Spin />}
+      {loading && (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin />
+        </div>
+      )}
       {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
     </PageLayout>
   );
