@@ -13,7 +13,7 @@ import GROUP_QUIZZES_QUERY from "../graphql/GroupQuizzesQuery.graphql";
 // import ADD_QUIZ_TO_GROUP from "../graphql/AddQuizToGroup.graphql";
 import UPDATE_FILTER from "../graphql/UpdateGroupFilter.client.graphql";
 import GROUP_STATE_QUERY from "../graphql/GroupStateQuery.client.graphql";
-// import QuizImportFromParentGroupView from "../components/QuizImportFromParentGroupView";
+import QuizImportFromParentGroupComponent from "../components/QuizImportFromParentGroupComponent";
 import AddPublicQuizToGroup from "@gqlapp/quiz-client-react/containers/AddPublicQuizToGroup.web";
 const { TabPane } = Tabs;
 const { Title, Text, Paragraph } = Typography;
@@ -94,6 +94,7 @@ class QuizImportFromParentGroup extends React.Component {
   render() {
     return (
       <>
+      <QuizImportFromParentGroupComponent {...this.props} />
         {/* <Tabs defaultActiveKey="1">
           <TabPane tab={"Group Quizzes"} key="1">
             <GroupQuizzesView {...this.props} />
@@ -198,7 +199,7 @@ export default compose(
     props({ data }) {
       console.log('groupQuizzesQuerydata', data)
       const {
-        groupQuizzesLoading,
+        loading,
         error,
         groupQuizzes,
         fetchMore,
@@ -233,7 +234,7 @@ export default compose(
       // };
       return {
         groupQuizzes,
-        groupQuizzesLoading,
+        groupQuizzesLoading:loading,
         // loadData,
         refetch,
         subscribeToMore,
