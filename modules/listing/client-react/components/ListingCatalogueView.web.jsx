@@ -62,5 +62,5 @@ ListingCatalogueView.propTypes = {
 
 export default translate('listing')(ListingCatalogueView);
 
-const NoListingsMessage = ({ t }) => <div className="text-center">{t('listing.noListingsMsg')}</div>;
+const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
 NoListingsMessage.propTypes = { t: PropTypes.func };

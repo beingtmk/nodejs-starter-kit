@@ -1,7 +1,0 @@
-#import "./Listing.graphql"
-
-query myListings {
-  userListings {
-    ...ListingInfo
-  }
-}

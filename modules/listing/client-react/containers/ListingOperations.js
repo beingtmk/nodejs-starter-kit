@@ -7,7 +7,6 @@ import { message } from 'antd';
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
-import MY_LISTINGS_QUERY from '../graphql/MyListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
 import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
@@ -25,13 +24,15 @@ import UPDATE_LISTING_FILTER from '../graphql/UpdateListingFilter.client.graphql
 import settings from '../../../../settings';
 
 const limit =
-  PLATFORM === 'web' || PLATFORM === 'server' ? settings.pagination.web.itemsNumber : settings.pagination.mobile.itemsNumber;
+  PLATFORM === 'web' || PLATFORM === 'server'
+    ? settings.pagination.web.itemsNumber
+    : settings.pagination.mobile.itemsNumber;
 
 export const withListingsState = Component =>
   graphql(LISTINGS_STATE_QUERY, {
     props({ data: { listingsState, loading } }) {
       return { ...removeTypename(listingsState), loadingState: loading };
-    },
+    }
   })(Component);
 
 export const withCurrentUser = Component =>
@@ -39,7 +40,7 @@ export const withCurrentUser = Component =>
     props({ data: { loading, error, currentUser } }) {
       if (error) throw new Error(error);
       return { currentUserLoading: loading, currentUser };
-    },
+    }
   })(Component);
 
 export const withListings = Component =>
@@ -47,7 +48,7 @@ export const withListings = Component =>
     options: ({ orderBy, filter }) => {
       return {
         variables: { limit: limit, after: 0, orderBy, filter },
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only'
       };
     },
     props: ({ data }) => {
@@ -55,7 +56,7 @@ export const withListings = Component =>
       const loadData = (after, dataDelivery) => {
         return fetchMore({
           variables: {
-            after: after,
+            after: after
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             const totalCount = fetchMoreResult.listings.totalCount;
@@ -70,15 +71,15 @@ export const withListings = Component =>
                 totalCount,
                 edges: displayedEdges,
                 pageInfo,
-                __typename: 'Listings',
-              },
+                __typename: 'Listings'
+              }
             };
-          },
+          }
         });
       };
       if (error) throw new Error(error);
       return { loading, listings, subscribeToMore, loadData, updateQuery };
-    },
+    }
   })(Component);
 
 export const updateListingsState = (ListingsUpdated, updateQuery) => {
@@ -106,8 +107,8 @@ function onAddListings(prev, node) {
 
   return update(prev, {
     listings: {
-      $set: [...prev.listings, node],
-    },
+      $set: [...prev.listings, node]
+    }
   });
 }
 
@@ -122,12 +123,12 @@ const onDeleteListings = (prev, id) => {
   return update(prev, {
     listings: {
       totalCount: {
-        $set: prev.listings.totalCount - 1,
+        $set: prev.listings.totalCount - 1
       },
       edges: {
-        $splice: [[index, 1]],
-      },
-    },
+        $splice: [[index, 1]]
+      }
+    }
   });
 };
 
@@ -155,8 +156,8 @@ const onAddMyListing = (prev, node) => {
   }
   return update(prev, {
     userListings: {
-      $set: [node, ...prev.userListings],
-    },
+      $set: [node, ...prev.userListings]
+    }
   });
 };
 
@@ -170,8 +171,8 @@ const onDeleteMyListing = (prev, id) => {
 
   return update(prev, {
     userListings: {
-      $splice: [[index, 1]],
-    },
+      $splice: [[index, 1]]
+    }
   });
 };
 
@@ -194,8 +195,8 @@ function onAddListing(prev, node) {
 
   return update(prev, {
     listing: {
-      $set: node,
-    },
+      $set: node
+    }
   });
 }
 const onDeleteListing = history => {
@@ -233,19 +234,19 @@ const onAddMyListingsBookmark = (prev, node) => {
     myListingsBookmark: {
       pageInfo: {
         endCursor: {
-          $set: prev.myListingsBookmark.pageInfo.endCursor + 1,
-        },
+          $set: prev.myListingsBookmark.pageInfo.endCursor + 1
+        }
       },
       edges: {
         $push: [
           {
             cursor: prev.myListingsBookmark.pageInfo.endCursor + 1,
             node,
-            __typename: 'ListingEdges',
-          },
-        ],
-      },
-    },
+            __typename: 'ListingEdges'
+          }
+        ]
+      }
+    }
   });
 };
 
@@ -260,12 +261,12 @@ const onDeleteMyListingBookmark = (prev, id) => {
   return update(prev, {
     myListingsBookmark: {
       totalCount: {
-        $set: prev.myListingsBookmark.totalCount - 1,
+        $set: prev.myListingsBookmark.totalCount - 1
       },
       edges: {
-        $splice: [[index, 1]],
-      },
-    },
+        $splice: [[index, 1]]
+      }
+    }
   });
 };
 export const withListingsDeleting = Component =>
@@ -278,8 +279,8 @@ export const withListingsDeleting = Component =>
             __typename: 'Mutation',
             deleteListing: {
               id: id,
-              __typename: 'Listing',
-            },
+              __typename: 'Listing'
+            }
           },
 
           update: (cache, { data: { deleteListing } }) => {
@@ -288,8 +289,8 @@ export const withListingsDeleting = Component =>
               query: LISTINGS_QUERY,
               variables: {
                 limit,
-                after: 0,
-              },
+                after: 0
+              }
             });
 
             const newListListings = onDeleteListing(prevListings, deleteListing.id);
@@ -299,28 +300,20 @@ export const withListingsDeleting = Component =>
               query: LISTINGS_QUERY,
               variables: {
                 limit,
-                after: 0,
+                after: 0
               },
               data: {
                 listings: {
                   ...newListListings.listings,
-                  __typename: 'Listings',
-                },
-              },
+                  __typename: 'Listings'
+                }
+              }
             });
-          },
+          }
         });
         message.warning('Listing deleted.');
-      },
-    }),
-  })(Component);
-
-export const withMyListing = Component =>
-  graphql(MY_LISTINGS_QUERY, {
-    props({ data: { loading, error, userListings, subscribeToMore, updateQuery, refetch } }) {
-      if (error) throw new Error(error);
-      return { loading, userListings, subscribeToMore, updateQuery, refetch };
-    },
+      }
+    })
   })(Component);
 
 export const withAddListing = Component =>
@@ -332,15 +325,15 @@ export const withAddListing = Component =>
         try {
           await mutate({
             variables: {
-              input: values,
+              input: values
             },
             optimisticResponse: {
               __typename: 'Mutation',
               addListing: {
                 __typename: 'Listing',
-                ...values,
-              },
-            },
+                ...values
+              }
+            }
           });
           message.destroy();
           message.success('Listing added.');
@@ -350,8 +343,8 @@ export const withAddListing = Component =>
           message.error("Couldn't perform the action");
           console.error(e);
         }
-      },
-    }),
+      }
+    })
   })(Component);
 
 export const withListing = Component =>
@@ -365,13 +358,13 @@ export const withListing = Component =>
       }
 
       return {
-        variables: { id: Number(id) },
+        variables: { id: Number(id) }
       };
     },
     props({ data: { loading, error, listing, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
       return { loading, listing, subscribeToMore, updateQuery };
-    },
+    }
   })(Component);
 
 export const withEditListing = Component =>
@@ -380,9 +373,9 @@ export const withEditListing = Component =>
       ownProps: {
         history,
         navigation,
-        currentUser: { role },
+        currentUser: { role }
       },
-      mutate,
+      mutate
     }) => ({
       editListing: async input => {
         try {
@@ -391,8 +384,8 @@ export const withEditListing = Component =>
           console.log('input', input);
           await mutate({
             variables: {
-              input: input,
-            },
+              input: input
+            }
           });
           message.destroy();
           message.success('Changes Saved.');
@@ -409,8 +402,8 @@ export const withEditListing = Component =>
           message.error("Couldn't perform the action");
           console.error(e);
         }
-      },
-    }),
+      }
+    })
   })(Component);
 
 export const withMyListingsBookmark = Component =>
@@ -421,9 +414,9 @@ export const withMyListingsBookmark = Component =>
         variables: {
           userId: props.currentUser && props.currentUser.id,
           limit: limit,
-          after: 0,
+          after: 0
         },
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only'
       };
     },
     props: ({ data }) => {
@@ -431,18 +424,19 @@ export const withMyListingsBookmark = Component =>
       const loadData = (after, dataDelivery) => {
         return fetchMore({
           variables: {
-            after: after,
+            after: after
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             const newEdges = fetchMoreResult.myListingsBookmark;
-            const displayedEdges = dataDelivery === 'add' ? [...previousResult.myListingsBookmark, ...newEdges] : newEdges;
+            const displayedEdges =
+              dataDelivery === 'add' ? [...previousResult.myListingsBookmark, ...newEdges] : newEdges;
 
             return {
               // By returning `cursor` here, we update the `fetchMore` function
               // to the new cursor.
-              myListingsBookmark: displayedEdges,
+              myListingsBookmark: displayedEdges
             };
-          },
+          }
         });
       };
       if (error) throw new Error(error);
@@ -451,9 +445,9 @@ export const withMyListingsBookmark = Component =>
         myListingsBookmark,
         subscribeToMore,
         loadData,
-        updateQuery,
+        updateQuery
       };
-    },
+    }
   })(Component);
 
 export const withToogleListingBookmark = Component =>
@@ -464,9 +458,9 @@ export const withToogleListingBookmark = Component =>
         message.loading('Please wait...', 0);
         try {
           const {
-            data: { addOrRemoveListingBookmark },
+            data: { addOrRemoveListingBookmark }
           } = await mutate({
-            variables: { listingId, userId },
+            variables: { listingId, userId }
           });
 
           message.destroy();
@@ -476,8 +470,8 @@ export const withToogleListingBookmark = Component =>
           message.error("Couldn't perform the action");
           console.error(e);
         }
-      },
-    }),
+      }
+    })
   })(Component);
 
 export const withListingBookmarkStatus = Component =>
@@ -493,15 +487,15 @@ export const withListingBookmarkStatus = Component =>
       return {
         variables: {
           listingId: Number(id || (props.listing && props.listing.id)),
-          userId: props.currentUser && props.currentUser.id,
+          userId: props.currentUser && props.currentUser.id
         },
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only'
       };
     },
     props({ data: { loading, error, listingBookmarkStatus } }) {
       if (error) throw new Error(error);
       return { loading, listingBookmarkStatus };
-    },
+    }
   })(Component);
 
 // Filter
@@ -511,8 +505,8 @@ export const withOrderByUpdating = Component =>
       onOrderBy: orderBy => {
         // console.log('orderby', mutate);
         mutate({ variables: { orderBy } });
-      },
-    }),
+      }
+    })
   })(Component);
 
 export const withFilterUpdating = Component =>
@@ -543,9 +537,9 @@ export const withFilterUpdating = Component =>
       onFiltersRemove(filter) {
         mutate({
           variables: {
-            filter,
-          },
+            filter
+          }
         });
-      },
-    }),
+      }
+    })
   })(Component);

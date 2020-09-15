@@ -1,142 +1,79 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Spin, Row, Col, Button, Icon } from 'antd';
+import { Icon, Spin, Divider } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import ListingItemComponent from './ListingItemComponent';
+import SuggestedListComponent from './SuggestedListComponent';
 
-const ButtonGroup = Button.Group;
-
-const ALL = 'All';
-const MYLISTING = 'My Listing';
-const MYORDERS = 'My orders';
-
-class MyListingsView extends Component {
-  state = {
-    status: ALL
-  };
-
-  FilterItems(e) {
-    this.setState({ status: e });
-  }
-
-  classNamesgroup(e) {
-    if (this.state.status === e) {
-      return 'btnActive';
-    } else {
-      return 'btn';
-    }
-  }
-  render() {
-    const { userListings, loading, deleteListing, history, currentUser } = this.props;
-    const { status } = this.state;
-    const delListing = async id => {
-      try {
-        await await deleteListing(id);
-      } catch (e) {
-        throw e;
+const renderMetaData = t => (
+  <Helmet
+    title={`${settings.app.name} - My Listings`}
+    meta={[
+      {
+        name: 'description',
+        content: `${settings.app.name} - My Listings)}`
       }
-    };
+    ]}
+  />
+);
 
-    return (
-      <PageLayout>
-        <Helmet
-          title={`${settings.app.name} - My Listings`}
-          meta={[
-            {
-              name: 'description',
-              content: `${settings.app.name} - My Listings)}`
-            }
-          ]}
-        />
-        {loading && !userListings ? (
+const MyListingsView = props => {
+  const { listings, loading, onDelete, history, currentUser, t } = props;
+
+  const renderFunc = (key, listing) => (
+    // <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
+    <ListingItemComponent
+      key={key}
+      history={history}
+      item={listing}
+      deleteProduct={onDelete}
+      currentUser={currentUser}
+    />
+  );
+  const RenderListings = () => (
+    <div>
+      <h2 className="headingTop">
+        <Icon type="solution" /> &nbsp; All Listings
+      </h2>
+      <Divider style={{ margin: '5px 0px 10px' }} />
+      <SuggestedListComponent
+        grid={{
+          gutter: 24,
+          sm: 1,
+          md: 1,
+          lg: 1
+        }}
+        {...props}
+        items={listings}
+        renderFunc={renderFunc}
+      />
+    </div>
+  );
+  return (
+    <PageLayout>
+      {renderMetaData(t)}
+      {loading && (
+        <div align="center">
+          <br />
+          <br />
+          <br />
           <Spin />
-        ) : (
-          <>
-            <Row>
-              <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
-                <h2 className="MyListHead">My Listing</h2>
-                <br />
-              </Col>
-              <Col md={{ span: 14 }} sm={{ span: 17 }} xs={{ span: 24 }}>
-                <ButtonGroup className="width100">
-                  <Button onClick={() => this.FilterItems(ALL)} className={this.classNamesgroup(ALL)}>
-                    <Icon type="appstore" />
-                    {`${ALL} (${userListings ? userListings.length : 0})`}
-                    {/* {`${ALL} (${userListings ? userListings.length + userListings.myOrders.length : 0})`} */}
-                  </Button>
-                  <Button onClick={() => this.FilterItems(MYLISTING)} className={this.classNamesgroup(MYLISTING)}>
-                    <Icon type="hdd" />
-                    {`${MYLISTING} (${userListings ? userListings.length : 0})`}
-                  </Button>
-                  <Button onClick={() => this.FilterItems(MYORDERS)} className={this.classNamesgroup(MYORDERS)}>
-                    <Icon type="shop" />
-                    {`${MYORDERS} (${userListings.myOrders ? userListings.myOrders.length : 0})`}
-                  </Button>
-                </ButtonGroup>
-              </Col>
-            </Row>
-            {status === ALL && (
-              <>
-                {userListings &&
-                  userListings.map(listing => (
-                    <ListingItemComponent
-                      history={history}
-                      item={listing}
-                      deleteProduct={delListing}
-                      currentUser={currentUser}
-                    />
-                  ))}
-                {/* <Divider />
-                <h3>My Orders</h3>
-                {userListings &&
-                  userListings.myOrders.map(order =>
-                    order.orderDetails.map(item => (
-                      <CartItemComponent
-                        item={item}
-                        currentUser={currentUser}
-                        // deleteProduct={props.deleteProduct}
-                      />
-                    ))
-                  )} */}
-              </>
-            )}
-            {userListings &&
-              status === MYLISTING &&
-              userListings.map(listing => (
-                <ListingItemComponent
-                  history={history}
-                  item={listing}
-                  deleteProduct={delListing}
-                  currentUser={currentUser}
-                />
-              ))}
-
-            {/* {userListings &&
-              status === MYORDERS &&
-              userListings.myOrders.map(order =>
-                order.orderDetails.map(item => (
-                  <CartItemComponent
-                    item={item}
-                    currentUser={currentUser}
-                    // deleteProduct={props.deleteProduct}
-                  />
-                ))
-              )} */}
-          </>
-        )}
-      </PageLayout>
-    );
-  }
-}
+        </div>
+      )}
+      {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
+      <Icon type="solution" /> &nbsp; My Listing
+    </PageLayout>
+  );
+};
 
 MyListingsView.propTypes = {
-  userListings: PropTypes.array,
+  listings: PropTypes.array,
   loading: PropTypes.bool,
-  deleteListing: PropTypes.func,
+  onDelete: PropTypes.func,
   currentUser: PropTypes.object,
   history: PropTypes.object
 };

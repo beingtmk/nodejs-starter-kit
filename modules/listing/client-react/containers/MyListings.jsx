@@ -1,32 +1,27 @@
-import React, { useEffect } from 'react';
-import { graphql } from 'react-apollo';
+import React from 'react';
 import { PropTypes } from 'prop-types';
+
 import { compose } from '@gqlapp/core-common';
 
-import { translate } from '@gqlapp/i18n-client-react/translate';
-
+import { withCurrentUser } from './ListingOperations';
 import MyListingsView from '../components/MyListingsView';
-
-import { useListingListWithSubscription } from './withSubscriptions';
-import { withCurrentUser, withMyListing, withListingsDeleting, updateMyListingsState } from './ListingOperations';
+import MyListingsContainer from './MyListingsContainer';
 
 const MyListings = props => {
-  const { updateQuery, subscribeToMore } = props;
-  const listingsUpdated = useListingListWithSubscription(subscribeToMore);
+  const { currentUser } = props;
 
-  useEffect(() => {
-    if (listingsUpdated) {
-      updateMyListingsState(listingsUpdated, updateQuery);
-    }
-  });
-  console.log('props', props);
-  return <MyListingsView {...props} />;
+  return (
+    <MyListingsContainer {...props} filter={{ userId: currentUser && currentUser.id }}>
+      <MyListingsView />
+    </MyListingsContainer>
+  );
 };
 
 MyListings.propTypes = {
+  currentUser: PropTypes.object,
   subscribeToMore: PropTypes.func,
   filter: PropTypes.object,
   updateQuery: PropTypes.func
 };
 
-export default compose(withCurrentUser, withMyListing, withListingsDeleting, translate('listing'))(MyListings);
+export default compose(withCurrentUser)(MyListings);

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Icon, Button, Row, Col, Card, Avatar, Divider, Popconfirm, message, Tooltip } from 'antd';
-import { graphql } from 'react-apollo';
-import { compose } from '@gqlapp/core-common';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
-
-import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 const { Meta } = Card;
@@ -49,8 +45,8 @@ class ListingItemComponent extends Component {
   render() {
     const { item, history, user, loading, currentUser } = this.props;
 
-    const sellerFirstName = (user && user.user && user.user.profile && user.user.profile.firstName) || null;
-    const sellerLastName = (user && user.user && user.user.profile && user.user.profile.lastName) || null;
+    const sellerFirstName = (item && item.user && item.user.profile && item.user.profile.firstName) || null;
+    const sellerLastName = (item && item.user && item.user.profile && item.user.profile.lastName) || null;
     const sellerName = (f, l) => {
       if (f && l) {
         return `${f} ${l}`;
@@ -65,7 +61,7 @@ class ListingItemComponent extends Component {
       }
     };
     const seller = sellerName(sellerFirstName, sellerLastName);
-    const sellerAvatar = (user && user.user && user.user.profile && user.user.profile.avatar) || AVATAR;
+    const sellerAvatar = (item && item.user && item.user.profile && item.user.profile.avatar) || AVATAR;
     return (
       // <Link to={`/listing-detail/${item.id}`}>
       !loading && (
@@ -78,9 +74,9 @@ class ListingItemComponent extends Component {
           }}
           extra={
             currentUser &&
-            user &&
-            user.user &&
-            currentUser.id === user.user.id && (
+            item &&
+            item.user &&
+            currentUser.id === item.user.id && (
               <Row>
                 <Col span={12}>
                   <BorderListzero block onClick={() => history.push(`/edit/listing/${item.id}`)}>
@@ -114,7 +110,7 @@ class ListingItemComponent extends Component {
               align="center"
               style={{ maxHeight: '200px', overflow: 'hidden' }}
             >
-              <img alt="" src={item.listingImages[0] && item.listingImages[0].imageUrl} width="100%" />
+              <img alt="" src={item.listingMedia[0] && item.listingMedia[0].url} width="100%" />
             </Col>
             <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }}>
               <div
@@ -128,7 +124,7 @@ class ListingItemComponent extends Component {
                 <h3>{`Event-Id: ${item.id}`}</h3>
                 <Divider style={{ margin: '5px 0px' }} />
 
-                <Link target="_blank" className="listing-link" to={`/public-profile/${user.user.id}`}>
+                <Link target="_blank" className="listing-link" to={`/Todo/${item.user.id}`}>
                   <Tooltip placement="topLeft" title="Visit User's Profile">
                     <Meta
                       avatar={<Avatar src={sellerAvatar} />}
@@ -138,7 +134,7 @@ class ListingItemComponent extends Component {
                           <br />
                         </h4>
                       }
-                      description={<h5 style={{ marginTop: '-10px' }}>{user.user.username}</h5>}
+                      description={<h5 style={{ marginTop: '-10px' }}>{item.user.username}</h5>}
                     />
                   </Tooltip>
                 </Link>
@@ -148,7 +144,7 @@ class ListingItemComponent extends Component {
                     <OrderGrey sm={7} xs={24}>
                       <span>
                         <strong>
-                          <span>Total</span> &#8377; {item.listingCost.cost}
+                          <span>Total</span> &#8377; {item.listingCostArray[0].cost}
                         </strong>
                       </span>
                     </OrderGrey>
@@ -183,18 +179,4 @@ ListingItemComponent.propTypes = {
   loading: PropTypes.bool
 };
 
-export default compose(
-  graphql(USER_QUERY, {
-    options: props => {
-      let id = 0;
-      id = props.item ? props.item.userId : id;
-      return {
-        variables: { id: id }
-      };
-    },
-    props({ data: { loading, error, user } }) {
-      if (error) throw new Error(error);
-      return { loading, user };
-    }
-  })
-)(ListingItemComponent);
+export default ListingItemComponent;
