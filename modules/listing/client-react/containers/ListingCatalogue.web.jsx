@@ -6,7 +6,13 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 import { useListingsWithSubscription } from './withSubscriptions';
-import { withListings, updateListingsState, withCurrentUser } from './ListingOperations';
+import {
+  withListingsState,
+  withFilterUpdating,
+  withListings,
+  updateListingsState,
+  withCurrentUser
+} from './ListingOperations';
 
 const ListingsCatalogue = props => {
   const { updateQuery, subscribeToMore, filter } = props;
@@ -19,7 +25,7 @@ const ListingsCatalogue = props => {
   });
 
   console.log('props', props);
-  return <ListingCatalogueView {...props} />;
+  return <ListingCatalogueView {...props} showFilter={true} />;
 };
 
 ListingsCatalogue.propTypes = {
@@ -28,4 +34,10 @@ ListingsCatalogue.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(withCurrentUser, withListings, translate('listing'))(ListingsCatalogue);
+export default compose(
+  withListingsState,
+  withCurrentUser,
+  withFilterUpdating,
+  withListings,
+  translate('listing')
+)(ListingsCatalogue);

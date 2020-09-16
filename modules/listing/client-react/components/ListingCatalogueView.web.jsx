@@ -8,6 +8,7 @@ import { PageLayout } from '@gqlapp/look-client-react';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import SuggestedListComponent from './SuggestedListComponent';
+import ListingFilterComponent from './ListingFilterComponent.web';
 import settings from '../../../../settings';
 
 const renderMetaData = t => (
@@ -23,7 +24,7 @@ const renderMetaData = t => (
 );
 
 const ListingCatalogueView = props => {
-  const { t, loading, listings, history, currentUser } = props;
+  const { t, loading, listings, history, currentUser, showFilter } = props;
 
   const renderFunc = (key, listing) => (
     <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
@@ -34,6 +35,13 @@ const ListingCatalogueView = props => {
         <Icon type="solution" /> &nbsp; All Listings
       </h2>
       <Divider style={{ margin: '5px 0px 10px' }} />
+      {showFilter && (
+        <>
+          <br />
+          <ListingFilterComponent {...props} />
+          <Divider />
+        </>
+      )}
       <SuggestedListComponent {...props} items={listings} renderFunc={renderFunc} />
     </div>
   );
@@ -57,7 +65,10 @@ const ListingCatalogueView = props => {
 ListingCatalogueView.propTypes = {
   t: PropTypes.func,
   loading: PropTypes.bool,
-  listings: PropTypes.object
+  showFilter: PropTypes.bool,
+  listings: PropTypes.object,
+  history: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 export default translate('listing')(ListingCatalogueView);
