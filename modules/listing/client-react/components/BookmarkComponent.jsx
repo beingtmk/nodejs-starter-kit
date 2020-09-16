@@ -20,7 +20,7 @@ const BookmarkComponent = props => {
     setStatus(listingBookmarkStatus);
   }, [listingBookmarkStatus]);
 
-  console.log('props', props, 'status', status);
+  // console.log('props', props, 'status', status);
   const handleClick = () => {
     try {
       handleBookmark();

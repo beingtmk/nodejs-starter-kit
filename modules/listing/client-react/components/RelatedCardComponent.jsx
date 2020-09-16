@@ -50,8 +50,13 @@ class RelatedCardComponent extends Component {
 
     const listing_id = listing && listing.id;
     const listing_is_new = listing && listing.listingFlags && listing.listingFlags.isNew;
-    const listing_img =
-      listing && listing.listingMedia.length !== 0 && listing.listingMedia && listing.listingMedia[0].url;
+    const listing_media =
+      listing &&
+      listing.listingMedia &&
+      listing.listingMedia.length > 0 &&
+      listing.listingMedia.filter(lM => lM.type === 'image');
+    const listing_img = listing_media.length > 0 && listing_media[0].url;
+    console.log(listing_img);
     const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
     const discount =
       listing &&
