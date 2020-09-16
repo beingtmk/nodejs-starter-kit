@@ -72,7 +72,7 @@ input FilterGroupInput {
 }
 
 extend type Mutation {
-  addGroupMemberInvite(input: AddGroupMemberInviteInput!): Boolean
+  addGroupMemberInvite(input: AddGroupMemberInput!): Boolean
   addGroupMember(input: AddGroupMemberInput!): GroupMember
   addGroupMembers(input: AddGroupMembersInput!): Boolean
   editGroupMember(input: EditGroupMemberInput!): GroupMember
@@ -101,12 +101,6 @@ input AdminEditGroupInput {
   members: [MemberInput]
 }
 
-input AddGroupMemberInviteInput {
-  groupId: Int!
-  email: String!
-  type: String!
-  status: String!
-}
 
 input ChangeGroupMemberTypeInput {
   id: Int!

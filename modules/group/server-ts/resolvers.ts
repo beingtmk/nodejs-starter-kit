@@ -14,6 +14,51 @@ const GROUPS_SUBSCRIPTION = "groups_subscription";
 const GROUP_SUBSCRIPTION = "group_subscription";
 // // const GMEMBER_SUBSCRIPTION = "groupMembers_subscription";
 
+const sendEmailInvite = async ({
+  groupId,
+  mailer,
+  Group,
+  GroupMember,
+}: any) => {
+  try {
+    const data = await Group.group(groupId);
+    const getMembers = await GroupMember.groupMembers(data.id);
+    const data1 = await Group.group(groupId);
+    const getMembers1 = await GroupMember.groupMembers(data1.id);
+    console.log("sendInvitationMailGroupppppp", data1);
+    console.log("sendInvitationMailGroupMembersppppp", getMembers1);
+    const url1 = `${__WEBSITE_URL__}/register`;
+    const url2 = `${__WEBSITE_URL__}/group/${data.id}`;
+    (await getMembers) &&
+      getMembers.map(async (item: any) => {
+        if (mailer && !item.isEmailSent) {
+          const sent = await mailer.sendMail({
+            from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
+              process.env.EMAIL_USER}>`,
+            to: item.email,
+            subject: `${settings.app.name} Registration`,
+            html: item.member
+              ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}<p>
+          <p>Group Link - <a href="${url2}">${url2}</a></p>`
+              : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}<p>
+          <p>Register - <a href="${url1}">${url1}</a></p>`,
+          });
+          log.info(`Sent mail to: ${item.email}`);
+          if (!sent) {
+            throw new Error("Email couldn't be sent");
+          } else {
+            const isUpdated = await GroupMember.changeIsEmailChange(item.id);
+            return true;
+          }
+        }
+
+      });
+    return true;
+  } catch (e) {
+    return e;
+  }
+};
+
 interface AddGroup {
   input: GroupInput;
 }
@@ -46,7 +91,7 @@ export default (pubsub: PubSub) => ({
       return GroupMember.groupMembers(id);
     },
     async groupQuizzes(obj: any, { groupId }: any, { GroupModel }: any) {
-      console.log('groupQuizzesInput', groupId, GroupModel);
+      console.log("groupQuizzesInput", groupId, GroupModel);
       return GroupModel.groupQuizzes(groupId);
       // const arr = [];
       // return arr;
@@ -110,38 +155,21 @@ export default (pubsub: PubSub) => ({
   },
   Mutation: {
     addGroup: withAuth(
-      async (obj: any, { input }: AddGroup, { Group, mailer, User }: any) => {
+      async (
+        obj: any,
+        { input }: AddGroup,
+        { Group, GroupMember, mailer, User }: any
+      ) => {
         try {
           const id = await Group.addGroup(input);
           const data = await Group.group(id);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${id}`;
-
-          let user;
-          (await input.members) &&
-            input.members.map(async (item) => {
-              user = await User.getUserByEmail(item.email);
-              if (mailer) {
-                const sent = await mailer.sendMail({
-                  from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-                    process.env.EMAIL_USER}>`,
-                  to: item.email,
-                  subject: `${settings.app.name} Registration`,
-                  html: user
-                    ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
-                <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                    : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}<p>
-                <p>Register - <a href="${url1}">${url1}</a></p>`,
-                });
-                log.info(`Sent mail to: ${item.email}`);
-                if (!sent) {
-                  throw new Error("Email couldn't be sent");
-                } else {
-                  return true;
-                }
-              }
-            });
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -157,37 +185,21 @@ export default (pubsub: PubSub) => ({
       }
     ),
     updateGroup: withAuth(
-      async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
+      async (
+        obj: any,
+        { input }: EditGroup,
+        { Group, mailer, GroupMember, User }: any
+      ) => {
         try {
           await Group.updateGroup(input);
           const data = await Group.group(input.id);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
-
-          let user;
-          // await input.members.map(async (item) => {
-          //   if (!item.id && mailer) {
-          //     user = await User.getUserByEmail(item.email);
-          //     const sent = await mailer.sendMail({
-          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //         process.env.EMAIL_USER}>`,
-          //       to: item.email,
-          //       subject: `${settings.app.name} Registration`,
-          //       html: user
-          //         ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //         : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          //     });
-          //     log.info(`Sent mail to: ${item.email}`);
-          //     if (!sent) {
-          //       throw new Error("Email couldn't be sent");
-          //     } else {
-          //       return true;
-          //     }
-          //   }
-          // });
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -210,36 +222,20 @@ export default (pubsub: PubSub) => ({
       }
     ),
     adminEditGroup: withAuth(
-      async (obj: any, { input }: EditGroup, { Group, mailer, User }: any) => {
+      async (
+        obj: any,
+        { input }: EditGroup,
+        { Group, mailer, GroupMember, User }: any
+      ) => {
         try {
           await Group.upsertGroup(input);
           const data = await Group.group(input.id);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
-
-          let user;
-          await input.members.map(async (item) => {
-            if (!item.id && mailer) {
-              user = await User.getUserByEmail(item.email);
-              const sent = await mailer.sendMail({
-                from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-                  process.env.EMAIL_USER}>`,
-                to: item.email,
-                subject: `${settings.app.name} Registration`,
-                html: user
-                  ? `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-                <p>Group Link - <a href="${url2}">${url2}</a></p>`
-                  : `<p>You have been added to <strong>${input.title}</strong> in ${settings.app.name}.<p>
-                <p>Register - <a href="${url1}">${url1}</a></p>`,
-              });
-              log.info(`Sent mail to: ${item.email}`);
-              if (!sent) {
-                throw new Error("Email couldn't be sent");
-              } else {
-                return true;
-              }
-            }
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
           });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
@@ -272,10 +268,12 @@ export default (pubsub: PubSub) => ({
           await Group.upsertGroup(input);
           const data = await Group.group(input.id);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${input.id}`;
-
-          let user;
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
           const addMemberToParentGroup = async (groupId, parentGroupId) => {
             const currentGroup = await Group.group(groupId);
             const parentGroup = await Group.group(parentGroupId);
@@ -302,6 +300,12 @@ export default (pubsub: PubSub) => ({
               addMemberInput.status = MemberStatus.ADDED;
               await GroupMember.addGroupMember(addMemberInput);
             });
+            await sendEmailInvite({
+              groupId: parentGroupId,
+              mailer,
+              Group,
+              GroupMember,
+            });
             if (parentGroup.groupId) {
               addMemberToParentGroup(parentGroup.id, parentGroup.groupId);
             }
@@ -309,28 +313,6 @@ export default (pubsub: PubSub) => ({
           if (data.groupId) {
             addMemberToParentGroup(data.id, data.groupId);
           }
-          // await input.members.map(async (item) => {
-          //   if (!item.id && mailer) {
-          //     user = await User.getUserByEmail(item.email);
-          //     const sent = await mailer.sendMail({
-          //       from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //         process.env.EMAIL_USER}>`,
-          //       to: item.email,
-          //       subject: `${settings.app.name} Registration`,
-          //       html: user
-          //         ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //         : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          //     });
-          //     log.info(`Sent mail to: ${item.email}`);
-          //     if (!sent) {
-          //       throw new Error("Email couldn't be sent");
-          //     } else {
-          //       return true;
-          //     }
-          //   }
-          // });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -356,7 +338,7 @@ export default (pubsub: PubSub) => ({
     addGroupMemberInvite: withAuth(
       async (
         obj: any,
-        { input }: any,
+        { input }: AddGroupMember,
         { Group, GroupMember, mailer, User }: any
       ) => {
         try {
@@ -364,15 +346,16 @@ export default (pubsub: PubSub) => ({
 
           const groupMemberId = await GroupMember.addGroupMember(modifiedInput);
           const data = await Group.group(input.groupId);
-          const dataGroupMember = await GroupMember.groupMember(groupMemberId);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${input.groupId}`;
-
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
           const currentGroup =
             data && data.members.find((meM) => meM.id === groupMemberId);
 
-          let user;
           const addMemberToParentGroup = async (groupId, parentGroupId) => {
             const currentGroup = await Group.group(groupId);
             const parentGroup = await Group.group(parentGroupId);
@@ -399,6 +382,12 @@ export default (pubsub: PubSub) => ({
               addMemberInput.status = MemberStatus.ADDED;
               await GroupMember.addGroupMember(addMemberInput);
             });
+            await sendEmailInvite({
+              groupId: parentGroupId,
+              mailer,
+              Group,
+              GroupMember,
+            });
             if (parentGroup.groupId) {
               addMemberToParentGroup(parentGroup.id, parentGroup.groupId);
             }
@@ -406,20 +395,6 @@ export default (pubsub: PubSub) => ({
           if (data.groupId) {
             addMemberToParentGroup(data.id, data.groupId);
           }
-          user = await User.getUserByEmail(currentGroup.email);
-          // const sent = await mailer.sendMail({
-          //   from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //     process.env.EMAIL_USER}>`,
-          //   to: currentGroup.email,
-          //   subject: `${settings.app.name} Registration`,
-          //   html: user
-          //     ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //     : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //       <p>Register - <a href="${url1}">${url1}</a></p>`,
-          // });
-          // log.info(`Sent mail to: ${currentGroup.email}`);
-
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
@@ -427,13 +402,6 @@ export default (pubsub: PubSub) => ({
               node: data,
             },
           });
-          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
-          //   groupMembersUpdated: {
-          //     mutation: "CREATED",
-          //     groupId: dataGroupMember.groupId,
-          //     node: dataGroupMember,
-          //   },
-          // });
           pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
@@ -455,37 +423,20 @@ export default (pubsub: PubSub) => ({
         { Group, GroupMember, mailer, User }: any
       ) => {
         try {
-          var users = [];
           input.members.map(async (inputItem) => {
             var modifiedInput = inputItem;
             const groupMemberId = await GroupMember.addGroupMember(
               modifiedInput
             );
-            const dataGroupMember = await GroupMember.groupMember(
-              groupMemberId
-            );
-            const u = await User.getUserByEmail(dataGroupMember.email);
-            users.push(dataGroupMember);
           });
           const data = await Group.group(input.groupId);
 
-          const url1 = `${__WEBSITE_URL__}/register`;
-          const url2 = `${__WEBSITE_URL__}/group/${input.groupId}`;
-
-          // users.map(async (userData) => {
-          //   const sent = await mailer.sendMail({
-          //     from: `${settings.app.name} <${process.env.EMAIL_SENDER ||
-          //       process.env.EMAIL_USER}>`,
-          //     to: userData.email,
-          //     subject: `${settings.app.name} Registration`,
-          //     html: userData.member
-          //       ? `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //         <p>Group Link - <a href="${url2}">${url2}</a></p>`
-          //       : `<p>You have been added to <strong>${data.title}</strong> in ${settings.app.name}.<p>
-          //         <p>Register - <a href="${url1}">${url1}</a></p>`,
-          //   });
-          //   log.info(`Sent mail to: ${userData.email}`);
-          // });
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
 
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -494,13 +445,7 @@ export default (pubsub: PubSub) => ({
               node: data,
             },
           });
-          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
-          //   groupMembersUpdated: {
-          //     mutation: "CREATED",
-          //     groupId: dataGroupMember.groupId,
-          //     node: dataGroupMember,
-          //   },
-          // });
+
           pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
@@ -544,55 +489,95 @@ export default (pubsub: PubSub) => ({
       async (
         obj: any,
         { input }: AddGroupMember,
-        { Group, GroupMember }: any
+        { Group, GroupMember, mailer }: any
       ) => {
         try {
-          const id = await GroupMember.addGroupMember(input);
-          const data = await GroupMember.groupMember(id);
-          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
-          //   groupMembersUpdated: {
-          //     mutation: "CREATED",
-          //     groupId: data.groupId,
-          //     node: data,
-          //   },
-          // });
-          const item = await Group.group(data.groupId);
+          var modifiedInput = input;
+
+          const groupMemberId = await GroupMember.addGroupMember(modifiedInput);
+          const data = await Group.group(input.groupId);
+          await sendEmailInvite({
+            groupId: data.id,
+            mailer,
+            Group,
+            GroupMember,
+          });
+
+          const currentGroup =
+            data && data.members.find((meM) => meM.id === groupMemberId);
+
+          const addMemberToParentGroup = async (groupId, parentGroupId) => {
+            const currentGroup = await Group.group(groupId);
+            const parentGroup = await Group.group(parentGroupId);
+            const comparer = (otherArray) => {
+              return function(current) {
+                return (
+                  otherArray.filter(function(other) {
+                    return other.email == current.email;
+                  }).length == 0
+                );
+              };
+            };
+            var onlyInCurrentGroup = currentGroup.members.filter(
+              comparer(parentGroup.members)
+            );
+            onlyInCurrentGroup.map(async (ii) => {
+              var addMemberInput = ii;
+              delete addMemberInput.id;
+              delete addMemberInput.createdAt;
+              delete addMemberInput.updatedAt;
+              delete addMemberInput.member;
+              addMemberInput.groupId = parentGroupId;
+              addMemberInput.type = MemberType.MEMBER;
+              addMemberInput.status = MemberStatus.ADDED;
+              await GroupMember.addGroupMember(addMemberInput);
+            });
+            await sendEmailInvite({
+              groupId: parentGroupId,
+              mailer,
+              Group,
+              GroupMember,
+            });
+            if (parentGroup.groupId) {
+              addMemberToParentGroup(parentGroup.id, parentGroup.groupId);
+            }
+          };
+          if (data.groupId) {
+            addMemberToParentGroup(data.id, data.groupId);
+          }
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
               mutation: "UPDATED",
-              parentGroupId: item.groupId,
-              node: item,
+              parentGroupId: data.groupId,
+              node: data,
             },
           });
           pubsub.publish(GROUP_SUBSCRIPTION, {
             groupItemUpdated: {
               mutation: "UPDATED",
-              id: item.id,
-              node: item,
+              id: data.id,
+              node: data,
             },
           });
-          return data;
+          return true;
         } catch (e) {
           return e;
         }
       }
     ),
     addQuizToGroup: withAuth(
-      async (
-        obj: any,
-        { input }: any,
-        { Group, GroupModel }: any
-      ) => {
+      async (obj: any, { input }: any, { Group, GroupModel }: any) => {
         try {
-          console.log('addQuizToGroup', input);
+          console.log("addQuizToGroup", input);
           var modifiedInput = input;
-          modifiedInput.model = 'quiz'; 
-          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams(input)
-          if(!groupQuizAlreadyExists){
-            
+          modifiedInput.model = "quiz";
+          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams(
+            input
+          );
+          if (!groupQuizAlreadyExists) {
             const added = await GroupModel.addGroupQuiz(input);
           }
-          const groupQuiz = await GroupModel.groupQuizByParams(input)
+          const groupQuiz = await GroupModel.groupQuizByParams(input);
 
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {
@@ -631,13 +616,6 @@ export default (pubsub: PubSub) => ({
         try {
           const inputId = await GroupMember.editGroupMember(input);
           const data = await GroupMember.groupMember(inputId);
-          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
-          //   groupMembersUpdated: {
-          //     mutation: "UPDATED",
-          //     groupId: data.groupId,
-          //     node: data,
-          //   },
-          // });
           const item = await Group.group(data.groupId);
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -666,13 +644,7 @@ export default (pubsub: PubSub) => ({
           const updated = await GroupMember.changeGroupMemberType(input);
 
           const data = await GroupMember.groupMember(input.id);
-          // pubsub.publish(GMEMBER_SUBSCRIPTION, {
-          //   groupMembersUpdated: {
-          //     mutation: "UPDATED",
-          //     groupId: data.groupId,
-          //     node: data,
-          //   },
-          // });
+
           const item = await Group.group(data.groupId);
           pubsub.publish(GROUPS_SUBSCRIPTION, {
             groupsUpdated: {
@@ -730,7 +702,6 @@ export default (pubsub: PubSub) => ({
     deleteQuizFromGroup: withAuth(
       async (obj: any, { quizGroupId }: any, { GroupModel, Group }: any) => {
         try {
-
           const data = await GroupModel.groupQuiz(quizGroupId);
           await GroupModel.deleteGroupQuiz(quizGroupId);
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {

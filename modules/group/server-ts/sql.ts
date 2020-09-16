@@ -311,6 +311,14 @@ class GroupMember extends Model {
 
     return res;
   }
+
+  public async changeIsEmailChange(id:number) {
+    const res = await GroupMember.query()
+      .update({ is_email_sent: true })
+      .findById(id);
+
+    return res;
+  }
 }
 
 class GroupModel extends Model {
