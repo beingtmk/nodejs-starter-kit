@@ -37,7 +37,7 @@ const MyListingsView = props => {
   const RenderListings = () => (
     <div>
       <h2 className="headingTop">
-        <Icon type="solution" /> &nbsp; All Listings
+        <Icon type="solution" /> &nbsp; My Listings
       </h2>
       <Divider style={{ margin: '5px 0px 10px' }} />
       <SuggestedListComponent

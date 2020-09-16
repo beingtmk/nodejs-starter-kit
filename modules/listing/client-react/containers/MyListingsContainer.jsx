@@ -4,17 +4,15 @@ import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withListings, withListingsDeleting, updateMyListingsState } from './ListingOperations';
-import { useListingListWithSubscription } from './withSubscriptions';
+import { withListings, withListingsDeleting } from './ListingOperations';
+import { subscribeToListings } from './withSubscriptions';
 
 const MyListingsContainer = props => {
-  const { updateQuery, subscribeToMore, deleteListing } = props;
-  const listingsUpdated = useListingListWithSubscription(subscribeToMore);
+  const { subscribeToMore, deleteListing, filter } = props;
 
   useEffect(() => {
-    if (listingsUpdated) {
-      updateMyListingsState(listingsUpdated, updateQuery);
-    }
+    const subscribe = subscribeToListings(subscribeToMore, filter);
+    return () => subscribe();
   });
 
   const handleDelete = async id => {
@@ -30,7 +28,9 @@ const MyListingsContainer = props => {
 };
 
 MyListingsContainer.propTypes = {
-  loading: PropTypes.bool,
-  children: PropTypes.any
+  subscribeToMore: PropTypes.func,
+  deleteListing: PropTypes.func,
+  filter: PropTypes.object.isRequired,
+  children: PropTypes.node
 };
 export default compose(withListings, withListingsDeleting, translate('listing'))(MyListingsContainer);

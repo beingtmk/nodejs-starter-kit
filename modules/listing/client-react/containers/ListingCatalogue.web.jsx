@@ -5,23 +5,15 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
-import { useListingsWithSubscription } from './withSubscriptions';
-import {
-  withListingsState,
-  withFilterUpdating,
-  withListings,
-  updateListingsState,
-  withCurrentUser
-} from './ListingOperations';
+import { subscribeToListings } from './withSubscriptions';
+import { withListingsState, withFilterUpdating, withListings, withCurrentUser } from './ListingOperations';
 
 const ListingsCatalogue = props => {
-  const { updateQuery, subscribeToMore, filter } = props;
-  const listingsUpdated = useListingsWithSubscription(subscribeToMore, filter);
+  const { subscribeToMore, filter } = props;
 
   useEffect(() => {
-    if (listingsUpdated) {
-      updateListingsState(listingsUpdated, updateQuery);
-    }
+    const subscribe = subscribeToListings(subscribeToMore, filter);
+    return () => subscribe();
   });
 
   console.log('props', props);
@@ -30,8 +22,7 @@ const ListingsCatalogue = props => {
 
 ListingsCatalogue.propTypes = {
   subscribeToMore: PropTypes.func,
-  filter: PropTypes.object,
-  updateQuery: PropTypes.func
+  filter: PropTypes.object
 };
 
 export default compose(

@@ -7,18 +7,15 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 
-import { useMyListingBookmarkWithSubscription } from './withSubscriptions';
-import { withCurrentUser, withMyListingsBookmark, updateMyListingsBookmarkState } from './ListingOperations';
+import { withCurrentUser, withMyListingsBookmark } from './ListingOperations';
+import { subscribeToListingsBookmark } from './withSubscriptions';
 
 const MyListingsBookmark = props => {
-  const { updateQuery, subscribeToMore } = props;
-  const listingsUpdated = useMyListingBookmarkWithSubscription(subscribeToMore);
-  console.log('listingsUpdated', listingsUpdated);
+  const { subscribeToMore } = props;
 
   useEffect(() => {
-    if (listingsUpdated) {
-      updateMyListingsBookmarkState(listingsUpdated, updateQuery);
-    }
+    const subscribe = subscribeToListingsBookmark(subscribeToMore);
+    return () => subscribe();
   });
 
   console.log('props', props);

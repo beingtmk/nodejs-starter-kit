@@ -82,271 +82,6 @@ export const withListings = Component =>
     }
   })(Component);
 
-export const updateListingsState = (ListingsUpdated, updateQuery) => {
-  const { mutation, node } = ListingsUpdated;
-  updateQuery(prev => {
-    switch (mutation) {
-      case 'CREATED':
-        return onAddListings(prev, node);
-      case 'DELETED':
-        return onDeleteListings(prev, node.id);
-      case 'UPDATED':
-        return onDeleteListings(prev, node.id);
-      default:
-        return prev;
-    }
-  });
-};
-
-function onAddListings(prev, node) {
-  // check if it is duplicate
-  // console.log('prev', prev.listings.edges.some(listing => listing.node.id === node.id));
-  if (prev.listings.edges.some(listing => listing.node.id === node.id)) {
-    return prev;
-  }
-
-  return update(prev, {
-    listings: {
-      $set: [...prev.listings, node]
-    }
-  });
-}
-
-const onDeleteListings = (prev, id) => {
-  const index = prev.listings.edges.findIndex(x => x.node.id === id);
-
-  // ignore if not found
-  if (index < 0) {
-    return prev;
-  }
-
-  return update(prev, {
-    listings: {
-      totalCount: {
-        $set: prev.listings.totalCount - 1
-      },
-      edges: {
-        $splice: [[index, 1]]
-      }
-    }
-  });
-};
-
-export const updateMyListingsState = (ListingsUpdated, updateQuery) => {
-  const { mutation, node } = ListingsUpdated;
-  updateQuery(prev => {
-    switch (mutation) {
-      case 'CREATED':
-        return onAddMyListing(prev, node);
-      case 'DELETED':
-        return onDeleteMyListing(prev, node.id);
-      case 'UPDATED':
-        return onDeleteMyListing(prev, node.id);
-      default:
-        return prev;
-    }
-  });
-};
-
-const onAddMyListing = (prev, node) => {
-  // ignore if duplicate
-  // console.log('prev', prev);
-  if (prev.userListings.edges.some(listing => node.id === listing.node.id)) {
-    return prev;
-  }
-  return update(prev, {
-    userListings: {
-      $set: [node, ...prev.userListings]
-    }
-  });
-};
-
-const onDeleteMyListing = (prev, id) => {
-  const index = prev.userListings.findIndex(list => list.id === id);
-
-  // ignore if not found
-  if (index < 0) {
-    return prev;
-  }
-
-  return update(prev, {
-    userListings: {
-      $splice: [[index, 1]]
-    }
-  });
-};
-
-export const updateListingState = (ListingUpdated, updateQuery, history) => {
-  const { mutation, node } = ListingUpdated;
-  updateQuery(prev => {
-    switch (mutation) {
-      case 'UPDATED':
-        return onAddListing(prev, node);
-      case 'DELETED':
-        return onDeleteListing(history);
-      default:
-        return prev;
-    }
-  });
-};
-
-function onAddListing(prev, node) {
-  // check if it is duplicate
-
-  return update(prev, {
-    listing: {
-      $set: node
-    }
-  });
-}
-const onDeleteListing = history => {
-  message.info('This listing has been deleted!');
-  message.warn('Redirecting to all listings');
-  return history.push('./listing_catalogue');
-};
-
-export const updateMyListingsBookmarkState = (ListingsUpdated, updateQuery) => {
-  const { mutation, node } = ListingsUpdated;
-  updateQuery(prev => {
-    // console.log('prev', prev, 'node', node);
-    switch (mutation) {
-      case 'CREATED':
-        return onAddMyListingsBookmark(prev, node);
-      case 'DELETED':
-        return onDeleteMyListingBookmark(prev, node.id);
-      case 'UPDATED':
-        return onDeleteMyListingBookmark(prev, node.id);
-      default:
-        return prev;
-    }
-  });
-};
-
-const onAddMyListingsBookmark = (prev, node) => {
-  // ignore if duplicate
-  // console.log('prev', prev, 'node', node);
-  if (prev.myListingsBookmark.edges.some(listing => node.id === listing.node.id)) {
-    return prev;
-  }
-  // node.node = node;
-  // node.cursor = prev.myListingsBookmark.pageInfo.endCursor + 1;
-  return update(prev, {
-    myListingsBookmark: {
-      pageInfo: {
-        endCursor: {
-          $set: prev.myListingsBookmark.pageInfo.endCursor + 1
-        }
-      },
-      edges: {
-        $push: [
-          {
-            cursor: prev.myListingsBookmark.pageInfo.endCursor + 1,
-            node,
-            __typename: 'ListingEdges'
-          }
-        ]
-      }
-    }
-  });
-};
-
-const onDeleteMyListingBookmark = (prev, id) => {
-  const index = prev.myListingsBookmark.edges.findIndex(list => list.node.id === id);
-  // console.log('indes', index);
-  // ignore if not found
-  if (index < 0) {
-    return prev;
-  }
-
-  return update(prev, {
-    myListingsBookmark: {
-      totalCount: {
-        $set: prev.myListingsBookmark.totalCount - 1
-      },
-      edges: {
-        $splice: [[index, 1]]
-      }
-    }
-  });
-};
-export const withListingsDeleting = Component =>
-  graphql(DELETE_LISTING, {
-    props: ({ mutate }) => ({
-      deleteListing: id => {
-        mutate({
-          variables: { id },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            deleteListing: {
-              id: id,
-              __typename: 'Listing'
-            }
-          },
-
-          update: (cache, { data: { deleteListing } }) => {
-            // Get previous listings from cache
-            const prevListings = cache.readQuery({
-              query: LISTINGS_QUERY,
-              variables: {
-                limit,
-                after: 0
-              }
-            });
-
-            const newListListings = onDeleteListing(prevListings, deleteListing.id);
-
-            // Write listings to cache
-            cache.writeQuery({
-              query: LISTINGS_QUERY,
-              variables: {
-                limit,
-                after: 0
-              },
-              data: {
-                listings: {
-                  ...newListListings.listings,
-                  __typename: 'Listings'
-                }
-              }
-            });
-          }
-        });
-        message.warning('Listing deleted.');
-      }
-    })
-  })(Component);
-
-export const withAddListing = Component =>
-  graphql(ADD_LISTING, {
-    props: ({ ownProps: { history }, mutate }) => ({
-      addListing: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
-        try {
-          await mutate({
-            variables: {
-              input: values
-            },
-            optimisticResponse: {
-              __typename: 'Mutation',
-              addListing: {
-                __typename: 'Listing',
-                ...values
-              }
-            }
-          });
-          message.destroy();
-          message.success('Listing added.');
-          history.push('/listings');
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
-      }
-    })
-  })(Component);
-
 export const withListing = Component =>
   graphql(LISTING_QUERY, {
     options: props => {
@@ -365,45 +100,6 @@ export const withListing = Component =>
       if (error) throw new Error(error);
       return { loading, listing, subscribeToMore, updateQuery };
     }
-  })(Component);
-
-export const withEditListing = Component =>
-  graphql(EDIT_LISTING, {
-    props: ({
-      ownProps: {
-        history,
-        navigation,
-        currentUser: { role }
-      },
-      mutate
-    }) => ({
-      editListing: async input => {
-        try {
-          message.destroy();
-          message.loading('Please wait...', 0);
-          // console.log('input', input);
-          await mutate({
-            variables: {
-              input: input
-            }
-          });
-          message.destroy();
-          message.success('Changes Saved.');
-          if (history) {
-            if (role === 'admin') return history.push('/listings');
-            else return history.push('/my-listings');
-          }
-          if (navigation) {
-            if (role === 'admin') return navigation.navigate('ListingCatalogue');
-            else return navigation.navigate('MyListings');
-          }
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
-      }
-    })
   })(Component);
 
 export const withMyListingsBookmark = Component =>
@@ -450,30 +146,6 @@ export const withMyListingsBookmark = Component =>
     }
   })(Component);
 
-export const withToogleListingBookmark = Component =>
-  graphql(TOOGLE_LISTING_BOOKMARK, {
-    props: ({ mutate }) => ({
-      addOrRemoveListingBookmark: async (listingId, userId) => {
-        message.destroy();
-        message.loading('Please wait...', 0);
-        try {
-          const {
-            data: { addOrRemoveListingBookmark }
-          } = await mutate({
-            variables: { listingId, userId }
-          });
-
-          message.destroy();
-          message.success(addOrRemoveListingBookmark);
-        } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
-          console.error(e);
-        }
-      }
-    })
-  })(Component);
-
 export const withListingBookmarkStatus = Component =>
   graphql(LISTING_BOOKMARK_STATUS, {
     options: props => {
@@ -496,6 +168,177 @@ export const withListingBookmarkStatus = Component =>
       if (error) throw new Error(error);
       return { loading, listingBookmarkStatus };
     }
+  })(Component);
+
+//
+export const updateListingState = (ListingUpdated, updateQuery, history) => {
+  const { mutation, node } = ListingUpdated;
+  updateQuery(prev => {
+    switch (mutation) {
+      case 'UPDATED':
+        return onAddListing(prev, node);
+      case 'DELETED':
+        return onDeleteListing(history);
+      default:
+        return prev;
+    }
+  });
+};
+
+function onAddListing(prev, node) {
+  // check if it is duplicate
+
+  return update(prev, {
+    listing: {
+      $set: node
+    }
+  });
+}
+const onDeleteListing = history => {
+  message.info('This listing has been deleted!');
+  message.warn('Redirecting to all listings');
+  return history.push('./listing_catalogue');
+};
+
+// Mutation
+export const withListingsDeleting = Component =>
+  graphql(DELETE_LISTING, {
+    props: ({ mutate }) => ({
+      deleteListing: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteListing: {
+              id: id,
+              __typename: 'Listing'
+            }
+          }
+          // ,update: (cache, { data: { deleteListing } }) => {
+          //   // Get previous listings from cache
+          //   const prevListings = cache.readQuery({
+          //     query: LISTINGS_QUERY,
+          //     variables: {
+          //       limit,
+          //       after: 0
+          //     }
+          //   });
+
+          //   const newListListings = onDeleteListing(prevListings, deleteListing.id);
+
+          //   // Write listings to cache
+          //   cache.writeQuery({
+          //     query: LISTINGS_QUERY,
+          //     variables: {
+          //       limit,
+          //       after: 0
+          //     },
+          //     data: {
+          //       listings: {
+          //         ...newListListings.listings,
+          //         __typename: 'Listings'
+          //       }
+          //     }
+          //   });
+          // }
+        });
+        message.warning('Listing deleted.');
+      }
+    })
+  })(Component);
+
+export const withAddListing = Component =>
+  graphql(ADD_LISTING, {
+    props: ({ ownProps: { history }, mutate }) => ({
+      addListing: async values => {
+        message.destroy();
+        message.loading('Please wait...', 0);
+        try {
+          await mutate({
+            variables: {
+              input: values
+            },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              addListing: {
+                __typename: 'Listing',
+                ...values
+              }
+            }
+          });
+          message.destroy();
+          message.success('Listing added.');
+          history.push('/listings');
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withEditListing = Component =>
+  graphql(EDIT_LISTING, {
+    props: ({
+      ownProps: {
+        history,
+        navigation,
+        currentUser: { role }
+      },
+      mutate
+    }) => ({
+      editListing: async input => {
+        try {
+          message.destroy();
+          message.loading('Please wait...', 0);
+          // console.log('input', input);
+          await mutate({
+            variables: {
+              input: input
+            }
+          });
+          message.destroy();
+          message.success('Changes Saved.');
+          if (history) {
+            if (role === 'admin') return history.push('/listings');
+            else return history.push('/my-listings');
+          }
+          if (navigation) {
+            if (role === 'admin') return navigation.navigate('ListingCatalogue');
+            else return navigation.navigate('MyListings');
+          }
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withToogleListingBookmark = Component =>
+  graphql(TOOGLE_LISTING_BOOKMARK, {
+    props: ({ mutate }) => ({
+      addOrRemoveListingBookmark: async (listingId, userId) => {
+        message.destroy();
+        message.loading('Please wait...', 0);
+        try {
+          const {
+            data: { addOrRemoveListingBookmark }
+          } = await mutate({
+            variables: { listingId, userId }
+          });
+
+          message.destroy();
+          message.success(addOrRemoveListingBookmark);
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
   })(Component);
 
 // Filter

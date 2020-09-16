@@ -2,25 +2,28 @@ import React, { useEffect } from 'react';
 import _ from 'lodash';
 import { PropTypes } from 'prop-types';
 
-import { compose, removeTypename } from '@gqlapp/core-common';
+import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingView from '../components/ListingView';
 
-import { useListingsWithSubscription } from './withSubscriptions';
+import { subscribeToListings } from './withSubscriptions';
 import {
   withListingsState,
   withListings,
   withListingsDeleting,
-  updateListingsState,
   withFilterUpdating,
   withOrderByUpdating,
   withEditListing
 } from './ListingOperations';
 
 const Listing = props => {
-  const { updateQuery, subscribeToMore, filter, editListing } = props;
-  const listingsUpdated = useListingsWithSubscription(subscribeToMore, filter);
+  const { subscribeToMore, filter, editListing } = props;
+
+  useEffect(() => {
+    const subscribe = subscribeToListings(subscribeToMore, filter);
+    return () => subscribe();
+  });
 
   const handleToggle = (field, value, id) => {
     const input = {};
@@ -33,12 +36,6 @@ const Listing = props => {
     }
   };
 
-  useEffect(() => {
-    if (listingsUpdated) {
-      updateListingsState(listingsUpdated, updateQuery);
-    }
-  });
-
   console.log('props', props);
   return <ListingView {...props} onToggle={handleToggle} />;
 };
@@ -46,7 +43,6 @@ const Listing = props => {
 Listing.propTypes = {
   subscribeToMore: PropTypes.func,
   filter: PropTypes.object,
-  updateQuery: PropTypes.func,
   editListing: PropTypes.func
 };
 
