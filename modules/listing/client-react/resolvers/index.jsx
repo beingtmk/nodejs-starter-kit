@@ -14,7 +14,7 @@ const defaults = {
       __typename: TYPE_LISTINGS_STATE_ORDER_BY
     },
     filter: {
-      userId: 0,
+      // userId: 0,
       searchText: '',
 
       lowerCost: 0,
