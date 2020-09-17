@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { message } from 'antd';
 import update from 'immutability-helper';
 
 import LISTINGS_BOOKMARK_SUBSCRIPTION from '../graphql/MyListingsBookmarkSubscription.graphql';
 import LISTINGS_SUBSCRIPTION from '../graphql/ListingsSubscription.graphql';
 import LISTING_SUBSCRIPTION from '../graphql/ListingSubscription.graphql';
+
+import ROUTES from '../routes';
 
 const useListingWithSubscription = (subscribeToMore, listingId) => {
   const [listingUpdated, setListingUpdated] = useState(null);
@@ -31,6 +34,48 @@ const useListingWithSubscription = (subscribeToMore, listingId) => {
   };
 
   return listingUpdated;
+};
+export const subscribeToListing = (subscribeToMore, listingId, history) =>
+  subscribeToMore({
+    document: LISTING_SUBSCRIPTION,
+    variables: { id: listingId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            listingUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      // console.log('mutation', mutation, node);
+      if (mutation === 'UPDATED') {
+        newResult = onEditListing(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteListing(history);
+      }
+      return newResult;
+    }
+  });
+
+function onEditListing(prev, node) {
+  return update(prev, {
+    listing: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteListing = history => {
+  message.info('This listing has been deleted!');
+  message.warn('Redirecting to my listings');
+  if (history) {
+    return history.push(`${ROUTES.myListing}`);
+  } else {
+    return history.push('/');
+  }
 };
 
 const useListingListWithSubscription = subscribeToMore => {

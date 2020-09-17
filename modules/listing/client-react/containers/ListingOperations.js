@@ -28,6 +28,7 @@ const limit =
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 
+// Query
 export const withListingsState = Component =>
   graphql(LISTINGS_STATE_QUERY, {
     props({ data: { listingsState, loading } }) {
@@ -169,36 +170,6 @@ export const withListingBookmarkStatus = Component =>
       return { loading, listingBookmarkStatus };
     }
   })(Component);
-
-//
-export const updateListingState = (ListingUpdated, updateQuery, history) => {
-  const { mutation, node } = ListingUpdated;
-  updateQuery(prev => {
-    switch (mutation) {
-      case 'UPDATED':
-        return onAddListing(prev, node);
-      case 'DELETED':
-        return onDeleteListing(history);
-      default:
-        return prev;
-    }
-  });
-};
-
-function onAddListing(prev, node) {
-  // check if it is duplicate
-
-  return update(prev, {
-    listing: {
-      $set: node
-    }
-  });
-}
-const onDeleteListing = history => {
-  message.info('This listing has been deleted!');
-  message.warn('Redirecting to all listings');
-  return history.push('./listing_catalogue');
-};
 
 // Mutation
 export const withListingsDeleting = Component =>
@@ -368,15 +339,15 @@ export const withFilterUpdating = Component =>
       onIsActiveChange(isActive) {
         mutate({ variables: { filter: { isActive } } });
       },
-      onIsFeaturedChange(isFeatured) {
-        mutate({ variables: { filter: { isFeatured } } });
-      },
-      onIsDiscount(isDiscount) {
-        mutate({ variables: { filter: { isDiscount } } });
-      },
-      onIsNewChange(isNew) {
-        mutate({ variables: { filter: { isNew } } });
-      },
+      // onIsFeaturedChange(isFeatured) {
+      //   mutate({ variables: { filter: { isFeatured } } });
+      // },
+      // onIsDiscount(isDiscount) {
+      //   mutate({ variables: { filter: { isDiscount } } });
+      // },
+      // onIsNewChange(isNew) {
+      //   mutate({ variables: { filter: { isNew } } });
+      // },
       onFiltersRemove(filter) {
         mutate({
           variables: {

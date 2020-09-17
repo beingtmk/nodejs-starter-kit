@@ -114,6 +114,14 @@ export default (pubsub: any) => ({
             node: listing
           }
         });
+        // publish for edit listing page
+        pubsub.publish(LISTING_SUBSCRIPTION, {
+          listingUpdated: {
+            mutation: 'UPDATED',
+            id: listing.id,
+            node: listing
+          }
+        });
         return true;
       } catch (e) {
         return e;
@@ -128,6 +136,14 @@ export default (pubsub: any) => ({
           listingsUpdated: {
             mutation: 'DELETED',
             id,
+            node: listing
+          }
+        });
+        // publish for edit listing page
+        pubsub.publish(LISTING_SUBSCRIPTION, {
+          listingUpdated: {
+            mutation: 'DELETED',
+            id, // import { ONSHELF, ONRENT } from "../common/constants/ListingStates";
             node: listing
           }
         });

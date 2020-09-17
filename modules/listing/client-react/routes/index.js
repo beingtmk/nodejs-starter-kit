@@ -11,7 +11,7 @@ const ROUTES = {
 
   add: '/new/listing',
   edit: '/edit/listing/:id',
-  editLink: '/edit/listing'
+  editLink: '/edit/listing/'
 };
 
 export default ROUTES;

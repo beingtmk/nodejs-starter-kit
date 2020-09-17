@@ -80,7 +80,7 @@ class ListingItemComponent extends Component {
             currentUser.id === item.user.id && (
               <Row>
                 <Col span={12}>
-                  <BorderListzero block onClick={() => history.push(`${ROUTES.listingDetailLink}${item.id}`)}>
+                  <BorderListzero block onClick={() => history.push(`${ROUTES.editLink}${item.id}`)}>
                     <Icon type="edit" />
                   </BorderListzero>
                 </Col>

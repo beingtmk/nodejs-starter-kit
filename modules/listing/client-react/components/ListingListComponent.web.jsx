@@ -254,7 +254,7 @@ const ListingListComponent = props => {
       fixed: 'right',
       render: (text, record) => (
         <div>
-          <Link className="listing-link" to={`${ROUTES.editLink}/${record.id}`}>
+          <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
             <Button color="primary" shape="circle" icon="edit" />
           </Link>
           &nbsp;

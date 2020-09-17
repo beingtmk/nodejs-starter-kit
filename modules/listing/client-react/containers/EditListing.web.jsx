@@ -4,21 +4,19 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { PropTypes } from 'prop-types';
-import { withListing, withCurrentUser, withEditListing, updateListingState } from './ListingOperations';
+import { withListing, withCurrentUser, withEditListing } from './ListingOperations';
 
 import EditListingView from '../components/EditListingView.web';
-import { useListingWithSubscription } from './withSubscriptions';
+import { subscribeToListing } from './withSubscriptions';
 
 const EditListing = props => {
-  const { updateQuery, subscribeToMore, listing, history, editListing } = props;
-  const listingsUpdated = useListingWithSubscription(subscribeToMore, listing && listing.id);
-  console.log('object', listingsUpdated);
+  const { subscribeToMore, listing, history, editListing } = props;
 
   useEffect(() => {
-    if (listingsUpdated) {
-      updateListingState(listingsUpdated, updateQuery, history);
-    }
+    const subscribe = subscribeToListing(subscribeToMore, listing && listing.id, history);
+    return () => subscribe();
   });
+
   const handleSubmit = values => {
     try {
       editListing(values);
@@ -26,7 +24,7 @@ const EditListing = props => {
       throw Error(e);
     }
   };
-  console.log('props', props);
+  // console.log('props', props);
   return <EditListingView onSubmit={handleSubmit} {...props} />;
 };
 
@@ -35,7 +33,7 @@ EditListing.propTypes = {
   subscribeToMore: PropTypes.func,
   editListing: PropTypes.func,
   listing: PropTypes.object,
-  history: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default compose(withCurrentUser, withListing, withEditListing, translate('listing'))(EditListing);
