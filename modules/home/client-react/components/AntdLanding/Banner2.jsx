@@ -110,4 +110,4 @@ Banner.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(Banner);
+export default translate('home')(Banner);

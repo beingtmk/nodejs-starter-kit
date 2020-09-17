@@ -22,7 +22,7 @@ class Banner4 extends React.PureComponent {
           },
           {
             name: 'button',
-            children: { href: '#', type: 'primary', children: t('banner4.chidlWrapper.button') }
+            children: { href: '#', type: 'primary', children: t('banner4.childWrapper.button') }
           }
         ]
       },
@@ -69,4 +69,4 @@ class Banner4 extends React.PureComponent {
 Banner4.propTypes = {
   t: PropTypes.func
 };
-export default translate(Banner4);
+export default translate('home')(Banner4);

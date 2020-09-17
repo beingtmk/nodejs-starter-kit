@@ -74,4 +74,4 @@ function Content4(props) {
 Content4.propTypes = {
   t: PropTypes.func
 };
-export default translate(Content4);
+export default translate('home')(Content4);

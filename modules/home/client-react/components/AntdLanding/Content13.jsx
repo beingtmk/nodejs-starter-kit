@@ -50,4 +50,4 @@ class Content13 extends React.PureComponent {
 Content13.propTypes = {
   t: PropTypes.func
 };
-export default translate(Content13);
+export default translate('home')(Content13);

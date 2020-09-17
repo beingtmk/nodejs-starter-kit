@@ -17,10 +17,10 @@ function Content2(props) {
       children: 'https://zos.alipayobjects.com/rmsportal/tvQTfCupGUFKSfQ.png'
     },
     textWrapper: { className: 'content2-text', md: 14, xs: 24 },
-    title: { className: 'content2-title', children: t('content2.textWrapper.title') },
+    title: { className: 'content2-title', children: t('feature2.textWrapper.title') },
     content: {
       className: 'content2-content',
-      children: t('content2.textWrapper.content')
+      children: t('feature2.textWrapper.content')
     }
   };
   const dataSource = Feature20DataSource;
@@ -89,4 +89,4 @@ function Content2(props) {
 Content2.propTypes = {
   t: PropTypes.func
 };
-export default translate(Content2);
+export default translate('home')(Content2);

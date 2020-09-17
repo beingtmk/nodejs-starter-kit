@@ -20,7 +20,7 @@ function Content1(props) {
     title: { className: 'content1-title', children: t('feature1.textWrapper.title') },
     content: {
       className: 'content1-content',
-      children: t('feture1.textWrapper.content')
+      children: t('feature1.textWrapper.content')
     }
   };
   const dataSource = Feature10DataSource;
@@ -85,4 +85,4 @@ function Content1(props) {
 Content1.propTypes = {
   t: PropTypes.func
 };
-export default translate(Content1);
+export default translate('home')(Content1);

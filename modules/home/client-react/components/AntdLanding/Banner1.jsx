@@ -122,4 +122,4 @@ class Banner extends React.PureComponent {
 Banner.propTypes = {
   t: PropTypes.func
 };
-export default translate(Banner);
+export default translate('home')(Banner);
