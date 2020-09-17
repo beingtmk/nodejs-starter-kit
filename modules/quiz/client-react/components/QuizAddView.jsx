@@ -10,6 +10,7 @@ import {
   CardTitle,
   Icon,
 } from "@gqlapp/look-client-react";
+import {Spin as Loader} from 'antd';
 import settings from "@gqlapp/config";
 
 import QuizAddForm from "./QuizAddForm";
@@ -17,14 +18,14 @@ import QuizAddForm from "./QuizAddForm";
 
 const QuizAddView = (props) => {
   const { t } = props;
-  const renderContent = () => (
+  const renderContent = (loading) => (
     <div style={{ maxWidth: '800px', margin: 'auto' }}>
       <Card style={{marginBottom:'30px'}}>
         <h1 style={{fontSize:"25px"}}>
         <Icon type="plus" /> {'Add Quiz'}
         </h1>
       </Card>
-      <QuizAddForm {...props} />
+      {loading? <div align='center' style={{marginTop:'50px'}}><Loader /></div> : (<QuizAddForm {...props} />)}
     </div>
   );
   return (
@@ -39,7 +40,7 @@ const QuizAddView = (props) => {
         ]}
       />
 
-      {renderContent()}
+      {renderContent(props.quizLoading)}
     </PageLayout>
   );
 };

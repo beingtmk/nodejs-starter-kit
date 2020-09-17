@@ -11,6 +11,7 @@ exports.up = function(knex) {
       table.string('state');
       table.string('cover');
       table.boolean("active").defaultTo(false);
+      table.boolean("is_public").defaultTo(true);
       table.string("title");
       table.string("description");
       table.boolean("is_editable_by_user").defaultTo(false);

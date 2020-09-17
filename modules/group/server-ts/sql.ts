@@ -83,7 +83,7 @@ export default class Group extends Model {
           to: "group.group_id",
         },
       },
-      groupQuizzes:{
+      group_quizzes:{
         relation: Model.HasManyRelation,
         modelClass: GroupQuiz,
         join: {

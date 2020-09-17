@@ -87,8 +87,9 @@ extend type Mutation {
 }
 
 input AddQuizToGroupInput {
-  groupId: Int!
-  quizId: Int!
+  id: Int
+  groupId: Int
+  quizId: Int
 }
 
 input AdminEditGroupInput {

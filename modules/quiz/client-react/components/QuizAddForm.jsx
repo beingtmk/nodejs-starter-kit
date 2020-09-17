@@ -13,9 +13,10 @@ import {
   Icon,
   RenderCheckBox,
   Card,
-  RenderUpload
+  RenderUpload,
 } from "@gqlapp/look-client-react";
 import RenderSectionsField from "./RenderSectionsField";
+import QuizAddFormGroupsComponent from "@gqlapp/group-client-react/containers/QuizAddFormGroupsComponent";
 // import { QuizAddForm } from '../types';
 
 // interface QuizAddFormProps {
@@ -23,14 +24,27 @@ import RenderSectionsField from "./RenderSectionsField";
 //   onSubmit: (values: QuizAddForm) => void;
 // }
 
-const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, deleteSection, deleteQuestion, submitQuestion, submitSection }) => {
+const QuizAddForm = ({
+  values,
+  handleSubmit,
+  t,
+  status,
+  errors,
+  addSection,
+  deleteSection,
+  deleteQuestion,
+  submitQuestion,
+  submitSection,
+  currentUser,
+}) => {
   const handleSections = (data) => (values.sections = data);
   const [load, setload] = React.useState(false);
+  console.log("quizAddFormValues", values);
   return (
     <Form name="quizAdd" onSubmit={handleSubmit}>
       {/* {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>} */}
       <Card
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: "10px" }}
         title={<h2>Quiz</h2>}
         extra={
           <div className="text-center">
@@ -39,10 +53,11 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
             )}
             <Button block color="primary" type="submit">
               {/* <Icon type="mail" /> {t('form.btnSubmit')} */}
-          Submit
-        </Button>
+              Submit
+            </Button>
           </div>
-        }>
+        }
+      >
         <Field
           name="title"
           component={RenderField}
@@ -50,7 +65,6 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
           label={"Title"}
           value={values.title}
         />
-
         <Field
           name="description"
           component={RenderField}
@@ -58,14 +72,14 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
           label={"Description"}
           value={values.description}
         />
-                      <Field
-                name="cover"
-                component={RenderUpload}
-                type="text"
-                setload={setload}
-                label={'Quiz Avatar'}
-                value={values.cover}
-              />
+        <Field
+          name="cover"
+          component={RenderUpload}
+          type="text"
+          setload={setload}
+          label={"Quiz Avatar"}
+          value={values.cover}
+        />
         <Field
           name="active"
           component={RenderCheckBox}
@@ -73,22 +87,40 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
           label={"Active"}
           checked={values.active}
         />{" "}
+        {currentUser && currentUser.role === "admin" && (
+          <Field
+            name="isPublic"
+            component={RenderCheckBox}
+            type="checkbox"
+            label={"Is Public"}
+            checked={values.isPublic}
+          />
+        )}
         <Field
           name="isEditableByUser"
           component={RenderCheckBox}
           type="checkbox"
           label={"Is Editable By User"}
           checked={values.isEditableByUser}
-        />{" "}
+        />
+        {!values.isPublic && (
+          <Field
+            name="quizGroups[0].groupId"
+            component={QuizAddFormGroupsComponent}
+            // type="checkbox"
+            label={"Add Group"}
+            value={values.quizGroups && values.quizGroups[0] && values.quizGroups[0].groupId}
+          />
+        )}
       </Card>
       <FieldArray
-        name='sections'
-        render={arrayHelpers => (
+        name="sections"
+        render={(arrayHelpers) => (
           <RenderSectionsField
             quizItem={values}
             arrayHelpers={arrayHelpers}
             values={values.sections}
-            name='sections'
+            name="sections"
             quizId={values.id}
             addSection={addSection}
             deleteSection={deleteSection}
@@ -100,7 +132,6 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
         sectionsVal={values.sections}
         handleSections={handleSections}
       />
-
     </Form>
   );
 };
@@ -108,10 +139,11 @@ const QuizAddForm = ({ values, handleSubmit, t, status, errors, addSection, dele
 const QuizAddFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
+    console.log("mapPropsToValuesQUiz", props);
     function getChoices(choice) {
       return {
         id: (choice && choice.id) || null,
-        description: (choice && choice.description) || '',
+        description: (choice && choice.description) || "",
         // choices: question && question.choices && question.choices.map(getChoices) || []
       };
     }
@@ -119,39 +151,63 @@ const QuizAddFormWithFormik = withFormik({
       return {
         id: (question && question.id) || null,
         sectionId: (question && question.sectionId) || null,
-        description: (question && question.description) || '',
-        choiceType: (question && question.choiceType) || '',
-        isActive: (question && question.isActive) || true,
-        choices: question && question.choices && question.choices.map(getChoices) || [],
+        description: (question && question.description) || "",
+        choiceType: (question && question.choiceType) || "",
+        isActive: question && question.isActive,
+        choices:
+          (question && question.choices && question.choices.map(getChoices)) ||
+          [],
         dependentQuestionId: (question && question.dependentQuestionId) || null,
-        dependentChoiceId: (question && question.dependentChoiceId) || null
+        dependentChoiceId: (question && question.dependentChoiceId) || null,
       };
     }
     function getSections(section) {
       return {
         id: (section && section.id) || null,
-        title: (section && section.title) || '',
-        quizId:(section && section.quizId) || null,
-        description: (section && section.description) || '',
-        isActive: (section && section.isActive) || true,
-        questions: section && section.questions && section.questions.map(getQuestions) || []
+        title: (section && section.title) || "",
+        quizId: (section && section.quizId) || null,
+        description: (section && section.description) || "",
+        isActive: section && section.isActive,
+        questions:
+          (section &&
+            section.questions &&
+            section.questions.map(getQuestions)) ||
+          [],
+      };
+    }
+    function getQuizGroup(quizGroup) {
+      return {
+        id: (quizGroup && quizGroup.id) || null,
+        quizId: (quizGroup && quizGroup.quizId) || props.quiz.id,
+        groupId: (quizGroup && quizGroup.groupId) || null,
       };
     }
     return {
       id: (props.quiz && props.quiz.id) || null,
       title: (props.quiz && props.quiz.title) || "",
       description: (props.quiz && props.quiz.description) || "",
-      active: (props.quiz && props.quiz.active) || true,
-      isEditableByUser: (props.quiz && props.quiz.isEditableByUser) || false,
+      active: props.quiz && props.quiz.active,
+      isEditableByUser: props.quiz && props.quiz.isEditableByUser,
+      isPublic: props.quiz && props.quiz.isPublic,
       cover: (props.quiz && props.quiz.cover) || "",
-      sections: (props.quiz && props.quiz.sections && props.quiz.sections.map(getSections)) || [],
-    }
+      quizGroups: (props.quiz &&
+        props.quiz.quizGroups &&
+        props.quiz.quizGroups.map(getQuizGroup)) || [
+        { groupId: null, quizId: props.quiz.id },
+      ],
+      sections:
+        (props.quiz &&
+          props.quiz.sections &&
+          props.quiz.sections.map(getSections)) ||
+        [],
+    };
   },
   async handleSubmit(
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }
   ) {
-    values.sections = Object.values(values.sections
+    values.sections = Object.values(
+      values.sections
       //   .map((question, key)=>{
       //   question.choices = Object.values(question.choices);
       // })

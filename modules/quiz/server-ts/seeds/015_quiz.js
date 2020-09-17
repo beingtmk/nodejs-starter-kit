@@ -13,6 +13,7 @@ export async function seed(knex) {
         active:true,
         title: `Placement Quiz ${i + 1}`,
         description: `Who wants to get hired?`,
+        is_public:i%2 === 0,
         is_editable_by_user: true
       });
       

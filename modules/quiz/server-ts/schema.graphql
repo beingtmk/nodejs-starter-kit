@@ -3,12 +3,14 @@ type Quiz {
   id: Int!
   userId: Int
   active: Boolean
+  isPublic: Boolean
   title: String
   state: String
-  cover:String
+  cover: String
   description: String
   createdAt: String
   updatedAt: String
+  quizGroups:[GroupQuiz]
   user: User
   isEditableByUser: Boolean
   sections: [Section]
@@ -60,7 +62,7 @@ type Attempt {
   id: Int!
   userId: Int
   quizId: Int
-  user:User
+  user: User
   answers: [Answer]
 }
 
@@ -82,7 +84,7 @@ type UserWiseResult {
   id: Int!
   userId: Int!
   sections: [Section]
-  attempts:[Attempt]
+  attempts: [Attempt]
 }
 
 extend type Query {
@@ -104,6 +106,7 @@ extend type Query {
 
 input FilterQuizInput {
   searchText: String
+  isPublic:Boolean
   # model: String
   # status: String
 }
@@ -136,7 +139,7 @@ extend type Mutation {
 }
 
 input AddAttemptInput {
-  id:Int
+  id: Int
   userId: Int!
   quizId: Int!
   answers: [AnswerInput]
@@ -153,16 +156,16 @@ input AnswerInput {
 #   results: [AnswerInput]!
 # }
 
-
-
 input EditQuizInput {
   id: Int!
   userId: Int!
   active: Boolean
+  isPublic: Boolean
   title: String
   description: String
-  cover:String
+  cover: String
   isEditableByUser: Boolean
+  quizGroups:[AddQuizToGroupInput]
   sections: [EditSectionInput]
 }
 
@@ -196,9 +199,10 @@ input AddQuizInput {
   id: Int
   userId: Int
   active: Boolean
+  isPublic: Boolean
   title: String
   description: String
-    cover:String
+  cover: String
   isEditableByUser: Boolean
   sections: [SectionInput]
 }

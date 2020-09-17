@@ -51,7 +51,7 @@ export default compose(
         fetchPolicy: "network-only",
         variables: {
           // orderBy,
-          filter: { searchText: "" },
+          filter: { searchText: "", isPublic:true },
         },
       };
     },

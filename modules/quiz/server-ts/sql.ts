@@ -16,7 +16,7 @@ import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
 import { user } from "@gqlapp/blog-client-react/demoData";
 import QuizStates from "@gqlapp/quiz-common/constants/QuizState";
 
-const eager = "[user, sections.[questions.[choices]]]";
+const eager = "[user, sections.[questions.[choices]], quiz_groups.[group]]";
 // const eagerWithCount = "[user, questions.[choices]]";
 const withAnswersEager = "[user, sections.[questions.[choices, answers]]]";
 const withChoiceAnswersEager =
@@ -42,8 +42,8 @@ export default class Quiz extends Model {
           to: "user.id",
         },
       },
-      quizGroups: {
-        relation: Model.BelongsToOneRelation,
+      quiz_groups: {
+        relation: Model.HasManyRelation,
         modelClass: GroupQuiz,
         join: {
           from: "quiz.id",
@@ -70,8 +70,14 @@ export default class Quiz extends Model {
   }
 
   public async getQuizzes(filter: any) {
-    const queryBuilder = await Quiz.query().eager(eager);
-    const res = camelizeKeys(queryBuilder);
+    const queryBuilder = Quiz.query().eager(eager);
+
+    if(filter){if (has(filter, 'isPublic') && filter.isPublic !== '') {
+      queryBuilder.where(function() {
+        this.where('quiz.is_public', filter.isPublic);
+      });
+    }}
+    const res = camelizeKeys(await queryBuilder);
     return res;
   }
   public async getQuiz(id: number) {
@@ -82,6 +88,7 @@ export default class Quiz extends Model {
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
+    console.log('getQuizSQL', res);
     return res;
   }
 

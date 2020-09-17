@@ -3,9 +3,15 @@ fragment QuizFragment on Quiz {
   userId
   active
   title
+  isPublic
   description
   isEditableByUser
   cover
+  quizGroups{
+    quizId
+    id
+    groupId
+  }
   sections {
     id
     quizId
