@@ -1,29 +1,24 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'react-apollo';
-import { compose } from '@gqlapp/core-common';
 
-import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';
+import { compose } from '@gqlapp/core-common';
 
 import {
   withListing,
   withCurrentUser,
   withToogleListingBookmark,
-  withListingBookmarkStatus,
-  updateListingState
+  withListingBookmarkStatus
 } from './ListingOperations';
 
 import ListingDetailView from '../components/ListingDetailView';
-import { useListingWithSubscription } from './withSubscriptions';
+import { subscribeToListing } from './withSubscriptions';
 
 const ListingDetail = props => {
-  const { updateQuery, subscribeToMore, listing, history } = props;
-  const listingsUpdated = useListingWithSubscription(subscribeToMore, listing && listing.id);
+  const { subscribeToMore, listing, history } = props;
 
   useEffect(() => {
-    if (listingsUpdated) {
-      updateListingState(listingsUpdated, updateQuery, history);
-    }
+    const subscribe = subscribeToListing(subscribeToMore, listing && listing.id, history);
+    return () => subscribe();
   });
 
   const bookmarkListing = async (id, userId) => {
@@ -52,18 +47,5 @@ export default compose(
   withListing,
   withCurrentUser,
   withToogleListingBookmark,
-  withListingBookmarkStatus,
-  graphql(USER_QUERY, {
-    options: props => {
-      let id = 0;
-      id = props.listing ? props.listing.userId : id;
-      return {
-        variables: { id: id }
-      };
-    },
-    props({ data: { loading, error, user } }) {
-      if (error) throw new Error(error);
-      return { loading, user };
-    }
-  })
+  withListingBookmarkStatus
 )(ListingDetail);
