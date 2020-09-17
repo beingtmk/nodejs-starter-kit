@@ -47,7 +47,7 @@ class RelatedCardComponent extends Component {
     // To Do: check if it is not present then set as default value
     const { currentUser } = this.props;
     let listing = this.props.listing;
-
+    console.log(this.props);
     const listing_id = listing && listing.id;
     const listing_is_new = listing && listing.listingFlags && listing.listingFlags.isNew;
     const listing_media =

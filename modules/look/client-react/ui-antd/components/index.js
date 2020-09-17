@@ -10,6 +10,7 @@ export { default as Option } from './Option';
 export { default as RenderField } from './RenderField';
 export { default as RenderSelect } from './RenderSelect';
 export { default as RenderAddress } from './RenderAddress';
+export { default as SlickCarousel } from './SlickCarousel';
 export { default as RenderCheckBox } from './RenderCheckBox';
 export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';

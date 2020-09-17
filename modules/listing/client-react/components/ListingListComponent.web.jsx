@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popconfirm, Icon, message, Spin } from 'antd';
+import { Popconfirm, message, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Button, Pagination } from '@gqlapp/look-client-react';
@@ -59,16 +59,6 @@ const ListingListComponent = props => {
     return onOrderBy({ column: name, order });
   };
 
-  const handleToggleisActive = async (event, record, isActive) => {
-    event.persist();
-    message.warning('Todo');
-    // const result = await toggleListingIsActive(record.id);
-    // if (result) {
-    //   record.isActive = isActive;
-    //   event.target.innerHTML = isActive ? 'Active' : 'InActive';
-    // }
-  };
-
   const columns = [
     {
       title: (
@@ -92,7 +82,7 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'title',
       key: 'title',
-      render: text => <div>{text}</div>
+      render: (text, record) => <a href={`${ROUTES.listingDetailLink}${record.id}`}>{text}</a>
     },
     {
       title: (
@@ -297,12 +287,12 @@ const ListingListComponent = props => {
   );
 
   return (
-    <div>
+    <>
       {/* Render loader */}
       {loading && !listings && <Loading t={t} />}
       {/* Render main listing content */}
       {listings && listings.totalCount ? <RenderListings /> : <NoListingsMessage t={t} />}
-    </div>
+    </>
   );
 };
 
