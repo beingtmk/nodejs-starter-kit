@@ -270,17 +270,69 @@
       }
     }
   },
-  "content11":{
+  "content11": {
+    "titleWrapper": {
+      "title": "Rich featured booth",
+      "content": "Featured booths include star products such as Ant Design, AntV, AntG, Egg, and product experts",
+      "content2": "On-site consultation, answering questions for you"
+    },
+    "button": "register now"
+  },
+  "content12": {
+    "titleWrapper": {
+      "title": "Special thanks"
+    }
+  },
+  "banner2": {
+    "BannerAnim": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    }
+  },
+  "banner1": {
+    "elem0": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    },
+    "elem1": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    },
+    "elem2": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    }
+  },
+  "banner4": {
+    "childWrapper": {
+      "name": "Ant Design Pro",
+      "content": "Out-of-the-box mid-stage front-end/design solution",
+      "button": "start using"
+    }
+  },
+  "content4":{
+    "titleWrapper":{
+      "title":"Ant Financial Cloud provides professional services",
+      "content":"Scientific and technological imagination, financial creativity"
+    }
+  },
+  "content13":{
     "titleWrapper":{
       "title":"Rich featured booth",
-      "content":"Featured booths include star products such as Ant Design, AntV, AntG, Egg, and product experts",
+      "content":"Featured booths include star products such as Ant Design, AntV, AntG, and Egg, as well as product experts",
       "content2":"On-site consultation, answering questions for you"
-    },
-    "button":"register now"
+    }
   },
-  "content12":{
-    "titleWrapper":{
-      "title":"Special thanks"
+  "feature1":{
+    "textWrapper":{
+      "title":"Enterprise Resource Management",
+      "content":"Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance. Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance. Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance."
+    }
+  },
+  "feature2":{
+    "textWrapper":{
+      "title":"Distributed middleware",
+      "content":"Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data. Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data."
     }
   }
 }

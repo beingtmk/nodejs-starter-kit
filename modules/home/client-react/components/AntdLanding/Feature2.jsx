@@ -2,27 +2,27 @@ import React from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import { Row, Col } from 'antd';
+import { translate } from '@gqlapp/i18n-client-react';
+import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
-const Feature20DataSource = {
-  wrapper: { className: 'home-page-wrapper content2-wrapper' },
-  OverPack: { className: 'home-page content2', playScale: 0.3 },
-  imgWrapper: { className: 'content2-img', md: 10, xs: 24 },
-  img: {
-    children: 'https://zos.alipayobjects.com/rmsportal/tvQTfCupGUFKSfQ.png'
-  },
-  textWrapper: { className: 'content2-text', md: 14, xs: 24 },
-  title: { className: 'content2-title', children: '分布式中间件' },
-  content: {
-    className: 'content2-content',
-    children:
-      '金融级联机交易处理中间件，大规模分布式计算机，数万笔/秒级并发能力，严格保证交易数据统一性。金融级联机交易处理中间件，大规模分布式计算机，数万笔/秒级并发能力，严格保证交易数据统一性。'
-  }
-};
-
 function Content2(props) {
-  const { ...tagProps } = props;
+  const { t, ...tagProps } = props;
   const { isMobile } = tagProps;
+  const Feature20DataSource = {
+    wrapper: { className: 'home-page-wrapper content2-wrapper' },
+    OverPack: { className: 'home-page content2', playScale: 0.3 },
+    imgWrapper: { className: 'content2-img', md: 10, xs: 24 },
+    img: {
+      children: 'https://zos.alipayobjects.com/rmsportal/tvQTfCupGUFKSfQ.png'
+    },
+    textWrapper: { className: 'content2-text', md: 14, xs: 24 },
+    title: { className: 'content2-title', children: t('content2.textWrapper.title') },
+    content: {
+      className: 'content2-content',
+      children: t('content2.textWrapper.content')
+    }
+  };
   const dataSource = Feature20DataSource;
   delete tagProps.isMobile;
   const animType = {
@@ -86,5 +86,7 @@ function Content2(props) {
     </div>
   );
 }
-
-export default Content2;
+Content2.propTypes = {
+  t: PropTypes.func
+};
+export default translate(Content2);
