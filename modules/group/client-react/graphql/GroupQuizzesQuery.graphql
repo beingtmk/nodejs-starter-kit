@@ -4,8 +4,7 @@ query groupQuizzes($groupId:Int!) {
   groupQuizzes(groupId:$groupId) {
     id
     groupId
-    modelId
-    model
+    quizId
     quiz{
       ...QuizMiniFragment
     }

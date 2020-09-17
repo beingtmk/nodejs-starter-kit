@@ -9,7 +9,7 @@ import { Model } from "objection";
 import { has } from "lodash";
 
 import { User } from "@gqlapp/user-server-ts/sql";
-import { GroupModel } from "@gqlapp/group-server-ts/sql";
+import { GroupQuiz } from "@gqlapp/group-server-ts/sql";
 import { GroupMember } from "@gqlapp/group-server-ts/sql";
 import { Identifier } from "@gqlapp/chat-server-ts/sql";
 import QuestionTypes from "@gqlapp/quiz-common/constants/QuestionTypes";
@@ -44,10 +44,10 @@ export default class Quiz extends Model {
       },
       quizGroups: {
         relation: Model.BelongsToOneRelation,
-        modelClass: GroupModel,
+        modelClass: GroupQuiz,
         join: {
           from: "quiz.id",
-          to: "group_model.model_id",
+          to: "group_quiz.quiz_id",
         },
       },
       sections: {

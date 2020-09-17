@@ -28,7 +28,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
     console.log(e);
     const input = {
       groupId: childGroup.id,
-      modelId: e,
+      quizId: e,
     };
     addQuizToGroup(input);
   };
@@ -65,7 +65,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
       return function(current) {
         return (
           otherArray.filter(function(other) {
-            return other.modelId == current.modelId;
+            return other.quizId == current.quizId;
           }).length == 0
         );
       };
@@ -135,7 +135,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
             size="medium"
             style={{ marginBottom: "10px", marginRight: "3px" }}
             ghost
-            onClick={() => this.handleAddQuizToGroup(record.modelId)}
+            onClick={() => this.handleAddQuizToGroup(record.quizId)}
           >
             Import
           </Button>

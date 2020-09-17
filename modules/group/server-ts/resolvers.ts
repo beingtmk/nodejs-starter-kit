@@ -90,9 +90,9 @@ export default (pubsub: PubSub) => ({
     async groupMembers(obj: any, { id }: Identifier, { GroupMember }: any) {
       return GroupMember.groupMembers(id);
     },
-    async groupQuizzes(obj: any, { groupId }: any, { GroupModel }: any) {
-      console.log("groupQuizzesInput", groupId, GroupModel);
-      return GroupModel.groupQuizzes(groupId);
+    async groupQuizzes(obj: any, { groupId }: any, { GroupQuiz }: any) {
+      console.log("groupQuizzesInput", groupId, GroupQuiz);
+      return GroupQuiz.groupQuizzes(groupId);
       // const arr = [];
       // return arr;
     },
@@ -566,18 +566,15 @@ export default (pubsub: PubSub) => ({
       }
     ),
     addQuizToGroup: withAuth(
-      async (obj: any, { input }: any, { Group, GroupModel }: any) => {
+      async (obj: any, { input }: any, { Group, GroupQuiz }: any) => {
         try {
-          console.log("addQuizToGroup", input);
-          var modifiedInput = input;
-          modifiedInput.model = "quiz";
-          const groupQuizAlreadyExists = await GroupModel.groupQuizByParams(
+          const groupQuizAlreadyExists = await GroupQuiz.groupQuizByParams(
             input
           );
           if (!groupQuizAlreadyExists) {
-            const added = await GroupModel.addGroupQuiz(input);
+            const added = await GroupQuiz.addGroupQuiz(input);
           }
-          const groupQuiz = await GroupModel.groupQuizByParams(input);
+          const groupQuiz = await GroupQuiz.groupQuizByParams(input);
 
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {
@@ -700,10 +697,10 @@ export default (pubsub: PubSub) => ({
       }
     ),
     deleteQuizFromGroup: withAuth(
-      async (obj: any, { quizGroupId }: any, { GroupModel, Group }: any) => {
+      async (obj: any, { quizGroupId }: any, { GroupQuiz, Group }: any) => {
         try {
-          const data = await GroupModel.groupQuiz(quizGroupId);
-          await GroupModel.deleteGroupQuiz(quizGroupId);
+          const data = await GroupQuiz.groupQuiz(quizGroupId);
+          await GroupQuiz.deleteGroupQuiz(quizGroupId);
           // pubsub.publish(GMEMBER_SUBSCRIPTION, {
           //   groupMembersUpdated: {
           //     mutation: "DELETED",

@@ -28,7 +28,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
     console.log(e);
     const input = {
       groupId: group.id,
-      modelId: e,
+      quizId: e,
     };
     addQuizToGroup(input);
   };
@@ -65,7 +65,7 @@ class AddPublicQuizToGroupComponent extends React.Component {
       return function(current) {
         return (
           otherArray.filter(function(other) {
-            return other.modelId == current.id;
+            return other.quizId == current.id;
           }).length == 0
         );
       };

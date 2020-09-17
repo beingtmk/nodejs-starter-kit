@@ -85,10 +85,10 @@ export default class Group extends Model {
       },
       groupQuizzes:{
         relation: Model.HasManyRelation,
-        modelClass: GroupModel,
+        modelClass: GroupQuiz,
         join: {
           from: "group.id",
-          to: "group_model.group_id",
+          to: "group_quiz.group_id",
         },
       },
     };
@@ -321,11 +321,11 @@ class GroupMember extends Model {
   }
 }
 
-class GroupModel extends Model {
+class GroupQuiz extends Model {
   // private id: any;
 
   static get tableName() {
-    return "group_model";
+    return "group_quiz";
   }
 
   static get idColumn() {
@@ -338,7 +338,7 @@ class GroupModel extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: Quiz,
         join: {
-          from: "group_model.model_id",
+          from: "group_quiz.quiz_id",
           to: "quiz.id",
         },
       },
@@ -346,7 +346,7 @@ class GroupModel extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: Group,
         join: {
-          from: "group_model.group_id",
+          from: "group_quiz.group_id",
           to: "group.id",
         },
       },
@@ -354,39 +354,37 @@ class GroupModel extends Model {
   }
   public async groupQuizzes(groupId: number) {
     return camelizeKeys(
-      await GroupModel.query()
+      await GroupQuiz.query()
         .where({ group_id: groupId })
-        .andWhere({model:'quiz'})
         .withGraphFetched("[quiz]")
         .orderBy("id", "desc")
     );
   }
   public async groupQuiz(id: number) {
     return camelizeKeys(
-      await GroupModel.query()
+      await GroupQuiz.query()
         .findById(id).first()
     );
   }
   public async groupQuizByParams(params:any) {
     console.log('groupQuizByParams sql', params);
     return camelizeKeys(
-      await GroupModel.query()
+      await GroupQuiz.query()
         .where({ group_id: params.groupId })
-        .andWhere({model_id: params.modelId})
-        .andWhere({model: params.model})
+        .andWhere({quiz_id: params.quizId})
         .first()
     );
   }
   public async addGroupQuiz(input: any) {
-    const res = await GroupModel.query().insertGraph(decamelizeKeys(input));
+    const res = await GroupQuiz.query().insertGraph(decamelizeKeys(input));
     return res.id;
   }
 
   public async deleteGroupQuiz(id: number) {
-    return knex("group_model")
+    return knex("group_quiz")
       .where({ id })
       .del();
   }
 }
 
-export {GroupMember, GroupModel};
+export {GroupMember, GroupQuiz};

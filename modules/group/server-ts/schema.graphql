@@ -6,7 +6,7 @@ type Group {
   groupId: Int
   subGroups: [Group]
   members: [GroupMember]
-  groupQuizzes: [GroupModalQuiz]
+  groupQuizzes: [GroupQuiz]
   groupType: String!
   createdAt: String!
   updatedAt: String!
@@ -24,11 +24,10 @@ type GroupMember {
   updatedAt: String!
 }
 
-type GroupModalQuiz {
+type GroupQuiz {
   id: Int!
   groupId: Int
-  modelId: Int
-  model: String
+  quizId: Int
   quiz: Quiz
   createdAt: String!
   updatedAt: String!
@@ -46,7 +45,7 @@ extend type Query {
   allGroupMembers: [GroupMember]
   groupMember(id: Int!): GroupMember
   groupMembers(id: Int!): [GroupMember]
-  groupQuizzes(groupId: Int!): [GroupModalQuiz]
+  groupQuizzes(groupId: Int!): [GroupQuiz]
 }
 
 type GroupEdges {
@@ -89,7 +88,7 @@ extend type Mutation {
 
 input AddQuizToGroupInput {
   groupId: Int!
-  modelId: Int!
+  quizId: Int!
 }
 
 input AdminEditGroupInput {
