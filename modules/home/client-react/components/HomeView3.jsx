@@ -1,24 +1,26 @@
 import React from 'react';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
-// import settings from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
+import { translate } from '@gqlapp/i18n-client-react';
+import PropTypes from 'prop-types';
 
 import Banner3 from './AntdLanding/Banner3';
+import Teams4 from './AntdLanding/Teams4';
 import Content9 from './AntdLanding/Content9';
 import Content11 from './AntdLanding/Content11';
 import Content12 from './AntdLanding/Content12';
 import Contact0 from './AntdLanding/Contact0';
-import Teams4 from './AntdLanding/Teams4';
 
 let isMobile;
 enquireScreen(b => {
   isMobile = b;
 });
 
-export default class HomeView extends React.Component {
+class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,12 +47,12 @@ export default class HomeView extends React.Component {
 
   render() {
     console.log(this.props);
-    // const renderMetaData = t => (
-    //   <Helmet
-    //     title={`${settings.app.name} - ${t('title')}`}
-    //     meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-    //   />
-    // );
+    const renderMetaData = t => (
+      <Helmet
+        title={`${settings.app.name} - ${t('title')}`}
+        meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
+      />
+    );
     const children = [
       <Banner3 id="Banner3_0" key="Banner3_0" isMobile={this.state.isMobile} />,
       <Teams4 id="Teams4_1" key="Teams4_1" isMobile={this.state.isMobile} />,
@@ -61,7 +63,7 @@ export default class HomeView extends React.Component {
     ];
     return (
       <PageLayout type="home">
-        {/* {renderMetaData(this.props.t)} */}
+        {renderMetaData(this.props.t)}
         <div
           className="templates-wrapper"
           ref={d => {
@@ -76,3 +78,8 @@ export default class HomeView extends React.Component {
     );
   }
 }
+HomeView.propTypes = {
+  t: PropTypes.func
+};
+
+export default translate('home')(HomeView);

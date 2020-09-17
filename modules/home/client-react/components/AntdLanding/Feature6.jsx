@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Carousel as AntCarousel, Row, Col } from 'antd';
@@ -8,118 +8,6 @@ import TweenOne from 'rc-tween-one';
 import Children from 'rc-tween-one/lib/plugin/ChildrenPlugin';
 
 TweenOne.plugins.push(Children);
-
-const Feature60DataSource = {
-  wrapper: { className: 'home-page-wrapper feature6-wrapper' },
-  OverPack: { className: 'home-page feature6', playScale: 0.3 },
-  Carousel: {
-    className: 'feature6-content',
-    dots: false,
-    wrapper: { className: 'feature6-content-wrapper' },
-    titleWrapper: {
-      className: 'feature6-title-wrapper',
-      barWrapper: {
-        className: 'feature6-title-bar-wrapper',
-        children: { className: 'feature6-title-bar' }
-      },
-      title: { className: 'feature6-title' }
-    },
-    children: [
-      {
-        title: { className: 'feature6-title-text', children: '服务指标' },
-        className: 'feature6-item',
-        name: 'block0',
-        children: [
-          {
-            md: 8,
-            xs: 24,
-            className: 'feature6-number-wrapper',
-            name: 'child0',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '万' },
-              toText: true,
-              children: '116'
-            },
-            children: { className: 'feature6-text', children: '模型数据' }
-          },
-          {
-            md: 8,
-            xs: 24,
-            className: 'feature6-number-wrapper',
-            name: 'child1',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '亿' },
-              toText: true,
-              children: '1.17'
-            },
-            children: { className: 'feature6-text', children: '模型迭代数量' }
-          },
-          {
-            md: 8,
-            xs: 24,
-            className: 'feature6-number-wrapper',
-            name: 'child2',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '亿' },
-              toText: true,
-              children: '2.10'
-            },
-            children: { className: 'feature6-text', children: '训练样本数量' }
-          }
-        ]
-      },
-      {
-        title: { className: 'feature6-title-text', children: '服务指标' },
-        className: 'feature6-item',
-        name: 'block1',
-        children: [
-          {
-            md: 8,
-            xs: 24,
-            name: 'child0',
-            className: 'feature6-number-wrapper',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '万' },
-              toText: true,
-              children: '116'
-            },
-            children: { className: 'feature6-text', children: '模型数据' }
-          },
-          {
-            md: 8,
-            xs: 24,
-            name: 'child1',
-            className: 'feature6-number-wrapper',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '亿' },
-              toText: true,
-              children: '1.17'
-            },
-            children: { className: 'feature6-text', children: '模型迭代数量' }
-          },
-          {
-            md: 8,
-            xs: 24,
-            name: 'child2',
-            className: 'feature6-number-wrapper',
-            number: {
-              className: 'feature6-number',
-              unit: { className: 'feature6-unit', children: '亿' },
-              toText: true,
-              children: '2.10'
-            },
-            children: { className: 'feature6-text', children: '训练样本数量' }
-          }
-        ]
-      }
-    ]
-  }
-};
 
 class Feature6 extends React.PureComponent {
   constructor(props) {
@@ -222,7 +110,119 @@ class Feature6 extends React.PureComponent {
   };
 
   render() {
-    const { isMobile, ...props } = this.props;
+    const { isMobile, t, ...props } = this.props;
+    const Feature60DataSource = {
+      wrapper: { className: 'home-page-wrapper feature6-wrapper' },
+      OverPack: { className: 'home-page feature6', playScale: 0.3 },
+      Carousel: {
+        className: 'feature6-content',
+        dots: false,
+        wrapper: { className: 'feature6-content-wrapper' },
+        titleWrapper: {
+          className: 'feature6-title-wrapper',
+          barWrapper: {
+            className: 'feature6-title-bar-wrapper',
+            children: { className: 'feature6-title-bar' }
+          },
+          title: { className: 'feature6-title' }
+        },
+        children: [
+          {
+            title: { className: 'feature6-title-text', children: t('feature6.block0.title') },
+            className: 'feature6-item',
+            name: 'block0',
+            children: [
+              {
+                md: 8,
+                xs: 24,
+                className: 'feature6-number-wrapper',
+                name: 'child0',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block0.child0.unit') },
+                  toText: true,
+                  children: '116'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block0.child0.children') }
+              },
+              {
+                md: 8,
+                xs: 24,
+                className: 'feature6-number-wrapper',
+                name: 'child1',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block0.child1.unit') },
+                  toText: true,
+                  children: '1.17'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block0.child1.children') }
+              },
+              {
+                md: 8,
+                xs: 24,
+                className: 'feature6-number-wrapper',
+                name: 'child2',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block0.child2.unit') },
+                  toText: true,
+                  children: '2.10'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block0.child2.children') }
+              }
+            ]
+          },
+          {
+            title: { className: 'feature6-title-text', children: t('feature6.block1.title') },
+            className: 'feature6-item',
+            name: 'block1',
+            children: [
+              {
+                md: 8,
+                xs: 24,
+                name: 'child0',
+                className: 'feature6-number-wrapper',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block1.child0.unit') },
+                  toText: true,
+                  children: '116'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block1.child0.children') }
+              },
+              {
+                md: 8,
+                xs: 24,
+                name: 'child1',
+                className: 'feature6-number-wrapper',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block1.child1.unit') },
+                  toText: true,
+                  children: '1.17'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block1.child1.children') }
+              },
+              {
+                md: 8,
+                xs: 24,
+                name: 'child2',
+                className: 'feature6-number-wrapper',
+                number: {
+                  className: 'feature6-number',
+                  unit: { className: 'feature6-unit', children: t('feature6.block1.child2.unit') },
+                  toText: true,
+                  children: '2.10'
+                },
+                children: { className: 'feature6-text', children: t('feature6.block1.child2.children') }
+              }
+            ]
+          }
+        ]
+      }
+    };
+
     const dataSource = Feature60DataSource;
     return (
       <div {...props} {...dataSource.wrapper}>
@@ -235,7 +235,8 @@ class Feature6 extends React.PureComponent {
 }
 
 Feature6.propTypes = {
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool.isRequired,
+  t: PropTypes.func
 };
 
-export default Feature6;
+export default translate('home')(Feature6);
