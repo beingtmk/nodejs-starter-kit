@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { required, minLength, validate, match } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Button, Alert } from '@gqlapp/look-client-react';
+import { Form, RenderField, Alert, SubmitButton } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const resetPasswordFormSchema = {
@@ -30,9 +30,9 @@ const ResetPasswordForm = ({ values, handleSubmit, errors, t }) => (
       value={values.passwordConfirmation}
     />
     {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-    <Button color="primary" type="submit">
+    <SubmitButton color="primary" type="submit">
       {t('resetPass.form.btnSubmit')}
-    </Button>
+    </SubmitButton>
   </Form>
 );
 
@@ -48,14 +48,7 @@ ResetPasswordForm.propTypes = {
 const ResetPasswordFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({ password: '', passwordConfirmation: '' }),
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      resetForm,
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { setErrors, resetForm, props: { onSubmit } }) {
     await onSubmit(values)
       .then(() => resetForm())
       .catch(e => {

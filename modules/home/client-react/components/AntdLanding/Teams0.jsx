@@ -2,71 +2,11 @@ import React from 'react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import BannerAnim, { Element } from 'rc-banner-anim';
 import TweenOne from 'rc-tween-one';
+import { translate } from '@gqlapp/i18n-client-react';
+import PropTypes from 'prop-types';
 import QueueAnim from 'rc-queue-anim';
 import { getChildrenToRender } from './utils';
 import 'rc-banner-anim/assets/index.css';
-
-const Teams00DataSource = {
-  wrapper: { className: 'home-page-wrapper teams0-wrapper' },
-  OverPack: { playScale: 0.3, className: 'home-page teams0' },
-  BannerAnim: {
-    className: 'banner-anim',
-    children: [
-      {
-        name: 'elem0',
-        className: 'teams0-banner-user-elem',
-        titleWrapper: {
-          className: 'teams0-content-wrapper',
-          children: [
-            {
-              name: 'image',
-              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ',
-              className: 'teams0-image'
-            },
-            {
-              name: 'content',
-              children:
-                'SEE = Seeking Experience & Engineering，意为探索用户体验与工程实践，由蚂蚁金服集团每年举办 1-2 次，包括专业分享、产品展台、Workshop 等内容。',
-              className: 'teams0-content'
-            },
-            { name: 'title', children: '韩勇', className: 'teams0-h1' },
-            {
-              name: 'content2',
-              children: '公司+职位 信息暂缺',
-              className: 'teams0-content'
-            }
-          ]
-        }
-      },
-      {
-        name: 'elem1',
-        className: 'teams0-banner-user-elem',
-        titleWrapper: {
-          className: 'teams0-content-wrapper',
-          children: [
-            {
-              name: 'image',
-              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ',
-              className: 'teams0-image'
-            },
-            {
-              name: 'content',
-              children:
-                'SEE = Seeking Experience & Engineering，意为探索用户体验与工程实践，由蚂蚁金服集团每年举办 1-2 次，包括专业分享、产品展台、Workshop 等内容。',
-              className: 'teams0-content'
-            },
-            { name: 'title', children: '叶秀英', className: 'teams0-h1' },
-            {
-              name: 'content2',
-              children: '公司+职位 信息暂缺',
-              className: 'teams0-content'
-            }
-          ]
-        }
-      }
-    ]
-  }
-};
 
 class Teams extends React.PureComponent {
   getChildrenToRender = children => {
@@ -83,8 +23,67 @@ class Teams extends React.PureComponent {
   };
 
   render() {
-    const { ...tagProps } = this.props;
+    const { t, ...tagProps } = this.props;
     const { isMobile } = tagProps;
+    const Teams00DataSource = {
+      wrapper: { className: 'home-page-wrapper teams0-wrapper' },
+      OverPack: { playScale: 0.3, className: 'home-page teams0' },
+      BannerAnim: {
+        className: 'banner-anim',
+        children: [
+          {
+            name: 'elem0',
+            className: 'teams0-banner-user-elem',
+            titleWrapper: {
+              className: 'teams0-content-wrapper',
+              children: [
+                {
+                  name: 'image',
+                  children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ',
+                  className: 'teams0-image'
+                },
+                {
+                  name: 'content',
+                  children: t('teams0.elem0.content'),
+                  className: 'teams0-content'
+                },
+                { name: 'title', children: t('teams0.elem0.title'), className: 'teams0-h1' },
+                {
+                  name: 'content2',
+                  children: t('teams0.elem0.content2'),
+                  className: 'teams0-content'
+                }
+              ]
+            }
+          },
+          {
+            name: 'elem1',
+            className: 'teams0-banner-user-elem',
+            titleWrapper: {
+              className: 'teams0-content-wrapper',
+              children: [
+                {
+                  name: 'image',
+                  children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ',
+                  className: 'teams0-image'
+                },
+                {
+                  name: 'content',
+                  children: t('teams0.elem1.content'),
+                  className: 'teams0-content'
+                },
+                { name: 'title', children: t('teams0.elem1.title'), className: 'teams0-h1' },
+                {
+                  name: 'content2',
+                  children: t('teams0.elem1.content2'),
+                  className: 'teams0-content'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    };
     const dataSource = Teams00DataSource;
     delete tagProps.isMobile;
     return (
@@ -119,5 +118,7 @@ class Teams extends React.PureComponent {
     );
   }
 }
-
-export default Teams;
+Teams.propTypes = {
+  t: PropTypes.func
+};
+export default translate('home')(Teams);
