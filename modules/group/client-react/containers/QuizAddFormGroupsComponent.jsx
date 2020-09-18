@@ -24,9 +24,9 @@ const limit =
 class QuizAddFormGroupsComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: props.value,
-    };
+    // this.state = {
+    //   value: props.value,
+    // };
     this.subscription = null;
   }
 
@@ -105,7 +105,10 @@ class QuizAddFormGroupsComponent extends React.Component {
   render() {
     console.log("QuizAddForm", this.props);
     const { groupLoading, groups, label, value, loadData } = this.props;
-    if (value) {
+    if (
+      value &&
+      groups && !groups.edges.find((node) => node.node.id === value)
+    ) {
       loadData(value, "add");
     }
     return (

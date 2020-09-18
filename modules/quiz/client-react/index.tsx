@@ -63,6 +63,20 @@ export default new ClientModule({
     />,
     <Route
       exact
+      path="/quiz-add/:groupId"
+      component={loadable(() =>
+        import("./containers/QuizAdd").then((c) => c.default)
+      )}
+    />,
+    <Route
+      exact
+      path="/quiz/edit/:id/:groupId"
+      component={loadable(() =>
+        import("./containers/QuizEdit").then((c) => c.default)
+      )}
+    />,
+    <Route
+      exact
       role={["user", "admin"]}
       redirect="/login"
       path="/quiz/report/:id"

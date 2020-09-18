@@ -4,7 +4,8 @@ import { compose, removeTypename, PLATFORM } from "@gqlapp/core-common";
 import { graphql } from "react-apollo";
 import update from "immutability-helper";
 import { translate } from "@gqlapp/i18n-client-react";
-import { message, Tabs, Typography, Spin as Loader } from "antd";
+import {NavLink} from 'react-router-dom';
+import { message, Tabs, Typography, Spin as Loader, Button } from "antd";
 
 import settings from "@gqlapp/config";
 import GROUP_SUBSCRIPTION from "../graphql/GroupsSubscription.graphql";
@@ -105,7 +106,11 @@ class GroupQuizzes extends React.Component {
     return (
       <>
         {!groupQuizzesLoading ? (
-          <Tabs defaultActiveKey="1">
+          <Tabs defaultActiveKey="1"
+            tabBarExtraContent={[
+              <NavLink to={`/quiz-add/${group && group.id}`}><Button type='primary'>Add Quiz</Button></NavLink>
+            ]}
+          >
             <TabPane tab={"Group Quizzes"} key="1">
               <GroupQuizzesView {...this.props} />
             </TabPane>

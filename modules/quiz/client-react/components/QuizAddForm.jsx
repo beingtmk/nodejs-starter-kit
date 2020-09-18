@@ -140,6 +140,7 @@ const QuizAddFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     console.log("mapPropsToValuesQUiz", props);
+    const urlParamGroupId = props.match && props.match.params && Number(props.match.params.groupId)
     function getChoices(choice) {
       return {
         id: (choice && choice.id) || null,
@@ -175,13 +176,6 @@ const QuizAddFormWithFormik = withFormik({
           [],
       };
     }
-    function getQuizGroup(quizGroup) {
-      return {
-        id: (quizGroup && quizGroup.id) || null,
-        quizId: (quizGroup && quizGroup.quizId) || props.quiz.id,
-        groupId: (quizGroup && quizGroup.groupId) || null,
-      };
-    }
     return {
       id: (props.quiz && props.quiz.id) || null,
       title: (props.quiz && props.quiz.title) || "",
@@ -192,8 +186,8 @@ const QuizAddFormWithFormik = withFormik({
       cover: (props.quiz && props.quiz.cover) || "",
       quizGroups: (props.quiz &&
         props.quiz.quizGroups &&
-        props.quiz.quizGroups.map(getQuizGroup)) || [
-        { groupId: null, quizId: props.quiz.id },
+        props.quiz.quizGroups[0]) || [
+        { groupId: urlParamGroupId, quizId: props.quiz.id },
       ],
       sections:
         (props.quiz &&
