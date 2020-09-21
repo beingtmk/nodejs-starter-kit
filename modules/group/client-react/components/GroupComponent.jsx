@@ -13,6 +13,7 @@ import {
   Typography,
   PageHeader,
   Icon,
+  Avatar,
 } from "antd";
 
 import MiniBlogImageComponent from "@gqlapp/blog-client-react/components/MiniBlogImageComponent";
@@ -42,15 +43,25 @@ const GroupComponent = ({ group, history }) => {
         <PageHeader
           style={{ padding: 0 }}
           title={
-            <Title style={{ display: "inline" }} level={2}>
+            <Title
+              className="group-page-heading"
+              style={{ display: "inline" }}
+              level={2}
+            >
               {group.title}
             </Title>
           }
           backIcon={
             group.groupId ? (
-              <Icon type="arrow-left" style={{ fontSize: "25px" }} />
+              <Icon
+                type="arrow-left"
+                style={{ fontSize: "25px", marginTop: "-5px" }}
+              />
             ) : (
-              <Icon type="team" style={{ fontSize: "25px" }} />
+              <Icon
+                type="team"
+                style={{ fontSize: "25px", marginTop: "-5px" }}
+              />
             )
           }
           onBack={() =>
@@ -58,34 +69,35 @@ const GroupComponent = ({ group, history }) => {
           }
           extra={[
             <Link to={`/group/edit/${group.id}`}>
-              <Button icon="edit" type="primary" size="small" ghost>
+              <Button icon="edit" type="primary" size="large" ghost>
                 Edit
               </Button>
             </Link>,
           ]}
         >
-          <Row type="flex">
-            <Col xs={{span:24, order:2}} md={{span:16, order:1}} lg={{span:18, order:1}}>
-              <Paragraph style={{ display: "inline" }}>
-                {group.description}
-              </Paragraph>
-
-              <Text>
-                Group Type: <Text mark>{group.groupType}</Text>
-              </Text>
-
-              <br />
-              <Text>
-                Created At:{" "}
-                <Text>{moment(group.createdAt).format("MMM DD, YYYY")}</Text>
-              </Text>
-            </Col>
-            <Col xs={{span:24, order:1}} md={{span:8, order:2}} lg={{span:6, order:2}} align="right">
-              <div align="center" style={{ overflow: "hidden" }}>
-                <img alt="" src={group.avatar} className="group-info-avatar" />
-              </div>
-            </Col>
-          </Row>
+          <Text style={{ fontSize: "15px", marginBottom: "10px" }}>
+            Group Type:{" "}
+            <Text style={{ fontSize: "inherit" }} mark>
+              {group.groupType}
+            </Text>
+          </Text>
+          <br />
+          <Text style={{ fontSize: "12px" }}>
+            Created At:{" "}
+            <Text style={{ fontSize: "inherit" }}>
+              {moment(group.createdAt).format("MMM DD, YYYY")}
+            </Text>
+          </Text>
+          <Card style={{ border: 0, marginTop:'24px' }} bodyStyle={{ padding: "0" }}>
+            <Meta
+              avatar={<Avatar src={group.avatar} size={130} />}
+              description={
+                <Paragraph style={{ display: "inline" }}>
+                  {group.description}
+                </Paragraph>
+              }
+            />
+          </Card>
         </PageHeader>
       </Col>
     </Row>
