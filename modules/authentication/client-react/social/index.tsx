@@ -1,5 +1,5 @@
 import React from 'react';
-import { faFacebookSquare, faGithubSquare, faGooglePlusSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookSquare, faGithubSquare, faGoogle, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 import SocialAuthComponent from './containers/SocialAuthComponent';
 
@@ -31,7 +31,7 @@ const GitHubButton = (props: ComponentProps) => (
 const GoogleButton = (props: ComponentProps) => (
   <SocialAuthComponent
     serverAuthUrl="/auth/google"
-    icon={faGooglePlusSquare}
+    icon={faGoogle}
     backgroundColor="#c43832"
     hoverColor="#aa1c17"
     {...props}

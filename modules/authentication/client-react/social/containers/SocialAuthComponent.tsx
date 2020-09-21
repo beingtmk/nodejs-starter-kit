@@ -13,7 +13,7 @@ const StyledButton = styled(({ backgroundColor, hoverColor, ...other }) => <Butt
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
+  padding: 20px;
   &:hover {
     background-color: ${props => props.hoverColor};
     border-color: ${props => props.hoverColor};
@@ -38,6 +38,7 @@ const ButtonLabel = styled.div`
   display: flex;
   justify-content: flex-start;
   flex: 5;
+  color:white;
 `;
 
 const ButtonIcon = styled(FontAwesomeIcon)`
