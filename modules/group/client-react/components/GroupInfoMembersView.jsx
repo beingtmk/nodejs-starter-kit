@@ -75,62 +75,6 @@ const GroupInfoMembersView = ({
                       changeGroupMemberType={changeGroupMemberType}
                       item={item}
                     />
-                    <Card
-                      hoverable
-                      style={{ marginBottom: "10px" }}
-                      cover={
-                        <img
-                          style={{ height: "200px" }}
-                          alt={item.email}
-                          src={
-                            (item.member.profile &&
-                              item.member.profile.avatar) ||
-                            emptyCover
-                          }
-                        />
-                      }
-                    >
-                      <Meta
-                        title={
-                          <span
-                            style={{
-                              fontSize: "15px",
-                            }}
-                          >
-                            <strong>{item.member.email}</strong>
-                            <br />
-                            <span>{Name(item.member.profile)}</span>
-                            <br />
-                            <span>
-                              Username: <i>{item.member.username} </i>
-                            </span>
-                          </span>
-                        }
-                        description={`Added on ${moment(item.createdAt).format(
-                          "MMM DD, YYYY"
-                        )}`}
-                      />
-                      <br />
-                      <Select
-                        value={item.type}
-                        style={{ display: "block", marginBottom: "20px" }}
-                        onChange={(e) => handleMemberTypeChange(e, item.id)}
-                      >
-                        <SelectOption
-                          key={MemberType.MANAGER}
-                          value={MemberType.MANAGER}
-                        >
-                          {MemberType.MANAGER}
-                        </SelectOption>
-                        <SelectOption
-                          key={MemberType.MEMBER}
-                          value={MemberType.MEMBER}
-                        >
-                          {MemberType.MEMBER}
-                        </SelectOption>
-                      </Select>
-                      <Alert type="success" message={item.type} />
-                    </Card>
                   </Col>
                 ))
               ) : (

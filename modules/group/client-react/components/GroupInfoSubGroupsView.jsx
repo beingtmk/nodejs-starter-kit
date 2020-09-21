@@ -82,7 +82,7 @@ class GroupInfoView extends React.Component {
           <>
             <Row gutter={24}>
               {groups.edges.map((edge, key) => (
-                <Col xs={24} md={12} lg={8}>
+                <Col xs={24} md={12} lg={10} xl={8}>
                   <GroupCatalogueComponent item={edge.node} key={key} deleteGroup={deleteGroup} />
                 </Col>
               ))}

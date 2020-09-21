@@ -1,7 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Col, Row, Card, Button, Tooltip, Empty, Popconfirm } from "antd";
+import {
+  Col,
+  Row,
+  Card,
+  Button,
+  Tooltip,
+  Empty,
+  Popconfirm,
+  Avatar,
+} from "antd";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import MiniBlogImageComponent from "@gqlapp/blog-client-react/components/MiniBlogImageComponent";
@@ -19,14 +28,19 @@ export const GroupCatalogueComponent = (props) => {
       hoverable
       title={
         <Tooltip placement="bottomLeft" title={item.title}>
-          <h4 style={{ fontSize: "20px" }}>
-            <p>{`${item.title.substring(0, 20)}${
-              item.description.length > 20 ? "..." : ""
-            }`}</p>
+          <h4 style={{ fontSize: "20px" }} className="line-limiter-1">
+            {item.title}
           </h4>
         </Tooltip>
       }
-      cover={<MiniBlogImageComponent title={item.title} image={item.avatar} />}
+      cover={
+        <div
+          style={{ height: "200px", overflow: "hidden", width: "100%" }}
+          align="center"
+        >
+          <img alt={item.email} height="100%" src={item.avatar} />
+        </div>
+      }
       className="blog-catalogue-card"
       style={{ marginBottom: "20px" }}
       extra={
