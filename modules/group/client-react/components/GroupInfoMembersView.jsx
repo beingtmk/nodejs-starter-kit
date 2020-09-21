@@ -21,7 +21,7 @@ import GroupLayout from "@gqlapp/look-client-react/ui-antd/components/GroupLayou
 import { Name, emptyCover } from "../constants";
 import AddInviteModal from "../containers/AddInviteModal";
 import AddMembersFromParentGroup from "../containers/AddMembersFromParentGroup";
-
+import MembersCard from "./MembersCard";
 import { MemberStatus, MemberType } from "@gqlapp/group-common";
 
 const { Meta } = Card;
@@ -42,9 +42,6 @@ const GroupInfoMembersView = ({
   } else if (navigation) {
     gid = navigation.state.params.id;
   }
-  const handleMemberTypeChange = async (e, id) => {
-    await changeGroupMemberType({ id, type: e });
-  };
 
   let invites = [],
     joinees = [];
@@ -74,6 +71,10 @@ const GroupInfoMembersView = ({
               {joinees.length > 0 ? (
                 joinees.map((item) => (
                   <Col xs={24} sm={12} md={12} lg={8}>
+                    <MembersCard
+                      changeGroupMemberType={changeGroupMemberType}
+                      item={item}
+                    />
                     <Card
                       hoverable
                       style={{ marginBottom: "10px" }}
