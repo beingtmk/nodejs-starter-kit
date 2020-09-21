@@ -3,6 +3,12 @@
   padding: 40px;
 }
 
+.auth-form-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 24px;
+}
+
 .auth-forms-page-right {
   max-width: 500px;
   .ant-form-item-label {
@@ -38,4 +44,13 @@
   //       background: rgba(@secondary-color, 0.6);
   //     //   color:white;
   //   }
+}
+
+@media only screen and (max-width: 577px) {
+  .auth-forms-page-right-wrapper {
+    padding: 24px;
+  }
+  .auth-form-wrapper {
+    padding: 0 5px;
+  }
 }

@@ -129,6 +129,7 @@ const LoginForm = ({
           alignItems: "center",
         }}
       >
+        <div align="left" style={{ width: "100%" }}>
         <Button
           block={true}
           size="lg"
@@ -137,11 +138,11 @@ const LoginForm = ({
           size="large"
           loading={isSubmitting}
           disabled={submitting}
+          style={{padding:'0  60px'}}
         >
           <Icon type="login" /> {t("login.form.btnSubmit")}
         </Button>
-        <br />
-        <div align="left" style={{ width: "100%" }}>
+        <hr style={{margin:'24px 0'}} />
           {renderSocialButtons(buttonsLength, t)}
         </div>
       </div>

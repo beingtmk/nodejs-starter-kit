@@ -60,7 +60,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
         <div className="auth-forms-page-right-wrapper">
           <div className="auth-forms-page-right">
             <LoginForm onSubmit={onSubmit} />
-            <hr />
+            <hr style={{ margin: "24px 0" }} />
             <Card>
               <CardGroup>
                 <CardTitle>{t("login.cardTitle")}:</CardTitle>
@@ -77,44 +77,68 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
   return (
     <PageLayout type="forms">
       {renderMetaData()}
-      <Row
-        style={{
-          maxWidth: "1200px",
-          margin: "auto",
-          background: "white",
-          boxShadow: "0px 4px 30px 20px rgba(0, 0, 0, 0.03)",
-        }}
-      >
-        <Col lg={6} style={{ padding: "40px" }}>
-          <img
-            src="https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
-            // height="46px"
-            width="100px"
-            alt=""
-          />
-          <Title
-            level={2}
-            style={{ marginTop: "80px", fontSize: "28px", fontWeight: "300" }}
-          >
-            Welcome Back
-          </Title>
+      <div
+      className='auth-form-wrapper'
 
-          <div className="text-center" style={{ marginBottom: 16 }}>
-            <span style={{ lineHeight: "58px" }} class="user-forms-text">
-              {t("login.btn.notReg")}
-            </span>
-            <NavLink
-              className="btn btn-primary"
-              to="/register"
-              activeClassName="active"
-              style={{ margin: 10 }}
+      >
+        <Row
+          style={{
+            background: "white",
+            boxShadow: "0px 4px 30px 20px rgba(0, 0, 0, 0.03)",
+          }}
+        >
+          <Col xs={'0'} lg={6} md={10}  style={{ padding: "40px" }}>
+            <img
+              src="https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
+              // height="46px"
+              width="100px"
+              alt=""
+            />
+            <Title
+              level={2}
+              style={{ marginTop: "80px", fontSize: "28px", fontWeight: "300" }}
             >
-              {t("login.btn.sign")}
-            </NavLink>
-          </div>
-        </Col>
-        <Col lg={18}>{renderContent()}</Col>
-      </Row>
+              Welcome Back
+            </Title>
+
+            <div className="text-center" style={{ marginBottom: 16 }}>
+              <span style={{ lineHeight: "58px" }} class="user-forms-text">
+                {t("login.btn.notReg")}
+              </span>
+              <NavLink
+                className="btn btn-primary"
+                to="/register"
+                activeClassName="active"
+                style={{ margin: 10 }}
+              >
+                {t("login.btn.sign")}
+              </NavLink>
+            </div>
+          </Col>
+          <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>
+            <Title level={2} style={{ fontSize: "22px", fontWeight: "300" }}>
+              Welcome Back
+            </Title>
+
+            <div className="text-center" style={{ marginBottom: 0 }}>
+              <span style={{ lineHeight: "28px" }} class="user-forms-text">
+                {t("login.btn.notReg")}
+              </span>
+              <NavLink
+                className="btn btn-primary"
+                to="/register"
+                activeClassName="active"
+                style={{ margin: 10 }}
+              >
+                {t("login.btn.sign")}
+              </NavLink>
+            </div>
+          </Col>
+          <Col lg={18} xs={24} md={14}>
+            {renderContent()}
+          </Col>
+        </Row>
+      </div>
     </PageLayout>
   );
 };

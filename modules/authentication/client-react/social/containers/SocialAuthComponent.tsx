@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@gqlapp/look-client-react';
 
 const StyledButton = styled(({ backgroundColor, hoverColor, ...other }) => <Button {...other} />)`
-  min-width: 320px;
+  min-width: 100%;
   margin-top: 10px;
   background-color: ${props => props.backgroundColor};
   border-color: ${props => props.backgroundColor};
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   &:hover {
@@ -22,8 +22,8 @@ const StyledButton = styled(({ backgroundColor, hoverColor, ...other }) => <Butt
 
 const IconContainer = styled.div`
   display: flex;
-  flex: 1 1 10%;
-  justify-content: flex-start;
+  // flex: 1 1 10%;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -32,12 +32,13 @@ const Separator = styled.div`
   width: 1px;
   background-color: #fff !important;
   margin-left: 10px;
+  margin-right: 10px;
 `;
 
 const ButtonLabel = styled.div`
   display: flex;
-  justify-content: flex-start;
-  flex: 5;
+  justify-content: center;
+  // flex: 5;
   color:white;
 `;
 
