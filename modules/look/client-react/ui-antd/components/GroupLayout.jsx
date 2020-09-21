@@ -49,7 +49,7 @@ class GroupLayout extends React.Component {
   }
   render() {
     const { children, id, navBar, type, path } = this.props;
-    
+
     return (
       <Layout id="page-layout">
         {navBar !== false && (
@@ -70,9 +70,9 @@ class GroupLayout extends React.Component {
           </Sider>
           <Layout className="group-layout-content-wrapper">
             <Content className="group-layout-content">{children}</Content>
-            <Footer />
           </Layout>
         </Layout>
+        <Footer />
         <BackTop>
           <Tooltip
             placement="left"

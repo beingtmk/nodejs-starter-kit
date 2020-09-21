@@ -238,27 +238,23 @@ export const QuizUserWiseReportComponent = (props) => {
       graphQuestion.choiceType === QuestionTypes.COUNTRIES);
 
   return (
-    <Row gutter={24}>
+    <div>
       {isGraph && (
-        <Col lg={12} md={24} xs={24}>
-          <div style={{ width: "100%", overflowX: "auto" }}>
-            <GraphChartComponent
-              graphQuestion={graphQuestion}
-              attempts={resultQuiz && resultQuiz.attempts}
-            />
-          </div>
-        </Col>
-      )}
-      <Col lg={isGraph ? 12 : 24} md={24} xs={24}>
         <div style={{ width: "100%", overflowX: "auto" }}>
-          <Table
-            columns={columns}
-            dataSource={resultQuiz && resultQuiz.attempts}
-            scroll={{ x: 100 * (columns && columns.length), y: 700 }}
+          <GraphChartComponent
+            graphQuestion={graphQuestion}
+            attempts={resultQuiz && resultQuiz.attempts}
           />
         </div>
-      </Col>
-    </Row>
+      )}
+      <div style={{ width: "100%", overflowX: "auto" }}>
+        <Table
+          columns={columns}
+          dataSource={resultQuiz && resultQuiz.attempts}
+          scroll={{ x: 100 * (columns && columns.length), y: 700 }}
+        />
+      </div>
+    </div>
   );
 };
 
