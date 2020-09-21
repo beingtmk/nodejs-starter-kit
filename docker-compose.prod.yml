@@ -21,7 +21,7 @@ services:
        sh -c '
        NODE_ENV=development yarn &&
        yarn build &&
-       (test -f dev-db.sqlite3 || yarn seed) &&
+       (test -f prod-db.sqlite3 || yarn seed) &&
        yarn start
        '
     ports:
