@@ -27,7 +27,7 @@
 }
 
 .group-layout-content{
-  margin:24px;
+  margin:24px 54px 24px 24px;
   padding:24px;
   background: white;
   min-height: (100vh-@navbar-height-large - 24px);
@@ -50,6 +50,12 @@
   width: 100%;
   max-width: 500px;
   margin: auto;
+}
+
+@media only screen and (max-width: 1439px) {
+  .group-layout-content{
+    margin: 24px;
+  }
 }
 
 @media only screen and (max-width: 767px) {

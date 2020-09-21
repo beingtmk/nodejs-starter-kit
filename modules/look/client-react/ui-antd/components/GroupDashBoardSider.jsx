@@ -19,29 +19,41 @@ class GroupDashBoardSider extends React.Component {
         selectedKeys={path}
         // className="navbar-menu"
       >
-        <MenuItem key="/group/:id/info">
+        <MenuItem
+          className="group-layout-sider-menuitem"
+          key="/group/:id/info"
+        >
           <NavLink to={`/group/${id}/info`}>
             <Icon type="file-text" />
             Info
           </NavLink>
         </MenuItem>
-        <MenuItem key="/group/:id/sub-groups">
+        <MenuItem
+          className="group-layout-sider-menuitem"
+          key="/group/:id/sub-groups"
+        >
           <NavLink to={`/group/${id}/sub-groups`}>
-          <Icon type="apartment" />
+            <Icon type="apartment" />
             Sub Groups
           </NavLink>
         </MenuItem>
 
-        <MenuItem key="/group/:id/members">
+        <MenuItem
+          className="group-layout-sider-menuitem"
+          key="/group/:id/members"
+        >
           <NavLink to={`/group/${id}/members`}>
             <Icon type="team" />
             Members
           </NavLink>
         </MenuItem>
 
-        <MenuItem key="/group/:id/quizzes">
+        <MenuItem
+          className="group-layout-sider-menuitem"
+          key="/group/:id/quizzes"
+        >
           <NavLink to={`/group/${id}/quizzes`}>
-          <Icon type="question" />
+            <Icon type="question" />
             Quizzes
           </NavLink>
         </MenuItem>

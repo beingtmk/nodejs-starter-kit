@@ -103,7 +103,7 @@ const QuizAddForm = ({
           label={"Is Editable By User"}
           checked={values.isEditableByUser}
         />
-        {!values.isPublic && (
+        {/* {!values.isPublic && (
           <Field
             name="quizGroups[0].groupId"
             component={QuizAddFormGroupsComponent}
@@ -111,7 +111,7 @@ const QuizAddForm = ({
             label={"Add Group"}
             value={values.quizGroups && values.quizGroups[0] && values.quizGroups[0].groupId}
           />
-        )}
+        )} */}
       </Card>
       <FieldArray
         name="sections"
@@ -184,11 +184,11 @@ const QuizAddFormWithFormik = withFormik({
       isEditableByUser: props.quiz && props.quiz.isEditableByUser,
       isPublic: props.quiz && props.quiz.isPublic,
       cover: (props.quiz && props.quiz.cover) || "",
-      quizGroups: (props.quiz &&
-        props.quiz.quizGroups &&
-        props.quiz.quizGroups[0]) || [
-        { groupId: urlParamGroupId, quizId: props.quiz.id },
-      ],
+      // quizGroups: (props.quiz &&
+      //   props.quiz.quizGroups &&
+      //   props.quiz.quizGroups[0]) || [
+      //   { groupId: urlParamGroupId, quizId: props.quiz.id },
+      // ],
       sections:
         (props.quiz &&
           props.quiz.sections &&

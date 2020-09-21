@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "react-apollo";
-import { message, Modal, Button, Spin as Loader } from "antd";
+import { message, Modal, Button, Spin as Loader, Row, Col } from "antd";
 import {
   BarChart,
   Bar,
@@ -228,29 +228,37 @@ export const QuizUserWiseReportComponent = (props) => {
     seTGraphQuestion(currentQ);
   };
 
+  const isGraph =
+    graphQuestion &&
+    (graphQuestion.choiceType === QuestionTypes.RADIO ||
+      graphQuestion.choiceType === QuestionTypes.SELECT ||
+      graphQuestion.choiceType === QuestionTypes.MSELECT ||
+      graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
+      graphQuestion.choiceType === QuestionTypes.NUMBER ||
+      graphQuestion.choiceType === QuestionTypes.COUNTRIES);
+
   return (
-    <div >
-      {graphQuestion &&
-        (graphQuestion.choiceType === QuestionTypes.RADIO ||
-          graphQuestion.choiceType === QuestionTypes.SELECT ||
-          graphQuestion.choiceType === QuestionTypes.MSELECT ||
-          graphQuestion.choiceType === QuestionTypes.CHECKBOX ||
-          graphQuestion.choiceType === QuestionTypes.NUMBER ||
-          graphQuestion.choiceType === QuestionTypes.COUNTRIES) && (
+    <Row gutter={24}>
+      {isGraph && (
+        <Col lg={12} md={24} xs={24}>
           <div style={{ width: "100%", overflowX: "auto" }}>
             <GraphChartComponent
               graphQuestion={graphQuestion}
               attempts={resultQuiz && resultQuiz.attempts}
             />
           </div>
-        )}
-      <div style={{ width: "100%", overflowX: "auto" }}>
-      <Table
-        columns={columns}
-        dataSource={resultQuiz && resultQuiz.attempts}
-        scroll={{ x: 100 * (columns && columns.length), y: 700 }}
-      /></div>
-    </div>
+        </Col>
+      )}
+      <Col lg={isGraph ? 12 : 24} md={24} xs={24}>
+        <div style={{ width: "100%", overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={resultQuiz && resultQuiz.attempts}
+            scroll={{ x: 100 * (columns && columns.length), y: 700 }}
+          />
+        </div>
+      </Col>
+    </Row>
   );
 };
 
