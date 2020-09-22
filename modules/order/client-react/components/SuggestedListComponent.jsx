@@ -7,62 +7,58 @@ const SuggestedListComponent = props => {
   const { items, loadData, renderFunc } = props;
   const [data, setData] = useState(items);
   const [load, setLoad] = useState(false);
-  // const [hasMore, setHasMore] = useState(items.pageInfo.hasNextPage);
-  // console.log(data);
+  const [hasMore, setHasMore] = useState(items.pageInfo.hasNextPage);
+
   const fetchMoreData = async () => {
     setLoad(true);
     const endCursor = data && data.pageInfo.endCursor;
 
-    // if (!hasMore) {
-    //   setHasMore(false);
+    if (!hasMore) {
+      setHasMore(false);
 
-    //   return;
-    // } else {
-    //   const newData = await loadData(endCursor + 1, 'add');
-    //   setData(newData.data.items);
-    //   // console.log(newData);
-    //   setLoad(false);
-    // }
+      return;
+    } else {
+      const newData = await loadData(endCursor + 1, 'add');
+      setData(newData.data.items);
+      // console.log(newData);
+      setLoad(false);
+    }
   };
   return (
-    // <InfiniteScroll
-    //   style={{ overflow: 'none' }}
-    //   dataLength={data.totalCount}
-    //   next={fetchMoreData}
-    //   // hasMore={hasMore}
-    //   loader={
-    //     <div align="center">
-    //       <Spin />
-    //     </div>
-    //   }
-    //   endMessage={
-    //     <Divider>
-    //       <p style={{ textAlign: 'center', marginTop: '25px' }}>
-    //         <b>End</b>
-    //       </p>
-    //     </Divider>
-    //   }
-    // >
-    <List
-      grid={
-        props.grid || {
-          gutter: 24,
-          xs: 1,
-          sm: 2,
-          md: 2,
-          lg: 3,
-          xl: 4,
-          xxl: 4
+    <InfiniteScroll
+      style={{ overflow: 'none' }}
+      dataLength={data.totalCount}
+      next={fetchMoreData}
+      hasMore={hasMore}
+      loader={
+        <div align="center">
+          <Spin />
+        </div>
+      }
+      endMessage={
+        <Divider>
+          <p style={{ textAlign: 'center', marginTop: '25px' }}>
+            <b>End</b>
+          </p>
+        </Divider>
+      }
+    >
+      <List
+        grid={
+          props.grid || {
+            gutter: 24,
+            xs: 1,
+            sm: 2,
+            md: 2,
+            lg: 3,
+            xl: 4,
+            xxl: 4
+          }
         }
-      }
-      dataSource={data}
-      renderItem={
-        item => <List.Item key={item.id}>{renderFunc(item.id, item)}</List.Item>
-        // console.log(item);
-      }
-    />
-    // </InfiniteScroll>
-    // <></>
+        dataSource={data.edges}
+        renderItem={item => <List.Item key={item.node.id}>{renderFunc(item.node.id, item.node)}</List.Item>}
+      />
+    </InfiniteScroll>
   );
 };
 

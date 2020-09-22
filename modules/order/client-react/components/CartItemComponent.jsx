@@ -115,7 +115,7 @@ class CartItemComponent extends Component {
 
   render() {
     const { order, edit, onSubmit } = this.props;
-
+    console.log(order);
     return (
       <Card
         style={{
@@ -128,7 +128,11 @@ class CartItemComponent extends Component {
       >
         <Row type="flex">
           <Col span={24} align="center" style={{ maxHeight: '200px', overflow: 'hidden' }}>
-            <img alt="" src={order.orderDetails && order.orderDetails[0].thumbnail} width="100%" />
+            <img
+              alt=""
+              src={order.orderDetails && order.orderDetails[0] && order.orderDetails[0].imageUrl}
+              width="100%"
+            />
           </Col>
           <Col span={18}>
             <div
@@ -140,7 +144,7 @@ class CartItemComponent extends Component {
               }}
             >
               <Col span={24}>
-                <h2>Order Id: {order.id}</h2>
+                <h2>Order Id: {order.orderState.id}</h2>
               </Col>
               <Col span={12}>
                 <Row type="flex" justify="start">
@@ -150,17 +154,10 @@ class CartItemComponent extends Component {
               <Col span={12}>
                 <Row type="flex" justify="end">
                   <h3>
-                    <StatusText status={order.state.toLowerCase()}>{order.state}</StatusText>
+                    <StatusText status={order.orderState.state.toLowerCase()}>{order.orderState.state}</StatusText>
                   </h3>
                 </Row>
               </Col>
-              {/* <OrderTotalDate span={24}>
-                    <h4>
-                      <OrderGrey sm={17} xs={24}>
-                        <br />
-                      </OrderGrey>
-                    </h4>
-                  </OrderTotalDate> */}
             </div>
           </Col>
           <Col span={6}>

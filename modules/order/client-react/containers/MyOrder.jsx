@@ -11,7 +11,7 @@ import { withCurrentUser, withOrders } from './OrderOperations';
 import MyOrdersView from '../components/MyOrdersView';
 
 const MyOrdersContainer = compose(withOrders)(props => {
-  console.log('props', props);
+  // console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 
@@ -35,4 +35,7 @@ MyOrders.propTypes = {
   //   filter: PropTypes.object
 };
 
-export default compose(withCurrentUser, translate('order'))(MyOrders);
+export default compose(
+  withCurrentUser,
+  translate('order')
+)(MyOrders);
