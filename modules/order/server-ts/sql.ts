@@ -1,11 +1,8 @@
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { Model } from 'objection';
 import { knex, returnId, orderedFor } from '@gqlapp/database-server-ts';
-// import { User, UserAddress } from '@gqlapp/user-server-ts/sql';
-import Listing from '@gqlapp/listing-server-ts/sql';
 
-// import { has } from 'lodash';
-import STATES from './constants/order_states';
+import { ORDER_STATES } from '@gqlapp/order-common';
 
 // Give the knex object to objection.
 Model.knex(knex);
@@ -18,7 +15,6 @@ interface OrderDetail {
   title: string;
   thumbnail: string;
 }
-
 
 export interface Order {
   id: number;
@@ -36,8 +32,7 @@ const eager_od = '[order]';
 // const eager =
 //   '[user.[profile], user_address, order_details.[extension.[order_detail], listing.[user.[profile], listing_images,  listing_detail.damages, listing_rental, listing_content]], order_payment, cards]';
 
-const eager =
-  '[order_details]';
+const eager = '[order_details]';
 
 export default class OrderDAO extends Model {
   // private id: any;
@@ -67,7 +62,7 @@ export default class OrderDAO extends Model {
           from: 'order.id',
           to: 'order_detail.order_id'
         }
-      },
+      }
     };
   }
 
@@ -124,7 +119,7 @@ export default class OrderDAO extends Model {
     const res = camelizeKeys(
       await OrderDAO.query()
         .where('vendor_id', userId)
-        .whereNot('state', STATES.STALE)
+        .whereNot('state', ORDER_STATES.STALE)
         .eager(eager)
         .orderBy('id', 'desc')
     );
@@ -132,12 +127,11 @@ export default class OrderDAO extends Model {
     return res;
   }
 
-
   public async userOrders(userId) {
     const res = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', userId)
-        .whereNot('state', STATES.STALE)
+        .whereNot('state', ORDER_STATES.STALE)
         .eager(eager)
         .orderBy('id', 'desc')
     );
@@ -167,17 +161,19 @@ export default class OrderDAO extends Model {
     const cart = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', input.consumerId)
-        .where('state', STATES.STALE)
+        .where('state', ORDER_STATES.STALE)
     )[0];
 
     console.log(cart);
     if (!cart) {
       // Create a STALE order
-        input.orderId = await returnId(knex('order')).insert({
+      input.orderId = await returnId(knex('order')).insert({
         consumer_id: input.consumerId,
-        state: STATES.STALE
+        state: ORDER_STATES.STALE
       });
-    }else input.orderDetail.orderId = cart.id;
+    } else {
+      input.orderDetail.orderId = cart.id;
+    }
 
     console.log(input);
     const newOrderDetail = camelizeKeys(await OrderDetail.query().insert(decamelizeKeys(input.orderDetail)));
@@ -190,7 +186,7 @@ export default class OrderDAO extends Model {
     const res = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', userId)
-        .where('state', STATES.STALE)
+        .where('state', ORDER_STATES.STALE)
         .eager(eager)
         .orderBy('id', 'desc')
     );
@@ -199,7 +195,7 @@ export default class OrderDAO extends Model {
       // Create a STALE order
       const order_stale_id = await returnId(knex('order')).insert({
         consumer_id: userId,
-        state: STATES.STALE
+        state: ORDER_STATES.STALE
       });
       const order_stale = await this.order(order_stale_id);
       // console.log(order_stale);
@@ -288,7 +284,6 @@ export default class OrderDAO extends Model {
     );
     return res;
   }
-
 }
 
 // OrderDetail model.
