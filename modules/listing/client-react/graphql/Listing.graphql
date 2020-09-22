@@ -1,0 +1,49 @@
+#import "@gqlapp/user-client-react/graphql/User.graphql"
+
+fragment ListingInfo on Listing {
+  id
+  user {
+    ...UserInfo
+  }
+
+  title
+  description
+  sku
+
+  listingFlags {
+    id
+    isFeatured
+    isNew
+    isDiscount
+  }
+
+  listingOptions {
+    id
+    fixedQuantity
+  }
+
+  listingDetail {
+    id
+    inventoryCount
+  }
+
+  listingMedia {
+    id
+    url
+    type
+
+    isActive
+  }
+
+  listingCostArray {
+    id
+    cost
+    discount
+    type
+    label
+  }
+
+  isActive
+  createdAt
+  updatedAt
+}

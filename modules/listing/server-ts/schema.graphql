@@ -1,0 +1,215 @@
+# Entity
+type Listing {
+  id: Int
+  user: User
+
+  title: String!
+  description: String
+  sku: String
+
+  listingFlags: ListingFlag
+  listingOptions: ListingOption
+  listingDetail: ListingDetail
+  listingMedia: [ListingMedium]
+  listingCostArray: [ListingCost]
+  isActive: Boolean
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ListingFlag {
+  id: Int
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+}
+
+type ListingOption {
+  id: Int
+  fixedQuantity: Int
+}
+
+type ListingDetail {
+  id: Int
+  inventoryCount: Int
+}
+
+type ListingMedium {
+  id: Int
+  url: String
+  type: String
+  isActive: Boolean
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ListingCost {
+  id: Int
+  cost: Int
+  discount: Float
+  type: String
+  label: String
+  isActive: Boolean
+  createdAt: String!
+  updatedAt: String!
+}
+
+type RangeValues {
+  maxCost: Float
+  minCost: Float
+}
+
+type Listings {
+  totalCount: Int
+  edges: [ListingEdges]
+  pageInfo: ListingPageInfo
+  rangeValues: RangeValues
+}
+
+type ListingEdges {
+  node: Listing
+  cursor: Int
+}
+
+type ListingPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+extend type Query {
+  listing(id: Int!): Listing
+  listings(
+    limit: Int!
+    after: Int!
+    orderBy: OrderByListInput
+    filter: FilterListInput
+  ): Listings
+
+  #Bookmark
+  myListingsBookmark(
+    userId: Int
+    limit: Int
+    after: Int
+    orderBy: OrderByListInput
+    filter: FilterListInput
+  ): Listings
+  listingBookmarkStatus(listingId: Int, userId: Int): Boolean
+}
+
+extend type Mutation {
+  # Create new listing
+  addListing(input: AddListingInput!): Boolean
+  # # Edit a listing
+  editListing(input: EditListingInput!): Boolean
+  # # Delete a listing
+  deleteListing(id: Int!): Boolean
+
+  # Bookmark
+  addOrRemoveListingBookmark(listingId: Int, userId: Int): String
+}
+
+# Input for ordering listings
+input OrderByListInput {
+  column: String
+  # asc | desc
+  order: String
+}
+
+input FilterListInput {
+  userId: Int
+  searchText: String
+
+  lowerCost: Float
+  upperCost: Float
+
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
+}
+
+input AddListingInput {
+  id: Int
+  userId: Int
+
+  title: String
+  description: String
+  sku: String
+
+  listingFlags: ListingFlagInput
+  listingOptions: ListingOptionInput
+  listingDetail: ListingDetailInput
+  listingMedia: [ListingMediumInput]
+  listingCostArray: [ListingCostInput]
+  isActive: Boolean
+}
+
+input ListingFlagInput {
+  id: Int
+  isFeatured: Boolean
+  isNew: Boolean
+  isDiscount: Boolean
+  isActive: Boolean
+}
+input ListingOptionInput {
+  id: Int
+  fixedQuantity: Int
+  isActive: Boolean
+}
+input ListingDetailInput {
+  id: Int
+  inventoryCount: Int
+  isActive: Boolean
+}
+
+# Input for addListing Mutation
+input ListingMediumInput {
+  id: Int
+  url: String!
+  type: String
+  isActive: Boolean
+}
+
+input ListingCostInput {
+  id: Int
+  cost: Int
+  discount: Float
+  type: String
+  label: String
+  isActive: Boolean
+}
+
+# Input for editListing Mutation
+input EditListingInput {
+  id: Int!
+  userId: Int
+
+  title: String
+  description: String
+  sku: String
+
+  listingFlags: ListingFlagInput
+  listingOptions: ListingOptionInput
+  listingDetail: ListingDetailInput
+  listingMedia: [ListingMediumInput]
+  listingCostArray: [ListingCostInput]
+  isActive: Boolean
+}
+
+extend type Subscription {
+  # Subscription for listing list
+  listingsUpdated(endCursor: Int, filter: FilterListInput): UpdateListingPayload
+
+  # Subscription for when editing a listing
+  listingUpdated(id: Int): UpdateListingPayload
+
+  # Bookmark
+  listingsBookmarkUpdated(endCursor: Int): UpdateListingPayload
+}
+
+# Payload for listingsUpdated Subscription
+type UpdateListingPayload {
+  mutation: String!
+  id: Int
+  node: Listing
+}

@@ -1,0 +1,6 @@
+mutation patchOrder($input: PatchOrderInput!) {
+  patchOrder(input: $input) {
+    id
+    state
+  }
+}

@@ -1,0 +1,3 @@
+query listingBookmarkStatus($listingId: Int, $userId: Int) {
+  listingBookmarkStatus(listingId: $listingId, userId: $userId)
+}

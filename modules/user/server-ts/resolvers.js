@@ -10,6 +10,8 @@ import { createTransaction } from '@gqlapp/database-server-ts';
 import { log } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
 
+import OTPAPI from './helpers/OTPAPI';
+
 const USERS_SUBSCRIPTION = 'users_subscription';
 const {
   auth: { secret, certificate, password },
@@ -36,19 +38,34 @@ export default pubsub => ({
 
       throw new Error(t('user:accessDenied'));
     }),
-    currentUser(
-      obj,
-      args,
-      {
-        User,
-        req: { identity }
-      }
-    ) {
+    currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
         return User.getUser(identity.id);
       } else {
         return null;
       }
+    },
+    async userList(obj, { orderBy, filter, limit, after }, { User }) {
+      const UserItemOutput = await User.getUserItems(limit, after, orderBy, filter);
+      const { userItems, total } = UserItemOutput;
+      const hasNextPage = total > after + limit;
+      console.log('User items', UserItemOutput);
+      const edgesArray = [];
+      userItems.map((UserItem, index) => {
+        edgesArray.push({
+          cursor: after + index,
+          node: UserItem
+        });
+      });
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     }
   },
   User: {
@@ -93,7 +110,9 @@ export default pubsub => ({
         }
 
         if (input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
@@ -108,8 +127,15 @@ export default pubsub => ({
             : !password.requireEmailConfirmation;
 
           [createdUserId] = await User.register({ ...input, isActive }, passwordHash).transacting(trx);
-          await User.editUserProfile({ id: createdUserId, ...input }).transacting(trx);
-          if (certificate.enabled) await User.editAuthCertificate({ id: createdUserId, ...input }).transacting(trx);
+          await User.editUserProfile({
+            id: createdUserId,
+            ...input
+          }).transacting(trx);
+          if (certificate.enabled)
+            await User.editAuthCertificate({
+              id: createdUserId,
+              ...input
+            }).transacting(trx);
           trx.commit();
         } catch (e) {
           trx.rollback();
@@ -170,7 +196,9 @@ export default pubsub => ({
         }
 
         if (input.password && input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
@@ -251,6 +279,91 @@ export default pubsub => ({
           return { user };
         } else {
           throw new Error(t('user:userCouldNotDeleted'));
+        }
+      }
+    ),
+    addUserMobile: withAuth(
+      (obj, args, { req: { identity } }) => {
+        if (typeof args.id !== 'undefined') {
+          return identity.id !== args.input.id ? ['user:update'] : ['user:update:self'];
+        } else {
+          return ['user:update:self'];
+        }
+      },
+      async (obj, { input }, { User, req: { identity, t } }) => {
+        // To Do Check for user type and have validations for adding appropriately
+        // const isAdmin = () => identity.role === 'admin';
+        // const isSelf = () => identity.id === input.id;
+        const user = await User.getUser(input.id || identity.id);
+
+        // if user doesnt have the mobile call otp & save to database
+        const mobile = {
+          mobile: input.mobile
+        };
+
+        if (typeof input.otp === 'undefined') {
+          // call otp api
+
+          const otp = await OTPAPI(input.mobile);
+          // const otp = 1212;
+          console.log(otp);
+          mobile.otpSent = otp && true;
+
+          var mobile_db;
+          console.log(user);
+          console.log(user.mobile);
+
+          if (user.mobile) {
+            await User.updateUserMobile(user.mobile.id, { otp });
+          } else {
+            if (typeof input.id !== 'undefined') {
+              mobile_db = await User.addUserMobile(input.id, {
+                mobile: input.mobile,
+                otp: otp
+              });
+            } else {
+              mobile_db = await User.addUserMobile(identity.id, {
+                mobile: input.mobile,
+                otp: otp
+              });
+            }
+          }
+        } else {
+          // check if otp is correct
+          const user = await User.getUser(input.id || identity.id);
+          const otp = user.mobile.otp;
+          mobile.otpSent = otp && true;
+          mobile.isVerified = input.otp === otp;
+          if (mobile.isVerified) {
+            await User.updateUserMobile(user.mobile.id, { is_verified: true });
+            await User.updateUserVerification(user.id, {
+              is_mobile_verified: true
+            });
+
+            // set as primary mobile
+            const patched = await User.patchProfile(user.id, {
+              mobile: mobile.mobile
+            });
+            console.log(patched);
+          } else {
+            mobile.error = 'Wrong OTP';
+          }
+        }
+        // else check for otp and return value
+        // save mobile to database
+
+        try {
+          const user_updated = await User.getUser(input.id || identity.id);
+          pubsub.publish(USERS_SUBSCRIPTION, {
+            usersUpdated: {
+              mutation: 'UPDATED',
+              node: user_updated
+            }
+          });
+          // console.log(user);
+          return mobile;
+        } catch (e) {
+          throw e;
         }
       }
     )

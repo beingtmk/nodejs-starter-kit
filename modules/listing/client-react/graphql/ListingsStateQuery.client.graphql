@@ -1,0 +1,7 @@
+#import "./ListingsState.client.graphql"
+
+query ListingsState {
+  listingsState @client {
+    ...ListingsStateInfo
+  }
+}

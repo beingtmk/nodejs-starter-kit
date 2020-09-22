@@ -104,6 +104,7 @@
         "react-ga": "^2.3.5",
         "react-helmet": "^5.2.1",
         "react-i18next": "^10.12.2",
+        "react-infinite-scroll-component": "^5.0.4",
         "react-redux": "^7.1.0",
         "react-router": "^5.0.0",
         "react-router-dom": "^5.0.0",
@@ -117,8 +118,11 @@
         "styled-components": "^4.3.1",
         "subscriptions-transport-ws": "^0.9.16",
         "use-react-router": "^1.0.7"
-    },
-    "devDependencies": {
+    ,
+    "@gqlapp/addresses-client-react": "^1.0.0",
+    "@gqlapp/listing-client-react": "^1.0.0",
+    "@gqlapp/order-client-react": "^1.0.0"},
+  "devDependencies": {
         "@storybook/addon-actions": "^5.1.8",
         "@storybook/addon-links": "^5.1.8",
         "@storybook/addons": "^5.1.8",

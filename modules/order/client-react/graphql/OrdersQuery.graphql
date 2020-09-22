@@ -1,0 +1,7 @@
+#import "./Order.graphql"
+
+query orders($limit: Int!, $after: Int!) {
+  orders(limit: $limit, after: $after) {
+    ...OrderInfo
+  }
+}

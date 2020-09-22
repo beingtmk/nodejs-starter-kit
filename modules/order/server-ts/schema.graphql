@@ -1,0 +1,136 @@
+type Order {
+  id: Int!
+
+  # User module
+  # consumer: User
+  # vendor: User
+
+  state: String
+  orderDetails: [OrderDetail]
+
+  createdAt: String
+  updatedAt: String
+}
+
+type OrderDetail {
+  id: Int!
+  state: String
+  date: String
+  cost: Int
+  title: String
+  thumbnail: String
+  quantity: Int
+}
+
+type OrderEdges {
+  node: Order
+  cursor: Int
+}
+
+type OrderPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+type Orders {
+  totalCount: Int
+  edges: [OrderEdges]
+  pageInfo: OrderPageInfo
+}
+
+extend type Query {
+  orders(
+    limit: Int!
+    after: Int! # orderBy: OrderByListInput
+  ): # filter: FilterListInput
+  [Order]
+
+  userOrders(userId: Int): [Order]
+  userDeliveries(userId: Int): [Order]
+  order(id: Int!): Order
+  getCart(userId: Int): Order
+}
+
+# input FilterOrderInput {
+#   searchText: String
+# }
+
+# # Input for ordering orders
+# input OrderByInput {
+#   column: String
+#   # asc | desc
+#   order: String
+# }
+
+extend type Mutation {
+  # Create new order
+  addToCart(input: AddToCartInput!): Boolean
+
+  # Create new order
+  addOrder(input: AddOrderInput!): Order
+  # Delete a order
+  deleteOrder(id: Int!): Order
+  # Edit a order
+  editOrder(input: EditOrderInput!): Order
+  # Patch a order
+  patchOrder(input: PatchOrderInput!): Order
+
+  changeDateInCart(input: ChangeDateInCartInput!): Boolean
+
+  deleteOrderDetail(id: Int!): Boolean
+}
+
+input ChangeDateInCartInput {
+  id: Int!
+  orderDetailId: Int!
+  date: String!
+}
+
+input AddToCartInput {
+  consumerId: Int
+  vendorId: Int
+  orderDetail: OrderDetailInput!
+}
+
+input OrderDetailInput {
+  id: Int
+  date: String
+  cost: Int
+  thumbnail: String
+  title: String
+  quantity: Int
+}
+
+input AddOrderInput {
+  consumerId: Int
+  vendorId: Int
+  state: String
+  orderDetails: [OrderDetailInput]
+}
+
+# Input for patchOrder Mutation
+input PatchOrderInput {
+  id: Int!
+  state: String
+}
+
+# Input for editOrder Mutation
+input EditOrderInput {
+  id: Int!
+  state: String
+  orderDetails: [OrderDetailInput]
+}
+
+extend type Subscription {
+  # Subscription for when editing a order
+  orderUpdated(id: Int!): UpdateOrderPayload
+  # Subscription for order list
+  ordersUpdated(endCursor: Int, filter: FilterListInput): UpdateOrderPayload
+}
+
+# Payload for ordersUpdated Subscription
+type UpdateOrderPayload {
+  mutation: String!
+  id: Int
+  node: Order
+}

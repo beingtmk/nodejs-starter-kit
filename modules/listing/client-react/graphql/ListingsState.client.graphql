@@ -1,0 +1,18 @@
+fragment ListingsStateInfo on ListingsState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    # userId
+    searchText
+
+    lowerCost
+    upperCost
+
+    # isFeatured
+    # isNew
+    # isDiscount
+    isActive
+  }
+}
