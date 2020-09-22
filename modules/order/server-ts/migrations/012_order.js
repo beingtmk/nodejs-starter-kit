@@ -1,49 +1,87 @@
-import { STALE } from '../constants/order_states';
+import { ORDER_STATES } from '@gqlapp/order-common';
 
 exports.up = function(knex, Promise) {
   return Promise.all([
-    knex.schema.createTable('order', table => {
-      table.increments('id');
-      table
-        .integer('consumer_id')
-        .unsigned()
-        .references('id')
-        .inTable('user')
-        .onDelete('CASCADE');
-      table
-        .integer('vendor_id')
-        .unsigned()
-        .references('id')
-        .inTable('user')
-        .onDelete('CASCADE');
-      table.string('state').defaultTo(STALE);
-      table.timestamps(false, true);
-    }),
+    knex.schema
+      .createTable('order', table => {
+        table.increments();
 
-    // Order Details
-    knex.schema.createTable('order_detail', table => {
-      table.increments('id');
+        table
+          .integer('consumer_id')
+          .unsigned()
+          .references('id')
+          .inTable('user')
+          .onDelete('CASCADE');
+        table
+          .integer('vendor_id')
+          .unsigned()
+          .references('id')
+          .inTable('user')
+          .onDelete('CASCADE');
 
-      table.integer('cost');
-      table.integer('quantity');
+        table.string('tracking_id');
 
-      table.string('title');
-      table.string('thumbnail');
-      table.string('date');
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
 
-      table
-        .integer('order_id')
-        .unsigned()
-        .references('id')
-        .inTable('order')
-        .onDelete('CASCADE');
-      table.timestamps(false, true);
-    })
+      .createTable('order_state', table => {
+        table.increments();
+        table
+          .integer('order_id')
+          .unsigned()
+          .references('id')
+          .inTable('order')
+          .onDelete('CASCADE');
 
-    // Order Delivery Table
+        table.string('state').defaultTo(ORDER_STATES.STALE);
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
+
+      .createTable('order_detail', table => {
+        table.increments();
+        table
+          .integer('order_id')
+          .unsigned()
+          .references('id')
+          .inTable('order')
+          .onDelete('CASCADE');
+
+        table.string('modal_name');
+        table.integer('modal_id');
+
+        table.string('image_url');
+        table.string('title');
+        table.string('cost');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
+
+      .createTable('order_option', table => {
+        table.increments();
+        table
+          .integer('order_detail_id')
+          .unsigned()
+          .references('id')
+          .inTable('order_detail')
+          .onDelete('CASCADE');
+
+        table.integer('quantity');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
   ]);
 };
 
 exports.down = function(knex, Promise) {
-  return Promise.all([knex.schema.dropTable('order_detail'), knex.schema.dropTable('order')]);
+  return Promise.all([
+    knex.schema.dropTable('order'),
+    knex.schema.dropTable('order_state'),
+    knex.schema.dropTable('order_detail'),
+    knex.schema.dropTable('order_option')
+  ]);
 };

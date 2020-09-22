@@ -1,32 +1,68 @@
-import { PubSub, withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
-// import { knex, returnId, orderedFor } from '@gqlapp/database-server-ts';
-import { Identifier } from './sql';
+import { withFilter } from 'graphql-subscriptions';
 
-// import { withFilter } from 'graphql-subscriptions';
-import moment from 'moment';
+import { Orders, Identifier } from './sql';
+
+interface Edges {
+  cursor: number;
+  node: Orders & Identifier;
+}
+
+interface OrderInput {
+  input: Orders;
+}
+
+interface OrderInputWithId {
+  input: Orders & Identifier;
+}
 
 const ORDERS_SUBSCRIPTION = 'orders_subscription';
 
 export default (pubsub: any) => ({
   Query: {
-    orders(obj, { limit, after, orderBy, filter }, { Order, req: { identity } }) {
-      if (identity) {
-        return Order.getOrders(limit, after, orderBy, filter);
-      } else {
-        return null;
-      }
-    },
-    userOrders(obj, { userId }, { Order, req: { identity } }) {
-      // To Do - Check if admin return with userId or identity.id
+    order: withAuth((obj: any, { id }: Identifier, { Order }: any) => {
+      return Order.order(id);
+    }),
+    orders: withAuth(
+      async (
+        obj: any,
+        {
+          limit,
+          after,
+          orderBy,
+          filter
+        }: {
+          limit: number;
+          after: number;
+          orderBy: object;
+          filter: object;
+        },
+        { Order }: any
+      ) => {
+        const edgesArray: Edges[] = [];
+        const { total, orders } = await Order.ordersPagination(limit, after, orderBy, filter);
 
-      if (identity) {
-        return Order.userOrders(identity.id);
-      } else {
-        return null;
+        const hasNextPage = total > after + limit;
+
+        orders.map((order: Orders & Identifier, index: number) => {
+          edgesArray.push({
+            cursor: after + index,
+            node: order
+          });
+        });
+        const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+        return {
+          totalCount: total,
+          edges: edgesArray,
+          pageInfo: {
+            endCursor,
+            hasNextPage
+          }
+        };
       }
-    },
-    userDeliveries(obj, { userId }, { Order, req: { identity } }) {
+    ),
+    userDeliveries(obj: any, { userId }, { Order, req: { identity } }: any) {
       // To Do - Check if admin return with userId or identity.id
 
       if (identity) {
@@ -34,17 +70,6 @@ export default (pubsub: any) => ({
       } else {
         return null;
       }
-    },
-    order(obj: any, { id }: Identifier, { Order, req: { identity } }) {
-      return Order.order(id);
-    },
-    getCart(obj: any, { userId }: any, { Order, req: { identity } }) {
-      // To Do - Check if admin return with userId or identity.id
-
-      const res = Order.getCart(identity.id);
-      // const res = Order.getCart(userId);
-
-      return res;
     }
   },
   Mutation: {

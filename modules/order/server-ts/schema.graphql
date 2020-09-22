@@ -1,24 +1,37 @@
 type Order {
   id: Int!
-
   # User module
-  # consumer: User
-  # vendor: User
+  consumer: User
+  vendor: User
 
-  state: String
+  trackingId: String
+
+  orderState: OrderState
   orderDetails: [OrderDetail]
 
   createdAt: String
   updatedAt: String
 }
 
+type OrderState {
+  id: Int
+  state: String
+}
+
 type OrderDetail {
   id: Int!
-  state: String
-  date: String
-  cost: Int
+  modalName: String
+  modalId: Int
+
   title: String
-  thumbnail: String
+  imageUrl: String
+  cost: Int
+
+  orderOptions: OrderOption
+}
+
+type OrderOption {
+  id: Int
   quantity: Int
 }
 
@@ -39,31 +52,32 @@ type Orders {
 }
 
 extend type Query {
+  order(id: Int!): Order
   orders(
     limit: Int!
-    after: Int! # orderBy: OrderByListInput
-  ): # filter: FilterListInput
-  [Order]
+    after: Int!
+    orderBy: OrderByListInput
+    filter: FilterOrderInput
+  ): Orders
 
-  userOrders(userId: Int): [Order]
   userDeliveries(userId: Int): [Order]
-  order(id: Int!): Order
-  getCart(userId: Int): Order
 }
 
-# input FilterOrderInput {
-#   searchText: String
-# }
+input FilterOrderInput {
+  searchText: String
+  vendorId: Int
+  consumerId: Int
+  state: String
+}
 
-# # Input for ordering orders
-# input OrderByInput {
-#   column: String
-#   # asc | desc
-#   order: String
-# }
+# Input for ordering orders
+input OrderByInput {
+  column: String
+  # asc | desc
+  order: String
+}
 
 extend type Mutation {
-  # Create new order
   addToCart(input: AddToCartInput!): Boolean
 
   # Create new order
