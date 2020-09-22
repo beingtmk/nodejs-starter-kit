@@ -6,6 +6,7 @@ import moment from 'moment';
 import { PropTypes } from 'prop-types';
 
 import AddToCartForm from './AddToCartForm';
+import { TotalPrice } from './CheckoutCartView';
 
 const OrderCard = styled(Card)`
   margin: 0px 0px 15px 0px !important;
@@ -73,7 +74,16 @@ const BorderListzero = styled(Button)`
   padding: 0 !important;
   padding-right: 20px !important;
 `;
-
+const Price = styled(Row)`
+  height: 100%;
+  color: white;
+  background-color: #1890ff;
+`;
+const StatusText = styled.div`
+  color: ${props => props.status === 'completed' && '#2aa952'};
+  color: ${props => props.status === 'initiated' && '#F79E1B'};
+  color: ${props => props.status === 'cancelled' && 'red'};
+`;
 class CartItemComponent extends Component {
   constructor(props) {
     super(props);
@@ -104,90 +114,66 @@ class CartItemComponent extends Component {
   // }
 
   render() {
-    const { item, edit, onSubmit } = this.props;
-    console.log('cart item', item);
+    const { order, edit, onSubmit } = this.props;
 
     return (
       <Card
-        type={this.props.inner && 'inner'}
-        style={{ marginBottom: '24px' }}
+        style={{
+          marginBottom: '24px'
+        }}
+        hoverable
         bodyStyle={{
           padding: '0px'
         }}
-        title={<h3>{item.title}</h3>}
-        extra={
-          <>
-            {edit && (
-              <>
-                <Icon type="edit" onClick={() => this.setState({ visible: true })} />
-
-                <AddToCartForm
-                  onSubmit={onSubmit}
-                  details={item}
-                  visible={this.state.visible}
-                  handleVisible={() => this.setState({ visible: false })}
-                />
-              </>
-            )}
-            {this.props.deleteProduct && (
-              <Popconfirm
-                title="Are you sure to delete this order?"
-                onConfirm={() => this.props.deleteProduct(item.id)}
-                onCancel={this.cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <BorderListzero block>
-                  <Icon type="delete" />
-                </BorderListzero>
-              </Popconfirm>
-            )}
-          </>
-        }
       >
-        {' '}
-        <Row>
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 9 }}
-            xxl={{ span: 6 }}
-            align="center"
-            style={{ maxHeight: '200px', overflow: 'hidden' }}
-          >
-            <img alt="" src={item.thumbnail} width="100%" />
+        <Row type="flex">
+          <Col span={24} align="center" style={{ maxHeight: '200px', overflow: 'hidden' }}>
+            <img alt="" src={order.orderDetails && order.orderDetails[0].thumbnail} width="100%" />
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }} style={{ padding: '24px' }}>
-            <h4>
-              <strong>
-                <span>Amount</span> &#8377; {`${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`}
-              </strong>
-            </h4>{' '}
-            <br />
-            <h4>
-              <span>Date</span> {item.date}
-            </h4>
-            <br />
-            {/* <Link
-              target='_blank'
-              className='listing-link'
-              to={`/public-profile/${user.id}`}
+          <Col span={18}>
+            <div
+              style={{
+                padding: '15px',
+                align: 'center',
+                height: '100%',
+                position: 'relative'
+              }}
             >
-              <Tooltip placement='topLeft' title="Visit User's Profile">
-                <Meta
-                  avatar={<Avatar src={sellerAvatar} />}
-                  title={
+              <Col span={24}>
+                <h2>Order Id: {order.id}</h2>
+              </Col>
+              <Col span={12}>
+                <Row type="flex" justify="start">
+                  <h3>Items: {order.orderDetails.length}</h3>
+                </Row>
+              </Col>
+              <Col span={12}>
+                <Row type="flex" justify="end">
+                  <h3>
+                    <StatusText status={order.state.toLowerCase()}>{order.state}</StatusText>
+                  </h3>
+                </Row>
+              </Col>
+              {/* <OrderTotalDate span={24}>
                     <h4>
-                      {seller}
-                      <br />
+                      <OrderGrey sm={17} xs={24}>
+                        <br />
+                      </OrderGrey>
                     </h4>
-                  }
-                  description={
-                    <h5 style={{ marginTop: '-10px' }}>{user.username}</h5>
-                  }
-                />
-              </Tooltip>
-            </Link> */}
-            <OrderTotalDate span={24}></OrderTotalDate>
+                  </OrderTotalDate> */}
+            </div>
+          </Col>
+          <Col span={6}>
+            <Price type="flex" justify="center" align="middle">
+              <span>
+                <strong>
+                  &#8377;
+                  {TotalPrice(order.orderDetails)}
+                </strong>
+                <br />
+                <span>Total</span>
+              </span>
+            </Price>
           </Col>
         </Row>
       </Card>
@@ -196,7 +182,7 @@ class CartItemComponent extends Component {
 }
 
 CartItemComponent.propTypes = {
-  item: PropTypes.object,
+  order: PropTypes.object,
   deleteProduct: PropTypes.func
 };
 
