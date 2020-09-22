@@ -21,14 +21,14 @@ const EditListingView = props => {
   const [step, setStep] = React.useState(0);
   const steps = [
     {
-      title: 'Details',
+      title: 'Details'
     },
     {
-      title: 'Flags',
+      title: 'Flags'
     },
     {
-      title: 'Media',
-    },
+      title: 'Media'
+    }
   ];
 
   return (
@@ -76,7 +76,7 @@ EditListingView.propTypes = {
   loading: PropTypes.bool,
   listing: PropTypes.object,
   currentUser: PropTypes.object,
-  editListing: PropTypes.func,
+  editListing: PropTypes.func
 };
 
 export default EditListingView;

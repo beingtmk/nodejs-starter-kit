@@ -24,4 +24,8 @@ AddListing.propTypes = {
   addListing: PropTypes.func
 };
 
-export default compose(withAddListing, withCurrentUser, translate('listing'))(AddListing);
+export default compose(
+  withAddListing,
+  withCurrentUser,
+  translate('listing')
+)(AddListing);

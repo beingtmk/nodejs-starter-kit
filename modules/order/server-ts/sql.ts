@@ -19,7 +19,6 @@ interface OrderDetail {
   thumbnail: string;
 }
 
-
 export interface Order {
   id: number;
   userId: number;
@@ -36,8 +35,7 @@ const eager_od = '[order]';
 // const eager =
 //   '[user.[profile], user_address, order_details.[extension.[order_detail], listing.[user.[profile], listing_images,  listing_detail.damages, listing_rental, listing_content]], order_payment, cards]';
 
-const eager =
-  '[order_details]';
+const eager = '[order_details]';
 
 export default class OrderDAO extends Model {
   // private id: any;
@@ -67,7 +65,7 @@ export default class OrderDAO extends Model {
           from: 'order.id',
           to: 'order_detail.order_id'
         }
-      },
+      }
     };
   }
 
@@ -132,7 +130,6 @@ export default class OrderDAO extends Model {
     return res;
   }
 
-
   public async userOrders(userId) {
     const res = camelizeKeys(
       await OrderDAO.query()
@@ -173,11 +170,13 @@ export default class OrderDAO extends Model {
     console.log(cart);
     if (!cart) {
       // Create a STALE order
-        input.orderId = await returnId(knex('order')).insert({
+      input.orderId = await returnId(knex('order')).insert({
         consumer_id: input.consumerId,
         state: STATES.STALE
       });
-    }else input.orderDetail.orderId = cart.id;
+    } else {
+      input.orderDetail.orderId = cart.id;
+    }
 
     console.log(input);
     const newOrderDetail = camelizeKeys(await OrderDetail.query().insert(decamelizeKeys(input.orderDetail)));
@@ -288,7 +287,6 @@ export default class OrderDAO extends Model {
     );
     return res;
   }
-
 }
 
 // OrderDetail model.

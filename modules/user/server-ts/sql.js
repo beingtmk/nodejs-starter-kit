@@ -247,12 +247,10 @@ export class User extends Model {
   }
 
   async isUserProfileExists(userId) {
-    return !!(
-      await knex('user_profile')
-        .count('id as count')
-        .where(decamelizeKeys({ userId }))
-        .first()
-    ).count;
+    return !!(await knex('user_profile')
+      .count('id as count')
+      .where(decamelizeKeys({ userId }))
+      .first()).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
@@ -282,7 +280,6 @@ export class User extends Model {
     const mobile = await user.$relatedQuery('mobile').insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);

@@ -38,15 +38,12 @@ exports.up = function(knex, Promise) {
         .inTable('order')
         .onDelete('CASCADE');
       table.timestamps(false, true);
-    }),
+    })
 
     // Order Delivery Table
   ]);
 };
 
 exports.down = function(knex, Promise) {
-  return Promise.all([
-    knex.schema.dropTable('order_detail'),
-    knex.schema.dropTable('order')
-  ]);
+  return Promise.all([knex.schema.dropTable('order_detail'), knex.schema.dropTable('order')]);
 };

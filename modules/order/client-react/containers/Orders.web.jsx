@@ -58,17 +58,20 @@ const Orders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose(graphql(ORDERS_QUERY, {
-  options: ({ orderBy, filter }) => {
-    return {
-      variables: { limit: 20, after: 0 },
-      fetchPolicy: 'network-only'
-    };
-  },
-  props({ data: { loading, error, orders } }) {
-    if (error) {
-      throw new Error(error);
+export default compose(
+  graphql(ORDERS_QUERY, {
+    options: ({ orderBy, filter }) => {
+      return {
+        variables: { limit: 20, after: 0 },
+        fetchPolicy: 'network-only'
+      };
+    },
+    props({ data: { loading, error, orders } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { loading, orders };
     }
-    return { loading, orders };
-  }
-}),translate('order'))(Orders);
+  }),
+  translate('order')
+)(Orders);

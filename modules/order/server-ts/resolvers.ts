@@ -102,11 +102,11 @@ export default (pubsub: any) => ({
         await context.Order.editOrder(input);
         const order = await context.Order.order(input.id);
         pubsub.publish(ORDERS_SUBSCRIPTION, {
-            ordersUpdated: {
-              mutation: 'CREATED',
-              node: order
-            }
-          });
+          ordersUpdated: {
+            mutation: 'CREATED',
+            node: order
+          }
+        });
         return order;
       } catch (e) {
         return e;

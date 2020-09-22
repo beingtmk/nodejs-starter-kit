@@ -328,7 +328,13 @@ const ListingWithFormik = withFormik({
       }
     };
   },
-  async handleSubmit(values, { setErrors, props: { onSubmit } }) {
+  async handleSubmit(
+    values,
+    {
+      setErrors,
+      props: { onSubmit }
+    }
+  ) {
     const input = {
       id: values.id,
       userId: values.userId,

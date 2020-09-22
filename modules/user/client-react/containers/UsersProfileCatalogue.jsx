@@ -17,4 +17,8 @@ UsersProfileCatalogue.propTypes = {
   filter: PropTypes.object
 };
 
-export default compose(withFilterUpdating, withUsersState, withUserList)(UsersProfileCatalogue);
+export default compose(
+  withFilterUpdating,
+  withUsersState,
+  withUserList
+)(UsersProfileCatalogue);
