@@ -43,6 +43,7 @@ const QuizzesCatalogueView = (props) => {
                 <Col xs={24} md={12} lg={8}>
                   <Card
                     hoverable
+                    style={{marginBottom:'24px'}}
                     cover={
                       <div
                         align="center"

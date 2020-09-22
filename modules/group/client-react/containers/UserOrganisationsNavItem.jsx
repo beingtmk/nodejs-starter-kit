@@ -40,12 +40,20 @@ const UserOrganisationsNavItem = (props) => {
               className="nav-link"
               activeClassName="active"
             >
-              <Avatar
-                size={15}
-                style={{ marginTop: "-5px", marginRight: "5px" }}
-                src={userGroups[0].avatar}
-              />
-              {userGroups[0].title}
+              <Card className='nav-item-card'>
+                <Meta
+                  avatar={
+                    <Avatar
+
+                      size={13}
+                      src={userGroups[0].avatar}
+                    />
+                  }
+                  title={
+                    <p >{userGroups[0].title}</p>
+                  }
+                />
+              </Card>
             </NavLink>
           </MenuItem>
         );
