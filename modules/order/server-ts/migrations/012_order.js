@@ -21,6 +21,7 @@ exports.up = function(knex, Promise) {
 
         table.string('tracking_id');
 
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
 
@@ -35,6 +36,7 @@ exports.up = function(knex, Promise) {
 
         table.string('state').defaultTo(ORDER_STATES.STALE);
 
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
 
@@ -53,6 +55,8 @@ exports.up = function(knex, Promise) {
         table.string('image_url');
         table.string('title');
         table.string('cost');
+
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
 
@@ -66,6 +70,8 @@ exports.up = function(knex, Promise) {
           .onDelete('CASCADE');
 
         table.integer('quantity');
+
+        table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
   ]);

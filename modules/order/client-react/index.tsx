@@ -79,7 +79,7 @@ export default new ClientModule({
   navItemUser: [
     <MenuItem key="/checkout-cart">
       <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
-        <NavItemCart />
+        {/* <NavItemCart /> */}
       </NavLink>
     </MenuItem>,
     <IfLoggedIn key="/my-orders">

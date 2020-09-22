@@ -9,8 +9,8 @@ exports.seed = async function(knex) {
   await Promise.all(
     [...Array(1).keys()].map(async () => {
       const order = await returnId(knex('order')).insert({
-        consumer_id: 1,
-        vendor_id: 1,
+        consumer_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
+        vendor_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
         tracking_id: Math.random()
           .toString(36)
           .substring(7)
@@ -40,8 +40,8 @@ exports.seed = async function(knex) {
   await Promise.all(
     [...Array(4).keys()].map(async () => {
       const order = await returnId(knex('order')).insert({
-        consumer_id: 1,
-        vendor_id: 1,
+        consumer_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
+        vendor_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
         tracking_id: Math.random()
           .toString(36)
           .substring(7)
@@ -74,8 +74,8 @@ exports.seed = async function(knex) {
   await Promise.all(
     [...Array(4).keys()].map(async () => {
       const order = await returnId(knex('order')).insert({
-        consumer_id: 1,
-        vendor_id: 1,
+        consumer_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
+        vendor_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
         tracking_id: Math.random()
           .toString(36)
           .substring(7)
@@ -107,8 +107,8 @@ exports.seed = async function(knex) {
   await Promise.all(
     [...Array(4).keys()].map(async () => {
       const order = await returnId(knex('order')).insert({
-        consumer_id: 1,
-        vendor_id: 1,
+        consumer_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
+        vendor_id: Math.floor(Math.random() * (2 - 1 + 1) + 1),
         tracking_id: Math.random()
           .toString(36)
           .substring(7)

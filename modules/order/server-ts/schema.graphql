@@ -1,27 +1,39 @@
 type Order {
   id: Int!
-
   # User module
-  # consumer: User
-  # vendor: User
+  consumer: User
+  vendor: User
 
-  state: String
+  trackingId: String
+
+  orderState: OrderState
   orderDetails: [OrderDetail]
 
   createdAt: String
   updatedAt: String
 }
 
-type OrderDetail {
-  id: Int!
+type OrderState {
+  id: Int
   state: String
-  date: String
-  cost: Int
-  title: String
-  thumbnail: String
-  quantity: Int
 }
 
+type OrderDetail {
+  id: Int!
+  modalName: String
+  modalId: Int
+
+  title: String
+  imageUrl: String
+  cost: Int
+
+  orderOptions: OrderOption
+}
+
+type OrderOption {
+  id: Int
+  quantity: Int
+}
 
 type OrderEdges {
   node: Order
@@ -40,32 +52,32 @@ type Orders {
 }
 
 extend type Query {
+  order(id: Int!): Order
   orders(
     limit: Int!
     after: Int!
-    # orderBy: OrderByListInput
-    # filter: FilterListInput
-  ): [Order]
+    orderBy: OrderByListInput
+    filter: FilterOrderInput
+  ): Orders
 
-  userOrders(userId: Int): [Order]
   userDeliveries(userId: Int): [Order]
-  order(id: Int!): Order
-  getCart(userId: Int): Order
 }
 
-# input FilterOrderInput {
-#   searchText: String
-# }
+input FilterOrderInput {
+  searchText: String
+  vendorId: Int
+  consumerId: Int
+  state: String
+}
 
-# # Input for ordering orders
-# input OrderByInput {
-#   column: String
-#   # asc | desc
-#   order: String
-# }
+# Input for ordering orders
+input OrderByInput {
+  column: String
+  # asc | desc
+  order: String
+}
 
 extend type Mutation {
-  # Create new order
   addToCart(input: AddToCartInput!): Boolean
 
   # Create new order
@@ -81,7 +93,6 @@ extend type Mutation {
 
   deleteOrderDetail(id: Int!): Boolean
 }
-
 
 input ChangeDateInCartInput {
   id: Int!
@@ -123,7 +134,6 @@ input EditOrderInput {
   state: String
   orderDetails: [OrderDetailInput]
 }
-
 
 extend type Subscription {
   # Subscription for when editing a order
