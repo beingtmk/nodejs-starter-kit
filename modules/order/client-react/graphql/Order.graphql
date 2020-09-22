@@ -1,12 +1,31 @@
+#import "@gqlapp/user-client-react/graphql/User.graphql"
+
 fragment OrderInfo on Order {
+  id
+  consumer {
+    ...UserInfo
+  }
+  vendor {
+    ...UserInfo
+  }
+
+  trackingId
+
+  orderState {
     id
     state
-    orderDetails {
-        id
-        cost
-        quantity
-        date
-        title
-        thumbnail
+  }
+
+  orderDetails {
+    id
+    modalName
+    modalId
+    title
+    imageUrl
+    cost
+    orderOptions {
+      id
+      quantity
     }
+  }
 }
