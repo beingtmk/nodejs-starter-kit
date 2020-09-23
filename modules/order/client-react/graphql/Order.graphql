@@ -28,4 +28,5 @@ fragment OrderInfo on Order {
       quantity
     }
   }
+  createdAt
 }

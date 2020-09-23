@@ -8,26 +8,28 @@ import loadable from '@loadable/component';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
+
 import resources from './locales';
+import ROUTES from './routes';
 
 import NavItemCart from './containers/NavItemCart.web';
 
 const { SubMenu } = Menu;
 
 const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/orders" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     {'Orders'}
   </NavLink>
 ));
 
 const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/my-orders" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.myOrder} className="nav-link" activeClassName="active">
     {'My Orders'}
   </NavLink>
 ));
 
 const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/my-delivery" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
     {'My Deliveries'}
   </NavLink>
 ));
@@ -36,55 +38,56 @@ export default new ClientModule({
   route: [
     <AuthRoute
       exact
-      path="/orders"
+      path={ROUTES.adminPanel}
       redirect="/profile"
       role="admin"
       component={loadable(() => import('./containers/Orders.web').then(c => c.default))}
     />,
-    <Route exact path="/order" component={loadable(() => import('./containers/Order').then(c => c.default))} />,
-    <Route exact path="/my-orders" component={loadable(() => import('./containers/MyOrder').then(c => c.default))} />,
+
+    <Route exact path={ROUTES.order} component={loadable(() => import('./containers/Order').then(c => c.default))} />,
+
     <Route
       exact
-      path="/my-delivery"
-      component={loadable(() => import('./containers/MyDelivery').then(c => c.default))}
+      path={ROUTES.myOrder}
+      component={loadable(() => import('./containers/MyOrder').then(c => c.default))}
     />,
     <Route
       exact
-      path="/checkout-cart"
+      path={ROUTES.myDelivery}
+      component={loadable(() => import('./containers/MyDelivery').then(c => c.default))}
+    />,
+
+    // Checkout
+    <Route
+      exact
+      path={ROUTES.checkoutCart}
       component={loadable(() => import('./containers/CheckoutCart.web').then(c => c.default))}
     />,
     <Route
       exact
-      path="/checkout-bill"
+      path={ROUTES.checkoutBill}
       component={loadable(() => import('./containers/CheckoutBill.web').then(c => c.default))}
     />,
     <Route
       exact
-      path="/checkout-pay"
+      path={ROUTES.checkoutPay}
       component={loadable(() => import('./containers/CheckoutPay.web').then(c => c.default))}
     />,
     <Route
       exact
-      path="/checkout-order/:id"
+      path={ROUTES.checkoutOrder}
       component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default))}
     />
   ],
-  // navItem: [
-  //   <MenuItem key="/checkout-cart">
-  //     <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
-  //       <NavItemCart />
-  //     </NavLink>
-  //   </MenuItem>
-  // ],
   navItemUser: [
-    <MenuItem key="/checkout-cart">
-      <NavLink to="/checkout-cart" className="nav-link" activeClassName="active">
+    <MenuItem key={ROUTES.checkoutCart}>
+      <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
         {/* <NavItemCart /> */}
       </NavLink>
     </MenuItem>,
-    <IfLoggedIn key="/my-orders">
+    <IfLoggedIn key={ROUTES.myOrder}>
       <SubMenu
-        key="/order"
+        key={ROUTES.order}
         title={
           <span>
             <Icon type="solution" />
@@ -102,7 +105,7 @@ export default new ClientModule({
     </IfLoggedIn>
   ],
   navItemAdmin: [
-    <IfLoggedIn key="/orders" role="admin">
+    <IfLoggedIn key={ROUTES.adminPanel} role="admin">
       <MenuItem>
         <NavLinkOrdersWithI18n />
       </MenuItem>

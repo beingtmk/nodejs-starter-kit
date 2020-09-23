@@ -22,7 +22,7 @@ const Loading = ({ t }) => (
 );
 Loading.propTypes = { t: PropTypes.func };
 
-const NoListingsMessage = ({ t }) => <div className="text-center">{t('listing.noListingsMsg')}</div>;
+const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
 NoListingsMessage.propTypes = { t: PropTypes.func };
 
 const cancel = () => {
@@ -52,7 +52,7 @@ const ListingListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: ''
+          order: '',
         });
       }
     }
@@ -70,7 +70,7 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'user.username',
       key: 'user.username',
-      render: (text, record) => <div>{record.user && record.user.username}</div>
+      render: (text, record) => <div>{record.user && record.user.username}</div>,
     },
     {
       title: (
@@ -82,7 +82,7 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <a href={`${ROUTES.listingDetailLink}${record.id}`}>{text}</a>
+      render: (text, record) => <a href={`${ROUTES.listingDetailLink}${record.id}`}>{text}</a>,
     },
     {
       title: (
@@ -95,12 +95,7 @@ const ListingListComponent = props => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <Select
-          name="role"
-          defaultValue={text}
-          style={{ width: '90px' }}
-          onChange={e => onToggle('isActive', e, record.id)}
-        >
+        <Select name="role" defaultValue={text} style={{ width: '90px' }} onChange={e => onToggle('isActive', e, record.id)}>
           <Option key={0} value={true}>
             Active
           </Option>
@@ -108,7 +103,7 @@ const ListingListComponent = props => {
             In-active
           </Option>
         </Select>
-      )
+      ),
     },
     {
       title: (
@@ -129,7 +124,7 @@ const ListingListComponent = props => {
             record.listingCostArray[0].cost &&
             record.listingCostArray[0].cost.toFixed(2)}
         </>
-      )
+      ),
     },
     {
       title: (
@@ -154,7 +149,7 @@ const ListingListComponent = props => {
             Not featured
           </Option>
         </Select>
-      )
+      ),
     },
     {
       title: (
@@ -181,7 +176,7 @@ const ListingListComponent = props => {
             </Option>
           </Select>
         </>
-      )
+      ),
     },
     {
       title: (
@@ -192,7 +187,7 @@ const ListingListComponent = props => {
       width: 120,
       dataIndex: 'listingFlags.isDiscount',
       key: 'listing_flag.isDiscount',
-      render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>
+      render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>,
     },
     {
       title: (
@@ -213,7 +208,7 @@ const ListingListComponent = props => {
                 : 'Discount not provided')
             : 'No Discount'}
         </>
-      )
+      ),
     },
     {
       title: (
@@ -224,7 +219,7 @@ const ListingListComponent = props => {
       width: 180,
       dataIndex: 'listingOptions.fixedQuantity',
       key: 'listing_option.fixedQuantity',
-      render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>
+      render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>,
     },
     {
       title: (
@@ -235,7 +230,7 @@ const ListingListComponent = props => {
       width: 200,
       dataIndex: 'listingDetail.inventoryCount',
       key: 'listingDetail.inventoryCount',
-      render: (text, record) => <>{record.listingDetail && record.listingDetail.inventoryCount}</>
+      render: (text, record) => <>{record.listingDetail && record.listingDetail.inventoryCount}</>,
     },
     {
       title: t('list.column.actions'),
@@ -258,13 +253,13 @@ const ListingListComponent = props => {
             <Button color="danger" shape="circle" icon="delete" />
           </Popconfirm>
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor }
+      pageInfo: { endCursor },
     } = listings;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -291,7 +286,7 @@ const ListingListComponent = props => {
       {/* Render loader */}
       {loading && !listings && <Loading t={t} />}
       {/* Render main listing content */}
-      {listings && listings.totalCount ? <RenderListings /> : <NoListingsMessage t={t} />}
+      {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
     </>
   );
 };
@@ -305,7 +300,7 @@ ListingListComponent.propTypes = {
   deleteListing: PropTypes.func.isRequired,
   onToggle: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default translate('listing')(ListingListComponent);
