@@ -52,7 +52,7 @@ const OrderListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: '',
+          order: ''
         });
       }
     }
@@ -68,7 +68,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'id',
       key: 'id',
-      render: (text, record) => <div>{record && record.id}</div>,
+      render: (text, record) => <div>{record && record.id}</div>
     },
     {
       title: (
@@ -78,7 +78,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'vendor',
       key: 'vendor',
-      render: (text, record) => <a href={`/todo`}>{record.vendor && record.vendor.username}</a>,
+      render: (text, record) => <a href={`/todo`}>{record.vendor && record.vendor.username}</a>
     },
     {
       title: (
@@ -88,7 +88,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'consumer',
       key: 'consumer',
-      render: (text, record) => <a href={`/todo`}>{record.consumer && record.consumer.username}</a>,
+      render: (text, record) => <a href={`/todo`}>{record.consumer && record.consumer.username}</a>
     },
     {
       title: (
@@ -112,7 +112,7 @@ const OrderListComponent = props => {
             In-active
           </Option>
         </Select>
-      ),
+      )
     },
     {
       title: (
@@ -122,7 +122,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text, record) => <>{record.createdAt}</>,
+      render: (text, record) => <>{record.createdAt}</>
     },
     {
       title: t('list.column.actions'),
@@ -143,13 +143,13 @@ const OrderListComponent = props => {
             <Button color="danger" shape="circle" icon="delete" />
           </Popconfirm>
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor },
+      pageInfo: { endCursor }
     } = orders;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -190,7 +190,7 @@ OrderListComponent.propTypes = {
   deleteOrder: PropTypes.func.isRequired,
   onToggle: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default translate('order')(OrderListComponent);

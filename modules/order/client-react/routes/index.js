@@ -16,7 +16,7 @@ const ROUTES = {
 
   add: '/new/order',
   edit: '/edit/order/:id',
-  editLink: '/edit/order/',
+  editLink: '/edit/order/'
 };
 
 export default ROUTES;
