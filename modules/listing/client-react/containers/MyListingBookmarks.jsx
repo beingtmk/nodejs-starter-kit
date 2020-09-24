@@ -29,8 +29,4 @@ MyListingsBookmark.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(
-  withCurrentUser,
-  withMyListingsBookmark,
-  translate('listing')
-)(MyListingsBookmark);
+export default compose(withCurrentUser, withMyListingsBookmark, translate('listing'))(MyListingsBookmark);

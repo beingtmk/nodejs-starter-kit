@@ -36,9 +36,4 @@ EditListing.propTypes = {
   history: PropTypes.object
 };
 
-export default compose(
-  withCurrentUser,
-  withListing,
-  withEditListing,
-  translate('listing')
-)(EditListing);
+export default compose(withCurrentUser, withListing, withEditListing, translate('listing'))(EditListing);

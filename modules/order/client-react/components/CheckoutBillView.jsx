@@ -130,12 +130,7 @@ const CheckoutBillWithFormik = withFormik({
       addresses: addresses && addresses.length !== 0 ? addresses.map(getAddresses) : []
     };
   },
-  async handleSubmit(
-    values,
-    {
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { props: { onSubmit } }) {
     // console.log('values', values);
     // onSubmit();
   },

@@ -31,7 +31,7 @@ MyOrders.propTypes = {
   //   usersUpdated: PropTypes.object,
   //   updateQuery: PropTypes.func,
   currentUser: PropTypes.func,
-  t: PropTypes.func,
+  t: PropTypes.func
   //   subscribeToMore: PropTypes.func,
   //   filter: PropTypes.object
 };

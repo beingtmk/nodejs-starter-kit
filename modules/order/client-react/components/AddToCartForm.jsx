@@ -59,13 +59,7 @@ const AddToCartWithFormik = withFormik({
       title: props.details && props.details.title
     };
   },
-  handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit, handleVisible }
-    }
-  ) {
+  handleSubmit(values, { setErrors, props: { onSubmit, handleVisible } }) {
     // console.log('on submit called', values);
     handleVisible();
     console.log('hey there this is a test!', values);
