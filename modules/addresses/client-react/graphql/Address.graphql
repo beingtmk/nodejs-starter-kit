@@ -1,0 +1,9 @@
+fragment AddressInfo on Address {
+  id
+  userId
+  streetAddress1
+  streetAddress2
+  city
+  state
+  pinCode
+}

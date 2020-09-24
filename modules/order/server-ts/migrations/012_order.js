@@ -48,6 +48,12 @@ exports.up = function(knex, Promise) {
           .references('id')
           .inTable('user')
           .onDelete('CASCADE');
+        table
+          .integer('order_detail_state_id')
+          .unsigned()
+          .references('id')
+          .inTable('order_state')
+          .onDelete('CASCADE');
 
         table.string('modal_name');
         table.integer('modal_id');

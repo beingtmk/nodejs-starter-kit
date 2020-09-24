@@ -58,7 +58,7 @@ export default class OrderDAO extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: OrderState,
         join: {
-          from: 'order.id',
+          from: 'order.order_state_id',
           to: 'order_state.id'
         }
       },
@@ -113,27 +113,33 @@ export default class OrderDAO extends Model {
         });
       }
 
-      if (has(filter, 'state') && filter.state !== '') {
+      if (has(filter, 'vendorId') && filter.vendorId !== 0) {
         queryBuilder.where(function() {
-          this.where('order_state.state', filter.state);
+          this.where('vendor.id', filter.vendorId);
         });
       }
 
-      // if (has(filter, 'searchText') && filter.searchText !== '') {
-      //   queryBuilder.where(function () {
-      //     this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
-      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
-      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]))
-      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['listing_cost.cost', `%${filter.searchText}%`]));
-      //   });
-      // }
+      if (has(filter, 'state') && filter.state !== '') {
+        const state = await OrderState.query().where('state', '=', filter.state);
+        queryBuilder.where(function() {
+          this.where('order.order_state_id', '=', state[0].id);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['consumer.username', `%${filter.searchText}%`]));
+          // this.where('consumer.username', 'ilike', `%${filter.searchText}%`);
+        });
+      }
     }
 
     queryBuilder
       .from('order')
-      .leftJoin('user as vendor', 'vendor.id', 'order.vendor_id')
       .leftJoin('user as consumer', 'consumer.id', 'order.consumer_id')
-      .leftJoin('order_state', 'order_state.id', 'order.id');
+      .leftJoin('order_detail', 'order_detail.order_id', 'order.id')
+      .leftJoin('user as vendor', 'vendor.id', 'order_detail.vendor_id')
+      .groupBy('order.id');
 
     const allOrders = camelizeKeys(await queryBuilder);
     const total = allOrders.length;
@@ -146,17 +152,17 @@ export default class OrderDAO extends Model {
     };
   }
 
-  public async userDeliveries(userId) {
-    const res = camelizeKeys(
-      await OrderDAO.query()
-        .where('vendor_id', userId)
-        .whereNot('state', ORDER_STATES.STALE)
-        .eager(eager)
-        .orderBy('id', 'desc')
-    );
-    // console.log(res);
-    return res;
-  }
+  // public async userDeliveries(userId: number) {
+  //   const res = camelizeKeys(
+  //     await OrderDAO.query()
+  //       .where('vendor_id', userId)
+  //       .whereNot('state', ORDER_STATES.STALE)
+  //       .eager(eager)
+  //       .orderBy('id', 'desc')
+  //   );
+  //   // console.log(res);
+  //   return res;
+  // }
 
   public async addToCart(input) {
     // console.log(input);
@@ -272,18 +278,18 @@ class OrderState extends Model {
     return 'id';
   }
 
-  static get relationMappings() {
-    return {
-      order: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: OrderDAO,
-        join: {
-          from: 'order_state.id',
-          to: 'order.id'
-        }
-      }
-    };
-  }
+  // static get relationMappings() {
+  //   return {
+  //     order: {
+  //       relation: Model.HasManyRelation,
+  //       modelClass: OrderDAO,
+  //       join: {
+  //         from: 'order_state.id',
+  //         to: 'order.id'
+  //       }
+  //     }
+  //   };
+  // }
 }
 
 class OrderDetail extends Model {

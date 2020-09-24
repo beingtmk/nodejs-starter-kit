@@ -61,16 +61,11 @@ export default (pubsub: any) => ({
           }
         };
       }
-    ),
-    userDeliveries(obj: any, { userId }, { Order, req: { identity } }: any) {
-      // To Do - Check if admin return with userId or identity.id
+    )
 
-      if (identity) {
-        return Order.userDeliveries(identity.id);
-      } else {
-        return null;
-      }
-    }
+    // userDeliveries: withAuth((obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) => {
+    //   return Order.userDeliveries(userId || identity.id);
+    // })
   },
   Mutation: {
     addToCart: withAuth(async (obj: any, { input }: any, { Order, req: { identity } }) => {

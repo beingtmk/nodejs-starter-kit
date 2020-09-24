@@ -1,11 +1,9 @@
 #import "@gqlapp/user-client-react/graphql/User.graphql"
+#import "@gqlapp/addresses-client-react/graphql/Address.graphql"
 
 fragment OrderInfo on Order {
   id
   consumer {
-    ...UserInfo
-  }
-  vendor {
     ...UserInfo
   }
 
@@ -18,6 +16,9 @@ fragment OrderInfo on Order {
 
   orderDetails {
     id
+    vendor {
+      ...UserInfo
+    }
     modalName
     modalId
     title
@@ -26,6 +27,13 @@ fragment OrderInfo on Order {
     orderOptions {
       id
       quantity
+    }
+    orderDelivery {
+      id
+      address {
+        ...AddressInfo
+      }
+      type
     }
   }
   createdAt

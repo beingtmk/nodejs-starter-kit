@@ -67,7 +67,7 @@ extend type Query {
     filter: FilterOrderInput
   ): Orders
 
-  userDeliveries(userId: Int): [Order]
+  # userDeliveries(userId: Int): [Order]
 }
 
 input FilterOrderInput {
