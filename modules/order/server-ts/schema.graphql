@@ -1,8 +1,7 @@
 type Order {
   id: Int!
-  # User module
+
   consumer: User
-  vendor: User
 
   trackingId: String
 
@@ -20,6 +19,7 @@ type OrderState {
 
 type OrderDetail {
   id: Int!
+  vendor: User
   modalName: String
   modalId: Int
 
@@ -28,11 +28,18 @@ type OrderDetail {
   cost: Int
 
   orderOptions: OrderOption
+  orderDelivery: OrderDelivery
 }
 
 type OrderOption {
   id: Int
   quantity: Int
+}
+
+type OrderDelivery {
+  id: Int
+  address: Address
+  type: String
 }
 
 type OrderEdges {

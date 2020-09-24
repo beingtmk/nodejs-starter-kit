@@ -1,8 +1,17 @@
-import { ORDER_STATES } from '@gqlapp/order-common';
+import DELIVERY from '@gqlapp/order-common/Delivery';
 
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema
+      .createTable('order_state', table => {
+        table.increments();
+
+        table.string('state');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
+
       .createTable('order', table => {
         table.increments();
 
@@ -13,28 +22,13 @@ exports.up = function(knex, Promise) {
           .inTable('user')
           .onDelete('CASCADE');
         table
-          .integer('vendor_id')
+          .integer('order_state_id')
           .unsigned()
           .references('id')
-          .inTable('user')
+          .inTable('order_state')
           .onDelete('CASCADE');
 
         table.string('tracking_id');
-
-        table.boolean('is_active').defaultTo(true);
-        table.timestamps(false, true);
-      })
-
-      .createTable('order_state', table => {
-        table.increments();
-        table
-          .integer('order_id')
-          .unsigned()
-          .references('id')
-          .inTable('order')
-          .onDelete('CASCADE');
-
-        table.string('state').defaultTo(ORDER_STATES.STALE);
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
@@ -47,6 +41,12 @@ exports.up = function(knex, Promise) {
           .unsigned()
           .references('id')
           .inTable('order')
+          .onDelete('CASCADE');
+        table
+          .integer('vendor_id')
+          .unsigned()
+          .references('id')
+          .inTable('user')
           .onDelete('CASCADE');
 
         table.string('modal_name');
@@ -74,6 +74,27 @@ exports.up = function(knex, Promise) {
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
+      .createTable('order_delivery', table => {
+        table.increments();
+        table
+          .integer('order_detail_id')
+          .unsigned()
+          .references('id')
+          .inTable('order_detail')
+          .onDelete('CASCADE');
+
+        table
+          .integer('address_id')
+          .unsigned()
+          .references('id')
+          .inTable('user_address')
+          .onDelete('CASCADE');
+
+        table.string('type').defaultTo(DELIVERY.default);
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
   ]);
 };
 
@@ -82,6 +103,7 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('order'),
     knex.schema.dropTable('order_state'),
     knex.schema.dropTable('order_detail'),
-    knex.schema.dropTable('order_option')
+    knex.schema.dropTable('order_option'),
+    knex.schema.dropTable('order_delivery')
   ]);
 };

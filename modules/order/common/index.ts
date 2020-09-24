@@ -1,2 +1,3 @@
-export * from './OrderStates.js';
-export * from './Modal.js';
+export * from './OrderStates';
+export * from './Modal';
+export * from './Delivery';

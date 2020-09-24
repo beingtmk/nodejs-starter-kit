@@ -4,6 +4,7 @@ import { Model, raw } from 'objection';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 
 import { User } from '@gqlapp/user-server-ts/sql';
+import Addresses from '@gqlapp/addresses-server-ts/sql';
 import { ORDER_STATES } from '@gqlapp/order-common';
 
 // Give the knex object to objection.
@@ -30,7 +31,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[consumer, orderState, vendor, order_details.orderOptions]';
+const eager = '[consumer, orderState, order_details.[vendor, order_options, order_delivery.address]]';
 
 export default class OrderDAO extends Model {
   // private id: any;
@@ -53,20 +54,12 @@ export default class OrderDAO extends Model {
           to: 'user.id'
         }
       },
-      vendor: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: 'order.vendor_id',
-          to: 'user.id'
-        }
-      },
       orderState: {
         relation: Model.BelongsToOneRelation,
         modelClass: OrderState,
         join: {
           from: 'order.id',
-          to: 'order_state.order_id'
+          to: 'order_state.id'
         }
       },
       order_details: {
@@ -115,13 +108,13 @@ export default class OrderDAO extends Model {
       // }
 
       if (has(filter, 'consumerId') && filter.consumerId !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('consumer.id', filter.consumerId);
         });
       }
 
       if (has(filter, 'state') && filter.state !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('order_state.state', filter.state);
         });
       }
@@ -140,7 +133,7 @@ export default class OrderDAO extends Model {
       .from('order')
       .leftJoin('user as vendor', 'vendor.id', 'order.vendor_id')
       .leftJoin('user as consumer', 'consumer.id', 'order.consumer_id')
-      .leftJoin('order_state', 'order_state.order_id', 'order.id');
+      .leftJoin('order_state', 'order_state.id', 'order.id');
 
     const allOrders = camelizeKeys(await queryBuilder);
     const total = allOrders.length;
@@ -285,7 +278,7 @@ class OrderState extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: OrderDAO,
         join: {
-          from: 'order_state.order_id',
+          from: 'order_state.id',
           to: 'order.id'
         }
       }
@@ -304,20 +297,28 @@ class OrderDetail extends Model {
 
   static get relationMappings() {
     return {
-      order: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: OrderDAO,
+      vendor: {
+        relation: Model.HasOneRelation,
+        modelClass: User,
         join: {
-          from: 'order_detail.order_id',
-          to: 'order.id'
+          from: 'order_detail.vendor_id',
+          to: 'user.id'
         }
       },
-      orderOptions: {
-        relation: Model.BelongsToOneRelation,
+      order_options: {
+        relation: Model.HasOneRelation,
         modelClass: OrderOption,
         join: {
           from: 'order_detail.id',
           to: 'order_option.order_detail_id'
+        }
+      },
+      order_delivery: {
+        relation: Model.HasOneRelation,
+        modelClass: OrderDelivery,
+        join: {
+          from: 'order_detail.id',
+          to: 'order_delivery.order_detail_id'
         }
       }
     };
@@ -333,14 +334,45 @@ class OrderOption extends Model {
     return 'id';
   }
 
+  // static get relationMappings() {
+  //   return {
+  //     order_detail: {
+  //       relation: Model.BelongsToOneRelation,
+  //       modelClass: OrderDAO,
+  //       join: {
+  //         from: 'order_option.order_detail_id',
+  //         to: 'order_detail.id'
+  //       }
+  //     }
+  //   };
+  // }
+}
+
+class OrderDelivery extends Model {
+  static get tableName() {
+    return 'order_delivery';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
   static get relationMappings() {
     return {
-      order: {
+      // order_detail: {
+      //   relation: Model.BelongsToOneRelation,
+      //   modelClass: OrderDAO,
+      //   join: {
+      //     from: 'order_delivery.order_detail_id',
+      //     to: 'order_detail.id'
+      //   }
+      // }
+      address: {
         relation: Model.BelongsToOneRelation,
-        modelClass: OrderDAO,
+        modelClass: Addresses,
         join: {
-          from: 'order_option.order_id',
-          to: 'order.id'
+          from: 'order_delivery.address_id',
+          to: 'user_address.id'
         }
       }
     };
