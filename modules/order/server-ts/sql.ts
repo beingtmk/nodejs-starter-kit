@@ -108,13 +108,13 @@ export default class OrderDAO extends Model {
       // }
 
       if (has(filter, 'consumerId') && filter.consumerId !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('consumer.id', filter.consumerId);
         });
       }
 
       if (has(filter, 'state') && filter.state !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('order_state.state', filter.state);
         });
       }
