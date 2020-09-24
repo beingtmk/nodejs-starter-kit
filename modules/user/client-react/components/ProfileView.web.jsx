@@ -9,7 +9,8 @@ import {
   //  CardGroup,
   CardText,
   //  CardTitle,
-  PageLayout
+  PageLayout,
+  Underline
 } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
@@ -74,7 +75,11 @@ class ProfileView extends React.Component {
                     position: 'relative'
                   }}
                 >
-                  <Icon type="user" /> My Profile
+                  <Underline>
+                    <div>
+                      <Icon type="user" /> {t(`profile.card.title`)}
+                    </div>
+                  </Underline>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`/users/${currentUser.id}`}>
                       <Button shape="circle" size="large">
@@ -111,7 +116,6 @@ class ProfileView extends React.Component {
                       <h2>
                         <Icon type="team" /> {t('profile.card.group.role')}:
                       </h2>
-
                       <CardText>{currentUser.role ? currentUser.role : 'Not Provided'}</CardText>
                     </div>
 

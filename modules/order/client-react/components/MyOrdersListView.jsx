@@ -7,6 +7,7 @@ import { PageLayout } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import ListingItemComponent from './CartItemComponent';
+import SuggestedListComponent from './SuggestedListComponent';
 
 const ButtonGroup = Button.Group;
 
@@ -40,7 +41,7 @@ class MyListingsView extends Component {
         throw e;
       }
     };
-
+    const renderFunc = (key, item) => <ListingItemComponent key={key} order={item} />;
     return (
       <>
         <Helmet
@@ -78,18 +79,20 @@ class MyListingsView extends Component {
               </ButtonGroup>
             </Col> */}
           </Row>
-          {console.log('orders', orders)}
-          {orders &&
-            orders.map(order =>
-              order.orderDetails.map(item => (
-                <ListingItemComponent
-                  history={history}
-                  item={item}
-                  deleteProduct={delListing}
-                  currentUser={currentUser}
-                />
-              ))
-            )}
+          {/* {console.log('orders', orders)} */}
+          {orders && (
+            // orders.map(order => (
+            // order.orderDetails.map(item => (
+            // <ListingItemComponent
+            //   history={history}
+            //   item={item}
+            //   deleteProduct={delListing}
+            //   currentUser={currentUser}
+            // />
+            // ))
+            // ))
+            <SuggestedListComponent items={orders} {...this.props} renderFunc={renderFunc} />
+          )}
         </>
         {/* )} */}
       </>

@@ -12,7 +12,6 @@ import MyOrdersListView from '../components/MyDeliveryListView';
 
 import MY_DELIVERIES_QUERY from '../graphql/MyDeliveriesQuery.graphql';
 
-
 const ORDERS = [
   {
     id: 1,
@@ -95,7 +94,6 @@ const ORDERS = [
 ];
 
 const MyOrders = props => {
-
   const renderMetaData = () => (
     <Helmet
       title={`${settings.app.name} - ${'MyOrders'}`}
@@ -112,10 +110,7 @@ const MyOrders = props => {
     <PageLayout>
       {renderMetaData()}
 
-      {props.loading ? <>Loading...</>
-        :
-         <MyOrdersListView orders={ORDERS} {...props} />
-      }
+      {props.loading ? <>Loading...</> : <MyOrdersListView orders={ORDERS} {...props} />}
     </PageLayout>
   );
 };
@@ -134,8 +129,10 @@ export default compose(
       if (error) {
         throw new Error(error);
       }
-      console.log("******************");
+      console.log('******************');
       console.log(userDeliveries);
       return { loading, userDeliveries };
     }
-  }),translate('order'))(MyOrders);
+  }),
+  translate('order')
+)(MyOrders);

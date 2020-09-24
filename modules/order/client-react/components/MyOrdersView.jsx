@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spin, Divider, Icon } from 'antd';
+import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/listing-client-react/components/SuggestedListComponent';
 import settings from '@gqlapp/config';
+
+import SuggestedListComponent from './SuggestedListComponent';
 
 import ListingItemComponent from './CartItemComponent';
 import MyOrdersListView from './MyOrdersListView';
 
+const ButtonGroup = Button.Group;
 // const renderMetaData = () => (
 //   <Helmet
 //     title={`${settings.app.name} - ${'MyOrders'}`}
@@ -20,21 +22,54 @@ import MyOrdersListView from './MyOrdersListView';
 //     ]}
 //   />
 // );
-
+const ALL = '';
+const MYLISTING = 'Completed';
+const MYORDERS = 'Initiated';
+const CANCELLED = 'Cancelled';
 const MyOrdersView = props => {
   const { loading, orders, t, history, currentUser } = props;
 
   const NoMyOrdersMessage = () => <div align="center">{t('orders.noListingsMsg')}</div>;
   const renderFunc = (key, item) => (
     // Add MyOrderItem component here
-    <h1>hello</h1>
-    // <ListingItemComponent key={key} item={item} history={history} currentUser={currentUser} />
+    // <h1>hello</h1>
+    <ListingItemComponent key={key} order={item} history={history} currentUser={currentUser} />
   );
   const RenderMyOrders = () => (
     <div>
-      <h2 className="headingTop">
+      {/* <h2 className="headingTop">
+
         <Icon type="solution" /> &nbsp; My Orders
-      </h2>
+      </h2> */}
+      <Row>
+        <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
+          <h2 className="headingTop">
+            <Icon type="solution" />
+            &nbsp; My Orders
+          </h2>
+          <br />
+        </Col>
+        <Col md={{ span: 14 }} sm={{ span: 17 }} xs={{ span: 24 }}>
+          <ButtonGroup className="width100">
+            <Button onClick={console.log('ALL')}>
+              <Icon type="appstore" />
+              {`${ALL === '' && 'ALL'}`}
+            </Button>
+            <Button onClick={console.log(MYLISTING)}>
+              <Icon type="hdd" />
+              {`${MYLISTING} `}
+            </Button>
+            <Button onClick={console.log(MYORDERS)}>
+              <Icon type="shop" />
+              {`${MYORDERS} `}
+            </Button>
+            <Button onClick={console.log(CANCELLED)}>
+              <Icon type="delete" />
+              {`${CANCELLED} `}
+            </Button>
+          </ButtonGroup>
+        </Col>
+      </Row>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {/* {showFilter && (
         <>
@@ -42,7 +77,7 @@ const MyOrdersView = props => {
           <ListingFilterComponent {...props} />
           <Divider />
         </>
-      )} */}
+        )} */}
       <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />
     </div>
   );

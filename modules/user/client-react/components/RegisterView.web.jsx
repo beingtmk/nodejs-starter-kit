@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Card, CardGroup, Icon, CardTitle, CardText } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardGroup, Icon, CardTitle, CardText, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RegisterForm from './RegisterForm';
@@ -32,9 +32,11 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
 
   const renderContent = () => (
     <Card className="form-card">
-      <CardTitle>
-        <Icon type="user-add" /> {t('reg.form.title')}
-      </CardTitle>
+      <Underline>
+        <CardTitle>
+          <Icon type="user-add" /> {t('reg.form.title')}
+        </CardTitle>
+      </Underline>
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
         renderConfirmationModal()
       ) : (

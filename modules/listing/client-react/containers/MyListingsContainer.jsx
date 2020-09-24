@@ -33,4 +33,8 @@ MyListingsContainer.propTypes = {
   filter: PropTypes.object.isRequired,
   children: PropTypes.node
 };
-export default compose(withListings, withListingsDeleting, translate('listing'))(MyListingsContainer);
+export default compose(
+  withListings,
+  withListingsDeleting,
+  translate('listing')
+)(MyListingsContainer);

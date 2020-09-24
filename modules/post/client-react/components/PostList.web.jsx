@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Button, Pagination, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -61,7 +61,9 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   const renderContent = () => (
     <>
-      <h2>{t('list.subTitle')}</h2>
+      <Underline>
+        <h2>{t('list.subTitle')}</h2>
+      </Underline>
       <Link to="/post/new">
         <Button color="primary">{t('list.btn.add')}</Button>
       </Link>

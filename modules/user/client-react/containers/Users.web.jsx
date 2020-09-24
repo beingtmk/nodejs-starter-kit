@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Button, PageLayout } from '@gqlapp/look-client-react';
+import { Button, PageLayout, Underline } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UsersFilterView from '../components/UsersFilterView';
@@ -46,7 +46,9 @@ const Users = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      <h2>{t('users.list.title')}</h2>
+      <Underline>
+        <h2>{t('users.list.title')}</h2>
+      </Underline>
       <Link to="/users/new">
         <Button color="primary">{t('users.btn.add')}</Button>
       </Link>

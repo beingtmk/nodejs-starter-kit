@@ -1,5 +1,6 @@
 import React from 'react';
-import Grid from 'hedron';
+import { Row, Col } from 'antd';
+
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
@@ -30,17 +31,15 @@ const ResetPasswordView = ({ t, onSubmit }) => {
 
   return (
     <PageLayout>
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          <Grid.Box sm={{ hidden: 'true' }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      {renderMetaData()}
+      <Row>
+        <Col md={0} lg={0}>
+          {renderContent()}
+        </Col>
+        <Col xs={0} md={24} lg={24}>
+          <LayoutCenter>{renderContent()}</LayoutCenter>
+        </Col>
+      </Row>
     </PageLayout>
   );
 };

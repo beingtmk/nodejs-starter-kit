@@ -1,10 +1,6 @@
 #import "./Listing.graphql"
 
-query myListingsBookmark(
-  $userId: Int
-  $limit: Int
-  $after: Int
-) {
+query myListingsBookmark($userId: Int, $limit: Int, $after: Int) {
   myListingsBookmark(userId: $userId, limit: $limit, after: $after) {
     totalCount
     edges {

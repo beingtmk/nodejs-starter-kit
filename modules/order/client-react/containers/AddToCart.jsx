@@ -17,7 +17,7 @@ class AddToCart extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit = async (values, redirect=false) => {
+  onSubmit = async (values, redirect = false) => {
     const { history, navigation, currentUser } = this.props;
 
     // if (!currentUser) {
@@ -25,31 +25,32 @@ class AddToCart extends React.Component {
     // }
     // Get Values
     console.log(values);
-    console.log("****************");
+    console.log('****************');
     console.log(this.props.listing);
     // Call Mutation
 
     const obj = {
       consumerId: 1,
       orderDetail: {
-        cost : 491,
-        title : "Listing 50",
-        quantity:values.quantity,
-        date:values.date,
-        thumbnail:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU"
+        cost: 491,
+        title: 'Listing 50',
+        quantity: values.quantity,
+        date: values.date,
+        thumbnail:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU'
       }
-    }
+    };
 
     try {
       await this.props.addToCart(obj);
     } catch (e) {
-      message.error("Failed!");
+      message.error('Failed!');
       console.log(e);
       // throw new FormError('Failed!', e);
     }
 
     // Add Message
-    message.success("Success! Complete your Order.");
+    message.success('Success! Complete your Order.');
 
     // Redirect
     // if (history || navigation) {

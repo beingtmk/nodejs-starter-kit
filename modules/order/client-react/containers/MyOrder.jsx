@@ -8,7 +8,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import { withCurrentUser, withOrders } from './OrderOperations';
 
-import MyOrdersView from '../components/MyOrdersView';
+// import MyOrdersView from '../components/MyOrdersView';
 
 const MyOrdersContainer = compose(withOrders)(props => {
   console.log('props', props);
@@ -21,7 +21,8 @@ const MyOrders = props => {
   // console.log('props', props);
   return (
     <MyOrdersContainer filter={{ consumerId: currentUser && currentUser.id }} {...props}>
-      <MyOrdersView />
+      <h1>hello</h1>
+      {/* <MyOrdersView /> */}
     </MyOrdersContainer>
   );
 };
@@ -30,7 +31,7 @@ MyOrders.propTypes = {
   //   usersUpdated: PropTypes.object,
   //   updateQuery: PropTypes.func,
   currentUser: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
   //   subscribeToMore: PropTypes.func,
   //   filter: PropTypes.object
 };

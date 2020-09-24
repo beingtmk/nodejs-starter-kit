@@ -68,7 +68,7 @@ export function TotalPrice(cartArray) {
   console.log('cart array', cartArray);
   cartArray &&
     cartArray.map((item, key) => {
-      totalCartPrice += item.cost * item.quantity;
+      totalCartPrice += item.cost * item.orderOptions.quantity;
     });
   return totalCartPrice;
 }

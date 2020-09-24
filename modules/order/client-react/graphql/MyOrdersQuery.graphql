@@ -2,6 +2,6 @@
 
 query userOrders {
   userOrders {
-        ...OrderInfo
+    ...OrderInfo
   }
 }

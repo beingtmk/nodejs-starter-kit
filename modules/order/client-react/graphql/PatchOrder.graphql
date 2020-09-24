@@ -1,5 +1,5 @@
 mutation patchOrder($input: PatchOrderInput!) {
-  patchOrder(input: $input){
+  patchOrder(input: $input) {
     id
     state
   }

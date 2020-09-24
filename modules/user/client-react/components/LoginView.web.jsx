@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { PageLayout, Card, CardGroup, CardTitle, CardText, Button, Icon } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardGroup, CardTitle, CardText, Button, Underline, Icon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import LoginForm from './LoginForm';
@@ -40,9 +40,11 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
         renderConfirmationModal()
       ) : (
         <Card className="form-card">
-          <CardTitle>
-            <Icon type="login" /> {t('login.form.title')}
-          </CardTitle>
+          <Underline>
+            <CardTitle>
+              <Icon type="login" /> {t('login.form.title')}
+            </CardTitle>
+          </Underline>
           <LoginForm onSubmit={onSubmit} />
           <hr />
           <Card>
