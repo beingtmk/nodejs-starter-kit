@@ -17,7 +17,9 @@ class FieldAdapter extends Component {
     defaultValue: PropTypes.string,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    min: PropTypes.number,
+    max: PropTypes.number
   };
 
   constructor(props) {
@@ -60,7 +62,7 @@ class FieldAdapter extends Component {
   };
 
   render() {
-    const { formik, component, name, defaultValue, defaultChecked, disabled } = this.props;
+    const { formik, component, name, defaultValue, defaultChecked, disabled, min, max } = this.props;
     let { value, checked } = this.props;
     value = value || '';
     checked = checked || false;
@@ -76,7 +78,9 @@ class FieldAdapter extends Component {
       checked,
       defaultValue,
       defaultChecked,
-      disabled
+      disabled,
+      min,
+      max
     };
 
     const changeEventHandler = PLATFORM === 'mobile' ? 'onChangeText' : 'onChange';

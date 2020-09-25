@@ -47,7 +47,7 @@ class RelatedCardComponent extends Component {
     // To Do: check if it is not present then set as default value
     const { currentUser } = this.props;
     let listing = this.props.listing;
-    console.log(this.props);
+    // console.log(this.props);
     const listing_id = listing && listing.id;
     const listing_is_new = listing && listing.listingFlags && listing.listingFlags.isNew;
     const listing_media =
@@ -56,7 +56,7 @@ class RelatedCardComponent extends Component {
       listing.listingMedia.length > 0 &&
       listing.listingMedia.filter(lM => lM.type === 'image');
     const listing_img = listing_media.length > 0 && listing_media[0].url;
-    console.log(listing_img);
+    // console.log(listing_img);
     const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
     const discount =
       listing &&
@@ -65,7 +65,7 @@ class RelatedCardComponent extends Component {
       listing.listingCostArray[0].discount;
     const cost =
       listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
-    console.log((cost - cost * (discount / 100)).toFixed(2));
+    // console.log((cost - cost * (discount / 100)).toFixed(2));
     return (
       <ListingWraper>
         <IfLoggedIn>

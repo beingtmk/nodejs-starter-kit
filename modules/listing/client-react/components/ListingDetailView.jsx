@@ -265,14 +265,15 @@ import {
   Tooltip,
   Tabs
 } from 'antd';
-
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout, Button } from '@gqlapp/look-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
+import { IfLoggedIn } from '@gqlapp/user-client-react';
 
 import settings from '../../../../settings';
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
+import CurrencyDisplay from './CurrencyDisplay';
 
 const { TabPane } = Tabs;
 const { Meta } = Card;
@@ -318,6 +319,11 @@ class ListingDetailView extends Component {
 
   render() {
     const { listing, loading, history, navigation, currentUser, handleBookmark, listingBookmarkStatus } = this.props;
+    const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
+    const discount = listing && listing.listingCostArray && listing.listingCostArray.discount;
+    const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
+    // console.log('cost', cost && cost.toFixed(2));
+    const inventoryCount = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
     const images =
       listing &&
       listing.listingMedia &&
@@ -328,7 +334,7 @@ class ListingDetailView extends Component {
       listing.listingMedia &&
       listing.listingMedia.length > 0 &&
       listing.listingMedia.filter(lM => lM.type === 'video');
-    console.log('ideo', youtubeUrl);
+    // console.log('ideo', youtubeUrl);
     const user = listing && listing.user;
     const getName = () => {
       const firstName = user && user.profile && user.profile.firstName;
@@ -368,7 +374,7 @@ class ListingDetailView extends Component {
     };
 
     const getYoutubeUrl = url => {
-      console.log('url', url);
+      // console.log('url', url);
       const newUrl = url.replace('watch?v=', 'embed/');
 
       return newUrl;
@@ -392,7 +398,7 @@ class ListingDetailView extends Component {
             <Spin />
           </div>
         )}
-        {listing && (
+        {!loading && listing && (
           <>
             <Row gutter={24}>
               <Col span={24}>
@@ -428,12 +434,12 @@ class ListingDetailView extends Component {
                         zIndex: '100'
                       }}
                     >
-                      {!(typeof listingBookmarkStatus == 'undefined') && (
+                      <IfLoggedIn>
                         <BookmarkComponent
                           handleBookmark={() => handleBookmark(listing.id, listing.userId)}
                           bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
                         />
-                      )}
+                      </IfLoggedIn>
                     </div>
                     <div className="carousel-arrow carousel-arrow-left" onClick={this.prevSlide}>
                       <Icon type="left" className="carousel-arrow-icon" />
@@ -479,7 +485,61 @@ class ListingDetailView extends Component {
                 </Row>
               </Col>
               <Col xl={14} lg={14} md={11} sm={24}>
-                <AddToCart listing={listing} history={history} />
+                <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
+                <br /> <p>{`SKU: ${listing && listing.sku}`}</p>
+                <Divider style={{ margin: '10px 5px' }} />
+                <Row>
+                  <Col lg={8} md={12} xs={12}>
+                    {isDiscount
+                      ? cost && (
+                          <CurrencyDisplay
+                            style={{ display: 'inline' }}
+                            input={(cost - cost * (discount / 100)).toFixed(2)}
+                          />
+                        )
+                      : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
+                  </Col>
+                  {isDiscount && (
+                    <Col lg={8} md={12} xs={12}>
+                      <Statistic
+                        title=""
+                        precision={2}
+                        valueStyle={{ color: '#cf1322' }}
+                        value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
+                        suffix={'%'}
+                        prefix={<Icon type="arrow-down" />}
+                      />
+                    </Col>
+                  )}
+
+                  <Col lg={8} md={24} xs={24}>
+                    <p style={{ fontSize: '16px', marginTop: '5px' }}>
+                      {`Availability: ${inventoryCount > 0 ? 'In Stock' : 'Out of Stock'}`}
+                    </p>
+                  </Col>
+                  <Col span={24}>
+                    {isDiscount && (
+                      <div style={{ display: 'flex' }}>
+                        <CurrencyDisplay input={cost.toFixed(2)} valueStyle={{ textDecoration: 'line-through' }} />
+                        &nbsp; &nbsp;
+                        <div style={{ lineHeight: '45px', display: 'flex' }}>
+                          <div style={{ fontSize: '15px' }}>
+                            <b>Saving Amount: &nbsp;</b>
+                          </div>
+                          {(cost.toFixed(2) - (cost - cost * (discount / 100)).toFixed(2)).toFixed(2)}
+                        </div>
+                      </div>
+                    )}
+                    <i>
+                      *Including GST
+                      <br /> *free shipping
+                      <br /> *certified
+                    </i>
+                  </Col>
+                </Row>
+                <Divider />
+                <br />
+                <AddToCart listing={listing} history={history} currentUser={currentUser} />
               </Col>
             </Row>
             <Divider style={{ marginBottom: '0' }} />

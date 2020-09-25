@@ -1,88 +1,64 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { message } from 'antd';
-import { graphql } from 'react-apollo';
-import { FormError } from '@gqlapp/forms-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import ADD_TO_CART from '../graphql/AddToCart.graphql';
+import AddToCartView from '../components/AddToCartView';
+import { withAddToCart } from './OrderOperations';
 
-import AddTocartCard from '../components/AddTocartCard';
+import ROUTES from '../routes';
 
-class AddToCart extends React.Component {
-  constructor(props) {
-    super(props);
+const AddToCart = props => {
+  const { history, currentUser, listing, addToCart } = props;
 
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+  const onSubmit = async (values, redirect = false) => {
+    if (!currentUser) {
+      history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
+    }
 
-  onSubmit = async (values, redirect = false) => {
-    const { history, navigation, currentUser } = this.props;
-
-    // if (!currentUser) {
-    //   return history.push("/login/");
-    // }
-    // Get Values
-    console.log(values);
-    console.log('****************');
-    console.log(this.props.listing);
-    // Call Mutation
-
-    const obj = {
-      consumerId: 1,
+    const input = {
+      consumerId: currentUser && currentUser.id,
       orderDetail: {
-        cost: 491,
-        title: 'Listing 50',
-        quantity: values.quantity,
-        date: values.date,
-        thumbnail:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU'
+        vendorId: listing && listing.user && listing.user.id,
+        modalName: 'listing',
+        modalId: listing && listing.id,
+
+        title: listing && listing.title,
+        imageUrl:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
+        cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
+        orderOptions: {
+          quantity: values.quantity
+        }
       }
     };
 
     try {
-      await this.props.addToCart(obj);
+      console.log('input', input);
+      await addToCart(input);
+      if (redirect) {
+        history.push(`${ROUTES.checkoutCart}`);
+      }
     } catch (e) {
       message.error('Failed!');
-      console.log(e);
-      // throw new FormError('Failed!', e);
+      throw new Error(e);
     }
 
     // Add Message
     message.success('Success! Complete your Order.');
-
-    // Redirect
-    // if (history || navigation) {
-    //   if (history && redirect) {
-    //     return history.push("/checkout-cart/");
-    //   }
-    // }
   };
 
-  render() {
-    console.log('props, add to cart', this.props);
-    return (
-      <>
-        <AddTocartCard onSubmit={this.onSubmit} {...this.props} />
-      </>
-    );
-  }
-}
+  console.log('AddToCart, props', props);
+  return <AddToCartView onSubmit={onSubmit} {...props} />;
+};
 
-export default compose(
-  graphql(ADD_TO_CART, {
-    props: ({ mutate }) => ({
-      addToCart: async values => {
-        console.log('mutation start', values);
-        await mutate({
-          variables: {
-            input: values
-          }
-        });
-        console.log(values, 'mutation called');
-      }
-    })
-  }),
-  translate('orders')
-)(AddToCart);
+AddToCart.propTypes = {
+  history: PropTypes.object,
+  listing: PropTypes.object,
+  currentUser: PropTypes.object,
+  addToCart: PropTypes.func
+};
+
+export default compose(withAddToCart, translate('orders'))(AddToCart);

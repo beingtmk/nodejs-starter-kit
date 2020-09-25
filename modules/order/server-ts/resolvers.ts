@@ -71,28 +71,23 @@ export default (pubsub: any) => ({
   },
   Mutation: {
     addToCart: withAuth(async (obj: any, { input }: any, { Order, req: { identity } }) => {
-      // To Do - Check if admin
-      try {
-        if (!input.consumerId) {
-          input.consumerId = identity.id;
-        }
-        const id = await Order.addToCart(input);
-        if (id) {
-          console.log('resolver2', id);
-          const orderItem = await Order.order(id);
-          console.log('resolver2', orderItem);
-          pubsub.publish(ORDERS_SUBSCRIPTION, {
-            ordersUpdated: {
-              mutation: 'CREATED',
-              node: orderItem
-            }
-          });
-          return true;
-        }
-        return false;
-      } catch (e) {
-        return e;
+      if (!input.consumerId) {
+        input.consumerId = identity.id;
       }
+      const id = await Order.addToCart(input);
+      if (id) {
+        console.log('resolver2', id);
+        const orderItem = await Order.order(id);
+        console.log('resolver2', orderItem);
+        pubsub.publish(ORDERS_SUBSCRIPTION, {
+          ordersUpdated: {
+            mutation: 'CREATED',
+            node: orderItem
+          }
+        });
+        return true;
+      }
+      return false;
     }),
     changeDateInCart: withAuth(async (obj: any, { input }: any, context: any) => {
       // To Do - Check if admin

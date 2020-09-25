@@ -1,6 +1,6 @@
 import React from 'react';
 import { Steps, Card, Icon } from 'antd';
-import STATES from '../constants/order_states_cart';
+import { ORDER_STATES } from '@gqlapp/order-common';
 
 const { Step } = Steps;
 
@@ -20,9 +20,9 @@ export default class OrderTrackCardComponent extends React.Component {
     const status = this.props.orderStatus;
 
     // var step = 0;
-    if (status === STATES.STALE) {
+    if (status === ORDER_STATES.STALE) {
       return 0;
-    } else if (status === STATES.COMPLETED) {
+    } else if (status === ORDER_STATES.COMPLETED) {
       return 6;
     }
   }

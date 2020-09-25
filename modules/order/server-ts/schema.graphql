@@ -110,16 +110,25 @@ input ChangeDateInCartInput {
 
 input AddToCartInput {
   consumerId: Int
-  vendorId: Int
   orderDetail: OrderDetailInput!
 }
 
 input OrderDetailInput {
   id: Int
-  date: String
-  cost: Int
-  thumbnail: String
+
+  vendorId: Int
+  modalName: String
+  modalId: Int
+
   title: String
+  imageUrl: String
+  cost: Int
+
+  orderOptions: OrderOptionsInput
+}
+
+input OrderOptionsInput {
+  id: Int
   quantity: Int
 }
 

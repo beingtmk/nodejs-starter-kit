@@ -6,6 +6,9 @@ import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQue
 import ORDERS_QUERY from '../graphql/OrdersQuery.graphql';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
+// Mutation
+import ADD_TO_CART from '../graphql/AddToCart.graphql';
+
 import settings from '../../../../settings';
 
 const limit =
@@ -73,4 +76,17 @@ export const withGetCart = Component =>
       }
       return { cartLoading: loading, getCart, subscribeToMore, refetch };
     }
+  })(Component);
+
+export const withAddToCart = Component =>
+  graphql(ADD_TO_CART, {
+    props: ({ mutate }) => ({
+      addToCart: async input => {
+        await mutate({
+          variables: {
+            input
+          }
+        });
+      }
+    })
   })(Component);

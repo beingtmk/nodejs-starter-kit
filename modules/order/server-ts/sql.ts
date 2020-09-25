@@ -193,27 +193,32 @@ export default class OrderDAO extends Model {
 
   public async addToCart(input) {
     // console.log(input);
+
+    const orderState = await OrderState.query().where('state', '=', ORDER_STATES.STALE);
+    // console.log('orderState', orderState);
+
     const cart = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', input.consumerId)
-        .where('state', ORDER_STATES.STALE)
+        .where('order_state_id', orderState[0].id)
     )[0];
 
     console.log(cart);
     if (!cart) {
       // Create a STALE order
-      input.orderId = await returnId(knex('order')).insert({
+      knex('order').insert({
         consumer_id: input.consumerId,
-        state: ORDER_STATES.STALE
+        order_state_id: ORDER_STATES.STALE
       });
     } else {
       input.orderDetail.orderId = cart.id;
+      input.orderDetail.orderDetailStateId = orderState[0].id;
     }
 
     console.log(input);
-    const newOrderDetail = camelizeKeys(await OrderDetail.query().insert(decamelizeKeys(input.orderDetail)));
+    const newOrderDetail = camelizeKeys(await OrderDetail.query().insertGraph(decamelizeKeys(input.orderDetail)));
     console.log('coooooooooooooooooooooooooooooooooooo', newOrderDetail);
-    return true;
+    return newOrderDetail.orderId;
   }
 
   public async addOrder(params: Orders) {
