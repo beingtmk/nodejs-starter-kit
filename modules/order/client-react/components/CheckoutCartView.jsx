@@ -11,8 +11,6 @@ import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
 // import { TotalAmount, TotalRent, Refund } from '../helper/index';
 
-import { AGREEMENT } from '../constants/Undertaking';
-
 const CheckoutDiv = styled.div`
   padding: 20px 8%;
 `;
@@ -21,16 +19,8 @@ const font14 = styled.div`
   font-size: 14px;
 `;
 
-const Margin20Col = styled(Col)`
-  margin: 20px 0;
-`;
-
 const Margin20Button = styled(Button)`
   margin: 20px 0;
-`;
-
-const Margin20BoxShadowThemeCard = styled(Card)`
-  box-shadow: 0 0 8px 4px rgba(49, 196, 167, 0.05);
 `;
 
 const MarginV15 = styled(Col)`
@@ -94,47 +84,14 @@ export default class CheckoutCartView extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  // cartItemSelect(id) {
-  //   var cart = this.state.cart;
-  //   startDate = 'aaaaa';
-  //   endDate = 'bbbbb';
-  //   for (i in range(cart.orderDetails.length)) {
-  //     if (cart.orderDetails[i].id === id) {
-  //       cart.orderDetails[i].startDate = startDate;
-  //       cart.orderDetails[i].endDate = endDate;
-
-  //       this.setState({ cart: cart });
-  //     }
-  //   }
-  //   var i;
-  //   let item = this.props.state.products;
-  //   item.some(item => {
-  //     if (item.id === id) {
-  //       this.setState({
-  //         cartItem: item
-  //       });
-  //     }
-  //   });
-  //   this.props.setModal1Visible();
-  // }
-
   onChange(e) {
     this.setState({
       checkout: e.target.checked
     });
   }
 
-  // getValue() {
-  //   let refundValue = 0;
-  //   this.props.state.products.map(k => {
-  //     refundValue = refundValue + k.refund;
-  //   });
-  //   return refundValue;
-  // }
-
   render() {
-    const { history, navigation, onSubmit } = this.props;
-    const getCart = this.props.order;
+    const { history, navigation, onSubmit, getCart } = this.props;
 
     const cartLength = getCart && getCart.length;
 

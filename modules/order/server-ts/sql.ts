@@ -1,8 +1,8 @@
 import { has } from 'lodash';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { Model, raw } from 'objection';
-import { knex, returnId } from '@gqlapp/database-server-ts';
 
+import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 import Addresses from '@gqlapp/addresses-server-ts/sql';
 import { ORDER_STATES } from '@gqlapp/order-common';
@@ -150,6 +150,33 @@ export default class OrderDAO extends Model {
       orders: res,
       total
     };
+  }
+
+  public async getCart(userId: number) {
+    const orderState = await OrderState.query().where('state', '=', ORDER_STATES.STALE);
+    // console.log('orderState', orderState);
+
+    // To Do - Get or Create
+    const res = camelizeKeys(
+      await OrderDAO.query()
+        .where('consumer_id', userId)
+        .where('order_state_id', orderState[0].id)
+        .eager(eager)
+        .orderBy('id', 'desc')
+    );
+    if (!res.length) {
+      // Create a STALE order
+      const staleOrderId = await returnId(knex('order')).insert({
+        consumer_id: userId,
+        order_state_id: orderState[0].id
+      });
+      const staleOrder = await this.order(staleOrderId);
+      // console.log(staleOrder);
+      return staleOrder;
+    }
+
+    // console.log(res);
+    return res[0];
   }
 
   // public async userDeliveries(userId: number) {

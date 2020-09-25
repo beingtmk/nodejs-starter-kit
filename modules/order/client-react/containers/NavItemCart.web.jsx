@@ -6,17 +6,17 @@ import { Icon, Badge } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import update from 'immutability-helper';
 
-import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
-import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
+
+import { withCurrentUser, withGetCart } from './OrderOperations';
 
 const NavItemCart = props => {
-  useEffect(() => {
-    console.log('use effect', props.subscribeToMore);
-    const subscribe = subscribeToOrders(props.subscribeToMore);
-    props.refetch();
-    return () => subscribe();
-  });
+  // useEffect(() => {
+  //   console.log('use effect', props.subscribeToMore);
+  //   const subscribe = subscribeToOrders(props.subscribeToMore);
+  //   props.refetch();
+  //   return () => subscribe();
+  // });
 
   console.log('props nav', props);
   return (
@@ -84,23 +84,4 @@ const subscribeToOrders = subscribeToMore =>
     }
   });
 
-export default compose(
-  graphql(CURRENT_USER_QUERY, {
-    props({ data: { loading, error, currentUser } }) {
-      if (error) throw new Error(error);
-      return {
-        currentUserLoading: loading,
-        currentUser
-      };
-    }
-  }),
-  graphql(GET_CART_QUERY, {
-    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
-      if (error) {
-        throw new Error(error);
-      }
-      return { cartLoading: loading, getCart, subscribeToMore, refetch };
-    }
-  }),
-  translate('order')
-)(NavItemCart);
+export default compose(withCurrentUser, withGetCart, translate('order'))(NavItemCart);

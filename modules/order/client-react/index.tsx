@@ -82,7 +82,7 @@ export default new ClientModule({
   navItemUser: [
     <MenuItem key={ROUTES.checkoutCart}>
       <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
-        {/* <NavItemCart /> */}
+        <NavItemCart />
       </NavLink>
     </MenuItem>,
     <IfLoggedIn key={ROUTES.myOrder}>

@@ -1,7 +1,7 @@
 #import "./Order.graphql"
 
-query getCart {
-  getCart {
+query getCart($userId: Int) {
+  getCart(userId: $userId) {
     ...OrderInfo
   }
 }

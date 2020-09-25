@@ -66,6 +66,7 @@ extend type Query {
     orderBy: OrderByListInput
     filter: FilterOrderInput
   ): Orders
+  getCart(userId: Int): Order
 
   # userDeliveries(userId: Int): [Order]
 }

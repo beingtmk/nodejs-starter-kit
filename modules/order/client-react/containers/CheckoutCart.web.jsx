@@ -1,28 +1,25 @@
 import React, { useEffect } from 'react';
 import { compose, removeTypename } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
-import { message } from 'antd';
 
 // import { Loader } from '@gqlapp/look-client-react';
-import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
+import { translate } from '@gqlapp/i18n-client-react';
 import update from 'immutability-helper';
 
-import { FormError } from '@gqlapp/forms-client-react';
-import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 import EDIT_ORDER from '../graphql/EditOrder.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
+import { withCurrentUser, withGetCart } from './OrderOperations';
 
 const CheckoutCart = props => {
   const { getCart, editOrder } = props;
-  useEffect(() => {
-    console.log('use effect', props.subscribeToMore);
-    const subscribe = subscribeToOrders(props.subscribeToMore);
-    props.refetch();
-    return () => subscribe();
-  });
+  // useEffect(() => {
+  //   console.log('use effect', props.subscribeToMore);
+  //   const subscribe = subscribeToOrders(props.subscribeToMore);
+  //   props.refetch();
+  //   return () => subscribe();
+  // });
 
   const handleSubmit = async values => {
     console.log('props', props, 'values', values);
@@ -59,22 +56,7 @@ const CheckoutCart = props => {
   //   }
   // };
 
-  return (
-    <>
-      {props.currentUserLoading || props.cartLoading ? (
-        <>Loading...</>
-      ) : (
-        <CheckoutCartView
-          order={props.getCart}
-          onSubmit={handleSubmit}
-          // deleteProduct={deleteProduct}
-          // onSubmit={onSubmit}
-          // cart={props.cart}
-          {...props}
-        />
-      )}
-    </>
-  );
+  return <CheckoutCartView onSubmit={handleSubmit} {...props} />;
 };
 
 const onAddOrder = (prev, node) => {
@@ -132,23 +114,8 @@ const subscribeToOrders = subscribeToMore =>
   });
 
 export default compose(
-  graphql(CURRENT_USER_QUERY, {
-    props({ data: { loading, error, currentUser } }) {
-      if (error) throw new Error(error);
-      return {
-        currentUserLoading: loading,
-        currentUser
-      };
-    }
-  }),
-  graphql(GET_CART_QUERY, {
-    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
-      if (error) {
-        throw new Error(error);
-      }
-      return { cartLoading: loading, getCart, subscribeToMore, refetch };
-    }
-  }),
+  withCurrentUser,
+  withGetCart,
   graphql(EDIT_ORDER, {
     props: ({ mutate }) => ({
       editOrder: async input => {

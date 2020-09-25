@@ -4,6 +4,7 @@ import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import ORDERS_QUERY from '../graphql/OrdersQuery.graphql';
+import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
 import settings from '../../../../settings';
 
@@ -56,5 +57,20 @@ export const withOrders = Component =>
       };
       if (error) throw new Error(error);
       return { loading, orders, subscribeToMore, loadData, updateQuery };
+    }
+  })(Component);
+
+export const withGetCart = Component =>
+  graphql(GET_CART_QUERY, {
+    options: ({ currentUser }) => {
+      return {
+        variables: { userId: currentUser && currentUser.id }
+      };
+    },
+    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { cartLoading: loading, getCart, subscribeToMore, refetch };
     }
   })(Component);
