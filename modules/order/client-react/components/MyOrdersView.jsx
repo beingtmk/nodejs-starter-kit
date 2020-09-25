@@ -30,17 +30,12 @@ const MyOrdersView = props => {
   const { loading, orders, t, history, currentUser } = props;
 
   const NoMyOrdersMessage = () => <div align="center">{t('orders.noListingsMsg')}</div>;
+
   const renderFunc = (key, item) => (
-    // Add MyOrderItem component here
-    // <h1>hello</h1>
-    <MyOrderItemComponent key={key} order={item} history={history} currentUser={currentUser} />
+    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
   );
   const RenderMyOrders = () => (
     <div>
-      {/* <h2 className="headingTop">
-
-        <Icon type="solution" /> &nbsp; My Orders
-      </h2> */}
       <Row>
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <h2 className="headingTop">
@@ -99,7 +94,7 @@ const MyOrdersView = props => {
 MyOrdersView.propTypes = {
   loading: PropTypes.bool,
   orders: PropTypes.object,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default MyOrdersView;
