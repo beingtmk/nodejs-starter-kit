@@ -35,11 +35,6 @@ const MarginB20btn = styled(Button)`
   margin-bottom: 20px;
 `;
 
-const CartSumh2 = styled.h2`
-  text-shadow: 0.5px 0 0;
-  font-size: 19px;
-`;
-
 const Font12 = styled.div`
   font-size: 12px;
 `;
@@ -55,7 +50,7 @@ const ColorFloat = styled.strong`
 
 export function TotalPrice(cartArray) {
   var totalCartPrice = 0;
-  console.log('cart array', cartArray);
+  // console.log('cart array', cartArray);
   cartArray &&
     cartArray.map((item, key) => {
       totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
@@ -76,7 +71,7 @@ const CheckoutCartView = props => {
     setCheckout(e);
   }
 
-  const { history, navigation, cartLoading, onSubmit, getCart } = props;
+  const { history, navigation, cartLoading, onSubmit, getCart, onDelete } = props;
 
   const cartLength = getCart && getCart.length;
 
@@ -108,63 +103,61 @@ const CheckoutCartView = props => {
                 <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                   {getCart &&
                     getCart.orderDetails.map(cartItem => (
-                      <CartItemComponent
-                        item={cartItem}
-                        edit={true}
-                        onSubmit={onSubmit}
-                        // deleteProduct={props.deleteProduct}
-                      />
+                      <CartItemComponent item={cartItem} edit={true} onSubmit={onSubmit} onDelete={onDelete} />
                     ))}
                 </Col>
                 <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                   <Card>
                     <MarginV15 span={24}>
-                      <Checkbox onChange={e => onChange(e)}>
+                      <Checkbox onChange={e => this.onChange(e)}>
                         <Font11h>
                           <b>I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.</b>
-                          {/* <b>{AGREEMENT}</b> */}
                         </Font11h>
                       </Checkbox>
                     </MarginV15>
                     {checkout ? (
                       <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
                         Next
+                        <Icon type="arrow-right" />
                       </Margin20Button>
                     ) : (
                       <Margin20Button type="primary" disabled block>
                         Checkout
+                        <Icon type="arrow-right" />
                       </Margin20Button>
                     )}
                     <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
                       <MarginB20btn type="primary" ghost block>
+                        <Icon type="plus-circle" />
                         Add more products
                       </MarginB20btn>
                     </Link>
-                    <CartSumh2>Cart Summary</CartSumh2>
+                    <hr />
+                    <h2>
+                      <u>Cart Summary</u>
+                    </h2>
+                    <br />
                     <Font12>
-                      {getCart &&
-                        getCart.orderDetails.map((item, key) => (
-                          <div key={key}>
-                            <strong>Item {key + 1}:</strong>
-                            <p>
-                              Price{' '}
-                              <Rightfloat>
-                                &#8377;{' '}
-                                {item.cost && item.cost !== '0'
-                                  ? `${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`
-                                  : 'Free'}
-                              </Rightfloat>
-                              <br />
-                            </p>
-                          </div>
-                        ))}
-
+                      {getCart.orderDetails.map((item, key) => (
+                        <div key={key}>
+                          <strong>Item {key + 1}:</strong>
+                          <p>
+                            Price{' '}
+                            <Rightfloat>
+                              &#8377;{' '}
+                              {item.cost && item.cost !== '0'
+                                ? `${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`
+                                : 'Free'}
+                            </Rightfloat>
+                            <br />
+                          </p>
+                        </div>
+                      ))}
+                      <hr />
+                      <br />
                       <h3>
-                        Total rent amount
-                        <ColorFloat>
-                          &#8377;
-                          {TotalPrice(getCart && getCart.orderDetails)}
-                        </ColorFloat>
+                        Total amount
+                        <ColorFloat>&#8377; {` ${TotalPrice(getCart.orderDetails)}`}</ColorFloat>
                       </h3>
                     </Font12>
                   </Card>

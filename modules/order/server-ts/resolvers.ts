@@ -171,8 +171,8 @@ export default (pubsub: any) => ({
       }
     }),
 
-    deleteOrderDetail: withAuth(async (obj: any, { id }: any, context: any) => {
-      const isDeleted = await context.Order.deleteOrderDetail(id);
+    deleteOrderDetail: withAuth(async (obj: any, { id }: { id: number }, { Order }: any) => {
+      const isDeleted = await Order.deleteOrderDetail(id);
       if (isDeleted) {
         return true;
       } else {

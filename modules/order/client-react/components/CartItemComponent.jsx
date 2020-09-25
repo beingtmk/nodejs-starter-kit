@@ -3,8 +3,6 @@ import { Icon, Button, Row, Col, Card, Popconfirm, message } from 'antd';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
-import AddToCartForm from './AddToCartForm';
-
 const { Meta } = Card;
 
 const OrderTotalDate = styled(Col)`
@@ -24,7 +22,7 @@ class CartItemComponent extends Component {
     this.state = {
       visible: false,
       myBooks: [],
-      modal1Visible: false,
+      modal1Visible: false
     };
   }
 
@@ -37,7 +35,7 @@ class CartItemComponent extends Component {
   };
 
   render() {
-    const { item, edit, onSubmit } = this.props;
+    const { item, edit, onSubmit, onDelete } = this.props;
     console.log('cart item', item);
 
     return (
@@ -45,20 +43,16 @@ class CartItemComponent extends Component {
         type={this.props.inner && 'inner'}
         style={{ marginBottom: '24px' }}
         bodyStyle={{
-          padding: '0px',
+          padding: '0px'
         }}
         title={<h3>{item.title}</h3>}
         extra={
           <>
-            {edit && (
-              <>
-                <Icon type="edit" onClick={() => this.setState({ visible: true })} />
-              </>
-            )}
-            {this.props.deleteProduct && (
+            {edit && <Icon type="edit" onClick={() => this.setState({ visible: true })} />}
+            {onDelete && (
               <Popconfirm
                 title="Are you sure to delete this order?"
-                onConfirm={() => this.props.deleteProduct(item.id)}
+                onConfirm={() => onDelete(item.id)}
                 onCancel={this.cancel}
                 okText="Yes"
                 cancelText="No"
@@ -71,7 +65,6 @@ class CartItemComponent extends Component {
           </>
         }
       >
-        {' '}
         <Row>
           <Col
             xs={{ span: 24 }}
@@ -87,7 +80,7 @@ class CartItemComponent extends Component {
               <strong>
                 <span>Amount</span> &#8377; {`${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`}
               </strong>
-            </h4>{' '}
+            </h4>
             <br />
             <h4>
               <span>Date</span> {item.date}
@@ -123,7 +116,7 @@ class CartItemComponent extends Component {
 
 CartItemComponent.propTypes = {
   item: PropTypes.object,
-  deleteProduct: PropTypes.func,
+  onDelete: PropTypes.func
 };
 
 export default CartItemComponent;

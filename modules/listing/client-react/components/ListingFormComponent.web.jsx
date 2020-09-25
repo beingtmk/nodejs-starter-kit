@@ -296,13 +296,15 @@ const ListingWithFormik = withFormik({
       isActive: (props.listing && props.listing.isActive) || false,
       listingCostArray: (props.listing &&
         props.listing.listingCostArray &&
-        props.listing.listingCostArray.map(getCost)) || {
-        id: null,
-        cost: null,
-        discount: null,
-        type: 'a',
-        label: 'a'
-      },
+        props.listing.listingCostArray.map(getCost)) || [
+        {
+          id: null,
+          cost: null,
+          discount: null,
+          type: 'a',
+          label: 'a'
+        }
+      ],
 
       listingFlags: (props.listing && props.listing.listingFlags) || {
         id: null,

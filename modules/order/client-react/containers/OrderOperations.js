@@ -8,6 +8,7 @@ import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 
 // Mutation
 import ADD_TO_CART from '../graphql/AddToCart.graphql';
+import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
 
 import settings from '../../../../settings';
 
@@ -78,6 +79,7 @@ export const withGetCart = Component =>
     }
   })(Component);
 
+// Mutation
 export const withAddToCart = Component =>
   graphql(ADD_TO_CART, {
     props: ({ mutate }) => ({
@@ -85,6 +87,24 @@ export const withAddToCart = Component =>
         await mutate({
           variables: {
             input
+          }
+        });
+      }
+    })
+  })(Component);
+
+export const withDeleteCartItem = Component =>
+  graphql(DELETE_CART_ITEM, {
+    props: ({ mutate }) => ({
+      deleteOrderDetail: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteOrderDetail: {
+              id: id,
+              __typename: 'OrderDetail'
+            }
           }
         });
       }

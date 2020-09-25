@@ -30,7 +30,6 @@ exports.seed = async function(knex) {
         .where('listing.id', '=', id)
         .from('listing')
         .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
-      console.log('modal', modal);
       const orderDetail = await returnId(knex('order_detail')).insert({
         order_id: order[0],
         vendor_id: modal[0].user_id,
@@ -38,7 +37,7 @@ exports.seed = async function(knex) {
         modal_id: id,
         order_detail_state_id: 1,
 
-        image_url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
+        image_url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
         title: modal[0].title,
         cost: modal[0].cost
       });
@@ -107,7 +106,7 @@ exports.seed = async function(knex) {
             order_detail_state_id: 2,
 
             image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
+              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
             title: modal2[0].title,
             cost: modal2[0].cost
           });
@@ -134,7 +133,7 @@ exports.seed = async function(knex) {
             order_detail_state_id: 3,
 
             image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
+              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
             title: modal3[0].title,
             cost: modal3[0].cost
           });
@@ -160,7 +159,7 @@ exports.seed = async function(knex) {
             order_detail_state_id: 4,
 
             image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
+              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
             title: modal4[0].title,
             cost: modal4[0].cost
           });

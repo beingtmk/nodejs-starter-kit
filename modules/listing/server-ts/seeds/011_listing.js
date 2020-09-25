@@ -2,7 +2,7 @@ import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 
 const MEDIA = [
   {
-    url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1599752239/hs2uxkcx4e32zlygbdds.jpg',
+    url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
     type: 'image'
   },
   {

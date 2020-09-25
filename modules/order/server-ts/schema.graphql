@@ -93,7 +93,7 @@ extend type Mutation {
   # Delete a order
   deleteOrder(id: Int!): Order
   # Edit a order
-  editOrder(input: EditOrderInput!): Order
+  editOrder(input: EditOrderInput!): Order # do editOrderDetail
   # Patch a order
   patchOrder(input: PatchOrderInput!): Order
 

@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
-import { compose, removeTypename } from '@gqlapp/core-common';
+import { message } from 'antd';
 import { graphql } from 'react-apollo';
-
-// import { Loader } from '@gqlapp/look-client-react';
-import { translate } from '@gqlapp/i18n-client-react';
 import update from 'immutability-helper';
+
+import { compose, removeTypename } from '@gqlapp/core-common';
+import { translate } from '@gqlapp/i18n-client-react';
 
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 import EDIT_ORDER from '../graphql/EditOrder.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
-import { withCurrentUser, withGetCart } from './OrderOperations';
+import { withCurrentUser, withGetCart, withDeleteCartItem } from './OrderOperations';
 
 const CheckoutCart = props => {
-  const { getCart, editOrder } = props;
+  const { getCart, deleteOrderDetail, editOrder } = props;
   // useEffect(() => {
   //   console.log('use effect', props.subscribeToMore);
   //   const subscribe = subscribeToOrders(props.subscribeToMore);
@@ -44,19 +44,16 @@ const CheckoutCart = props => {
     }
   };
 
-  // const onSubmit = async () => {
-  //   const { history, navigation } = props;
+  const handleDelete = id => {
+    try {
+      deleteOrderDetail(id);
+      message.error('Removed from Cart.');
+    } catch (e) {
+      throw Error(e);
+    }
+  };
 
-  //   // Redirect
-  //   if (history) {
-  //     return history.push('/checkout-bill/');
-  //   }
-  //   if (navigation) {
-  //     return navigation.goBack();
-  //   }
-  // };
-
-  return <CheckoutCartView onSubmit={handleSubmit} {...props} />;
+  return <CheckoutCartView onSubmit={handleSubmit} onDelete={handleDelete} {...props} />;
 };
 
 const onAddOrder = (prev, node) => {
@@ -116,6 +113,7 @@ const subscribeToOrders = subscribeToMore =>
 export default compose(
   withCurrentUser,
   withGetCart,
+  withDeleteCartItem,
   graphql(EDIT_ORDER, {
     props: ({ mutate }) => ({
       editOrder: async input => {
