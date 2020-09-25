@@ -1,15 +1,15 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import { PageLayout } from '@gqlapp/look-client-react';
-// import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Card, Icon, Checkbox, Empty } from 'antd';
-// import AvailDiscount from '@gqlapp/discounts-client-react/containers/AvailDiscount';
+
+import { PageLayout } from '@gqlapp/look-client-react';
+// import { TranslateFunction } from "@gqlapp/i18n-client-react";
+
 import settings from '../../../../settings';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
-// import { TotalAmount, TotalRent, Refund } from '../helper/index';
 
 const CheckoutDiv = styled.div`
   padding: 20px 8%;
@@ -58,7 +58,7 @@ export function TotalPrice(cartArray) {
   console.log('cart array', cartArray);
   cartArray &&
     cartArray.map((item, key) => {
-      totalCartPrice += item.cost * item.orderOptions.quantity;
+      totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
     });
   return totalCartPrice;
 }
@@ -70,92 +70,80 @@ const renderMetaData = () => (
   />
 );
 
-export default class CheckoutCartView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cart: !this.props.loading && this.props.order ? this.props.order : null,
-      loading: this.props.loading,
-      cartItem: null,
-      books: [],
-      randomVal: 2000,
-      checkout: true
-    };
-    this.onChange = this.onChange.bind(this);
+const CheckoutCartView = props => {
+  const [checkout, setCheckout] = React.useState(true);
+  function onChange(e) {
+    setCheckout(e);
   }
 
-  onChange(e) {
-    this.setState({
-      checkout: e.target.checked
-    });
-  }
+  const { history, navigation, cartLoading, onSubmit, getCart } = props;
 
-  render() {
-    const { history, navigation, onSubmit, getCart } = this.props;
+  const cartLength = getCart && getCart.length;
 
-    const cartLength = getCart && getCart.length;
-
-    return (
-      <PageLayout>
-        {renderMetaData()}
-        {console.log('props', this.props)}
-        {// !this.props.loading &&
-        getCart.orderDetails.length > 0 ? (
-          <CheckoutDiv>
-            <Row>
-              <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-                <CheckoutStepsComponent step={0} />
+  return (
+    <PageLayout>
+      {renderMetaData()}
+      {console.log('props', props)}
+      {// !props.loading &&
+      !cartLoading && getCart && getCart.orderDetails.length > 0 ? (
+        <CheckoutDiv>
+          <Row>
+            <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
+              <CheckoutStepsComponent step={0} />
+            </Col>
+            <MarginV15 lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
+              <Col span={24}>
+                <font14>
+                  <strong>My cart - </strong>
+                  {cartLength} items
+                </font14>
+                <h4>orderId - {getCart.id}</h4>
+                <div>
+                  Total price: <strong>&#8377; {TotalPrice(getCart && getCart.orderDetails)} </strong>
+                </div>
               </Col>
-              <MarginV15 lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
-                <Col span={24}>
-                  <font14>
-                    <strong>My cart - </strong>
-                    {cartLength} items
-                  </font14>
-                  <h4>orderId - {getCart.id}</h4>
-                  <div>
-                    Total price: <strong>&#8377; {TotalPrice(getCart.orderDetails)} </strong>
-                  </div>
-                </Col>
-                <br />
-                <br />
-                <Row gutter={24}>
-                  <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
-                    {getCart.orderDetails.map(cartItem => (
+              <br />
+              <br />
+              <Row gutter={24}>
+                <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                  {getCart &&
+                    getCart.orderDetails.map(cartItem => (
                       <CartItemComponent
                         item={cartItem}
                         edit={true}
                         onSubmit={onSubmit}
-                        // deleteProduct={this.props.deleteProduct}
+                        // deleteProduct={props.deleteProduct}
                       />
                     ))}
-                  </Col>
-                  <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
-                    <Card>
-                      <MarginV15 span={24}>
-                        <Checkbox onChange={e => this.onChange(e)}>
-                          <Font11h>
-                            <b>{AGREEMENT}</b>
-                          </Font11h>
-                        </Checkbox>
-                      </MarginV15>
-                      {this.state.checkout ? (
-                        <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
-                          Next
-                        </Margin20Button>
-                      ) : (
-                        <Margin20Button type="primary" disabled block>
-                          Checkout
-                        </Margin20Button>
-                      )}
-                      <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
-                        <MarginB20btn type="primary" ghost block>
-                          Add more products
-                        </MarginB20btn>
-                      </Link>
-                      <CartSumh2>Cart Summary</CartSumh2>
-                      <Font12>
-                        {getCart.orderDetails.map((item, key) => (
+                </Col>
+                <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                  <Card>
+                    <MarginV15 span={24}>
+                      <Checkbox onChange={e => onChange(e)}>
+                        <Font11h>
+                          <b>I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.</b>
+                          {/* <b>{AGREEMENT}</b> */}
+                        </Font11h>
+                      </Checkbox>
+                    </MarginV15>
+                    {checkout ? (
+                      <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
+                        Next
+                      </Margin20Button>
+                    ) : (
+                      <Margin20Button type="primary" disabled block>
+                        Checkout
+                      </Margin20Button>
+                    )}
+                    <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
+                      <MarginB20btn type="primary" ghost block>
+                        Add more products
+                      </MarginB20btn>
+                    </Link>
+                    <CartSumh2>Cart Summary</CartSumh2>
+                    <Font12>
+                      {getCart &&
+                        getCart.orderDetails.map((item, key) => (
                           <div key={key}>
                             <strong>Item {key + 1}:</strong>
                             <p>
@@ -171,32 +159,33 @@ export default class CheckoutCartView extends React.Component {
                           </div>
                         ))}
 
-                        <h3>
-                          Total rent amount
-                          <ColorFloat>
-                            &#8377;
-                            {TotalPrice(getCart.orderDetails)}
-                          </ColorFloat>
-                        </h3>
-                      </Font12>
-                    </Card>
-                  </Col>
-                </Row>
-              </MarginV15>
-            </Row>
-          </CheckoutDiv>
-        ) : (
-          <div className="width100 centerAlign marginT30">
-            <Empty description="You have no items in your Cart">
-              <Link to="/listing_catalogue">
-                <Button style={{ width: 'fit-content' }} type="primary">
-                  Add some products
-                </Button>
-              </Link>
-            </Empty>
-          </div>
-        )}
-      </PageLayout>
-    );
-  }
-}
+                      <h3>
+                        Total rent amount
+                        <ColorFloat>
+                          &#8377;
+                          {TotalPrice(getCart && getCart.orderDetails)}
+                        </ColorFloat>
+                      </h3>
+                    </Font12>
+                  </Card>
+                </Col>
+              </Row>
+            </MarginV15>
+          </Row>
+        </CheckoutDiv>
+      ) : (
+        <div className="width100 centerAlign marginT30">
+          <Empty description="You have no items in your Cart">
+            <Link to="/listing_catalogue">
+              <Button style={{ width: 'fit-content' }} type="primary">
+                Add some products
+              </Button>
+            </Link>
+          </Empty>
+        </div>
+      )}
+    </PageLayout>
+  );
+};
+
+export default CheckoutCartView;

@@ -7,7 +7,7 @@ import settings from '@gqlapp/config';
 
 import SuggestedListComponent from './SuggestedListComponent';
 
-import ListingItemComponent from './CartItemComponent';
+import MyOrderItemComponent from './MyOrderItemComponent';
 import MyOrdersListView from './MyOrdersListView';
 
 const ButtonGroup = Button.Group;
@@ -33,7 +33,7 @@ const MyOrdersView = props => {
   const renderFunc = (key, item) => (
     // Add MyOrderItem component here
     // <h1>hello</h1>
-    <ListingItemComponent key={key} order={item} history={history} currentUser={currentUser} />
+    <MyOrderItemComponent key={key} order={item} history={history} currentUser={currentUser} />
   );
   const RenderMyOrders = () => (
     <div>
@@ -99,7 +99,7 @@ const MyOrdersView = props => {
 MyOrdersView.propTypes = {
   loading: PropTypes.bool,
   orders: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
 export default MyOrdersView;
