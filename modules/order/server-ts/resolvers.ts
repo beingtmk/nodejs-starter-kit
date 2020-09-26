@@ -131,24 +131,17 @@ export default (pubsub: any) => ({
     }),
     patchOrder: withAuth(async (obj: any, { input }: any, { Order, req: { identity } }) => {
       try {
-        if (identity && identity.role === 'admin') {
-          const id = input.id;
-          // console.log(input);
-          delete input.id;
-          // console.log(input);
-          await Order.patchOrder(id, input);
+        // console.log(input);
+        const id = await Order.patchOrder(input);
 
-          const order = await Order.order(id);
-          pubsub.publish(ORDERS_SUBSCRIPTION, {
-            ordersUpdated: {
-              mutation: 'CREATED',
-              node: order
-            }
-          });
-          return order;
-        } else {
-          throw new Error("You don't have the rights to do that.");
-        }
+        const order = await Order.order(id);
+        pubsub.publish(ORDERS_SUBSCRIPTION, {
+          ordersUpdated: {
+            mutation: 'CREATED',
+            node: order
+          }
+        });
+        return order;
       } catch (e) {
         return e;
       }

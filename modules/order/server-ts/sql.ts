@@ -275,13 +275,23 @@ export default class OrderDAO extends Model {
       .del();
   }
 
-  public async patchOrder(id: any, params: any) {
-    // console.log('patchOrder called!');
-    // To Do: This supposedly is'nt returning the id
-    const order = await OrderDAO.query()
-      .findById(id)
-      .patch(params);
-    // console.log(order);
+  public async patchOrder({ id, state }) {
+    const orderState = await OrderState.query().where('state', '=', state);
+    const order = camelizeKeys(
+      await OrderDAO.query()
+        .eager(eager)
+        .findById(id)
+    );
+    if (order) {
+      const orderCheck = camelizeKeys(
+        await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState[0].id }))
+      );
+      console.log('orderCheck', orderCheck);
+      order.orderDetails.map(async oD => {
+        await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState[0].id }));
+      });
+    }
+
     return order.id;
   }
 
