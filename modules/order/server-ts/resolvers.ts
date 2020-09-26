@@ -170,7 +170,24 @@ export default (pubsub: any) => ({
         return { id: null };
       }
     }),
-
+    patchAddress: withAuth(
+      async (obj: any, { cartId, addressId }: { cartId: number; addressId: number }, { Order, req: { identity } }) => {
+        try {
+          const orderId = await Order.patchAddress(cartId, addressId);
+          const orderItem = await Order.order(orderId);
+          // console.log('resolver2', orderItem);
+          pubsub.publish(ORDERS_SUBSCRIPTION, {
+            ordersUpdated: {
+              mutation: 'ADDRESS_UPDATED',
+              node: orderItem
+            }
+          });
+          return true;
+        } catch (e) {
+          return e;
+        }
+      }
+    ),
     deleteOrderDetail: withAuth(async (obj: any, { id }: { id: number }, { Order }: any) => {
       const isDeleted = await Order.deleteOrderDetail(id);
       if (isDeleted) {

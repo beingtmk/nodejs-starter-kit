@@ -9,7 +9,7 @@ interface AddressInput {
 export default (pubsub: any) => ({
   Query: {
     async addresses(obj: any, { id }: Identifier, context: any) {
-      const addresses = await context.Addresses.addresses(id);
+      const addresses = await context.Addresses.addresses(id || context.req.identity.id);
       return addresses;
     }
   },
@@ -19,15 +19,16 @@ export default (pubsub: any) => ({
         if (!input.userId) {
           input.userId = context.identity.id;
         }
-        await context.Addresses.addAddress(input);
-        return true;
+        const address = await context.Addresses.addAddress(input);
+        return address;
       } catch (e) {
         return e;
       }
     }),
     addOrEditAddress: withAuth(async (obj: any, { input }: AddressInput, context: any) => {
       try {
-        return await context.Addresses.addOrEditAddress(input);
+        const address = await context.Addresses.addOrEditAddress(input);
+        return address;
       } catch (e) {
         return e;
       }

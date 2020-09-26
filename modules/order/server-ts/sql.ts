@@ -244,7 +244,31 @@ export default class OrderDAO extends Model {
     );
     return res;
   }
-
+  public async patchAddressForOrderDetail(orderDetailId: number, addressId: number) {
+    const orderDetail = camelizeKeys(
+      await OrderDetail.query()
+        .eager('order_delivery')
+        .findById(orderDetailId)
+    );
+    if (!orderDetail.orderDelivery) {
+      await OrderDetail.query().upsertGraph(decamelizeKeys({ id: orderDetail.id, orderDelivery: { addressId } }));
+    } else {
+      await OrderDetail.query().upsertGraph(
+        decamelizeKeys({ id: orderDetail.id, orderDelivery: { id: orderDetail.orderDelivery.id, addressId } })
+      );
+    }
+    return orderDetail.orderId;
+  }
+  public async patchAddress(cartId: number, addressId: number) {
+    const order = camelizeKeys(
+      await OrderDAO.query()
+        .eager('order_details')
+        .findById(cartId)
+    );
+    const orderDetailIds = order.orderDetails.map(oD => oD.id);
+    orderDetailIds.map((id: number) => this.patchAddressForOrderDetail(id, addressId));
+    return order.id;
+  }
   public deleteOrderDetail(id: number) {
     return knex('order_detail')
       .where('id', '=', id)

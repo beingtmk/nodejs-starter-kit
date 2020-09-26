@@ -1,12 +1,12 @@
 import React from 'react';
-import { Row, Col, Button, Card } from 'antd';
+import { Row, Col, Icon, Button, Card, Divider } from 'antd';
 
 import CartItemComponent from './CartItemComponent';
 import { TotalPrice } from './CheckoutCartView';
 
 export default class OrderCardComponent extends React.Component {
   getTotalRent() {
-    console.log(this.props);
+    // console.log(this.props);
     var rent = 0;
     const cartItems = this.props.cartItems
       ? this.props.cartItems
@@ -20,46 +20,61 @@ export default class OrderCardComponent extends React.Component {
     const SubmitButton = this.props.SubmitButton;
     const getCart = this.props.getCart;
     return (
-      <Card className="boxShadowTheme borderRadius9" align="left">
-        <h3 className="OrderHead">Order Status</h3>
+      <Card align="left" style={{ height: '100%' }}>
+        <h3 className="OrderHead">Order summary</h3>
+        <hr />
+        <br />
         {getCart &&
           getCart.orderDetails &&
           getCart.orderDetails.length !== 0 &&
-          getCart.orderDetails.map((item, key) => <CartItemComponent inner={true} key={key} item={item} />)}
-
-        <h3 className="OrderHead">Cart Summary</h3>
-        {this.props.paid === true ? (
-          <h5 className="lightText">
-            Total rent amount{' '}
+          getCart.orderDetails.map((item, key) => (
+            <>
+              <CartItemComponent inner={true} key={key} item={item} />
+              <Divider />
+            </>
+          ))}
+        <hr />
+        <br />
+        <h3 className="OrderHead">
+          <u>Cart Summary</u>
+        </h3>
+        {/* {this.props.paid === true ? (
+          <h3 className="lightText">
+            Total amount{' '}
             <strong className="rightfloat">
               &#8377;
-              {TotalPrice(getCart.orderDetails)}
+              {` ${TotalPrice(getCart && getCart.orderDetails.length !== 0 && getCart.orderDetails)}`}
             </strong>
-          </h5>
-        ) : (
-          <h4 className="rentAmount">
-            Total amount{' '}
-            <strong className="colorFloat">
+          </h3>
+        ) : ( */}
+        <br />
+        <div style={{ lineHeight: '12px' }}>
+          <h3 className="rentAmount">
+            Total amount
+            <h2 style={{ float: 'right' }}>
               &#8377;
-              {TotalPrice(getCart && getCart.orderDetails.length !== 0 && getCart.orderDetails)}
-            </strong>
-          </h4>
-        )}
+              {` ${TotalPrice(getCart && getCart.orderDetails.length !== 0 && getCart.orderDetails)}`}
+            </h2>
+          </h3>
+        </div>
+        {/* )} */}
         {getCart.paid === true ? (
-          <h5 className="lightText">
-            You paid <strong className="colorFloat">&#8377; {TotalPrice(getCart)}</strong>
+          <h4 className="lightText">
+            You paid <strong className="colorFloat"> &#8377; {TotalPrice(getCart)}</strong>
             <h6 className="PaidMethodColor">{this.props.product.youPaid.method}</h6>
-          </h5>
+          </h4>
         ) : null}
         <br />
         <div align="right">
-          {SubmitButton ? (
-            <SubmitButton />
-          ) : (
-            <Button type="primary" onClick={this.props.onSubmit} size="large">
-              {this.props.buttonText}
-            </Button>
-          )}
+          {this.props.showBtn &&
+            (SubmitButton ? (
+              <SubmitButton />
+            ) : (
+              <Button type="primary" onClick={this.props.onSubmit} disabled={this.props.btnDisabled} size="large">
+                {this.props.buttonText}
+                <Icon type="arrow-right" />
+              </Button>
+            ))}
         </div>
       </Card>
     );

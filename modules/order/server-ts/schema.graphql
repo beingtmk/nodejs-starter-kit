@@ -99,6 +99,7 @@ extend type Mutation {
 
   changeDateInCart(input: ChangeDateInCartInput!): Boolean
 
+  patchAddress(cartId: Int, addressId: Int): Boolean
   deleteOrderDetail(id: Int!): Boolean
 }
 

@@ -18,7 +18,7 @@ const NavItemCart = props => {
   //   return () => subscribe();
   // });
 
-  console.log('props nav', props);
+  // console.log('props nav', props);
   return (
     <>
       {!props.currentUserLoading && (
@@ -35,7 +35,7 @@ const NavItemCart = props => {
 };
 
 const onAddOrder = (prev, node) => {
-  console.log('subscription add', prev, node);
+  // console.log('subscription add', prev, node);
   return update(prev, {
     getCart: {
       $set: node
@@ -44,7 +44,7 @@ const onAddOrder = (prev, node) => {
 };
 
 const onDeleteOrder = (prev, node) => {
-  console.log('subscription deleted');
+  // console.log('subscription deleted');
 
   // ignore if not found
   if (prev.id !== node.id) {
@@ -71,7 +71,7 @@ const subscribeToOrders = subscribeToMore =>
         }
       }
     ) => {
-      console.log('subscribed');
+      // console.log('subscribed');
       let newResult = prev;
       if (mutation === 'CREATED') {
         newResult = onAddOrder(prev, node);

@@ -1,6 +1,8 @@
-import { knex } from '@gqlapp/database-server-ts';
+import { knex, returnId } from '@gqlapp/database-server-ts';
 import { Model } from 'objection';
 import { camelizeKeys, decamelizeKeys } from 'humps';
+
+import OrderDAO from '@gqlapp/order-server-ts/sql';
 
 // Give the knex object to objection.
 Model.knex(knex);
@@ -27,23 +29,42 @@ export default class Addresses extends Model {
   static get idColumn() {
     return 'id';
   }
+
+  static get relationMappings() {
+    return {
+      order: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: OrderDAO,
+        join: {
+          from: 'user_address.id',
+          to: 'order.address_id'
+        }
+      }
+    };
+  }
+
+  public async address(id: number) {
+    return camelizeKeys(await Addresses.query().findById(id));
+  }
   public async addresses(id: number) {
     return camelizeKeys(await Addresses.query().where('user_id', '=', id));
   }
 
   public async addAddress(params: Address) {
-    return Addresses.query().insertGraph(decamelizeKeys(params));
+    const res = returnId(await Addresses.query().insertGraph(decamelizeKeys(params)));
+    return this.address(res.id);
   }
 
   public async addOrEditAddress(params: Address) {
     if (params.id) {
       // const status = await this.addressStatus(params);
-      await Addresses.query().upsertGraph(decamelizeKeys(params));
-      return 'Address edited';
+      const res = await Addresses.query().upsertGraph(decamelizeKeys(params));
+      return this.address(res.id);
     } else {
       // perform address add
-      await Addresses.query().insertGraph(decamelizeKeys(params));
-      return 'Address added';
+      delete params.id;
+      const res = await Addresses.query().insertGraph(decamelizeKeys(params));
+      return this.address(res.id);
     }
   }
 

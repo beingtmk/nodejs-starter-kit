@@ -1,3 +1,6 @@
+#import "./Address.graphql"
 mutation addOrEditAddress($input: AddressInput!) {
-  addOrEditAddress(input: $input)
+  addOrEditAddress(input: $input) {
+    ...AddressInfo
+  }
 }

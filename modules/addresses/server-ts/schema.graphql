@@ -13,8 +13,8 @@ extend type Query {
 }
 
 extend type Mutation {
-  addAddress(input: AddressInput!): Boolean!
-  addOrEditAddress(input: AddressInput!): String!
+  addAddress(input: AddressInput!): Address!
+  addOrEditAddress(input: AddressInput!): Address!
   deleteAddress(id: Int): Boolean!
 }
 

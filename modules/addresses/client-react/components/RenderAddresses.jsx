@@ -51,7 +51,6 @@ const HomeAddress = styled.div`
   background-color: ${props => props.backgroundColor || 'rgba(35, 177, 149, 0.2)'};
   width: 100%;
   border-radius: 10px;
-
   ${props =>
     props.selectable
       ? css`
@@ -84,7 +83,6 @@ const AddNewAddressBlock = styled.div`
   height: 215px;
   background-color: white;
   width: 275px !important;
-
   &:hover {
     border: 3px solid rgba(175, 226, 217, 0.81);
     width: 275px !important;
@@ -105,13 +103,13 @@ const PadB30 = styled.div`
 class RenderAddress extends React.Component {
   constructor(props) {
     super(props);
-    this.props.isSelectable ? this.props.onSelect(0) : null;
+    // this.props.isSelectable ? this.props.onSelect(this.props.addresses[0].id) : null;
   }
 
   state = {
     visible: [],
     newAddressState: false,
-    address: 0
+    address: null
   };
 
   componentDidMount() {
@@ -131,8 +129,7 @@ class RenderAddress extends React.Component {
   }
 
   renderCondition(e, id) {
-    this.setState({ address: e });
-    this.props.isSelectable ? this.props.onSelect(id) : null;
+    id && (this.setState({ address: e }), this.props.isSelectable ? this.props.onSelect(id) : null);
   }
 
   modalControl = (index, visiblity) => {
@@ -187,11 +184,11 @@ class RenderAddress extends React.Component {
 
     //Form field Section-->>
     const keys = [
-      { key: 'streetAddress1', label: 'streetAddress' },
-      { key: 'streetAddress2', label: 'streetAddress' },
-      { key: 'city', label: 'city' },
-      { key: 'state', label: 'state' },
-      { key: 'pinCode', label: 'pinCode' }
+      { key: 'streetAddress1', label: 'Street address 1' },
+      { key: 'streetAddress2', label: 'Street address 2' },
+      { key: 'city', label: 'City' },
+      { key: 'state', label: 'State' },
+      { key: 'pinCode', label: 'Pin code' }
     ];
 
     let formItems = [];
@@ -209,7 +206,7 @@ class RenderAddress extends React.Component {
                   component={RenderField}
                   placeholder={k.label}
                   type="text"
-                  label={t(`${label}.${k.label}`)}
+                  label={k.label}
                   value={address[k.key]}
                 />
               </FormItem>
@@ -270,7 +267,6 @@ class RenderAddress extends React.Component {
         )
       );
     }
-
     return (
       <>
         <Grid.Provider
@@ -279,7 +275,7 @@ class RenderAddress extends React.Component {
           breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}
         >
           <>
-            <h3 className="Addresses">Addresses</h3>
+            {/* <h3 className="Addresses">Addresses</h3> */}
             <br />
             <Grid.Bounds direction="vertical" halign="center">
               <Row>
@@ -335,9 +331,7 @@ class RenderAddress extends React.Component {
     );
   }
 }
-
 export default RenderAddress;
-
 RenderAddress.propTypes = {
   t: PropTypes.func,
   addresses: PropTypes.any,
