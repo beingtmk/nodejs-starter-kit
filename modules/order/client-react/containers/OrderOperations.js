@@ -153,6 +153,10 @@ export const withFilterUpdating = Component =>
       },
       onStateChange(state) {
         mutate({ variables: { filter: { state } } });
+      },
+      onUserStateChange(consumerId, state) {
+        console.log('consumerId, state', consumerId, state);
+        mutate({ variables: { filter: { consumerId, state } } });
       }
     })
   })(Component);

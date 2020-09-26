@@ -35,7 +35,7 @@ const SuggestedListComponent = props => {
           <br />
           <br />
           <br />
-          <Spin />
+          <Spin size="large" />
         </div>
       }
       endMessage={

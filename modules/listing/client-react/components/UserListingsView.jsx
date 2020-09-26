@@ -21,7 +21,7 @@ const MyListingsView = props => {
         ]}
       />
       {loading && !userListings ? (
-        <Spin />
+        <Spin size="large" />
       ) : (
         <>
           <Row>

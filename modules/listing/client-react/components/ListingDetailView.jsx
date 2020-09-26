@@ -395,7 +395,7 @@ class ListingDetailView extends Component {
             <br />
             <br />
             <br />
-            <Spin />
+            <Spin size="large" />
           </div>
         )}
         {!loading && listing && (

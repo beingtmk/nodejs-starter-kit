@@ -6,7 +6,7 @@ import update from 'immutability-helper';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withCurrentUser, withOrders } from './OrderOperations';
+import { withCurrentUser, withOrdersState, withFilterUpdating, withOrderStates, withOrders } from './OrderOperations';
 
 import MyOrdersView from '../components/MyOrdersView';
 
@@ -16,23 +16,30 @@ const MyOrdersContainer = compose(withOrders)(props => {
 });
 
 const MyOrders = props => {
-  const { currentUser } = props;
+  const { currentUser, filter } = props;
 
   // console.log('props', props);
   return (
-    <MyOrdersContainer filter={{ consumerId: currentUser && currentUser.id }} {...props}>
-      <MyOrdersView />
+    <MyOrdersContainer filter={{ consumerId: currentUser && currentUser.id, ...filter }}>
+      <MyOrdersView {...props} />
     </MyOrdersContainer>
   );
 };
 
 MyOrders.propTypes = {
   //   usersUpdated: PropTypes.object,
+  filter: PropTypes.object,
   //   updateQuery: PropTypes.func,
-  currentUser: PropTypes.func,
+  currentUser: PropTypes.object,
   t: PropTypes.func
   //   subscribeToMore: PropTypes.func,
   //   filter: PropTypes.object
 };
 
-export default compose(withCurrentUser, translate('order'))(MyOrders);
+export default compose(
+  withCurrentUser,
+  withOrdersState,
+  withFilterUpdating,
+  withOrderStates,
+  translate('order')
+)(MyOrders);

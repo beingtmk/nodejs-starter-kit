@@ -12,7 +12,10 @@ const { itemsNumber, type } = settings.pagination.web;
 const Loading = ({ t }) => (
   <div style={{ minHeight: '20vh', paddingTop: '10vh' }} align="center">
     {/* <Loader text={'Loading'} /> */}
-    <Spin />
+    <br />
+    <br />
+    <br />
+    <Spin size="large" />
   </div>
 );
 Loading.propTypes = { t: PropTypes.func };

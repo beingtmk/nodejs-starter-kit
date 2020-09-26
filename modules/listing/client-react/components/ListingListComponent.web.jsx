@@ -17,7 +17,7 @@ const Loading = ({ t }) => (
     <br />
     <br />
     <br />
-    <Spin text={t('listing.loadMsg')} />
+    <Spin size="large" text={t('listing.loadMsg')} />
   </div>
 );
 Loading.propTypes = { t: PropTypes.func };

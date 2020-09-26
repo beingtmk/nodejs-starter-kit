@@ -55,7 +55,7 @@ class CatalogueWithInfiniteScroll extends Component {
         hasMore={this.state.hasMore}
         loader={
           <div align="center">
-            <Spin />
+            <Spin size="large" />
           </div>
         }
         endMessage={

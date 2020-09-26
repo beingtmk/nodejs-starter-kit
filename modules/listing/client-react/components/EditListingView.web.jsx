@@ -40,7 +40,7 @@ const EditListingView = props => {
             <br />
             <br />
             <br />
-            <Spin text={t('listing.loadMsg')} />
+            <Spin size="large" text={t('listing.loadMsg')} />
           </div>
         ) : (
           <>

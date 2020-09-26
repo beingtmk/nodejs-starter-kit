@@ -37,7 +37,7 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
           <br />
           <br />
           <br />
-          <Spin />
+          <Spin size="large" />
         </div>
       ) : (
         <>

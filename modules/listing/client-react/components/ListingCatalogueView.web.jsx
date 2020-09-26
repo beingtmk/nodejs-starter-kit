@@ -54,7 +54,7 @@ const ListingCatalogueView = props => {
           <br />
           <br />
           <br />
-          <Spin />
+          <Spin size="large" />
         </div>
       )}
       {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}

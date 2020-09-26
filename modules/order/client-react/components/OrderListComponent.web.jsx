@@ -17,7 +17,7 @@ const Loading = () => (
     <br />
     <br />
     <br />
-    <Spin />
+    <Spin size="large" />
   </div>
 );
 Loading.propTypes = { t: PropTypes.func };

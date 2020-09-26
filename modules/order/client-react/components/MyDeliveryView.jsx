@@ -82,7 +82,7 @@ const MyOrdersView = props => {
         <div align="center">
           <br />
           <br />
-          <Spin />
+          <Spin size="large" />
         </div>
       )}
       {orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />}

@@ -104,7 +104,7 @@ const CheckoutOrder = props => {
       <div align="center">
         <br />
         <br />
-        <Spin />
+        <Spin size="large" />
       </div>
     );
   }

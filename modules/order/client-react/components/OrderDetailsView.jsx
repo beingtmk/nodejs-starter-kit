@@ -47,7 +47,7 @@ const OrderDetailsView = props => {
                           <h4>The order will be delivered to the address below:</h4>
                           <hr />
                           <Row type="flex" justify="center" align="middle">
-                            <AddressView addresses={[address]} addressId={address.id} />
+                            {address && <AddressView addresses={[address]} addressId={address.id} />}
                           </Row>
                         </Card>
                       </Col>

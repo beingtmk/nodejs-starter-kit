@@ -32,7 +32,7 @@ const SuggestedListComponent = props => {
       hasMore={hasMore}
       loader={
         <div align="center">
-          <Spin />
+          <Spin size="large" />
         </div>
       }
       endMessage={

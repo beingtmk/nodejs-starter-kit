@@ -121,7 +121,7 @@ class Content5 extends React.PureComponent {
               <br />
               <br />
               <br />
-              <Spin />
+              <Spin size="large" />
             </div>
           )}
           {listings && listings.totalCount ? (

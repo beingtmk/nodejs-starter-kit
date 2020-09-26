@@ -53,7 +53,7 @@ class MyListingsView extends Component {
           ]}
         />
         {/* {loading && !orders ? (
-          <Spin />
+          <Spin size="large"/>
         ) : ( */}
         <>
           <Row>
