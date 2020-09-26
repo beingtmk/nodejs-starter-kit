@@ -48,6 +48,12 @@ export default new ClientModule({
 
     <Route
       exact
+      path={ROUTES.orderDetail}
+      component={loadable(() => import('./containers/OrderDetails.web').then(c => c.default))}
+    />,
+
+    <Route
+      exact
       path={ROUTES.myOrder}
       component={loadable(() => import('./containers/MyOrder').then(c => c.default))}
     />,

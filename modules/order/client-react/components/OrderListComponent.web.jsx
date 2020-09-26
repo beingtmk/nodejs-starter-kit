@@ -129,7 +129,7 @@ const OrderListComponent = props => {
       key: 'actions',
       render: (text, record) => (
         <div>
-          <Link to={'/todo'}>
+          <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
             <Button color="primary" shape="circle" icon="eye" />
           </Link>
           &nbsp; &nbsp;
