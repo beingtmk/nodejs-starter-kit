@@ -8,7 +8,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import { withCurrentUser, withOrders } from './OrderOperations';
 
-// import MyDeliveryView from '../components/MyDeliveryView';
+import MyDeliveryView from '../components/MyDeliveryView';
 
 const MyDeliveryContainer = compose(withOrders)(props => {
   console.log('props', props);
@@ -21,8 +21,7 @@ const MyDelivery = props => {
   // console.log('props', props);
   return (
     <MyDeliveryContainer filter={{ vendorId: currentUser && currentUser.id }} {...props}>
-      <h1>hello</h1>
-      {/* <MyDeliveryView /> */}
+      <MyDeliveryView />
     </MyDeliveryContainer>
   );
 };
