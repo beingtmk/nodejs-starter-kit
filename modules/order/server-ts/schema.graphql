@@ -58,6 +58,12 @@ type Orders {
   pageInfo: OrderPageInfo
 }
 
+type OrderStates {
+  id: Int
+  state: String
+  isActive: Boolean
+}
+
 extend type Query {
   order(id: Int!): Order
   orders(
@@ -68,6 +74,7 @@ extend type Query {
   ): Orders
   getCart(userId: Int): Order
 
+  orderStates: [OrderStates]
   # userDeliveries(userId: Int): [Order]
 }
 

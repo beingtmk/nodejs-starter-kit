@@ -72,16 +72,6 @@ const OrderListComponent = props => {
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'vendor.username')} href="#">
-          Vendor {renderOrderByArrow('vendor.username')}
-        </a>
-      ),
-      dataIndex: 'vendor',
-      key: 'vendor',
-      render: (text, record) => <a href={`/todo`}>{record.vendor && record.vendor.username}</a>
-    },
-    {
-      title: (
         <a onClick={e => handleOrderBy(e, 'consumer.username')} href="#">
           Consumer {renderOrderByArrow('consumer.username')}
         </a>
@@ -155,8 +145,9 @@ const OrderListComponent = props => {
   };
 
   const RenderOrders = () => (
-    <Fragment>
+    <>
       <Table dataSource={orders.edges.map(({ node }) => node)} columns={columns} />
+      <br />
       <div align="center">
         <Pagination
           itemsPerPage={orders.edges.length}
@@ -168,7 +159,7 @@ const OrderListComponent = props => {
           defaultPageSize={itemsNumber}
         />
       </div>
-    </Fragment>
+    </>
   );
 
   return (

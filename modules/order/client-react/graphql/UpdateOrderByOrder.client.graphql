@@ -1,0 +1,5 @@
+#import "./OrdersState.client.graphql"
+
+mutation updateOrderByOrder($orderBy: OrderByListInput!) {
+  updateOrderByOrder(orderBy: $orderBy) @client
+}

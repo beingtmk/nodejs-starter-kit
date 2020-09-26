@@ -9,6 +9,7 @@ import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 
+import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
@@ -117,5 +118,6 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'order', resources }]
 });

@@ -179,6 +179,10 @@ export default class OrderDAO extends Model {
     return res[0];
   }
 
+  public async orderStates() {
+    return camelizeKeys(await OrderState.query());
+  }
+
   // public async userDeliveries(userId: number) {
   //   const res = camelizeKeys(
   //     await OrderDAO.query()

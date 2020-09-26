@@ -1,0 +1,10 @@
+fragment OrdersStateInfo on OrdersState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    state
+  }
+}

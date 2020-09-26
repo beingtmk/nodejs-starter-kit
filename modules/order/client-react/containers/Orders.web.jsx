@@ -5,7 +5,13 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import OrdersView from '../components/OrdersView';
-import { withOrders } from './OrderOperations';
+import {
+  withOrdersState,
+  withOrders,
+  withFilterUpdating,
+  withOrderByUpdating,
+  withOrderStates
+} from './OrderOperations';
 
 const Orders = props => {
   // const { t, updateQuery, subscribeToMore } = props;
@@ -30,4 +36,11 @@ const Orders = props => {
 //   filter: PropTypes.object
 // };
 
-export default compose(withOrders, translate('order'))(Orders);
+export default compose(
+  withOrdersState,
+  withOrders,
+  withFilterUpdating,
+  withOrderByUpdating,
+  withOrderStates,
+  translate('order')
+)(Orders);

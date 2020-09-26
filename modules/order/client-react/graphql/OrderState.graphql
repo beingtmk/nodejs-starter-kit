@@ -1,0 +1,5 @@
+fragment OrderStateInfo on OrderStates {
+  id
+  state
+  isActive
+}

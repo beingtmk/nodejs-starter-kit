@@ -64,6 +64,9 @@ export default (pubsub: any) => ({
     ),
     getCart: withAuth((obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) => {
       return Order.getCart(userId || identity.id);
+    }),
+    orderStates: withAuth((obj: any, {}: any, { Order, req: { identity } }: any) => {
+      return Order.orderStates();
     })
     // userDeliveries: withAuth((obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) => {
     //   return Order.userDeliveries(userId || identity.id);

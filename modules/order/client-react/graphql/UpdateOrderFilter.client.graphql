@@ -1,0 +1,5 @@
+#import "./OrdersState.client.graphql"
+
+mutation updateFilterOrder($filter: FilterOrderInput!) {
+  updateFilterOrder(filter: $filter) @client
+}

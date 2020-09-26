@@ -3,12 +3,18 @@ import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import ORDERS_STATE_QUERY from '../graphql/OrdersStateQuery.client.graphql';
 import ORDERS_QUERY from '../graphql/OrdersQuery.graphql';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
+import ORDER_STATES from '../graphql/OrderStatesQuery.graphql';
 
 // Mutation
 import ADD_TO_CART from '../graphql/AddToCart.graphql';
 import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
+
+// Filter
+import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
+import UPDATE_ORDER_FILTER from '../graphql/UpdateOrderFilter.client.graphql';
 
 import settings from '../../../../settings';
 
@@ -16,6 +22,14 @@ const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
+
+// Query
+export const withOrdersState = Component =>
+  graphql(ORDERS_STATE_QUERY, {
+    props({ data: { ordersState, loading } }) {
+      return { ...removeTypename(ordersState), loadingState: loading };
+    }
+  })(Component);
 
 export const withCurrentUser = Component =>
   graphql(CURRENT_USER_QUERY, {
@@ -53,7 +67,7 @@ export const withOrders = Component =>
                 totalCount,
                 edges: displayedEdges,
                 pageInfo,
-                __typename: 'Listings'
+                __typename: 'Orders'
               }
             };
           }
@@ -76,6 +90,16 @@ export const withGetCart = Component =>
         throw new Error(error);
       }
       return { cartLoading: loading, getCart, subscribeToMore, refetch };
+    }
+  })(Component);
+
+export const withOrderStates = Component =>
+  graphql(ORDER_STATES, {
+    props({ data: { loading, error, orderStates, subscribeToMore, refetch } }) {
+      if (error) {
+        throw new Error(error);
+      }
+      return { orderStatesLoading: loading, orderStates, subscribeToMore, refetch };
     }
   })(Component);
 
@@ -107,6 +131,28 @@ export const withDeleteCartItem = Component =>
             }
           }
         });
+      }
+    })
+  })(Component);
+
+export const withOrderByUpdating = Component =>
+  graphql(UPDATE_ORDER_BY_ORDER, {
+    props: ({ mutate }) => ({
+      onOrderBy: orderBy => {
+        mutate({ variables: { orderBy } });
+      }
+    })
+  })(Component);
+
+export const withFilterUpdating = Component =>
+  graphql(UPDATE_ORDER_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        // console.log("searchtext", searchText);
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onStateChange(state) {
+        mutate({ variables: { filter: { state } } });
       }
     })
   })(Component);

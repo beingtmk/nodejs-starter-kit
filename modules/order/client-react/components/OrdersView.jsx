@@ -7,7 +7,7 @@ import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
-// import OrderFilterComponent from './OrderFilterComponent.web';
+import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
 
 const renderMetaData = t => (
@@ -39,7 +39,7 @@ const OrderView = props => {
       <br />
       <hr />
       <br />
-      {/* <OrderFilterComponent {...props} /> */}
+      <OrderFilterComponent {...props} />
       <Divider />
       <hr />
       <OrderListComponent {...props} />
