@@ -152,18 +152,16 @@ export default (pubsub: any) => ({
     deleteOrder: withAuth(async (obj: any, { id }: Identifier, context: any) => {
       const order = await context.Order.order(id);
       const isDeleted = await context.Order.deleteOrder(id);
-      console.log('order', order);
-      const orderItem = await context.Order.order(order.orderDetail[0].orderId);
       if (isDeleted) {
         pubsub.publish(ORDERS_SUBSCRIPTION, {
           ordersUpdated: {
             mutation: 'UPDATED',
-            node: orderItem
+            node: order
           }
         });
-        return { id: order.id };
+        return true;
       } else {
-        return { id: null };
+        return false;
       }
     }),
     patchAddress: withAuth(

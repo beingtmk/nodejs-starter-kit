@@ -18,10 +18,11 @@ import {
 } from './ListingOperations';
 
 const Listing = props => {
-  const { subscribeToMore, filter, editListing } = props;
+  const { subscribeToMore, editListing } = props;
+  const filter = {};
 
   useEffect(() => {
-    const subscribe = subscribeToListings(subscribeToMore, filter);
+    const subscribe = subscribeToListings(subscribeToMore, props.filter);
     return () => subscribe();
   });
 
@@ -37,7 +38,7 @@ const Listing = props => {
   };
 
   console.log('props', props);
-  return <ListingView {...props} onToggle={handleToggle} />;
+  return <ListingView onToggle={handleToggle} filter={filter} {...props} />;
 };
 
 Listing.propTypes = {

@@ -156,7 +156,7 @@ export const withListingBookmarkStatus = Component =>
       } else if (props.navigation) {
         id = props.navigation.state.params.id;
       }
-      // console.log('props LO', props, 'id', id);
+      console.log('id', id);
       return {
         variables: {
           listingId: Number(id || (props.listing && props.listing.id)),

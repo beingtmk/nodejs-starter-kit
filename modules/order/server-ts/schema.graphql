@@ -98,7 +98,7 @@ extend type Mutation {
   # Create new order
   addOrder(input: AddOrderInput!): Order
   # Delete a order
-  deleteOrder(id: Int!): Order
+  deleteOrder(id: Int!): Boolean
   # Edit a order
   editOrder(input: EditOrderInput!): Order # do editOrderDetail
   # Patch a order

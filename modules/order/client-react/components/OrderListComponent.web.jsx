@@ -30,7 +30,7 @@ const cancel = () => {
 };
 
 const OrderListComponent = props => {
-  const { onToggle, orderBy, onOrderBy, loading, orders, t, loadData, deleteOrder } = props;
+  const { onToggle, orderBy, onOrderBy, loading, orders, t, loadData, onDelete } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -125,7 +125,7 @@ const OrderListComponent = props => {
           &nbsp; &nbsp;
           <Popconfirm
             title="Are you sure delete this order?"
-            onConfirm={() => deleteOrder(record.id)}
+            onConfirm={() => onDelete(record.id)}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
@@ -178,7 +178,7 @@ OrderListComponent.propTypes = {
   orders: PropTypes.object,
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
-  deleteOrder: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   onToggle: PropTypes.func,
   t: PropTypes.func,
   history: PropTypes.object

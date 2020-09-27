@@ -11,6 +11,7 @@ import ORDER_STATES from '../graphql/OrderStatesQuery.graphql';
 // Mutation
 import ADD_TO_CART from '../graphql/AddToCart.graphql';
 import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
+import DELETE_ORDER from '../graphql/DeleteOrder.graphql';
 
 // Filter
 import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
@@ -135,6 +136,25 @@ export const withDeleteCartItem = Component =>
     })
   })(Component);
 
+export const withDeleteOrder = Component =>
+  graphql(DELETE_ORDER, {
+    props: ({ mutate }) => ({
+      deleteOrder: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteOrder: {
+              id: id,
+              __typename: 'Order'
+            }
+          }
+        });
+      }
+    })
+  })(Component);
+
+// Filter
 export const withOrderByUpdating = Component =>
   graphql(UPDATE_ORDER_BY_ORDER, {
     props: ({ mutate }) => ({

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { message } from 'antd';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
@@ -10,11 +11,13 @@ import {
   withOrders,
   withFilterUpdating,
   withOrderByUpdating,
-  withOrderStates
+  withOrderStates,
+  withDeleteOrder
 } from './OrderOperations';
 
 const Orders = props => {
-  // const { t, updateQuery, subscribeToMore } = props;
+  const { t, updateQuery, deleteOrder, subscribeToMore } = props;
+  const filter = {};
   // const filter = { isActive: true };
   // const usersUpdated = useUsersWithSubscription(subscribeToMore, filter);
   // console.log('users', props);
@@ -24,8 +27,20 @@ const Orders = props => {
   //   }
   // });
 
+  const handleDelete = id => {
+    try {
+      message.destroy();
+      message.error('Processing.');
+      deleteOrder(id);
+      message.destroy();
+      message.error('Order deleted.');
+    } catch (e) {
+      throw Error(e);
+    }
+  };
+
   console.log('props', props);
-  return <OrdersView {...props} />;
+  return <OrdersView onDelete={handleDelete} filter={filter} {...props} />;
 };
 
 // Orders.propTypes = {
@@ -42,5 +57,6 @@ export default compose(
   withFilterUpdating,
   withOrderByUpdating,
   withOrderStates,
+  withDeleteOrder,
   translate('order')
 )(Orders);
