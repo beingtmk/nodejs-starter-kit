@@ -10,7 +10,7 @@ query faqs(
     edges {
       cursor
       node {
-        ...FaqsInfo
+        ...FaqInfo
       }
     }
     pageInfo {

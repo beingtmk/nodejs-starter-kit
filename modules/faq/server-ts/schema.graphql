@@ -57,6 +57,7 @@ extend type Mutation {
 }
 
 input AddFaqInput {
+  id: Int
   question: String!
   answer: String
   isFeatured: Boolean

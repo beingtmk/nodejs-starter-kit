@@ -4,7 +4,7 @@ subscription onFaqsUpdated($filter: FaqFilterListInput) {
   faqsUpdated(filter: $filter) {
     mutation
     node {
-      ...FaqsInfo
+      ...FaqInfo
     }
   }
 }

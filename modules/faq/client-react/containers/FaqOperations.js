@@ -186,6 +186,7 @@ const withOrderByUpdating = (Component) =>
 
 const updateFaqsState = (faqsUpdated, updateQuery) => {
   const { mutation, node } = faqsUpdated;
+  console.log('updatedFaqsState', mutation, node);
   updateQuery((prev) => {
     switch (mutation) {
       case "CREATED":

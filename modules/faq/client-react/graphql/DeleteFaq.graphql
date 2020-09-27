@@ -2,7 +2,7 @@
 
 
 mutation deleteFaq($id: Int!) {
-  deleteFa q(id: $id) {
+  deleteFaq(id: $id) {
     ...FaqInfo
   }
 }

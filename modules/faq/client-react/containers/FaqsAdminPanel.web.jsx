@@ -45,27 +45,36 @@ export default compose(
   graphql(TOGGLE_FEATURED_FAQ, {
     props: ({ mutate }) => ({
       toggleFeatured: async (id) => {
-        const { data: faq } = await mutate({
-          variables: { id },
-        });
-        return faq;
+        try {
+          const { data: faq } = await mutate({
+            variables: { id },
+          });
+          message.success("Faq Is Featured Status Changed");
+          return faq;
+        } catch (e) {
+          message.error("Operation Failed");
+        }
       },
     }),
   }),
   graphql(DELETE_FAQ, {
     props: ({ mutate }) => ({
       deleteFaq: (id) => {
-        mutate({
-          variables: { id },
-          optimisticResponse: {
-            __typename: "Mutation",
-            deleteFaq: {
-              id,
-              __typename: "Faq",
+        try {
+          mutate({
+            variables: { id },
+            optimisticResponse: {
+              __typename: "Mutation",
+              deleteFaq: {
+                id,
+                __typename: "Faq",
+              },
             },
-          },
-        });
-        message.warning("Faq deleted.");
+          });
+          message.success("Faq deleted.");
+        } catch (e) {
+          message.error("Operation Failed");
+        }
       },
     }),
   })

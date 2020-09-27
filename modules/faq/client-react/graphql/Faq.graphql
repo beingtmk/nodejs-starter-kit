@@ -1,4 +1,4 @@
-fragment FaqsInfo on Faq {
+fragment FaqInfo on Faq {
     id
     question
     answer
