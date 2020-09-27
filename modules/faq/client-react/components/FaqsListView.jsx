@@ -7,13 +7,13 @@ import { translate } from "@gqlapp/i18n-client-react";
 import { PageLayout, Button } from "@gqlapp/look-client-react";
 import Loader from "@gqlapp/look-client-react/ui-antd/components/Loader";
 
-// import FaqFilterComponent from './FaqFilterComponent';
+import FaqFilterComponent from "./FaqFilterComponent";
 import FaqListComponent from "./FaqListComponent";
 
 import settings from "../../../../settings";
 
 const FaqsListView = (props) => {
-  const { t, loading, faqs } = props;
+  const { t, loading, faqs, stateLoading } = props;
   return (
     <PageLayout>
       {/* Render metadata */}
@@ -32,7 +32,7 @@ const FaqsListView = (props) => {
       </Link>
       <hr />
 
-      {/* <FaqFilterComponent {...props} /> */}
+      {!stateLoading && <FaqFilterComponent {...props} />}
 
       <FaqListComponent {...props} />
     </PageLayout>

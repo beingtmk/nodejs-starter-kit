@@ -3,10 +3,8 @@ import { camelizeKeys, decamelizeKeys, decamelize } from "humps";
 import { knex, returnId, orderedFor } from "@gqlapp/database-server-ts";
 import { has } from "lodash";
 
-
 // Give the knex object to objection.
 Model.knex(knex);
-
 
 export default class Faq extends Model {
   static get tableName() {
@@ -18,12 +16,7 @@ export default class Faq extends Model {
   }
   // Query functions
 
-  public async faqs(
-    limit: number,
-    after: any,
-    orderBy: any,
-    filter: any
-  ) {
+  public async faqs(limit: number, after: any, orderBy: any, filter: any) {
     const queryBuilder = Faq.query();
     if (orderBy && orderBy.column) {
       let column = orderBy.column;
@@ -35,11 +28,37 @@ export default class Faq extends Model {
       queryBuilder.orderBy(decamelize(`faq.${column}`), order);
     }
 
-
     const allFaqItems = camelizeKeys(await queryBuilder);
     const total = allFaqItems.length;
     let res = {};
-    
+
+    if (filter) {
+      if (has(filter, "isFeatured") && filter.isFeatured !== false) {
+        queryBuilder.where(function() {
+          this.where("faq.is_featured", filter.isFeatured);
+        });
+      }
+      if (has(filter, "searchText") && filter.searchText !== "") {
+        queryBuilder
+          // .from('events')
+          // .leftJoin('listing_content AS ld', 'ld.listing_id', 'listing.id')
+          .groupBy("faq.id")
+          .where(function() {
+            this.where(
+              raw("LOWER(??) LIKE LOWER(?)", [
+                "faq.question",
+                `%${filter.searchText}%`,
+              ])
+            ).orWhere(
+              raw("LOWER(??) LIKE LOWER(?)", [
+                "faq.answer",
+                `%${filter.searchText}%`,
+              ])
+            );
+          });
+      }
+    }
+
     if (limit && after) {
       res = camelizeKeys(
         await queryBuilder
@@ -50,9 +69,7 @@ export default class Faq extends Model {
     } else if (limit && !after) {
       res = camelizeKeys(await queryBuilder.limit(limit).groupBy("faq.id"));
     } else if (!limit && after) {
-      res = camelizeKeys(
-        await queryBuilder.offset(after).groupBy("faq.id")
-      );
+      res = camelizeKeys(await queryBuilder.offset(after).groupBy("faq.id"));
     } else {
       res = camelizeKeys(await queryBuilder.groupBy("faq.id"));
     }
@@ -64,7 +81,7 @@ export default class Faq extends Model {
     return camelizeKeys(
       await Faq.query()
         .findById(id)
-        
+
         .orderBy("id", "desc")
     );
   }
