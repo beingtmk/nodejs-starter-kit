@@ -22,7 +22,7 @@ export const subscribeToCart = (subscribeToMore, orderId, history) =>
       }
     ) => {
       let newResult = prev;
-      // console.log('mutation', mutation, node);
+      console.log('mutation', mutation, node);
       if (mutation === 'UPDATED') {
         newResult = onEditCart(prev, node);
       } else if (mutation === 'DELETED') {

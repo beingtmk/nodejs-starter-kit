@@ -112,7 +112,7 @@ export default (pubsub: any) => ({
     }),
     addOrder: withAuth(async (obj: any, { input }: any, context: any) => {
       if (!input.userId) {
-        input.userId = context.identity.id;
+        input.userId = context.req.identity.id;
       }
       const id = await context.Order.addOrder(input);
       const order = await context.Order.order(id);
@@ -194,16 +194,9 @@ export default (pubsub: any) => ({
     }),
     patchAddress: withAuth(
       async (obj: any, { cartId, addressId }: { cartId: number; addressId: number }, { Order, req: { identity } }) => {
-        try {
-          const orderId = await Order.patchAddress(cartId, addressId);
+        const orderId = await Order.patchAddress(cartId, addressId);
+        if (orderId) {
           const order = await Order.order(orderId);
-          // console.log('resolver2', order);
-          pubsub.publish(ORDERS_SUBSCRIPTION, {
-            ordersUpdated: {
-              mutation: 'ADDRESS_UPDATED',
-              node: order
-            }
-          });
           pubsub.publish(ORDER_SUBSCRIPTION, {
             orderUpdated: {
               mutation: 'UPDATED',
@@ -212,8 +205,8 @@ export default (pubsub: any) => ({
             }
           });
           return true;
-        } catch (e) {
-          return e;
+        } else {
+          return false;
         }
       }
     ),

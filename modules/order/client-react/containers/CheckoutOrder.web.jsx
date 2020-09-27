@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Spin, message } from 'antd';
+import { message } from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { graphql } from 'react-apollo';
 import update from 'immutability-helper';
 
-import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import { ORDER_STATES } from '@gqlapp/order-common';
-import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
-import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 import ROUTES from '../routes';
 
 // import ORDER_PAYMENT from '../graphql/OrderPayment.graphql';
@@ -15,16 +12,16 @@ import ROUTES from '../routes';
 
 import CheckoutOrderView from '../components/CheckoutOrderView';
 import { withCurrentUser, withGetCart, withPatchOrderState } from './OrderOperations';
+import { subscribeToCart } from './OrderSubscriptions';
 
 const CheckoutOrder = props => {
   const { history, navigation, patchOrderState, getCart, orderPayment, subscribeToMore, refetch } = props;
 
   useEffect(() => {
-    const subscribe = subscribeToOrders(subscribeToMore);
-    refetch();
+    const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, history);
     return () => subscribe();
   });
-  // console.log('orderPayment', orderPayment);
+
   const openCheckout = () => {
     // Variables
     // props.orderPaymentRefetch();
@@ -101,15 +98,6 @@ const CheckoutOrder = props => {
   }
 
   // console.log('props', props);
-  if (props.loading) {
-    return (
-      <div align="center">
-        <br />
-        <br />
-        <Spin size="large" />
-      </div>
-    );
-  }
   return (
     <>
       <CheckoutOrderView openCheckout={openCheckout} onSubmit={onSubmit} {...props} />
@@ -124,67 +112,7 @@ const CheckoutOrder = props => {
     </>
   );
 };
-const onAddOrder = (prev, node) => {
-  // ignore if duplicate
-  // if (prev.blogs.some(item => node.id === item.id)) {
-  //   return prev;
-  // }
-  return update(prev, {
-    getCart: {
-      orderDetails: {
-        $push: [node]
-      }
-    }
-  });
-};
-const onAddressUpdate = (prev, node) => {
-  // ignore if duplicate
-  // if (prev.blogs.some(item => node.id === item.id)) {
-  //   return prev;
-  // }
-  return update(prev, {
-    getCart: {
-      $set: [node]
-    }
-  });
-};
-const onDeleteOrder = (prev, node) => {
-  // ignore if not found
-  if (prev.id !== node.id) {
-    return prev;
-  }
-  return update(prev, {
-    getCart: {
-      $set: node
-    }
-  });
-};
-const subscribeToOrders = subscribeToMore =>
-  subscribeToMore({
-    document: ORDERS_SUBSCRIPTION,
-    updateQuery: (
-      prev,
-      {
-        subscriptionData: {
-          data: {
-            ordersUpdated: { mutation, node }
-          }
-        }
-      }
-    ) => {
-      let newResult = prev;
-      if (mutation === 'CREATED') {
-        newResult = onAddOrder(prev, node);
-      } else if (mutation === 'UPDATED') {
-        newResult = onAddOrder(prev, node);
-      } else if (mutation === 'DELETED') {
-        newResult = onDeleteOrder(prev, node);
-      } else if (mutation === 'ADDRESS_UPDATED') {
-        newResult = onAddressUpdate(prev, node);
-      }
-      return newResult;
-    }
-  });
+
 export default compose(
   withCurrentUser,
   withGetCart,

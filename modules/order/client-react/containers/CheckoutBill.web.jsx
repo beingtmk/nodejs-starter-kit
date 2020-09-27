@@ -13,10 +13,17 @@ import PATCH_ADDRESS from '../graphql/PatchAddress.graphql';
 
 import CheckoutBillView from '../components/CheckoutBillView';
 import { withCurrentUser, withGetCart } from './OrderOperations';
+import { subscribeToCart } from './OrderSubscriptions';
 
 const CheckoutBill = props => {
-  const { history, navigation, patchAddress, addresses } = props;
+  const { history, navigation, patchAddress, addresses, subscribeToMore, getCart } = props;
   const [addressId, setAddressId] = React.useState(0);
+
+  React.useEffect(() => {
+    const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, history);
+    return () => subscribe();
+  });
+
   const handleSelect = id => {
     console.log('addresses id', id);
     setAddressId(id);

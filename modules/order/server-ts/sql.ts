@@ -269,11 +269,10 @@ export default class OrderDAO extends Model {
   public async patchAddress(cartId: number, addressId: number) {
     const order = camelizeKeys(
       await OrderDAO.query()
-        .eager('order_details')
+        .eager(eager)
         .findById(cartId)
     );
-    const orderDetailIds = order.orderDetails.map(oD => oD.id);
-    orderDetailIds.map((id: number) => this.patchAddressForOrderDetail(id, addressId));
+    await Promise.all(order.orderDetails.map(oD => this.patchAddressForOrderDetail(oD.id, addressId)));
     return order.id;
   }
   public async deleteOrderDetail(id: number) {

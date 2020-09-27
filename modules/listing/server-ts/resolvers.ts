@@ -85,7 +85,7 @@ export default (pubsub: any) => ({
     addListing: withAuth(async (obj: any, { input }: ListingInput, context: any) => {
       try {
         if (!input.userId) {
-          input.userId = context.identity.id;
+          input.userId = context.req.identity.id;
         }
         const id = await context.Listing.addListing(input);
         const listing = await context.Listing.listing(id);
