@@ -79,9 +79,7 @@ export default (pubsub: any) => ({
       }
       const id = await Order.addToCart(input);
       if (id) {
-        console.log('resolver2', id);
         const orderItem = await Order.order(id);
-        console.log('resolver2', orderItem);
         pubsub.publish(ORDERS_SUBSCRIPTION, {
           ordersUpdated: {
             mutation: 'CREATED',

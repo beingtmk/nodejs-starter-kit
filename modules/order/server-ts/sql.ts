@@ -108,14 +108,16 @@ export default class OrderDAO extends Model {
       // }
 
       if (has(filter, 'consumerId') && filter.consumerId !== 0) {
+        const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
         queryBuilder.where(function() {
-          this.where('consumer.id', filter.consumerId);
+          this.where('consumer.id', filter.consumerId).whereNot('order.order_state_id', '=', orderState.id);
         });
       }
 
       if (has(filter, 'vendorId') && filter.vendorId !== 0) {
+        const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
         queryBuilder.where(function() {
-          this.where('vendor.id', filter.vendorId);
+          this.where('vendor.id', filter.vendorId).whereNot('order.order_state_id', '=', orderState.id);
         });
       }
 
