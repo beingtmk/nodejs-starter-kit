@@ -1,0 +1,7 @@
+#import "./Faq.graphql"
+
+query faq($id: Int!) {
+  faq(id: $id) {
+    ...FaqInfo
+  }
+}

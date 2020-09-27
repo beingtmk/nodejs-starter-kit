@@ -3,7 +3,7 @@ exports.up = function(knex) {
     knex.schema.createTable('like', table => {
       table.increments('id');
       table.string('type');
-      table.string('type_id');
+      table.integer('type_id');
       table
         .integer('user_id')
         .unsigned()

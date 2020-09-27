@@ -1,0 +1,3 @@
+mutation updateFaqFilter($filter: FaqFilterListInput!) {
+  updateFaqFilter(filter: $filter) @client 
+}

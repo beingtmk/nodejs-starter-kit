@@ -1,0 +1,10 @@
+#import "./Faq.graphql"
+
+
+mutation editFaq($input: EditFaqInput!) {
+  editFaq(input: $input){
+        ...FaqInfo
+
+  }
+
+}

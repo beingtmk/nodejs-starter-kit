@@ -1,0 +1,85 @@
+# Entity
+type Faq {
+  id: Int!
+  question: String
+  answer: String
+  isFeatured: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type FaqEdges {
+  node: Faq
+  cursor: Int
+}
+
+type FaqList {
+  totalCount: Int
+  edges: [FaqEdges]
+  pageInfo: FaqPageInfo
+}
+type FaqPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+extend type Query {
+  faqs(
+    filter: FaqFilterListInput
+    limit: Int
+    after: Int
+    orderBy: OrderByFaqListInput
+  ): FaqList
+  # userGalleries(
+  #   userId: Int
+  #   filter: FaqFilterListInput
+  #   limit: Int
+  #   after: Int
+  #   orderBy: OrderByFaqListInput
+  # ): FaqList
+  faq(id: Int!): Faq
+  # participants(id: Int!): [Participant]
+}
+
+input FaqFilterListInput {
+  isFeatured: Boolean
+  searchText: String
+}
+
+input OrderByFaqListInput {
+  column: String
+  order: String
+}
+extend type Mutation {
+  addFaq(input: AddFaqInput!): Faq
+  editFaq(input: EditFaqInput!): Faq
+  deleteFaq(id: Int!): Faq
+  toggleFeaturedFaq(id: Int!): Faq
+}
+
+input AddFaqInput {
+  question: String!
+  answer: String
+  isFeatured: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+input EditFaqInput {
+  id: Int!
+  question: String!
+  answer: String
+  isFeatured: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+extend type Subscription {
+  # Subscription for faqs list
+  faqsUpdated(filter: FaqFilterListInput): UpdateFaqPayload
+}
+
+# Payload for eventUpdated Subscription
+type UpdateFaqPayload {
+  mutation: String!
+  node: Faq
+}

@@ -1,6 +1,6 @@
+import faq from '@gqlapp/faq-client-react';
 import group from '@gqlapp/group-client-react';
 import quiz from '@gqlapp/quiz-client-react';
-
 import tag from '@gqlapp/tag-client-react';
 import geolocation from '@gqlapp/geolocation-client-react';
 import bookmark from '@gqlapp/bookmark-client-react';
@@ -30,6 +30,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  faq,
   quiz,
   group,
   tag,

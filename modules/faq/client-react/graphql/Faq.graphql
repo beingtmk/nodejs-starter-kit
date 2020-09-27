@@ -1,0 +1,8 @@
+fragment FaqsInfo on Faq {
+    id
+    question
+    answer
+    isFeatured
+    createdAt
+    updatedAt
+}

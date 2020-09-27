@@ -1,0 +1,4 @@
+
+mutation updateOrderBy($orderBy: OrderByFaqListInput!) {
+  updateOrderByFaqList(orderBy: $orderBy) @client
+}

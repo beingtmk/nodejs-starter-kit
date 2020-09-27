@@ -1,0 +1,21 @@
+#import "./Faq.graphql"
+query faqs(
+  $limit: Int
+  $after: Int
+  $filter: FaqFilterListInput
+  $orderBy: OrderByFaqListInput
+) {
+  faqs(limit: $limit, after: $after, filter: $filter, orderBy: $orderBy) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...FaqsInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

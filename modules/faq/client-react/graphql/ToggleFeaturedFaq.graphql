@@ -1,0 +1,8 @@
+#import "./Faq.graphql"
+
+
+mutation toggleFeaturedFaq($id: Int!) {
+  toggleFeaturedFaq(id: $id) {
+    ...FaqInfo
+  }
+}

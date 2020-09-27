@@ -36,6 +36,9 @@ export { default as Pagination } from './Pagination';
 export { default as Avatar } from './Avatar';
 export { default as Icon } from './Icon';
 export { default as RenderContentField } from './RenderContentField';
+export { default as CatalogueWithInfiniteScroll } from './CatalogueWithInfiniteScroll';
+export { default as Loader } from './Loader';
+export { default as RenderTableLoading } from './RenderTableLoading';
 
 export { onAppCreate } from './NavBar';
 export { onAppCreateGroupLayout } from './GroupLayout';

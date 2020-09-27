@@ -1,0 +1,12 @@
+query FaqState {
+  faqState @client {
+    orderBy {
+      column
+      order
+    }
+    filter {
+      searchText
+      isFeatured
+    }
+  }
+}

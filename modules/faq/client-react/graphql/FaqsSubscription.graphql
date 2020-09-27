@@ -1,0 +1,10 @@
+#import "./Faq.graphql"
+
+subscription onFaqsUpdated($filter: FaqFilterListInput) {
+  faqsUpdated(filter: $filter) {
+    mutation
+    node {
+      ...FaqsInfo
+    }
+  }
+}
