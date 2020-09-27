@@ -4,7 +4,7 @@ import { withFormik } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, Button, Select, Option } from '@gqlapp/look-client-react';
+import { RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import UserAutoCompleteComponent from './UserAutoCompleteComponent';
@@ -95,8 +95,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             />
           )}
         /> */}
-      <Button
-        color="primary"
+      <SubmitButton
         type="submit"
         disabled={
           // load &&
@@ -104,7 +103,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         }
       >
         Submit
-      </Button>
+      </SubmitButton>
     </Form>
   );
 };

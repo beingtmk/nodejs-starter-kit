@@ -1,9 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Icon, Button, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { MODAL } from '@gqlapp/review-common';
@@ -38,10 +38,7 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
         <Col span={12}>
           <Row type="flex" justify="end">
             <Link to={ROUTES.add}>
-              <Button color="primary">
-                <Icon type="plus" />
-                {t('adminPanel.btn.add')}
-              </Button>
+              <AddButton color="primary">{t('adminPanel.btn.add')}</AddButton>
             </Link>
           </Row>
         </Col>

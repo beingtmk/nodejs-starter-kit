@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon, Modal } from 'antd';
+import { Modal } from 'antd';
 
+import { AddButton } from '@gqlapp/look-client-react';
 import ReviewFormComponent from './ReviewFormComponent';
 
 const ReviewModal = props => {
@@ -9,9 +10,7 @@ const ReviewModal = props => {
   const { t, cardTitle, addReview, modalName, modalId } = props;
   return (
     <>
-      <Button type={'primary'} onClick={() => setVisible(true)}>
-        <Icon type="plus-circle" /> {'Add review'}
-      </Button>
+      <AddButton onClick={() => setVisible(true)}>{'Add review'}</AddButton>
       <Modal title={cardTitle} visible={visible} onCancel={() => setVisible(false)} footer={null}>
         <ReviewFormComponent
           t={t}

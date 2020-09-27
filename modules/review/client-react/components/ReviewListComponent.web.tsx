@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import { Divider, Empty, Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { EditIcon, Table, agination, DeleteIcon } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ROUTES from '../routes/index';
+// import { , DeleteIcon } from '@gqlapp/look-client-react';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -123,22 +124,10 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       render: (text: string, record: Review) => (
         <div>
           <Link className="review-link" to={`${ROUTES.editLink}/${record.id}`}>
-            <Button color="primary" shape="circle">
-              <Icon type="edit" />
-            </Button>
+            <EditIcon />
           </Link>
           <Divider type="vertical" />
-          <Popconfirm
-            title="Are you sure delete this review?"
-            onConfirm={() => deleteReview(record.id)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="danger" shape="circle">
-              <Icon type="delete" />
-            </Button>
-          </Popconfirm>
+          <DeleteIcon onClick={() => deleteReview(record.id)} />
         </div>
       )
     }
