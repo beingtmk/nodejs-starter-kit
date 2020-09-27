@@ -137,9 +137,10 @@ export default class OrderDAO extends Model {
     queryBuilder
       .from('order')
       .leftJoin('user as consumer', 'consumer.id', 'order.consumer_id')
+      .leftJoin('order_state', 'order_state.id', 'order.order_state_id')
       .leftJoin('order_detail', 'order_detail.order_id', 'order.id')
       .leftJoin('user as vendor', 'vendor.id', 'order_detail.vendor_id')
-      .groupBy('order.id');
+      .groupBy('order.id', 'consumer.username', 'order_state.state');
 
     const allOrders = camelizeKeys(await queryBuilder);
     const total = allOrders.length;

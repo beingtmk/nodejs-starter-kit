@@ -107,12 +107,12 @@ const OrderListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'createdAt')} href="#">
-          Created at {renderOrderByArrow('createdAt')}
+          Created at - (en-IN) {renderOrderByArrow('createdAt')}
         </a>
       ),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text, record) => <>{record.createdAt}</>
+      render: (text, record) => <>{new Date(Number(record.createdAt)).toLocaleDateString('en-IN')}</>
     },
     {
       title: t('list.column.actions'),
