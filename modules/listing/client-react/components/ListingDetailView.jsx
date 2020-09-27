@@ -435,10 +435,13 @@ class ListingDetailView extends Component {
                       }}
                     >
                       <IfLoggedIn>
-                        <BookmarkComponent
-                          handleBookmark={() => handleBookmark(listing.id, listing.userId)}
-                          bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
-                        />
+                        {listing && (
+                          <BookmarkComponent
+                            handleBookmark={() => handleBookmark(listing.id, listing.userId)}
+                            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                            listing={listing}
+                          />
+                        )}
                       </IfLoggedIn>
                     </div>
                     <div className="carousel-arrow carousel-arrow-left" onClick={this.prevSlide}>

@@ -102,7 +102,7 @@ extend type Mutation {
   # Edit a order
   editOrder(input: EditOrderInput!): Order # do editOrderDetail
   # Patch a order
-  patchOrder(input: PatchOrderInput!): Order
+  patchOrderState(orderId: Int, state: String): Boolean
 
   changeDateInCart(input: ChangeDateInCartInput!): Boolean
 

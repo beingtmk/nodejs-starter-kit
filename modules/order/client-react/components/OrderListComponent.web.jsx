@@ -1,11 +1,12 @@
 /* eslint-disable react/display-name */
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popconfirm, message, Spin } from 'antd';
+import { Row, Col, Popconfirm, message, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { ORDER_STATES } from '@gqlapp/order-common';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
@@ -30,7 +31,7 @@ const cancel = () => {
 };
 
 const OrderListComponent = props => {
-  const { onToggle, orderBy, onOrderBy, loading, orders, t, loadData, onDelete } = props;
+  const { onPatchOrderState, orderBy, onOrderBy, loading, orders, t, loadData, onDelete, orderStates } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -93,14 +94,13 @@ const OrderListComponent = props => {
           name="state"
           defaultValue={record.orderState && record.orderState.state}
           style={{ width: '125px' }}
-          onChange={e => onToggle('isActive', e, record.id)}
+          onChange={e => onPatchOrderState(record.id, e)}
         >
-          <Option key={0} value={true}>
-            Active
-          </Option>
-          <Option key={1} value={false}>
-            In-active
-          </Option>
+          {orderStates.map((oS, i) => (
+            <Option key={i + 1} value={oS.state}>
+              {oS.state}
+            </Option>
+          ))}
         </Select>
       )
     },
@@ -118,21 +118,26 @@ const OrderListComponent = props => {
       title: t('list.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <div>
-          <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
-            <Button color="primary" shape="circle" icon="eye" />
-          </Link>
-          &nbsp; &nbsp;
-          <Popconfirm
-            title="Are you sure delete this order?"
-            onConfirm={() => onDelete(record.id)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button color="danger" shape="circle" icon="delete" />
-          </Popconfirm>
-        </div>
+        <Row gutter={24}>
+          <Col span={4}>
+            {record.orderState.state !== ORDER_STATES.STALE && (
+              <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
+                <Button color="primary" shape="circle" icon="eye" />
+              </Link>
+            )}
+          </Col>
+          <Col span={4}>
+            <Popconfirm
+              title="Are you sure delete this order?"
+              onConfirm={() => onDelete(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button color="danger" shape="circle" icon="delete" />
+            </Popconfirm>
+          </Col>
+        </Row>
       )
     }
   ];
@@ -179,9 +184,10 @@ OrderListComponent.propTypes = {
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onToggle: PropTypes.func,
+  onPatchOrderState: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  orderStates: PropTypes.object
 };
 
 export default translate('order')(OrderListComponent);

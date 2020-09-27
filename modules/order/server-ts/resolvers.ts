@@ -132,23 +132,23 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    patchOrder: withAuth(async (obj: any, { input }: any, { Order, req: { identity } }) => {
-      try {
-        // console.log(input);
-        const id = await Order.patchOrder(input);
-
-        const order = await Order.order(id);
-        pubsub.publish(ORDERS_SUBSCRIPTION, {
-          ordersUpdated: {
-            mutation: 'CREATED',
-            node: order
-          }
-        });
-        return order;
-      } catch (e) {
-        return e;
+    patchOrderState: withAuth(
+      async (obj: any, { orderId, state }: { orderId: number; state: string }, { Order, req: { identity } }: any) => {
+        const patch = await Order.patchOrderState(orderId, state);
+        if (patch) {
+          const order = await Order.order(orderId);
+          pubsub.publish(ORDERS_SUBSCRIPTION, {
+            ordersUpdated: {
+              mutation: 'CREATED',
+              node: order
+            }
+          });
+          return true;
+        } else {
+          return false;
+        }
       }
-    }),
+    ),
     deleteOrder: withAuth(async (obj: any, { id }: Identifier, context: any) => {
       const order = await context.Order.order(id);
       const isDeleted = await context.Order.deleteOrder(id);

@@ -12,11 +12,12 @@ import {
   withFilterUpdating,
   withOrderByUpdating,
   withOrderStates,
-  withDeleteOrder
+  withDeleteOrder,
+  withPatchOrderState
 } from './OrderOperations';
 
 const Orders = props => {
-  const { t, updateQuery, deleteOrder, subscribeToMore } = props;
+  const { t, updateQuery, deleteOrder, subscribeToMore, patchOrderState } = props;
   const filter = {};
   // const filter = { isActive: true };
   // const usersUpdated = useUsersWithSubscription(subscribeToMore, filter);
@@ -26,6 +27,18 @@ const Orders = props => {
   //     updateUsersState(usersUpdated, updateQuery);
   //   }
   // });
+
+  const handlePatchOrderState = (orderId, state) => {
+    try {
+      message.destroy();
+      message.error('Processing.');
+      patchOrderState(orderId, state);
+      message.destroy();
+      message.success(`State change to ${state}`);
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
 
   const handleDelete = id => {
     try {
@@ -40,7 +53,7 @@ const Orders = props => {
   };
 
   console.log('props', props);
-  return <OrdersView onDelete={handleDelete} filter={filter} {...props} />;
+  return <OrdersView onDelete={handleDelete} onPatchOrderState={handlePatchOrderState} filter={filter} {...props} />;
 };
 
 // Orders.propTypes = {
@@ -58,5 +71,6 @@ export default compose(
   withOrderByUpdating,
   withOrderStates,
   withDeleteOrder,
+  withPatchOrderState,
   translate('order')
 )(Orders);

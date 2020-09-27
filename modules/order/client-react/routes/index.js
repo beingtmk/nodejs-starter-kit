@@ -10,7 +10,6 @@ const ROUTES = {
 
   checkoutCart: '/checkout-cart',
   checkoutBill: '/checkout-bill',
-  checkoutPay: '/checkout-pay',
   checkoutOrder: '/checkout-order/:id',
   checkoutOrderLink: '/checkout-order/',
 

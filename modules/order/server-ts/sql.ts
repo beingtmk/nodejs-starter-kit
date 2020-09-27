@@ -154,14 +154,14 @@ export default class OrderDAO extends Model {
   }
 
   public async getCart(userId: number) {
-    const orderState = await OrderState.query().where('state', '=', ORDER_STATES.STALE);
+    const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
     // console.log('orderState', orderState);
 
     // To Do - Get or Create
     const res = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', userId)
-        .where('order_state_id', orderState[0].id)
+        .where('order_state_id', orderState.id)
         .eager(eager)
         .orderBy('id', 'desc')
     );
@@ -169,7 +169,7 @@ export default class OrderDAO extends Model {
       // Create a STALE order
       const staleOrderId = await returnId(knex('order')).insert({
         consumer_id: userId,
-        order_state_id: orderState[0].id
+        order_state_id: orderState.id
       });
       const staleOrder = await this.order(staleOrderId);
       // console.log(staleOrder);
@@ -199,13 +199,13 @@ export default class OrderDAO extends Model {
   public async addToCart(input) {
     // console.log(input);
 
-    const orderState = await OrderState.query().where('state', '=', ORDER_STATES.STALE);
+    const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
     // console.log('orderState', orderState);
 
     const cart = camelizeKeys(
       await OrderDAO.query()
         .where('consumer_id', input.consumerId)
-        .where('order_state_id', orderState[0].id)
+        .where('order_state_id', orderState.id)
     )[0];
 
     console.log(cart);
@@ -217,7 +217,7 @@ export default class OrderDAO extends Model {
       });
     } else {
       input.orderDetail.orderId = cart.id;
-      input.orderDetail.orderDetailStateId = orderState[0].id;
+      input.orderDetail.orderDetailStateId = orderState.id;
     }
 
     console.log(input);
@@ -280,24 +280,20 @@ export default class OrderDAO extends Model {
       .del();
   }
 
-  public async patchOrder({ id, state }) {
-    const orderState = await OrderState.query().where('state', '=', state);
+  public async patchOrderState(orderId: any, state: any) {
+    const orderState = camelizeKeys(await OrderState.query().where('state', '=', state))[0];
     const order = camelizeKeys(
       await OrderDAO.query()
         .eager(eager)
-        .findById(id)
+        .findById(orderId)
     );
-    if (order) {
-      const orderCheck = camelizeKeys(
-        await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState[0].id }))
-      );
-      console.log('orderCheck', orderCheck);
+    if (order && orderState) {
+      await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState.id }));
       order.orderDetails.map(async oD => {
-        await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState[0].id }));
+        await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
       });
     }
-
-    return order.id;
+    return true;
   }
 
   public async patchOrderDetail(id: any, params: any) {

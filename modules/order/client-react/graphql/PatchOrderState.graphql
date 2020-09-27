@@ -1,0 +1,3 @@
+mutation patchOrderState($orderId: Int, $state: String) {
+  patchOrderState(orderId: $orderId, state: $state)
+}

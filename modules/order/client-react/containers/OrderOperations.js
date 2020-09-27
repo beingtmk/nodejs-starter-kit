@@ -12,6 +12,7 @@ import ORDER_STATES from '../graphql/OrderStatesQuery.graphql';
 import ADD_TO_CART from '../graphql/AddToCart.graphql';
 import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
 import DELETE_ORDER from '../graphql/DeleteOrder.graphql';
+import PATCH_ORDER_STATE from '../graphql/PatchOrderState.graphql';
 
 // Filter
 import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
@@ -148,6 +149,20 @@ export const withDeleteOrder = Component =>
               id: id,
               __typename: 'Order'
             }
+          }
+        });
+      }
+    })
+  })(Component);
+
+export const withPatchOrderState = Component =>
+  graphql(PATCH_ORDER_STATE, {
+    props: ({ mutate }) => ({
+      patchOrderState: async (orderId, state) => {
+        await mutate({
+          variables: {
+            orderId,
+            state
           }
         });
       }

@@ -77,11 +77,6 @@ export default new ClientModule({
     />,
     <Route
       exact
-      path={ROUTES.checkoutPay}
-      component={loadable(() => import('./containers/CheckoutPay.web').then(c => c.default))}
-    />,
-    <Route
-      exact
       path={ROUTES.checkoutOrder}
       component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default))}
     />

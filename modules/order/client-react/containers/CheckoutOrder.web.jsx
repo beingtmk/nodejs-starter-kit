@@ -5,7 +5,7 @@ import { graphql } from 'react-apollo';
 import update from 'immutability-helper';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import PATCH_ORDER from '../graphql/PatchOrder.graphql';
+import { ORDER_STATES } from '@gqlapp/order-common';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
 import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 import ROUTES from '../routes';
@@ -14,9 +14,10 @@ import ROUTES from '../routes';
 // import PATCH_ORDER_PAYMENT from '../graphql/PatchOrderPayment.graphql';
 
 import CheckoutOrderView from '../components/CheckoutOrderView';
+import { withCurrentUser, withGetCart, withPatchOrderState } from './OrderOperations';
 
 const CheckoutOrder = props => {
-  const { history, navigation, orderPayment, subscribeToMore, refetch } = props;
+  const { history, navigation, patchOrderState, getCart, orderPayment, subscribeToMore, refetch } = props;
 
   useEffect(() => {
     const subscribe = subscribeToOrders(subscribeToMore);
@@ -84,18 +85,19 @@ const CheckoutOrder = props => {
     // console.log('paymmmmmmm', finalObj);
 
     try {
-      // await props.patchOrderPayment(finalObj);
-      await props.patchOrder({ id: props.getCart.id, state: 'INITIATED' });
+      message.destroy();
+      message.error('Processing.');
+      patchOrderState(getCart.id, ORDER_STATES.INITIATED);
+      message.destroy();
+      message.success(`State change to ${ORDER_STATES.INITIATED}`);
       if (history) {
         return history.push(`${ROUTES.myOrder}`);
       }
     } catch (e) {
+      message.destroy();
       message.error('Failed!');
-      console.log(e);
-      // throw new FormError('Failed!', e);
+      throw new Error(e);
     }
-
-    // Redirect
   }
 
   // console.log('props', props);
@@ -184,20 +186,8 @@ const subscribeToOrders = subscribeToMore =>
     }
   });
 export default compose(
-  graphql(CURRENT_USER_QUERY, {
-    props({ data: { loading, error, currentUser } }) {
-      if (error) throw new Error(error);
-      return { currentUserLoading: loading, currentUser };
-    }
-  }),
-  graphql(GET_CART_QUERY, {
-    props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {
-      if (error) {
-        throw new Error(error);
-      }
-      return { cartLoading: loading, getCart, subscribeToMore, refetch };
-    }
-  }),
+  withCurrentUser,
+  withGetCart,
   // graphql(ORDER_PAYMENT, {
   //   props({ data: { loading, error, orderPayment, refetch } }) {
   //     if (error) throw new Error(error);
@@ -217,17 +207,6 @@ export default compose(
   //     },
   //   }),
   // }),
-  graphql(PATCH_ORDER, {
-    props: ({ mutate }) => ({
-      patchOrder: async values => {
-        // console.log('mutation start', values);
-        await mutate({
-          variables: {
-            input: values
-          }
-        });
-        // console.log(values, 'mutation called');
-      }
-    })
-  })
+
+  withPatchOrderState
 )(CheckoutOrder);
