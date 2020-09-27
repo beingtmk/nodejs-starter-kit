@@ -2,22 +2,40 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
-import { Card, Typography, Icon, Collapse, Skeleton } from "antd";
+import { Card, Typography, Icon, Collapse, Skeleton, Divider } from "antd";
 import { translate } from "@gqlapp/i18n-client-react";
 import { PageLayout, Button } from "@gqlapp/look-client-react";
 import Loader from "@gqlapp/look-client-react/ui-antd/components/Loader";
 import CatalogueWithInfiniteScroll from "@gqlapp/look-client-react/ui-antd/components/CatalogueWithInfiniteScroll";
 
 import settings from "../../../../settings";
-import RenderFaqComponent from "./RenderFaqComponent";
+import FaqPublicFilterComponent from "./FaqPublicFilterComponent";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
+const AnimatedUnderLine = ({ width, alignment }) => {
+  return (
+    <div align={alignment}>
+      <div
+        key="line"
+        className="title-line-wrapper"
+        style={{ maxWidth: width }}
+        align="left"
+      >
+        <div
+          className="title-line"
+          // style={{ transform: "translateX(-64px)" }}
+        />
+      </div>
+    </div>
+  );
+};
+
 const NoFaqsMessage = ({ t }) => <div className="text-center">No Faqs</div>;
 
 const FaqView = (props) => {
-  const { t, loading, faqs } = props;
+  const { t, loading, faqs, stateLoading } = props;
 
   const fetchMoreData = async (e) => {
     const hasMore = props.faqs.pageInfo.hasNextPage;
@@ -42,7 +60,11 @@ const FaqView = (props) => {
           },
         ]}
       />
-      <h1>{"Faqs"}</h1>
+      <h1 style={{ fontSize: "32px" }}>{"FAQ's"}</h1>
+        <AnimatedUnderLine width={'200px'} alignment='left' />
+      <br />
+      {!stateLoading && <FaqPublicFilterComponent {...props} />}
+      <Divider />
       <br />
       <div>
         {loading && !faqs && (
