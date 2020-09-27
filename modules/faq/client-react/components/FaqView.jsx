@@ -2,24 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
-import { Card, Typography, Icon } from "antd";
+import { Card, Typography, Icon, Collapse, Skeleton } from "antd";
 import { translate } from "@gqlapp/i18n-client-react";
-import {
-  PageLayout,
-  Button,
-  Loader,
-  CatalogueWithInfiniteScroll,
-} from "@gqlapp/look-client-react";
-import settings from "../../../../settings";
-import RenderFaqComponent from './RenderFaqComponent';
-const { Text } = Typography;
+import { PageLayout, Button } from "@gqlapp/look-client-react";
+import Loader from "@gqlapp/look-client-react/ui-antd/components/Loader";
+import CatalogueWithInfiniteScroll from "@gqlapp/look-client-react/ui-antd/components/CatalogueWithInfiniteScroll";
 
-const NoFaqsMessage = ({ t }) => (
-  <div className="text-center">No Faqs</div>
-);
+import settings from "../../../../settings";
+import RenderFaqComponent from "./RenderFaqComponent";
+
+const { Text } = Typography;
+const { Panel } = Collapse;
+
+const NoFaqsMessage = ({ t }) => <div className="text-center">No Faqs</div>;
 
 const FaqView = (props) => {
   const { t, loading, faqs } = props;
+
+  const fetchMoreData = async (e) => {
+    const hasMore = props.faqs.pageInfo.hasNextPage;
+    const endCursor = props.faqs.pageInfo.endCursor;
+    const totalCount = props.faqs.totalCount;
+    if (!hasMore) {
+      return;
+    } else {
+      await props.loadDataFaqs(endCursor + 1, "add");
+    }
+  };
+
   return (
     <PageLayout>
       {/* Render metadata */}
@@ -32,37 +42,48 @@ const FaqView = (props) => {
           },
         ]}
       />
-      <h2>{"Faqs"}</h2>
+      <h1>{"Faqs"}</h1>
       <br />
-      <div style={{ overflowX: "auto" }}>
+      <div>
         {loading && !faqs && (
-          <div style={{ marginTop: "20px" }} align="center">
-            <Loader text="Faqs Loading" />
+          <div style={{ marginTop: "20px" }}>
+            {[...Array(3).keys()].map(() => (
+              <Skeleton
+                style={{ marginBottom: "34px" }}
+                active
+                paragraph={{ rows: 1, width: "100%" }}
+              ></Skeleton>
+            ))}
           </div>
         )}
 
         {!loading && faqs && (
           <>
             {faqs.edges && faqs.edges.length !== 0 ? (
-              <CatalogueWithInfiniteScroll
-                grid={{
-                  gutter: 24,
-                  xs: 1,
-                  sm: 2,
-                  md: 3,
-                  lg: 4,
-                  xl: 4,
-                  xxl: 4,
-                }}
-                component={RenderFaqComponent}
-                endMessage={"End Of Faqs"}
-                loadData={props.loadDataFaqs}
-                list={props.faqs}
-                loading={props.loading}
-                hasMore={props.faqs.pageInfo.hasNextPage}
-                endCursor={props.faqs.pageInfo.endCursor}
-                totalCount={props.faqs.totalCount}
-              />
+              <>
+                <Collapse
+                  className="faq-view-collapse"
+                  style={{ background: "transparent" }}
+                  bordered={false}
+                  defaultActiveKey={["0"]}
+                  expandIcon={({ isActive }) => (
+                    <Icon type="caret-right" rotate={isActive ? 90 : 0} />
+                  )}
+                  expandIconPosition="right"
+                >
+                  {faqs.edges.map((item, key) => (
+                    <Panel header={<h2>{item.node.question}</h2>} key={key}>
+                      <p>{item.node.answer}</p>
+                    </Panel>
+                  ))}
+                </Collapse>
+                <br />
+                {props.faqs.pageInfo.hasNextPage && (
+                  <div align="center">
+                    <Button onClick={fetchMoreData}>Load More</Button>
+                  </div>
+                )}
+              </>
             ) : (
               <NoFaqsMessage t={t} />
             )}
