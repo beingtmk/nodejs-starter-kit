@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Spin } from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 
 import { withCurrentUser, withMyListingsBookmark } from './ListingOperations';
-import { subscribeToListingsBookmark } from './withSubscriptions';
+import { subscribeToListingsBookmark } from './ListingSubscriptions';
 
 const MyListingsBookmark = props => {
   const { subscribeToMore } = props;

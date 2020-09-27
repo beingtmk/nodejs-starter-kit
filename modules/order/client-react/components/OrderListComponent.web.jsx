@@ -96,11 +96,12 @@ const OrderListComponent = props => {
           style={{ width: '125px' }}
           onChange={e => onPatchOrderState(record.id, e)}
         >
-          {orderStates.map((oS, i) => (
-            <Option key={i + 1} value={oS.state}>
-              {oS.state}
-            </Option>
-          ))}
+          {orderStates &&
+            orderStates.map((oS, i) => (
+              <Option key={i + 1} value={oS.state}>
+                {oS.state}
+              </Option>
+            ))}
         </Select>
       )
     },

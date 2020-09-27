@@ -5,7 +5,7 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
-import { subscribeToListings } from './withSubscriptions';
+import { subscribeToListings } from './ListingSubscriptions';
 import { withListingsState, withFilterUpdating, withListings, withCurrentUser } from './ListingOperations';
 
 const ListingsCatalogue = props => {

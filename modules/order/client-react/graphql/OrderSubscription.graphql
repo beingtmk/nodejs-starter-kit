@@ -1,0 +1,11 @@
+#import "./Order.graphql"
+
+subscription onOrderUpdated($id: Int) {
+  orderUpdated(id: $id) {
+    mutation
+    id
+    node {
+      ...OrderInfo
+    }
+  }
+}

@@ -16,6 +16,7 @@ interface OrderInputWithId {
   input: Orders & Identifier;
 }
 
+const ORDER_SUBSCRIPTION = 'order_subscription';
 const ORDERS_SUBSCRIPTION = 'orders_subscription';
 
 export default (pubsub: any) => ({
@@ -79,11 +80,18 @@ export default (pubsub: any) => ({
       }
       const id = await Order.addToCart(input);
       if (id) {
-        const orderItem = await Order.order(id);
-        pubsub.publish(ORDERS_SUBSCRIPTION, {
-          ordersUpdated: {
-            mutation: 'CREATED',
-            node: orderItem
+        const order = await Order.order(id);
+        // pubsub.publish(ORDERS_SUBSCRIPTION, {
+        //   ordersUpdated: {
+        //     mutation: 'CREATED',
+        //     node: order
+        //   }
+        // });
+        pubsub.publish(ORDER_SUBSCRIPTION, {
+          orderUpdated: {
+            mutation: 'UPDATED',
+            id: order.id,
+            node: order
           }
         });
         return true;
@@ -103,17 +111,18 @@ export default (pubsub: any) => ({
       }
     }),
     addOrder: withAuth(async (obj: any, { input }: any, context: any) => {
-      try {
-        if (!input.userId) {
-          input.userId = context.identity.id;
-        }
-        const id = await context.Order.addOrder(input);
-        const order = await context.Order.order(id);
-
-        return order;
-      } catch (e) {
-        return e;
+      if (!input.userId) {
+        input.userId = context.identity.id;
       }
+      const id = await context.Order.addOrder(input);
+      const order = await context.Order.order(id);
+      pubsub.publish(ORDERS_SUBSCRIPTION, {
+        ordersUpdated: {
+          mutation: 'CREATED',
+          node: order
+        }
+      });
+      return order;
     }),
     editOrder: withAuth(async (obj: any, { input }: any, context: any) => {
       try {
@@ -121,7 +130,14 @@ export default (pubsub: any) => ({
         const order = await context.Order.order(input.id);
         pubsub.publish(ORDERS_SUBSCRIPTION, {
           ordersUpdated: {
-            mutation: 'CREATED',
+            mutation: 'UPDATED',
+            node: order
+          }
+        });
+        pubsub.publish(ORDER_SUBSCRIPTION, {
+          orderUpdated: {
+            mutation: 'UPDATED',
+            id: order.id,
             node: order
           }
         });
@@ -137,7 +153,14 @@ export default (pubsub: any) => ({
           const order = await Order.order(orderId);
           pubsub.publish(ORDERS_SUBSCRIPTION, {
             ordersUpdated: {
-              mutation: 'CREATED',
+              mutation: 'UPDATED',
+              node: order
+            }
+          });
+          pubsub.publish(ORDER_SUBSCRIPTION, {
+            orderUpdated: {
+              mutation: 'UPDATED',
+              id: order.id,
               node: order
             }
           });
@@ -153,7 +176,14 @@ export default (pubsub: any) => ({
       if (isDeleted) {
         pubsub.publish(ORDERS_SUBSCRIPTION, {
           ordersUpdated: {
-            mutation: 'UPDATED',
+            mutation: 'DELETED',
+            node: order
+          }
+        });
+        pubsub.publish(ORDER_SUBSCRIPTION, {
+          orderUpdated: {
+            mutation: 'DELETED',
+            id: order.id,
             node: order
           }
         });
@@ -166,12 +196,19 @@ export default (pubsub: any) => ({
       async (obj: any, { cartId, addressId }: { cartId: number; addressId: number }, { Order, req: { identity } }) => {
         try {
           const orderId = await Order.patchAddress(cartId, addressId);
-          const orderItem = await Order.order(orderId);
-          // console.log('resolver2', orderItem);
+          const order = await Order.order(orderId);
+          // console.log('resolver2', order);
           pubsub.publish(ORDERS_SUBSCRIPTION, {
             ordersUpdated: {
               mutation: 'ADDRESS_UPDATED',
-              node: orderItem
+              node: order
+            }
+          });
+          pubsub.publish(ORDER_SUBSCRIPTION, {
+            orderUpdated: {
+              mutation: 'UPDATED',
+              id: order.id,
+              node: order
             }
           });
           return true;
@@ -181,8 +218,16 @@ export default (pubsub: any) => ({
       }
     ),
     deleteOrderDetail: withAuth(async (obj: any, { id }: { id: number }, { Order }: any) => {
-      const isDeleted = await Order.deleteOrderDetail(id);
-      if (isDeleted) {
+      const orderId = await Order.deleteOrderDetail(id);
+      if (orderId) {
+        const order = await Order.order(orderId);
+        pubsub.publish(ORDER_SUBSCRIPTION, {
+          orderUpdated: {
+            mutation: 'UPDATED',
+            id: order.id,
+            node: order
+          }
+        });
         return true;
       } else {
         throw Error('Failed!');
@@ -194,7 +239,19 @@ export default (pubsub: any) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(ORDERS_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.ordersUpdated.id === variables.id;
+          if (variables.endCursor) {
+            return payload.ordersUpdated.id === variables.id;
+          } else {
+            return true;
+          }
+        }
+      )
+    },
+    orderUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(ORDER_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.orderUpdated.id === variables.id;
         }
       )
     }

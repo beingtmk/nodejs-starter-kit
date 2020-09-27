@@ -5,7 +5,7 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { withListings, withListingsDeleting } from './ListingOperations';
-import { subscribeToListings } from './withSubscriptions';
+import { subscribeToListings } from './ListingSubscriptions';
 
 const MyListingsContainer = props => {
   const { subscribeToMore, deleteListing, filter } = props;

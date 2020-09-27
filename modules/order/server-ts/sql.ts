@@ -276,10 +276,12 @@ export default class OrderDAO extends Model {
     orderDetailIds.map((id: number) => this.patchAddressForOrderDetail(id, addressId));
     return order.id;
   }
-  public deleteOrderDetail(id: number) {
-    return knex('order_detail')
+  public async deleteOrderDetail(id: number) {
+    const res = camelizeKeys(await OrderDetail.query().findById(id));
+    await knex('order_detail')
       .where('id', '=', id)
       .del();
+    return res.orderId;
   }
 
   public async patchOrderState(orderId: any, state: any) {

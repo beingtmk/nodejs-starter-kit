@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types';
 import { withListing, withCurrentUser, withEditListing } from './ListingOperations';
 
 import EditListingView from '../components/EditListingView.web';
-import { subscribeToListing } from './withSubscriptions';
+import { subscribeToListing } from './ListingSubscriptions';
 
 const EditListing = props => {
   const { subscribeToMore, listing, history, editListing } = props;

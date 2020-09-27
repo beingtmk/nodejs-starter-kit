@@ -1,87 +1,39 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
-import { graphql } from 'react-apollo';
 import { Icon, Badge } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import update from 'immutability-helper';
-
-import ORDERS_SUBSCRIPTION from '../graphql/OrdersSubscription.graphql';
 
 import { withCurrentUser, withGetCart } from './OrderOperations';
+import { subscribeToCart } from './OrderSubscriptions';
 
 const NavItemCart = props => {
-  // useEffect(() => {
-  //   console.log('use effect', props.subscribeToMore);
-  //   const subscribe = subscribeToOrders(props.subscribeToMore);
-  //   props.refetch();
-  //   return () => subscribe();
-  // });
+  const { getCart, subscribeToMore, history, currentUserLoading } = props;
 
-  // console.log('props nav', props);
+  useEffect(() => {
+    const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, history);
+    return () => subscribe();
+  });
+
+  // console.log('props navCart', props);
   return (
     <>
-      {!props.currentUserLoading && (
+      {!currentUserLoading && (
         <>
           <Icon type="shopping-cart" /> Cart{' '}
-          <Badge
-            style={{ marginTop: '-5px' }}
-            count={props.getCart && props.getCart.orderDetails && props.getCart.orderDetails.length}
-          />
+          <Badge style={{ marginTop: '-5px' }} count={getCart && getCart.orderDetails && getCart.orderDetails.length} />
         </>
       )}
     </>
   );
 };
 
-const onAddOrder = (prev, node) => {
-  // console.log('subscription add', prev, node);
-  return update(prev, {
-    getCart: {
-      $set: node
-    }
-  });
+NavItemCart.propTypes = {
+  currentUserLoading: PropTypes.bool.isRequired,
+  getCart: PropTypes.object,
+  history: PropTypes.object,
+  subscribeToMore: PropTypes.func
 };
-
-const onDeleteOrder = (prev, node) => {
-  // console.log('subscription deleted');
-
-  // ignore if not found
-  if (prev.id !== node.id) {
-    return prev;
-  }
-
-  return update(prev, {
-    getCart: {
-      $set: node
-    }
-  });
-};
-
-const subscribeToOrders = subscribeToMore =>
-  subscribeToMore({
-    document: ORDERS_SUBSCRIPTION,
-    updateQuery: (
-      prev,
-      {
-        subscriptionData: {
-          data: {
-            ordersUpdated: { mutation, node }
-          }
-        }
-      }
-    ) => {
-      // console.log('subscribed');
-      let newResult = prev;
-      if (mutation === 'CREATED') {
-        newResult = onAddOrder(prev, node);
-      } else if (mutation === 'UPDATED') {
-        newResult = onAddOrder(prev, node);
-      } else if (mutation === 'DELETED') {
-        newResult = onDeleteOrder(prev, node);
-      }
-      return newResult;
-    }
-  });
 
 export default compose(withCurrentUser, withGetCart, translate('order'))(NavItemCart);

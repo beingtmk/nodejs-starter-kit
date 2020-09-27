@@ -7,7 +7,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingView from '../components/ListingView';
 
-import { subscribeToListings } from './withSubscriptions';
+import { subscribeToListings } from './ListingSubscriptions';
 import {
   withListingsState,
   withListings,

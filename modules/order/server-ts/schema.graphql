@@ -162,7 +162,7 @@ input EditOrderInput {
 
 extend type Subscription {
   # Subscription for when editing a order
-  orderUpdated(id: Int!): UpdateOrderPayload
+  orderUpdated(id: Int): UpdateOrderPayload
   # Subscription for order list
   ordersUpdated(endCursor: Int, filter: FilterListInput): UpdateOrderPayload
 }

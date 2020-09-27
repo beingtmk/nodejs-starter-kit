@@ -5,7 +5,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Card, PageLayout } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon } from 'antd';
 
-import UserListings from '@gqlapp/listing-client-react/containers/UserListings';
+// import UserListings from '@gqlapp/listing-client-react/containers/UserListings';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 import userCardData from '../helpers/userCardData';
 import settings from '../../../../settings';
@@ -62,7 +62,7 @@ class ProfileView extends React.Component {
                   description={userCardData(t, user, this.getUserId()).profileHead}
                 />
                 <Divider />
-                <UserListings user={user.user} history={history} />
+                {/* <UserListings user={user.user} history={history} /> */}
               </Card>
             </Col>
           </Row>

@@ -6,7 +6,7 @@ import { compose } from '@gqlapp/core-common';
 import { withListing, withCurrentUser, withToogleListingBookmark } from './ListingOperations';
 
 import ListingDetailView from '../components/ListingDetailView';
-import { subscribeToListing } from './withSubscriptions';
+import { subscribeToListing } from './ListingSubscriptions';
 
 const ListingDetail = props => {
   const { subscribeToMore, listing, history } = props;

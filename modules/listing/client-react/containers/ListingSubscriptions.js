@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import update from 'immutability-helper';
 
@@ -8,33 +7,6 @@ import LISTING_SUBSCRIPTION from '../graphql/ListingSubscription.graphql';
 
 import ROUTES from '../routes';
 
-const useListingWithSubscription = (subscribeToMore, listingId) => {
-  const [listingUpdated, setListingUpdated] = useState(null);
-
-  useEffect(() => {
-    const subscribe = subscribeToListings();
-    return () => subscribe();
-  });
-
-  const subscribeToListings = () => {
-    return subscribeToMore({
-      document: LISTING_SUBSCRIPTION,
-      variables: { id: listingId },
-      updateQuery: (
-        prev,
-        {
-          subscriptionData: {
-            data: { listingUpdated: newData }
-          }
-        }
-      ) => {
-        setListingUpdated(newData);
-      }
-    });
-  };
-
-  return listingUpdated;
-};
 export const subscribeToListing = (subscribeToMore, listingId, history) =>
   subscribeToMore({
     document: LISTING_SUBSCRIPTION,
@@ -77,35 +49,6 @@ const onDeleteListing = history => {
     return history.push('/');
   }
 };
-
-const useListingListWithSubscription = subscribeToMore => {
-  const [listingsUpdated, setListingsUpdated] = useState(null);
-
-  useEffect(() => {
-    const subscribe = subscribeToListings();
-    return () => subscribe();
-  });
-
-  const subscribeToListings = () => {
-    return subscribeToMore({
-      document: LISTINGS_SUBSCRIPTION,
-      updateQuery: (
-        prev,
-        {
-          subscriptionData: {
-            data: { listingsUpdated: newData }
-          }
-        }
-      ) => {
-        setListingsUpdated(newData);
-      }
-    });
-  };
-
-  return listingsUpdated;
-};
-
-export { useListingListWithSubscription, useListingWithSubscription };
 
 export const subscribeToListings = (subscribeToMore, filter) =>
   subscribeToMore({
