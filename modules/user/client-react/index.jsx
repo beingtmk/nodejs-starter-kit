@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from 'antd';
 
 import { CookiesProvider } from 'react-cookie';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { translate } from '@gqlapp/i18n-client-react';
 import { MenuItem } from '@gqlapp/look-client-react';
@@ -35,7 +35,7 @@ const LogoutLink = withRouter(
           e.preventDefault();
           (async () => {
             await logout();
-            history.push('/');
+            history.push('/logout-page');
           })();
         }}
         className="nav-link"
@@ -63,6 +63,13 @@ const NavLinkLoginWithI18n = translate('user')(({ t }) => (
 
 export default new ClientModule({
   route: [
+    <Route
+      exact
+      path="/logout-page"
+      component={loadable(() =>
+        import("./containers/LogoutPage").then((c) => c.default)
+      )}
+    />,
     <AuthRoute
       exact
       path="/profile"
