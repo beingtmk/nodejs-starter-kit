@@ -14,7 +14,11 @@ import {
 } from './ReviewOperations';
 interface ReviewProps {
   t: TranslateFunction;
-  filter: object;
+  filter: {
+    isActive: boolean;
+    modalId: number;
+    modalName: string;
+  };
   subscribeToMore: () => null;
 }
 

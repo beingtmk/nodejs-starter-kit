@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Divider, Empty, Popconfirm, Icon, message, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import { EditIcon, Table, agination, DeleteIcon } from '@gqlapp/look-client-react';
+import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';

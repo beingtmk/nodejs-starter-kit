@@ -23,10 +23,15 @@ const renderMetaData = (t: TranslateFunction) => (
 
 export interface ReviewViewProps {
   t: TranslateFunction;
+  filter: {
+    isActive: boolean;
+    modalId: number;
+    modalName: string;
+  };
 }
 
 const ReviewsView: React.FC<ReviewViewProps> = props => {
-  const { t } = props;
+  const { t, filter } = props;
 
   return (
     <PageLayout>
@@ -45,7 +50,7 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       </Row>
       <br />
       <hr />
-      <ReviewFilterComponent {...props} />
+      <ReviewFilterComponent filter={filter} {...props} />
       <hr />
       <ReviewListComponent {...props} />
       <Review

@@ -48,15 +48,16 @@ export interface ReviewProps {
 }
 
 const Review: React.FC<ReviewProps> = props => {
-  const { subscribeToMore, filter } = props;
+  const { subscribeToMore } = props;
+  const filter = {};
 
   useEffect(() => {
-    const subscribe = subscribeToReviews(subscribeToMore, filter);
+    const subscribe = subscribeToReviews(subscribeToMore, props.filter);
     return () => subscribe();
   });
 
   // console.log('props', props);
-  return <ReviewsView {...props} />;
+  return <ReviewsView filter={filter} {...props} />;
 };
 
 export default compose(
