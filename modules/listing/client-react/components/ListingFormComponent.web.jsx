@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
@@ -329,7 +328,7 @@ const ListingWithFormik = withFormik({
       }
     };
   },
-  async handleSubmit(values, { setErrors, props: { onSubmit } }) {
+  async handleSubmit(values, { props: { onSubmit } }) {
     const input = {
       id: values.id,
       userId: values.userId,
@@ -363,6 +362,11 @@ const ListingWithFormik = withFormik({
     input.listingMedia = [];
     if (values.listingMedia.image.length > 0) {
       input.listingMedia = [...input.listingMedia, ...values.listingMedia.image];
+    } else {
+      input.listingMedia.push({
+        url: 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png',
+        type: 'image'
+      });
     }
     if (values.listingMedia.video.length > 0) {
       input.listingMedia = [...input.listingMedia, ...values.listingMedia.video];

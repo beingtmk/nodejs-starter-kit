@@ -15,15 +15,6 @@ const AddListing = props => {
       delete values.listingFlags.id;
       delete values.listingOptions.id;
       delete values.listingDetail.id;
-      values.listingMedia =
-        values.listingMedia.length === 0
-          ? [
-              {
-                url: 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png',
-                type: 'image'
-              }
-            ]
-          : values.listingMedia;
       addListing(values);
     } catch (e) {
       throw Error(e);

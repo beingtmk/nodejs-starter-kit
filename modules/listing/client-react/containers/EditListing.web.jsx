@@ -19,15 +19,6 @@ const EditListing = props => {
 
   const handleSubmit = values => {
     try {
-      values.listingMedia =
-        values.listingMedia.length === 0
-          ? [
-              {
-                url: 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png',
-                type: 'image'
-              }
-            ]
-          : values.listingMedia;
       editListing(values);
     } catch (e) {
       throw Error(e);

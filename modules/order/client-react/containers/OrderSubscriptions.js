@@ -23,7 +23,7 @@ export const subscribeToCart = (subscribeToMore, orderId, history) =>
       }
     ) => {
       let newResult = prev;
-      console.log('mutation', mutation, node);
+      // console.log('mutation', mutation, node);
       if (mutation === 'UPDATED') {
         newResult = onEditCart(prev, node);
       } else if (mutation === 'DELETED') {
@@ -120,9 +120,9 @@ function onEditOrders(prev, node) {
     __typename: 'OrderEdges'
   };
   if (index) {
-    console.log('index', index);
+    // console.log('index', index);
     prev.orders.edges.splice(index, 1, edge);
-    console.log(prev.orders.edges);
+    // console.log(prev.orders.edges);
     return update(prev, {
       orders: {
         edges: {

@@ -113,13 +113,21 @@ function onAddListings(prev, node) {
 
 function onEditListings(prev, node) {
   const index = prev.listings.edges.findIndex(x => x.node.id === node.id);
-  prev.listings.edges.splice(index, 1, node);
-
-  return update(prev, {
-    listings: {
-      $set: [...prev.listings]
-    }
-  });
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: 'OrderEdges'
+  };
+  if (index) {
+    prev.listings.edges.splice(index, 1, edge);
+    return update(prev, {
+      listings: {
+        edges: {
+          $set: [...prev.listings]
+        }
+      }
+    });
+  }
 }
 
 const onDeleteListings = (prev, id) => {

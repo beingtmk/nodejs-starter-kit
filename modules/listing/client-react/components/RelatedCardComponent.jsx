@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { compose } from '@gqlapp/core-common';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
+// eslint-disable-next-line import/no-named-default
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
@@ -156,7 +157,7 @@ const RelatedCardComponent = props => {
               <Row style={{ height: '70px' }}>
                 <Col span={12}>
                   {/* <h4>&#8377;{cost} per day</h4> */}
-                  {isDiscount ? (
+                  {isDiscount && cost ? (
                     <>
                       <CurrencyDisplay
                         style={{ display: 'inline' }}
@@ -171,7 +172,7 @@ const RelatedCardComponent = props => {
                       />
                     </>
                   ) : (
-                    <CurrencyDisplay input={cost.toFixed(2)} />
+                    cost && <CurrencyDisplay input={cost.toFixed(2)} />
                   )}
                 </Col>
                 {isDiscount && (
@@ -201,6 +202,8 @@ const RelatedCardComponent = props => {
 
 RelatedCardComponent.propTypes = {
   listing: PropTypes.object.isRequired,
+  history: PropTypes.object,
+  addToCart: PropTypes.func,
   addOrRemoveListingBookmark: PropTypes.func,
   currentUser: PropTypes.object,
   listingBookmarkStatus: PropTypes.bool
