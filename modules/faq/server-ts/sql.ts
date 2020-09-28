@@ -28,9 +28,7 @@ export default class Faq extends Model {
       queryBuilder.orderBy(decamelize(`faq.${column}`), order);
     }
 
-    const allFaqItems = camelizeKeys(await queryBuilder);
-    const total = allFaqItems.length;
-    let res = {};
+
 
     if (filter) {
       if (has(filter, "isFeatured") && filter.isFeatured !== false) {
@@ -58,6 +56,10 @@ export default class Faq extends Model {
           });
       }
     }
+
+    const allFaqItems = camelizeKeys(await queryBuilder);
+    const total = allFaqItems.length;
+    let res = {};
 
     if (limit && after) {
       res = camelizeKeys(

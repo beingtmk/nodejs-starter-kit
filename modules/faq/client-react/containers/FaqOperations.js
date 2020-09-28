@@ -19,7 +19,6 @@ const limit =
 const withFaqState = (Component) =>
   graphql(FAQ_STATE_QUERY, {
     props({ data }) {
-      console.log('withFaqState', data);
       const faqState = removeTypename(data.faqState);
       return {...faqState, stateLoading:data.loading };
     },

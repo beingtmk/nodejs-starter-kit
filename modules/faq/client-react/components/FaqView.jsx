@@ -47,7 +47,6 @@ const FaqView = (props) => {
       await props.loadDataFaqs(endCursor + 1, "add");
     }
   };
-
   return (
     <PageLayout>
       {/* Render metadata */}
@@ -61,7 +60,7 @@ const FaqView = (props) => {
         ]}
       />
       <h1 style={{ fontSize: "32px" }}>{"FAQ's"}</h1>
-        <AnimatedUnderLine width={'200px'} alignment='left' />
+      <AnimatedUnderLine width={"200px"} alignment="left" />
       <br />
       {!stateLoading && <FaqPublicFilterComponent {...props} />}
       <Divider />
