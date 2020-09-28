@@ -1,0 +1,3 @@
+mutation editReview($input: EditReviewInput!) {
+  editReview(input: $input)
+}

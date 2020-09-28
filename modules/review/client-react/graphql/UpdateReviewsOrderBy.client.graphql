@@ -1,0 +1,3 @@
+mutation updateReviewsOrderBy($orderBy: OrderByReviewInput!) {
+  updateReviewsOrderBy(orderBy: $orderBy) @client
+}

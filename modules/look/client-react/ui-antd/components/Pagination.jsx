@@ -24,6 +24,7 @@ const Pagination = ({
             ({itemsPerPage} / {total})
           </small>
         </div>
+        <br />
         <Button color="primary" onClick={() => handlePageChange(pagination)}>
           {loadMoreText}
         </Button>

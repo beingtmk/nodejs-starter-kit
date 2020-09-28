@@ -1,0 +1,7 @@
+#import "./Rating.graphql"
+
+query ratingAverage($modalName: String!, $modalId: Int!) {
+  ratingAverage(modalName: $modalName, modalId: $modalId) {
+    ...RatingInfo
+  }
+}

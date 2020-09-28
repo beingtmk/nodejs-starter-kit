@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const SuggestedListComponent = props => {
   const { items, loadData, renderFunc } = props;
   const [data, setData] = useState(items);
+  // eslint-disable-next-line no-unused-vars
   const [load, setLoad] = useState(false);
   const [hasMore, setHasMore] = useState(items.pageInfo.hasNextPage);
 

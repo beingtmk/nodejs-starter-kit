@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Button, Pagination, Underline } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Pagination, DeleteIcon, AddButton, Row, Col } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -28,11 +28,9 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
     {
       title: t('list.column.actions'),
       key: 'actions',
-      width: 50,
+      width: 100,
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => deletePost(record.id)}>
-          {t('post.btn.del')}
-        </Button>
+        <DeleteIcon onClick={() => deletePost(record.id)}>{/* {t('post.btn.del')} */}</DeleteIcon>
       )
     }
   ];
@@ -61,12 +59,18 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   const renderContent = () => (
     <>
-      <Underline>
-        <h2>{t('list.subTitle')}</h2>
-      </Underline>
-      <Link to="/post/new">
-        <Button color="primary">{t('list.btn.add')}</Button>
-      </Link>
+      <Row>
+        <Col span={12}>
+          <h2>{t('list.subTitle')}</h2>
+        </Col>
+        <Col span={12}>
+          <Row type="flex" justify="end">
+            <Link to="/post/new">
+              <AddButton color="primary">{t('list.btn.add')}</AddButton>
+            </Link>
+          </Row>
+        </Col>
+      </Row>
       {/* Render loader */}
       {loading && !posts && <Loading t={t} />}
       {/* Render main post content */}

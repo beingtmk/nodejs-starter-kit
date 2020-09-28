@@ -1,0 +1,5 @@
+#import "./ReviewsState.client.graphql"
+
+mutation updateReviewsFilter($filter: FilterReviewInput!) {
+  updateReviewsFilter(filter: $filter) @client
+}

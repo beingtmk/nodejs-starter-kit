@@ -5,9 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Button, PageLayout, Underline } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton, Row, Col } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-
 import UsersFilterView from '../components/UsersFilterView';
 import UsersListView from '../components/UsersListView';
 import { useUsersWithSubscription } from './withSubscription';
@@ -46,12 +45,18 @@ const Users = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      <Underline>
-        <h2>{t('users.list.title')}</h2>
-      </Underline>
-      <Link to="/users/new">
-        <Button color="primary">{t('users.btn.add')}</Button>
-      </Link>
+      <Row>
+        <Col span={20}>
+          <h2>{t('users.list.title')}</h2>
+        </Col>
+        <Col span={4}>
+          <Row type="flex" justify="end">
+            <Link to="/users/new">
+              <AddButton color="primary">{t('users.btn.add')}</AddButton>
+            </Link>
+          </Row>
+        </Col>
+      </Row>
       <hr />
       <UsersFilterView {...props} filter={filter} />
       <hr />

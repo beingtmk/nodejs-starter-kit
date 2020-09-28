@@ -1,0 +1,11 @@
+fragment ReviewsStateInfo on ReviewsState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    modalName
+    isActive
+  }
+}

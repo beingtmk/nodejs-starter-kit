@@ -13,7 +13,8 @@ Model.knex(knex);
 const user_eager = `[
   verification,
   mobile,
-  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate
+  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate,
+  profile
 ]`;
 
 // Actual query fetching and transformation in DB
@@ -282,7 +283,6 @@ export class User extends Model {
     const mobile = await user.$relatedQuery('mobile').insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);

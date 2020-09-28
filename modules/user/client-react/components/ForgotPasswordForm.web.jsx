@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, RenderField, Button, Alert, Icon } from '@gqlapp/look-client-react';
+import { Form, RenderField, Alert, NextButton } from '@gqlapp/look-client-react';
 import { required, email, validate } from '@gqlapp/validation-common-react';
 
 const forgotPasswordFormSchema = {
@@ -23,9 +23,9 @@ const ForgotPasswordForm = ({ handleSubmit, errors, sent, values, t }) => {
       />
       <div className="text-center">
         {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-        <Button color="primary" type="submit">
-          <Icon type="arrow-right" /> {t('forgotPass.form.btnSubmit')}
-        </Button>
+        <NextButton color="primary" type="submit">
+          {t('forgotPass.form.btnSubmit')}
+        </NextButton>
       </div>
     </Form>
   );
@@ -43,14 +43,7 @@ ForgotPasswordForm.propTypes = {
 const ForgotPasswordFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({ email: '' }),
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      resetForm,
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { setErrors, resetForm, props: { onSubmit } }) {
     await onSubmit(values)
       .then(() => resetForm())
       .catch(e => {

@@ -1,6 +1,7 @@
 import addresses from '@gqlapp/addresses-server-ts';
 import order from '@gqlapp/order-server-ts';
 import listing from '@gqlapp/listing-server-ts';
+import review from '@gqlapp/review-server-ts';
 import home from '@gqlapp/home-server-ts';
 import core from '@gqlapp/core-server-ts';
 import i18n from '@gqlapp/i18n-server-ts';
@@ -27,6 +28,7 @@ const modules: ServerModule = new ServerModule(
   addresses,
   order,
   listing,
+  review,
   home,
   authentication,
   cookies,

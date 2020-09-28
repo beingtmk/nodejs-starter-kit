@@ -17,7 +17,8 @@ import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from
 const ProfileName = withLoadedUser(({ currentUser }) => {
   return (
     <>
-      <Icon type="user" /> {currentUser ? currentUser.fullName || currentUser.username : null}
+      <Icon type="user" /> &nbsp;
+      {currentUser ? currentUser.fullName || currentUser.username : null}
     </>
   );
 });
@@ -36,7 +37,7 @@ const LogoutLink = withRouter(
         }}
         className="nav-link"
       >
-        <Icon type="logout" /> {t('navLink.logout')}
+        <Icon type="logout" /> &nbsp; {t('navLink.logout')}
       </a>
     ))
   )

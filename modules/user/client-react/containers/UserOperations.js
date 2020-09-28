@@ -7,8 +7,17 @@ import USERS_QUERY from '../graphql/UsersQuery.graphql';
 import USER_LIST_QUERY from '../graphql/UserListQuery.graphql';
 import DELETE_USER from '../graphql/DeleteUser.graphql';
 import UPDATE_FILTER from '../graphql/UpdateFilter.client.graphql';
+import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
 
 import settings from '../../../../settings';
+
+export const withCurrentUser = Component =>
+  graphql(CURRENT_USER_QUERY, {
+    props({ data: { loading, error, currentUser } }) {
+      if (error) throw new Error(error);
+      return { loading, currentUser };
+    }
+  })(Component);
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'

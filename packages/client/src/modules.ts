@@ -1,6 +1,7 @@
 import addresses from '@gqlapp/addresses-client-react';
 import order from '@gqlapp/order-client-react';
 import listing from '@gqlapp/listing-client-react';
+import review from '@gqlapp/review-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import home from '@gqlapp/home-client-react';
 import core from '@gqlapp/core-client-react';
@@ -27,6 +28,7 @@ const modules = new ClientModule(
   addresses,
   order,
   listing,
+  review,
   pwa,
   home,
   look,

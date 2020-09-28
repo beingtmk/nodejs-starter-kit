@@ -10,9 +10,10 @@ import {
   CardText,
   //  CardTitle,
   PageLayout,
-  Underline
+  Underline,
+  EditIcon
 } from '@gqlapp/look-client-react';
-import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
+import { Row, Col, Divider, Icon, Spin as Loader } from 'antd';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
@@ -82,9 +83,7 @@ class ProfileView extends React.Component {
                   </Underline>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`/users/${currentUser.id}`}>
-                      <Button shape="circle" size="large">
-                        <Icon type="edit" />
-                      </Button>
+                      <EditIcon />
                     </Link>
                   </div>
                 </h2>

@@ -1,0 +1,22 @@
+#import "./Review.graphql"
+
+query reviews(
+  $limit: Int!
+  $after: Int
+  $orderBy: OrderByReviewInput
+  $filter: FilterReviewInput
+) {
+  reviews(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ReviewInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

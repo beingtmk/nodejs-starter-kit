@@ -1,0 +1,10 @@
+fragment RatingInfo on Rating {
+  id
+  modalName
+  modalId
+  one
+  two
+  three
+  four
+  five
+}
