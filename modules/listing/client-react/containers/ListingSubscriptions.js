@@ -112,7 +112,7 @@ function onAddListings(prev, node) {
 }
 
 function onEditListings(prev, node) {
-  const index = prev.listings.edges.findIndex(x => x.id === node.id);
+  const index = prev.listings.edges.findIndex(x => x.node.id === node.id);
   prev.listings.edges.splice(index, 1, node);
 
   return update(prev, {

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-import update from 'immutability-helper';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -9,37 +7,44 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { withCurrentUser, withOrdersState, withFilterUpdating, withOrderStates, withOrders } from './OrderOperations';
 
 import MyOrdersView from '../components/MyOrdersView';
+import { subscribeToOrders } from './OrderSubscriptions';
 
-const MyOrdersContainer = compose(withOrders)(props => {
+const MyOrdersContainer = compose(
+  withOrders,
+  withOrdersState,
+  withFilterUpdating,
+  withOrderStates
+)(props => {
+  const { ordersSubscribeToMore } = props;
+  useEffect(() => {
+    const subscribe = subscribeToOrders(ordersSubscribeToMore, props.filter);
+    return () => subscribe();
+  });
   console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 
 const MyOrders = props => {
-  const { currentUser, filter } = props;
+  const { currentUser, filter, currentUserLoading } = props;
 
   // console.log('props', props);
   return (
-    <MyOrdersContainer filter={{ consumerId: currentUser && currentUser.id, ...filter }}>
-      <MyOrdersView {...props} />
-    </MyOrdersContainer>
+    !currentUserLoading && (
+      <MyOrdersContainer filter={{ consumerId: currentUser && currentUser.id, ...filter }}>
+        <MyOrdersView {...props} />
+      </MyOrdersContainer>
+    )
   );
 };
 
 MyOrders.propTypes = {
-  //   usersUpdated: PropTypes.object,
+  currentUserLoading: PropTypes.bool,
   filter: PropTypes.object,
   //   updateQuery: PropTypes.func,
   currentUser: PropTypes.object,
   t: PropTypes.func
-  //   subscribeToMore: PropTypes.func,
+  // ordersSubscribeToMore: PropTypes.func,
   //   filter: PropTypes.object
 };
 
-export default compose(
-  withCurrentUser,
-  withOrdersState,
-  withFilterUpdating,
-  withOrderStates,
-  translate('order')
-)(MyOrders);
+export default compose(withCurrentUser, translate('order'))(MyOrders);

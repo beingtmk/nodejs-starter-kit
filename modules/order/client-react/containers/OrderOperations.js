@@ -76,7 +76,7 @@ export const withOrders = Component =>
         });
       };
       if (error) throw new Error(error);
-      return { loading, orders, subscribeToMore, loadData, updateQuery };
+      return { loading, orders, ordersSubscribeToMore: subscribeToMore, loadData, updateQuery };
     }
   })(Component);
 

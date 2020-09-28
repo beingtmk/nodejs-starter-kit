@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button, Icon, Divider } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Spin } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
@@ -18,7 +18,7 @@ const renderMetaData = t => (
 );
 
 const OrderView = props => {
-  const { t } = props;
+  const { t, load } = props;
 
   return (
     <PageLayout>
@@ -42,7 +42,16 @@ const OrderView = props => {
       <OrderFilterComponent {...props} />
       <Divider />
       <hr />
-      <OrderListComponent {...props} />
+      {!load ? (
+        <OrderListComponent {...props} />
+      ) : (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin size="large" />
+        </div>
+      )}
     </PageLayout>
   );
 };

@@ -164,7 +164,7 @@ extend type Subscription {
   # Subscription for when editing a order
   orderUpdated(id: Int): UpdateOrderPayload
   # Subscription for order list
-  ordersUpdated(endCursor: Int, filter: FilterListInput): UpdateOrderPayload
+  ordersUpdated(endCursor: Int, filter: FilterOrderInput): UpdateOrderPayload
 }
 
 # Payload for ordersUpdated Subscription

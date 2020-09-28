@@ -85,7 +85,10 @@ export default class OrderDAO extends Model {
   }
 
   public async ordersPagination(limit: number, after: number, orderBy: any, filter: any) {
-    const queryBuilder = OrderDAO.query().eager(eager);
+    const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
+    const queryBuilder = OrderDAO.query()
+      .eager(eager)
+      .whereNot('order_state_id', orderState.id);
 
     if (orderBy && orderBy.column) {
       const column = orderBy.column;

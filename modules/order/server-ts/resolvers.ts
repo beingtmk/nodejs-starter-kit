@@ -1,6 +1,8 @@
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 
+import { ORDER_STATES } from '@gqlapp/order-common';
+
 import { Orders, Identifier } from './sql';
 
 interface Edges {
@@ -148,12 +150,13 @@ export default (pubsub: any) => ({
     }),
     patchOrderState: withAuth(
       async (obj: any, { orderId, state }: { orderId: number; state: string }, { Order, req: { identity } }: any) => {
+        const prevOrder = await Order.order(orderId);
         const patch = await Order.patchOrderState(orderId, state);
         if (patch) {
           const order = await Order.order(orderId);
           pubsub.publish(ORDERS_SUBSCRIPTION, {
             ordersUpdated: {
-              mutation: 'UPDATED',
+              mutation: prevOrder.orderState.state === ORDER_STATES.STALE ? 'CREATED' : 'UPDATED',
               node: order
             }
           });
