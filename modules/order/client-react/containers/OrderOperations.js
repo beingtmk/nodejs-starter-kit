@@ -84,7 +84,8 @@ export const withGetCart = Component =>
   graphql(GET_CART_QUERY, {
     options: ({ currentUser }) => {
       return {
-        variables: { userId: currentUser && currentUser.id }
+        variables: { userId: currentUser && currentUser.id },
+        fetchPolicy: 'network-only'
       };
     },
     props({ data: { loading, error, getCart, subscribeToMore, refetch } }) {

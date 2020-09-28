@@ -129,7 +129,6 @@ input FilterListInput {
 }
 
 input AddListingInput {
-  id: Int
   userId: Int
 
   title: String

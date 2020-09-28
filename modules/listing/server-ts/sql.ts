@@ -223,7 +223,7 @@ export default class ListingDAO extends Model {
   }
 
   public async addListing(params: Listing) {
-    const res = await ListingDAO.query().insertGraph(decamelizeKeys(params));
+    const res = camelizeKeys(await returnId(ListingDAO.query()).insertGraph(decamelizeKeys(params)));
     return res.id;
   }
 

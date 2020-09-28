@@ -12,7 +12,7 @@ exports.up = function(knex) {
 
         table.string('title');
         table.string('description');
-        table.integer('sku');
+        table.string('sku');
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);

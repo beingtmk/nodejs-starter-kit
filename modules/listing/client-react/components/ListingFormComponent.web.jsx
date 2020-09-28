@@ -4,14 +4,13 @@ import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
-import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import { RenderField, RenderUploadMultiple, FormItem, RenderCheckBox } from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
 const ListingFormSchema = {
-  // title: [required, minLength(3)],
-  // description: [required, minLength(10)],
+  title: [required, minLength(3)]
 };
 
 const ButtonGroup = Button.Group;
@@ -269,9 +268,9 @@ const ListingWithFormik = withFormik({
     function getListingImage(listingImg) {
       const obj = {
         id: (listingImg && listingImg.id) || null,
-        url: (listingImg && listingImg.url) || 'a',
-        type: (listingImg && listingImg.type) || 'a',
-        isActive: (listingImg && listingImg.isActive) || false
+        url: (listingImg && listingImg.url) || '',
+        type: (listingImg && listingImg.type) || '',
+        isActive: (listingImg && listingImg.isActive) || true
       };
       obj.type === 'image' && listingMedia.image.push(obj);
       obj.type === 'video' && listingMedia.image.push(obj);
@@ -290,10 +289,10 @@ const ListingWithFormik = withFormik({
       id: (props.listing && props.listing.id) || null,
       userId: (props.listing && props.listing.userId) || (props.currentUser && props.currentUser.id) || null,
 
-      title: (props.listing && props.listing.title) || 'a',
-      description: (props.listing && props.listing.description) || 'a',
-      sku: (props.listing && props.listing.sku) || 'a',
-      isActive: (props.listing && props.listing.isActive) || false,
+      title: (props.listing && props.listing.title) || '',
+      description: (props.listing && props.listing.description) || '',
+      sku: (props.listing && props.listing.sku) || '',
+      isActive: (props.listing && props.listing.isActive) || true,
       listingCostArray: (props.listing &&
         props.listing.listingCostArray &&
         props.listing.listingCostArray.map(getCost)) || [
@@ -301,8 +300,8 @@ const ListingWithFormik = withFormik({
           id: null,
           cost: null,
           discount: null,
-          type: 'a',
-          label: 'a'
+          type: '',
+          label: ''
         }
       ],
 
