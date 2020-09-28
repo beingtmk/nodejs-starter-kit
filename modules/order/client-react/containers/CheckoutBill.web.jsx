@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 import update from 'immutability-helper';
@@ -9,14 +10,13 @@ import { translate } from '@gqlapp/i18n-client-react';
 import ADDRESSES_QUERY from '@gqlapp/addresses-client-react/graphql/AddressesQuery.graphql';
 import ADD_OR_EDIT_ADDRESS from '@gqlapp/addresses-client-react/graphql/AddOrEditAddress.graphql';
 import DELETE_ADDRESS from '@gqlapp/addresses-client-react/graphql/DeleteAddress.graphql';
-import PATCH_ADDRESS from '../graphql/PatchAddress.graphql';
 
 import CheckoutBillView from '../components/CheckoutBillView';
-import { withCurrentUser, withGetCart } from './OrderOperations';
+import { withCurrentUser, withGetCart, withPatchAddress } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
 
 const CheckoutBill = props => {
-  const { history, navigation, patchAddress, addresses, subscribeToMore, getCart } = props;
+  const { history, patchAddress, addresses, subscribeToMore, getCart } = props;
   const [addressId, setAddressId] = React.useState(0);
 
   React.useEffect(() => {
@@ -30,19 +30,15 @@ const CheckoutBill = props => {
   };
 
   async function onSubmit() {
-    const addressMutation = await patchAddress(addressId === 0 ? addresses[0].id : addressId).catch(e => {
-      throw new Error(e);
-    });
-    // console.log('object', addressMutation);
-
-    // Add Message
-    // message.info('Success! Complete Payment.');
-
-    // Redirect
-    if (history && addressMutation) {
-      return history.push(`/checkout-order/${props.getCart.id}`);
-    } else {
-      message.error('Try again!!');
+    try {
+      const addressMutation = await patchAddress(addressId === 0 ? addresses[0].id : addressId);
+      if (history && addressMutation) {
+        return history.push(`/checkout-order/${props.getCart.id}`);
+      } else {
+        message.error('Try again!!');
+      }
+    } catch (e) {
+      throw Error(e);
     }
   }
 
@@ -80,9 +76,19 @@ const writePostToCache = (cache, address, userId) =>
       __type: 'Address'
     }
   });
+
+CheckoutBill.propTypes = {
+  getCart: PropTypes.object,
+  addresses: PropTypes.object,
+  patchAddress: PropTypes.func,
+  subscribeToMore: PropTypes.func,
+  history: PropTypes.object
+};
+
 export default compose(
   withCurrentUser,
   withGetCart,
+  withPatchAddress,
   graphql(ADDRESSES_QUERY, {
     options: ({ currentUser }) => {
       return { variables: { id: currentUser && currentUser.id } };
@@ -124,23 +130,6 @@ export default compose(
           message.error("Couldn't perform the action");
           console.error(e);
         }
-      }
-    })
-  }),
-  graphql(PATCH_ADDRESS, {
-    props: ({ mutate, ownProps: { getCart } }) => ({
-      patchAddress: async addressId => {
-        // console.log('mutation start', id);
-        const {
-          data: { patchAddress }
-        } = await mutate({
-          variables: {
-            cartId: getCart && getCart.id,
-            addressId
-          }
-        });
-        message.destroy();
-        return patchAddress && message.success('Address updated') && patchAddress;
       }
     })
   }),

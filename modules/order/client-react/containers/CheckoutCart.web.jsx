@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { message } from 'antd';
-import { graphql } from 'react-apollo';
-import update from 'immutability-helper';
 
-import { compose, removeTypename } from '@gqlapp/core-common';
+import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import EDIT_ORDER from '../graphql/EditOrder.graphql';
+// import EDIT_ORDER from '../graphql/EditOrder.graphql';
 
 import CheckoutCartView from '../components/CheckoutCartView';
 import { withCurrentUser, withGetCart, withDeleteCartItem } from './OrderOperations';
@@ -58,23 +57,30 @@ const CheckoutCart = props => {
     />
   );
 };
+CheckoutCart.propTypes = {
+  getCart: PropTypes.object,
+  deleteOrderDetail: PropTypes.func,
+  editOrder: PropTypes.func,
+  subscribeToMore: PropTypes.func,
+  history: PropTypes.object
+};
 
 export default compose(
   withCurrentUser,
   withGetCart,
   withDeleteCartItem,
-  graphql(EDIT_ORDER, {
-    props: ({ mutate }) => ({
-      editOrder: async input => {
-        const {
-          data: { editOrder }
-        } = await mutate({
-          variables: { input }
-        });
+  // graphql(EDIT_ORDER, {
+  //   props: ({ mutate }) => ({
+  //     editOrder: async input => {
+  //       const {
+  //         data: { editOrder }
+  //       } = await mutate({
+  //         variables: { input }
+  //       });
 
-        return editOrder;
-      }
-    })
-  }),
+  //       return editOrder;
+  //     }
+  //   })
+  // }),
   translate('orders')
 )(CheckoutCart);

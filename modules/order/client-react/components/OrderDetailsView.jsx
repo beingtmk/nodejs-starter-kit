@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { PageLayout } from '@gqlapp/look-client-react';
-// import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import { Row, Col, Divider, Card } from 'antd';
 
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
@@ -9,13 +9,14 @@ import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
 
 const OrderDetailsView = props => {
-  const { order } = props;
+  const { order, onSubmit } = props;
   const address =
     order &&
     order.orderDetails &&
     order.orderDetails.length > 0 &&
     order.orderDetails[0].orderDelivery &&
     order.orderDetails[0].orderDelivery.address;
+
   return (
     <PageLayout>
       <div className="checkoutDiv">
@@ -32,17 +33,16 @@ const OrderDetailsView = props => {
             <Row gutter={24}>
               <Col lg={{ span: 10, offset: 0 }} xs={{ span: 24, offset: 0 }} className="margin20">
                 <Row>
-                  {props.order && (
+                  {order && (
                     <>
                       <OrderTrackCardComponent
                         orderPayment={order.orderPayment}
-                        orderStatus={props.order.state}
+                        orderStatus={order.state}
                         // status={state.status}
                         completed={3}
                       />
                       <Divider />
                       <Col lg={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
-                        {/* <div style={{ marginTop: "200px" }} /> */}
                         <Card className="boxShadowTheme borderRadius9">
                           <h4>The order will be delivered to the address below:</h4>
                           <hr />
@@ -56,10 +56,10 @@ const OrderDetailsView = props => {
                 </Row>
               </Col>
               <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
-                {props.order && (
+                {order && (
                   <CheckoutCardComponent
-                    onSubmit={props.onSubmit}
-                    getCart={props.order}
+                    onSubmit={onSubmit}
+                    getCart={order}
                     product={3}
                     showBtn={false}
                     paid={true}
@@ -74,4 +74,10 @@ const OrderDetailsView = props => {
     </PageLayout>
   );
 };
+
+OrderDetailsView.propTypes = {
+  order: PropTypes.object,
+  onSubmit: PropTypes.func
+};
+
 export default OrderDetailsView;

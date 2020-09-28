@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { message } from 'antd';
-import { compose } from '@gqlapp/core-common';
-import { graphql } from 'react-apollo';
-import update from 'immutability-helper';
 
+import { compose } from '@gqlapp/core-common';
 import { ORDER_STATES } from '@gqlapp/order-common';
-import ROUTES from '../routes';
 
 // import ORDER_PAYMENT from '../graphql/OrderPayment.graphql';
 // import PATCH_ORDER_PAYMENT from '../graphql/PatchOrderPayment.graphql';
 
+import ROUTES from '../routes';
 import CheckoutOrderView from '../components/CheckoutOrderView';
+
 import { withCurrentUser, withGetCart, withPatchOrderState } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
 
 const CheckoutOrder = props => {
-  const { history, navigation, patchOrderState, getCart, orderPayment, subscribeToMore, refetch } = props;
+  const { history, patchOrderState, getCart, orderPayment, subscribeToMore } = props;
 
   useEffect(() => {
     const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, history);
@@ -111,6 +111,16 @@ const CheckoutOrder = props => {
       </form>
     </>
   );
+};
+
+CheckoutOrder.propTypes = {
+  getCart: PropTypes.object,
+  deleteOrderDetail: PropTypes.func,
+  editOrder: PropTypes.func,
+  subscribeToMore: PropTypes.func,
+  history: PropTypes.object,
+  patchOrderState: PropTypes.func,
+  orderPayment: PropTypes.object
 };
 
 export default compose(

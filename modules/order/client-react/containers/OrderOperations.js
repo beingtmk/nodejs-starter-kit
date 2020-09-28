@@ -1,8 +1,11 @@
 import { graphql } from 'react-apollo';
+import { message } from 'antd';
+
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import ORDER_QUERY from '../graphql/OrderQuery.graphql';
 import ORDERS_STATE_QUERY from '../graphql/OrdersStateQuery.client.graphql';
 import ORDERS_QUERY from '../graphql/OrdersQuery.graphql';
 import GET_CART_QUERY from '../graphql/GetCartQuery.graphql';
@@ -13,6 +16,7 @@ import ADD_TO_CART from '../graphql/AddToCart.graphql';
 import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
 import DELETE_ORDER from '../graphql/DeleteOrder.graphql';
 import PATCH_ORDER_STATE from '../graphql/PatchOrderState.graphql';
+import PATCH_ADDRESS from '../graphql/PatchAddress.graphql';
 
 // Filter
 import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
@@ -38,6 +42,27 @@ export const withCurrentUser = Component =>
     props({ data: { loading, error, currentUser } }) {
       if (error) throw new Error(error);
       return { currentUserLoading: loading, currentUser };
+    }
+  })(Component);
+
+export const withOrder = Component =>
+  graphql(ORDER_QUERY, {
+    options: props => {
+      // console.log(props);
+      let id = 0;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
+
+      return {
+        variables: { id: Number(id) }
+      };
+    },
+    props({ data: { loading, error, order, subscribeToMore, updateQuery } }) {
+      if (error) throw new Error(error);
+      return { loading, order, subscribeToMore, updateQuery };
     }
   })(Component);
 
@@ -166,6 +191,25 @@ export const withPatchOrderState = Component =>
             state
           }
         });
+      }
+    })
+  })(Component);
+
+export const withPatchAddress = Component =>
+  graphql(PATCH_ADDRESS, {
+    props: ({ mutate, ownProps: { getCart } }) => ({
+      patchAddress: async addressId => {
+        // console.log('mutation start', id);
+        const {
+          data: { patchAddress }
+        } = await mutate({
+          variables: {
+            cartId: getCart && getCart.id,
+            addressId
+          }
+        });
+        message.destroy();
+        return patchAddress && message.success('Address updated') && patchAddress;
       }
     })
   })(Component);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -10,34 +11,6 @@ import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '../../../../settings';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
-
-const CheckoutDiv = styled.div`
-  padding: 20px 8%;
-`;
-
-const font14 = styled.div`
-  font-size: 14px;
-`;
-
-const Margin20Button = styled(Button)`
-  margin: 20px 0;
-`;
-
-const MarginV15 = styled(Col)`
-  margin: 15px 0 !important;
-`;
-
-const Font11h = styled.span`
-  font-size: 11.5px;
-`;
-
-const MarginB20btn = styled(Button)`
-  margin-bottom: 20px;
-`;
-
-const Font12 = styled.div`
-  font-size: 12px;
-`;
 
 const Rightfloat = styled.div`
   float: right;
@@ -52,7 +25,7 @@ export function TotalPrice(cartArray) {
   var totalCartPrice = 0;
   // console.log('cart array', cartArray);
   cartArray &&
-    cartArray.map((item, key) => {
+    cartArray.map(item => {
       totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
     });
   return totalCartPrice;
@@ -66,12 +39,9 @@ const renderMetaData = () => (
 );
 
 const CheckoutCartView = props => {
-  const [checkout, setCheckout] = React.useState(true);
-  function onChange(e) {
-    setCheckout(e);
-  }
+  const [checkout, setCheckout] = React.useState(false);
 
-  const { history, navigation, cartLoading, onSubmit, getCart, onDelete } = props;
+  const { history, cartLoading, onSubmit, getCart, onDelete } = props;
 
   const cartLength = getCart && getCart.length;
 
@@ -81,21 +51,30 @@ const CheckoutCartView = props => {
       {console.log('props', props)}
       {// !props.loading &&
       !cartLoading && getCart && getCart.orderDetails.length > 0 ? (
-        <CheckoutDiv>
+        <div>
           <Row>
             <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
               <CheckoutStepsComponent step={0} />
             </Col>
-            <MarginV15 lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
+            <Col lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
               <Col span={24}>
-                <font14>
-                  <strong>My cart - </strong>
-                  {cartLength} items
-                </font14>
-                <h4>orderId - {getCart.id}</h4>
-                <div>
-                  Total price: <strong>&#8377; {TotalPrice(getCart && getCart.orderDetails)} </strong>
-                </div>
+                <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <h2>
+                    <Icon type="shopping" />
+                    {' My cart - '} {cartLength} items
+                  </h2>
+                </Col>
+                <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <h2>Order id - {getCart.id}</h2>
+                </Col>
+                <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <h2>
+                    Total price: <strong>&#8377; {TotalPrice(getCart.orderDetails)} </strong>
+                  </h2>
+                </Col>
+                <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <br />
+                </Col>
               </Col>
               <br />
               <br />
@@ -108,36 +87,39 @@ const CheckoutCartView = props => {
                 </Col>
                 <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                   <Card>
-                    <MarginV15 span={24}>
-                      <Checkbox onChange={e => this.onChange(e)}>
-                        <Font11h>
-                          <b>I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.</b>
-                        </Font11h>
-                      </Checkbox>
-                    </MarginV15>
+                    <Checkbox onChange={e => setCheckout(e.target.checked)}>
+                      I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.
+                    </Checkbox>
+                    <br />
+                    <br />
                     {checkout ? (
-                      <Margin20Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
+                      <Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
                         Next
                         <Icon type="arrow-right" />
-                      </Margin20Button>
+                      </Button>
                     ) : (
-                      <Margin20Button type="primary" disabled block>
+                      <Button type="primary" disabled block>
                         Checkout
                         <Icon type="arrow-right" />
-                      </Margin20Button>
+                      </Button>
                     )}
+                    <br />
+                    <br />
                     <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
-                      <MarginB20btn type="primary" ghost block>
+                      <Button type="primary" ghost block>
                         <Icon type="plus-circle" />
                         Add more products
-                      </MarginB20btn>
+                      </Button>
                     </Link>
+                    <br />
+                    <br />
                     <hr />
+                    <br />
                     <h2>
                       <u>Cart Summary</u>
                     </h2>
                     <br />
-                    <Font12>
+                    <span>
                       {getCart.orderDetails.map((item, key) => (
                         <div key={key}>
                           <strong>Item {key + 1}:</strong>
@@ -146,26 +128,28 @@ const CheckoutCartView = props => {
                             <Rightfloat>
                               &#8377;{' '}
                               {item.cost && item.cost !== '0'
-                                ? `${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`
+                                ? `${item.cost} X ${item.orderOptions.quantity} = ${item.cost *
+                                    item.orderOptions.quantity}`
                                 : 'Free'}
                             </Rightfloat>
                             <br />
                           </p>
                         </div>
                       ))}
+                      <br />
                       <hr />
                       <br />
                       <h3>
                         Total amount
                         <ColorFloat>&#8377; {` ${TotalPrice(getCart.orderDetails)}`}</ColorFloat>
                       </h3>
-                    </Font12>
+                    </span>
                   </Card>
                 </Col>
               </Row>
-            </MarginV15>
+            </Col>
           </Row>
-        </CheckoutDiv>
+        </div>
       ) : (
         <div className="width100 centerAlign marginT30">
           <Empty description="You have no items in your Cart">
@@ -179,6 +163,14 @@ const CheckoutCartView = props => {
       )}
     </PageLayout>
   );
+};
+
+CheckoutCartView.propTypes = {
+  history: PropTypes.object,
+  getCart: PropTypes.object,
+  cartLoading: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  onDelete: PropTypes.func
 };
 
 export default CheckoutCartView;
