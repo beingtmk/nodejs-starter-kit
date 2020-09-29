@@ -1,8 +1,8 @@
 const ROUTES = {
   adminPanel: '/reviews',
-  add: '/new/review',
-  edit: '/edit/review/:id',
-  editLink: '/edit/review',
+  add: '/review/new',
+  edit: '/review/edit/:id',
+  editLink: '/review/edit',
   review: '/review',
   myReview: '/my-review'
 };

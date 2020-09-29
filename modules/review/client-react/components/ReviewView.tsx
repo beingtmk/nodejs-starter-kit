@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
-import { Row, Col, Checkbox, Spin } from 'antd';
+import { Row, Col, Checkbox, Spin, Tooltip } from 'antd';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
@@ -19,6 +19,7 @@ interface ReviewViewProps {
   };
   reviews: Reviews;
   loading: boolean;
+  showAdd: boolean;
   ratingAverage: {
     id: number;
     one: string;
@@ -47,7 +48,7 @@ export const NoReviews: React.FC = () => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, filter, loading, ratingAverage, handleHelpful, addReview, deleteReview, t } = props;
+  const { reviews, filter, loading, ratingAverage, handleHelpful, addReview, deleteReview, t, showAdd } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
@@ -88,18 +89,24 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
         <Col span={4}>
           <br />
           <div align="center">
-            <ReviewModal
-              cardTitle={'Add Review'}
-              t={t}
-              addReview={addReview}
-              modalName={filter.modalName}
-              modalId={filter.modalId}
-            />
+            {showAdd && (
+              <>
+                <ReviewModal
+                  cardTitle={'Add Review'}
+                  t={t}
+                  addReview={addReview}
+                  modalName={filter.modalName}
+                  modalId={filter.modalId}
+                />
+                <br />
+              </>
+            )}
             <br />
-            <br />
-            <Checkbox onChange={() => setPhoto(!photo)}>
-              <strong>With photo</strong>
-            </Checkbox>
+            <Tooltip title={`review_image table dosn't exist`}>
+              <Checkbox disabled onChange={() => setPhoto(!photo)}>
+                <strong>With photo</strong>
+              </Checkbox>
+            </Tooltip>
           </div>
         </Col>
         <Col span={12}>

@@ -9,18 +9,14 @@ import { withCurrentUser, withOrdersState, withFilterUpdating, withOrderStates, 
 import MyOrdersView from '../components/MyOrdersView';
 import { subscribeToOrders } from './OrderSubscriptions';
 
-const MyOrdersContainer = compose(
-  withOrders,
-  withOrdersState,
-  withFilterUpdating,
-  withOrderStates
-)(props => {
-  const { ordersSubscribeToMore } = props;
+const MyOrdersContainer = compose(withOrders)(props => {
+  const { ordersSubscribeToMore, refetch } = props;
   useEffect(() => {
     const subscribe = subscribeToOrders(ordersSubscribeToMore, props.filter);
+    refetch();
     return () => subscribe();
   });
-  console.log('props', props);
+  // console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 
@@ -47,4 +43,10 @@ MyOrders.propTypes = {
   //   filter: PropTypes.object
 };
 
-export default compose(withCurrentUser, translate('order'))(MyOrders);
+export default compose(
+  withCurrentUser,
+  withOrdersState,
+  withFilterUpdating,
+  withOrderStates,
+  translate('order')
+)(MyOrders);

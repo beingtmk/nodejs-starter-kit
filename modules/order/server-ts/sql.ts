@@ -186,7 +186,7 @@ export default class OrderDAO extends Model {
   }
 
   public async orderStates() {
-    return camelizeKeys(await OrderState.query());
+    return camelizeKeys(await OrderState.query().whereNot('state', '=', ORDER_STATES.STALE));
   }
 
   // public async userDeliveries(userId: number) {

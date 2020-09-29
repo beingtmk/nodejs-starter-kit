@@ -160,13 +160,13 @@ export default (pubsub: any) => ({
               node: order
             }
           });
-          pubsub.publish(ORDER_SUBSCRIPTION, {
-            orderUpdated: {
-              mutation: 'UPDATED',
-              id: order.id,
-              node: order
-            }
-          });
+          // pubsub.publish(ORDER_SUBSCRIPTION, {
+          //   orderUpdated: {
+          //     mutation: 'UPDATED',
+          //     id: order.id,
+          //     node: order
+          //   }
+          // });
           return true;
         } else {
           return false;

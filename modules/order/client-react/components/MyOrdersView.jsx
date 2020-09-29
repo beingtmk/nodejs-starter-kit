@@ -48,6 +48,19 @@ const MyOrdersView = props => {
   const Icons = [<Icon type="appstore" />, <Icon type="hdd" />, <Icon type="shop" />, <Icon type="delete" />];
   const RenderMyOrders = () => (
     <div>
+      {loading && (
+        <div align="center">
+          <br />
+          <br />
+          <Spin size="large" />
+        </div>
+      )}
+      {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
+    </div>
+  );
+  return (
+    <PageLayout>
+      {renderMetaData()}
       <Row>
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <h2 className="headingTop">
@@ -65,7 +78,7 @@ const MyOrdersView = props => {
               </Button>
               {orderStates.map((oS, i) => (
                 <Button key={i} onClick={() => filterItems(oS.state)} type={classNamesgroup(oS.state)}>
-                  {Icons[i + 2]}
+                  {Icons[i + 1]}
                   {oS.state}
                 </Button>
               ))}
@@ -74,20 +87,7 @@ const MyOrdersView = props => {
         </Col>
       </Row>
       <Divider />
-      <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />
-    </div>
-  );
-  return (
-    <PageLayout>
-      {renderMetaData()}
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
-      {!loading && (orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />)}
+      {orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />}
     </PageLayout>
   );
 };

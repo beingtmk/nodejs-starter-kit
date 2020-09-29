@@ -75,7 +75,7 @@ export const withOrders = Component =>
       };
     },
     props: ({ data }) => {
-      const { loading, error, orders, fetchMore, subscribeToMore, updateQuery } = data;
+      const { loading, error, orders, fetchMore, subscribeToMore, updateQuery, refetch } = data;
       const loadData = (after, dataDelivery) => {
         return fetchMore({
           variables: {
@@ -101,7 +101,7 @@ export const withOrders = Component =>
         });
       };
       if (error) throw new Error(error);
-      return { loading, orders, ordersSubscribeToMore: subscribeToMore, loadData, updateQuery };
+      return { loading, orders, ordersSubscribeToMore: subscribeToMore, loadData, updateQuery, refetch };
     }
   })(Component);
 

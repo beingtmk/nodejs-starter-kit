@@ -19,6 +19,7 @@ interface ReviewProps {
     modalId: number;
     modalName: string;
   };
+  showAdd: boolean;
   subscribeToMore: () => null;
 }
 

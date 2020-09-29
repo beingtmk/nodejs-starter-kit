@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Card, Icon, Checkbox, Empty } from 'antd';
 
 import { PageLayout, NextButton, AddButton } from '@gqlapp/look-client-react';
-// import { TranslateFunction } from "@gqlapp/i18n-client-react";
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import ROUTES from '../routes';
 
 import settings from '../../../../settings';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
@@ -93,7 +95,7 @@ const CheckoutCartView = props => {
                     <br />
                     <br />
                     {checkout ? (
-                      <NextButton onClick={() => history.push('/checkout-bill/')} block>
+                      <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block>
                         Next
                       </NextButton>
                     ) : (
@@ -103,7 +105,7 @@ const CheckoutCartView = props => {
                     )}
                     <br />
                     <br />
-                    <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
+                    <Link className="listing-link" to={`${LISTING_ROUTES.listingCatalogue}`} target="_blank">
                       <AddButton ghost block>
                         Add more products
                       </AddButton>
@@ -150,10 +152,8 @@ const CheckoutCartView = props => {
       ) : (
         <div className="width100 centerAlign marginT30">
           <Empty description="You have no items in your Cart">
-            <Link to="/listing_catalogue">
-              <AddButton style={{ width: 'fit-content' }} type="primary">
-                Add some products
-              </AddButton>
+            <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
+              <AddButton style={{ width: 'fit-content' }}>Add some products</AddButton>
             </Link>
           </Empty>
         </div>

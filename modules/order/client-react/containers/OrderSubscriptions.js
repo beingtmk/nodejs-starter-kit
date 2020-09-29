@@ -66,6 +66,7 @@ export const subscribeToOrders = (subscribeToMore, filter) =>
       }
     ) => {
       let newResult = prev;
+      console.log(prev, node, 'func');
       if (mutation === 'CREATED') {
         newResult = onAddOrders(prev, node);
       } else if (mutation === 'UPDATED') {
@@ -78,8 +79,9 @@ export const subscribeToOrders = (subscribeToMore, filter) =>
   });
 
 function onAddOrders(prev, node) {
-  // console.log('prev', prev, node);
-  if (prev.orders.edges.some(order => node.id === order.cursor)) {
+  console.log('prev', prev, node);
+  if (prev.orders && prev.orders.edges.some(order => node.id === order.cursor)) {
+    console.log('bleh');
     return update(prev, {
       orders: {
         totalCount: {
@@ -92,24 +94,26 @@ function onAddOrders(prev, node) {
     });
   }
 
-  const filteredOrders = prev.orders.edges.filter(order => order.node.id !== null);
-
-  const edge = {
-    cursor: node.id,
-    node: node,
-    __typename: 'OrderEdges'
-  };
-
-  return update(prev, {
-    orders: {
-      totalCount: {
-        $set: prev.orders.totalCount + 1
-      },
-      edges: {
-        $set: [edge, ...filteredOrders]
+  if (prev.orders) {
+    const filteredOrders = prev.orders.edges.filter(order => order.node.id !== null);
+    const edge = {
+      cursor: node.id,
+      node: node,
+      __typename: 'OrderEdges'
+    };
+    console.log([edge, ...filteredOrders]);
+    return update(prev, {
+      orders: {
+        totalCount: {
+          $set: prev.orders.totalCount + 1
+        },
+        edges: {
+          $set: [edge, ...filteredOrders]
+        }
       }
-    }
-  });
+    });
+  }
+  console.log('prev.orders is undefined');
 }
 
 function onEditOrders(prev, node) {

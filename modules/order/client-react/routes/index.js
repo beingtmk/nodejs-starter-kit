@@ -2,20 +2,20 @@ const ROUTES = {
   adminPanel: '/orders',
   order: '/order',
 
-  orderDetail: '/order-detail/:id',
-  orderDetailLink: '/order-detail/',
+  orderDetail: '/order/detail/:id',
+  orderDetailLink: '/order/detail/',
 
   myOrder: '/my-order',
-  myDelivery: '/my-delivery',
+  myDelivery: '/my-deliveries',
 
-  checkoutCart: '/checkout-cart',
-  checkoutBill: '/checkout-bill',
-  checkoutOrder: '/checkout-order/:id',
-  checkoutOrderLink: '/checkout-order/',
+  checkoutCart: '/checkout/cart',
+  checkoutBill: '/checkout/bill',
+  checkoutOrder: '/checkout/order/:id',
+  checkoutOrderLink: '/checkout/order/',
 
-  add: '/new/order',
-  edit: '/edit/order/:id',
-  editLink: '/edit/order/'
+  add: '/order/new',
+  edit: '/order/edit/:id',
+  editLink: '/order/edit/'
 };
 
 export default ROUTES;

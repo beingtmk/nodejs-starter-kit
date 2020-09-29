@@ -11,6 +11,7 @@ import ADDRESSES_QUERY from '@gqlapp/addresses-client-react/graphql/AddressesQue
 import ADD_OR_EDIT_ADDRESS from '@gqlapp/addresses-client-react/graphql/AddOrEditAddress.graphql';
 import DELETE_ADDRESS from '@gqlapp/addresses-client-react/graphql/DeleteAddress.graphql';
 
+import ROUTES from '../routes';
 import CheckoutBillView from '../components/CheckoutBillView';
 import { withCurrentUser, withGetCart, withPatchAddress } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
@@ -33,7 +34,7 @@ const CheckoutBill = props => {
     try {
       const addressMutation = await patchAddress(addressId === 0 ? addresses[0].id : addressId);
       if (history && addressMutation) {
-        return history.push(`/checkout-order/${props.getCart.id}`);
+        return history.push(`${ROUTES.checkoutOrderLink}${props.getCart.id}`);
       } else {
         message.error('Try again!!');
       }
