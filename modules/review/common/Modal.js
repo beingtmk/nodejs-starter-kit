@@ -5,11 +5,7 @@ export const MODAL = [
     value: ''
   },
   {
-    label: 'Event',
-    value: 'event'
-  },
-  {
-    label: 'Blog',
-    value: 'blog'
+    label: 'Listing',
+    value: 'listing'
   }
 ];

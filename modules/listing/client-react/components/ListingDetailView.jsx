@@ -18,41 +18,41 @@
 // class ListingDetailView extends Component {
 //   constructor(props) {
 //     super(props);
-//     this.next = this.next.bind(this);
-//     this.previous = this.previous.bind(this);
-//     this.carousel = React.createRef();
+//     next = next.bind(this);
+//     previous = previous.bind(this);
+//     carousel = React.createRef();
 //   }
 
 //   renderMetaData = () => (
 //     <Helmet
-//       title={`${settings.app.name} - ${this.props.t('listingDetail.title')}`}
+//       title={`${settings.app.name} - ${props.t('listingDetail.title')}`}
 //       meta={[
 //         {
 //           name: 'description',
-//           content: this.props.t('listingDetail.meta'),
+//           content: props.t('listingDetail.meta'),
 //         },
 //       ]}
 //     />
 //   );
 
 //   next() {
-//     this.carousel.next();
+//     carousel.next();
 //   }
 
 //   previous() {
-//     this.carousel.prev();
+//     carousel.prev();
 //   }
 
 //   prevSlide = () => {
-//     this.carousel.prev();
+//     carousel.prev();
 //   };
 
 //   nextSlide = () => {
-//     this.carousel.next();
+//     carousel.next();
 //   };
 
 //   render() {
-//     const { listing, loading, user, history, navigation, currentUser, handleBookmark, listingBookmarkStatus } = this.props;
+//     const { listing, loading, user, history, navigation, currentUser, handleBookmark, listingBookmarkStatus } = props;
 //     const images = listing && listing.listingImages && listing.listingImages.length !== 0 && listing.listingImages;
 //     const getName = () => {
 //       const firstName = user && user.user && user.user.profile && user.user.profile.firstName;
@@ -86,7 +86,7 @@
 //     };
 //     return (
 //       <PageLayout>
-//         {this.renderMetaData()}
+//         {renderMetaData()}
 //         {!loading && !listing && (
 //           <div align="center">
 //             <br />
@@ -146,10 +146,10 @@
 //                         marginBottom: '30px',
 //                       }}
 //                     >
-//                       <div className="carousel-arrow carousel-arrow-left" onClick={this.prevSlide}>
+//                       <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
 //                         <Icon type="left" className="carousel-arrow-icon" />
 //                       </div>
-//                       <Carousel className="listing-detail-carousel" ref={node => (this.carousel = node)} {...status}>
+//                       <Carousel className="listing-detail-carousel" ref={node => (carousel = node)} {...status}>
 //                         {images &&
 //                           images.map((item, id) => (
 //                             <div key={id} align="center">
@@ -157,7 +157,7 @@
 //                             </div>
 //                           ))}
 //                       </Carousel>
-//                       <div className="carousel-arrow carousel-arrow-right" onClick={this.nextSlide}>
+//                       <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
 //                         <Icon type="right" className="carousel-arrow-icon" />
 //                       </div>
 //                     </div>
@@ -246,7 +246,7 @@
 // };
 
 // export default translate('listing')(ListingDetailView);
-import React, { Component } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
@@ -267,8 +267,9 @@ import {
 } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout, Button } from '@gqlapp/look-client-react';
-import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
+import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
+import Review from '@gqlapp/review-client-react/containers/Review';
 
 import settings from '../../../../settings';
 import ListingsCarousel from './ListingCarousel';
@@ -281,295 +282,292 @@ const BreadCrumbItem = Breadcrumb.Item;
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
-class ListingDetailView extends Component {
-  constructor(props) {
-    super(props);
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.carousel = React.createRef();
-  }
+const ListingDetailView = props => {
+  let carousel = React.useRef();
+  const { listing, loading, history, currentUser, handleBookmark, listingBookmarkStatus, t } = props;
 
-  renderMetaData = () => (
+  const renderMetaData = () => (
     <Helmet
-      title={`${settings.app.name} - ${this.props.t('listingDetail.title')}`}
+      title={`${settings.app.name} - ${t('listingDetail.title')}`}
       meta={[
         {
           name: 'description',
-          content: this.props.t('listingDetail.meta')
+          content: t('listingDetail.meta')
         }
       ]}
     />
   );
 
-  next() {
-    this.carousel.next();
-  }
-
-  previous() {
-    this.carousel.prev();
-  }
-
-  prevSlide = () => {
-    this.carousel.prev();
+  const prevSlide = () => {
+    carousel.prev();
   };
 
-  nextSlide = () => {
-    this.carousel.next();
+  const nextSlide = () => {
+    carousel.next();
   };
 
-  render() {
-    const { listing, loading, history, navigation, currentUser, handleBookmark, listingBookmarkStatus } = this.props;
-    const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
-    const discount = listing && listing.listingCostArray && listing.listingCostArray.discount;
-    const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
-    // console.log('cost', cost && cost.toFixed(2));
-    const inventoryCount = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
-    const images =
-      listing &&
-      listing.listingMedia &&
-      listing.listingMedia.length > 0 &&
-      listing.listingMedia.filter(lM => lM.type === 'image');
-    const youtubeUrl =
-      listing &&
-      listing.listingMedia &&
-      listing.listingMedia.length > 0 &&
-      listing.listingMedia.filter(lM => lM.type === 'video');
-    // console.log('ideo', youtubeUrl);
-    const user = listing && listing.user;
-    const getName = () => {
-      const firstName = user && user.profile && user.profile.firstName;
-      const lastName = user && user && user.profile && user.profile.lastName;
-      if (firstName && lastName) {
-        return `${firstName} ${lastName}`;
-      } else if (firstName && !lastName) {
-        return firstName;
-      } else {
-        return 'Name Not Available';
-      }
-    };
+  const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
+  const discount = listing && listing.listingCostArray && listing.listingCostArray.discount;
+  const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
+  // console.log('cost', cost && cost.toFixed(2));
+  const inventoryCount = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
+  const images =
+    listing &&
+    listing.listingMedia &&
+    listing.listingMedia.length > 0 &&
+    listing.listingMedia.filter(lM => lM.type === 'image');
+  const youtubeUrl =
+    listing &&
+    listing.listingMedia &&
+    listing.listingMedia.length > 0 &&
+    listing.listingMedia.filter(lM => lM.type === 'video');
+  // console.log('ideo', youtubeUrl);
+  // const user = listing && listing.user;
+  // const getName = () => {
+  //   const firstName = user && user.profile && user.profile.firstName;
+  //   const lastName = user && user && user.profile && user.profile.lastName;
+  //   if (firstName && lastName) {
+  //     return `${firstName} ${lastName}`;
+  //   } else if (firstName && !lastName) {
+  //     return firstName;
+  //   } else {
+  //     return 'Name Not Available';
+  //   }
+  // };
 
-    const status = {
-      customPaging: function(i) {
-        return (
-          <a>
-            <img
-              src={
-                (images && images.length !== 0 && images[i] && images[i].url) ||
-                'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
-              }
-              style={{ width: '30px', height: '30px', zIndex: '10' }}
-            />
-          </a>
-        );
-      },
-      autoplay: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      dots: true
+  const status = {
+    customPaging: function(i) {
+      return (
+        <a>
+          <img
+            src={
+              (images && images.length !== 0 && images[i] && images[i].url) ||
+              'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
+            }
+            style={{ width: '30px', height: '30px', zIndex: '10' }}
+          />
+        </a>
+      );
+    },
+    autoplay: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots: true
 
-      // nextArrow: <SampleNextArrow />,
-      // prevArrow: <SamplePrevArrow />
-    };
+    // nextArrow: <SampleNextArrow />,
+    // prevArrow: <SamplePrevArrow />
+  };
 
-    const getYoutubeUrl = url => {
-      // console.log('url', url);
-      const newUrl = url.replace('watch?v=', 'embed/');
+  const getYoutubeUrl = url => {
+    // console.log('url', url);
+    const newUrl = url.replace('watch?v=', 'embed/');
 
-      return newUrl;
-    };
-    return (
-      <PageLayout>
-        {this.renderMetaData()}
-        {!loading && !listing && (
-          <div align="center">
-            <br />
-            <br />
-            <br />
-            <h3>{'Listing not found!'}</h3>
-          </div>
-        )}
-        {loading && (
-          <div align="center">
-            <br />
-            <br />
-            <br />
-            <Spin size="large" />
-          </div>
-        )}
-        {!loading && listing && (
-          <>
-            <Row gutter={24}>
-              <Col span={24}>
-                <Breadcrumb
-                  separator=">"
+    return newUrl;
+  };
+  return (
+    <PageLayout>
+      {renderMetaData()}
+      {!loading && !listing && (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <h3>{'Listing not found!'}</h3>
+        </div>
+      )}
+      {loading && (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin size="large" />
+        </div>
+      )}
+      {!loading && listing && (
+        <>
+          <Row gutter={24}>
+            <Col span={24}>
+              <Breadcrumb
+                separator=">"
+                style={{
+                  marginBottom: '5px'
+                }}
+              >
+                <BreadCrumbItem key="home">
+                  <NavLink to="/">
+                    <Icon type="home" />
+                  </NavLink>
+                </BreadCrumbItem>
+                <BreadCrumbItem key="listing-title">{listing && listing.title}</BreadCrumbItem>
+              </Breadcrumb>
+            </Col>
+
+            <Col xl={10} lg={10} md={13} sm={24} style={{ marginBottom: '30px' }}>
+              <div style={{ height: '50vh', paddingTop: '10px' }} align="center">
+                <div
                   style={{
-                    marginBottom: '5px'
+                    height: '300px',
+                    position: 'relative',
+                    marginBottom: '30px'
                   }}
                 >
-                  <BreadCrumbItem key="home">
-                    <NavLink to="/">
-                      <Icon type="home" />
-                    </NavLink>
-                  </BreadCrumbItem>
-                  <BreadCrumbItem key="listing-title">{listing && listing.title}</BreadCrumbItem>
-                </Breadcrumb>
-              </Col>
-
-              <Col xl={10} lg={10} md={13} sm={24} style={{ marginBottom: '30px' }}>
-                <div style={{ height: '50vh', paddingTop: '10px' }} align="center">
                   <div
                     style={{
-                      height: '300px',
-                      position: 'relative',
-                      marginBottom: '30px'
+                      position: 'absolute',
+                      top: '5',
+                      right: '0',
+                      zIndex: '100'
                     }}
                   >
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '5',
-                        right: '0',
-                        zIndex: '100'
-                      }}
-                    >
-                      <IfLoggedIn>
-                        {listing && (
-                          <BookmarkComponent
-                            handleBookmark={() => handleBookmark(listing.id, listing.userId)}
-                            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
-                            listing={listing}
-                          />
-                        )}
-                      </IfLoggedIn>
-                    </div>
-                    <div className="carousel-arrow carousel-arrow-left" onClick={this.prevSlide}>
-                      <Icon type="left" className="carousel-arrow-icon" />
-                    </div>
-                    <Carousel className="listing-detail-carousel" ref={node => (this.carousel = node)} {...status}>
-                      {images &&
-                        images.map((item, id) => (
-                          <div key={id} align="center">
-                            <img src={item.url} style={{ height: '300px' }} />
-                          </div>
-                        ))}
-                      {youtubeUrl.length > 0 &&
-                        youtubeUrl.map(yT => (
-                          <div key="video">
-                            <iframe
-                              width="100%"
-                              height="300px"
-                              src={getYoutubeUrl(yT.url)}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            ></iframe>
-                          </div>
-                        ))}
-                    </Carousel>
-                    <div className="carousel-arrow carousel-arrow-right" onClick={this.nextSlide}>
-                      <Icon type="right" className="carousel-arrow-icon" />
-                    </div>
+                    <IfLoggedIn>
+                      {listing && (
+                        <BookmarkComponent
+                          handleBookmark={() => handleBookmark(listing.id, listing.userId)}
+                          bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                          listing={listing}
+                        />
+                      )}
+                    </IfLoggedIn>
                   </div>
-                  <div align="left" style={{ padding: '5px' }}>
-                    <h3>Details: </h3>
-                    <p>{listing.description}</p>
+                  <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
+                    <Icon type="left" className="carousel-arrow-icon" />
+                  </div>
+                  <Carousel className="listing-detail-carousel" ref={node => (carousel = node)} {...status}>
+                    {images &&
+                      images.map((item, id) => (
+                        <div key={id} align="center">
+                          <img src={item.url} style={{ height: '300px' }} />
+                        </div>
+                      ))}
+                    {youtubeUrl.length > 0 &&
+                      youtubeUrl.map(yT => (
+                        <div key="video">
+                          <iframe
+                            width="100%"
+                            height="300px"
+                            src={getYoutubeUrl(yT.url)}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      ))}
+                  </Carousel>
+                  <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
+                    <Icon type="right" className="carousel-arrow-icon" />
                   </div>
                 </div>
-                <Row>
-                  <Col xl={23} lg={23} md={23} sm={23}></Col>
-                  <Col xl={1} lg={1} md={1} sm={1}></Col>
-                </Row>
-                <Row>
-                  {/* <Col align="right" md={12} xs={0}>
+                <div align="left" style={{ padding: '5px' }}>
+                  <h3>Details: </h3>
+                  <p>{listing.description}</p>
+                </div>
+              </div>
+              <Row>
+                <Col xl={23} lg={23} md={23} sm={23}></Col>
+                <Col xl={1} lg={1} md={1} sm={1}></Col>
+              </Row>
+              <Row>
+                {/* <Col align="right" md={12} xs={0}>
                     <AddToCart listing={listing} currentUser={currentUser} history={history} navigation={navigation} />
                   </Col> */}
-                </Row>
-              </Col>
-              <Col xl={14} lg={14} md={11} sm={24}>
-                <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
-                <br /> <p>{`SKU: ${listing && listing.sku}`}</p>
-                <Divider style={{ margin: '10px 5px' }} />
-                <Row>
+              </Row>
+            </Col>
+            <Col xl={14} lg={14} md={11} sm={24}>
+              <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
+              <br /> <p>{`SKU: ${listing && listing.sku}`}</p>
+              <Divider style={{ margin: '10px 5px' }} />
+              <Row>
+                <Col lg={8} md={12} xs={12}>
+                  {isDiscount
+                    ? cost && (
+                        <CurrencyDisplay
+                          style={{ display: 'inline' }}
+                          input={(cost - cost * (discount / 100)).toFixed(2)}
+                        />
+                      )
+                    : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
+                </Col>
+                {isDiscount && (
                   <Col lg={8} md={12} xs={12}>
-                    {isDiscount
-                      ? cost && (
-                          <CurrencyDisplay
-                            style={{ display: 'inline' }}
-                            input={(cost - cost * (discount / 100)).toFixed(2)}
-                          />
-                        )
-                      : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
+                    <Statistic
+                      title=""
+                      precision={2}
+                      valueStyle={{ color: '#cf1322' }}
+                      value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
+                      suffix={'%'}
+                      prefix={<Icon type="arrow-down" />}
+                    />
                   </Col>
-                  {isDiscount && (
-                    <Col lg={8} md={12} xs={12}>
-                      <Statistic
-                        title=""
-                        precision={2}
-                        valueStyle={{ color: '#cf1322' }}
-                        value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
-                        suffix={'%'}
-                        prefix={<Icon type="arrow-down" />}
-                      />
-                    </Col>
-                  )}
+                )}
 
-                  <Col lg={8} md={24} xs={24}>
-                    <p style={{ fontSize: '16px', marginTop: '5px' }}>
-                      {`Availability: ${inventoryCount > 0 ? 'In Stock' : 'Out of Stock'}`}
-                    </p>
-                  </Col>
-                  <Col span={24}>
-                    {isDiscount && (
-                      <div style={{ display: 'flex' }}>
-                        <CurrencyDisplay input={cost.toFixed(2)} valueStyle={{ textDecoration: 'line-through' }} />
-                        &nbsp; &nbsp;
-                        <div style={{ lineHeight: '45px', display: 'flex' }}>
-                          <div style={{ fontSize: '15px' }}>
-                            <b>Saving Amount: &nbsp;</b>
-                          </div>
-                          {(cost.toFixed(2) - (cost - cost * (discount / 100)).toFixed(2)).toFixed(2)}
+                <Col lg={8} md={24} xs={24}>
+                  <p style={{ fontSize: '16px', marginTop: '5px' }}>
+                    {`Availability: ${inventoryCount > 0 ? 'In Stock' : 'Out of Stock'}`}
+                  </p>
+                </Col>
+                <Col span={24}>
+                  {isDiscount && (
+                    <div style={{ display: 'flex' }}>
+                      <CurrencyDisplay input={cost.toFixed(2)} valueStyle={{ textDecoration: 'line-through' }} />
+                      &nbsp; &nbsp;
+                      <div style={{ lineHeight: '45px', display: 'flex' }}>
+                        <div style={{ fontSize: '15px' }}>
+                          <b>Saving Amount: &nbsp;</b>
                         </div>
+                        {(cost.toFixed(2) - (cost - cost * (discount / 100)).toFixed(2)).toFixed(2)}
                       </div>
-                    )}
-                    <i>
-                      *Including GST
-                      <br /> *free shipping
-                      <br /> *certified
-                    </i>
-                  </Col>
-                </Row>
-                <Divider />
-                <br />
-                <AddToCart listing={listing} history={history} currentUser={currentUser} />
-              </Col>
-            </Row>
-            <Divider style={{ marginBottom: '0' }} />
-            <div>
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="Additional Info" key="1">
-                  <Descriptions layout="horizontal" bordered column={1} size="small">
-                    {/* {listing && listing.listingInfo && listing.listingInfo.size && ( */}
-                    <Descriptions.Item label="Something">{'Something'}</Descriptions.Item>
-                    {/* )} */}
-                    {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
-                  </Descriptions>
-                </TabPane>
-                <TabPane tab="Details" key="2">
-                  <p>{listing.description}</p>
-                </TabPane>
-              </Tabs>
-            </div>
-            <>
-              <ListingsCarousel filter={{ userId: listing.user.id }} currentUser={currentUser} />
-            </>
+                    </div>
+                  )}
+                  <i>
+                    *Including GST
+                    <br /> *free shipping
+                    <br /> *certified
+                  </i>
+                </Col>
+              </Row>
+              <Divider />
+              <br />
+              <AddToCart listing={listing} history={history} currentUser={currentUser} />
+            </Col>
+          </Row>
+          <Divider style={{ marginBottom: '0' }} />
+          <div>
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Additional Info" key="1">
+                <Descriptions layout="horizontal" bordered column={1} size="small">
+                  {/* {listing && listing.listingInfo && listing.listingInfo.size && ( */}
+                  <Descriptions.Item label="Something">{'Something'}</Descriptions.Item>
+                  {/* )} */}
+                  {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
+                </Descriptions>
+              </TabPane>
+              <TabPane tab="Details" key="2">
+                <p>{listing.description}</p>
+              </TabPane>
+            </Tabs>
+          </div>
+          <>
+            <ListingsCarousel filter={{ userId: listing.user.id }} currentUser={currentUser} />
           </>
-        )}
-      </PageLayout>
-    );
-  }
-}
+          {listing && (
+            <>
+              <Review
+                filter={{
+                  isActive: true,
+                  modalId: listing && listing.id,
+                  modalName: 'listing'
+                }}
+                t={t}
+              />
+            </>
+          )}
+        </>
+      )}
+    </PageLayout>
+  );
+};
 
 ListingDetailView.propTypes = {
   loading: PropTypes.bool.isRequired,

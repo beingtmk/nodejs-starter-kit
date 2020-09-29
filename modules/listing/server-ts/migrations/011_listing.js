@@ -11,7 +11,7 @@ exports.up = function(knex) {
           .onDelete('CASCADE');
 
         table.string('title');
-        table.string('description');
+        table.string('description', 5000);
         table.string('sku');
 
         table.boolean('is_active').defaultTo(true);

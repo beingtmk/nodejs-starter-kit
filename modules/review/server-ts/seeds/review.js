@@ -5,17 +5,6 @@ exports.seed = async function(knex) {
     'review'
     // , 'review_image'
   ]);
-  await Promise.all(
-    [...Array(50).keys()].map(async ii => {
-      await returnId(knex('event')).insert({
-        title: `Event ${ii + 1}`
-      });
-      await returnId(knex('blog')).insert({
-        title: `Blog ${ii + 1}`
-      });
-      return true;
-    })
-  );
 
   await Promise.all(
     [...Array(200).keys()].map(async ii => {
@@ -36,8 +25,8 @@ exports.seed = async function(knex) {
       //   })
       // );
       return returnId(knex('modal_review')).insert({
-        modal_name: Math.random() >= 0.5 ? 'event' : 'blog',
-        modal_id: Math.floor(Math.random() * (50 - 1 + 1) + 1),
+        modal_name: 'listing',
+        modal_id: Math.floor(Math.random() * (100 - 1 + 1) + 1),
         review_id: review[0]
       });
     })

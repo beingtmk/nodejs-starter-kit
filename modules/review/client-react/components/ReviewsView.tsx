@@ -6,13 +6,10 @@ import { Row, Col } from 'antd';
 import { PageLayout, AddButton } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import { MODAL } from '@gqlapp/review-common';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';
 import ReviewListComponent from './ReviewListComponent.web';
 import ROUTES from '../routes';
-
-import Review from '../containers/Review';
 
 const renderMetaData = (t: TranslateFunction) => (
   <Helmet
@@ -53,14 +50,6 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       <ReviewFilterComponent filter={filter} {...props} />
       <hr />
       <ReviewListComponent {...props} />
-      <Review
-        filter={{
-          isActive: true,
-          modalId: 1,
-          modalName: MODAL[1].value
-        }}
-        t={t}
-      />
     </PageLayout>
   );
 };
