@@ -17,11 +17,10 @@ services:
       - /home/node/.cache/yarn
     working_dir: ${APP_DIR}
     # user: node
-    #  (test -f prod-db.sqlite3 || yarn seed) &&
     command: >
       sh -c '
       NODE_ENV=development yarn &&
-      knex migrate:latest &&
+      (test -f prod-db.sqlite3 || yarn seed) &&
       yarn build &&
       yarn start
       '
