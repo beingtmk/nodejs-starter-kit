@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   node:
     build:
@@ -17,12 +17,13 @@ services:
       - /home/node/.cache/yarn
     working_dir: ${APP_DIR}
     # user: node
+    #  (test -f prod-db.sqlite3 || yarn seed) &&
     command: >
-       sh -c '
-       NODE_ENV=development yarn &&
-       (test -f prod-db.sqlite3 || yarn seed) &&
-       yarn build &&
-       yarn start
-       '
+      sh -c '
+      NODE_ENV=development yarn &&
+      knex migrate:latest &&
+      yarn build &&
+      yarn start
+      '
     ports:
       - 8080:8080
