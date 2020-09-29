@@ -1,9 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, Icon, Divider } from 'antd';
+import { Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
@@ -28,15 +28,15 @@ const ListingView: React.SFC<ListingViewProps> = props => {
     <PageLayout>
       {renderMetaData(t)}
       <Row>
-        <Col span={12}>
+        <Col span={22}>
           <h2>
             <Icon type="solution" /> &nbsp;
             {t('list.subTitle')}
           </h2>
         </Col>
-        <Col span={12} align="right">
+        <Col span={2} align="right">
           <Link to={ROUTES.add}>
-            <Button color="primary">{t('list.btn.add')}</Button>
+            <AddButton>{t('list.btn.add')}</AddButton>
           </Link>
         </Col>
       </Row>

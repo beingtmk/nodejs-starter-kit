@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Divider, Empty, Popconfirm, Icon, message, Spin } from 'antd';
+import { Divider, Empty, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
@@ -26,10 +26,6 @@ const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
     <Empty />
   </div>
 );
-
-const cancel = () => {
-  message.error('Click on No');
-};
 
 export interface ReviewListComponentProps {
   loading: boolean;

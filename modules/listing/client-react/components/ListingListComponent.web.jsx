@@ -2,10 +2,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popconfirm, message, Spin } from 'antd';
+import { Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Select, Option, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
@@ -24,10 +24,6 @@ Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
 NoListingsMessage.propTypes = { t: PropTypes.func };
-
-const cancel = () => {
-  message.error('Click on No');
-};
 
 const ListingListComponent = props => {
   const { onToggle, orderBy, onOrderBy, loading, listings, t, loadData, deleteListing } = props;
@@ -245,18 +241,10 @@ const ListingListComponent = props => {
       render: (text, record) => (
         <div>
           <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
-            <Button color="primary" shape="circle" icon="edit" />
+            <EditIcon />
           </Link>
           &nbsp;
-          <Popconfirm
-            title="Are you sure delete this listing?"
-            onConfirm={() => deleteListing(record.id)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button color="danger" shape="circle" icon="delete" />
-          </Popconfirm>
+          <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
         </div>
       )
     }

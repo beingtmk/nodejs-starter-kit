@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Row, Col, Button, Card, Icon, Checkbox, Empty } from 'antd';
+import { Row, Col, Card, Icon, Checkbox, Empty } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, NextButton, AddButton } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from "@gqlapp/i18n-client-react";
 
 import settings from '../../../../settings';
@@ -93,23 +93,20 @@ const CheckoutCartView = props => {
                     <br />
                     <br />
                     {checkout ? (
-                      <Button onClick={() => history.push('/checkout-bill/')} type="primary" block>
+                      <NextButton onClick={() => history.push('/checkout-bill/')} block>
                         Next
-                        <Icon type="arrow-right" />
-                      </Button>
+                      </NextButton>
                     ) : (
-                      <Button type="primary" disabled block>
+                      <NextButton disabled block>
                         Checkout
-                        <Icon type="arrow-right" />
-                      </Button>
+                      </NextButton>
                     )}
                     <br />
                     <br />
                     <Link className="listing-link" to={`/listing_catalogue`} target="_blank">
-                      <Button type="primary" ghost block>
-                        <Icon type="plus-circle" />
+                      <AddButton ghost block>
                         Add more products
-                      </Button>
+                      </AddButton>
                     </Link>
                     <br />
                     <br />
@@ -154,9 +151,9 @@ const CheckoutCartView = props => {
         <div className="width100 centerAlign marginT30">
           <Empty description="You have no items in your Cart">
             <Link to="/listing_catalogue">
-              <Button style={{ width: 'fit-content' }} type="primary">
+              <AddButton style={{ width: 'fit-content' }} type="primary">
                 Add some products
-              </Button>
+              </AddButton>
             </Link>
           </Empty>
         </div>
