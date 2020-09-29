@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { graphql, withApollo } from 'react-apollo';
 import queryString from 'query-string';
-
+import {message} from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FormError } from '@gqlapp/forms-client-react';
@@ -42,10 +42,10 @@ const Login = props => {
     }
 
     await authentication.doLogin(client);
-
     const params = queryString.parse(location.search);
     history.push(params.redirectBack ? params.redirectBack : '/profile');
   };
+  isReady && message.info('Awesome manager logging in')
 
   return (
     <React.Fragment>
