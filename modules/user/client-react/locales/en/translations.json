@@ -9,7 +9,8 @@
     "editUser": "Edit user",
     "forgotPassword": "Forgot password",
     "register": "Register",
-    "resetPassword": "Reset password"
+    "resetPassword": "Reset password",
+    "dashboard":"DashBoard"
   },
   "forgotPass": {
     "title": "Forgot password",

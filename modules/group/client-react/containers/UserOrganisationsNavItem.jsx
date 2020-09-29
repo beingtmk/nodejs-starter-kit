@@ -28,32 +28,29 @@ const UserOrganisationsNavItem = (props) => {
 
   const getOrgs = () => {
     if (loading) {
-      return <MenuItem key="my-organisations-loading">Loading...</MenuItem>;
+      return (
+        <MenuItem {...props} key="my-organisations-loading">
+          <Icon type="loading" />
+          Loading...
+        </MenuItem>
+      );
     } else {
       if (userGroups && userGroups.length === 0) {
-        return <MenuItem>No organisations to show</MenuItem>;
+        return <MenuItem {...props}>No organisations to show</MenuItem>;
       } else if (userGroups && userGroups.length === 1) {
         return (
-          <MenuItem key={`my-organisations-${userGroups[0].title}`}>
+          <MenuItem {...props} key={`/group/${userGroups[0].id}/info`}>
             <NavLink
               to={`/group/${userGroups[0].id}/info`}
               className="nav-link"
               activeClassName="active"
             >
-              <Card className='nav-item-card'>
-                <Meta
-                  avatar={
-                    <Avatar
-
-                      size={13}
-                      src={userGroups[0].avatar}
-                    />
-                  }
-                  title={
-                    <p >{userGroups[0].title}</p>
-                  }
-                />
-              </Card>
+              <Avatar
+                size={15}
+                style={{ marginTop: "-5px", marginRight: "5px" }}
+                src={userGroups[0].avatar}
+              />
+              {userGroups[0].title}
             </NavLink>
           </MenuItem>
         );
@@ -71,7 +68,7 @@ const UserOrganisationsNavItem = (props) => {
             {...props}
           >
             {userGroups.map((group, key) => (
-              <MenuItem key={`my-organisations-${group.title}`}>
+              <MenuItem key={`/group/${group.id}/info`}>
                 <NavLink
                   to={`/group/${group.id}/info`}
                   className="nav-link"
