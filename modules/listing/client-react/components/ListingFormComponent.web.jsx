@@ -5,7 +5,14 @@ import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, RenderUploadMultiple, FormItem, RenderCheckBox } from '@gqlapp/look-client-react';
+import {
+  RenderField,
+  RenderUploadMultiple,
+  FormItem,
+  RenderCheckBox,
+  NextButton,
+  SubmitButton
+} from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
 const ListingFormSchema = {
@@ -145,9 +152,9 @@ class ListingFormComponent extends React.Component {
               </Col>
               <Col span={24} align="right">
                 <br />
-                <Button type="primary" onClick={() => setStep(1)}>
-                  Next <Icon type="arrow-right" />
-                </Button>
+                <NextButton style={{ width: 'auto' }} onClick={() => setStep(1)}>
+                  Next
+                </NextButton>
               </Col>
             </Row>
           )}
@@ -186,9 +193,9 @@ class ListingFormComponent extends React.Component {
                   <Button size="large" onClick={() => setStep(0)}>
                     <Icon type="arrow-left" /> Previous
                   </Button>
-                  <Button type="primary" size="large" onClick={() => setStep(2)}>
-                    Next <Icon type="arrow-right" />
-                  </Button>
+                  <NextButton style={{ width: 'auto' }} size="lg" onClick={() => setStep(2)}>
+                    Next
+                  </NextButton>
                 </ButtonGroup>
               </Col>
             </Row>
@@ -233,9 +240,14 @@ class ListingFormComponent extends React.Component {
                   <Button size="large" onClick={() => setStep(1)}>
                     <Icon type="arrow-left" /> Previous
                   </Button>
-                  <Button type="primary" size="large" disable={!this.state.load} onClick={() => handleSubmit(values)}>
+                  <SubmitButton
+                    size="lg"
+                    style={{ width: 'auto' }}
+                    disable={!this.state.load}
+                    onClick={() => handleSubmit(values)}
+                  >
                     Submit
-                  </Button>
+                  </SubmitButton>
                 </ButtonGroup>
               </Col>
             </Row>

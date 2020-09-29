@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Col, Statistic, Card, Icon, message, Button } from 'antd';
+import { AddButton } from '@gqlapp/look-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
@@ -107,9 +108,9 @@ const RelatedCardComponent = props => {
       </IfLoggedIn>
       {listing_is_new && <NewLabel>{'New'}</NewLabel>}
       <div align="center" style={{ padding: '20px', zIndex: 1, position: 'absolute', bottom: 0, width: '100%' }}>
-        <Button block onClick={() => handleSubmit(false)}>
-          <Icon type="plus-circle" /> Add to Cart
-        </Button>
+        <AddButton block color="default" onClick={() => handleSubmit(false)}>
+          Add to Cart
+        </AddButton>
         <br />
         <br />
         <Button type="primary" block onClick={() => handleSubmit(true)}>

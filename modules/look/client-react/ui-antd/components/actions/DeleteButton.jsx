@@ -4,7 +4,15 @@ import { Button, Popconfirm, Icon } from 'antd';
 
 class DeleteButton extends React.Component {
   render() {
-    const { children = 'Delete', type, color = 'danger', size, onClick, ...props } = this.props;
+    const {
+      children = 'Delete',
+      type,
+      color = 'danger',
+      size,
+      onClick,
+      title = 'Are you sure？',
+      ...props
+    } = this.props;
 
     let buttonSize = 'default';
 
@@ -15,11 +23,7 @@ class DeleteButton extends React.Component {
     }
 
     return (
-      <Popconfirm
-        title="Are you sure？"
-        icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-        onConfirm={onClick}
-      >
+      <Popconfirm title={title} icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={onClick}>
         <Button type={color} htmlType={type} block size={buttonSize} icon="delete" {...props}>
           {children}
         </Button>
@@ -33,6 +37,7 @@ DeleteButton.propTypes = {
   color: PropTypes.string,
   type: PropTypes.string,
   size: PropTypes.string,
+  title: PropTypes.string,
   onClick: PropTypes.func
 };
 
