@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Icon, Button, Row, Col, Card, Popconfirm, message } from 'antd';
+import { Row, Col, Card, message } from 'antd';
 import { Link } from 'react-router-dom';
+import { DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
+
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
@@ -104,16 +106,14 @@ class CartItemComponent extends Component {
           <Row type="flex" justify="space-around" align="middle" gutter={12}>
             {edit && (
               <Col span={8}>
-                <Button
-                  shape="circle"
-                  size="large"
+                <EditIcon
+                  color="default"
                   onClick={
                     /* () => this.setState({ visibleEditModal: true }) */
                     () => console.log('edit in cartitemcompoent')
                   }
-                >
-                  <Icon type="edit" />
-                </Button>
+                  size="lg"
+                />
 
                 {/* <AddToCartForm
                   // onSubmit={onEditItem}
@@ -127,17 +127,11 @@ class CartItemComponent extends Component {
 
             <Col span={8}>
               {onDelete && (
-                <Popconfirm
+                <DeleteIcon
                   title="Are you sure to delete this order?"
-                  onConfirm={() => this.props.onDelete(item.id)}
-                  onCancel={this.cancel}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button type="danger" shape="circle" size="large">
-                    <Icon type="delete" />
-                  </Button>
-                </Popconfirm>
+                  onClick={() => this.props.onDelete(item.id)}
+                  size="lg"
+                />
               )}
             </Col>
           </Row>
@@ -147,7 +141,6 @@ class CartItemComponent extends Component {
             {item.quantity}
           </Ribbon>
           <Ribbon bottom={this.props.mobile ? '15px' : '30px'}>&#8377; {` ${item.cost * item.quantity}`}</Ribbon>
-          {/* {console.log('object', this.props.componentStyle)} */}
           <Card
             // type={this.props.inner && 'inner'}
             // style={
