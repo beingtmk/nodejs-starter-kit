@@ -9,8 +9,8 @@ import {
   //  CardGroup,
   CardText,
   //  CardTitle,
-  PageLayout,
 } from "@gqlapp/look-client-react";
+import AccountLayout from "@gqlapp/look-client-react/ui-antd/components/AccountLayout";
 import { Row, Col, Divider, Icon, Button, Spin as Loader } from "antd";
 // import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from "./components/ProfileHeadComponent";
@@ -47,23 +47,22 @@ class ProfileView extends React.Component {
       );
     };
     const { t } = this.props;
-    const { currentUser, currentUserLoading } = this.props;
+    const { currentUser, currentUserLoading, match } = this.props;
 
     if (currentUserLoading && !currentUser) {
       return (
-        <PageLayout select="/profile">
+        <AccountLayout select="/profile" path={match && match.path}>
           {renderMetaData(t)}
           <Loader text={t("profile.loadMsg")} />
-        </PageLayout>
+        </AccountLayout>
       );
     } else if (currentUser) {
       return (
-        <PageLayout select="/profile">
+        <AccountLayout select="/profile" path={match && match.path}>
           {renderMetaData(t)}
 
           <Row gutter={5}>
             <Col xs={{ span: 24 }} lg={{ span: 24 }}>
-              <Card style={{ display: "block" }}>
                 <h2
                   style={{
                     fontSize: "23px",
@@ -193,7 +192,6 @@ class ProfileView extends React.Component {
                 {settings.stripe.subscription.enabled &&
                   settings.stripe.subscription.publicKey &&
                   currentUser.role === "user" && <StripeSubscriptionProfile />}
-              </Card>
             </Col>
             {/* <Col xs={{ span: 24 }} lg={{ span: 8 }}>
               <Row gutter={10} type="flex" justify="space-around" align="middle">
@@ -207,14 +205,14 @@ class ProfileView extends React.Component {
               </Row>
             </Col> */}
           </Row>
-        </PageLayout>
+        </AccountLayout>
       );
     } else {
       return (
-        <PageLayout>
+        <AccountLayout path={match && match.path}>
           {renderMetaData(t)}
           <h2>{t("profile.errorMsg")}</h2>
-        </PageLayout>
+        </AccountLayout>
       );
     }
   }

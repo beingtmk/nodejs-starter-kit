@@ -3,26 +3,40 @@ import Helmet from "react-helmet";
 import PropTypes from "prop-types";
 import { Layout, BackTop, Button, Tooltip, Menu, Icon } from "antd";
 import { enquireScreen } from "enquire-js";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import MenuItem from "./MenuItem";
-import { GroupDashBoardSider } from "./GroupDashBoardSider";
+// import MenuItem from "./MenuItem";
+// import { GroupDashBoardSider } from "./GroupDashBoardSider";
 import styles from "../styles/index.less";
 
 const { Content, Sider } = Layout;
 
 const ref = { modules: null };
+export const onAppCreateAccountLayout = async (modules) => (ref.modules = modules);
 
-export const onAppCreateGroupLayout = async (modules) =>
-  (ref.modules = modules);
+const AccountMenu = (props)=>{
+  console.log('AccountMenu', props);
+  const { path } = props;
+    return (
+      <Menu
+        mode="inline"
+        theme="dark"
+        selectedKeys={path}
+        // className="navbar-menu"
+      >
+        {ref.modules.navItemsUser}
+      </Menu>
+    );
+}
+
 
 let isMobile;
 enquireScreen((b) => {
   isMobile = b;
 });
 
-class GroupLayout extends React.Component {
+class AccountLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,15 +62,15 @@ class GroupLayout extends React.Component {
     // }
   }
   render() {
-    const { children, id, navBar, type, path } = this.props;
-
+    const { children, navBar, type, path } = this.props;
+    console.log('AccountLayout', this.props);
     return (
       <Layout id="page-layout">
         {navBar !== false && (
           <NavBar
             isMobile={this.state.isMobile}
             layoutType={"wide"}
-            leftSiderComponent={<GroupDashBoardSider id={id} path={path} />}
+            leftSiderComponent={<AccountMenu  path={path} />}
           />
         )}
         {__SERVER__ && __DEV__ && (
@@ -66,7 +80,7 @@ class GroupLayout extends React.Component {
         )}
         <Layout className="wide-layout-inner">
           <Sider width={200} className="wide-layout-sider">
-            <GroupDashBoardSider id={id} path={path} />
+          <AccountMenu  path={path} />
           </Sider>
           <Layout className="wide-layout-content-wrapper">
             <Content className="wide-layout-content">{children}</Content>
@@ -92,10 +106,10 @@ class GroupLayout extends React.Component {
   }
 }
 
-GroupLayout.propTypes = {
+AccountLayout.propTypes = {
   children: PropTypes.node,
   navBar: PropTypes.bool,
   type: PropTypes.string,
 };
 
-export default GroupLayout;
+export default AccountLayout;
