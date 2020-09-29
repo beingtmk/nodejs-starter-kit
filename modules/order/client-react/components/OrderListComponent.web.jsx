@@ -2,10 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Popconfirm, message, Spin } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Select, Option, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import { Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 
 import settings from '../../../../settings';
@@ -25,10 +25,6 @@ Loading.propTypes = { t: PropTypes.func };
 
 const NoOrdersMessage = ({ t }) => <div align="center">{t('order.noOrdersMsg')}</div>;
 NoOrdersMessage.propTypes = { t: PropTypes.func };
-
-const cancel = () => {
-  message.error('Click on No');
-};
 
 const OrderListComponent = props => {
   const { onPatchOrderState, orderBy, onOrderBy, loading, orders, t, loadData, onDelete, orderStates } = props;
@@ -123,20 +119,12 @@ const OrderListComponent = props => {
           <Col span={4}>
             {record.orderState.state !== ORDER_STATES.STALE && (
               <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
-                <Button color="primary" shape="circle" icon="eye" />
+                <ViewIcon />
               </Link>
             )}
           </Col>
           <Col span={4}>
-            <Popconfirm
-              title="Are you sure delete this order?"
-              onConfirm={() => onDelete(record.id)}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button color="danger" shape="circle" icon="delete" />
-            </Popconfirm>
+            <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
           </Col>
         </Row>
       )

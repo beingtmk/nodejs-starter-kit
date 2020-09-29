@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button, Card, Divider } from 'antd';
-
+import { Card, Divider } from 'antd';
+import { NextButton } from '@gqlapp/look-client-react';
 import CartItemComponent from './CartItemComponent';
 import { TotalPrice } from './CheckoutCartView';
 
@@ -60,10 +60,9 @@ const OrderCardComponent = props => {
           (SubmitButton ? (
             <SubmitButton />
           ) : (
-            <Button type="primary" onClick={onSubmit} disabled={btnDisabled} size="large">
+            <NextButton onClick={onSubmit} disabled={btnDisabled} size="lg">
               {buttonText}
-              <Icon type="arrow-right" />
-            </Button>
+            </NextButton>
           ))}
       </div>
     </Card>
