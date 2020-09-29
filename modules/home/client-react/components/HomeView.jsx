@@ -7,13 +7,8 @@ import { PageLayout } from '@gqlapp/look-client-react';
 // import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
 
-import Banner0 from './AntdLanding/Banner0';
+import Banner2 from './components/Banner2';
 
-import Content5 from './AntdLanding/Content5';
-
-import Feature0 from './AntdLanding/Feature0';
-
-import Feature3 from './AntdLanding/Feature3';
 
 let isMobile;
 enquireScreen(b => {
@@ -53,10 +48,8 @@ export default class HomeView extends React.Component {
     //   />
     // );
     const children = [
-      <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
-      <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,
-      <Content5 id="Content5_0" key="Content5_0" isMobile={this.state.isMobile} />,
-      <Feature3 id="Feature3_0" key="Feature3_0" isMobile={this.state.isMobile} />
+      <Banner2 id="Banner2_0" key="Banner2_0" isMobile={this.state.isMobile} />,
+      
     ];
     return (
       <PageLayout type="home">
