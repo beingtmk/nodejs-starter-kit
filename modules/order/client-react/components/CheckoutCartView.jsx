@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Icon, Checkbox, Empty } from 'antd';
+import { Row, Col, Card, Icon, Checkbox, Empty, Divider } from 'antd';
 
 import { PageLayout, NextButton, AddButton } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
@@ -84,7 +84,10 @@ const CheckoutCartView = props => {
                 <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                   {getCart &&
                     getCart.orderDetails.map(cartItem => (
-                      <CartItemComponent item={cartItem} edit={true} onSubmit={onSubmit} onDelete={onDelete} />
+                      <>
+                        <CartItemComponent item={cartItem} edit={true} onSubmit={onSubmit} onDelete={onDelete} />
+                        <Divider />
+                      </>
                     ))}
                 </Col>
                 <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>

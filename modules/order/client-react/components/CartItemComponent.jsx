@@ -5,6 +5,8 @@ import { DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
 
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 const Position1 = styled.h4`
   position: absolute;
@@ -69,7 +71,7 @@ const CartItemComponent = props => {
   }
 
   return (
-    <Col span={24} style={{ paddingRight: '10px' }}>
+    <Row span={24} style={{ paddingRight: '10px' }}>
       <Align>
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {edit && (
@@ -89,7 +91,7 @@ const CartItemComponent = props => {
           </Col>
         </Row>
       </Align>
-      <Link to={`/listing-detail/${item.listingId}`}>
+      <Link to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
         <Ribbon bottom={props.mobile ? '70px' : '105px'} width="120px" color="#df0303">
           {item.orderOptions.quantity}
         </Ribbon>
@@ -146,7 +148,7 @@ const CartItemComponent = props => {
           </Row>
         </Card>
       </Link>
-    </Col>
+    </Row>
   );
 };
 

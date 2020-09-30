@@ -79,6 +79,7 @@ const CheckoutBillView = props => {
                   console.log('Working!');
                   props.onSubmit();
                 }}
+                showState={false}
                 getCart={getCart}
                 btnDisabled={btnDisabled}
                 showBtn={true}

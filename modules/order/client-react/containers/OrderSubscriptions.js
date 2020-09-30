@@ -51,6 +51,49 @@ const onDeleteCart = history => {
   }
 };
 
+export const subscribeToOrder = (subscribeToMore, orderId, history) =>
+  subscribeToMore({
+    document: ORDER_SUBSCRIPTION,
+    variables: { id: orderId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            orderUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      // console.log('mutation', mutation, node);
+      if (mutation === 'UPDATED') {
+        newResult = onEditOrder(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteOrder(history);
+      }
+      return newResult;
+    }
+  });
+
+function onEditOrder(prev, node) {
+  return update(prev, {
+    order: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteOrder = history => {
+  message.info('This cart has been deleted!');
+  message.warn('Redirecting to my orders');
+  if (history) {
+    return history.push(`${ROUTES.myOrder}`);
+  } else {
+    return <Redirect to={'/'} />;
+  }
+};
+
 export const subscribeToOrders = (subscribeToMore, filter) =>
   subscribeToMore({
     document: ORDERS_SUBSCRIPTION,

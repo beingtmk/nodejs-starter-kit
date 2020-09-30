@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { PageLayout } from '@gqlapp/look-client-react';
 import { Spin, Row, Col, Card, Divider } from 'antd';
@@ -10,7 +11,7 @@ import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
 
-const renderMetaData = t => (
+const renderMetaData = () => (
   <Helmet
     title={`${settings.app.name} - Order`}
     meta={[{ name: 'description', content: `${settings.app.name} - ${'meta'}` }]}
@@ -20,7 +21,6 @@ const renderMetaData = t => (
 
 const CheckoutOrderView = props => {
   const { getCart, getCartLoading, onSubmit } = props;
-  const [product, setProduct] = React.useState({});
 
   const address =
     getCart &&
@@ -76,7 +76,8 @@ const CheckoutOrderView = props => {
                     // onSubmit={openCheckout}
                     onSubmit={onSubmit}
                     getCart={getCart}
-                    product={product}
+                    product={{}}
+                    showState={false}
                     showBtn={true}
                     paid={true}
                     buttonText={'Pay now'}
@@ -90,6 +91,12 @@ const CheckoutOrderView = props => {
       {/* )} */}
     </PageLayout>
   );
+};
+
+CheckoutOrderView.propTypes = {
+  getCart: PropTypes.object,
+  getCartLoading: PropTypes.bool,
+  onSubmit: PropTypes.func
 };
 
 export default CheckoutOrderView;

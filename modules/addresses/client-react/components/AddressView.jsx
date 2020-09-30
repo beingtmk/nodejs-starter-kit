@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -53,7 +53,7 @@ const AddressLines = styled.h4`
 const AddressView = props => {
   const { addresses, addressId, backgroundColor, borderColor } = props;
   const address = addresses.filter(address => address.id === addressId)[0];
-  console.log('address', address, 'props', props);
+  // console.log('address', address, 'props', props);
   return (
     <>
       <HomeAddress backgroundColor={backgroundColor} borderColor={borderColor} key={address.id}>
@@ -73,7 +73,9 @@ const AddressView = props => {
 
 AddressView.propTypes = {
   addresses: PropTypes.array,
-  addressId: PropTypes.number
+  addressId: PropTypes.number,
+  backgroundColor: PropTypes.string,
+  borderColor: PropTypes.string
 };
 
 export default AddressView;

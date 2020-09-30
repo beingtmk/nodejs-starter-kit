@@ -1,16 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Card, Divider } from 'antd';
+import { Row, Col, Card, Divider } from 'antd';
+
 import { NextButton } from '@gqlapp/look-client-react';
+
 import CartItemComponent from './CartItemComponent';
 import { TotalPrice } from './CheckoutCartView';
 
+const StatusText = styled.div`
+  color: ${props => props.status === 'completed' && '#2aa952'};
+  color: ${props => props.status === 'initiated' && '#F79E1B'};
+  color: ${props => props.status === 'cancelled' && 'red'};
+`;
+
 const OrderCardComponent = props => {
-  const { getCart, SubmitButton, product, showBtn, btnDisabled, onSubmit, buttonText } = props;
+  const { getCart, SubmitButton, product, showBtn, btnDisabled, onSubmit, buttonText, showState } = props;
 
   return (
     <Card align="left" style={{ height: '100%' }}>
-      <h3 className="OrderHead">Order summary</h3>
+      <Row>
+        <Col span={12}>
+          <h3 className="OrderHead">Order summary</h3>
+        </Col>
+        {showState && (
+          <Col span={12} align="right">
+            <h3>
+              <StatusText status={getCart.orderState && getCart.orderState.state.toLowerCase()}>
+                {getCart.orderState && getCart.orderState.state}
+              </StatusText>
+            </h3>
+          </Col>
+        )}
+      </Row>
       <br />
       <hr />
       <br />
@@ -74,6 +96,7 @@ OrderCardComponent.propTypes = {
   SubmitButton: PropTypes.Component,
   product: PropTypes.object,
   showBtn: PropTypes.bool,
+  showState: PropTypes.bool,
   btnDisabled: PropTypes.bool,
   onSubmit: PropTypes.func,
   buttonText: PropTypes.string
