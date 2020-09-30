@@ -125,15 +125,16 @@ class DynamicCarouselComponentView extends React.PureComponent {
       BannerAnim: {
         children:
           props.data &&
-          props.data.map((d, indx) => {
+          props.data.edges &&
+          props.data.edges.map((d, indx) => {
             return {
               name: `elem${indx}`,
               BannerElement: { className: 'banner-user-elem' },
               textWrapper: { className: 'current-banner1-text-wrapper' },
               bg: {
                 className: `bg bg${indx}`,
-                image: d.imageUrl,
-                link: d.link
+                image: d.node && d.node.imageUrl,
+                link: d.node && d.node.link
               },
               title: {
                 className: 'current-banner1-title',

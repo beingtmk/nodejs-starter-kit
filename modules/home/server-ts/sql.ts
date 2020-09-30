@@ -12,13 +12,15 @@ interface FilterDynamicCarousel {
 }
 
 export interface FilterDynamicCarouselInput {
+  limit: number;
+  after: number;
   filter: FilterDynamicCarousel;
 }
 
 export interface Identifier {
   id: number;
 }
-interface DynamicCarousels {
+export interface DynamicCarousels {
   label: string;
   link: string;
   image: string;
@@ -35,7 +37,7 @@ export default class Home extends Model {
     return knex.select();
   }
 
-  public async dynamicCarousels(filter: FilterDynamicCarousel) {
+  public async dynamicCarousels(limit: number, after: number, filter: FilterDynamicCarousel) {
     const queryBuilder = DynamicCarousel.query();
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== false) {
@@ -51,7 +53,10 @@ export default class Home extends Model {
         });
       }
     }
-    return camelizeKeys(await queryBuilder);
+    const AllDynamicCarousels = camelizeKeys(await queryBuilder);
+    const total = AllDynamicCarousels.length;
+    const dynamicCarousels = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    return { dynamicCarousels, total };
   }
   public async dynamicCarousel(id: number) {
     return camelizeKeys(await DynamicCarousel.query().findById(id));

@@ -2,26 +2,70 @@ import { message } from 'antd';
 import update from 'immutability-helper';
 import { graphql } from 'react-apollo';
 
+import { PLATFORM } from '@gqlapp/core-common';
+import settings from '@gqlapp/config';
+
 // Query
-import DYNAMIC_CAROUSEL_QUERY from '../graphql/DynamicCarouselQuery.graphql';
-import DYNAMIC_CAROUSELS_QUERY from '../graphql/DynamicCarouselsQuery.graphql';
+import DYNAMIC_CAROUSEL_QUERY from '../../graphql/DynamicCarouselQuery.graphql';
+import DYNAMIC_CAROUSELS_QUERY from '../../graphql/DynamicCarouselsQuery.graphql';
 
 // Mutation
-import ADD_DYNAMIC_CAROUSEL from '../graphql/AddDynamicCarousel.graphql';
-import DELETE_DYNAMIC_CAROUSEL from '../graphql/DeleteDynamicCarousel.graphql';
-import EDIT_DYNAMIC_CAROUSEL from '../graphql/EditDynamicCarousel.graphql';
+import ADD_DYNAMIC_CAROUSEL from '../../graphql/AddDynamicCarousel.graphql';
+import DELETE_DYNAMIC_CAROUSEL from '../../graphql/DeleteDynamicCarousel.graphql';
+import EDIT_DYNAMIC_CAROUSEL from '../../graphql/EditDynamicCarousel.graphql';
 
 // Subscription
-import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../graphql/DynamicCarouselSubscription.graphql';
+import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../../graphql/DynamicCarouselSubscription.graphql';
+
+const limit =
+  PLATFORM === 'web' || PLATFORM === 'server'
+    ? settings.pagination.web.itemsNumber
+    : settings.pagination.mobile.itemsNumber;
 
 // Query
 const withDynamicCarousels = Component =>
   graphql(DYNAMIC_CAROUSELS_QUERY, {
-    props({ data: { loading, error, dynamicCarousels, subscribeToMore, updateQuery, refetch } }) {
-      if (error) {
-        throw new Error(error);
-      }
-      return { loading, dynamicCarousels, subscribeToMore, updateQuery, refetch };
+    options: ({ orderBy, filter }) => {
+      return {
+        fetchPolicy: 'network-only',
+        variables: { limit: limit, after: 0, orderBy, filter }
+      };
+    },
+    props: ({ data }) => {
+      const { loading, error, dynamicCarousels, fetchMore, subscribeToMore, updateQuery } = data;
+      const loadData = (after, dataDelivery) => {
+        return fetchMore({
+          variables: {
+            after: after
+          },
+          updateQuery: (previousResult, { fetchMoreResult }) => {
+            const totalCount = fetchMoreResult.dynamicCarousels.totalCount;
+            const newEdges = fetchMoreResult.dynamicCarousels.edges;
+            const pageInfo = fetchMoreResult.dynamicCarousels.pageInfo;
+            const displayedEdges =
+              dataDelivery === 'add' ? [...previousResult.dynamicCarousels.edges, ...newEdges] : newEdges;
+
+            return {
+              // By returning `cursor` here, we update the `fetchMore` function
+              // to the new cursor.
+              dynamicCarousels: {
+                totalCount,
+                edges: displayedEdges,
+                pageInfo,
+                __typename: 'Dynamic Carousel'
+              }
+            };
+          }
+        });
+      };
+      if (error) throw new Error(error);
+      return {
+        loading,
+        dynamicCarousels,
+        subscribeToMore,
+        loadData,
+        updateQueryListings: updateQuery
+      };
     }
   })(Component);
 
@@ -63,7 +107,6 @@ const withDeleteDynamicCarousel = Component =>
             }
           }
         });
-        console.log('object', deleteDynamicCarousel);
         if (deleteDynamicCarousel) message.warning('Banner deleted.');
         else message.warning('Try again!');
       }

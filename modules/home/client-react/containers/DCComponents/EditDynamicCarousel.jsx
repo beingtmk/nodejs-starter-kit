@@ -5,17 +5,12 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { withDynamicCarousel, withEditDynamicCarousel, subscribeToDynamicCarousel } from './DynamicCarouselOperations';
-import EditDynamicCarouselView from '../components/EditDynamicCarouselView.web';
+import EditDynamicCarouselView from '../../components/DCComponents/EditDynamicCarouselView.web';
 
 const EditDynamicCarousel = props => {
-  const {
-    // refetch,
-    subscribeToMore,
-    history
-  } = props;
+  const { subscribeToMore, history } = props;
   useEffect(() => {
     const subscribe = subscribeToDynamicCarousel(subscribeToMore, history);
-    // refetch();
     return () => subscribe();
   });
 

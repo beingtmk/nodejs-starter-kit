@@ -6,7 +6,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { compose } from '@gqlapp/core-common';
 
 import { withDynamicCarousels } from './DynamicCarouselOperations';
-import DynamicCarouselComponentView from '../components/DynamicCarouselComponentView';
+import DynamicCarouselComponentView from '../../components/DCComponents/DynamicCarouselComponentView';
 
 const DynamicCarouselComponent = props => {
   const { loading, dynamicCarousels } = props;

@@ -3,7 +3,7 @@ import React from 'react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import AddDynamicCarouselView from '../components/AddDynamicCarouselView.web';
+import AddDynamicCarouselView from '../../components/DCComponents/AddDynamicCarouselView.web';
 
 import { withAddDynamicCarousel } from './DynamicCarouselOperations';
 

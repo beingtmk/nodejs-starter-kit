@@ -8,8 +8,28 @@ type DynamicCarousel {
   updatedAt: String
 }
 
+type DynamicCarousels {
+  totalCount: Int
+  edges: [DynamicCarouselEdges]
+  pageInfo: DynamicCarouselPageInfo
+}
+
+type DynamicCarouselEdges {
+  node: DynamicCarousel
+  cursor: Int
+}
+
+type DynamicCarouselPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
 extend type Query {
-  dynamicCarousels(filter: FilterDynamicCarouselInput): [DynamicCarousel]
+  dynamicCarousels(
+    limit: Int
+    after: Int
+    filter: FilterDynamicCarouselInput
+  ): DynamicCarousels
   dynamicCarousel(id: Int!): DynamicCarousel
 }
 

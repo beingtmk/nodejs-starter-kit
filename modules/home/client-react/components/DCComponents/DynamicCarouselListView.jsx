@@ -1,0 +1,122 @@
+import React, { Fragment } from 'react';
+import { Spin, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { translate } from '@gqlapp/i18n-client-react';
+import { Table, Pagination } from '@gqlapp/look-client-react';
+
+import settings from '@gqlapp/config';
+
+const { itemsNumber, type } = settings.pagination.web;
+
+const Loading = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    <br />
+    <Spin text={t('listing.loadMsg')} />
+  </div>
+);
+Loading.propTypes = { t: PropTypes.func };
+
+const NodynaDicCarouselsMessage = ({ t }) => <div className="text-center">{t('listing.noListingsMsg')}</div>;
+NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
+
+const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCarousels, loadData }) => {
+  const columns = [
+    {
+      title: <>Carousel Id</>,
+      dataIndex: 'id',
+      key: 'id',
+      render: (text, record) => <>{record.id}</>
+    },
+    {
+      title: <>Image</>,
+      dataIndex: 'imageUrl',
+      key: 'imageUrl',
+      render: (text, record) => (
+        <>
+          <img src={record.imageUrl} width="200px" />
+        </>
+      )
+    },
+    {
+      title: <>Link</>,
+      dataIndex: 'link',
+      key: 'link',
+      render: (text, record) => <>{record.link}</>
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => (
+        <>
+          <Link to={`/edit/dynamic-carousel/${record.id}`}>
+            <Button shape="circle" size="large">
+              <Icon type="edit" />
+            </Button>
+          </Link>
+          {/* <div style={{ paddingRight: '10px' }} /> */}
+          <Popconfirm
+            title="Are you sure delete this listing?"
+            onConfirm={() => deleteDynamicCarousel(record.id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="danger" shape="circle" size="large">
+              <Icon type="delete" />
+            </Button>
+          </Popconfirm>
+        </>
+      )
+    }
+  ];
+  const cancel = () => {
+    message.error('Click on No');
+  };
+  const handlePageChange = (pagination, pageNumber) => {
+    const {
+      pageInfo: { endCursor }
+    } = dynamicCarousels;
+    pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
+  };
+  const RenderDynamicCarousels = () => (
+    <Fragment>
+      <Table dataSource={dynamicCarousels.edges.map(({ node }) => node)} columns={columns} />
+      <Pagination
+        itemsPerPage={dynamicCarousels.edges.length}
+        handlePageChange={handlePageChange}
+        hasNextPage={dynamicCarousels.pageInfo.hasNextPage}
+        pagination={type}
+        total={dynamicCarousels.totalCount}
+        loadMoreText="Load more"
+        defaultPageSize={itemsNumber}
+      />
+    </Fragment>
+  );
+
+  return (
+    <>
+      <div style={{ overflowX: 'auto' }}>
+        {loading && !dynamicCarousels && <Loading t={t} />}
+        {/* Render main listing content */}
+        {dynamicCarousels && dynamicCarousels.totalCount ? (
+          <RenderDynamicCarousels />
+        ) : (
+          <NodynaDicCarouselsMessage t={t} />
+        )}
+      </div>
+    </>
+  );
+};
+
+DynamicCarouselListView.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  deleteDynamicCarousel: PropTypes.func,
+  loadData: PropTypes.func,
+  dynamicCarousels: PropTypes.array,
+  t: PropTypes.func
+};
+
+export default translate('user')(DynamicCarouselListView);

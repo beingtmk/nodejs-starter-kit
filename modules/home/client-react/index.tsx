@@ -43,22 +43,22 @@ export default new ClientModule({
       path="/dynamic-carousel"
       redirect="/profile"
       role="admin"
-      component={loadable(() => import('./containers/DynamicCarousel.web').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default))}
     />,
     <Route
       exact
       path="/new/dynamic-carousel"
-      component={loadable(() => import('./containers/AddDynamicCarousel').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/AddDynamicCarousel').then(c => c.default))}
     />,
     <Route
       exact
       path="/edit/dynamic-carousel/:id"
-      component={loadable(() => import('./containers/EditDynamicCarousel').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/EditDynamicCarousel').then(c => c.default))}
     />,
     <Route
       exact
       path="/component/dynamic-carousel"
-      component={loadable(() => import('./containers/DynamicCarouselComponent').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/DynamicCarouselComponent').then(c => c.default))}
     />
   ],
 

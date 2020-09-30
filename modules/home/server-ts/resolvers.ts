@@ -1,12 +1,41 @@
 import { withFilter } from 'graphql-subscriptions';
-import { DynamicCarouselInput, Identifier, FilterDynamicCarouselInput } from './sql';
+import { DynamicCarouselInput, Identifier, FilterDynamicCarouselInput, DynamicCarousels } from './sql';
 
 const DYNAMIC_CAROUSEL_SUBSCRIPTION = 'dynamic_carousel_subscription';
 
+interface Edges {
+  cursor: number;
+  node: DynamicCarousels & Identifier;
+}
 export default (pubsub: any) => ({
   Query: {
-    dynamicCarousels(obj: any, { filter }: FilterDynamicCarouselInput, { Home, req: { identity, t } }: any) {
-      return Home.dynamicCarousels(filter);
+    async dynamicCarousels(
+      obj: any,
+      { limit, after, filter }: FilterDynamicCarouselInput,
+      { Home, req: { identity, t } }: any
+    ) {
+      const edgesArray: Edges[] = [];
+      const { dynamicCarousels, total } = await Home.dynamicCarousels(limit, after, filter);
+
+      const hasNextPage = total > after + limit;
+
+      dynamicCarousels.map((dynamicCarousel: DynamicCarousels & Identifier, index: number) => {
+        edgesArray.push({
+          cursor: after + index,
+          node: dynamicCarousel
+        });
+      });
+
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     },
     dynamicCarousel(obj: any, { id }: Identifier, { Home, req: { identity, t } }: any) {
       return Home.dynamicCarousel(id);
