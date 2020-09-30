@@ -39,7 +39,7 @@ const MyOrdersView = props => {
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <h2 className="headingTop">
             <Icon type="solution" />
-            &nbsp; My Delivery
+            &nbsp; My Deliveries
           </h2>
           <br />
         </Col>

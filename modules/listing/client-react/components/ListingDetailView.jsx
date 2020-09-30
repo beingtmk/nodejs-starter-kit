@@ -321,6 +321,9 @@ const ListingDetailView = props => {
     listing.listingMedia &&
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'video');
+  let carouselThumbnail = [];
+  carouselThumbnail = youtubeUrl && youtubeUrl.length !== 0 && [...carouselThumbnail, ...youtubeUrl];
+  carouselThumbnail = images && images.length !== 0 && [...carouselThumbnail, ...images];
   // console.log('ideo', youtubeUrl);
   // const user = listing && listing.user;
   // const getName = () => {
@@ -339,9 +342,14 @@ const ListingDetailView = props => {
     customPaging: function(i) {
       return (
         <a>
+          {console.log(carouselThumbnail)}
           <img
             src={
-              (images && images.length !== 0 && images[i] && images[i].url) ||
+              (carouselThumbnail &&
+                carouselThumbnail.length !== 0 &&
+                carouselThumbnail[i] &&
+                carouselThumbnail[i].type === 'image' &&
+                carouselThumbnail[i].url) ||
               'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
             }
             style={{ width: '30px', height: '30px', zIndex: '10' }}
@@ -417,8 +425,7 @@ const ListingDetailView = props => {
                     style={{
                       position: 'absolute',
                       top: '5',
-                      right: '0',
-                      zIndex: '100'
+                      right: '0'
                     }}
                   >
                     <IfLoggedIn>
@@ -435,12 +442,6 @@ const ListingDetailView = props => {
                     <Icon type="left" className="carousel-arrow-icon" />
                   </div>
                   <Carousel className="listing-detail-carousel" ref={node => (carousel = node)} {...status}>
-                    {images &&
-                      images.map((item, id) => (
-                        <div key={id} align="center">
-                          <img src={item.url} style={{ height: '300px' }} />
-                        </div>
-                      ))}
                     {youtubeUrl.length > 0 &&
                       youtubeUrl.map(yT => (
                         <div key="video">
@@ -452,6 +453,12 @@ const ListingDetailView = props => {
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                           ></iframe>
+                        </div>
+                      ))}
+                    {images &&
+                      images.map((item, id) => (
+                        <div key={id} align="center">
+                          <img src={item.url} style={{ height: '300px' }} />
                         </div>
                       ))}
                   </Carousel>

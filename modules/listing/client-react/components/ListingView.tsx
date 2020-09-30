@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Row, Col, Icon, Divider } from 'antd';
+import { Spin, Row, Col, Icon, Divider } from 'antd';
 
 import { PageLayout, AddButton } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -20,10 +20,12 @@ const renderMetaData = (t: TranslateFunction) => (
 
 export interface ListingViewProps {
   t: TranslateFunction;
+  loading: boolean;
 }
 
-const ListingView: React.SFC<ListingViewProps> = props => {
-  const { t } = props;
+const ListingView: React.FC<ListingViewProps> = props => {
+  const { t, loading } = props;
+  console.log(loading);
   return (
     <PageLayout>
       {renderMetaData(t)}
@@ -46,7 +48,15 @@ const ListingView: React.SFC<ListingViewProps> = props => {
       <ListingFilterComponent {...props} />
       <Divider />
       <hr />
-      <ListingListComponent {...props} />
+      {loading && (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin />
+        </div>
+      )}
+      {!loading && <ListingListComponent {...props} />}
     </PageLayout>
   );
 };

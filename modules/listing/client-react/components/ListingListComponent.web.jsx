@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
@@ -239,13 +239,16 @@ const ListingListComponent = props => {
       width: 200,
       fixed: 'right',
       render: (text, record) => (
-        <div>
-          <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
-            <EditIcon />
-          </Link>
-          &nbsp;
-          <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
-        </div>
+        <Row gutter={24}>
+          <Col span={5}>
+            <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
+              <EditIcon />
+            </Link>
+          </Col>
+          <Col span={5}>
+            <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
+          </Col>
+        </Row>
       )
     }
   ];

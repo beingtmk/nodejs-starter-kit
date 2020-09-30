@@ -45,7 +45,10 @@ const RelatedCardComponent = props => {
     listing.listingMedia &&
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'image');
-  const listing_img = listing_media.length > 0 && listing_media[0].url;
+  const listing_img =
+    listing_media.length > 0
+      ? listing_media[0].url
+      : 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png';
   // console.log(listing_img);
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
   const discount =

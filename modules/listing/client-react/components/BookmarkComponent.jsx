@@ -7,9 +7,9 @@ import { withListingBookmarkStatus } from '../containers/ListingOperations';
 
 const BookmarkStyle = styled.div`
   position: absolute;
-  z-index: 1;
   right: 6%;
   top: 3%;
+  z-index: 1;
 `;
 
 const BookmarkComponent = props => {
