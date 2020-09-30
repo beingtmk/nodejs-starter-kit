@@ -1,5 +1,7 @@
 import React from 'react';
 import { Mutation, FetchResult, MutationFn } from 'react-apollo';
+import queryString from 'query-string';
+
 import { FormError } from '@gqlapp/forms-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import ContactView from '../components/ContactView';
@@ -8,6 +10,7 @@ import { ContactForm } from '../types';
 
 interface ContctProps {
   t: TranslateFunction;
+  location: any
 }
 
 const Contact = (props: ContctProps): any => {
@@ -20,7 +23,9 @@ const Contact = (props: ContctProps): any => {
       throw new FormError(t('serverError'), e);
     }
   };
-
+  const {location} = props;
+  const cParams = queryString.parse(location.search);
+  const conditionParams = cParams && cParams.condition;
   return (
     <Mutation mutation={CONTACT}>
       {(mutate: MutationFn) => {
@@ -30,7 +35,7 @@ const Contact = (props: ContctProps): any => {
           } = (await mutate({ variables: { input: values } })) as FetchResult;
           return contact;
         };
-        return <ContactView {...props} onSubmit={onSubmit(sendContact)} />;
+        return <ContactView conditionParams={conditionParams} {...props} onSubmit={onSubmit(sendContact)} />;
       }}
     </Mutation>
   );

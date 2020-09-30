@@ -3,6 +3,7 @@ import TweenOne from "rc-tween-one";
 import OverPack from "rc-scroll-anim/lib/ScrollOverPack";
 import QueueAnim from "rc-queue-anim";
 import { Row, Col, Button, Icon } from "antd";
+import { ContactFormConditions } from "@gqlapp/contact-client-react";
 
 const Footer10DataSource = {
   wrapper: { className: "home-page-wrapper footer1-wrapper" },
@@ -19,13 +20,23 @@ const Footer10DataSource = {
         title: {
           className: "logo",
           children: (
-            <div style={{background:'white', borderRadius:'5px', height:'fit-content', width:'100%', padding:'24px', marginBottom:'24px'}}>
-            <img
-              width="100%"
-              src={
-                "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
-              }
-            /></div>
+            <div
+              style={{
+                background: "white",
+                borderRadius: "5px",
+                height: "fit-content",
+                width: "100%",
+                padding: "24px",
+                marginBottom: "24px",
+              }}
+            >
+              <img
+                width="100%"
+                src={
+                  "https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
+                }
+              />
+            </div>
           ),
         },
         childWrapper: {
@@ -94,7 +105,17 @@ const Footer10DataSource = {
         childWrapper: {
           children: [
             { href: "/contact", name: "link0", children: "Contact Us" },
-            { href: "#", name: "link1", children: "Email" },
+            {
+              href: `/contact?condition=${ContactFormConditions.help.PARAM}`,
+              name: "link1",
+              children: "Help Required",
+            },
+            {
+              href: `/contact?condition=${ContactFormConditions.suggestion.PARAM}`,
+              name: "link2",
+              children: "Make a suggestion",
+            },
+            { href: "#", name: "link3", children: "Email" },
           ],
         },
       },

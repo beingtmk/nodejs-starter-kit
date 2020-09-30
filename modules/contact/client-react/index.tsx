@@ -11,7 +11,9 @@ import loadable from '@loadable/component';
 import ClientModule from '@gqlapp/module-client-react';
 // import { MenuItem } from '@gqlapp/look-client-react';
 import resources from './locales';
+import {ContactFormConditions} from './constants';
 
+export {ContactFormConditions};
 // const NavLinkWithI18n = translate('contact')(({ t }: { t: TranslateFunction }) => (
 //   <NavLink to="/contact" className="nav-link" activeClassName="active">
 //     <Icon type="contacts" /> {t('navLink')}

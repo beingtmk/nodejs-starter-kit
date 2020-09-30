@@ -1,17 +1,25 @@
-import React from 'react';
-import { withFormik, FormikProps } from 'formik';
-import { isFormError } from '@gqlapp/forms-client-react';
-import { contactFormSchema } from '@gqlapp/contact-common';
-import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { validate } from '@gqlapp/validation-common-react';
-import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import React from "react";
+import { withFormik, FormikProps } from "formik";
+import { isFormError } from "@gqlapp/forms-client-react";
+import { contactFormSchema } from "@gqlapp/contact-common";
+import { TranslateFunction } from "@gqlapp/i18n-client-react";
+import { validate } from "@gqlapp/validation-common-react";
+import { FieldAdapter as Field } from "@gqlapp/forms-client-react";
 
-import { Form, RenderField, Button, Alert, Icon } from '@gqlapp/look-client-react';
-import { ContactForm } from '../types';
+import {
+  Form,
+  RenderField,
+  Button,
+  Alert,
+  Icon,
+} from "@gqlapp/look-client-react";
+import { ContactForm } from "../types";
 
 interface ContactFormProps {
   t: TranslateFunction;
   onSubmit: (values: ContactForm) => void;
+  formSubject: string;
+  formLabel: string;
 }
 
 const BaseContactForm = ({
@@ -19,23 +27,43 @@ const BaseContactForm = ({
   handleSubmit,
   t,
   status,
-  errors
-}: FormikProps<ContactForm> & ContactFormProps & { errors: { errorMsg: string } }) => (
+  errors,
+  formSubject,
+  formLabel,
+  setFieldValue,
+}: FormikProps<ContactForm> &
+  ContactFormProps & { errors: { errorMsg: string } }) => (
   <Form name="contact" onSubmit={handleSubmit}>
-    {status && status.sent && <Alert color="success">{t('successMsg')}</Alert>}
-    <Field name="name" component={RenderField} type="text" label={t('form.field.name')} value={values.name} />
-    <Field name="email" component={RenderField} type="text" label={t('form.field.email')} value={values.email} />
+    {status && status.sent && <Alert color="success">{t("successMsg")}</Alert>}
+    <Field
+      name="name"
+      component={RenderField}
+      type="text"
+      label={t("form.field.name")}
+      value={values.name}
+    />
+    <Field
+      name="email"
+      component={RenderField}
+      type="text"
+      label={t("form.field.email")}
+      value={values.email}
+    />
+    {/* <Field name="subject" component={RenderField} type="text" label={t('form.field.subject')} value={values.subject} /> */}
+    {formSubject && setFieldValue("subject", formSubject)}
     <Field
       name="content"
       component={RenderField}
       type="textarea"
-      label={t('form.field.content')}
+      label={formLabel || t("form.field.content")}
       value={values.content}
     />
     <div className="text-center">
-      {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
+      {errors && errors.errorMsg && (
+        <Alert color="error">{errors.errorMsg}</Alert>
+      )}
       <Button block color="primary" type="submit">
-        <Icon type="mail" /> {t('form.btnSubmit')}
+        <Icon type="mail" /> {t("form.btnSubmit")}
       </Button>
     </div>
   </Form>
@@ -43,8 +71,11 @@ const BaseContactForm = ({
 
 const ContactFormWithFormik = withFormik<ContactFormProps, ContactForm>({
   enableReinitialize: true,
-  mapPropsToValues: () => ({ content: '', email: '', name: '' }),
-  async handleSubmit(values, { resetForm, setErrors, setStatus, props: { onSubmit } }) {
+  mapPropsToValues: () => ({ content: "", email: "", name: "", subject: "" }),
+  async handleSubmit(
+    values,
+    { resetForm, setErrors, setStatus, props: { onSubmit } }
+  ) {
     try {
       await onSubmit(values);
       resetForm();
@@ -58,8 +89,8 @@ const ContactFormWithFormik = withFormik<ContactFormProps, ContactForm>({
       setStatus({ sent: false });
     }
   },
-  validate: values => validate(values, contactFormSchema),
-  displayName: 'ContactUsForm' // helps with React DevTools
+  validate: (values) => validate(values, contactFormSchema),
+  displayName: "ContactUsForm", // helps with React DevTools
 });
 
 export default ContactFormWithFormik(BaseContactForm);
