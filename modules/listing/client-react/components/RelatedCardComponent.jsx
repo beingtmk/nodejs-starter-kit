@@ -69,8 +69,7 @@ const RelatedCardComponent = props => {
         modalId: listing && listing.id,
 
         title: listing && listing.title,
-        imageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
+        imageUrl: listing_img,
         cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
         orderOptions: {
           quantity: 1
