@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
-// import { DownOutlined } from '@ant-design/icons';
+import { Button, Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element } from 'rc-banner-anim';
@@ -31,11 +30,12 @@ class Banner extends React.PureComponent {
               },
               title: {
                 className: 'banner1-title',
-                children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+                children:
+                  'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580223483/nodejs-starterkit/untitled_4.svg'
               },
               content: {
                 className: 'banner1-content',
-                children: '一个高效的页面动画解决方案'
+                children: 'An All JavaScript Solution For Your App Needs'
               },
               button: { className: 'banner1-button', children: 'Learn More' }
             };
@@ -91,7 +91,7 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          {/* <DownOutlined /> */}
+          <Icon type="down" />
         </TweenOne>
       </div>
     );
