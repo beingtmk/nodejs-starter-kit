@@ -4,6 +4,8 @@ type DynamicCarousel {
   label: String
   link: String
   imageUrl: String!
+
+  isActive: Boolean
   createdAt: String
   updatedAt: String
 }
@@ -42,7 +44,7 @@ extend type Mutation {
 # Input for filter
 input FilterDynamicCarouselInput {
   searchText: String
-  # filter by isActive
+  label: String
   isActive: Boolean
 }
 

@@ -7,8 +7,10 @@ import { translate } from '@gqlapp/i18n-client-react';
 import DynamicCarouselView from '../../components/DCComponents/DynamicCarouselView';
 
 import {
+  withDynamicCarouselState,
   withDynamicCarousels,
   withDeleteDynamicCarousel,
+  withDynamicCarouselFilterUpdating,
   subscribeToDynamicCarousels
 } from './DynamicCarouselOperations';
 
@@ -28,4 +30,10 @@ DynamicCarousel.propTypes = {
   subscribeToMore: PropTypes.func
 };
 
-export default compose(withDynamicCarousels, withDeleteDynamicCarousel, translate('home'))(DynamicCarousel);
+export default compose(
+  withDynamicCarouselState,
+  withDynamicCarousels,
+  withDeleteDynamicCarousel,
+  withDynamicCarouselFilterUpdating,
+  translate('home')
+)(DynamicCarousel);

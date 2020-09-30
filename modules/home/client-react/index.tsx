@@ -8,6 +8,7 @@ import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import loadable from '@loadable/component';
 import { MenuItem } from '@gqlapp/look-client-react';
 
+import resolvers from './resolvers';
 import resources from './locales';
 
 // const NavLinkWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
@@ -80,5 +81,6 @@ export default new ClientModule({
       </SubMenu>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'home', resources }]
 });

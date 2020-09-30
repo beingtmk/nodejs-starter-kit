@@ -5,11 +5,12 @@ import Helmet from 'react-helmet';
 import { Row, Col, Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
+import DynamicCarouselFilterView from './DynamicCarouselFilterView';
 import DynamicCarouselListView from './DynamicCarouselListView';
 
 const renderMetaData = () => (
   <Helmet
-    title={`${settings.app.name} - ${'DynamicCarousel-Admin'}`}
+    title={`${settings.app.name} - ${'DynamicCarousel - Admin'}`}
     meta={[
       {
         name: 'description',
@@ -35,7 +36,9 @@ const DynamicCarouselView = props => {
       </Row>
       <br />
       <hr />
-      {<DynamicCarouselListView {...props} />}
+      <DynamicCarouselFilterView {...props} filter={{ isActive: true }} />
+      <hr />
+      <DynamicCarouselListView {...props} />
     </PageLayout>
   );
 };

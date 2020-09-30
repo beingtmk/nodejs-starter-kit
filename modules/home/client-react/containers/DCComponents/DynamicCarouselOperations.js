@@ -2,7 +2,7 @@ import { message } from 'antd';
 import update from 'immutability-helper';
 import { graphql } from 'react-apollo';
 
-import { PLATFORM } from '@gqlapp/core-common';
+import { removeTypename, PLATFORM } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
 
 // Query
@@ -17,13 +17,17 @@ import EDIT_DYNAMIC_CAROUSEL from '../../graphql/EditDynamicCarousel.graphql';
 // Subscription
 import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../../graphql/DynamicCarouselSubscription.graphql';
 
+// Filters
+import DYNAMIC_CAROUSEL_STATE_QUERY from '../../graphql/DynamicCarouselStateQuery.client.graphql';
+import DYNAMIC_CAROUSEL_UPDATE_FILTER from '../../graphql/DynamicCarouselUpdateFilter.client.graphql';
+
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
 
 // Query
-const withDynamicCarousels = Component =>
+export const withDynamicCarousels = Component =>
   graphql(DYNAMIC_CAROUSELS_QUERY, {
     options: ({ orderBy, filter }) => {
       return {
@@ -69,7 +73,7 @@ const withDynamicCarousels = Component =>
     }
   })(Component);
 
-const withDynamicCarousel = Component =>
+export const withDynamicCarousel = Component =>
   graphql(DYNAMIC_CAROUSEL_QUERY, {
     options: props => {
       // console.log(props);
@@ -91,7 +95,7 @@ const withDynamicCarousel = Component =>
   })(Component);
 
 // Mutation
-const withDeleteDynamicCarousel = Component =>
+export const withDeleteDynamicCarousel = Component =>
   graphql(DELETE_DYNAMIC_CAROUSEL, {
     props: ({ mutate }) => ({
       deleteDynamicCarousel: async id => {
@@ -113,7 +117,7 @@ const withDeleteDynamicCarousel = Component =>
     })
   })(Component);
 
-const withAddDynamicCarousel = Component =>
+export const withAddDynamicCarousel = Component =>
   graphql(ADD_DYNAMIC_CAROUSEL, {
     props: ({ ownProps: { history }, mutate }) => ({
       addDynamicCarousel: async values => {
@@ -145,7 +149,7 @@ const withAddDynamicCarousel = Component =>
     })
   })(Component);
 
-const withEditDynamicCarousel = Component =>
+export const withEditDynamicCarousel = Component =>
   graphql(EDIT_DYNAMIC_CAROUSEL, {
     props: ({ ownProps: { history }, mutate }) => ({
       editDynamicCarousel: async values => {
@@ -171,7 +175,7 @@ const withEditDynamicCarousel = Component =>
   })(Component);
 
 // Subscription
-const subscribeToDynamicCarousels = subscribeToMore =>
+export const subscribeToDynamicCarousels = subscribeToMore =>
   subscribeToMore({
     document: DYNAMIC_CAROUSEL_SUBSCRIPTION,
     updateQuery: (
@@ -234,7 +238,7 @@ const onDeleteDynamicCarousels = (prev, id) => {
   });
 };
 
-const subscribeToDynamicCarousel = (subscribeToMore, history) =>
+export const subscribeToDynamicCarousel = (subscribeToMore, history) =>
   subscribeToMore({
     document: DYNAMIC_CAROUSEL_SUBSCRIPTION,
     updateQuery: (
@@ -272,15 +276,26 @@ const onDeleteDynamicCarousel = (prev, id, history) => {
   }
 };
 
-export {
-  // Query
-  withDynamicCarousels,
-  withDynamicCarousel,
-  // Mutation
-  withDeleteDynamicCarousel,
-  withAddDynamicCarousel,
-  withEditDynamicCarousel,
-  // Subscription
-  subscribeToDynamicCarousels,
-  subscribeToDynamicCarousel
-};
+// Filters
+export const withDynamicCarouselState = Component =>
+  graphql(DYNAMIC_CAROUSEL_STATE_QUERY, {
+    props({ data: { dynamicCarouselState } }) {
+      return { ...removeTypename(dynamicCarouselState) };
+    }
+  })(Component);
+
+export const withDynamicCarouselFilterUpdating = Component =>
+  graphql(DYNAMIC_CAROUSEL_UPDATE_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onLabelChange(role) {
+        mutate({ variables: { filter: { role } } });
+      },
+      onIsActiveChange(isActive) {
+        console.log(isActive);
+        mutate({ variables: { filter: { isActive } } });
+      }
+    })
+  })(Component);

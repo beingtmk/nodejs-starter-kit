@@ -40,16 +40,21 @@ export default class Home extends Model {
   public async dynamicCarousels(limit: number, after: number, filter: FilterDynamicCarousel) {
     const queryBuilder = DynamicCarousel.query();
     if (filter) {
-      if (has(filter, 'isActive') && filter.isActive !== false) {
+      if (has(filter, 'isActive') && filter.isActive !== '') {
         queryBuilder.where(function() {
           this.where('is_active', filter.isActive);
         });
       }
+
+      if (has(filter, 'label') && filter.label !== '') {
+        queryBuilder.where(function() {
+          this.where('label', filter.label.toUpperCase());
+        });
+      }
+
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder.where(function() {
-          this.where(raw('LOWER(??) LIKE LOWER(?)', ['label', `%${filter.searchText}%`]))
-            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['link', `%${filter.searchText}%`]))
-            .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['image_url', `%${filter.searchText}%`]));
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['link', `%${filter.searchText}%`]));
         });
       }
     }
