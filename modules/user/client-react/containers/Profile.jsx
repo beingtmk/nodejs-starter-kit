@@ -12,7 +12,7 @@ const Profile = props => {
   const { currentUser } = props;
   const { profile } = currentUser;
   
-  console.log('profile View', currentUser);
+  console.log('profileView', currentUser);
   return <ProfileView {...props} />;
 };
 

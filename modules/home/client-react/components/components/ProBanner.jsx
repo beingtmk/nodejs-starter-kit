@@ -36,15 +36,17 @@ function Banner(props) {
             awesomeness. Log in and explore the world of people management.
           </p>
           <div key="button" className="button-wrapper">
-            <a
-              href="http://preview.pro.ant.design"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Button type="primary" icon="login" href="login">
+              Login
+            </Button>
+            <Button
+              icon="user-add"
+              style={{ margin: "0 16px" }}
+              type="primary"
+              href='register'
+              ghost
             >
-              <Button type="primary">预览</Button>
-            </a>
-            <Button style={{ margin: "0 16px" }} type="primary" ghost>
-              开始使用
+              Sign Up
             </Button>
           </div>
         </QueueAnim>
