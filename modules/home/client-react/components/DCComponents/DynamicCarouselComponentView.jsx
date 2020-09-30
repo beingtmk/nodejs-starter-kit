@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Button, Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
@@ -8,106 +9,6 @@ import { SlickCarousel } from '@gqlapp/look-client-react';
 import 'rc-banner-anim/assets/index.css';
 
 const { BgElement } = Element;
-
-const Banner10DataSource = {
-  wrapper: { className: 'current-banner1' },
-  BannerAnim: {
-    children: [
-      {
-        name: 'elem0',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'current-banner1-text-wrapper' },
-        bg: {
-          className: 'bg bg0',
-          image: 'https://rashiratanjaipur.net/media/wysiwyg/Banner/pmkkgems.jpg'
-        },
-        title: {
-          className: 'current-banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'current-banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'current-banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem1',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'current-banner1-text-wrapper' },
-        bg: {
-          className: 'bg bg1',
-          link: true,
-          image: 'https://rashiratanjaipur.net/media/wysiwyg/Banner/pmkkgems_jewellery-compressor.jpg'
-        },
-        title: {
-          className: 'current-banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'current-banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'current-banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem2',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'current-banner1-text-wrapper' },
-        bg: {
-          className: 'bg bg2',
-          image: 'https://rashiratanjaipur.net/media/wysiwyg/Banner/Gemstone_recommendation-_PMKK_GEMS.jpg',
-          link: true
-        },
-        title: {
-          className: 'current-banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'current-banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'current-banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem2',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'current-banner1-text-wrapper' },
-        bg: {
-          className: 'bg bg3',
-          image: 'https://rashiratanjaipur.net/media/wysiwyg/savan_banner.jpg'
-        },
-        title: {
-          className: 'current-banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'current-banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'current-banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem2',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'current-banner1-text-wrapper' },
-        bg: {
-          className: 'bg bg4',
-          image: 'https://rashiratanjaipur.net/media/wysiwyg/Banner/banner_-_pmkkgems.jpg'
-        },
-        title: {
-          className: 'current-banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'current-banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'current-banner1-button', children: 'Learn More' }
-      }
-    ]
-  }
-};
 
 const ItemComponent = props => {
   return (
@@ -121,6 +22,7 @@ class DynamicCarouselComponentView extends React.PureComponent {
   render() {
     const { ...props } = this.props;
     const Banner10DataSource = {
+      // wrapper: { className: 'banner0' },
       wrapper: { className: 'current-banner1' },
       BannerAnim: {
         children:
@@ -260,3 +162,81 @@ class DynamicCarouselComponentView extends React.PureComponent {
 }
 
 export default DynamicCarouselComponentView;
+
+// const Carousel = styled.div`
+//   width: 100%;
+//   height: 100vh;
+//   position: relative;
+//   text-align: center;
+//   border-color: #666;
+//   background-image: ${props => props.img && `url(${props.img})`};
+//   background-size: cover;
+//   background-attachment: fixed;
+//   background-position: center;
+//   & &-text-wrapper {
+//     display: inline-block;
+//     position: absolute;
+//     top: 20%;
+//     margin: auto;
+//     left: 0;
+//     right: 0;
+//     font-size: 14px;
+//     width: 550px;
+//     > .queue-anim-leaving {
+//       position: relative !important;
+//     }
+//   }
+//   & &-title {
+//     width: 350px;
+//     min-height: 60px;
+//     margin: auto;
+//     display: inline-block;
+//     font-size: 40px;
+//     position: relative;
+//   }
+//   & &-content {
+//     margin-bottom: 20px;
+//     word-wrap: break-word;
+//     min-height: 24px;
+//   }
+//   & &-button {
+//     border: 1px solid #fff;
+//     color: #fff;
+//     background: transparent;
+//     box-shadow: 0 0 0 transparent;
+//     line-height: 40px;
+//     font-size: 16px;
+//     height: 40px;
+//     &:hover {
+//       color: #fff;
+//       border-color: #fff;
+//       background: rgba(255, 255, 255, 0.1);
+//       box-shadow: 0 0 10px rgba(50, 250, 255, 0.75);
+//     }
+//     &:focus {
+//       color: #fff;
+//       border-color: #fff;
+//     }
+//     &.queue-anim-leaving {
+//       width: auto;
+//     }
+//   }
+//   & &-icon {
+//     bottom: 20px;
+//     font-size: 24px;
+//     position: absolute;
+//     left: 50%;
+//     margin-left: -12px;
+//   }
+
+//   @media screen and (max-width: 767px) {
+//     background-attachment: inherit;
+//     & &-text-wrapper {
+//       width: 90%;
+//     }
+//     & &-title {
+//       width: 90%;
+//       left: 0;
+//     }
+//   }
+// `;

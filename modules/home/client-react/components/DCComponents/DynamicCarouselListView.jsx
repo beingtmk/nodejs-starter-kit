@@ -41,6 +41,12 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       )
     },
     {
+      title: <>Label</>,
+      dataIndex: 'label',
+      key: 'label',
+      render: (text, record) => <>{record.label}</>
+    },
+    {
       title: <>Link</>,
       dataIndex: 'link',
       key: 'link',
@@ -50,25 +56,28 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <>
-          <Link to={`/edit/dynamic-carousel/${record.id}`}>
-            <Button shape="circle" size="large">
-              <Icon type="edit" />
-            </Button>
-          </Link>
-          {/* <div style={{ paddingRight: '10px' }} /> */}
-          <Popconfirm
-            title="Are you sure delete this listing?"
-            onConfirm={() => deleteDynamicCarousel(record.id)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="danger" shape="circle" size="large">
-              <Icon type="delete" />
-            </Button>
-          </Popconfirm>
-        </>
+        <Row gutter={24}>
+          <Col span={5}>
+            <Link to={`/edit/dynamic-carousel/${record.id}`}>
+              <Button shape="circle" size="large">
+                <Icon type="edit" />
+              </Button>
+            </Link>
+          </Col>
+          <Col span={5}>
+            <Popconfirm
+              title="Are you sure delete this listing?"
+              onConfirm={() => deleteDynamicCarousel(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="danger" shape="circle" size="large">
+                <Icon type="delete" />
+              </Button>
+            </Popconfirm>
+          </Col>
+        </Row>
       )
     }
   ];
@@ -119,4 +128,4 @@ DynamicCarouselListView.propTypes = {
   t: PropTypes.func
 };
 
-export default translate('user')(DynamicCarouselListView);
+export default translate('home')(DynamicCarouselListView);

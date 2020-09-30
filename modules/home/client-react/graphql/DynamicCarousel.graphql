@@ -1,5 +1,6 @@
 fragment DynamicCarouselInfo on DynamicCarousel {
   id
+  label
   link
   imageUrl
 }

@@ -35,7 +35,7 @@ const DynamicCarouselView = props => {
       </Row>
       <br />
       <hr />
-      <DynamicCarouselListView {...props} />
+      {<DynamicCarouselListView {...props} />}
     </PageLayout>
   );
 };
