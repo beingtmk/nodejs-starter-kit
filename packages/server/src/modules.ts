@@ -1,3 +1,4 @@
+import pages from '@gqlapp/pages-server-ts';
 import faq from '@gqlapp/faq-server-ts';
 import quiz from '@gqlapp/quiz-server-ts';
 import group from '@gqlapp/group-server-ts';
@@ -30,6 +31,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  pages,
   faq,
   quiz,
   group,
