@@ -71,7 +71,7 @@ class NavBar extends React.Component {
             </Col>
             <Col span={24}>
               <Row>
-                <Col align="left" xs={12} md={12} lg={7}>
+                <Col align="left" xs={12} md={12} lg={6}>
                   <NavLink to="/" className="nav-link">
                     <ScrollParallax
                       location="page-layout"
@@ -94,7 +94,7 @@ class NavBar extends React.Component {
                     </ScrollParallax>
                   </NavLink>
                 </Col>
-                <Col xs={0} md={0} lg={2}>
+                <Col xs={0} md={0} lg={3}>
                   <Menu
                     onClick={this.handleClick}
                     selectedKeys={[this.props.location.pathname]}
