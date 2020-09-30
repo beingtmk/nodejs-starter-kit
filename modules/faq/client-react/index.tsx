@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Icon } from "antd";
 import ClientModule from "@gqlapp/module-client-react";
 import { translate, TranslateFunction } from "@gqlapp/i18n-client-react";
 import loadable from "@loadable/component";
@@ -9,18 +9,17 @@ import { MenuItem } from "@gqlapp/look-client-react";
 import resources from "./locales";
 import resolvers from "./resolvers";
 
-
 const NavLinkAdminWithI18n = translate("faq")(
   ({ t }: { t: TranslateFunction }) => (
     <NavLink to="/faqs" className="nav-link" activeClassName="active">
-      Faq
+      <Icon type="customer-service" /> Faq
     </NavLink>
   )
 );
 
 const NavLinkWithI18n = translate("faq")(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/faq" className="nav-link" activeClassName="active">
-    Faq
+    <Icon type="customer-service" /> Faq
   </NavLink>
 ));
 

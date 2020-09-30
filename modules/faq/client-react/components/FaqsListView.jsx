@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
-
+import { Icon } from "antd";
 import { translate } from "@gqlapp/i18n-client-react";
 import { PageLayout, Button } from "@gqlapp/look-client-react";
 import Loader from "@gqlapp/look-client-react/ui-antd/components/Loader";
@@ -26,7 +26,10 @@ const FaqsListView = (props) => {
           },
         ]}
       />
-      <h2>{"Faqs"}</h2>
+      <h2>
+        <Icon type="customer-service" />
+        {" Faqs"}
+      </h2>
       <Link to="/add-faq">
         <Button color="primary">{"Add Faq"}</Button>
       </Link>

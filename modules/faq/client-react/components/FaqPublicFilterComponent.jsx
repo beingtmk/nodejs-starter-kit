@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { DebounceInput } from "react-debounce-input";
-import {Switch} from 'antd';
+import { Input, Switch, Icon } from "antd";
 import { translate } from "@gqlapp/i18n-client-react";
-import {
-  Form,
-  FormItem,
-  Select,
-  Option,
-  Input,
-} from "@gqlapp/look-client-react";
+import { Form, FormItem, Select, Option } from "@gqlapp/look-client-react";
 
 const FaqFilterComponent = (props) => {
   const {
@@ -26,7 +20,9 @@ const FaqFilterComponent = (props) => {
           minLength={2}
           debounceTimeout={300}
           placeholder="Search FAQ's"
-          element={Input}
+          element={(p) => {
+            return <Input {...p} suffix={<Icon type="search" />} />;
+          }}
           value={searchText}
           onChange={(e) => onSearchTextChange(e.target.value)}
         />

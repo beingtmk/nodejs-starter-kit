@@ -59,7 +59,10 @@ const FaqView = (props) => {
           },
         ]}
       />
-      <h1 style={{ fontSize: "32px" }}>{"FAQ's"}</h1>
+      <h1 style={{ fontSize: "32px" }}>
+        <Icon type="customer-service" />
+        {" FAQ's"}
+      </h1>
       <AnimatedUnderLine width={"200px"} alignment="left" />
       <br />
       {!stateLoading && <FaqPublicFilterComponent {...props} />}
@@ -101,7 +104,10 @@ const FaqView = (props) => {
                 <br />
                 {props.faqs.pageInfo.hasNextPage && (
                   <div align="center">
-                    <Button onClick={fetchMoreData}>Load More</Button>
+                    <Button onClick={fetchMoreData}>
+                      <Icon type="down" />
+                      {" Load More"}
+                    </Button>
                   </div>
                 )}
               </>
