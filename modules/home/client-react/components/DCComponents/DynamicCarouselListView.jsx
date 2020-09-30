@@ -19,7 +19,13 @@ const Loading = ({ t }) => (
 );
 Loading.propTypes = { t: PropTypes.func };
 
-const NodynaDicCarouselsMessage = ({ t }) => <div className="text-center">{t('listing.noListingsMsg')}</div>;
+const NodynaDicCarouselsMessage = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    {t('listing.noListingsMsg')}
+  </div>
+);
 NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
 
 const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCarousels, loadData }) => {

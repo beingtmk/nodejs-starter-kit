@@ -290,8 +290,8 @@ export const withDynamicCarouselFilterUpdating = Component =>
       onSearchTextChange(searchText) {
         mutate({ variables: { filter: { searchText } } });
       },
-      onLabelChange(role) {
-        mutate({ variables: { filter: { role } } });
+      onLabelChange(label) {
+        mutate({ variables: { filter: { label } } });
       },
       onIsActiveChange(isActive) {
         console.log(isActive);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Form, FormItem, Select, Option, Label, Input } from '@gqlapp/look-client-react';
+import { LABEL } from '@gqlapp/home-common';
 
 const DynamicCarouselFilterView = ({
   filter: { searchText, label, isActive },
@@ -24,16 +25,16 @@ const DynamicCarouselFilterView = ({
     </FormItem>
     &nbsp;
     <FormItem label={'Label'}>
-      <Select name="role" defaultValue={label} style={{ width: '100px' }} onChange={e => onLabelChange(e.target.value)}>
-        <Option key={1} value="">
-          {t('dynamicCarousel.list.item.role.all')}
+      <Select name="label" defaultValue={label} style={{ width: '100px' }} onChange={e => onLabelChange(e)}>
+        <Option key={1} value={''}>
+          All
         </Option>
-        <Option key={2} value="user">
-          {t('dynamicCarousel.list.item.role.user')}
-        </Option>
-        <Option key={3} value="admin">
-          {t('dynamicCarousel.list.item.role.admin')}
-        </Option>
+        {LABEL &&
+          LABEL.map((l, i) => (
+            <Option key={i + 2} value={l}>
+              {l}
+            </Option>
+          ))}
       </Select>
     </FormItem>
     &nbsp;

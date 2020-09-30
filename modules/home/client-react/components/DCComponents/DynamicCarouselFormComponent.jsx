@@ -5,7 +5,8 @@ import { withFormik } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
+import { FormItem, Select, Option, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
+import { LABEL } from '@gqlapp/home-common';
 
 const DynamicCarouselFormSchema = {
   imageUrl: [required]
@@ -16,9 +17,7 @@ class DynamicCarouselFormComponent extends React.Component {
     load: false
   };
   render() {
-    const { cardTitle, values, handleSubmit } = this.props;
-
-    // console.log('load', load);
+    const { cardTitle, values, handleSubmit, setFieldValue } = this.props;
 
     console.log('props form component', this.props.values);
     return (
@@ -30,14 +29,24 @@ class DynamicCarouselFormComponent extends React.Component {
         }
       >
         <Form onSubmit={handleSubmit}>
-          <Field
-            name="label"
-            component={RenderField}
-            placeholder="Label"
-            type="text"
-            label="Label"
-            value={values.label}
-          />
+          <FormItem label={'Label'}>
+            <Select
+              name="label"
+              defaultValue={values.label}
+              style={{ width: '130px' }}
+              onChange={e => setFieldValue('label', e)}
+            >
+              <Option key={1} value={''}>
+                All
+              </Option>
+              {LABEL &&
+                LABEL.map((l, i) => (
+                  <Option key={i + 2} value={l}>
+                    {l}
+                  </Option>
+                ))}
+            </Select>
+          </FormItem>
           <Field name="link" component={RenderField} placeholder="Link" type="text" label="Link" value={values.link} />
           <Field
             name="imageUrl"
@@ -60,6 +69,7 @@ DynamicCarouselFormComponent.propTypes = {
   cardTitle: PropTypes.string,
   t: PropTypes.func,
   handleSubmit: PropTypes.func,
+  setFieldValue: PropTypes.func,
   values: PropTypes.object
 };
 

@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
-import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
+import { Row, PageLayout } from '@gqlapp/look-client-react';
 
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 
@@ -19,17 +19,25 @@ const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser })
     <PageLayout>
       {renderMetaData(t)}
       {loading ? (
-        <Spin />
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin size="large" />
+        </div>
       ) : (
         <>
-          <LayoutCenter>
+          <br />
+          <br />
+          <br />
+          <Row type="flex" justify="space-around" align="middle">
             <DynamicCarouselFormComponent
               cardTitle="Add banner"
               t={t}
               onSubmit={addDynamicCarousel}
               currentUser={currentUser}
             />
-          </LayoutCenter>
+          </Row>
         </>
       )}
     </PageLayout>

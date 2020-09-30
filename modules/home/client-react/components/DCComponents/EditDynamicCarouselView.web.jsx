@@ -3,7 +3,7 @@ import { Spin } from 'antd';
 import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
 
-import { PageLayout, LayoutCenter } from '@gqlapp/look-client-react';
+import { Row, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
@@ -18,26 +18,32 @@ const EditDynamicCarouselView = props => {
   const { t, dynamicCarousel, loading, editDynamicCarousel, currentUser } = props;
 
   return (
-    <>
-      <PageLayout>
-        {renderMetaData(t)}
-        {loading ? (
-          <Spin />
-        ) : (
-          <>
-            <LayoutCenter>
-              <DynamicCarouselFormComponent
-                cardTitle="Edit home banner"
-                t={t}
-                dynamicCarousel={dynamicCarousel}
-                onSubmit={editDynamicCarousel}
-                currentUser={currentUser}
-              />
-            </LayoutCenter>
-          </>
-        )}
-      </PageLayout>
-    </>
+    <PageLayout>
+      {renderMetaData(t)}
+      {loading ? (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin size="large" />
+        </div>
+      ) : (
+        <>
+          <br />
+          <br />
+          <br />
+          <Row type="flex" justify="space-around" align="middle">
+            <DynamicCarouselFormComponent
+              cardTitle="Edit home banner"
+              t={t}
+              dynamicCarousel={dynamicCarousel}
+              onSubmit={editDynamicCarousel}
+              currentUser={currentUser}
+            />
+          </Row>
+        </>
+      )}
+    </PageLayout>
   );
 };
 
