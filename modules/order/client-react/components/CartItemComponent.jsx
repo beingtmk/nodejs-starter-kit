@@ -1,26 +1,59 @@
 import React, { Component } from 'react';
-import { Icon, Button, Row, Col, Card, Popconfirm, message } from 'antd';
+import { Row, Col, Card, message } from 'antd';
+import { Link } from 'react-router-dom';
+import { DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
+
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
-const { Meta } = Card;
+// import AddToCartForm from './AddToCartForm';
 
-const OrderTotalDate = styled(Col)`
-  margin-top: 13px !important;
-  margin-bottom: 2px !important;
+const Position1 = styled.h4`
+  position: absolute;
+  bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
+  @media only screen and (max-width: 768px) {
+    bottom: ${props => props.bottom && `${parseInt(props.bottom) - 35}px`};
+  }
+`;
+const Position = styled.h4`
+  position: absolute;
+  bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
+  @media only screen and (max-width: 768px) {
+    bottom: ${props => props.bottom && `${parseInt(props.bottom) - 15}px`};
+  }
 `;
 
-const BorderListzero = styled(Button)`
-  border: 0 !important;
-  padding: 0 !important;
-  padding-right: 20px !important;
+const Ribbon = styled.div`
+  width: ${props => (props.width ? props.width : '150px')};
+  bottom: ${props => props.bottom && props.bottom};
+  background: ${props => (props.color ? props.color : 'rgb(123, 159, 199)')};
+
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  padding: 0.15em 0.5em;
+  font-size: 1.3em;
+  margin: 0 0 0 -0.625em;
+  line-height: 1.875em;
+  text-align: center;
+  color: #e6e2c8;
+  border-radius: 0 0.156em 0.156em 0;
+  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
+`;
+const Align = styled.div`
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  padding-right: 10px;
+  margin: 15px 20px;
 `;
 
 class CartItemComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visibleEditModal: false,
+      visibleDetailsModal: false,
       myBooks: [],
       modal1Visible: false
     };
@@ -34,89 +67,168 @@ class CartItemComponent extends Component {
     message.error('Click on No');
   };
 
+  // disabledDate(current) {
+  //   if (
+  //     (current && current.valueOf() < Date.now()) ||
+  //     this.state.myBooks.some(row => row === moment(current._d).format('YYYY-MM-DD'))
+  //   ) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
   render() {
-    const { item, edit, onSubmit, onDelete } = this.props;
-    console.log('cart item', item);
+    const { item, edit, onDelete } = this.props;
+    console.log('cart item', this.props);
+    var coverGrid = {
+      xs: { span: 24 },
+      md: { span: 9 },
+      xxl: { span: 6 }
+    };
+
+    var infoGrid = {
+      xs: { span: 24 },
+      md: { span: 15 },
+      xxl: { span: 18 }
+    };
+
+    if (this.props.mobile) {
+      coverGrid = null;
+      infoGrid = null;
+      coverGrid = { span: 24 };
+      infoGrid = { span: 24 };
+    }
 
     return (
-      <Card
-        type={this.props.inner && 'inner'}
-        style={{ marginBottom: '24px' }}
-        bodyStyle={{
-          padding: '0px'
-        }}
-        title={<h3>{item.title}</h3>}
-        extra={
-          <>
-            {edit && <Icon type="edit" onClick={() => this.setState({ visible: true })} />}
-            {onDelete && (
-              <Popconfirm
-                title="Are you sure to delete this order?"
-                onConfirm={() => onDelete(item.id)}
-                onCancel={this.cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <BorderListzero block>
-                  <Icon type="delete" />
-                </BorderListzero>
-              </Popconfirm>
-            )}
-          </>
-        }
-      >
-        <Row>
-          <Col
-            xs={{ span: 24 }}
-            md={{ span: 9 }}
-            xxl={{ span: 6 }}
-            align="center"
-            style={{ maxHeight: '200px', overflow: 'hidden' }}
-          >
-            <img alt="" src={item.thumbnail} width="100%" />
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }} style={{ padding: '24px' }}>
-            <h4>
-              <strong>
-                <span>Amount</span> &#8377; {`${item.cost} X ${item.quantity} = ${item.cost * item.quantity}`}
-              </strong>
-            </h4>
-            <br />
-            <h4>
-              <span>Date</span> {item.date}
-            </h4>
-            <br />
-            {/* <Link
-              target='_blank'
-              className='listing-link'
-              to={`/public-profile/${user.id}`}
-            >
-              <Tooltip placement='topLeft' title="Visit User's Profile">
-                <Meta
-                  avatar={<Avatar src={sellerAvatar} />}
-                  title={
-                    <h4>
-                      {seller}
-                      <br />
-                    </h4>
+      <Col span={24} style={{ paddingRight: '10px' }}>
+        <Align>
+          <Row type="flex" justify="space-around" align="middle" gutter={12}>
+            {edit && (
+              <Col span={8}>
+                <EditIcon
+                  color="default"
+                  onClick={
+                    /* () => this.setState({ visibleEditModal: true }) */
+                    () => console.log('edit in cartitemcompoent')
                   }
-                  description={
-                    <h5 style={{ marginTop: '-10px' }}>{user.username}</h5>
-                  }
+                  size="lg"
                 />
-              </Tooltip>
-            </Link> */}
-            <OrderTotalDate span={24}></OrderTotalDate>
-          </Col>
-        </Row>
-      </Card>
+
+                {/* <AddToCartForm
+                  // onSubmit={onEditItem}
+                  showForm={item.isOrderOptions}
+                  details={item}
+                  visible={this.state.visibleEditModal}
+                  handleVisible={() => this.setState({ visibleEditModal: false })}
+                /> */}
+              </Col>
+            )}
+
+            <Col span={8}>
+              {onDelete && (
+                <DeleteIcon
+                  title="Are you sure to delete this order?"
+                  onClick={() => this.props.onDelete(item.id)}
+                  size="lg"
+                />
+              )}
+            </Col>
+          </Row>
+        </Align>
+        <Link to={`/listing-detail/${item.listingId}`}>
+          <Ribbon bottom={this.props.mobile ? '70px' : '105px'} width="120px" color="#df0303">
+            {item.quantity}
+          </Ribbon>
+          <Ribbon bottom={this.props.mobile ? '15px' : '30px'}>&#8377; {` ${item.cost * item.quantity}`}</Ribbon>
+          <Card
+            // type={this.props.inner && 'inner'}
+            // style={
+            //   (this.props.componentStyle && this.props.componentStyle) || {
+            //     boxShadow: '0px 1px 24px rgba(0, 0, 0, 0.12)'
+            //     // maxHeight: '250px',
+            //   }
+            // }
+            // className="order-cart-item"
+            bodyStyle={{
+              padding: '0px'
+            }}
+          >
+            <Row>
+              <Col
+                {...coverGrid}
+                align="center"
+                style={{ maxHeight: this.props.mobile ? '130px' : '250px', overflow: 'hidden' }}
+              >
+                <img alt="" src={item.imageUrl} width="100%" />
+              </Col>
+              <Col {...infoGrid}>
+                <Card
+                  style={{ height: this.props.mobile ? '180px' : '250px', borderWidth: '0px' }}
+                  title={<h3>{item.title}</h3>}
+                  // bodyStyle={{
+                  //   padding: "40px 20px 20px 20px",
+                  // }}
+                  // extra={
+
+                  // }
+                >
+                  {/* {console.log('this.props.mobile', this.props.mobile)} */}
+                  <br />
+                  <h3>
+                    <Position1 bottom={'100'}>
+                      <span>Quantity: </span>
+                    </Position1>
+                  </h3>
+
+                  <br />
+                  <br />
+                  <Position bottom={'30'}>
+                    <strong>
+                      <span>Amount</span> &#8377; {`${item.cost} X ${item.quantity}`}
+                    </strong>
+                  </Position>
+                </Card>
+              </Col>
+            </Row>
+          </Card>
+        </Link>
+      </Col>
     );
   }
 }
 
 CartItemComponent.propTypes = {
   item: PropTypes.object,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  edit: PropTypes.boolean,
+  onSubmit: PropTypes.func,
+  mobile: PropTypes.func
 };
 
-export default CartItemComponent;
+export default // compose(
+//   graphql(DISABLED_DATES, {
+//     options: props => {
+//       return {
+//         variables: { listingId: props.item.listing.id }
+//       };
+//     },
+//     props({ data: { loading, error, disabledDates, subscribeToMore, updateQuery, refetch } }) {
+//       if (error) throw new Error(error);
+//       return { loading, disabledDates, subscribeToMore, updateQuery, refetch };
+//     }
+//   }),
+//   graphql(BOOKED_DATES, {
+//     options: props => {
+//       return {
+//         variables: { listingId: props.item.listing.id }
+//       };
+//     },
+//     props({ data: { loading, error, orderDetailsList } }) {
+//       if (error) throw new Error(error);
+//       return { bookLoading: loading, orderDetailsList };
+//     }
+//   })
+// )(
+CartItemComponent;
+// );
