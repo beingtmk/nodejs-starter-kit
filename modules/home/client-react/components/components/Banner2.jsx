@@ -16,7 +16,7 @@ const Banner20DataSource = {
         page: { className: 'home-page currentBanner2-page' },
         textWrapper: { className: 'currentBanner2-text-wrapper' },
         bg: { className: 'bg bg0' },
-        title: { className: 'currentBanner2-title', children: 'Mapp!' },
+        title: { className: 'currentBanner2-title', children: 'MApp!' },
         content: {
           className: 'currentBanner2-content',
           children: "Welcome to MApp! You've reached the one stop shop for manager awesomeness. Log in and explore the world of people management."

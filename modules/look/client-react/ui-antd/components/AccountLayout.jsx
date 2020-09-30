@@ -79,7 +79,7 @@ class AccountLayout extends React.Component {
           </Helmet>
         )}
         <Layout className="wide-layout-inner">
-          <Sider width={200} className="wide-layout-sider">
+          <Sider width={210} className="wide-layout-sider">
           <AccountMenu  path={path} />
           </Sider>
           <Layout className="wide-layout-content-wrapper">

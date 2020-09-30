@@ -13,13 +13,23 @@
   height: 40px;
   background: @primary-color;
   position: relative;
-}
-
-.navbar-top-layer {
-  color: white;
-  max-width: 1200px;
-  margin: auto;
-  padding: 10px 24px;
+  &-narrow {
+    .navbar-top-layer {
+      padding: 10px 24px;
+      position: relative;
+      margin: auto;
+      max-width: 1200px;
+    }
+  }
+  &-wide {
+    .navbar-top-layer {
+      width: 100%;
+      padding: 10px 54px;
+    }
+  }
+  .navbar-top-layer {
+    color: white;
+  }
 }
 
 .navbar-header {
@@ -67,7 +77,6 @@
     }
   }
 }
-
 
 @media only screen and (max-width: 1439px) {
   .navbar-wrapper {

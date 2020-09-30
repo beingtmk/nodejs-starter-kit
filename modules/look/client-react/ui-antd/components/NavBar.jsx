@@ -70,7 +70,7 @@ class NavBar extends React.Component {
           translateY: this.state.isMobile ? "" : "-40px",
         }}
       >
-        <div className="navbar-top-layer-wrapper">
+        <div className={`navbar-top-layer-wrapper navbar-top-layer-wrapper-${layoutType}`}>
           <Row className="navbar-top-layer">
             <Col md={12} xs={0}></Col>
             <Col md={12} xs={24} align="right">

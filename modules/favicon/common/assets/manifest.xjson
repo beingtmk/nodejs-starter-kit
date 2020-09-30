@@ -1,16 +1,18 @@
 {
-    "short_name": "AUSK",
-    "name": "apollo-universal-starter-kit",
+    "short_name": "MApp",
+    "name": "MApp",
     "icons": [
         {
             "src": "android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
+            "purpose":"maskable"
         },
         {
             "src": "android-chrome-256x256.png",
             "sizes": "256x256",
             "type": "image/png"
+            "purpose":"any"
         }
     ],
     "start_url": ".",
