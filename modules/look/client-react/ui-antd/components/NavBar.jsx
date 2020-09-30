@@ -66,11 +66,14 @@ class NavBar extends React.Component {
         location="page-layout"
         className="navbar-parallex"
         animation={{
-          playScale: [1, 1.1],
+          playScale: [1, 1.2],
           translateY: this.state.isMobile ? "" : "-40px",
+          boxShadow: "0 2px 6px 2px rgba(60,64,67,.15)",
         }}
       >
-        <div className={`navbar-top-layer-wrapper navbar-top-layer-wrapper-${layoutType}`}>
+        <div
+          className={`navbar-top-layer-wrapper navbar-top-layer-wrapper-${layoutType}`}
+        >
           <Row className="navbar-top-layer">
             <Col md={12} xs={0}></Col>
             <Col md={12} xs={24} align="right">

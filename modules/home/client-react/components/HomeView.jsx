@@ -7,7 +7,7 @@ import { PageLayout } from '@gqlapp/look-client-react';
 // import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
 
-import Banner2 from './components/Banner2';
+import ProBanner from './components/ProBanner';
 
 
 let isMobile;
@@ -48,7 +48,7 @@ export default class HomeView extends React.Component {
     //   />
     // );
     const children = [
-      <Banner2 id="Banner2_0" key="Banner2_0" isMobile={this.state.isMobile} />,
+      <ProBanner id="ProBanner_0" key="ProBanner_0" isMobile={this.state.isMobile} />,
       
     ];
     return (
