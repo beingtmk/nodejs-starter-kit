@@ -7,27 +7,28 @@ import { ImgUser } from "../../constants/DefaultImages";
 import ProfileOrganisationDisplay from "@gqlapp/group-client-react/containers/ProfileOrganisationDisplay";
 const { Meta } = Card;
 
-const ProfileHeadComponent = ({ profile, description, userId }) => {
+const ProfileHeadComponent = ({ profile,  userId }) => {
+  console.log('ProfileHeadComponent', profile);
   return (
     <div style={{ marginBottom: "10px" }}>
       <Meta
         title={
           <h2>
             <Icon type="robot" />{" "}
-            {profile && profile.firstName && profile.lastName
+            {profile && (profile.firstName || profile.lastName)
               ? profile.firstName + " " + profile.lastName
               : "Not Provided"}
           </h2>
         }
-        description={
-          <h3>
-            (
-            {profile && profile.designation
-              ? profile.designation
-              : "Not Provided"}
-            )
-          </h3>
-        }
+        // description={
+        //   <h3>
+        //     (
+        //     {profile && profile.designation
+        //       ? profile.designation
+        //       : "Not Provided"}
+        //     )
+        //   </h3>
+        // }
         avatar={
           <Avatar
             size={100}
@@ -36,7 +37,7 @@ const ProfileHeadComponent = ({ profile, description, userId }) => {
         }
       />
       <Divider />
-      <h4 style={{fontSize:'20px', marginBottom:"15px"}}>Organisations:</h4>
+      <h4 style={{ fontSize: "20px", marginBottom: "15px" }}>Organisations:</h4>
       <ProfileOrganisationDisplay userId={userId} />
     </div>
   );

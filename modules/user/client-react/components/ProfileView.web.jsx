@@ -87,11 +87,8 @@ class ProfileView extends React.Component {
 
                 <ProfileHeadComponent
                   userId={this.getUserId() || currentUser.id}
-                  profile={currentUser.profile && currentUser.profile}
-                  description={
-                    userCardData(t, currentUser, this.getUserId()).profileHead
-                  }
-                />
+                  profile={currentUser && currentUser.profile}
+                />{console.log('ProfileHeadHeadHead', currentUser)}
                 <Divider />
                 <Row type="flex" justify="space-around" align="middle">
                   <Col
@@ -105,18 +102,7 @@ class ProfileView extends React.Component {
                       </h2>
                       <CardText>{currentUser.username}</CardText>
                     </div>
-                    <div>
-                      <h2>
-                        <Icon type="solution" /> {t("profile.card.group.about")}
-                        :
-                      </h2>
-
-                      <CardText>
-                        {currentUser.profile && currentUser.profile.about
-                          ? currentUser.profile.about
-                          : "Not Provided"}
-                      </CardText>
-                    </div>
+                    
 
                     <div>
                       <h2>
@@ -128,21 +114,7 @@ class ProfileView extends React.Component {
                       </CardText>
                     </div>
 
-                    {/* Portfolios */}
-                    <h2>
-                      <Icon type="paper-clip" />{" "}
-                      {t("profile.card.group.portfolios.title")}
-                    </h2>
-                    {currentUser.portfolios &&
-                    currentUser.portfolios.length !== 0
-                      ? currentUser.portfolios.map((portfolio, key) => (
-                          <div key={key}>
-                            <CardText>
-                              {portfolio.platform} : {portfolio.portfolioUrl}
-                            </CardText>
-                          </div>
-                        ))
-                      : "Not Provided"}
+                    
                   </Col>
                   <Col align="right" span={12}>
                     <div>
@@ -155,38 +127,11 @@ class ProfileView extends React.Component {
                       </CardText>
                     </div>
 
-                    <div>
-                      <h2>
-                        <Icon type="shake" /> Mobile
-                      </h2>
-                      <CardText>
-                        {currentUser.profile && currentUser.profile.mobile
-                          ? currentUser.profile.mobile
-                          : "Not Provided"}
-                      </CardText>
-                    </div>
+                    
                   </Col>
                 </Row>
                 <Divider />
-                <h2>
-                  <Icon type="contacts" />{" "}
-                  {t("profile.card.group.addresses.title")}
-                </h2>
-                <Row gutter={10}>
-                  {currentUser.addresses && currentUser.addresses.length !== 0
-                    ? currentUser.addresses.map((address, key) => (
-                        <Col xs={{ span: 24 }} md={{ span: 12 }} key={key}>
-                          <AddressCardComponent
-                            address={address}
-                            subTitle={t(
-                              "profile.card.group.addresses.subTitle"
-                            )}
-                            index={key}
-                          />
-                        </Col>
-                      ))
-                    : "Not Provided"}
-                </Row>
+                
 
                 {/* Credit card info (Stripe subscription module)*/}
                 {settings.stripe.subscription.enabled &&

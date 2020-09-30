@@ -21,6 +21,7 @@ fragment BlogsInfo on Blog {
     profile {
       firstName
       lastName
+      avatar
     }
   }
 }

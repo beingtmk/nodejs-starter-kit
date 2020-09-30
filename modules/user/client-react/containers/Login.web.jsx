@@ -42,10 +42,10 @@ const Login = props => {
     }
 
     await authentication.doLogin(client);
+    message.success('Awesome manager logging in');
     const params = queryString.parse(location.search);
-    history.push(params.redirectBack ? params.redirectBack : '/profile');
+    history.push(params.redirectBack ? params.redirectBack : '/dashboard');
   };
-  isReady && message.info('Awesome manager logging in')
 
   return (
     <React.Fragment>

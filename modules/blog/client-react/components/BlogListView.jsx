@@ -20,6 +20,7 @@ class BlogListView extends React.Component {
     this.setState({ flag: true });
   }
   render() {
+    console.log('BlogListView', this.props)
     return (
       <PageLayout>
         {renderMetaData(this.props.t)}

@@ -4,14 +4,16 @@ type User {
   role: String!
   isActive: Boolean
   email: String!
-  profile: UserProfile
+  profile: Profile
   auth: UserAuth
 }
 
-type UserProfile {
+type Profile {
+  id:Int
+  userId:Int
   firstName: String
   lastName: String
-  fullName: String
+  avatar: String
 }
 
 # Additional authentication service info
@@ -146,6 +148,7 @@ input EditUserInput {
 input ProfileInput {
   firstName: String
   lastName: String
+  avatar: String
 }
 
 extend type Subscription {

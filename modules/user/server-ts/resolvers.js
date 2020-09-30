@@ -36,35 +36,22 @@ export default pubsub => ({
 
       throw new Error(t('user:accessDenied'));
     }),
-    currentUser(obj, args, { User, req: { identity } }) {
+    async currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
-        return User.getUser(identity.id);
+        const userRes = await User.getUser(identity.id);
+        console.log('userRes', userRes);
+        return userRes;
       } else {
         return null;
       }
     }
   },
   User: {
-    profile(obj) {
-      return obj;
-    },
+    // profile(obj) {
+    //   return obj;
+    // },
     auth(obj) {
       return obj;
-    }
-  },
-  UserProfile: {
-    firstName(obj) {
-      return obj.firstName;
-    },
-    lastName(obj) {
-      return obj.lastName;
-    },
-    fullName(obj) {
-      if (obj.firstName && obj.lastName) {
-        return `${obj.firstName} ${obj.lastName}`;
-      } else {
-        return null;
-      }
     }
   },
   Mutation: {

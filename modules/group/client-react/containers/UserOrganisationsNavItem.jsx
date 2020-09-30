@@ -23,7 +23,6 @@ const UserOrganisationsNavItem = (props) => {
   //     const subscribe = subscribeToGroups(subscribeToMore);
   //     return () => subscribe();
   //   });
-  console.log("propsProfileOrg", props);
   const { loading, userGroups } = props;
 
   const getOrgs = () => {

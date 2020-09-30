@@ -50,7 +50,7 @@ export interface Identifier {
   id: number;
 }
 // const eager = '[author.[profile], model]';
-const eager = '[author, model, tags]';
+const eager = '[author.[profile], model, tags]';
 
 export default class Blog extends Model {
   // private id: any;

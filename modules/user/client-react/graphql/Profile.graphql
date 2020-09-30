@@ -1,5 +1,5 @@
-fragment UserProfileInfo on UserProfile {
+fragment UserProfileInfo on Profile {
   firstName
   lastName
-  fullName
+  avatar
 }
