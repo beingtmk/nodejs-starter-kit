@@ -24,7 +24,7 @@ const renderMetaData = () => (
 );
 
 const MyListingsView = props => {
-  const { listings, loading, onDelete, history, currentUser, t } = props;
+  const { listings, loading, onDelete, history, t } = props;
 
   const renderFunc = (key, listing) => (
     // <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
@@ -33,7 +33,7 @@ const MyListingsView = props => {
       history={history}
       item={listing}
       deleteProduct={onDelete}
-      currentUser={currentUser}
+      // currentUser={currentUser}
     />
   );
   const RenderListings = () => (
@@ -90,7 +90,6 @@ MyListingsView.propTypes = {
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
   t: PropTypes.func,
-  currentUser: PropTypes.object,
   history: PropTypes.object
 };
 
