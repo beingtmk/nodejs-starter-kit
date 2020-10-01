@@ -24,7 +24,7 @@ const renderSocialButtons = (buttonsLength, t) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minWidth: 200
+        width: '100%'
       }}
     >
       {facebook.enabled && (
@@ -49,7 +49,7 @@ const renderSocialButtons = (buttonsLength, t) => {
       )}
     </div>
   ) : (
-    <div>
+    <div style={{ width: '100%' }}>
       {facebook.enabled && (
         <div className="text-center">
           <FacebookButton text={t('login.fbBtn')} type={'button'} />
