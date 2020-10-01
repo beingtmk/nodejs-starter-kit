@@ -319,7 +319,7 @@ const ListingWithFormik = withFormik({
       listingFlags: (props.listing && props.listing.listingFlags) || {
         id: null,
         isFeatured: false,
-        isNew: false,
+        isNew: true,
         isDiscount: false
       },
       listingOptions: (props.listing && props.listing.listingOptions) || {

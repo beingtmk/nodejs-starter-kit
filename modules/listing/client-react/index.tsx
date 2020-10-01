@@ -35,6 +35,16 @@ const NavLinkMyListingsBookmark = () => {
   );
 };
 
+const NavLinkAddListings = () => {
+  return (
+    <NavLink to={ROUTES.add}>
+      <div>
+        <Icon type="solution" /> {'Add listing'}
+      </div>
+    </NavLink>
+  );
+};
+
 const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
   <NavLink to={ROUTES.myListing} className=" AccDetItem" activeClassName="AccDetItemSelected">
     <Icon style={{ paddingRight: '5px' }} type="solution" />
@@ -129,6 +139,9 @@ export default new ClientModule({
         </MenuItem>
         <MenuItem>
           <NavLinkMyListingsBookmark />
+        </MenuItem>
+        <MenuItem>
+          <NavLinkAddListings />
         </MenuItem>
       </SubMenu>
     </IfLoggedIn>
