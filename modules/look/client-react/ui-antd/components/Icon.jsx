@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Icon as ADIcon } from 'antd';
 
 const Icon = ({ ...props }) => {
-  console.log('icon', props);
+  // console.log('icon', props);
   return <ADIcon type={props.type} />;
 };
 

@@ -130,6 +130,7 @@ const withFilterUpdating = Component =>
   graphql(UPDATE_FILTER, {
     props: ({ mutate }) => ({
       onSearchTextChange(searchText) {
+        console.log(searchText);
         mutate({ variables: { filter: { searchText } } });
       },
       onRoleChange(role) {

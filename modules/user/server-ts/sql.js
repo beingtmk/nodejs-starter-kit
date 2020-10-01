@@ -126,13 +126,15 @@ export class User extends Model {
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder.where(function() {
-          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['first_name', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['last_name', `%${filter.searchText}%`]));
+          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.email', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
         });
       }
     }
+
+    queryBuilder.from('user as u').leftJoin('user_profile AS up', 'up.user_id', 'u.id');
 
     return camelizeKeys(await queryBuilder);
   }
