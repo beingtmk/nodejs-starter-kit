@@ -38,9 +38,11 @@ export default pubsub => ({
 
       throw new Error(t('user:accessDenied'));
     }),
-    currentUser(obj, args, { User, req: { identity } }) {
+    async currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
-        return User.getUser(identity.id);
+        const user = await User.getUser(identity.id);
+        console.log('user', user);
+        return user;
       } else {
         return null;
       }
@@ -68,29 +70,32 @@ export default pubsub => ({
       };
     }
   },
-  User: {
-    profile(obj) {
-      return obj;
-    },
-    auth(obj) {
-      return obj;
-    }
-  },
-  UserProfile: {
-    firstName(obj) {
-      return obj.firstName;
-    },
-    lastName(obj) {
-      return obj.lastName;
-    },
-    fullName(obj) {
-      if (obj.firstName && obj.lastName) {
-        return `${obj.firstName} ${obj.lastName}`;
-      } else {
-        return null;
-      }
-    }
-  },
+  // User: {
+  //   profile(obj) {
+  //     return obj;
+  //   },
+  //   auth(obj) {
+  //     return obj;
+  //   }
+  // },
+  // UserProfile: {
+  //   firstName(obj) {
+  //     return obj.firstName;
+  //   },
+  //   lastName(obj) {
+  //     return obj.lastName;
+  //   },
+  //   fullName(obj) {
+  //     if (obj.firstName && obj.lastName) {
+  //       return `${obj.firstName} ${obj.lastName}`;
+  //     } else {
+  //       return null;
+  //     }
+  //   },
+  //   avatar(obj) {
+  //     return obj.avatar;
+  //   }
+  // },
   Mutation: {
     addUser: withAuth(
       (obj, { input }, { req: { identity } }) => {

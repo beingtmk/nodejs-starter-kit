@@ -18,15 +18,14 @@ const Profile = props => {
     isActive: currentUser.isActive,
     email: currentUser.id,
     profile: {
-      firstName: profile.firstName,
-      lastName: profile.lastName,
+      firstName: profile && profile.firstName,
+      lastName: profile && profile.lastName,
       isVerified: true,
       isAvailable: true,
       website: 'www.google.com',
       about: 'web developer',
       designation: 'dev',
-      avatar:
-        'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80',
+      avatar: currentUser.profile && currentUser.profile.avatar,
       rating: 5,
       responseTime: 35,
       acceptanceRate: 35,

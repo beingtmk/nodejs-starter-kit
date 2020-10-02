@@ -16,6 +16,7 @@ type UserProfile {
   lastName: String
   fullName: String
   mobile: String
+  avatar: String
 }
 
 type UserVerification {

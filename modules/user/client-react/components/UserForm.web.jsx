@@ -7,13 +7,16 @@ import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
 import {
+  Row,
+  Col,
   Form,
   RenderField,
   RenderSelect,
   RenderCheckBox,
   Option,
   Alert,
-  SubmitButton
+  SubmitButton,
+  RenderUpload
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
@@ -35,18 +38,45 @@ const updateUserFormSchema = {
 };
 
 const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
+  const [load, setLoad] = React.useState(false);
   const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
 
+  console.log('props', values);
   return (
     <Form name="user" onSubmit={handleSubmit}>
-      <Field
-        name="username"
-        component={RenderField}
-        type="text"
-        label={t('userEdit.form.field.name')}
-        value={username}
-      />
-      <Field name="email" component={RenderField} type="email" label={t('userEdit.form.field.email')} value={email} />
+      <Row type="flex" gutter={24}>
+        <Col lg={14} xs={24}>
+          <Field
+            name="username"
+            component={RenderField}
+            type="text"
+            label={t('userEdit.form.field.name')}
+            value={username}
+          />
+          <Field
+            name="email"
+            component={RenderField}
+            type="email"
+            label={t('userEdit.form.field.email')}
+            value={email}
+          />
+        </Col>
+        <Col lg={10} xs={24} align="center">
+          &nbsp; &nbsp;
+          <Col lg={3} xs={24} />
+          <Col lg={18} xs={24}>
+            <Field
+              name={'avatar'}
+              component={RenderUpload}
+              type="text"
+              setload={e => setLoad(e)}
+              label={'Avatar'}
+              value={values.profile.avatar}
+            />
+          </Col>
+        </Col>
+      </Row>
+
       {shouldDisplayRole && (
         <Field
           name="role"
@@ -109,7 +139,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         value={passwordConfirmation}
       />
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <SubmitButton color="primary" type="submit">
+      <SubmitButton color="primary" type="submit" disabled={!load}>
         {t('userEdit.form.btnSubmit')}
       </SubmitButton>
     </Form>
@@ -144,7 +174,8 @@ const UserFormWithFormik = withFormik({
       passwordConfirmation: '',
       profile: {
         firstName: profile && profile.firstName,
-        lastName: profile && profile.lastName
+        lastName: profile && profile.lastName,
+        avatar: profile && profile.avatar
       },
       auth: {
         ...values.initialValues.auth

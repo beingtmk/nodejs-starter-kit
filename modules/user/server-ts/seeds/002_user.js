@@ -21,6 +21,7 @@ export async function seed(knex) {
   await returnId(knex('user_profile')).insert({
     first_name: 'admin',
     last_name: 'admin',
+    avatar: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601659766/ko7mcmro5mei5xbaco93.jpg',
     mobile: '9999988888',
     user_id: 1
   });
@@ -41,6 +42,7 @@ export async function seed(knex) {
   await returnId(knex('user_profile')).insert({
     first_name: 'user',
     last_name: 'user',
+    avatar: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601659766/ko7mcmro5mei5xbaco93.jpg',
     mobile: '9999988888',
     user_id: 2
   });
