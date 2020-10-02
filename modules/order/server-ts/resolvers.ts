@@ -2,8 +2,11 @@ import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 
 import { ORDER_STATES } from '@gqlapp/order-common';
+import { log } from '@gqlapp/core-common';
 
 import { Orders, Identifier } from './sql';
+import settings from '@gqlapp/config';
+import { TotalPrice } from '@gqlapp/order-client-react/components/CheckoutCartView';
 
 interface Edges {
   cursor: number;
@@ -20,6 +23,11 @@ interface OrderInputWithId {
 
 const ORDER_SUBSCRIPTION = 'order_subscription';
 const ORDERS_SUBSCRIPTION = 'orders_subscription';
+
+const {
+  auth: { secret, certificate, password },
+  app
+} = settings;
 
 export default (pubsub: any) => ({
   Query: {
@@ -227,6 +235,46 @@ export default (pubsub: any) => ({
         return true;
       } else {
         throw Error('Failed!');
+      }
+    }),
+    orderStatusMail: withAuth(async (obj: any, { orderId, note }: any, { Order, User, req: { identity }, mailer }) => {
+      try {
+        if (identity && identity.role === 'admin') {
+          if (mailer) {
+            const order = await Order.order(orderId);
+            const user = await User.getUser(order.consumerId);
+            const address =
+              order.orderDetails &&
+              order.orderDetails &&
+              order.orderDetails.length > 0 &&
+              order.orderDetails[0].orderDelivery.address;
+            // async email
+            // const encodedToken = Buffer.from(emailToken).toString('base64');
+            const url = `${__WEBSITE_URL__}/order-detail/${order.id}`;
+            mailer.sendMail({
+              from: `${app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,
+              to: user.email,
+              subject: `Regarding your ${app.name} order: ${order.id}`,
+              html: `<p>Hi, ${user.username}!</p>
+                  <p>Your order has been dispatched.</p>
+                  <p>Below are your order details. Please click the following link to view the order details</p>
+                  <p><a href="${url}">${url}</a></p>
+                  <p>Order id: ${order.id}</p>
+                  <p>Total cost: ${TotalPrice(order.orderDetails)}</p>
+                  <p>This order will be delivered at: ${address.streetAddress1}, ${address.streetAddress2}, ${
+                address.city
+              }, ${address.state}, ${address.pinCode}</p>
+                <p>${note}</p>
+                `
+            });
+            log.info(`Sent successful order status email to: ${user.email}`);
+          }
+        } else {
+          throw new Error("You don't have the rights to do that.");
+        }
+        return true;
+      } catch (e) {
+        return e;
       }
     })
   },

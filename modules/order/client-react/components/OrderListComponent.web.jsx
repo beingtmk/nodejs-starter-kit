@@ -2,12 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Spin } from 'antd';
+import { Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 
+import OrderStatusMail from '../containers/OrderStatusMail';
 import settings from '../../../../settings';
 import ROUTES from '../routes';
 
@@ -115,18 +116,17 @@ const OrderListComponent = props => {
       title: t('list.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <Row gutter={24}>
-          <Col span={4}>
-            {record.orderState.state !== ORDER_STATES.STALE && (
-              <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
-                <ViewIcon />
-              </Link>
-            )}
-          </Col>
-          <Col span={4}>
-            <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
-          </Col>
-        </Row>
+        <div align="center">
+          {record.orderState.state !== ORDER_STATES.STALE && (
+            <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
+              <ViewIcon />
+            </Link>
+          )}
+          &nbsp; &nbsp;
+          {record.orderState.state === ORDER_STATES.DISPATCHED && <OrderStatusMail orderId={record.id} />}
+          &nbsp; &nbsp;
+          <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
+        </div>
       )
     }
   ];

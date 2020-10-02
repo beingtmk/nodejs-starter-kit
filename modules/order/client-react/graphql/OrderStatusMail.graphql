@@ -1,0 +1,3 @@
+mutation orderStatusMail($orderId: Int, $note: String) {
+  orderStatusMail(orderId: $orderId, note: $note)
+}

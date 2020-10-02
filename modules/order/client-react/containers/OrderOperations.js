@@ -17,6 +17,7 @@ import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
 import DELETE_ORDER from '../graphql/DeleteOrder.graphql';
 import PATCH_ORDER_STATE from '../graphql/PatchOrderState.graphql';
 import PATCH_ADDRESS from '../graphql/PatchAddress.graphql';
+import COMPLETED_MAIL from '../graphql/OrderStatusMail.graphql';
 
 // Filter
 import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
@@ -214,6 +215,25 @@ export const withPatchAddress = Component =>
     })
   })(Component);
 
+export const withOrderStatusMail = Component =>
+  graphql(COMPLETED_MAIL, {
+    props: ({ mutate }) => ({
+      orderStatusMail: async (orderId, note) => {
+        // console.log('mutation start', note);
+        const {
+          data: { orderStatusMail }
+        } = await mutate({
+          variables: {
+            orderId,
+            note
+          }
+        });
+        message.destroy();
+        return orderStatusMail ? message.success('Mail sent.') : message.error('Please try again.');
+      }
+    })
+  })(Component);
+
 // Filter
 export const withOrderByUpdating = Component =>
   graphql(UPDATE_ORDER_BY_ORDER, {
@@ -235,7 +255,7 @@ export const withFilterUpdating = Component =>
         mutate({ variables: { filter: { state } } });
       },
       onUserStateChange(consumerId, state) {
-        console.log('consumerId, state', consumerId, state);
+        // console.log('consumerId, state', consumerId, state);
         mutate({ variables: { filter: { consumerId, state } } });
       }
     })
