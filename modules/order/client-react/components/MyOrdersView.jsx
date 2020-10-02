@@ -45,7 +45,13 @@ const MyOrdersView = props => {
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
   );
-  const Icons = [<Icon type="appstore" />, <Icon type="hdd" />, <Icon type="shop" />, <Icon type="delete" />];
+  const Icons = [
+    <Icon type="appstore" />,
+    <Icon type="hdd" />,
+    <Icon type="shop" />,
+    <Icon type="to-top" />,
+    <Icon type="delete" />
+  ];
   const RenderMyOrders = () => (
     <div>
       {loading && (
@@ -58,6 +64,7 @@ const MyOrdersView = props => {
       {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
+  console.log('props', props);
   return (
     <PageLayout>
       {renderMetaData()}

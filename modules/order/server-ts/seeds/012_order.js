@@ -6,7 +6,7 @@ exports.seed = async function(knex) {
   await truncateTables(knex, Promise, ['order', 'order_state', 'order_detail', 'order_option']);
 
   await Promise.all(
-    [...Array(4).keys()].map(async i => {
+    [...Array(ORDER_STATES_ARRAY.length).keys()].map(async i => {
       await returnId(knex('order_state')).insert({
         state: ORDER_STATES_ARRAY[i]
       });

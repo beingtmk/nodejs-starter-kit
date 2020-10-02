@@ -23,9 +23,9 @@ const MyOrdersContainer = compose(withOrders)(props => {
   useEffect(() => {
     // setDidMount(true);
     const subscribe = subscribeToOrders(ordersSubscribeToMore, props.filter);
-    console.log(subscribe);
+    // console.log(subscribe);
     refetch();
-    console.log(subscribe);
+    // console.log(subscribe);
     // () => ;
     // setDidMount(false);
     return () => subscribe();
@@ -35,7 +35,7 @@ const MyOrdersContainer = compose(withOrders)(props => {
   //   return null;
   // }
 
-  console.log('props', props);
+  // console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 
