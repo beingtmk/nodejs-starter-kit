@@ -342,7 +342,7 @@ const ListingDetailView = props => {
     customPaging: function(i) {
       return (
         <a>
-          {console.log(carouselThumbnail)}
+          {/* {console.log(carouselThumbnail)} */}
           <img
             src={
               (carouselThumbnail &&

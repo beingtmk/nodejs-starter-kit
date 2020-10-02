@@ -14,40 +14,48 @@ const AddToCart = props => {
   const { history, currentUser, listing, addToCart } = props;
 
   const onSubmit = async (values, redirect = false) => {
+    const max = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
     if (!currentUser) {
       history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
+      return null;
     }
 
-    const input = {
-      consumerId: currentUser && currentUser.id,
-      orderDetail: {
-        vendorId: listing && listing.user && listing.user.id,
-        modalName: 'listing',
-        modalId: listing && listing.id,
+    if (values.quantity > max) {
+      message.error('Invalid quantity!');
+      return null;
+    }
+    if (values.quantity <= max) {
+      const input = {
+        consumerId: currentUser && currentUser.id,
+        orderDetail: {
+          vendorId: listing && listing.user && listing.user.id,
+          modalName: 'listing',
+          modalId: listing && listing.id,
 
-        title: listing && listing.title,
-        imageUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
-        cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
-        orderOptions: {
-          quantity: values.quantity
+          title: listing && listing.title,
+          imageUrl:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
+          cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
+          orderOptions: {
+            quantity: values.quantity
+          }
         }
-      }
-    };
+      };
 
-    try {
-      console.log('input', input);
-      await addToCart(input);
-      if (redirect) {
-        history.push(`${ROUTES.checkoutCart}`);
+      try {
+        console.log('input', input);
+        await addToCart(input);
+        if (redirect) {
+          history.push(`${ROUTES.checkoutCart}`);
+        }
+      } catch (e) {
+        message.error('Failed!');
+        throw new Error(e);
       }
-    } catch (e) {
-      message.error('Failed!');
-      throw new Error(e);
+
+      // Add Message
+      message.success('Success! Complete your Order.');
     }
-
-    // Add Message
-    message.success('Success! Complete your Order.');
   };
 
   console.log('AddToCart, props', props);
