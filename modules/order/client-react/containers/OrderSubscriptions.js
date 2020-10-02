@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import update from 'immutability-helper';
 import { Redirect } from 'react-router-dom';
@@ -109,7 +109,6 @@ export const subscribeToOrders = (subscribeToMore, filter) =>
       }
     ) => {
       let newResult = prev;
-      console.log(prev, node, 'func');
       if (mutation === 'CREATED') {
         newResult = onAddOrders(prev, node);
       } else if (mutation === 'UPDATED') {
@@ -121,10 +120,52 @@ export const subscribeToOrders = (subscribeToMore, filter) =>
     }
   });
 
+export const SubscribeToOrdersForMyOrders = (subscribeToMore, filter) => {
+  const [ordersUpdated, setOrdersUpdated] = useState(null);
+
+  useEffect(() => {
+    const subscribe = subscribeToOrders();
+    return () => subscribe();
+  });
+
+  const subscribeToOrders = () => {
+    return subscribeToMore({
+      document: ORDERS_SUBSCRIPTION,
+      variables: { filter },
+      updateQuery: (
+        prev,
+        {
+          subscriptionData: {
+            data: { ordersUpdated: newData }
+          }
+        }
+      ) => {
+        setOrdersUpdated(newData);
+      }
+    });
+  };
+
+  return ordersUpdated;
+};
+
+export const updateOrdersState = (OrdersUpdated, updateQuery) => {
+  const { mutation, node } = OrdersUpdated;
+  updateQuery(prev => {
+    switch (mutation) {
+      case 'CREATED':
+        return onAddOrders(prev, node);
+      case 'DELETED':
+        return onDeleteOrders(prev, node.id);
+      case 'UPDATED':
+        return onEditOrders(prev, node);
+      default:
+        return prev;
+    }
+  });
+};
+
 function onAddOrders(prev, node) {
-  console.log('prev', prev, node);
   if (prev.orders && prev.orders.edges.some(order => node.id === order.cursor)) {
-    console.log('bleh');
     return update(prev, {
       orders: {
         totalCount: {
@@ -156,7 +197,6 @@ function onAddOrders(prev, node) {
       }
     });
   }
-  console.log('prev.orders is undefined');
 }
 
 function onEditOrders(prev, node) {

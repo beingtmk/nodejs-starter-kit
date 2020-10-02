@@ -97,7 +97,7 @@ MyOrdersView.propTypes = {
   orders: PropTypes.object,
   history: PropTypes.object,
   currentUser: PropTypes.object,
-  orderStates: PropTypes.object,
+  orderStates: PropTypes.array,
   onUserStateChange: PropTypes.func,
   t: PropTypes.func
 };

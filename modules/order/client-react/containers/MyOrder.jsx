@@ -7,16 +7,35 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { withCurrentUser, withOrdersState, withFilterUpdating, withOrderStates, withOrders } from './OrderOperations';
 
 import MyOrdersView from '../components/MyOrdersView';
-import { subscribeToOrders } from './OrderSubscriptions';
+import { subscribeToOrders, SubscribeToOrdersForMyOrders, updateOrdersState } from './OrderSubscriptions';
 
 const MyOrdersContainer = compose(withOrders)(props => {
-  const { ordersSubscribeToMore, refetch } = props;
+  const { ordersSubscribeToMore, refetch, updateOrdersQuery } = props;
+
+  // const listingsUpdated = SubscribeToOrdersForMyOrders(ordersSubscribeToMore, props.filter);
+
+  // useEffect(() => {
+  //   if (listingsUpdated) {
+  //     updateOrdersState(listingsUpdated, updateOrdersQuery);
+  //   }
+  // });
+
   useEffect(() => {
+    // setDidMount(true);
     const subscribe = subscribeToOrders(ordersSubscribeToMore, props.filter);
+    console.log(subscribe);
     refetch();
+    console.log(subscribe);
+    // () => ;
+    // setDidMount(false);
     return () => subscribe();
-  });
-  // console.log('props', props);
+  }, [ordersSubscribeToMore, props.filter, refetch]);
+
+  // if (!didMount) {
+  //   return null;
+  // }
+
+  console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 
