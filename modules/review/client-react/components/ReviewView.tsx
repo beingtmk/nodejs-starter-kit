@@ -4,11 +4,11 @@ import Helmet from 'react-helmet';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 import { Row, Col, Checkbox, Spin, Tooltip } from 'antd';
+import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
-import SuggestedListComponent from './SuggestedListComponent';
 import AvgRatingComponent from './AvgRatingComponent';
 
 interface ReviewViewProps {

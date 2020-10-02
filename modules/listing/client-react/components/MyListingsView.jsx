@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 import { Icon, Button, Spin } from 'antd';
 
 import { Row, Col, PageLayout } from '@gqlapp/look-client-react';
+import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
 import ListingItemComponent from './ListingItemComponent';
-import SuggestedListComponent from './SuggestedListComponent';
 
 const renderMetaData = () => (
   <Helmet

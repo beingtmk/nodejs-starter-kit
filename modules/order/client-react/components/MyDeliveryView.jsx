@@ -5,8 +5,7 @@ import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-
-import SuggestedListComponent from './SuggestedListComponent';
+import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 

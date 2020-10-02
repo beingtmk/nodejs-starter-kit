@@ -5,9 +5,9 @@ import { Icon, Spin, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout } from '@gqlapp/look-client-react';
+import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import RelatedCardComponent from './RelatedCardComponent';
-import SuggestedListComponent from './SuggestedListComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';
 import settings from '../../../../settings';
 

@@ -6,9 +6,9 @@ import Helmet from 'react-helmet';
 import settings from '@gqlapp/config';
 import { MODAL } from '@gqlapp/review-common';
 import { Form, FormItem, Select, Option } from '@gqlapp/look-client-react';
+import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
-import SuggestedListComponent from './SuggestedListComponent';
 import { NoReviews } from './ReviewView';
 
 const renderMetaData = t => (
