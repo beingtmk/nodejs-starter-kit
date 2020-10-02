@@ -3,6 +3,9 @@ import { Icon, Button, Row, Col, Card, Avatar, Divider, Popconfirm, message, Too
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+
+import { NO_IMG } from '@gqlapp/listing-common';
+
 import ROUTES from '../routes';
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
@@ -133,7 +136,7 @@ const ListingItemComponent = props => {
                 align="center"
                 style={{ maxHeight: '200px', overflow: 'hidden' }}
               >
-                <img alt="" src={item.listingMedia[0] && item.listingMedia[0].url} width="100%" />
+                <img alt="" src={(item.listingMedia[0] && item.listingMedia[0].url) || NO_IMG} width="100%" />
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }}>
                 <div

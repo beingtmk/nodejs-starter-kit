@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Statistic, Card, Icon, message, Button } from 'antd';
 import { AddButton } from '@gqlapp/look-client-react';
 
+import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 
@@ -45,10 +46,7 @@ const RelatedCardComponent = props => {
     listing.listingMedia &&
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'image');
-  const listing_img =
-    listing_media.length > 0
-      ? listing_media[0].url
-      : 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png';
+  const listing_img = listing_media.length > 0 ? listing_media[0].url : NO_IMG;
   // console.log(listing_img);
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
   const discount =

@@ -71,7 +71,7 @@ export const withReview = Component =>
 export const withReviews = Component =>
   graphql(REVIEWS_QUERY, {
     options: ({ orderBy, filter }) => {
-      console.log('filter', filter);
+      // console.log('filter', filter);
       return {
         variables: {
           limit,

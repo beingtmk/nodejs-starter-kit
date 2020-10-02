@@ -256,20 +256,21 @@ import {
   Breadcrumb,
   Divider,
   Spin,
-  Card,
+  // Card,
   Descriptions,
-  Avatar,
+  // Avatar,
   Statistic,
   Carousel,
   Icon,
-  Tooltip,
+  // Tooltip,
   Tabs
 } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Button } from '@gqlapp/look-client-react';
+import { PageLayout } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
+import { NO_IMG } from '@gqlapp/listing-common';
 
 import settings from '../../../../settings';
 import ListingsCarousel from './ListingCarousel';
@@ -277,10 +278,10 @@ import BookmarkComponent from './BookmarkComponent';
 import CurrencyDisplay from './CurrencyDisplay';
 
 const { TabPane } = Tabs;
-const { Meta } = Card;
+// const { Meta } = Card;
 const BreadCrumbItem = Breadcrumb.Item;
 
-const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+// const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
 const ListingDetailView = props => {
   let carousel = React.useRef();
@@ -322,8 +323,14 @@ const ListingDetailView = props => {
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'video');
   let carouselThumbnail = [];
-  carouselThumbnail = youtubeUrl && youtubeUrl.length !== 0 && [...carouselThumbnail, ...youtubeUrl];
-  carouselThumbnail = images && images.length !== 0 && [...carouselThumbnail, ...images];
+  carouselThumbnail = youtubeUrl && youtubeUrl.length !== 0 ? [...carouselThumbnail, ...youtubeUrl] : [];
+  carouselThumbnail =
+    images && images.length !== 0
+      ? [...carouselThumbnail, ...images]
+      : carouselThumbnail.length !== 0
+      ? [...carouselThumbnail]
+      : [{ url: NO_IMG, type: 'image' }];
+
   // console.log('ideo', youtubeUrl);
   // const user = listing && listing.user;
   // const getName = () => {
@@ -339,6 +346,7 @@ const ListingDetailView = props => {
   // };
 
   const status = {
+    // eslint-disable-next-line react/display-name
     customPaging: function(i) {
       return (
         <a>

@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
+import { NO_IMG } from '@gqlapp/listing-common';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import {
@@ -376,7 +377,7 @@ const ListingWithFormik = withFormik({
       input.listingMedia = [...input.listingMedia, ...values.listingMedia.image];
     } else {
       input.listingMedia.push({
-        url: 'https://res.cloudinary.com/gemspremium/image/upload/v1600885630/images_h4yc1x.png',
+        url: NO_IMG,
         type: 'image'
       });
     }

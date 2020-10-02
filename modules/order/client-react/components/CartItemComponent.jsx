@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { NO_IMG } from '@gqlapp/listing-common';
 
 const Position1 = styled.h4`
   position: absolute;
@@ -115,7 +116,7 @@ const CartItemComponent = props => {
               align="center"
               style={{ maxHeight: props.mobile ? '130px' : '250px', overflow: 'hidden' }}
             >
-              <img alt="" src={item.imageUrl} width="100%" />
+              <img alt="" src={item.imageUrl || NO_IMG} width="100%" />
             </Col>
             <Col {...infoGrid}>
               <Card

@@ -68,7 +68,10 @@ const ReviewsItemComponent = props => {
       >
         <Avatar
           alt=""
-          src={review.user.profile.avatar || 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'}
+          src={
+            (review.user.profile && review.user.profile.avatar) ||
+            'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+          }
         />
       </Link>
       <DropDownPosition>
@@ -96,7 +99,7 @@ const ReviewsItemComponent = props => {
         >
           <Col span={10}>
             <h3>
-              <strong>{review.user.profile.fullName}</strong>
+              <strong>{review.user.profile && review.user.profile.fullName}</strong>
             </h3>
           </Col>
           <Col span={12}>

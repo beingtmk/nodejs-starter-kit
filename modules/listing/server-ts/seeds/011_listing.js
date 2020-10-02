@@ -1,15 +1,5 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
-
-const MEDIA = [
-  {
-    url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
-    type: 'image'
-  },
-  {
-    url: 'https://www.youtube.com/watch?v=ScMzIvxBSi4&ab_channel=BenMarquezTX',
-    type: 'video'
-  }
-];
+import { MEDIA } from '@gqlapp/listing-common';
 
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [

@@ -14,6 +14,7 @@ export { default as SlickCarousel } from './SlickCarousel';
 export { default as RenderCheckBox } from './RenderCheckBox';
 export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';
+export { default as SuggestedListComponent } from './SuggestedListComponent';
 
 export { default as Container } from './Container';
 export { default as Row } from './Row';

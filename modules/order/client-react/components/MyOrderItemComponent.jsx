@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
+import { NO_IMG } from '@gqlapp/listing-common';
 import { TotalPrice } from './CheckoutCartView';
 import ROUTES from '../routes';
 
-const { Meta } = Card;
+// const { Meta } = Card;
 
 const Price = styled(Row)`
   height: 100%;
@@ -21,7 +22,10 @@ const StatusText = styled.div`
 `;
 
 const CartItemComponent = props => {
-  const { item, edit, onSubmit } = props;
+  const {
+    item
+    // edit,
+  } = props;
   // console.log(item);
   return (
     <Link to={`${ROUTES.orderDetailLink}${item.id}`}>
@@ -36,7 +40,11 @@ const CartItemComponent = props => {
       >
         <Row type="flex">
           <Col span={24} align="center" style={{ maxHeight: '200px', overflow: 'hidden' }}>
-            <img alt="" src={item.orderDetails && item.orderDetails[0] && item.orderDetails[0].imageUrl} width="100%" />
+            <img
+              alt=""
+              src={(item.orderDetails && item.orderDetails[0] && item.orderDetails[0].imageUrl) || NO_IMG}
+              width="100%"
+            />
           </Col>
           <Col span={18}>
             <div
