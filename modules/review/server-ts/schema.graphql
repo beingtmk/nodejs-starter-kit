@@ -24,23 +24,18 @@ type Review {
   feedback: String
   isActive: Boolean
   helpful: Int
-  # reviewImages: [ReviewImage]
+  reviewMedia: [ReviewMedium]
   createdAt: String!
   updatedAt: String!
 }
-type ReviewImage {
+type ReviewMedium {
   id: Int
-  imageUrl: String
+  url: String
+  type: String
+  isActive: Boolean
+  createdAt: String!
+  updatedAt: String!
 }
-# type Modal {
-#   # Add new modalName here
-#   event: Event
-#   # blog: Blog
-# }
-
-# type Event {
-#   title: String
-# }
 
 type Rating {
   id: Int

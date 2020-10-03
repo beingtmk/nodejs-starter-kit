@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Card, Rate, Menu, Button } from 'antd';
 
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 
-// import ImagesSlickComponent from './ImagesSlickComponent';
+import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
 
 const Avatar = styled.img`
@@ -115,9 +114,13 @@ const ReviewsItemComponent = props => {
               <p>{review.feedback}</p>
             </div>
           </Col>
-          {showPhotos && <Col span={24}>{/* <ImagesSlickComponent images={review.reviewImages} /> */}</Col>}
+          {showPhotos && (
+            <Col span={24}>
+              <ImagesSlickComponent images={review.reviewMedia} />
+            </Col>
+          )}
           <Col span={12}>
-            <>{moment(`${review.createdAt}`).format('LL')}</>
+            <>{new Date(Number(review.createdAt)).toLocaleDateString('en-IN')}</>
           </Col>
           <Col span={12}></Col>
         </Card>

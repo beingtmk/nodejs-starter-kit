@@ -26,7 +26,7 @@ export interface ModalReview {
   review: Reviews & Identifier;
 }
 
-const eager = '[user.[profile]]';
+const eager = '[user.[profile], review_media]';
 
 export default class Review extends Model {
   private id: any;
@@ -46,6 +46,14 @@ export default class Review extends Model {
         join: {
           from: 'review.user_id',
           to: 'user.id'
+        }
+      },
+      review_media: {
+        relation: Model.HasManyRelation,
+        modelClass: ReviewMedium,
+        join: {
+          from: 'review.id',
+          to: 'review_medium.review_id'
         }
       }
     };
@@ -298,6 +306,30 @@ export class Rating extends Model {
         modelClass: Review,
         join: {
           from: 'average_rating.review_id',
+          to: 'review.id'
+        }
+      }
+    };
+  }
+}
+
+// ReviewMedium model.
+class ReviewMedium extends Model {
+  static get tableName() {
+    return 'review_medium';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      review: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Review,
+        join: {
+          from: 'review_medium.review_id',
           to: 'review.id'
         }
       }

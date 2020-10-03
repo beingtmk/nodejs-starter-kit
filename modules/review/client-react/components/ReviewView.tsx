@@ -103,7 +103,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
             )}
             <br />
             <Tooltip title={`review_image table dosn't exist`}>
-              <Checkbox disabled onChange={() => setPhoto(!photo)}>
+              <Checkbox onChange={() => setPhoto(!photo)}>
                 <strong>With photo</strong>
               </Checkbox>
             </Tooltip>

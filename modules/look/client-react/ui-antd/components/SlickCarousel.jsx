@@ -40,7 +40,7 @@ export default class Carousel extends React.Component {
   }
   render() {
     // console.log('carousel', this.props);
-    const { Compo, componentProps } = this.props;
+    const { Compo, componentProps, showArrow = true } = this.props;
 
     const prevSlide = () => {
       this.carousel.prev();
@@ -107,9 +107,11 @@ export default class Carousel extends React.Component {
     return (
       <>
         <div style={{ position: 'relative', height: this.props.height || '370px' }}>
-          <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
-            <Icon type="left" className="carousel-arrow-icon" />
-          </div>
+          {showArrow && (
+            <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
+              <Icon type="left" className="carousel-arrow-icon" />
+            </div>
+          )}
           <ADCarousel ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
             {this.props.data.map((item, key) => (
               <Compo
@@ -120,9 +122,11 @@ export default class Carousel extends React.Component {
               />
             ))}
           </ADCarousel>
-          <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
-            <Icon type="right" className="carousel-arrow-icon" />
-          </div>
+          {showArrow && (
+            <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
+              <Icon type="right" className="carousel-arrow-icon" />
+            </div>
+          )}
         </div>
       </>
     );

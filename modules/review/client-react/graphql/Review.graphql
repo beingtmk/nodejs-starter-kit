@@ -9,10 +9,11 @@ fragment ReviewInfo on Review {
   feedback
   isActive
   helpful
-  # reviewImages {
-  #   id
-  #   imageUrl
-  # }
+  reviewMedia {
+    id
+    url
+    type
+  }
   createdAt
   updatedAt
 }
