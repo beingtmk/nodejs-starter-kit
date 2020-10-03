@@ -38,7 +38,7 @@ const ListingCatalogueView = props => {
       {showFilter && (
         <>
           <br />
-          <ListingFilterComponent {...props} />
+          <ListingFilterComponent showIsActive={false} {...props} />
           <Divider />
         </>
       )}
@@ -57,7 +57,7 @@ const ListingCatalogueView = props => {
           <Spin size="large" />
         </div>
       )}
-      {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
+      {!loading && listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
     </PageLayout>
   );
 };

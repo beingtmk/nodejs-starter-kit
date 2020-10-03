@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import { Divider, Button } from 'antd';
+import { Row, Col, Button } from 'antd';
+
+import { SORT_BY } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Label, Input } from '@gqlapp/look-client-react';
+import { Select, Option, Form, FormItem, Label, Input } from '@gqlapp/look-client-react';
+
 import SliderControlled from './FIlterSliderControlledComponent';
 
 const ListingsFilterComponent = props => {
@@ -15,7 +18,10 @@ const ListingsFilterComponent = props => {
     onLowerCostChange,
     onUpperCostChange,
     onFiltersRemove,
-    listings
+    listings,
+    showIsActive = false,
+    orderBy,
+    onOrderBy
   } = props;
   const rangeValues = listings && listings.rangeValues;
   const handleChangeSlider = e => {
@@ -23,6 +29,10 @@ const ListingsFilterComponent = props => {
     onUpperCostChange(e[1]);
     console.log(e);
   };
+
+  // const handleOrderBy = (order, name) => {
+  //   return onOrderBy({ column: name, order });
+  // };
 
   const handleFiltersRemove = () => {
     const filter = {
@@ -43,51 +53,90 @@ const ListingsFilterComponent = props => {
   return (
     <>
       <Form layout="inline">
-        <FormItem label={'search'}>
-          <DebounceInput
-            minLength={2}
-            debounceTimeout={300}
-            placeholder={'search'}
-            element={Input}
-            value={searchText}
-            onChange={e => onSearchTextChange(e.target.value)}
-          />
-        </FormItem>
-        &nbsp;
-        <FormItem>
-          <Label>
-            <Input
-              type="checkbox"
-              defaultChecked={isActive}
-              checked={isActive}
-              onChange={() => onIsActiveChange(!isActive)}
-            />
-            &nbsp;Is Active
-          </Label>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" onClick={handleFiltersRemove}>
-            Reset Filters
-          </Button>
-        </FormItem>
-        <br />
-        <div style={{ display: 'block' }}>
-          <h5 style={{ fontSize: '' }}>Cost Filter</h5>
-          <SliderControlled
-            style={{
-              width: '100%',
-              background: 'white'
-            }}
-            max={Math.round(rangeValues && rangeValues.maxCost + 1)}
-            min={Math.floor(rangeValues && rangeValues.minCost)}
-            marks={costMarks}
-            range
-            value={[lowerCost, upperCost]}
-            // value={[lowerCost, upperCost]}
-            // disabled={false}
-            handleSliderChange={e => handleChangeSlider(e)}
-          />
-        </div>
+        <Row type="flex" align="middle">
+          <Col span={24}>
+            <Col span={16}>
+              <FormItem label={'search'}>
+                <DebounceInput
+                  minLength={2}
+                  debounceTimeout={300}
+                  placeholder={'search'}
+                  element={Input}
+                  value={searchText}
+                  onChange={e => onSearchTextChange(e.target.value)}
+                />
+              </FormItem>
+              &nbsp;
+              {showIsActive && (
+                <FormItem>
+                  <Label>
+                    <Input
+                      type="checkbox"
+                      defaultChecked={isActive}
+                      checked={isActive}
+                      onChange={() => onIsActiveChange(!isActive)}
+                    />
+                    &nbsp;Is Active
+                  </Label>
+                </FormItem>
+              )}
+            </Col>
+            <Col span={8} align="right">
+              {SORT_BY && SORT_BY.length !== 0 && (
+                <FormItem label={'Sort By'}>
+                  <Select
+                    name="sortBy"
+                    defaultValue={orderBy.order}
+                    style={{ width: '150px' }}
+                    onChange={e =>
+                      e === ''
+                        ? onOrderBy({ order: e, column: '' })
+                        : onOrderBy({ order: e, column: 'listing_cost.cost' })
+                    }
+                  >
+                    <Option key={1} value="">
+                      None
+                    </Option>
+                    {SORT_BY.map((sB, i) => (
+                      <Option key={i + 2} value={sB.sortBy}>
+                        {sB.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </FormItem>
+              )}
+            </Col>
+          </Col>
+          <Col span={24} align="right">
+            <Col span={20}>
+              <div style={{ display: 'block' }}>
+                <h5 style={{ fontSize: '' }}>Cost Filter</h5>
+                <SliderControlled
+                  style={{
+                    width: '100%',
+                    background: 'white'
+                  }}
+                  max={Math.round(rangeValues && rangeValues.maxCost + 1)}
+                  min={Math.floor(rangeValues && rangeValues.minCost)}
+                  marks={costMarks}
+                  range
+                  value={[lowerCost, upperCost]}
+                  // value={[lowerCost, upperCost]}
+                  // disabled={false}
+                  handleSliderChange={e => handleChangeSlider(e)}
+                />
+              </div>
+            </Col>
+            <Col span={4}>
+              <br />
+              <FormItem>
+                <Button type="primary" onClick={handleFiltersRemove}>
+                  Reset Filters
+                </Button>
+              </FormItem>
+            </Col>
+          </Col>
+        </Row>
       </Form>
     </>
   );
@@ -99,10 +148,13 @@ ListingsFilterComponent.propTypes = {
   onUpperCostChange: PropTypes.func.isRequired,
   onFiltersRemove: PropTypes.func.isRequired,
   listings: PropTypes.object.isRequired,
+  orderBy: PropTypes.object.isRequired,
   onSearchTextChange: PropTypes.func.isRequired,
   onRoleChange: PropTypes.func.isRequired,
+  showIsActive: PropTypes.bool.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
+  onOrderBy: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 
-export default translate('user')(ListingsFilterComponent);
+export default translate('listing')(ListingsFilterComponent);

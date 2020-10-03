@@ -25,7 +25,7 @@ export interface ListingViewProps {
 
 const ListingView: React.FC<ListingViewProps> = props => {
   const { t, loading } = props;
-  console.log(loading);
+  // console.log(loading);
   return (
     <PageLayout>
       {renderMetaData(t)}
@@ -45,7 +45,7 @@ const ListingView: React.FC<ListingViewProps> = props => {
       <br />
       <hr />
       <br />
-      <ListingFilterComponent {...props} />
+      <ListingFilterComponent showIsActive={true} {...props} />
       <Divider />
       <hr />
       {loading && (
