@@ -20,11 +20,11 @@ const AddToCart = props => {
       return null;
     }
 
-    if (values.quantity > max) {
+    if (values.quantity > max || values.quantity <= 0) {
       message.error('Invalid quantity!');
       return null;
     }
-    if (values.quantity <= max) {
+    if (values.quantity <= max && values.quantity > 0) {
       const input = {
         consumerId: currentUser && currentUser.id,
         orderDetail: {

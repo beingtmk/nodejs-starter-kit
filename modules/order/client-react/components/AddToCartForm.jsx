@@ -1,5 +1,5 @@
 import React from 'react';
-import { message, Form, Button, Icon, Tooltip } from 'antd';
+import { Form, Button, Icon, Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
@@ -14,7 +14,7 @@ const AddToCartFormSchema = {
 const ButtonGroup = Button.Group;
 
 const AddToCartForm = props => {
-  const { values, handleSubmit, currentUser, onSubmit, max } = props;
+  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity } = props;
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -25,6 +25,7 @@ const AddToCartForm = props => {
         type="number"
         label="Quantity"
         value={values.quantity}
+        disabled={fixedQuantity !== -1}
         min={0}
         max={max}
       />
@@ -50,16 +51,17 @@ AddToCartForm.propTypes = {
   currentUser: PropTypes.object,
   values: PropTypes.object,
   handleSubmit: PropTypes.func,
-  max: PropTypes.number
+  max: PropTypes.number,
+  fixedQuantity: PropTypes.number
 };
 
 const AddToCartWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
-      quantity: props.max > 0 ? 1 : 0
+      quantity: props.max > 0 ? (props.fixedQuantity === -1 ? 1 : props.fixedQuantity) : 0
     };
   },
-  handleSubmit(values, { props: { onSubmit, max } }) {
+  handleSubmit(values, { props: { onSubmit } }) {
     onSubmit(values);
   },
   validate: values => validate(values, AddToCartFormSchema),

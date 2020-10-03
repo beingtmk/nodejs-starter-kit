@@ -12,6 +12,7 @@ const AddToCartView = props => {
         currentUser={currentUser}
         onSubmit={onSubmit}
         max={listing && listing.listingDetail && listing.listingDetail.inventoryCount}
+        fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
       />
     </Card>
   );
