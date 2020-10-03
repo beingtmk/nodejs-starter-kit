@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Row, Col, Icon, Form, Card, Button } from 'antd';
+import { message, Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
@@ -100,14 +100,6 @@ class ListingFormComponent extends React.Component {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="listingDetail.inventoryCount"
-                  component={RenderField}
-                  placeholder="Listing Invontory Count"
-                  type="number"
-                  label="Listing Invontory Count"
-                  value={values.listingDetail.inventoryCount}
-                />
-                <Field
                   name="sku"
                   component={RenderField}
                   placeholder="Listing Sku"
@@ -115,40 +107,37 @@ class ListingFormComponent extends React.Component {
                   label="Listing Sku"
                   value={values.sku}
                 />
-              </Col>
-              <Col md={12} xs={24} align="left">
                 <Field
                   name="listingCostArray[0].cost"
                   component={RenderField}
                   placeholder="Cost"
                   type="number"
                   label="Cost"
+                  min={0}
                   value={values.listingCostArray[0].cost}
-                />
-                <Field
-                  name="listingOptions.fixedQuantity"
-                  component={RenderField}
-                  placeholder="Fixed Quantity"
-                  type="number"
-                  label="Fixed Quantity"
-                  value={values.listingOptions.fixedQuantity}
                 />
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="listingFlags.isDiscount"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={'Is Discount'}
-                  checked={values.listingFlags.isDiscount}
-                />
-                <Field
-                  name="listingCostArray[0].discount"
+                  name="listingDetail.inventoryCount"
                   component={RenderField}
-                  placeholder="Discount"
+                  placeholder="Listing Invontory Count"
                   type="number"
-                  label="Discount"
-                  value={values.listingCostArray[0].discount}
+                  label="Listing Invontory Count"
+                  min={0}
+                  value={values.listingDetail.inventoryCount}
+                />
+              </Col>
+              <Col md={12} xs={24} align="left">
+                <Field
+                  name="listingOptions.fixedQuantity"
+                  component={RenderField}
+                  placeholder="Fixed Quantity (Enter -1 for false)"
+                  type="number"
+                  label="Fixed Quantity"
+                  min={-1}
+                  max={values.listingDetail.inventoryCount}
+                  value={values.listingOptions.fixedQuantity}
                 />
               </Col>
               <Col span={24} align="right">
@@ -169,6 +158,13 @@ class ListingFormComponent extends React.Component {
                   label={'Is Featured'}
                   checked={values.listingFlags.isFeatured}
                 />
+                <Field
+                  name="listingFlags.isDiscount"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={'Is Discount'}
+                  checked={values.listingFlags.isDiscount}
+                />
               </Col>
               <Col md={8} xs={24} align="left">
                 <Field
@@ -178,6 +174,18 @@ class ListingFormComponent extends React.Component {
                   label={'Is Active'}
                   checked={values.isActive}
                 />
+                {values.listingFlags.isDiscount && (
+                  <Field
+                    name="listingCostArray[0].discount"
+                    component={RenderField}
+                    placeholder="Discount"
+                    type="number"
+                    label="Discount"
+                    min={0}
+                    max={100}
+                    value={values.listingCostArray[0].discount}
+                  />
+                )}
               </Col>
               <Col md={8} xs={24} align="left">
                 <Field
@@ -187,6 +195,19 @@ class ListingFormComponent extends React.Component {
                   label={'Is New'}
                   checked={values.listingFlags.isNew}
                 />
+                {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
+                  <Field
+                    name="finalPrice"
+                    component={RenderField}
+                    type="number"
+                    label={'Final Price'}
+                    disabled={true}
+                    value={(
+                      values.listingCostArray[0].cost -
+                      values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
+                    ).toFixed(2)}
+                  />
+                )}
               </Col>
               <Col span={24} align="right">
                 <br />
@@ -325,7 +346,7 @@ const ListingWithFormik = withFormik({
       },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
-        fixedQuantity: null
+        fixedQuantity: -1
       },
       listingDetail: (props.listing && props.listing.listingDetail) || {
         id: null,
@@ -342,6 +363,17 @@ const ListingWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { props: { onSubmit } }) {
+    if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Invontory Count - Less than zero');
+    if (values.listingCostArray[0].cost < 0) return message.error('Invalid Listing Cost - Less than zero');
+    if (
+      values.listingOptions.fixedQuantity < -1 ||
+      values.listingOptions.fixedQuantity > values.listingDetail.inventoryCount
+    )
+      return message.error('Invalid Fixed Quantity - Cannot be less than zero/more than Inventory Count');
+    if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
+      return message.error('Invalid Discount - Less than zero/more than 100');
+    // if (< 0) return message.error('Invalid - Less than zero');
+
     const input = {
       id: values.id,
       userId: values.userId,

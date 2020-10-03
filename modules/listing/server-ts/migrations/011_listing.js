@@ -44,7 +44,7 @@ exports.up = function(knex) {
           .inTable('listing')
           .onDelete('CASCADE');
 
-        table.integer('fixed_quantity');
+        table.integer('fixed_quantity').defaultTo(-1);
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
