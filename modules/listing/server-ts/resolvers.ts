@@ -1,6 +1,7 @@
 import { Listing, Identifier } from './sql';
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
+import settings from '@gqlapp/config';
 
 interface Edges {
   cursor: number;
@@ -190,7 +191,23 @@ export default (pubsub: any) => ({
         });
         return 'Removed SuccessFully';
       }
-    })
+    }),
+    async shareListingByEmail(obj: any, { input }: any, { mailer }: any) {
+      if (mailer) {
+        const sent = await mailer.sendMail({
+          from: `${settings.app.name} <${process.env.EMAIL_USER}>`,
+          to: input.email,
+          subject: 'Listing',
+          html: input.message
+        });
+        if (!sent) {
+          throw new Error("Email couldn't be sent");
+        } else {
+          return true;
+        }
+      }
+      throw new Error("Email couldn't be sent");
+    }
   },
   Subscription: {
     listingsUpdated: {

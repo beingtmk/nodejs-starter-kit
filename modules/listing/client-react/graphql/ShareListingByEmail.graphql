@@ -1,0 +1,3 @@
+mutation shareListingByEmail($input: ShareListingByEmailInput) {
+  shareListingByEmail(input: $input)
+}

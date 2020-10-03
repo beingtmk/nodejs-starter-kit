@@ -17,7 +17,7 @@ const AddToCartForm = props => {
   const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned } = props;
   const disabled = max <= 0 || listingOwned || !currentUser;
 
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <Form onSubmit={handleSubmit}>
       <Field

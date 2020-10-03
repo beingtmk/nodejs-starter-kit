@@ -105,8 +105,15 @@ extend type Mutation {
   # # Delete a listing
   deleteListing(id: Int!): Boolean
 
+  shareListingByEmail(input: ShareListingByEmailInput): Boolean
+
   # Bookmark
   addOrRemoveListingBookmark(listingId: Int, userId: Int): String
+}
+
+input ShareListingByEmailInput {
+  email: String!
+  message: String!
 }
 
 # Input for ordering listings

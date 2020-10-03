@@ -43,7 +43,7 @@ const AddToCart = props => {
       };
 
       try {
-        console.log('input', input);
+        // console.log('input', input);
         await addToCart(input);
         if (redirect) {
           history.push(`${ROUTES.checkoutCart}`);
@@ -58,7 +58,7 @@ const AddToCart = props => {
     }
   };
 
-  console.log('AddToCart, props', props);
+  // console.log('AddToCart, props', props);
   return <AddToCartView onSubmit={onSubmit} {...props} />;
 };
 

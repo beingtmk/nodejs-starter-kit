@@ -16,6 +16,7 @@ import DUPLICATE_LISTING from '../graphql/DuplicateListing.graphql';
 import EDIT_LISTING from '../graphql/EditListing.graphql';
 import DELETE_LISTING from '../graphql/DeleteListing.graphql';
 import TOOGLE_LISTING_BOOKMARK from '../graphql/ToggleListingBookmark.graphql';
+import SHARE_LISTING_BY_EMAIL from '../graphql/ShareListingByEmail.graphql';
 
 // Filter
 import UPDATE_ORDER_BY_LISTING from '../graphql/UpdateOrderByListing.client.graphql';
@@ -327,6 +328,18 @@ export const withToogleListingBookmark = Component =>
           message.error("Couldn't perform the action");
           console.error(e);
         }
+      }
+    })
+  })(Component);
+
+export const withShareListingByEmail = Component =>
+  graphql(SHARE_LISTING_BY_EMAIL, {
+    props: ({ mutate }) => ({
+      shareListingByEmail: async input => {
+        const { data: shareListingByEmail } = await mutate({
+          variables: { input }
+        });
+        return shareListingByEmail;
       }
     })
   })(Component);
