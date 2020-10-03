@@ -144,7 +144,8 @@ export const withReviewAdding = Component =>
           review: {
             userId: values.userId,
             rating: values.rating,
-            feedback: values.feedback
+            feedback: values.feedback,
+            reviewMedia: values.reviewMedia
           }
         };
         // console.log(input);

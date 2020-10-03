@@ -127,7 +127,7 @@ export default class Review extends Model {
   }
 
   public async addReview({ modalName, modalId, review }: ModalReview) {
-    const res = await Review.query().insert(decamelizeKeys(review));
+    const res = camelizeKeys(await Review.query().insertGraph(decamelizeKeys(review)));
     if (res.id) {
       // const res1 =
       await knex('modal_review').insert(decamelizeKeys({ modalName, modalId, reviewId: res.id }));
@@ -150,7 +150,7 @@ export default class Review extends Model {
     if (input.rating) {
       await this.deleteRating(review);
     }
-    const res = await Review.query().upsertGraph(decamelizeKeys(input));
+    const res = camelizeKeys(await Review.query().upsertGraph(decamelizeKeys(input)));
     if (input.rating) {
       await this.addRating({ modalName: review.modalName, modalId: review.modalId, review: input });
     }

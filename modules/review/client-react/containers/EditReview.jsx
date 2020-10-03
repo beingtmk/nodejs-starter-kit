@@ -28,8 +28,8 @@ const EditReview = props => {
         userId: values.userId,
         rating: values.rating,
         feedback: values.feedback,
-        isActive: values.isActive
-        // input.reviewImages = Object.values(input.reviewImages);
+        isActive: values.isActive,
+        reviewMedia: Object.values(values.reviewMedia)
       };
       await props.editReview(input);
     } catch (e) {

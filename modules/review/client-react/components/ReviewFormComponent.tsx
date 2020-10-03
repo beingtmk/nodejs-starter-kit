@@ -1,10 +1,11 @@
 import React from 'react';
-import { Form, Rate } from 'antd';
-import { withFormik } from 'formik';
+import { Row, Col, Icon, Form, Rate } from 'antd';
+import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
+import { RenderUploadMultiple, RenderField, Select, Option, SubmitButton, Button } from '@gqlapp/look-client-react';
+import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 
 import UserAutoCompleteComponent from './UserAutoCompleteComponent';
@@ -23,6 +24,8 @@ interface FormValues {
 }
 
 export interface ReviewFormComponentProps {
+  modalName: string;
+  modalId: number;
   review: Review;
   dirty: boolean;
   showModal: boolean;
@@ -35,7 +38,41 @@ export interface ReviewFormComponentProps {
 
 const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
   const { dirty, values, onSearchTextChange, handleSubmit, setFieldValue, showModal } = props;
-  // const [load, setLoad] = useState(true);
+  const videos = values.reviewMedia.video;
+  const [load, setLoad] = React.useState(false);
+  let formItems = null;
+  if (videos.length > 0) {
+    formItems = videos.map((v, index) => (
+      <FormItem required={false} key={index} style={{ margin: '0px' }}>
+        <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={index}>
+          <Field
+            name={`reviewMedia.video[${index}].url`}
+            component={RenderField}
+            placeholder={'Video url'}
+            type="text"
+            label={'Video url'}
+            value={v.url}
+            key={index}
+          />
+        </FormItem>
+        <Icon
+          style={{ paddingTop: '40px' }}
+          title="Remove "
+          className="dynamic-delete-button"
+          type="minus-circle-o"
+          onClick={() => setFieldValue('reviewMedia.video', videos.splice(index, 1) && videos)}
+        />
+      </FormItem>
+    ));
+  }
+
+  const add = () => {
+    const obj = {
+      url: '',
+      type: 'video'
+    };
+    setFieldValue('reviewMedia.video', [...values.reviewMedia.video, obj]);
+  };
 
   // console.log('props', props);
   return (
@@ -83,25 +120,41 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         type="textarea"
         value={values.feedback}
       />
-      {/* <FieldArray
-          name="reviewImages"
-          label={'Add photo'}
-          render={arrayHelpers => (
-            <RenderUploadMultiple
-              setload={load => setLoad(load)}
-              arrayHelpers={arrayHelpers}
-              values={values.reviewImages}
-              dictKey="imageUrl"
+      <Row gutter={24}>
+        <Col md={12} xs={24} align="left">
+          <Col span={24}>
+            <Col span={18}>
+              <FormItem label={'Add video url'}>{formItems}</FormItem>
+            </Col>
+            <Col span={6} align="right">
+              <FormItem>
+                <Button type="primary" onClick={add}>
+                  <Icon type="video-camera" />
+                  Add
+                </Button>
+              </FormItem>
+            </Col>
+          </Col>
+        </Col>
+        <Col md={12} xs={24} align="left">
+          <FormItem label={'Add images'}>
+            <FieldArray
+              name="reviewMedia.image"
+              label={'Review Image'}
+              render={arrayHelpers => (
+                <RenderUploadMultiple
+                  setload={(e: boolean) => setLoad(e)}
+                  arrayHelpers={arrayHelpers}
+                  values={values.reviewMedia.image}
+                  getType={true}
+                  dictKey="url"
+                />
+              )}
             />
-          )}
-        /> */}
-      <SubmitButton
-        type="submit"
-        disabled={
-          // load &&
-          !dirty
-        }
-      >
+          </FormItem>
+        </Col>
+      </Row>
+      <SubmitButton type="submit" disabled={load && !dirty}>
         Submit
       </SubmitButton>
     </Form>
@@ -110,28 +163,60 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
 
 const ReviewWithFormik = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: props => {
-    // function getImg(Img) {
-    //   return {
-    //     id: Img.id,
-    //     imageUrl: Img.imageUrl,
-    //   };
-    // }
+  mapPropsToValues: (props: ReviewFormComponentProps) => {
+    const reviewMedia = {
+      image: [],
+      video: []
+    };
+    function getReviewImage(reviewImg) {
+      const obj = {
+        id: (reviewImg && reviewImg.id) || null,
+        url: (reviewImg && reviewImg.url) || '',
+        type: (reviewImg && reviewImg.type) || '',
+        isActive: (reviewImg && reviewImg.isActive) || true
+      };
+      obj.type === 'image' && reviewMedia.image.push(obj);
+      obj.type === 'video' && reviewMedia.image.push(obj);
+    }
     return {
       id: (props.review && props.review.id) || null,
       modalName: (props.modalData && props.modalData.modalName) || '',
       modalId: (props.modalData && props.modalData.modalId) || 1,
       userId: (props.review && props.review.user && props.review.user.id) || null,
       rating: (props.review && props.review.rating) || null,
-      feedback: (props.review && props.review.feedback) || ''
-      // reviewImages:
-      //   props.review && props.review.reviewImages && props.review.reviewImages.length !== 0
-      //     ? props.review.reviewImages.map(getImg)
-      //     : [],
+      feedback: (props.review && props.review.feedback) || '',
+      reviewMedia: (props.review &&
+        props.review.reviewMedia &&
+        props.review.reviewMedia.map(getReviewImage) &&
+        reviewMedia) || {
+        image: [],
+        video: []
+      }
     };
   },
-  async handleSubmit(values, { props: { onSubmit, hideModal } }) {
-    onSubmit(values);
+  async handleSubmit(values: Review, { props: { onSubmit, hideModal } }) {
+    const input: Review = {
+      id: values.id,
+      modalName: values.modalName,
+      modalId: values.modalId,
+      userId: values.userId,
+      rating: values.rating,
+      feedback: values.feedback,
+      reviewMedia: []
+    };
+    if (values.reviewMedia.image.length > 0) {
+      input.reviewMedia = [...input.reviewMedia, ...values.reviewMedia.image];
+    } else {
+      input.reviewMedia.push({
+        url: NO_IMG,
+        type: 'image'
+      });
+    }
+    if (values.reviewMedia.video.length > 0) {
+      input.reviewMedia = [...input.reviewMedia, ...values.reviewMedia.video];
+    }
+    console.log(input);
+    onSubmit(input);
     hideModal && hideModal();
   },
   validate: values => validate(values, ReviewFormSchema),

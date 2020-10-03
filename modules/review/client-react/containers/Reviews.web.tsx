@@ -35,9 +35,15 @@ export interface Review {
   rating: string;
   feedback: string;
   isActive: boolean;
-  // reviewImages: [ReviewImage]
+  reviewMedia: ReviewMedia[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ReviewMedia {
+  id: number;
+  url: string;
+  type: string;
 }
 
 export interface ReviewProps {

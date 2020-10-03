@@ -62,7 +62,7 @@ input FilterReviewInput {
   # filter by isActive
   isActive: Boolean
   modalName: String
-  # for listing review
+  # for review review
   modalId: Int
   # for myReview
   userId: Int
@@ -108,8 +108,9 @@ input AddReviewInput {
   rating: String
   feedback: String
   isActive: Boolean
-  # reviewImages: [ReviewImagesInput]
+  reviewMedia: [ReviewMediumInput]
 }
+
 input EditReviewInput {
   id: Int!
   userId: Int
@@ -117,7 +118,14 @@ input EditReviewInput {
   feedback: String
   isActive: Boolean
   helpful: Int
-  # reviewImages: [ReviewImagesInput]
+  reviewMedia: [ReviewMediumInput]
+}
+
+input ReviewMediumInput {
+  id: Int
+  url: String!
+  type: String
+  isActive: Boolean
 }
 
 extend type Subscription {
