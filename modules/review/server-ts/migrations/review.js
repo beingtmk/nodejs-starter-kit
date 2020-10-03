@@ -33,17 +33,21 @@ exports.up = function(knex) {
         table.timestamps(false, true);
       })
 
-      // .createTable('review_image', table => {
-      //   table.increments();
-      //   table
-      //     .integer('review_id')
-      //     .unsigned()
-      //     .references('id')
-      //     .inTable('review')
-      //     .onDelete('CASCADE');
-      //   table.string('image_url');
-      //   table.timestamps(false, true);
-      // })
+      .createTable('review_medium', table => {
+        table.increments();
+        table
+          .integer('review_id')
+          .unsigned()
+          .references('id')
+          .inTable('review')
+          .onDelete('CASCADE');
+
+        table.string('url');
+        table.string('type');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
       .createTable('average_rating', table => {
         table.increments();
         table.string('modal_name');
@@ -67,7 +71,8 @@ exports.up = function(knex) {
 exports.down = function(knex) {
   return Promise.all([
     knex.schema.dropTable('review'),
-    knex.schema.dropTable('event_review'),
-    knex.schema.dropTable('blog_review')
+    knex.schema.dropTable('modal_review'),
+    knex.schema.dropTable('review_medium'),
+    knex.schema.dropTable('average_rating')
   ]);
 };

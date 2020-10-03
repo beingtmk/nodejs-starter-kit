@@ -1,4 +1,5 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
+import { MEDIA } from '@gqlapp/listing-common';
 
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [
@@ -16,14 +17,15 @@ exports.seed = async function(knex) {
         rating: String((Math.random() * (5.0 - 2.0 + 1.0) + 1.0).toFixed(1)),
         helpful: Math.floor(Math.random() * (50 - 1 + 1) + 1)
       });
-      // await Promise.all(
-      //   [...Array(3).keys()].map(async () => {
-      //     return returnId(knex('review_image')).insert({
-      //       review_id: review[0],
-      //       image_url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1593961377/wfouh2evldlk2otnxepx.svg',
-      //     });
-      //   })
-      // );
+      await Promise.all(
+        [...Array(3).keys()].map(async () => {
+          return returnId(knex('review_medium')).insert({
+            review_id: review[0],
+            ...MEDIA[Math.floor(Math.random() * (1 - 0 + 1) + 0)],
+            is_active: Math.random() < 0.6 ? false : true
+          });
+        })
+      );
       return returnId(knex('modal_review')).insert({
         modal_name: 'listing',
         modal_id: Math.floor(Math.random() * (100 - 1 + 1) + 1),
