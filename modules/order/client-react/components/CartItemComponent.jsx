@@ -92,7 +92,7 @@ const CartItemComponent = props => {
           </Col>
         </Row>
       </Align>
-      <Link to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
+      <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
         <Ribbon bottom={props.mobile ? '70px' : '105px'} width="120px" color="#df0303">
           {item.orderOptions.quantity}
         </Ribbon>
