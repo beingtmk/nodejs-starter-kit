@@ -78,7 +78,11 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'title',
       key: 'title',
-      render: (text, record) => <a href={`${ROUTES.listingDetailLink}${record.id}`}>{text}</a>
+      render: (text, record) => (
+        <a href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank">
+          {text}
+        </a>
+      )
     },
     {
       title: (

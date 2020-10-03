@@ -14,8 +14,10 @@ const AddToCartFormSchema = {
 const ButtonGroup = Button.Group;
 
 const AddToCartForm = props => {
-  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity } = props;
+  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned } = props;
+  const disabled = max <= 0 || listingOwned || !currentUser;
 
+  console.log('props', props);
   return (
     <Form onSubmit={handleSubmit}>
       <Field
@@ -30,13 +32,21 @@ const AddToCartForm = props => {
         max={max}
       />
       <div align="right">
-        <Tooltip title={!currentUser ? 'SignIn To Continue' : max <= 0 ? 'Out of Stock' : 'Continue to Booking'}>
+        <Tooltip
+          title={
+            !currentUser
+              ? 'SignIn To Continue'
+              : disabled
+              ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+              : 'Continue to Booking'
+          }
+        >
           <ButtonGroup>
-            <Button size="large" onClick={handleSubmit} disabled={max <= 0}>
+            <Button size="large" onClick={handleSubmit} disabled={disabled}>
               <Icon type="shopping" />
               ADD TO CART
             </Button>
-            <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={max <= 0}>
+            <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
               BOOK NOW
             </Button>
           </ButtonGroup>
@@ -52,7 +62,8 @@ AddToCartForm.propTypes = {
   values: PropTypes.object,
   handleSubmit: PropTypes.func,
   max: PropTypes.number,
-  fixedQuantity: PropTypes.number
+  fixedQuantity: PropTypes.number,
+  listingOwned: PropTypes.bool
 };
 
 const AddToCartWithFormik = withFormik({

@@ -6,6 +6,7 @@ import AddToCartForm from './AddToCartForm';
 
 const AddToCartView = props => {
   const { currentUser, listing, onSubmit } = props;
+  const listingOwned = (listing && listing.user && listing.user.id) === (currentUser && currentUser.id);
   return (
     <Card>
       <AddToCartForm
@@ -13,6 +14,7 @@ const AddToCartView = props => {
         onSubmit={onSubmit}
         max={listing && listing.listingDetail && listing.listingDetail.inventoryCount}
         fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
+        listingOwned={listingOwned}
       />
     </Card>
   );

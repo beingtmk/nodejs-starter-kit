@@ -308,8 +308,10 @@ const ListingDetailView = props => {
   };
 
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
-  const discount = listing && listing.listingCostArray && listing.listingCostArray.discount;
-  const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
+  const discount =
+    listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].discount;
+  const cost =
+    listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
   // console.log('cost', cost && cost.toFixed(2));
   const inventoryCount = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
   const images =
