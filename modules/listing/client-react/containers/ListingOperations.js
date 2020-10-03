@@ -1,6 +1,5 @@
 import { graphql } from 'react-apollo';
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
-import update from 'immutability-helper';
 import { message } from 'antd';
 
 // Query
@@ -13,6 +12,7 @@ import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
 
 // Mutation
 import ADD_LISTING from '../graphql/AddListing.graphql';
+import DUPLICATE_LISTING from '../graphql/DuplicateListing.graphql';
 import EDIT_LISTING from '../graphql/EditListing.graphql';
 import DELETE_LISTING from '../graphql/DeleteListing.graphql';
 import TOOGLE_LISTING_BOOKMARK from '../graphql/ToggleListingBookmark.graphql';
@@ -237,6 +237,32 @@ export const withAddListing = Component =>
           message.destroy();
           message.error("Couldn't perform the action");
           console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withDulicateListing = Component =>
+  graphql(DUPLICATE_LISTING, {
+    props: ({ mutate }) => ({
+      duplicateListing: async id => {
+        message.loading('Please wait...', 0);
+        try {
+          message.destroy();
+          const {
+            data: { duplicateListing }
+          } = await mutate({
+            variables: { id }
+          });
+
+          if (duplicateListing.errors) {
+            return { errors: duplicateListing.errors };
+          }
+          message.success('Duplicate listing created!');
+          return duplicateListing;
+        } catch (e) {
+          message.error("Couldn't perform the action");
+          throw Error(e);
         }
       }
     })

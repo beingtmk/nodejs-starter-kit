@@ -8,11 +8,11 @@ import { User } from '@gqlapp/user-server-ts/sql';
 Model.knex(knex);
 
 export interface Listing {
-  userId: number;
+  user: object;
   title: string;
   description: string;
   listingMedias: ListingMedium[];
-  listingCost: ListingCost[];
+  listingCostArray: ListingCost[];
   isActive: boolean;
 }
 
@@ -225,6 +225,40 @@ export default class ListingDAO extends Model {
   public async addListing(params: Listing) {
     const res = camelizeKeys(await returnId(ListingDAO.query()).insertGraph(decamelizeKeys(params)));
     return res.id;
+  }
+  public async duplicateListing(id: number) {
+    const listing = camelizeKeys(
+      await ListingDAO.query()
+        .eager(eager)
+        .findById(id)
+    );
+    // console.log('sql, res', listing);
+
+    // deleting ids
+    listing.userId = listing.user.id;
+    if (listing) {
+      delete listing.id;
+      delete listing.user;
+      if (listing.listingFlags) {
+        delete listing.listingFlags.id;
+      }
+      if (listing.listingOptions) {
+        delete listing.listingOptions.id;
+      }
+      if (listing.listingDetail) {
+        delete listing.listingDetail.id;
+      }
+      if (listing.listingMedia && listing.listingMedia.length > 0) {
+        listing.listingMedia.map(lM => delete lM.id);
+      }
+      if (listing.listingCostArray && listing.listingCostArray.length > 0) {
+        listing.listingCostArray.map(lM => delete lM.id);
+      }
+
+      const res = camelizeKeys(await ListingDAO.query().insertGraph(decamelizeKeys(listing)));
+      return res.id;
+    }
+    return false;
   }
 
   public async editListing(params: Listing & Identifier) {

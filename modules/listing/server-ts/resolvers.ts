@@ -102,6 +102,19 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
+    duplicateListing: withAuth(async (obj: any, { id }: Identifier, context: any) => {
+      const newListingid = await context.Listing.duplicateListing(id);
+      const listing = await context.Listing.listing(newListingid);
+      if (newListingid && listing) {
+        pubsub.publish(LISTINGS_SUBSCRIPTION, {
+          listingsUpdated: {
+            mutation: 'CREATED',
+            node: listing
+          }
+        });
+      }
+      return newListingid;
+    }),
     editListing: withAuth(async (obj: any, { input }: ListingInputWithId, context: any) => {
       try {
         await context.Listing.editListing(input);

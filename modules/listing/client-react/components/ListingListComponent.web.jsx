@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Spin } from 'antd';
+import { Tooltip, Button, Icon, Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
@@ -26,7 +26,7 @@ const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsM
 NoListingsMessage.propTypes = { t: PropTypes.func };
 
 const ListingListComponent = props => {
-  const { onToggle, orderBy, onOrderBy, loading, listings, t, loadData, deleteListing } = props;
+  const { onToggle, orderBy, onOrderBy, loading, listings, t, loadData, deleteListing, onDuplicate } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -239,16 +239,19 @@ const ListingListComponent = props => {
       width: 200,
       fixed: 'right',
       render: (text, record) => (
-        <Row gutter={24}>
-          <Col span={5}>
-            <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
-              <EditIcon />
-            </Link>
-          </Col>
-          <Col span={5}>
-            <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
-          </Col>
-        </Row>
+        <div align="center">
+          <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
+            <EditIcon />
+          </Link>
+          &nbsp; &nbsp;
+          <Tooltip title="Duplicate Listing">
+            <Button type="primary" shape="circle" size="sm" onClick={() => onDuplicate(record.id)}>
+              <Icon type="copy" />
+            </Button>
+          </Tooltip>
+          &nbsp; &nbsp;
+          <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
+        </div>
       )
     }
   ];
@@ -296,6 +299,7 @@ ListingListComponent.propTypes = {
   deleteListing: PropTypes.func.isRequired,
   onToggle: PropTypes.func,
   t: PropTypes.func,
+  onDuplicate: PropTypes.func,
   history: PropTypes.object
 };
 
