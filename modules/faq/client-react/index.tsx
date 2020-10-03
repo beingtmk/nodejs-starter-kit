@@ -12,14 +12,14 @@ import resolvers from "./resolvers";
 const NavLinkAdminWithI18n = translate("faq")(
   ({ t }: { t: TranslateFunction }) => (
     <NavLink to="/faqs" className="nav-link" activeClassName="active">
-      <Icon type="customer-service" /> Faq
+      <Icon type="customer-service" /> FAQ
     </NavLink>
   )
 );
 
 const NavLinkWithI18n = translate("faq")(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/faq" className="nav-link" activeClassName="active">
-    <Icon type="customer-service" /> Faq
+    <Icon type="customer-service" /> FAQ
   </NavLink>
 ));
 

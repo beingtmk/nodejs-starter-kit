@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { Row, Tabs, Empty } from 'antd';
+import { Row, Tabs, Empty, Icon } from 'antd';
 import MyMiniBlogsCardComponent from './MyMiniBlogsCardComponent';
 import { status } from '../constants';
 
@@ -12,7 +12,7 @@ const MyBlogsComponent = ({ blogs, deleteBlog, editBlog }) => {
   return (
     <Row gutter={32} className="blog-list-row">
       <div style={{ marginBottom: '30px', marginLeft: '16px' }}>
-        <h1 style={{ fontSize: '32px' }}>My Blogs</h1>
+        <h1 style={{ fontSize: '32px' }}><Icon type="solution" /> {' My Blogs'}</h1>
 
         <div align="left">
           <div key="line" className="title-line-wrapper" style={{ width: '200px' }} align="left">

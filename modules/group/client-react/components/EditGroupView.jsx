@@ -21,10 +21,11 @@ class EditGroupView extends React.Component {
 
   render() {
     return (
-      <PageLayout>
+      <PageLayout type='forms'>
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.groupLoading ? (
-          <GroupFormComponent {...this.props} cardTitle={'Edit Group'} />
+          <div style={{maxWidth:'600px', width:'100%'}}>
+          <GroupFormComponent {...this.props} cardTitle={'Edit Group'} /></div>
         ) : (
           <Loading />
         )}

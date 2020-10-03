@@ -1,17 +1,15 @@
-import React from 'react';
+import React from "react";
 // import Helmet from 'react-helmet';
 
-
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from "@gqlapp/look-client-react";
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
 // import settings from '@gqlapp/config';
-import { enquireScreen } from 'enquire-js';
+import { enquireScreen } from "enquire-js";
 
-import ProBanner from './components/ProBanner';
-
+import ProBanner from "./components/ProBanner";
 
 let isMobile;
-enquireScreen(b => {
+enquireScreen((b) => {
   isMobile = b;
 });
 
@@ -20,13 +18,13 @@ export default class HomeView extends React.Component {
     super(props);
     this.state = {
       isMobile,
-      show: true //!location.port, ToDo - find a better approach this
+      show: true, //!location.port, ToDo - find a better approach this
     };
   }
 
   componentDidMount() {
     // 适配手机屏幕;
-    enquireScreen(b => {
+    enquireScreen((b) => {
       this.setState({ isMobile: !!b });
     });
     // ToDo - find a better approach for below statement
@@ -34,7 +32,7 @@ export default class HomeView extends React.Component {
 
     setTimeout(() => {
       this.setState({
-        show: true
+        show: true,
       });
     }, 500);
     // }
@@ -48,15 +46,24 @@ export default class HomeView extends React.Component {
     //   />
     // );
     const children = [
-      <ProBanner id="ProBanner_0" key="ProBanner_0" isMobile={this.state.isMobile} />,
-      
+      <ProBanner
+        id="ProBanner_0"
+        key="ProBanner_0"
+        isMobile={this.state.isMobile}
+      />,
     ];
     return (
       <PageLayout type="home">
+        <MetaTags
+          title="Home"
+          description="Welcome to MApp!
+            You've reached the one stop shop for manager awesomeness.
+            Log in and explore the world of people management."
+        />
         {/* {renderMetaData(this.props.t)} */}
         <div
           className="templates-wrapper"
-          ref={d => {
+          ref={(d) => {
             this.dom = d;
           }}
         >

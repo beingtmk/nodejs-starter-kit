@@ -6,13 +6,8 @@ import { PageLayout } from "@gqlapp/look-client-react";
 
 const LogoutPage = (props) => {
   return (
-    <PageLayout type="home">
+    <PageLayout type="forms">
       <div
-        style={{
-          height: "100vh",
-          display: "grid",
-          placeItems: "center",
-        }}
       >
         <Result
           icon={

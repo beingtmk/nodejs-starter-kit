@@ -9,7 +9,7 @@ function Banner(props) {
   return (
     <div className="pro-banner-container">
       <div className="pro-banner-wrapper">
-        {props.isMobile && (
+        {/* {props.isMobile && (
           <TweenOne animation={{ opacity: 1 }} className="banner-image-wrapper">
             <div className="home-banner-image">
               <img
@@ -19,7 +19,7 @@ function Banner(props) {
               />
             </div>
           </TweenOne>
-        )}
+        )} */}
         <QueueAnim
           className="banner-title-wrapper"
           type={props.isMobile ? "bottom" : "right"}
@@ -32,8 +32,9 @@ function Banner(props) {
           </div>
           <h1 key="h1">MApp!</h1>
           <p key="content">
-            Welcome to MApp! You've reached the one stop shop for manager
-            awesomeness. Log in and explore the world of people management.
+            Welcome to MApp!
+            <br /> You've reached the one stop shop for manager awesomeness.{" "}
+            <br /> Log in and explore the world of people management.
           </p>
           <div key="button" className="button-wrapper">
             <Button type="primary" icon="login" href="login">
@@ -43,18 +44,17 @@ function Banner(props) {
               icon="user-add"
               style={{ margin: "0 16px" }}
               type="primary"
-              href='register'
+              href="register"
               ghost
             >
               Sign Up
             </Button>
           </div>
         </QueueAnim>
-        {!props.isMobile && (
-          <TweenOne animation={{ opacity: 1 }} className="banner-image-wrapper">
-            <BannerSVGAnim />
-          </TweenOne>
-        )}
+
+        <TweenOne animation={{ opacity: 1 }} className="banner-image-wrapper">
+          <BannerSVGAnim />
+        </TweenOne>
       </div>
     </div>
   );

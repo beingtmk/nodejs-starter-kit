@@ -1,7 +1,7 @@
 module.exports = Object.freeze({
     help:{
         PARAM:'help',
-        LABEL:'What do you need our help for?',
+        LABEL:'what do you need help with?',
         HEADING:'Help Form',
         SUBJECT:'MApp mailer | Help Required'
     },

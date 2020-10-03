@@ -1,18 +1,11 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import PropTypes from 'prop-types';
-import { PageLayout, Loading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import React from "react";
+import Helmet from "react-helmet";
+import PropTypes from "prop-types";
+import { PageLayout, Loading, MetaTags } from "@gqlapp/look-client-react";
+import settings from "@gqlapp/config";
 // import { message } from 'antd';
-import BlogListComponent from './BlogListComponent';
-import BlogsFilterComponent from './BlogsFilterComponent';
-
-const renderMetaData = t => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
+import BlogListComponent from "./BlogListComponent";
+import BlogsFilterComponent from "./BlogsFilterComponent";
 
 class BlogListView extends React.Component {
   state = { flag: false };
@@ -20,10 +13,10 @@ class BlogListView extends React.Component {
     this.setState({ flag: true });
   }
   render() {
-    console.log('BlogListView', this.props)
+    console.log("BlogListView", this.props);
     return (
       <PageLayout>
-        {renderMetaData(this.props.t)}
+        <MetaTags title="All Blogs" description="Read Blogs" />
         {this.props.models && this.props.filter && (
           <>
             <hr />
@@ -31,7 +24,11 @@ class BlogListView extends React.Component {
             <hr />
           </>
         )}
-        {this.state.flag && !this.props.blogLoading ? <BlogListComponent {...this.props} /> : <Loading />}
+        {this.state.flag && !this.props.blogLoading ? (
+          <BlogListComponent {...this.props} />
+        ) : (
+          <Loading />
+        )}
       </PageLayout>
     );
   }
@@ -41,7 +38,7 @@ BlogListView.propTypes = {
   t: PropTypes.func,
   blogLoading: PropTypes.bool,
   filter: PropTypes.object,
-  models: PropTypes.array
+  models: PropTypes.array,
 };
 
 export default BlogListView;

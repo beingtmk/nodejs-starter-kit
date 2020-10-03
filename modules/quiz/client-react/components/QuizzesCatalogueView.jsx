@@ -1,22 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { Spin as Loader, Row, Col, Card, Empty, Typography } from "antd";
-import { PageLayout } from "@gqlapp/look-client-react";
+import { PageLayout, MetaTags } from "@gqlapp/look-client-react";
 import { TranslateFunction } from "@gqlapp/i18n-client-react";
 import settings from "@gqlapp/config";
 import QuizForm from "./QuizForm";
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
-
-const renderMetaData = (t) => (
-  <Helmet
-    title={`${settings.app.name} - ${t("title")}`}
-    meta={[
-      { name: "description", content: `${settings.app.name} - ${t("meta")}` },
-    ]}
-  />
-);
 
 const QuizzesCatalogueView = (props) => {
   const { quizzes, loadingQuizzes } = props;
@@ -30,6 +21,7 @@ const QuizzesCatalogueView = (props) => {
   };
   return (
     <PageLayout>
+      <MetaTags title="All Quizzes" description="Take Quizzes" />
       <Row gutter={24}>
         {loadingQuizzes && (
           <div align="center">
@@ -43,7 +35,7 @@ const QuizzesCatalogueView = (props) => {
                 <Col xs={24} md={12} lg={8}>
                   <Card
                     hoverable
-                    style={{marginBottom:'24px'}}
+                    style={{ marginBottom: "24px" }}
                     cover={
                       <div
                         align="center"

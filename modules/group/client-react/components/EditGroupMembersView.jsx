@@ -1,14 +1,16 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import PropTypes from 'prop-types';
-import { PageLayout, Loading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
-import GroupFormMembersComponent from './GroupFormMembersComponent';
+import React from "react";
+import Helmet from "react-helmet";
+import PropTypes from "prop-types";
+import { PageLayout, Loading } from "@gqlapp/look-client-react";
+import settings from "@gqlapp/config";
+import GroupFormMembersComponent from "./GroupFormMembersComponent";
 
-const renderMetaData = t => (
+const renderMetaData = (t) => (
   <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
+    title={`${settings.app.name} - ${t("title")}`}
+    meta={[
+      { name: "description", content: `${settings.app.name} - ${t("meta")}` },
+    ]}
   />
 );
 
@@ -21,10 +23,15 @@ class EditGroupMembersView extends React.Component {
 
   render() {
     return (
-      <PageLayout>
+      <PageLayout type="forms">
         {renderMetaData(this.props.t)}
         {this.state.flag && !this.props.groupLoading ? (
-          <GroupFormMembersComponent {...this.props} cardTitle={'Edit Group Members'} />
+          <div style={{ maxWidth: "700px", width: "100%" }}>
+            <GroupFormMembersComponent
+              {...this.props}
+              cardTitle={"Edit Group Members"}
+            />
+          </div>
         ) : (
           <Loading />
         )}
@@ -35,7 +42,7 @@ class EditGroupMembersView extends React.Component {
 
 EditGroupMembersView.propTypes = {
   groupLoading: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
 export default EditGroupMembersView;

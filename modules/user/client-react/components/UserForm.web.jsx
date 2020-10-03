@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, RenderSelect, RenderCheckBox, Option, Button, Alert } from '@gqlapp/look-client-react';
+import { Form, RenderField, RenderSelect, RenderCheckBox, Option, Button, Alert, RenderUpload } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const userFormSchema = {
@@ -28,7 +28,8 @@ const updateUserFormSchema = {
 
 const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
   const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
-
+  const [load, setload] = React.useState(false);
+  console.log('userFormValues', values)
   return (
     <Form name="user" onSubmit={handleSubmit}>
       <Field
@@ -76,6 +77,14 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         value={profile.lastName}
         // onChange={value => setFieldValue('profile', { ...profile, lastName: value })}
       />
+      <Field
+          name="profile.avatar"
+          component={RenderUpload}
+          type="text"
+          setload={setload}
+          label={"Avatar"}
+          value={profile.avatar}
+        />
       {settings.auth.certificate.enabled && (
         <Field
           name="serial"
@@ -127,6 +136,7 @@ UserForm.propTypes = {
 const UserFormWithFormik = withFormik({
   mapPropsToValues: values => {
     const { username, email, role, isActive, profile } = values.initialValues;
+    console.log('mapPropsToValue', values);
     return {
       username: username,
       email: email,
@@ -136,7 +146,8 @@ const UserFormWithFormik = withFormik({
       passwordConfirmation: '',
       profile: {
         firstName: profile && profile.firstName,
-        lastName: profile && profile.lastName
+        lastName: profile && profile.lastName,
+        avatar: profile && profile.avatar
       },
       auth: {
         ...values.initialValues.auth

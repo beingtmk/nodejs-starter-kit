@@ -77,17 +77,14 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
   return (
     <PageLayout type="forms">
       {renderMetaData()}
-      <div
-      className='auth-form-wrapper'
-
-      >
+      <div className="auth-form-wrapper">
         <Row
           style={{
             background: "white",
             boxShadow: "0px 4px 30px 20px rgba(0, 0, 0, 0.03)",
           }}
         >
-          <Col xs={'0'} lg={6} md={10}  style={{ padding: "40px" }}>
+          <Col xs={"0"} lg={6} md={10} style={{ padding: "40px" }}>
             <img
               src="https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
               // height="46px"
@@ -105,14 +102,16 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
               <span style={{ lineHeight: "58px" }} class="user-forms-text">
                 {t("login.btn.notReg")}
               </span>
-              <NavLink
-                className="btn btn-primary"
-                to="/register"
-                activeClassName="active"
-                style={{ margin: 10 }}
-              >
-                {t("login.btn.sign")}
-              </NavLink>
+              <span style={{display:'inline'}}>
+                <NavLink
+                  className="btn btn-primary"
+                  to="/register"
+                  activeClassName="active"
+                  style={{ margin: 10 }}
+                >
+                  <Button type="primary">{t("login.btn.sign")}</Button>
+                </NavLink>
+              </span>
             </div>
           </Col>
           <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>

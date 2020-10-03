@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 import { Card, Typography, Icon, Collapse, Skeleton, Divider } from "antd";
 import { translate } from "@gqlapp/i18n-client-react";
-import { PageLayout, Button } from "@gqlapp/look-client-react";
+import { PageLayout, Button, MetaTags } from "@gqlapp/look-client-react";
 import Loader from "@gqlapp/look-client-react/ui-antd/components/Loader";
 import CatalogueWithInfiniteScroll from "@gqlapp/look-client-react/ui-antd/components/CatalogueWithInfiniteScroll";
 
@@ -50,15 +50,7 @@ const FaqView = (props) => {
   return (
     <PageLayout>
       {/* Render metadata */}
-      <Helmet
-        title={`${settings.app.name} - ${"Faq"}`}
-        meta={[
-          {
-            name: "description",
-            content: `${settings.app.name} - ${"Faq"}`,
-          },
-        ]}
-      />
+      <MetaTags title="FAQs" description="FAQs" />
       <h1 style={{ fontSize: "32px" }}>
         <Icon type="customer-service" />
         {" FAQ's"}

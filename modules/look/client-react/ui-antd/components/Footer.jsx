@@ -44,18 +44,26 @@ const Footer10DataSource = {
           children: [
             {
               name: "content0",
-              children: "An all js stater-kit for all app needs.",
+              children: "One stop shop for Manager awesomeness!",
             },
             {
               name: "content0",
               children: (
                 <h1 style={{ fontSize: "25px", color: "white" }}>
-                  {" "}
-                  <Icon type="twitter" /> {"  "}
-                  <Icon type="github" />
-                  {"  "} <Icon type="youtube" />
+                  <a href="">
+                    <Icon type="twitter" />
+                  </a>{" "}
+                  <a href="">
+                    <Icon type="github" />
+                  </a>{" "}
+                  <a href="">
+                    <Icon type="youtube" />
+                  </a>
                   {"  "}
-                  <Icon type="facebook" />
+                  <a href="">
+                    {" "}
+                    <Icon type="facebook" />
+                  </a>
                 </h1>
               ),
             },
@@ -108,7 +116,7 @@ const Footer10DataSource = {
             {
               href: `/contact?condition=${ContactFormConditions.help.PARAM}`,
               name: "link1",
-              children: "Help Required",
+              children: "Need Help?",
             },
             {
               href: `/contact?condition=${ContactFormConditions.suggestion.PARAM}`,

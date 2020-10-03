@@ -158,6 +158,7 @@ export default pubsub => ({
         return identity.id !== args.input.id ? ['user:update'] : ['user:update:self'];
       },
       async (obj, { input }, { User, req: { identity, t }, mailer }) => {
+        console.log('editUserEditUser', input);
         const isAdmin = () => identity.role === 'admin';
         const isSelf = () => identity.id === input.id;
 
@@ -185,6 +186,8 @@ export default pubsub => ({
         const passwordHash = await createPasswordHash(input.password);
 
         const trx = await createTransaction();
+        delete userInfo.password;
+        console.log('userEditUserInfo', userInfo);
         try {
           await User.editUser(userInfo, passwordHash).transacting(trx);
           await User.editUserProfile(input, isProfileExists).transacting(trx);

@@ -12,7 +12,7 @@ import {
   CardText,
 } from "@gqlapp/look-client-react";
 
-import { Typography, Row, Col } from "antd";
+import { Typography, Row, Col, Button } from "antd";
 import { NavLink } from "react-router-dom";
 
 import settings from "@gqlapp/config";
@@ -58,9 +58,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
   return (
     <PageLayout type="forms">
       {renderMetaData(t)}
-      <div
-        className='auth-form-wrapper'
-      >
+      <div className="auth-form-wrapper">
         <Row
           style={{
             background: "white",
@@ -91,15 +89,12 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
                 activeClassName="active"
                 style={{ margin: 10 }}
               >
-                sign In
+                <Button type="primary">sign In</Button>
               </NavLink>
             </div>
           </Col>
           <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>
-            <Title
-              level={2}
-              style={{ fontSize: "22px", fontWeight: "300" }}
-            >
+            <Title level={2} style={{ fontSize: "22px", fontWeight: "300" }}>
               Create your account
             </Title>
 
@@ -117,7 +112,9 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
               </NavLink>
             </div>
           </Col>
-          <Col lg={18} xs={24} md={14}>{renderContent()}</Col>
+          <Col lg={18} xs={24} md={14}>
+            {renderContent()}
+          </Col>
         </Row>
       </div>
     </PageLayout>
