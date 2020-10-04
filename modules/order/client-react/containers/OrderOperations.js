@@ -13,6 +13,7 @@ import ORDER_STATES from '../graphql/OrderStatesQuery.graphql';
 
 // Mutation
 import ADD_TO_CART from '../graphql/AddToCart.graphql';
+import EDIT_ORDERDETAIL from '../graphql/EditOrderDetail.graphql';
 import DELETE_CART_ITEM from '../graphql/DeleteCartItem.graphql';
 import DELETE_ORDER from '../graphql/DeleteOrder.graphql';
 import PATCH_ORDER_STATE from '../graphql/PatchOrderState.graphql';
@@ -142,6 +143,21 @@ export const withAddToCart = Component =>
             input
           }
         });
+      }
+    })
+  })(Component);
+
+export const withEditOrderDetail = Component =>
+  graphql(EDIT_ORDERDETAIL, {
+    props: ({ mutate }) => ({
+      editOrderDetail: async input => {
+        const {
+          data: { editOrderDetail }
+        } = await mutate({
+          variables: { input }
+        });
+
+        return editOrderDetail;
       }
     })
   })(Component);

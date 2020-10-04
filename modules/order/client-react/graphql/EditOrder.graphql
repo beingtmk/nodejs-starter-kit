@@ -1,6 +1,0 @@
-#import "./Order.graphql"
-mutation editOrder($input: EditOrderInput!) {
-  editOrder(input: $input) {
-    ...OrderInfo
-  }
-}

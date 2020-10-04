@@ -134,24 +134,27 @@ export default (pubsub: any) => ({
       });
       return order;
     }),
-    editOrder: withAuth(async (obj: any, { input }: any, context: any) => {
+    editOrderDetail: withAuth(async (obj: any, { input }: any, context: any) => {
       try {
-        await context.Order.editOrder(input);
-        const order = await context.Order.order(input.id);
-        pubsub.publish(ORDERS_SUBSCRIPTION, {
-          ordersUpdated: {
-            mutation: 'UPDATED',
-            node: order
-          }
-        });
-        pubsub.publish(ORDER_SUBSCRIPTION, {
-          orderUpdated: {
-            mutation: 'UPDATED',
-            id: order.id,
-            node: order
-          }
-        });
-        return order;
+        const id = await context.Order.editOrderDetail(input);
+        if (id) {
+          const order = await context.Order.order(id);
+          pubsub.publish(ORDERS_SUBSCRIPTION, {
+            ordersUpdated: {
+              mutation: 'UPDATED',
+              node: order
+            }
+          });
+          pubsub.publish(ORDER_SUBSCRIPTION, {
+            orderUpdated: {
+              mutation: 'UPDATED',
+              id: order.id,
+              node: order
+            }
+          });
+          return true;
+        }
+        return false;
       } catch (e) {
         return e;
       }

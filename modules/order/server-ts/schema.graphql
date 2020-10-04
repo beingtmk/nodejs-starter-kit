@@ -100,7 +100,7 @@ extend type Mutation {
   # Delete a order
   deleteOrder(id: Int!): Boolean
   # Edit a order
-  editOrder(input: EditOrderInput!): Order # do editOrderDetail
+  editOrderDetail(input: EditOrderDetailInput): Boolean
   # Patch a order
   patchOrderState(orderId: Int, state: String): Boolean
 
@@ -155,11 +155,11 @@ input PatchOrderInput {
   state: String
 }
 
-# Input for editOrder Mutation
-input EditOrderInput {
-  id: Int!
-  state: String
-  orderDetails: [OrderDetailInput]
+# Input for EditOrderDetailInput Mutation
+input EditOrderDetailInput {
+  id: Int
+  listingCost: Int
+  orderOptions: OrderOptionsInput
 }
 
 extend type Subscription {

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Row, Col, Card } from 'antd';
 import { Link } from 'react-router-dom';
-import { DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
+import { DeleteIcon } from '@gqlapp/look-client-react';
 
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
+
+import EditCart from './EditCart';
 
 const Position1 = styled.h4`
   position: absolute;
@@ -50,7 +52,7 @@ const Align = styled.div`
 `;
 
 const CartItemComponent = props => {
-  const { item, edit, onDelete } = props;
+  const { item, onEdit, onDelete, currentUser } = props;
   console.log('cart item', props);
   var coverGrid = {
     xs: { span: 24 },
@@ -75,9 +77,9 @@ const CartItemComponent = props => {
     <Row span={24} style={{ paddingRight: '10px' }}>
       <Align>
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
-          {edit && (
+          {onEdit && (
             <Col span={8}>
-              <EditIcon color="default" onClick={() => console.log('edit in cartitemcompoent')} size="lg" />
+              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} />
             </Col>
           )}
 
@@ -122,14 +124,7 @@ const CartItemComponent = props => {
               <Card
                 style={{ height: props.mobile ? '180px' : '250px', borderWidth: '0px' }}
                 title={<h3>{item.title}</h3>}
-                // bodyStyle={{
-                //   padding: "40px 20px 20px 20px",
-                // }}
-                // extra={
-
-                // }
               >
-                {/* {console.log('props.mobile', props.mobile)} */}
                 <br />
                 <h3>
                   <Position1 bottom={'100'}>
@@ -155,8 +150,9 @@ const CartItemComponent = props => {
 
 CartItemComponent.propTypes = {
   item: PropTypes.object,
+  currentUser: PropTypes.object,
   onDelete: PropTypes.func,
-  edit: PropTypes.boolean,
+  onEdit: PropTypes.func,
   onSubmit: PropTypes.func,
   mobile: PropTypes.func
 };

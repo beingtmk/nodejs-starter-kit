@@ -15,6 +15,13 @@ const AddToCart = props => {
 
   const onSubmit = async (values, redirect = false) => {
     const max = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
+    const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
+    const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
+    const discount =
+      listing &&
+      listing.listingCostArray &&
+      listing.listingCostArray.length > 0 &&
+      listing.listingCostArray[0].discount;
     if (!currentUser) {
       history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
       return null;
@@ -35,7 +42,7 @@ const AddToCart = props => {
           title: listing && listing.title,
           imageUrl:
             'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
-          cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
+          cost: isDiscount ? parseInt(cost && (cost - cost * (discount / 100)).toFixed()) : parseInt(cost.toFixed(2)),
           orderOptions: {
             quantity: values.quantity
           }

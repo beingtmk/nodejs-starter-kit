@@ -6,6 +6,7 @@ import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 import Addresses from '@gqlapp/addresses-server-ts/sql';
 import { ORDER_STATES } from '@gqlapp/order-common';
+import ListingDAO from '@gqlapp/listing-server-ts/sql';
 
 // Give the knex object to objection.
 Model.knex(knex);
@@ -111,14 +112,12 @@ export default class OrderDAO extends Model {
       // }
 
       if (has(filter, 'consumerId') && filter.consumerId !== 0) {
-        const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
         queryBuilder.where(function() {
           this.where('consumer.id', filter.consumerId).whereNot('order.order_state_id', '=', orderState.id);
         });
       }
 
       if (has(filter, 'vendorId') && filter.vendorId !== 0) {
-        const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
         queryBuilder.where(function() {
           this.where('vendor.id', filter.vendorId).whereNot('order.order_state_id', '=', orderState.id);
         });
@@ -213,7 +212,7 @@ export default class OrderDAO extends Model {
         .where('order_state_id', orderState.id)
     )[0];
 
-    console.log(cart);
+    // console.log(cart);
     if (!cart) {
       // Create a STALE order
       knex('order').insert({
@@ -225,9 +224,9 @@ export default class OrderDAO extends Model {
       input.orderDetail.orderDetailStateId = orderState.id;
     }
 
-    console.log(input);
+    // console.log(input);
     const newOrderDetail = camelizeKeys(await OrderDetail.query().insertGraph(decamelizeKeys(input.orderDetail)));
-    console.log('coooooooooooooooooooooooooooooooooooo', newOrderDetail);
+    // console.log('coooooooooooooooooooooooooooooooooooo', newOrderDetail);
     return newOrderDetail.orderId;
   }
 
@@ -236,9 +235,22 @@ export default class OrderDAO extends Model {
     return res.id;
   }
 
-  public async editOrder(params: Orders & Identifier) {
-    const res = await OrderDAO.query().upsertGraph(decamelizeKeys(params));
-    return res.id;
+  public async editOrderDetail(input: OrderDetail) {
+    const orderDetail = camelizeKeys(await OrderDetail.query().findById(input.id));
+    const orderDetailUpdated = camelizeKeys(
+      await OrderDetail.query().upsertGraph(
+        decamelizeKeys({
+          id: orderDetail.id,
+          cost: input.listingCost,
+          orderOptions: {
+            id: input.orderOptions.id,
+            quantity: input.orderOptions.quantity
+          }
+        })
+      )
+    );
+    // console.log(orderDetail);
+    return orderDetail.orderId;
   }
 
   public async changeDateInCart(params: any) {

@@ -95,7 +95,7 @@ export const withListing = Component =>
       }
 
       return {
-        variables: { id: Number(id) }
+        variables: { id: Number(id) || props.modalId }
       };
     },
     props({ data: { loading, error, listing, subscribeToMore, updateQuery } }) {

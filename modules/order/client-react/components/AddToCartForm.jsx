@@ -14,7 +14,7 @@ const AddToCartFormSchema = {
 const ButtonGroup = Button.Group;
 
 const AddToCartForm = props => {
-  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned } = props;
+  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned, showBtn = true } = props;
   const disabled = max <= 0 || listingOwned || !currentUser;
 
   // console.log('props', props);
@@ -32,25 +32,31 @@ const AddToCartForm = props => {
         max={max}
       />
       <div align="right">
-        <Tooltip
-          title={
-            !currentUser
-              ? 'SignIn To Continue'
-              : disabled
-              ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
-              : 'Continue to Booking'
-          }
-        >
-          <ButtonGroup>
-            <Button size="large" onClick={handleSubmit} disabled={disabled}>
-              <Icon type="shopping" />
-              ADD TO CART
-            </Button>
-            <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
-              BOOK NOW
-            </Button>
-          </ButtonGroup>
-        </Tooltip>
+        {!showBtn ? (
+          <Button type={'primary'} onClick={handleSubmit}>
+            Save
+          </Button>
+        ) : (
+          <Tooltip
+            title={
+              !currentUser
+                ? 'SignIn To Continue'
+                : disabled
+                ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+                : 'Continue to Booking'
+            }
+          >
+            <ButtonGroup>
+              <Button size="large" onClick={handleSubmit} disabled={disabled}>
+                <Icon type="shopping" />
+                ADD TO CART
+              </Button>
+              <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
+                BOOK NOW
+              </Button>
+            </ButtonGroup>
+          </Tooltip>
+        )}
       </div>
     </Form>
   );
@@ -63,7 +69,8 @@ AddToCartForm.propTypes = {
   handleSubmit: PropTypes.func,
   max: PropTypes.number,
   fixedQuantity: PropTypes.number,
-  listingOwned: PropTypes.bool
+  listingOwned: PropTypes.bool,
+  showBtn: PropTypes.bool
 };
 
 const AddToCartWithFormik = withFormik({
