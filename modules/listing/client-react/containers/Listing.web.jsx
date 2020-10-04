@@ -21,7 +21,6 @@ import {
 
 const Listing = props => {
   const { subscribeToMore, editListing, duplicateListing, history } = props;
-  const filter = {};
 
   useEffect(() => {
     const subscribe = subscribeToListings(subscribeToMore, props.filter);
@@ -49,7 +48,7 @@ const Listing = props => {
     }
   };
   console.log('props', props);
-  return <ListingView onToggle={handleToggle} onDuplicate={handleDuplicate} filter={filter} {...props} />;
+  return <ListingView onToggle={handleToggle} onDuplicate={handleDuplicate} filter={{}} orderBy={{}} {...props} />;
 };
 
 Listing.propTypes = {

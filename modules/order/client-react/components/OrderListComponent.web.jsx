@@ -76,7 +76,11 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'consumer',
       key: 'consumer',
-      render: (text, record) => <a href={`/todo`}>{record.consumer && record.consumer.username}</a>
+      render: (text, record) => (
+        <a href={`/todo`} target={'_blank'} rel="noopener noreferrer">
+          {record.consumer && record.consumer.username}
+        </a>
+      )
     },
     {
       title: (
