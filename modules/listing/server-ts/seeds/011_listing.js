@@ -17,7 +17,7 @@ exports.seed = async function(knex) {
       const isDiscount = Math.random() < 0.6 ? false : true;
       const isActive = Math.random() < 0.6 ? false : true;
       const listing = await returnId(knex('listing')).insert({
-        user_id: Math.floor(Math.random() * 2) + 1,
+        user_id: Math.random() < 0.7 ? 2 : 1,
 
         title: `Listing ${ii + 1}`,
         description: `This is listing ${ii + 1}`,
@@ -37,7 +37,7 @@ exports.seed = async function(knex) {
       await returnId(knex('listing_option')).insert({
         listing_id: listing[0],
 
-        fixed_quantity: Math.floor(Math.random() * (50 - 1 + 1) + 1),
+        fixed_quantity: Math.random() < 0.6 ? -1 : Math.floor(Math.random() * (10 - 1 + 1) + 1),
 
         is_active: isActive
       });
