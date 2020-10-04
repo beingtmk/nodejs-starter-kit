@@ -24,7 +24,13 @@ export default (pubsub: any) => ({
   Query: {
     async listings(obj: any, { limit, after, orderBy, filter }: any, context: any) {
       const edgesArray: Edges[] = [];
-      const { total, listings, rangeValues } = await context.Listing.listingsPagination(limit, after, orderBy, filter);
+      const { total, listings, rangeValues } = await context.Listing.listingsPagination(
+        limit,
+        after,
+        orderBy,
+        filter,
+        context.req.identity.id
+      );
 
       const hasNextPage = total > after + limit;
 

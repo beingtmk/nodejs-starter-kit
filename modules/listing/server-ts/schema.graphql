@@ -130,6 +130,7 @@ input FilterListInput {
   lowerCost: Float
   upperCost: Float
 
+  showOwned: Boolean
   isFeatured: Boolean
   isNew: Boolean
   isDiscount: Boolean

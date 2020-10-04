@@ -105,7 +105,7 @@ export default class ListingDAO extends Model {
     };
   }
 
-  public async listingsPagination(limit: number, after: number, orderBy: any, filter: any) {
+  public async listingsPagination(limit: number, after: number, orderBy: any, filter: any, userId: number) {
     const queryBuilder = ListingDAO.query().eager(eager);
 
     if (orderBy && orderBy.column) {
@@ -140,6 +140,11 @@ export default class ListingDAO extends Model {
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
         queryBuilder.where(function() {
           this.where('listing_flag.is_discount', filter.isDiscount);
+        });
+      }
+      if (has(filter, 'showOwned') && filter.showOwned !== false) {
+        queryBuilder.where(function() {
+          this.whereNot('user.id', userId);
         });
       }
 
