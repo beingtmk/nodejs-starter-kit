@@ -76,7 +76,12 @@ AddToCartForm.propTypes = {
 const AddToCartWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
-      quantity: props.max > 0 ? (props.fixedQuantity === -1 ? 1 : props.fixedQuantity) : 0
+      quantity:
+        (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || props.max > 0
+          ? props.fixedQuantity === -1
+            ? 1
+            : props.fixedQuantity
+          : 0
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {

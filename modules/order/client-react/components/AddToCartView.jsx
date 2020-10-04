@@ -5,7 +5,7 @@ import { Card } from 'antd';
 import AddToCartForm from './AddToCartForm';
 
 const AddToCartView = props => {
-  const { currentUser, listing, onSubmit, showBtn } = props;
+  const { currentUser, listing, onSubmit, showBtn, item } = props;
   const listingOwned = (listing && listing.user && listing.user.id) === (currentUser && currentUser.id);
   return (
     <Card>
@@ -16,6 +16,7 @@ const AddToCartView = props => {
         fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
         listingOwned={listingOwned}
         showBtn={showBtn}
+        item={item}
       />
     </Card>
   );
@@ -25,6 +26,7 @@ AddToCartView.propTypes = {
   onSubmit: PropTypes.func,
   showBtn: PropTypes.bool,
   currentUser: PropTypes.object,
+  item: PropTypes.object,
   listing: PropTypes.object
 };
 

@@ -10,6 +10,8 @@ import AddToCartView from './AddToCartView';
 
 const EditCart = props => {
   const { loading, listing, currentUser, onEdit, item } = props;
+  const [visible, setVisible] = React.useState(false);
+
   const handleSubmit = values => {
     const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
     const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
@@ -27,8 +29,7 @@ const EditCart = props => {
     setVisible(false);
   };
 
-  const [visible, setVisible] = React.useState(false);
-
+  console.log(('props editcart', props));
   return (
     <>
       <EditIcon color="default" onClick={() => setVisible(true)} size="lg" />
@@ -48,7 +49,13 @@ const EditCart = props => {
           </div>
         )}
         {listing && (
-          <AddToCartView currentUser={currentUser} onSubmit={handleSubmit} showBtn={false} listing={listing} />
+          <AddToCartView
+            currentUser={currentUser}
+            onSubmit={handleSubmit}
+            showBtn={false}
+            listing={listing}
+            item={item}
+          />
         )}
       </Modal>
     </>

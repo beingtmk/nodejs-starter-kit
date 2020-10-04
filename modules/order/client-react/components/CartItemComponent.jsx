@@ -53,7 +53,7 @@ const Align = styled.div`
 
 const CartItemComponent = props => {
   const { item, onEdit, onDelete, currentUser } = props;
-  console.log('cart item', props);
+  // console.log('cart item', props);
   var coverGrid = {
     xs: { span: 24 },
     md: { span: 9 },
