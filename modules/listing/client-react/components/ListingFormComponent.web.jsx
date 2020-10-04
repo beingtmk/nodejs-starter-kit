@@ -416,7 +416,7 @@ const ListingWithFormik = withFormik({
     if (values.listingMedia.video.length > 0) {
       input.listingMedia = [...input.listingMedia, ...values.listingMedia.video];
     }
-    console.log(input);
+    // console.log(input);
     await onSubmit(input);
   },
   validate: values => validate(values, ListingFormSchema),

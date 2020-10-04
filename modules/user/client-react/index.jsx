@@ -32,7 +32,7 @@ const LogoutLink = withRouter(
           e.preventDefault();
           (async () => {
             await logout();
-            history.push('/');
+            history.push('/logout-page');
           })();
         }}
         className="nav-link"
@@ -103,6 +103,12 @@ export default new ClientModule({
       redirectOnLoggedIn
       redirect="/"
       component={loadable(() => import('./containers/Login').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path="/logout-page"
+      redirect="/"
+      component={loadable(() => import('./containers/LogoutPage').then(c => c.default))}
     />,
     <AuthRoute
       exact
