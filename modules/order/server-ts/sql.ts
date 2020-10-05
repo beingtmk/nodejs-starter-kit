@@ -32,7 +32,7 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[consumer, orderState, order_details.[vendor, order_options, order_delivery.address]]';
+const eager = '[consumer, order_state, order_details.[vendor, order_options, order_delivery.address, order_state]]';
 
 export default class OrderDAO extends Model {
   // private id: any;
@@ -55,7 +55,7 @@ export default class OrderDAO extends Model {
           to: 'user.id'
         }
       },
-      orderState: {
+      order_state: {
         relation: Model.BelongsToOneRelation,
         modelClass: OrderState,
         join: {
@@ -307,9 +307,46 @@ export default class OrderDAO extends Model {
     );
     if (order && orderState) {
       await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState.id }));
-      order.orderDetails.map(async oD => {
-        await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
-      });
+      await Promise.all(
+        order.orderDetails.map(async oD => {
+          await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
+          if (
+            (oD.orderState.state === ORDER_STATES.STALE || oD.orderState.state === ORDER_STATES.CANCELLED) &&
+            state === ORDER_STATES.INITIATED
+          ) {
+            const listing = camelizeKeys(
+              await ListingDAO.query()
+                .eager('[listing_detail]')
+                .findById(oD.modalId)
+            );
+            await ListingDAO.query().upsertGraph(
+              decamelizeKeys({
+                id: oD.modalId,
+                listingDetail: {
+                  id: listing.listingDetail.id,
+                  inventoryCount: listing.listingDetail.inventoryCount - oD.orderOptions.quantity
+                }
+              })
+            );
+          }
+          if (oD.orderState.state === ORDER_STATES.INITIATED && state === ORDER_STATES.CANCELLED) {
+            const listing = camelizeKeys(
+              await ListingDAO.query()
+                .eager('[listing_detail]')
+                .findById(oD.modalId)
+            );
+            await ListingDAO.query().upsertGraph(
+              decamelizeKeys({
+                id: oD.modalId,
+                listingDetail: {
+                  id: listing.listingDetail.id,
+                  inventoryCount: listing.listingDetail.inventoryCount + oD.orderOptions.quantity
+                }
+              })
+            );
+          }
+        })
+      );
     }
     return true;
   }
@@ -410,6 +447,14 @@ class OrderDetail extends Model {
         join: {
           from: 'order_detail.id',
           to: 'order_delivery.order_detail_id'
+        }
+      },
+      order_state: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: OrderState,
+        join: {
+          from: 'order_detail.order_detail_state_id',
+          to: 'order_state.id'
         }
       }
     };

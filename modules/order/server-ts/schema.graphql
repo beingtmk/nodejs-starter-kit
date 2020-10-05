@@ -27,6 +27,7 @@ type OrderDetail {
   imageUrl: String
   cost: Int
 
+  orderState: OrderState
   orderOptions: OrderOption
   orderDelivery: OrderDelivery
 }

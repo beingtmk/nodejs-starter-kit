@@ -35,6 +35,10 @@ fragment OrderInfo on Order {
       }
       type
     }
+    orderState {
+      id
+      state
+    }
   }
   createdAt
 }
