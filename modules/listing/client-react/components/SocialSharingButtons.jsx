@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { Button, Col, message, Modal, Card, Dropdown } from 'antd';
 import PropTypes from 'prop-types';
 import { Form, RenderField, Alert } from '@gqlapp/look-client-react';
@@ -10,6 +11,12 @@ const SocialSharingButtonsSchema = {
   inviteVal: [required]
 };
 
+const Img = styled.img`
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 const SocialSharingButtons = props => {
   const { values, handleSubmit, submitting, errors, twitterMessage, whatsappMessage, link, hideEmailButton } = props;
   const [visible, setVisible] = useState(false);
@@ -19,7 +26,7 @@ const SocialSharingButtons = props => {
     <Card bodyStyle={{ padding: '5px' }}>
       <a href={`http://www.facebook.com/share.php?u=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img src={require('./assets/facebook.svg')} height="30" width="30" align="centre" />
+          <Img src={require('./assets/facebook.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a
@@ -28,17 +35,17 @@ const SocialSharingButtons = props => {
         rel="noopener noreferrer"
       >
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img src={require('./assets/twitter.svg')} height="30" width="30" align="centre" />
+          <Img src={require('./assets/twitter.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img src={require('./assets/whatsapp.svg')} height="30" width="30" align="centre" />
+          <Img src={require('./assets/whatsapp.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img src={require('./assets/linkedin.svg')} height="30" width="30" align="centre" />
+          <Img src={require('./assets/linkedin.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       {!hideEmailButton && (
@@ -50,7 +57,7 @@ const SocialSharingButtons = props => {
           ghost
           style={{ fontSize: '22px' }}
         >
-          <img src={require('./assets/mail.svg')} height="30" width="30" align="centre" />
+          <Img src={require('./assets/mail.svg')} height="30" width="30" align="centre" />
         </Button>
       )}
     </Card>
