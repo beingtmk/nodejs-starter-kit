@@ -2,7 +2,7 @@ import ROUTES from '@gqlapp/listing-client-react/routes';
 
 // eslint-disable-next-line import/prefer-default-export
 export function ListingShareMessage(id, username, title) {
-  const link = process.env.WEBSITE_URL,
+  const link = window.location.href,
     listingLink = `${link}${ROUTES.listingDetailLink}${id}`;
 
   const whatsappMessage = `Hey, check out this listing - ${title} by ${username}, you can check it here ${listingLink}. Checkout other listings at ${link}.`;
