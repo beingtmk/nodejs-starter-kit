@@ -19,13 +19,7 @@ const SocialSharingButtons = props => {
     <Card bodyStyle={{ padding: '5px' }}>
       <a href={`http://www.facebook.com/share.php?u=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img
-            src={require('./assets/facebook.svg')}
-            height="30"
-            width="30"
-            align="centre"
-            className="marginR10 borderRadius9"
-          />
+          <img src={require('./assets/facebook.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a
@@ -34,35 +28,17 @@ const SocialSharingButtons = props => {
         rel="noopener noreferrer"
       >
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img
-            src={require('./assets/twitter.svg')}
-            height="30"
-            width="30"
-            align="centre"
-            className="marginR10 borderRadius9"
-          />
+          <img src={require('./assets/twitter.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img
-            src={require('./assets/whatsapp.svg')}
-            height="30"
-            width="30"
-            align="centre"
-            className="marginR10 borderRadius9"
-          />
+          <img src={require('./assets/whatsapp.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <img
-            src={require('./assets/linkedin.svg')}
-            height="30"
-            width="30"
-            align="centre"
-            className="marginR10 borderRadius9"
-          />
+          <img src={require('./assets/linkedin.svg')} height="30" width="30" align="centre" />
         </Button>
       </a>
       {!hideEmailButton && (
@@ -74,13 +50,7 @@ const SocialSharingButtons = props => {
           ghost
           style={{ fontSize: '22px' }}
         >
-          <img
-            src={require('./assets/mail.svg')}
-            height="30"
-            width="30"
-            align="centre"
-            className="marginR10 borderRadius9"
-          />
+          <img src={require('./assets/mail.svg')} height="30" width="30" align="centre" />
         </Button>
       )}
     </Card>

@@ -1,8 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col, Button, Icon } from 'antd';
+import { Row, Col, Button } from 'antd';
+
+const Img = styled.img`
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const Container = styled.div`
+  float: left;
+  width: 25%;
+  @media screen and (max-width: 600px) {
+    & {
+      width: 100%;
+    }
+  }
+`;
 
 const Footer10DataSource = {
   wrapper: { className: 'home-page-wrapper footer1-wrapper' },
@@ -32,12 +49,48 @@ const Footer10DataSource = {
               name: 'content0',
               children: (
                 <h1 style={{ fontSize: '25px', color: 'white' }}>
-                  {' '}
-                  <Icon type="twitter" /> {'  '}
-                  <Icon type="github" />
-                  {'  '} <Icon type="youtube" />
-                  {'  '}
-                  <Icon type="facebook" />
+                  <div align="center" className="row" style={{ display: 'flex' }}>
+                    <Container>
+                      <Img
+                        src={require('@gqlapp/listing-client-react/components/assets/facebook.svg')}
+                        height="30"
+                        width="30"
+                        align="centre"
+                      />
+                    </Container>
+                    <Container>
+                      <Img
+                        src={require('@gqlapp/listing-client-react/components/assets/youtube.png')}
+                        height="30"
+                        width="30"
+                        align="centre"
+                      />
+                    </Container>
+                    <Container>
+                      <Img
+                        src={require('@gqlapp/listing-client-react/components/assets/twitter.svg')}
+                        height="30"
+                        width="30"
+                        align="centre"
+                      />
+                    </Container>
+                    <Container>
+                      <Img
+                        src={require('@gqlapp/listing-client-react/components/assets/linkedin.svg')}
+                        height="30"
+                        width="30"
+                        align="centre"
+                      />
+                    </Container>
+                    <Container>
+                      <Img
+                        src={require('@gqlapp/listing-client-react/components/assets/instagram.png')}
+                        height="30"
+                        width="30"
+                        align="centre"
+                      />
+                    </Container>
+                  </div>
                 </h1>
               )
             }
