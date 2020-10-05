@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, message, Modal, Card, Dropdown, Icon } from 'antd';
+import { Button, Col, message, Modal, Card, Dropdown } from 'antd';
 import PropTypes from 'prop-types';
 import { Form, RenderField, Alert } from '@gqlapp/look-client-react';
 import { withFormik } from 'formik';
@@ -18,8 +18,14 @@ const SocialSharingButtons = props => {
   const sharingMenu = (
     <Card bodyStyle={{ padding: '5px' }}>
       <a href={`http://www.facebook.com/share.php?u=${link}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="primary" ghost size="large" style={{ fontSize: '22px' }}>
-          <Icon type="facebook" />
+        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+          <img
+            src={require('./assets/facebook.svg')}
+            height="30"
+            width="30"
+            align="centre"
+            className="marginR10 borderRadius9"
+          />
         </Button>
       </a>
       <a
@@ -27,12 +33,18 @@ const SocialSharingButtons = props => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Button shape="circle" type="primary" ghost size="large" style={{ fontSize: '22px' }}>
-          <Icon type="twitter" />
+        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+          <img
+            src={require('./assets/twitter.svg')}
+            height="30"
+            width="30"
+            align="centre"
+            className="marginR10 borderRadius9"
+          />
         </Button>
       </a>
       <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="primary" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
           <img
             src={require('./assets/whatsapp.svg')}
             height="30"
@@ -43,20 +55,32 @@ const SocialSharingButtons = props => {
         </Button>
       </a>
       <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${link}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="primary" ghost size="large" style={{ fontSize: '22px' }}>
-          <Icon type="linkedin" />
+        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+          <img
+            src={require('./assets/linkedin.svg')}
+            height="30"
+            width="30"
+            align="centre"
+            className="marginR10 borderRadius9"
+          />
         </Button>
       </a>
       {!hideEmailButton && (
         <Button
           shape="circle"
           onClick={() => setVisible(true)}
-          type="primary"
+          type="link"
           size="large"
           ghost
           style={{ fontSize: '22px' }}
         >
-          <Icon type="mail" />
+          <img
+            src={require('./assets/mail.svg')}
+            height="30"
+            width="30"
+            align="centre"
+            className="marginR10 borderRadius9"
+          />
         </Button>
       )}
     </Card>
