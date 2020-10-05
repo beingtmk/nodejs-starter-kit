@@ -72,7 +72,7 @@ class Banner extends React.PureComponent {
 }
 
 Banner.propTypes = {
-  children: PropTypes.jsx,
+  children: PropTypes.node,
   background: PropTypes.string,
   title: PropTypes.string
 };
