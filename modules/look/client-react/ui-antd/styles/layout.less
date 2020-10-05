@@ -1,6 +1,5 @@
-
 .form-layout-outer {
-  background-image: url("https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg");
+  background-image: url('https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -20,6 +19,10 @@
   width: 100%;
 }
 
+.home-content-layout {
+  margin-top: @navbar-height-large;
+}
+
 .form-card {
   width: 100%;
   max-width: 500px;
@@ -30,6 +33,9 @@
   .form-layout-outer {
     padding-left: 5px;
     padding-right: 5px;
+  }
+  .home-content-layout {
+    margin-top: @navbar-height-small;
   }
 }
 
