@@ -4,6 +4,7 @@ import { message } from 'antd';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
+import { NO_IMG } from '@gqlapp/listing-common';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart } from './OrderOperations';
@@ -22,6 +23,9 @@ const AddToCart = props => {
       listing.listingCostArray &&
       listing.listingCostArray.length > 0 &&
       listing.listingCostArray[0].discount;
+    const image = listing && listing.listingMedia && listing.listingMedia.filter(lM => lM.type === 'image');
+    const imageUrl = (image && image.length > 0 && image[0].url) || NO_IMG;
+
     if (!currentUser) {
       history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
       return null;
@@ -40,8 +44,7 @@ const AddToCart = props => {
           modalId: listing && listing.id,
 
           title: listing && listing.title,
-          imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQXZ8SesX28HePAR71L995TcEpkx91g6SudGMG9FSC97oCkKkSI&usqp=CAU',
+          imageUrl,
           cost: isDiscount ? parseInt(cost && (cost - cost * (discount / 100)).toFixed()) : parseInt(cost.toFixed(2)),
           orderOptions: {
             quantity: values.quantity

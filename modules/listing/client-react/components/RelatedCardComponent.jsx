@@ -47,7 +47,7 @@ const RelatedCardComponent = props => {
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'image');
   const listing_img = listing_media.length > 0 ? listing_media[0].url : NO_IMG;
-  // console.log(listing_img);
+  const fixedQuantity = listing && listing.listingOptions && listing.listingOptions.fixedQuantity;
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
   const discount =
     listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].discount;
@@ -59,6 +59,10 @@ const RelatedCardComponent = props => {
       history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
     }
 
+    if ((currentUser && currentUser.id) === (listing && listing.user && listing.user.id)) {
+      return message.error('Listing owned!');
+    }
+
     const input = {
       consumerId: currentUser && currentUser.id,
       orderDetail: {
@@ -68,9 +72,9 @@ const RelatedCardComponent = props => {
 
         title: listing && listing.title,
         imageUrl: listing_img,
-        cost: listing && listing.listingCostArray && listing.listingCostArray[0].cost,
+        cost: isDiscount ? parseInt(cost && (cost - cost * (discount / 100)).toFixed()) : parseInt(cost.toFixed(2)),
         orderOptions: {
-          quantity: 1
+          quantity: fixedQuantity === -1 ? 1 : fixedQuantity
         }
       }
     };

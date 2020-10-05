@@ -1,19 +1,19 @@
-import { Listing, Identifier } from './sql';
+import { Listing as Listings, Identifier } from './sql';
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 import settings from '@gqlapp/config';
 
 interface Edges {
   cursor: number;
-  node: Listing & Identifier;
+  node: Listings & Identifier;
 }
 
 interface ListingInput {
-  input: Listing;
+  input: Listings;
 }
 
 interface ListingInputWithId {
-  input: Listing & Identifier;
+  input: Listings & Identifier;
 }
 
 const LISTING_SUBSCRIPTION = 'listing_subscription';
@@ -22,19 +22,19 @@ const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
 
 export default (pubsub: any) => ({
   Query: {
-    async listings(obj: any, { limit, after, orderBy, filter }: any, context: any) {
+    async listings(obj: any, { limit, after, orderBy, filter }: any, { Listing, req: { identity } }: any) {
       const edgesArray: Edges[] = [];
-      const { total, listings, rangeValues } = await context.Listing.listingsPagination(
+      const { total, listings, rangeValues } = await Listing.listingsPagination(
         limit,
         after,
         orderBy,
         filter,
-        context.req.identity.id
+        identity && identity.id
       );
 
       const hasNextPage = total > after + limit;
 
-      listings.map((listing: Listing & Identifier, index: number) => {
+      listings.map((listing: Listings & Identifier, index: number) => {
         edgesArray.push({
           cursor: after + index,
           node: listing
@@ -66,7 +66,7 @@ export default (pubsub: any) => ({
       );
 
       const hasNextPage = total > after + limit;
-      listings.map((listing: Listing & Identifier, index: number) => {
+      listings.map((listing: Listings & Identifier, index: number) => {
         edgesArray.push({
           cursor: after + index,
           node: listing

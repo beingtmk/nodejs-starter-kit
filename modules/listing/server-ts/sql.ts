@@ -142,7 +142,7 @@ export default class ListingDAO extends Model {
           this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
-      if (has(filter, 'showOwned') && filter.showOwned !== false) {
+      if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
         queryBuilder.where(function() {
           this.whereNot('user.id', userId);
         });
