@@ -4,14 +4,14 @@ import { PageLayout } from '@gqlapp/look-client-react';
 
 import StaticPageComponent from './StaticPageComponent';
 
-const AboutUsView = () => {
+const FaqView = () => {
   return (
     <PageLayout type="home">
-      <StaticPageComponent title={'About Us'}>
-        <div style={{ height: '100vh' }}>This is About Us.</div>
+      <StaticPageComponent title={'FAQ'}>
+        <div style={{ height: '100vh' }}>This is Faq.</div>
       </StaticPageComponent>
     </PageLayout>
   );
 };
 
-export default AboutUsView;
+export default FaqView;

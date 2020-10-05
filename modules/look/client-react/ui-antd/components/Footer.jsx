@@ -77,7 +77,7 @@ const Footer10DataSource = {
         childWrapper: {
           children: [
             { href: '/contact', name: 'link0', children: 'Contact Us' },
-            { href: '#', name: 'link1', children: 'Email' }
+            { href: '/email', name: 'link1', children: 'Email' }
           ]
         }
       }
