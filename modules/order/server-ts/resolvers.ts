@@ -3,6 +3,7 @@ import { withFilter } from 'graphql-subscriptions';
 
 import { ORDER_STATES } from '@gqlapp/order-common';
 import { log } from '@gqlapp/core-common';
+import { LISTING_SUBSCRIPTION, LISTINGS_SUBSCRIPTION } from '@gqlapp/listing-server-ts/resolvers';
 
 import { Orders, Identifier } from './sql';
 import settings from '@gqlapp/config';
@@ -160,7 +161,11 @@ export default (pubsub: any) => ({
       }
     }),
     patchOrderState: withAuth(
-      async (obj: any, { orderId, state }: { orderId: number; state: string }, { Order, req: { identity } }: any) => {
+      async (
+        obj: any,
+        { orderId, state }: { orderId: number; state: string },
+        { Order, Listing, req: { identity } }: any
+      ) => {
         const prevOrder = await Order.order(orderId);
         const patch = await Order.patchOrderState(orderId, state);
         if (patch) {
@@ -178,6 +183,31 @@ export default (pubsub: any) => ({
               node: order
             }
           });
+
+          // Inventory count is changing
+          await Promise.all(
+            prevOrder.orderDetails.map(async pO => {
+              if (
+                (pO.orderState.state === ORDER_STATES.STALE || pO.orderState.state === ORDER_STATES.CANCELLED) &&
+                state === ORDER_STATES.INITIATED
+              ) {
+                const listing = await Listing.listing(pO.modalId);
+                pubsub.publish(LISTINGS_SUBSCRIPTION, {
+                  listingsUpdated: {
+                    mutation: 'UPDATED',
+                    node: listing
+                  }
+                });
+                pubsub.publish(LISTING_SUBSCRIPTION, {
+                  listingUpdated: {
+                    mutation: 'UPDATED',
+                    id: listing.id,
+                    node: listing
+                  }
+                });
+              }
+            })
+          );
           return true;
         } else {
           return false;

@@ -16,9 +16,9 @@ interface ListingInputWithId {
   input: Listings & Identifier;
 }
 
-const LISTING_SUBSCRIPTION = 'listing_subscription';
-const LISTINGS_SUBSCRIPTION = 'listings_subscription';
-const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
+export const LISTING_SUBSCRIPTION = 'listing_subscription';
+export const LISTINGS_SUBSCRIPTION = 'listings_subscription';
+export const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
 
 export default (pubsub: any) => ({
   Query: {
