@@ -70,9 +70,9 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.dropTable('review'),
     knex.schema.dropTable('modal_review'),
     knex.schema.dropTable('review_medium'),
-    knex.schema.dropTable('average_rating')
+    knex.schema.dropTable('average_rating'),
+    knex.schema.dropTable('review')
   ]);
 };

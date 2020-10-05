@@ -121,12 +121,12 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.dropTable('listing'),
     knex.schema.dropTable('listing_flag'),
     knex.schema.dropTable('listing_option'),
     knex.schema.dropTable('listing_detail'),
     knex.schema.dropTable('listing_medium'),
     knex.schema.dropTable('listing_cost'),
-    knex.schema.dropTable('listing_bookmark')
+    knex.schema.dropTable('listing_bookmark'),
+    knex.schema.dropTable('listing')
   ]);
 };
