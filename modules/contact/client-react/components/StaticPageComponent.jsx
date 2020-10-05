@@ -21,7 +21,7 @@ class Banner extends React.PureComponent {
   render() {
     const { ...currentProps } = this.props;
     const { children } = this.props;
-    console.log('static page', children);
+    // console.log('static page', children);
     const dataSource = Banner00DataSource;
     delete currentProps.isMobile;
     return (
