@@ -102,9 +102,9 @@ class ListingFormComponent extends React.Component {
                 <Field
                   name="sku"
                   component={RenderField}
-                  placeholder="Listing Sku"
+                  placeholder="Listing SKU"
                   type="text"
-                  label="Listing Sku"
+                  label="Listing SKU"
                   value={values.sku}
                 />
                 <Field
