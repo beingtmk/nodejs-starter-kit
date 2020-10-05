@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { message, Row, Col, Icon, Form, Card, Button } from 'antd';
+import { Tooltip, message, Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
@@ -134,7 +134,14 @@ class ListingFormComponent extends React.Component {
                   component={RenderField}
                   placeholder="Fixed Quantity (Enter -1 for false)"
                   type="number"
-                  label="Fixed Quantity"
+                  label={
+                    <>
+                      Fixed Quantity &nbsp;
+                      <Tooltip title={'Enter -1 for false'}>
+                        <Icon type="info-circle" />
+                      </Tooltip>
+                    </>
+                  }
                   min={-1}
                   max={values.listingDetail.inventoryCount}
                   value={values.listingOptions.fixedQuantity}
@@ -350,7 +357,7 @@ const ListingWithFormik = withFormik({
       },
       listingDetail: (props.listing && props.listing.listingDetail) || {
         id: null,
-        inventoryCount: null
+        inventoryCount: 1
       },
 
       listingMedia: (props.listing &&
