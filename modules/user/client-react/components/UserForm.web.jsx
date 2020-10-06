@@ -139,7 +139,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         value={passwordConfirmation}
       />
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <SubmitButton color="primary" type="submit" disabled={!load}>
+      <SubmitButton color="primary" type="submit" disabled={load}>
         {t('userEdit.form.btnSubmit')}
       </SubmitButton>
     </Form>
