@@ -49,22 +49,30 @@ const Footer10DataSource = {
             {
               name: "content0",
               children: (
-                <h1 style={{ fontSize: "25px", color: "white" }}>
-                  <a href="">
-                    <Icon type="twitter" />
-                  </a>{" "}
-                  <a href="">
-                    <Icon type="github" />
-                  </a>{" "}
-                  <a href="">
-                    <Icon type="youtube" />
-                  </a>
-                  {"  "}
-                  <a href="">
-                    {" "}
-                    <Icon type="facebook" />
-                  </a>
-                </h1>
+                <h4 style={{ fontSize: "25px", color: "white" }}>
+                  <Row>
+                    <Col span={6}>
+                      <a href="">
+                        <Icon type="twitter" />
+                      </a>
+                    </Col>
+                    <Col span={6}>
+                      <a href="">
+                        <Icon type="github" />
+                      </a>
+                    </Col>
+                    <Col span={6}>
+                      <a href="">
+                        <Icon type="youtube" />
+                      </a>
+                    </Col>
+                    <Col span={6}>
+                      <a href="">
+                        <Icon type="facebook" />
+                      </a>
+                    </Col>
+                  </Row>
+                </h4>
               ),
             },
           ],

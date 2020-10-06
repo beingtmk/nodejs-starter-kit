@@ -99,20 +99,20 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
             </Title>
 
             <div className="text-center" style={{ marginBottom: 16 }}>
-              <span style={{ lineHeight: "58px" }} class="user-forms-text">
+              <p style={{ lineHeight: "58px" }} class="user-forms-text">
                 {t("login.btn.notReg")}
-              </span>
-              <span style={{display:'inline'}}>
-                <NavLink
-                  className="btn btn-primary"
-                  to="/register"
-                  activeClassName="active"
-                  style={{ margin: 10 }}
-                >
-                  <Button type="primary">{t("login.btn.sign")}</Button>
-                </NavLink>
-              </span>
+              </p>
             </div>
+            <NavLink
+              className=""
+              style={{margin:0}}
+              to="/register"
+              activeClassName="active"
+            >
+              <Button icon='user-add' type="primary" block>
+                {t("login.btn.sign")}
+              </Button>
+            </NavLink>
           </Col>
           <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>
             <Title level={2} style={{ fontSize: "22px", fontWeight: "300" }}>

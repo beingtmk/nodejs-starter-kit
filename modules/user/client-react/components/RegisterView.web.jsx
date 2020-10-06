@@ -83,15 +83,14 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
               <span style={{ lineHeight: "58px" }} class="user-forms-text">
                 Already a user
               </span>
-              <NavLink
-                className="btn btn-primary"
-                to="/login"
-                activeClassName="active"
-                style={{ margin: 10 }}
-              >
-                <Button type="primary">sign In</Button>
-              </NavLink>
             </div>
+            <NavLink
+              className="btn btn-primary"
+              to="/login"
+              activeClassName="active"
+            >
+              <Button icon='login' block type="primary">sign In</Button>
+            </NavLink>
           </Col>
           <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>
             <Title level={2} style={{ fontSize: "22px", fontWeight: "300" }}>
