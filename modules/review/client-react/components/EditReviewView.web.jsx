@@ -17,7 +17,7 @@ const EditReviewView = props => {
     />
   );
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       {renderMetaData(t)}
       <br />
       <br />

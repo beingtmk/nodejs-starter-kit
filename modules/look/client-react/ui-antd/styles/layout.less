@@ -3,11 +3,11 @@
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  width: 100%;
+  // width: 100%;
   min-height: 100vh;
   height: fit-content;
-  padding-top: 100px;
-  padding-bottom: 24px;
+  margin: 0 -200%;
+  padding: 100px 220% 24px 220%;
 }
 .content-layout {
   position: relative;
@@ -42,5 +42,9 @@
 //Overriding antd
 .ant-card {
   border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.hideOverflow {
   overflow: hidden;
 }

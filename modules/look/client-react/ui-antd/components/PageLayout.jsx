@@ -73,7 +73,7 @@ class PageLayout extends React.Component {
       );
     };
     return (
-      <Layout id="page-layout">
+      <Layout id="page-layout" className="hideOverflow">
         {navBar !== false && <NavBar isMobile={this.state.isMobile} />}
         {__SERVER__ && __DEV__ && (
           <Helmet>

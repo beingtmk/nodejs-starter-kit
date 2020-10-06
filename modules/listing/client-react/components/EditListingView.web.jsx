@@ -32,42 +32,40 @@ const EditListingView = props => {
   ];
 
   return (
-    <>
-      <PageLayout>
-        {renderMetaData(t)}
-        {loading ? (
+    <PageLayout type="forms">
+      {renderMetaData(t)}
+      {loading ? (
+        <div align="center">
+          <br />
+          <br />
+          <br />
+          <Spin size="large" text={t('listing.loadMsg')} />
+        </div>
+      ) : (
+        <>
+          <br />
+          <br />
+          <Steps current={step}>
+            {steps.map(item => (
+              <Step key={item.title} title={item.title} />
+            ))}
+          </Steps>
+          <br />
+          <br />
           <div align="center">
-            <br />
-            <br />
-            <br />
-            <Spin size="large" text={t('listing.loadMsg')} />
+            <ListingFormComponent
+              step={step}
+              setStep={setStep}
+              cardTitle="Edit Listing"
+              t={t}
+              listing={listing}
+              onSubmit={onSubmit}
+              currentUser={currentUser}
+            />
           </div>
-        ) : (
-          <>
-            <br />
-            <br />
-            <Steps current={step}>
-              {steps.map(item => (
-                <Step key={item.title} title={item.title} />
-              ))}
-            </Steps>
-            <br />
-            <br />
-            <div align="center">
-              <ListingFormComponent
-                step={step}
-                setStep={setStep}
-                cardTitle="Edit Listing"
-                t={t}
-                listing={listing}
-                onSubmit={onSubmit}
-                currentUser={currentUser}
-              />
-            </div>
-          </>
-        )}
-      </PageLayout>
-    </>
+        </>
+      )}
+    </PageLayout>
   );
 };
 
@@ -76,7 +74,7 @@ EditListingView.propTypes = {
   loading: PropTypes.bool,
   listing: PropTypes.object,
   currentUser: PropTypes.object,
-  editListing: PropTypes.func
+  onSubmit: PropTypes.func
 };
 
 export default EditListingView;

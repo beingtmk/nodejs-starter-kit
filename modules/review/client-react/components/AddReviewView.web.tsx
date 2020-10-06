@@ -24,7 +24,7 @@ export interface AddReviewViewProps {
 const AddReviewView: React.FC<AddReviewViewProps> = props => {
   const { t, loading, addReview } = props;
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       {renderMetaData(t)}
       <br />
       <br />

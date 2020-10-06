@@ -30,7 +30,7 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
     }
   ];
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       {renderMetaData(t)}
       {loading ? (
         <div align="center">
