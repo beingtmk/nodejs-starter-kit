@@ -2,9 +2,10 @@ import { has } from 'lodash';
 import { Model, raw } from 'objection';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
+import { ORDER_STATES } from '@gqlapp/order-common';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
-import OrderDAO from '@gqlapp/order-server-ts/sql';
+import OrderDAO, { OrderState } from '@gqlapp/order-server-ts/sql';
 
 Model.knex(knex);
 
@@ -385,10 +386,13 @@ export default class ListingDAO extends Model {
   }
 
   public async canUserReview(listingId: number, userId: number) {
+    const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
     const orderQueryBuilder = OrderDAO.query()
       .eager('[order_details]')
-      .where('consumer_id', '=', userId);
-    orderQueryBuilder.where('order_detail.modal_id', '=', listingId);
+      .where('order.consumer_id', '=', userId)
+      .andWhere('order_detail.modal_id', '=', listingId);
+    orderQueryBuilder.whereNot('order.order_state_id', orderState.id);
+
     orderQueryBuilder.from('order').leftJoin('order_detail', 'order_detail.order_id', 'order.id');
 
     const orders = camelizeKeys(await orderQueryBuilder);

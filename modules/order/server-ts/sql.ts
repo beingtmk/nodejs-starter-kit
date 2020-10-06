@@ -399,7 +399,7 @@ export default class OrderDAO extends Model {
   }
 }
 
-class OrderState extends Model {
+export class OrderState extends Model {
   static get tableName() {
     return 'order_state';
   }

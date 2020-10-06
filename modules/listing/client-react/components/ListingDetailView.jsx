@@ -39,7 +39,17 @@ const BreadCrumbItem = Breadcrumb.Item;
 
 const ListingDetailView = props => {
   let carousel = React.useRef();
-  const { listing, loading, history, currentUser, handleBookmark, listingBookmarkStatus, t, onShare } = props;
+  const {
+    listing,
+    loading,
+    history,
+    currentUser,
+    handleBookmark,
+    listingBookmarkStatus,
+    t,
+    onShare,
+    canUserReview
+  } = props;
 
   const renderMetaData = () => (
     <Helmet
@@ -316,7 +326,7 @@ const ListingDetailView = props => {
                   modalId: listing && listing.id,
                   modalName: 'listing'
                 }}
-                // showAdd={false}
+                showAdd={canUserReview}
                 t={t}
               />
             </>
@@ -329,6 +339,7 @@ const ListingDetailView = props => {
 
 ListingDetailView.propTypes = {
   loading: PropTypes.bool.isRequired,
+  canUserReview: PropTypes.bool,
   listing: PropTypes.object,
   reviews: PropTypes.array,
   location: PropTypes.object.isRequired,

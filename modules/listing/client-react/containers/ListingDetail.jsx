@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 
-import { withListing, withCurrentUser, withToogleListingBookmark, withShareListingByEmail } from './ListingOperations';
+import {
+  withListing,
+  withCurrentUser,
+  withToogleListingBookmark,
+  withCanUserReview,
+  withShareListingByEmail
+} from './ListingOperations';
 
 import ListingDetailView from '../components/ListingDetailView';
 import { subscribeToListing } from './ListingSubscriptions';
@@ -54,4 +60,10 @@ ListingDetail.propTypes = {
   shareListingByEmail: PropTypes.func
 };
 
-export default compose(withListing, withCurrentUser, withToogleListingBookmark, withShareListingByEmail)(ListingDetail);
+export default compose(
+  withListing,
+  withCurrentUser,
+  withToogleListingBookmark,
+  withCanUserReview,
+  withShareListingByEmail
+)(ListingDetail);

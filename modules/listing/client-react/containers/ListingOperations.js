@@ -8,6 +8,7 @@ import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
+import CAN_USER_REVIEW from '../graphql/CanUserReview.graphql';
 import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
 
 // Mutation
@@ -162,6 +163,23 @@ export const withListingBookmarkStatus = Component =>
     props({ data: { loading, error, listingBookmarkStatus } }) {
       if (error) throw new Error(error);
       return { loading, listingBookmarkStatus };
+    }
+  })(Component);
+
+export const withCanUserReview = Component =>
+  graphql(CAN_USER_REVIEW, {
+    options: props => {
+      return {
+        variables: {
+          listingId: Number(props.listing && props.listing.id),
+          userId: props.currentUser && props.currentUser.id
+        },
+        fetchPolicy: 'network-only'
+      };
+    },
+    props({ data: { loading, error, canUserReview } }) {
+      if (error) throw new Error(error);
+      return { loading, canUserReview };
     }
   })(Component);
 
