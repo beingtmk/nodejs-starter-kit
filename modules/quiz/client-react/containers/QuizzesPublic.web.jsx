@@ -10,29 +10,28 @@ import QUIZZES_QUERY from "../graphql/QuizzesQuery.graphql";
 import QuizzesCatalogueView from "../components/QuizzesCatalogueView";
 
 // import QuizzesFilterView from '../components/QuizzesFilterView';
-// import { useQuizzesWithSubscription } from './withSubscription';
-// import {
-//   withFilterUpdating,
-//   withOrderByUpdating,
-//   withQuizzes,
-//   withQuizzesDeleting,
-//   withQuizzesState,
-//   updateQuizzesState
-// } from './UserOperations';
+import { useQuizzesWithSubscription } from "./withSubscription";
+import {
+  withQuizListState,
+  withCardQuizList,
+  withAdminCardQuizList,
+  withFeaturedQuizList,
+  withFilterUpdating,
+  updateQuizListState,
+  // withOrderByUpdating,
+} from "./QuizListOperations";
 
 const Quizzes = (props) => {
-  const {
-    t,
-    // , updateQuery, subscribeToMore
-  } = props;
-  // const filter = { isActive: true };
-  // const usersUpdated = useQuizzesWithSubscription(subscribeToMore, filter);
+  const { t, updateQuery, subscribeToMore, onIsPublicChange } = props;
+  onIsPublicChange(true);
+  const filter = { isPublic: false };
+  const quizzesUpdated = useQuizzesWithSubscription(subscribeToMore, filter);
 
-  // useEffect(() => {
-  //   if (usersUpdated) {
-  //     updateQuizzesState(usersUpdated, updateQuery);
-  //   }
-  // });
+  useEffect(() => {
+    if (quizzesUpdated) {
+      updateQuizzesState(quizzesUpdated, updateQuery);
+    }
+  });
 
   const renderMetaData = () => (
     <Helmet
@@ -45,6 +44,8 @@ const Quizzes = (props) => {
       ]}
     />
   );
+  console.log("props", props);
+  // return <h1>QUizzes</h1>;
   return <QuizzesCatalogueView {...props} />;
 };
 
@@ -57,26 +58,30 @@ Quizzes.propTypes = {
 };
 
 export default compose(
-  graphql(QUIZZES_QUERY, {
-    options: ({
-      // orderBy,
-      filter,
-    }) => {
-      return {
-        fetchPolicy: "network-only",
-        variables: {
-          // orderBy,
-          filter: { searchText: "", isPublic:true },
-        },
-      };
-    },
-    props({ data: { loading, quizzes, error } }) {
-      if (error) {
-        throw new Error(error);
-      }
-      return { loadingQuizzes: loading, quizzes };
-    },
-  })
+  withQuizListState,
+  withCardQuizList,
+  withFilterUpdating
+  // withOrderByUpdating
+  // graphql(QUIZZES_QUERY, {
+  //   options: ({
+  //     // orderBy,
+  //     filter,
+  //   }) => {
+  //     return {
+  //       fetchPolicy: "network-only",
+  //       variables: {
+  //         // orderBy,
+  //         filter: { searchText: "", isPublic:true },
+  //       },
+  //     };
+  //   },
+  //   props({ data: { loading, quizzes, error } }) {
+  //     if (error) {
+  //       throw new Error(error);
+  //     }
+  //     return { loadingQuizzes: loading, quizzes };
+  //   },
+  // })
   // graphql(QUIZZES_QUERY, {
   //   options: ({
   //     // orderBy,

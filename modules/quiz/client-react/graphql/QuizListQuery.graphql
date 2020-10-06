@@ -1,0 +1,22 @@
+#import "./QuizSmall.graphql"
+
+query quizList(
+  $limit: Int!
+  $after: Int
+  $filter: FilterQuizInput
+  $groupId: Int
+) {
+  quizList(limit: $limit, after: $after, filter: $filter, groupId: $groupId) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...QuizSmallFragment
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

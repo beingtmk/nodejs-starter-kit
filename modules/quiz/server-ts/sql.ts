@@ -86,7 +86,7 @@ export default class Quiz extends Model {
     // }
 
     if (filter) {
-      if (has(filter, "isPublic") && filter.isPublic !== "") {
+      if (has(filter, "isPublic") && filter.isPublic !== false) {
         queryBuilder.where(function() {
           this.where("quiz.is_public", filter.isPublic);
         });

@@ -7,11 +7,14 @@ import { Icon } from "antd";
 import { Route, NavLink } from "react-router-dom";
 import { MenuItem } from "@gqlapp/look-client-react";
 import resources from "./locales";
+import resolvers from "./resolvers";
 
 const NavLinkQuizListWithI18n = translate("quiz")(
   ({ t }: { t: TranslateFunction }) => (
     <NavLink to="/quiz-list" className="nav-link" activeClassName="active">
-      <span><Icon type="question-circle" /> {"Quiz"}</span>
+      <span>
+        <Icon type="question-circle" /> {"Quiz"}
+      </span>
     </NavLink>
   )
 );
@@ -120,5 +123,7 @@ export default new ClientModule({
       <NavLinkQuizCatalogueWithI18n />
     </MenuItem>,
   ],
+  resolver: [resolvers],
+
   localization: [{ ns: "quiz", resources }],
 });

@@ -1,10 +1,10 @@
-#import "./Quiz.graphql"
+#import "./QuizSmall.graphql"
 
-subscription quizzesUpdated($filter: FilterQuizInput) {
-  quizzesUpdated(filter: $filter) {
+subscription quizzesUpdated($filter: FilterQuizInput, $groupId: Int) {
+  quizzesUpdated(filter: $filter, groupId: $groupId) {
     mutation
     node {
-      ...QuizFragment
+      ...QuizSmallFragment
     }
   }
 }

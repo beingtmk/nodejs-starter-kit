@@ -1,0 +1,15 @@
+fragment QuizSmallFragment on Quiz {
+  id
+  userId
+  active
+  title
+  isPublic
+  description
+  isEditableByUser
+  cover
+  quizGroups {
+    quizId
+    id
+    groupId
+  }
+}

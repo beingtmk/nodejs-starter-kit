@@ -1,0 +1,5 @@
+#import "./QuizListState.client.graphql"
+
+mutation updateQuizListFilter($filter: FilterQuizInput!) {
+  updateQuizListFilter(filter: $filter) @client
+}

@@ -1,0 +1,6 @@
+fragment QuizListStateInfo on QuizListState {
+  filter {
+    isPublic
+    searchText
+  }
+}
