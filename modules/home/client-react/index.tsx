@@ -6,6 +6,7 @@ import loadable from "@loadable/component";
 import { PageLoading } from "@gqlapp/look-client-react";
 import { Route } from "react-router-dom";
 import resources from "./locales";
+import pMinDelay from 'p-min-delay'
 
 // const NavLinkWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
 //   <NavLink to="/home" className="nav-link" activeClassName="active">
@@ -14,7 +15,7 @@ import resources from "./locales";
 // ));
 
 const LoadableHome = loadable(() => import("./containers/Home"), {
-  fallback: <></>,
+  fallback: <PageLoading />,
 });
 
 export default new ClientModule({
