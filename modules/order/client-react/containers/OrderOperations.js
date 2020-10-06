@@ -202,12 +202,15 @@ export const withPatchOrderState = Component =>
   graphql(PATCH_ORDER_STATE, {
     props: ({ mutate }) => ({
       patchOrderState: async (orderId, state) => {
-        await mutate({
+        const {
+          data: { patchOrderState }
+        } = await mutate({
           variables: {
             orderId,
             state
           }
         });
+        return patchOrderState;
       }
     })
   })(Component);

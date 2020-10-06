@@ -2,6 +2,7 @@ import { has } from 'lodash';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { Model, raw } from 'objection';
 
+import { UserInputError } from 'apollo-server-errors';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 import Addresses from '@gqlapp/addresses-server-ts/sql';
@@ -306,10 +307,11 @@ export default class OrderDAO extends Model {
         .findById(orderId)
     );
     if (order && orderState) {
-      await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState.id }));
       await Promise.all(
         order.orderDetails.map(async oD => {
-          await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
+          if (oD.orderState.state !== ORDER_STATES.STALE && oD.orderState.state !== ORDER_STATES.CANCELLED) {
+            await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
+          }
           if (
             (oD.orderState.state === ORDER_STATES.STALE || oD.orderState.state === ORDER_STATES.CANCELLED) &&
             state === ORDER_STATES.INITIATED
@@ -319,15 +321,20 @@ export default class OrderDAO extends Model {
                 .eager('[listing_detail]')
                 .findById(oD.modalId)
             );
-            await ListingDAO.query().upsertGraph(
-              decamelizeKeys({
-                id: oD.modalId,
-                listingDetail: {
-                  id: listing.listingDetail.id,
-                  inventoryCount: listing.listingDetail.inventoryCount - oD.orderOptions.quantity
-                }
-              })
-            );
+            if (listing.listingDetail.inventoryCount - oD.orderOptions.quantity >= 0) {
+              await ListingDAO.query().upsertGraph(
+                decamelizeKeys({
+                  id: oD.modalId,
+                  listingDetail: {
+                    id: listing.listingDetail.id,
+                    inventoryCount: listing.listingDetail.inventoryCount - oD.orderOptions.quantity
+                  }
+                })
+              );
+              await OrderDetail.query().upsertGraph(decamelizeKeys({ id: oD.id, orderDetailStateId: orderState.id }));
+            } else {
+              throw new UserInputError('Item out of stock', { errors: 'Item out of stock' });
+            }
           }
           if (oD.orderState.state === ORDER_STATES.INITIATED && state === ORDER_STATES.CANCELLED) {
             const listing = camelizeKeys(
@@ -347,6 +354,7 @@ export default class OrderDAO extends Model {
           }
         })
       );
+      await OrderDAO.query().upsertGraph(decamelizeKeys({ id: order.id, orderStateId: orderState.id }));
     }
     return true;
   }

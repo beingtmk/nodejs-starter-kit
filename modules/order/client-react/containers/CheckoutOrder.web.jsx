@@ -83,16 +83,20 @@ const CheckoutOrder = props => {
 
     try {
       message.destroy();
-      message.error('Processing.');
-      patchOrderState(getCart.id, ORDER_STATES.INITIATED);
-      message.destroy();
-      message.success(`State change to ${ORDER_STATES.INITIATED}`);
-      if (history) {
-        return history.push(`${ROUTES.myOrder}`);
+      message.warning('Processing.');
+      const output = await patchOrderState(getCart.id, ORDER_STATES.INITIATED);
+      console.log(output);
+      if (output) {
+        message.destroy();
+        message.success(`State change to ${ORDER_STATES.INITIATED}`);
+        if (history) {
+          return history.push(`${ROUTES.myOrder}`);
+        }
       }
     } catch (e) {
       message.destroy();
-      message.error('Failed!');
+      e.message.replace('GraphQL error:', '');
+      message.error(e.message.replace('GraphQL error:', ''));
       throw new Error(e);
     }
   }
