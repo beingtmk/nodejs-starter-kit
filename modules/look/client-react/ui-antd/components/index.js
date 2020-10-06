@@ -40,6 +40,7 @@ export { default as Icon } from "./Icon";
 export { default as RenderContentField } from "./RenderContentField";
 export { default as CatalogueWithInfiniteScroll } from "./CatalogueWithInfiniteScroll";
 export { default as Loader } from "./Loader";
+export { default as PageLoading } from "./PageLoading";
 export { default as RenderTableLoading } from "./RenderTableLoading";
 
 import { onAppCreate } from "./NavBar";
