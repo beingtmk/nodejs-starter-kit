@@ -4,6 +4,7 @@ import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
+import OrderDAO from '@gqlapp/order-server-ts/sql';
 
 Model.knex(knex);
 
@@ -381,6 +382,17 @@ export default class ListingDAO extends Model {
         minCost: minCost.var
       }
     };
+  }
+
+  public async canUserReview(listingId: number, userId: number) {
+    const orderQueryBuilder = OrderDAO.query()
+      .eager('[order_details]')
+      .where('consumer_id', '=', userId);
+    orderQueryBuilder.where('order_detail.modal_id', '=', listingId);
+    orderQueryBuilder.from('order').leftJoin('order_detail', 'order_detail.order_id', 'order.id');
+
+    const orders = camelizeKeys(await orderQueryBuilder);
+    return orders.length > 0;
   }
 
   public async listingBookmarkStatus(listingId: number, userId: number) {

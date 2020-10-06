@@ -94,6 +94,7 @@ extend type Query {
     filter: FilterListInput
   ): Listings
   listingBookmarkStatus(listingId: Int, userId: Int): Boolean
+  canUserReview(listingId: Int, userId: Int): Boolean
 }
 
 extend type Mutation {

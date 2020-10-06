@@ -86,6 +86,9 @@ export default (pubsub: any) => ({
     }),
     listingBookmarkStatus: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
       return context.Listing.listingBookmarkStatus(listingId, userId || context.req.identity.id);
+    }),
+    canUserReview: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
+      return context.Listing.canUserReview(listingId, userId || context.req.identity.id);
     })
   },
   Mutation: {
