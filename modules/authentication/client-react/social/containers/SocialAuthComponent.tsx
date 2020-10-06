@@ -8,9 +8,10 @@ import { Button } from '@gqlapp/look-client-react';
 // min-width: 320px;
 const StyledButton = styled(({ backgroundColor, hoverColor, ...other }) => <Button {...other} />)`
   margin-top: 10px;
-  background-color: ${props => props.backgroundColor};
-  border-color: ${props => props.backgroundColor};
-  display: flex;
+  background-color: ${props => props.backgroundColor} !important;
+  border-color: ${props => props.backgroundColor} !important;
+  color: white !important;
+  display: flex !important;
   justify-content: flex-start;
   align-items: center;
 
