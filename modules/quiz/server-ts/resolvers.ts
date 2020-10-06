@@ -10,16 +10,42 @@ const QUIZ_WITH_ANSWERS_SUBSCRIPTION = "quiz_with_answers_subscription";
 
 export default (pubsub: any) => ({
   Query: {
-    // async quiz(obj, {id}, {Quiz}) {
-    //   const quiz = await Quiz.getQuiz(id);
-    //   // console.log('user profile', userProfile);
+    async quizList(
+      obj: any,
+      { filter, limit, after, groupId }: any,
+      context: any
+    ) {
+      console.log("QuizzesResol", groupId);
+      // return context.Group.groups();
+      const quizOutput = await context.Quiz.getQuizList(
+        filter,
+        limit,
+        after,
+        groupId
+      );
+      const { quizzes, total } = quizOutput;
 
-    //   if (quiz) {
-    //     return null;
-    //   }
+      const hasNextPage = total > after + limit;
 
-    //   return quiz;
-    // },
+      const edgesArray: any = [];
+      quizzes.map((item: any, i: number) => {
+        edgesArray.push({
+          cursor: after + i,
+          node: item,
+        });
+      });
+
+      const endCursor =
+        edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage,
+        },
+      };
+    },
     async quizzes(obj: any, { filter }: any, context: any) {
       return context.Quiz.getQuizzes(filter);
     },

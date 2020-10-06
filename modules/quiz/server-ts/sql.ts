@@ -69,14 +69,79 @@ export default class Quiz extends Model {
     };
   }
 
+  public async getQuizList(
+    filter: any,
+    limit: number,
+    after: number,
+    groupId: number
+  ) {
+    const queryBuilder = Quiz.query()
+      .withGraphFetched(eager)
+      .orderBy("id", "desc");
+
+    // if (groupId) {
+    //   queryBuilder.where("group.group_id", groupId);
+    // } else {
+    //   queryBuilder.whereNull("group.group_id");
+    // }
+
+    if (filter) {
+      if (has(filter, "isPublic") && filter.isPublic !== "") {
+        queryBuilder.where(function() {
+          this.where("quiz.is_public", filter.isPublic);
+        });
+      }
+      if (has(filter, "searchText") && filter.searchText !== "") {
+        queryBuilder.where(function() {
+          this.where(
+            knex.raw("LOWER(??) LIKE LOWER(?)", [
+              "quiz.title",
+              `%${filter.searchText}%`,
+            ])
+          ).orWhere(
+            knex.raw("LOWER(??) LIKE LOWER(?)", [
+              "quiz.description",
+              `%${filter.searchText}%`,
+            ])
+          );
+        });
+      }
+    }
+
+    queryBuilder
+      .from("quiz")
+      .leftJoin("section", "quiz.id", "section.quiz_id")
+      // .leftJoin("user", "user.email", "quiz_member.email")
+      // .leftJoin("user_profile", "user_profile.user_id", "user.id")
+      .groupBy("quiz.id")
+      .orderBy("id", "desc");
+
+    const allQuizzes = camelizeKeys(await queryBuilder);
+    const total = allQuizzes.length;
+
+    let quizzes = {};
+    if (limit && after) {
+      quizzes = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      quizzes = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      quizzes = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      quizzes = camelizeKeys(await queryBuilder);
+    }
+    return { quizzes, total };
+  }
+
   public async getQuizzes(filter: any) {
     const queryBuilder = Quiz.query().eager(eager);
 
-    if(filter){if (has(filter, 'isPublic') && filter.isPublic !== '') {
-      queryBuilder.where(function() {
-        this.where('quiz.is_public', filter.isPublic);
-      });
-    }}
+    if (filter) {
+      if (has(filter, "isPublic") && filter.isPublic !== "") {
+        queryBuilder.where(function() {
+          this.where("quiz.is_public", filter.isPublic);
+        });
+      }
+    }
     const res = camelizeKeys(await queryBuilder);
     return res;
   }
@@ -88,7 +153,7 @@ export default class Quiz extends Model {
       // .eager(eager)
       // .orderBy('id', 'desc')
     );
-    console.log('getQuizSQL', res);
+    console.log("getQuizSQL", res);
     return res;
   }
 

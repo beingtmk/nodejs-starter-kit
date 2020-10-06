@@ -10,7 +10,7 @@ type Quiz {
   description: String
   createdAt: String
   updatedAt: String
-  quizGroups:[GroupQuiz]
+  quizGroups: [GroupQuiz]
   user: User
   isEditableByUser: Boolean
   sections: [Section]
@@ -87,9 +87,32 @@ type UserWiseResult {
   attempts: [Attempt]
 }
 
+type QuizEdges {
+  node: Quiz
+  cursor: Int
+}
+
+type QuizList {
+  totalCount: Int
+  edges: [QuizEdges]
+  pageInfo: QuizPageInfo
+}
+
+type QuizPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
 extend type Query {
   #get quizzes
   quizzes(filter: FilterQuizInput): [Quiz]
+  #get quiz list
+  quizList(
+    limit: Int
+    after: Int
+    groupId: Int
+    filter: FilterQuizInput
+  ): QuizList
   #get quiz by id
   quiz(id: Int!): Quiz
   #get quiz attempt of a user
@@ -106,7 +129,7 @@ extend type Query {
 
 input FilterQuizInput {
   searchText: String
-  isPublic:Boolean
+  isPublic: Boolean
   # model: String
   # status: String
 }
@@ -165,7 +188,7 @@ input EditQuizInput {
   description: String
   cover: String
   isEditableByUser: Boolean
-  quizGroups:[AddQuizToGroupInput]
+  quizGroups: [AddQuizToGroupInput]
   sections: [EditSectionInput]
 }
 
@@ -234,13 +257,14 @@ input ChoiceInput {
 
 extend type Subscription {
   # modelUpdated: UpdateModelPayload
-  quizzesUpdated(filter: FilterQuizInput): UpdateQuizzesPayload
+  quizzesUpdated(filter: FilterQuizInput, groupId:Int): UpdateQuizzesPayload
   quizUpdated(id: Int): UpdateQuizPayload
   quizWithAnswersUpdated(id: Int): UpdateQuizPayload
 }
 
 type UpdateQuizzesPayload {
   mutation: String!
+  groupId: Int
   node: Quiz
 }
 
