@@ -87,7 +87,7 @@ const ListingsFilterComponent = props => {
                   <Select
                     name="sortBy"
                     defaultValue={orderBy.order}
-                    style={{ width: '150px' }}
+                    style={{ width: '170px' }}
                     onChange={e =>
                       e === ''
                         ? onOrderBy({ order: e, column: '' })

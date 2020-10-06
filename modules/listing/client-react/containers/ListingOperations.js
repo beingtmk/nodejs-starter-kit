@@ -169,9 +169,15 @@ export const withListingBookmarkStatus = Component =>
 export const withCanUserReview = Component =>
   graphql(CAN_USER_REVIEW, {
     options: props => {
+      let id = 0;
+      if (props.match) {
+        id = props.match.params.id;
+      } else if (props.navigation) {
+        id = props.navigation.state.params.id;
+      }
       return {
         variables: {
-          listingId: Number(props.listing && props.listing.id),
+          listingId: Number((props.listing && props.listing.id) || id),
           userId: props.currentUser && props.currentUser.id
         },
         fetchPolicy: 'network-only'

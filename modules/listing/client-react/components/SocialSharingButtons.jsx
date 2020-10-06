@@ -30,6 +30,15 @@ const SocialSharingButtons = props => {
         </Button>
       </a>
       <a
+        href={`http://www.reddit.com/submit?url=${link}&title=Checkout%20this%20Listing`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+          <Img src={require('./assets/reddit.svg')} height="30" width="30" align="centre" />
+        </Button>
+      </a>
+      <a
         href={`https://twitter.com/share?url=${twitterMessage.link}&amp;text=${twitterMessage.text}&amp;hashtags=${twitterMessage.hashtag}`}
         target="_blank"
         rel="noopener noreferrer"
