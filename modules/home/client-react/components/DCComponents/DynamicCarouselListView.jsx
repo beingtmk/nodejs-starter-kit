@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Spin, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
@@ -35,6 +36,12 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => <>{record.id}</>
+    },
+    {
+      title: <>Title</>,
+      dataIndex: 'title',
+      key: 'title',
+      render: (text, record) => <>{record.title}</>
     },
     {
       title: <>Image</>,

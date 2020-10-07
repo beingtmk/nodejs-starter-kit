@@ -28,6 +28,22 @@ class DynamicCarouselFormComponent extends React.Component {
           </h1>
         }
       >
+        <Field
+          name="title"
+          component={RenderField}
+          placeholder="Title"
+          type="text"
+          label="Title"
+          value={values.title}
+        />
+        <Field
+          name="description"
+          component={RenderField}
+          placeholder="Description"
+          type="textarea"
+          label="Description"
+          value={values.description}
+        />
         <Form onSubmit={handleSubmit}>
           <FormItem label={'Label'}>
             <Select
@@ -77,6 +93,8 @@ const DynamicCarouselWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: props => ({
     id: (props.dynamicCarousel && props.dynamicCarousel.id) || null,
+    title: (props.dynamicCarousel && props.dynamicCarousel.title) || '',
+    description: (props.dynamicCarousel && props.dynamicCarousel.description) || '',
     link: (props.dynamicCarousel && props.dynamicCarousel.link) || null,
     label: (props.dynamicCarousel && props.dynamicCarousel.label) || '',
     imageUrl: (props.dynamicCarousel && props.dynamicCarousel.imageUrl) || ''

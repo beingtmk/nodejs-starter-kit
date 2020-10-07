@@ -52,6 +52,8 @@ input FilterDynamicCarouselInput {
 
 input AddDynamicCarouselInput {
   id: Int
+  title: String
+  description: String
   label: String
   link: String
   imageUrl: String!
@@ -59,6 +61,8 @@ input AddDynamicCarouselInput {
 
 input EditDynamicCarouselInput {
   id: Int!
+  title: String
+  description: String
   label: String
   link: String
   imageUrl: String!
