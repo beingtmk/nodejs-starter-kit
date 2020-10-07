@@ -1,10 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+
 import { getChildrenToRender } from '../AntdLanding/utils';
+
+const Img = styled.img`
+  height: 300px;
+  width: 300px;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const Title = styled.div`
+  margin: 10px 0;
+  font-size: 25px;
+`;
 
 class Content extends React.PureComponent {
   render() {
@@ -20,20 +34,6 @@ class Content extends React.PureComponent {
             name: 'title',
             children: 'Image Banner',
             className: 'title-h1 featuredHome-title'
-          },
-          {
-            name: 'content',
-            className: 'content-underline',
-            children: (
-              <div align="center">
-                <div key="line" className="title-line-wrapper" align="left">
-                  <div
-                    className="title-line"
-                    // style={{ transform: "translateX(-64px)" }}
-                  />
-                </div>
-              </div>
-            )
           }
         ]
       },
@@ -80,19 +80,19 @@ class Content extends React.PureComponent {
                       <div {...item}>
                         {item.children.map((item, i) => {
                           return (
-                            <>
+                            <div align="center">
                               {item.link ? (
                                 <a href={item.link}>
-                                  {getChildrenToRender(item, i)}
-                                  <h2>{item.title}</h2>
+                                  <Img className={item.className} key={i} src={item.children} />
+                                  <Title>{item.title}</Title>
                                 </a>
                               ) : (
                                 <>
-                                  {getChildrenToRender(item, i)}
-                                  <h2>{item.title}</h2>
+                                  <Img className={item.className} key={i} src={item.children} />
+                                  <Title>{item.title}</Title>
                                 </>
                               )}
-                            </>
+                            </div>
                           );
                         })}
                       </div>

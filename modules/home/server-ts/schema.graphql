@@ -1,6 +1,8 @@
 # Entity
 type DynamicCarousel {
   id: Int
+  title: String
+  description: String
   label: String
   link: String
   imageUrl: String!
