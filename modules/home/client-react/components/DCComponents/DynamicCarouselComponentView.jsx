@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Icon } from 'antd';
-import QueueAnim from 'rc-queue-anim';
+import { Icon } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element } from 'rc-banner-anim';
-import { isImg } from '../AntdLanding/utils';
 import 'rc-banner-anim/assets/index.css';
 
 const { BgElement } = Element;
@@ -22,22 +20,11 @@ class Banner extends React.PureComponent {
             return {
               name: `elem${indx}`,
               BannerElement: { className: 'banner-user-elem' },
-              textWrapper: { className: 'banner1-text-wrapper' },
               bg: {
                 className: `bg`,
                 image: d.node && d.node.imageUrl,
                 link: d.node && d.node.link
-              },
-              title: {
-                className: 'banner1-title',
-                children:
-                  'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580223483/nodejs-starterkit/untitled_4.svg'
-              },
-              content: {
-                className: 'banner1-content',
-                children: 'An All JavaScript Solution For Your App Needs'
-              },
-              button: { className: 'banner1-button', children: 'Learn More' }
+              }
             };
           })
       }
@@ -49,25 +36,10 @@ class Banner extends React.PureComponent {
       const elem = item.BannerElement;
       const elemClassName = elem.className;
       delete elem.className;
-      const { bg, textWrapper, title, content, button } = item;
+      const { bg } = item;
       return (
         <Element key={i.toString()} {...elem} prefixCls={elemClassName}>
           <StyledBgElement key="bg" {...bg} />
-          <QueueAnim type={['bottom', 'top']} delay={200} key="text" {...textWrapper}>
-            <div key="logo" {...title}>
-              {typeof title.children === 'string' && title.children.match(isImg) ? (
-                <img src={title.children} width="100%" alt="img" />
-              ) : (
-                title.children
-              )}
-            </div>
-            <div key="content" {...content}>
-              {content.children}
-            </div>
-            <Button ghost key="button" {...button}>
-              {button.children}
-            </Button>
-          </QueueAnim>
         </Element>
       );
     });
@@ -91,7 +63,7 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <Icon type="down" />
+          <Icon type="down" onClick={() => window.scrollBy(0, window.innerHeight)} />
         </TweenOne>
       </div>
     );
