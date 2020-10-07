@@ -48,7 +48,7 @@ export default class Home extends Model {
 
       if (has(filter, 'label') && filter.label !== '') {
         queryBuilder.where(function() {
-          this.where('label', filter.label.toUpperCase());
+          this.where('label', filter.label);
         });
       }
 

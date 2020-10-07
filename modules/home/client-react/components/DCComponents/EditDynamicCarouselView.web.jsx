@@ -18,7 +18,7 @@ const EditDynamicCarouselView = props => {
   const { t, dynamicCarousel, loading, editDynamicCarousel, currentUser } = props;
 
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       {renderMetaData(t)}
       {loading ? (
         <div align="center">

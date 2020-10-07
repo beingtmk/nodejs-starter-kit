@@ -30,6 +30,7 @@ const limit =
 export const withDynamicCarousels = Component =>
   graphql(DYNAMIC_CAROUSELS_QUERY, {
     options: ({ orderBy, filter }) => {
+      console.log(filter);
       return {
         fetchPolicy: 'network-only',
         variables: { limit: limit, after: 0, orderBy, filter }

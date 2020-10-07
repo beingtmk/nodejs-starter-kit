@@ -16,7 +16,7 @@ const renderMetaData = t => (
 );
 const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser }) => {
   return (
-    <PageLayout>
+    <PageLayout type="forms">
       {renderMetaData(t)}
       {loading ? (
         <div align="center">

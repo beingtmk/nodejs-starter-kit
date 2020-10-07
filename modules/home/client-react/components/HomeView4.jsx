@@ -2,6 +2,7 @@ import React from 'react';
 // import Helmet from 'react-helmet';
 
 import { PageLayout } from '@gqlapp/look-client-react';
+import { LABEL } from '@gqlapp/home-common';
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
 // import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
@@ -11,6 +12,7 @@ import { enquireScreen } from 'enquire-js';
 // import Feature0 from './AntdLanding/Feature0';
 // import Feature3 from './AntdLanding/Feature3';
 import DynamicCarousel from '../containers/DCComponents/DynamicCarouselComponent';
+import ImageBanner from '../containers/DCComponents/ImageBannerComponent';
 
 let isMobile;
 enquireScreen(b => {
@@ -50,7 +52,8 @@ export default class HomeView4 extends React.Component {
     //   />
     // );
     const children = [
-      <DynamicCarousel id="Banner_0" key="Banner_0" isMobile={this.state.isMobile} />
+      <DynamicCarousel id="Banner_0" key="Banner_0" filter={{ label: LABEL[0] }} isMobile={this.state.isMobile} />,
+      <ImageBanner id="Banner_1" key="Banner_1" filter={{ label: LABEL[1] }} isMobile={this.state.isMobile} />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,
       // <Content5 id="Content5_0" key="Content5_0" isMobile={this.state.isMobile} />,
