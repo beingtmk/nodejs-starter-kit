@@ -15,8 +15,11 @@ const DynamicCarouselComponent = props => {
   return !loading && dynamicCarousels ? (
     <DynamicCarouselComponentView {...props} id="Banner1_0" key="Banner1_0" data={dynamicCarousels} />
   ) : (
-    <div align="center">
-      <Spin />
+    <div align="center" style={{ height: '100vh' }}>
+      <br />
+      <br />
+      <br />
+      <Spin size="large" />
     </div>
   );
 };

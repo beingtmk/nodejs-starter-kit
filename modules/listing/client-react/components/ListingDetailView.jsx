@@ -316,7 +316,11 @@ const ListingDetailView = props => {
             </Tabs>
           </div>
           <>
-            <ListingsCarousel filter={{ userId: listing.user.id }} currentUser={currentUser} />
+            <ListingsCarousel
+              filter={{ userId: listing.user.id }}
+              currentUser={currentUser}
+              title={'Similar Listing (same user)'}
+            />
           </>
           {listing && (
             <>

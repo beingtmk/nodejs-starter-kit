@@ -2,27 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Carousel as ADCarousel, Icon } from 'antd';
 
-// import '../resources/listingCatalogue.css';
-
-// function SampleNextArrow(props) {
-//   return (
-//     <div
-//       style={{ ...style, display: "block", background: "red", zIndex: "10" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
-
-// function SamplePrevArrow() {
-//   return (
-//     <div
-//       className={className}
-//       style={{ ...style, display: "block", background: "green", zIndex: "10" }}
-//       onClick={onClick}
-//     />
-//   );
-// }
-
 export default class Carousel extends React.Component {
   constructor(props) {
     super(props);
@@ -48,20 +27,12 @@ export default class Carousel extends React.Component {
     const nextSlide = () => {
       this.carousel.next();
     };
-    // const tileNo = this.props.tileNo || null;
-    const getSlides = length => {
-      if (length < 4) {
-        return length;
-      } else {
-        return 4;
-      }
-    };
     const status = {
       autoplay: this.props.autoplay,
       easing: 100000,
       infinite: true,
       speed: 900,
-      variableWidth: true,
+      // variableWidth: true,
       centerMode: true,
       className: 'slider variable-width',
       // slidesToScroll:3, // getSlides(this.props.data.length) === 0 ? '1' : getSlides(this.props.data.length),
@@ -134,7 +105,12 @@ export default class Carousel extends React.Component {
 }
 Carousel.propTypes = {
   settings: PropTypes.object.isRequired,
+  componentStyle: PropTypes.object,
+  componentProps: PropTypes.object,
+  node: PropTypes.object,
+  height: PropTypes.string,
   Compo: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
-  autoplay: PropTypes.bool
+  autoplay: PropTypes.bool,
+  showArrow: PropTypes.bool
 };

@@ -36,7 +36,8 @@ const ListingWraper = styled.div`
 `;
 
 const RelatedCardComponent = props => {
-  const { currentUser, history, addToCart } = props;
+  const { currentUser, history, addToCart, componentStyle } = props;
+
   let listing = props.listing;
   // console.log(props);
   const listing_id = listing && listing.id;
@@ -102,7 +103,7 @@ const RelatedCardComponent = props => {
   };
 
   return (
-    <ListingWraper>
+    <ListingWraper style={componentStyle}>
       <IfLoggedIn>
         <BookmarkComponent
           handleBookmark={() => bookmarkListing(listing.id, currentUser.id)}
@@ -159,8 +160,8 @@ const RelatedCardComponent = props => {
               </span>
             }
             description={
-              <Row style={{ height: '70px' }}>
-                <Col span={12}>
+              <Row style={{ height: '75px' }}>
+                <Col span={15}>
                   {/* <h4>&#8377;{cost} per day</h4> */}
                   {isDiscount && cost ? (
                     <>
@@ -181,7 +182,7 @@ const RelatedCardComponent = props => {
                   )}
                 </Col>
                 {isDiscount && (
-                  <Col align="right" span={12} style={{}}>
+                  <Col align="right" span={9}>
                     <Statistic
                       title=""
                       precision={2}
@@ -208,6 +209,7 @@ const RelatedCardComponent = props => {
 RelatedCardComponent.propTypes = {
   listing: PropTypes.object.isRequired,
   history: PropTypes.object,
+  componentStyle: PropTypes.object,
   addToCart: PropTypes.func,
   addOrRemoveListingBookmark: PropTypes.func,
   currentUser: PropTypes.object,
