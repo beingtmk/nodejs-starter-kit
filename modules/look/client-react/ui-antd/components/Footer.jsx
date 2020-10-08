@@ -4,6 +4,7 @@ import OverPack from "rc-scroll-anim/lib/ScrollOverPack";
 import QueueAnim from "rc-queue-anim";
 import { Row, Col, Button, Icon } from "antd";
 import { ContactFormConditions } from "@gqlapp/contact-client-react";
+import settings from "@gqlapp/config";
 
 const Footer10DataSource = {
   wrapper: { className: "home-page-wrapper footer1-wrapper" },
@@ -131,7 +132,16 @@ const Footer10DataSource = {
               name: "link2",
               children: "Make a suggestion",
             },
-            { href: "#", name: "link3", children: "Email" },
+            {
+              href: `mailto: Info@brain-Ayan.com`,
+              name: "link3",
+              children: "Info@brain-Ayan.com",
+            },
+            {
+              href: `tel: +919848524333`,
+              name: "link4",
+              children: `+919848524333`,
+            },
           ],
         },
       },
@@ -193,6 +203,7 @@ class Footer extends React.Component {
     });
 
   render() {
+    console.log("process.env", settings.contactUs);
     const { ...props } = this.props;
     const dataSource = Footer10DataSource;
 

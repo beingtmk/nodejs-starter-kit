@@ -10,3 +10,4 @@ export { default as pagination } from './pagination';
 export { default as upload } from './upload';
 export { default as chat } from './chat';
 export { default as auth } from './auth';
+export { default as contactUs } from './contact-us';

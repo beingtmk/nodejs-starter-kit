@@ -24,7 +24,7 @@ export default () => ({
       try {
         await mailer.sendMail({
           from: input.email,
-          to: process.env.EMAIL_SENDER || process.env.EMAIL_USER,
+          to: process.env.EMAIL_CONTACT_US || process.env.EMAIL_USER,
           subject: input.subject,
           html: `<p>${input.name} is sending the following message.</p><p>${input.content}</p>`
         });

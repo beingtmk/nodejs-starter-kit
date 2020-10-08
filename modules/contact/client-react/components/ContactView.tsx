@@ -34,7 +34,7 @@ const ContactView = (props: ContactViewProps) => {
     formLabel = ContactFormConditions[conditionParams].LABEL;
   }
   const renderContent = () => (
-    <Card style={{maxWidth:'700px', width:'100%'}}>
+    <Card style={{maxWidth:'700px', width:'100%', margin:'0 10px'}}>
       <CardTitle>
         <Icon type="global" /> {formTitle || t("form.title")}
       </CardTitle>
