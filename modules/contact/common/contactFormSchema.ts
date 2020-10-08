@@ -4,5 +4,5 @@ export const contactFormSchema = {
   name: [required, minLength(3)],
   email: [required, email],
   content: [required, minLength(10)],
-  subject: [required, minLength(5)]
+  subject: [required]
 };

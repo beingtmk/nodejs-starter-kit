@@ -21,12 +21,11 @@ export default () => ({
       if (!isEmpty(errors)) {
         throw new UserInputError(t('contact:validateError'), { errors });
       }
-
       try {
         await mailer.sendMail({
           from: input.email,
           to: process.env.EMAIL_SENDER || process.env.EMAIL_USER,
-          subject: 'New email through contact us page',
+          subject: input.subject,
           html: `<p>${input.name} is sending the following message.</p><p>${input.content}</p>`
         });
       } catch (e) {

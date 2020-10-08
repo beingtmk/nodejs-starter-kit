@@ -32,46 +32,54 @@ const BaseContactForm = ({
   formLabel,
   setFieldValue,
 }: FormikProps<ContactForm> &
-  ContactFormProps & { errors: { errorMsg: string } }) => (
-  <Form name="contact" onSubmit={handleSubmit}>
-    {status && status.sent && <Alert color="success">{t("successMsg")}</Alert>}
-    <Field
-      name="name"
-      component={RenderField}
-      type="text"
-      label={t("form.field.name")}
-      value={values.name}
-    />
-    <Field
-      name="email"
-      component={RenderField}
-      type="text"
-      label={t("form.field.email")}
-      value={values.email}
-    />
-    {/* <Field name="subject" component={RenderField} type="text" label={t('form.field.subject')} value={values.subject} /> */}
-    {formSubject && setFieldValue("subject", formSubject)}
-    <Field
-      name="content"
-      component={RenderField}
-      type="textarea"
-      label={formLabel || t("form.field.content")}
-      value={values.content}
-    />
-    <div className="text-center">
-      {errors && errors.errorMsg && (
-        <Alert color="error">{errors.errorMsg}</Alert>
+  ContactFormProps & { errors: { errorMsg: string } }) => {
+  return (
+    <Form name="contact" onSubmit={handleSubmit}>
+      {status && status.sent && (
+        <Alert color="success">{t("successMsg")}</Alert>
       )}
-      <Button block color="primary" type="submit">
-        <Icon type="mail" /> {t("form.btnSubmit")}
-      </Button>
-    </div>
-  </Form>
-);
+      <Field
+        name="name"
+        component={RenderField}
+        type="text"
+        label={t("form.field.name")}
+        value={values.name}
+      />
+      <Field
+        name="email"
+        component={RenderField}
+        type="text"
+        label={t("form.field.email")}
+        value={values.email}
+      />
+      {/* <Field name="subject" component={RenderField} type="text" label={t('form.field.subject')} value={values.subject} /> */}
+      <Field
+        name="content"
+        component={RenderField}
+        type="textarea"
+        label={formLabel || t("form.field.content")}
+        value={values.content}
+      />
+      <div className="text-center">
+        {errors && errors.errorMsg && (
+          <Alert color="error">{errors.errorMsg}</Alert>
+        )}
+        <Button block color="primary" type="submit" onClick={handleSubmit}>
+          <Icon type="mail" /> {t("form.btnSubmit")}
+        </Button>
+      </div>
+    </Form>
+  );
+};
 
 const ContactFormWithFormik = withFormik<ContactFormProps, ContactForm>({
   enableReinitialize: true,
-  mapPropsToValues: () => ({ content: "", email: "", name: "", subject: "" }),
+  mapPropsToValues: (props) => ({
+    content: "",
+    email: "",
+    name: "",
+    subject: props.formSubject || "",
+  }),
   async handleSubmit(
     values,
     { resetForm, setErrors, setStatus, props: { onSubmit } }

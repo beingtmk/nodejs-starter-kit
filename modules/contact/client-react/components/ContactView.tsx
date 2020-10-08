@@ -25,16 +25,16 @@ interface ContactViewProps {
 const ContactView = (props: ContactViewProps) => {
   const { t, conditionParams } = props;
 
-  var formTitle:string;
-  var formSubject:string;
-  var formLabel:string;
+  var formTitle: string;
+  var formSubject: string;
+  var formLabel: string;
   if (conditionParams) {
     formTitle = ContactFormConditions[conditionParams].HEADING;
     formSubject = ContactFormConditions[conditionParams].SUBJECT;
     formLabel = ContactFormConditions[conditionParams].LABEL;
   }
   const renderContent = () => (
-    <Card>
+    <Card style={{maxWidth:'700px', width:'100%'}}>
       <CardTitle>
         <Icon type="global" /> {formTitle || t("form.title")}
       </CardTitle>
@@ -43,25 +43,17 @@ const ContactView = (props: ContactViewProps) => {
   );
   return (
     <PageLayout type="forms">
-      <Grid.Provider breakpoints={{ sm: "-500", md: "501-768", lg: "+769" }}>
-        <Grid.Bounds direction="vertical">
-          <Helmet
-            title={`${settings.app.name} - ${t("title")}`}
-            meta={[
-              {
-                name: "description",
-                content: `${settings.app.name} - ${t("meta")}`,
-              },
-            ]}
-          />
-          <Grid.Box sm={{ hidden: "true" }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: "true" }} lg={{ hidden: "true" }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      <Helmet
+        title={`${settings.app.name} - ${formTitle || t("title")}`}
+        meta={[
+          {
+            name: "description",
+            content: `${settings.app.name} - ${formLabel || t("meta")}`,
+          },
+        ]}
+      />
+
+      {renderContent()}
     </PageLayout>
   );
 };
