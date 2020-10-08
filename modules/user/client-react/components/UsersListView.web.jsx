@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Table, DeleteIcon } from '@gqlapp/look-client-react';
+import { Table, DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
 
 const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
   const [errors, setErrors] = useState([]);
@@ -95,7 +95,13 @@ const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
       title: t('users.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <DeleteIcon onClick={() => handleDeleteUser(record.id)}>{/* {t('users.btn.delete')} */}</DeleteIcon>
+        <div>
+          <Link to={`/users/${record.id}`}>
+            <EditIcon />
+          </Link>
+          &nbsp;&nbsp;
+          <DeleteIcon onClick={() => handleDeleteUser(record.id)} />
+        </div>
       )
     }
   ];
