@@ -5,6 +5,9 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col, Button } from 'antd';
 
+// eslint-disable-next-line import/no-named-default
+import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';
+
 const Img = styled.img`
   &:hover {
     transform: scale(1.2);
@@ -104,7 +107,7 @@ const Footer10DataSource = {
         className: 'block',
         title: { children: 'About Company' },
         childWrapper: {
-          children: [{ name: 'link0', href: '/about-us', children: 'About Us' }]
+          children: [{ name: 'link0', href: PAGES_ROUTES.aboutUs, children: 'About Us' }]
         }
       },
       {
@@ -115,9 +118,9 @@ const Footer10DataSource = {
         title: { children: 'Static Pages' },
         childWrapper: {
           children: [
-            { href: '/faq', name: 'link0', children: 'FAQ' },
-            { name: 'link1', href: '/terms-of-service', children: 'Terms Of Service' },
-            { name: 'link2', href: '/privacy-policy', children: 'Privacy Policy' }
+            { href: PAGES_ROUTES.faq, name: 'link0', children: 'FAQ' },
+            { name: 'link1', href: PAGES_ROUTES.termsOfService, children: 'Terms Of Service' },
+            { name: 'link2', href: PAGES_ROUTES.privacyPolicy, children: 'Privacy Policy' }
           ]
         }
       },
@@ -130,7 +133,7 @@ const Footer10DataSource = {
         childWrapper: {
           children: [
             { href: '/contact', name: 'link0', children: 'Contact Us' },
-            { href: '/email', name: 'link1', children: 'Email' }
+            { href: PAGES_ROUTES.email, name: 'link1', children: 'Email' }
           ]
         }
       }
