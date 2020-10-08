@@ -185,6 +185,75 @@ export class User extends Model {
     return res;
   }
 
+
+  async getUserForQuizSubscription(id) {
+    return camelizeKeys(
+      await knex
+        .select(
+          'u.id',
+          'u.username',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          // // 'up.first_name',
+          // // 'up.last_name',
+          // // 'ca.serial',
+          // // 'fa.fb_id',
+          // // 'fa.display_name AS fbDisplayName',
+          // // 'lna.ln_id',
+          // // 'lna.display_name AS lnDisplayName',
+          // // 'gha.gh_id',
+          // // 'gha.display_name AS ghDisplayName',
+          // // 'ga.google_id',
+          // // 'ga.display_name AS googleDisplayName'
+        )
+        .from('user AS u')
+        // .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        // .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
+        // .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
+        // .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
+        // .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
+        // .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
+        .where('u.id', '=', id)
+        .first()
+    );
+  }
+
+  async getUsersWithIdArray(idArray){
+    return camelizeKeys(
+      await knex
+        .select(
+          'u.id',
+          'u.username',
+          'u.role',
+          'u.is_active',
+          'u.email',
+          'up.first_name',
+          'up.last_name',
+          'ca.serial',
+          'fa.fb_id',
+          'fa.display_name AS fbDisplayName',
+          'lna.ln_id',
+          'lna.display_name AS lnDisplayName',
+          'gha.gh_id',
+          'gha.display_name AS ghDisplayName',
+          'ga.google_id',
+          'ga.display_name AS googleDisplayName'
+        )
+        .from('user AS u')
+        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
+        .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
+        .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
+        .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
+        .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
+        .where(function() {
+          this.whereIn('u.id', idArray);
+        })
+    );
+  }
+
+
   async register(params) {
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
     const res = await User.query()
