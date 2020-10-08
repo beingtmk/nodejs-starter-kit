@@ -11,10 +11,11 @@ import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';
 const Img = styled.img`
   &:hover {
     transform: scale(1.2);
+    cursor: pointer;
   }
 `;
 
-const Container = styled.div`
+const Container = styled.a`
   float: left;
   width: 25%;
   @media screen and (max-width: 600px) {
@@ -53,41 +54,51 @@ const Footer10DataSource = {
               children: (
                 <h1 style={{ fontSize: '25px', color: 'white' }}>
                   <div align="center" className="row" style={{ display: 'flex' }}>
-                    <Container>
+                    <Container href="https://google.com" target="_blank">
                       <Img
-                        src={require('@gqlapp/listing-client-react/components/assets/facebook.svg')}
+                        src={
+                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170780/ypoeagxzxrcwfnhxydir.svg'
+                        }
                         height="30"
                         width="30"
                         align="centre"
                       />
                     </Container>
-                    <Container>
+                    <Container href="https://google.com" target="_blank">
                       <Img
-                        src={require('@gqlapp/listing-client-react/components/assets/youtube.png')}
+                        src={
+                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170807/nqwlv8ulatkj8qnml6uq.png'
+                        }
                         height="30"
                         width="30"
                         align="centre"
                       />
                     </Container>
-                    <Container>
+                    <Container href="https://google.com" target="_blank">
                       <Img
-                        src={require('@gqlapp/listing-client-react/components/assets/twitter.svg')}
+                        src={
+                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170822/ieq0oplvvympjnwqdhvm.svg'
+                        }
                         height="30"
                         width="30"
                         align="centre"
                       />
                     </Container>
-                    <Container>
+                    <Container href="https://google.com" target="_blank">
                       <Img
-                        src={require('@gqlapp/listing-client-react/components/assets/linkedin.svg')}
+                        src={
+                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170837/q0hfnknlfdrsnlfq6chx.svg'
+                        }
                         height="30"
                         width="30"
                         align="centre"
                       />
                     </Container>
-                    <Container>
+                    <Container href="https://google.com" target="_blank">
                       <Img
-                        src={require('@gqlapp/listing-client-react/components/assets/instagram.png')}
+                        src={
+                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170860/twtea5mc1wxflssxbwx9.png'
+                        }
                         height="30"
                         width="30"
                         align="centre"

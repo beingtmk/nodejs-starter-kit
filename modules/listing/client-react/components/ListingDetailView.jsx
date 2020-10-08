@@ -115,7 +115,7 @@ const ListingDetailView = props => {
         </a>
       );
     },
-    autoplay: true,
+    // autoplay: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,

@@ -26,7 +26,12 @@ const SocialSharingButtons = props => {
     <Card bodyStyle={{ padding: '5px' }}>
       <a href={`http://www.facebook.com/share.php?u=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <Img src={require('./assets/facebook.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170780/ypoeagxzxrcwfnhxydir.svg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       </a>
       <a
@@ -35,7 +40,12 @@ const SocialSharingButtons = props => {
         rel="noopener noreferrer"
       >
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <Img src={require('./assets/reddit.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170934/lfibgc3woiwkbeubo6w5.svg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       </a>
       <a
@@ -44,17 +54,32 @@ const SocialSharingButtons = props => {
         rel="noopener noreferrer"
       >
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <Img src={require('./assets/twitter.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170822/ieq0oplvvympjnwqdhvm.svg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       </a>
       <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <Img src={require('./assets/whatsapp.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171220/gtd0x3gg3vcmirxdwr19.jpg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       </a>
       <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${link}`} target="_blank" rel="noopener noreferrer">
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
-          <Img src={require('./assets/linkedin.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170837/q0hfnknlfdrsnlfq6chx.svg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       </a>
       {!hideEmailButton && (
@@ -66,7 +91,12 @@ const SocialSharingButtons = props => {
           ghost
           style={{ fontSize: '22px' }}
         >
-          <Img src={require('./assets/mail.svg')} height="30" width="30" align="centre" />
+          <Img
+            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171054/pueo2x3cpojocidoeou8.svg'}
+            height="30"
+            width="30"
+            align="centre"
+          />
         </Button>
       )}
     </Card>
