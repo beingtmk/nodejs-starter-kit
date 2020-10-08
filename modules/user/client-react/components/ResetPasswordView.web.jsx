@@ -4,7 +4,7 @@ import { Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ResetPasswordForm from './ResetPasswordForm';
@@ -24,7 +24,7 @@ const ResetPasswordView = ({ t, onSubmit }) => {
 
   const renderContent = () => (
     <>
-      <h1>{t('resetPass.form.title')}</h1>
+      <Heading type="1">{t('resetPass.form.title')}</Heading>
       <ResetPasswordForm onSubmit={onSubmit} />
     </>
   );

@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Pagination, DeleteIcon, AddButton, Row, Col } from '@gqlapp/look-client-react';
+import { PageLayout, Table, Pagination, DeleteIcon, AddButton, Row, Col, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -61,7 +61,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
     <>
       <Row>
         <Col span={12}>
-          <h2>{t('list.subTitle')}</h2>
+          <Heading type="2">{t('list.subTitle')}</Heading>
         </Col>
         <Col span={12}>
           <Row type="flex" justify="end">
@@ -71,6 +71,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
           </Row>
         </Col>
       </Row>
+      <br />
       {/* Render loader */}
       {loading && !posts && <Loading t={t} />}
       {/* Render main post content */}

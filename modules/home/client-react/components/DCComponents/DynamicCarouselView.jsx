@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import { Row, Col, Button, PageLayout } from '@gqlapp/look-client-react';
+import { Row, Col, Button, PageLayout, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import DynamicCarouselFilterView from './DynamicCarouselFilterView';
@@ -26,7 +26,7 @@ const DynamicCarouselView = props => {
       {renderMetaData()}
       <Row>
         <Col span={12}>
-          <h2>Dynamic Carousel</h2>
+          <Heading type="2">Dynamic Carousel</Heading>
         </Col>
         <Col span={12} align="right">
           <Link to="/new/dynamic-carousel">

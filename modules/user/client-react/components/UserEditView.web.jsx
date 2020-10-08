@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, Card, Underline } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UserForm from './UserForm';
@@ -27,11 +27,9 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
   const renderContent = () => (
     <Card>
       <Link to={currentUser && currentUser.role === 'admin' ? '/users' : '/profile'}>Back</Link>
-      <Underline>
-        <h2>
-          {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
-        </h2>
-      </Underline>
+      <Heading type="2">
+        {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
+      </Heading>
       <UserForm
         onSubmit={onSubmit}
         shouldDisplayRole={isNotSelf}

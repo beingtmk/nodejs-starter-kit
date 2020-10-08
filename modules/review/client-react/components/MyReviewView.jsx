@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 
 import settings from '@gqlapp/config';
 import { MODAL } from '@gqlapp/review-common';
-import { Form, FormItem, Select, Option } from '@gqlapp/look-client-react';
+import { Form, FormItem, Select, Option, Heading } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
@@ -43,9 +43,9 @@ const MyReviewView = props => {
       {renderMetaData(t)}
       <Row>
         <Col span={12}>
-          <h1>
+          <Heading type="1">
             <Icon type="book" /> &nbsp; My Reviews
-          </h1>
+          </Heading>
         </Col>
         <Col span={12}>
           <Row type="flex" justify="end">
