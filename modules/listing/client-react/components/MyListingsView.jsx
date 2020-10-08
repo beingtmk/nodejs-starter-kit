@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Icon, Button, Spin } from 'antd';
 
-import { Row, Col, PageLayout } from '@gqlapp/look-client-react';
+import { Row, Col, PageLayout, Heading } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import settings from '../../../../settings';
@@ -40,9 +40,9 @@ const MyListingsView = props => {
     <>
       <Row>
         <Col span={12}>
-          <h2 className="headingTop">
+          <Heading type="2">
             <Icon type="solution" /> &nbsp; My Listings
-          </h2>
+          </Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>

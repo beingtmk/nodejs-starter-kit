@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
@@ -69,10 +69,10 @@ const MyOrdersView = props => {
       {renderMetaData()}
       <Row>
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
-          <h2 className="headingTop">
+          <Heading type="2" className="headingTop">
             <Icon type="solution" />
             &nbsp; My Orders
-          </h2>
+          </Heading>
           <br />
         </Col>
         <Col md={{ span: 14 }} sm={{ span: 17 }} xs={{ span: 24 }}>

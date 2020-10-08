@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Spin, Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout, AddButton } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
@@ -31,10 +31,10 @@ const ListingView: React.FC<ListingViewProps> = props => {
       {renderMetaData(t)}
       <Row>
         <Col span={22}>
-          <h2>
+          <Heading type="2">
             <Icon type="solution" /> &nbsp;
             {t('list.subTitle')}
-          </h2>
+          </Heading>
         </Col>
         <Col span={2} align="right">
           <Link to={ROUTES.add}>
