@@ -17,12 +17,6 @@ import resources from './locales';
 //   </NavLink>
 // ));
 
-const NavLinkDynamicCarouselComponentWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/component/dynamic-carousel" className="nav-link" activeClassName="active">
-    {'Dynamic Carousel Component'}
-  </NavLink>
-));
-
 const NavLinkDynamicCarouselWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
   <NavLink to="/dynamic-carousel" className="nav-link" activeClassName="active">
     Dynamic Carousel
@@ -33,11 +27,11 @@ const { SubMenu } = Menu;
 
 export default new ClientModule({
   route: [
-    <Route exact path="/" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
+    <Route exact path="/" component={loadable(() => import('./components/HomeView4').then(c => c.default))} />,
     <Route exact path="/home1" component={loadable(() => import('./components/HomeView1').then(c => c.default))} />,
     <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
     <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />,
-    <Route exact path="/home4" component={loadable(() => import('./components/HomeView4').then(c => c.default))} />,
+    <Route exact path="/home4" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
 
     // Dynamic Carousel
     <AuthRoute
@@ -56,23 +50,10 @@ export default new ClientModule({
       exact
       path="/edit/dynamic-carousel/:id"
       component={loadable(() => import('./containers/DCComponents/EditDynamicCarousel').then(c => c.default))}
-    />,
-    <Route
-      exact
-      path="/component/dynamic-carousel"
-      component={loadable(() => import('./containers/DCComponents/DynamicCarouselComponent').then(c => c.default))}
     />
   ],
 
-  navItemTest: [
-    <SubMenu title="Home" key="/home">
-      <MenuItem key="/component/dynamic-carousel">
-        <MenuItem>
-          <NavLinkDynamicCarouselComponentWithI18n />
-        </MenuItem>
-      </MenuItem>
-    </SubMenu>
-  ],
+  // navItemTest: [],
   navItemAdmin: [
     <IfLoggedIn key="/home" role="admin">
       <SubMenu title="Home">
