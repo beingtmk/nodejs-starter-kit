@@ -1,0 +1,3 @@
+mutation deleteDynamicCarousel($id: Int!) {
+  deleteDynamicCarousel(id: $id)
+}

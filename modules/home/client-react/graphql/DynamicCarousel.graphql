@@ -1,0 +1,8 @@
+fragment DynamicCarouselInfo on DynamicCarousel {
+  id
+  title
+  description
+  label
+  link
+  imageUrl
+}

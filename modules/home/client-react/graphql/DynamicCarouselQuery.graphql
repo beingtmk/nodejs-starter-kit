@@ -1,0 +1,6 @@
+#import "./DynamicCarousel.graphql"
+query dynamicCarousel($id: Int!) {
+  dynamicCarousel(id: $id) {
+    ...DynamicCarouselInfo
+  }
+}

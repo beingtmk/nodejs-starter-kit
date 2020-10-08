@@ -1,0 +1,3 @@
+mutation updateFilterDynamicCarousels($filter: FilterUserInput!) {
+  updateFilterDynamicCarousels(filter: $filter) @client
+}
