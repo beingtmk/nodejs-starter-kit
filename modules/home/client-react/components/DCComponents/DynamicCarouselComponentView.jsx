@@ -23,7 +23,8 @@ class Banner extends React.PureComponent {
               bg: {
                 className: `bg`,
                 image: d.node && d.node.imageUrl,
-                link: d.node && d.node.link
+                href: d.node && d.node.link,
+                component: d.node && d.node.link ? 'a' : 'div'
               }
             };
           })
@@ -47,7 +48,7 @@ class Banner extends React.PureComponent {
       <div {...props} {...dataSource.wrapper}>
         <TweenOneGroup key="bannerGroup" enter={{ opacity: 0, type: 'from' }} leave={{ opacity: 0 }} component="">
           <div className="banner1-wrapper" key="wrapper">
-            <BannerAnim key="BannerAnim" {...dataSource.BannerAnim}>
+            <BannerAnim key="BannerAnim" autoPlay {...dataSource.BannerAnim}>
               {childrenToRender}
             </BannerAnim>
           </div>

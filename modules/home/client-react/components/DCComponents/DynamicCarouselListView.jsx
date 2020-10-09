@@ -3,10 +3,12 @@ import React, { Fragment } from 'react';
 import { Spin, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Pagination } from '@gqlapp/look-client-react';
-
 import settings from '@gqlapp/config';
+
+import ROUTES from '../../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -71,7 +73,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       render: (text, record) => (
         <Row gutter={24}>
           <Col span={5}>
-            <Link to={`/edit/dynamic-carousel/${record.id}`}>
+            <Link to={`${ROUTES.editLink}${record.id}`}>
               <Button shape="circle" size="large">
                 <Icon type="edit" />
               </Button>
