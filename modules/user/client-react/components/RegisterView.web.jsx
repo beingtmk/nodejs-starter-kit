@@ -65,7 +65,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
             boxShadow: "0px 4px 30px 20px rgba(0, 0, 0, 0.03)",
           }}
         >
-          <Col lg={6} md={10} xs={0} style={{ padding: "40px" }}>
+          <Col lg={6} md={0} xs={0} style={{ padding: "40px" }}>
             <img
               src="https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
               // height="46px"
@@ -81,7 +81,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
 
             <div className="text-center" style={{ marginBottom: 16 }}>
               <span style={{ lineHeight: "58px" }} class="user-forms-text">
-                Already a user
+                Already a user?
               </span>
             </div>
             <NavLink
@@ -92,14 +92,14 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
               <Button icon='login' block type="primary">sign In</Button>
             </NavLink>
           </Col>
-          <Col lg={0} md={0} xs={24} style={{ padding: "24px" }}>
+          <Col lg={0} md={24} xs={24} style={{ padding: "24px" }}>
             <Title level={2} style={{ fontSize: "22px", fontWeight: "300" }}>
               Create your account
             </Title>
 
             <div className="text-center" style={{ marginBottom: 0 }}>
               <span style={{ lineHeight: "28px" }} class="user-forms-text">
-                Already a user
+                Already a user?
               </span>
               <NavLink
                 className="btn btn-primary"
@@ -111,7 +111,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
               </NavLink>
             </div>
           </Col>
-          <Col lg={18} xs={24} md={14}>
+          <Col lg={18} xs={24} md={24}>
             {renderContent()}
           </Col>
         </Row>

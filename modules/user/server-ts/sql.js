@@ -1,10 +1,10 @@
 // Helpers
-import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
-import { has } from 'lodash';
-import bcrypt from 'bcryptjs';
-import { knex, returnId } from '@gqlapp/database-server-ts';
+import { camelizeKeys, decamelizeKeys, decamelize } from "humps";
+import { has } from "lodash";
+import bcrypt from "bcryptjs";
+import { knex, returnId } from "@gqlapp/database-server-ts";
 
-import { Model } from 'objection';
+import { Model } from "objection";
 
 // Give the knex object to objection.
 Model.knex(knex);
@@ -20,11 +20,11 @@ const user_eager = `[
 // Actual query fetching and transformation in DB
 export class User extends Model {
   static get tableName() {
-    return 'user';
+    return "user";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -33,66 +33,66 @@ export class User extends Model {
         relation: Model.HasOneRelation,
         modelClass: UserProfile,
         join: {
-          from: 'user.id',
-          to: 'user_profile.user_id'
-        }
+          from: "user.id",
+          to: "user_profile.user_id",
+        },
       },
       auth_certificate: {
         relation: Model.HasOneRelation,
         modelClass: AuthCertificate,
         join: {
-          from: 'user.id',
-          to: 'auth_certificate.user_id'
-        }
+          from: "user.id",
+          to: "auth_certificate.user_id",
+        },
       },
       auth_facebook: {
         relation: Model.HasOneRelation,
         modelClass: AuthFacebook,
         join: {
-          from: 'user.id',
-          to: 'auth_facebook.user_id'
-        }
+          from: "user.id",
+          to: "auth_facebook.user_id",
+        },
       },
       auth_google: {
         relation: Model.HasOneRelation,
         modelClass: AuthGoogle,
         join: {
-          from: 'user.id',
-          to: 'auth_google.user_id'
-        }
+          from: "user.id",
+          to: "auth_google.user_id",
+        },
       },
       auth_github: {
         relation: Model.HasOneRelation,
         modelClass: AuthGithub,
         join: {
-          from: 'user.id',
-          to: 'auth_github.user_id'
-        }
+          from: "user.id",
+          to: "auth_github.user_id",
+        },
       },
       auth_linkedin: {
         relation: Model.HasOneRelation,
         modelClass: AuthLinkedin,
         join: {
-          from: 'user.id',
-          to: 'auth_linkedin.user_id'
-        }
+          from: "user.id",
+          to: "auth_linkedin.user_id",
+        },
       },
       verification: {
         relation: Model.HasOneRelation,
         modelClass: UserVerification,
         join: {
-          from: 'user.id',
-          to: 'user_verification.user_id'
-        }
+          from: "user.id",
+          to: "user_verification.user_id",
+        },
       },
       mobile: {
         relation: Model.HasOneRelation,
         modelClass: UserMobile,
         join: {
-          from: 'user.id',
-          to: 'user_mobile.user_id'
-        }
-      }
+          from: "user.id",
+          to: "user_mobile.user_id",
+        },
+      },
     };
   }
 
@@ -102,7 +102,7 @@ export class User extends Model {
     // add order by
     if (orderBy && orderBy.column) {
       let column = orderBy.column;
-      let order = 'asc';
+      let order = "asc";
       if (orderBy.order) {
         order = orderBy.order;
       }
@@ -112,27 +112,53 @@ export class User extends Model {
 
     // add filter conditions
     if (filter) {
-      if (has(filter, 'role') && filter.role !== '') {
+      if (has(filter, "role") && filter.role !== "") {
         queryBuilder.where(function() {
-          this.where('role', filter.role);
+          this.where("role", filter.role);
         });
       }
 
-      if (has(filter, 'isActive') && filter.isActive !== null) {
+      if (has(filter, "isActive") && filter.isActive !== null) {
         queryBuilder.where(function() {
-          this.where('is_active', filter.isActive);
+          this.where("is_active", filter.isActive);
         });
       }
 
-      if (has(filter, 'searchText') && filter.searchText !== '') {
+      if (has(filter, "searchText") && filter.searchText !== "") {
         queryBuilder.where(function() {
-          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['first_name', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['last_name', `%${filter.searchText}%`]));
+          this.where(
+            knex.raw("LOWER(??) LIKE LOWER(?)", [
+              "username",
+              `%${filter.searchText}%`,
+            ])
+          )
+            .orWhere(
+              knex.raw("LOWER(??) LIKE LOWER(?)", [
+                "email",
+                `%${filter.searchText}%`,
+              ])
+            )
+            .orWhere(
+              knex.raw("LOWER(??) LIKE LOWER(?)", [
+                "first_name",
+                `%${filter.searchText}%`,
+              ])
+            )
+            .orWhere(
+              knex.raw("LOWER(??) LIKE LOWER(?)", [
+                "last_name",
+                `%${filter.searchText}%`,
+              ])
+            );
         });
       }
     }
+
+    queryBuilder
+      .from("user")
+      .leftJoin("user_profile", "user.id", "user_profile.user_id")
+      .groupBy("user.id")
+      .orderBy("id", "desc");
 
     return camelizeKeys(await queryBuilder);
   }
@@ -149,18 +175,18 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.password_hash',
-          'u.role',
-          'u.is_active',
-          'u.email',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.password_hash",
+          "u.role",
+          "u.is_active",
+          "u.email",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .where('u.id', '=', id)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .from("user AS u")
+        .where("u.id", "=", id)
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
         .first()
     );
   }
@@ -178,23 +204,26 @@ export class User extends Model {
 
     // confirm this To Do
     const queryBuilder = User.query()
-      .where('user.id', '=', AuthCertificate.query().where('serial', serial)[0].user_id)
+      .where(
+        "user.id",
+        "=",
+        AuthCertificate.query().where("serial", serial)[0].user_id
+      )
       .eager(user_eager);
     const res = camelizeKeys(await queryBuilder);
     // console.log(res);
     return res;
   }
 
-
   async getUserForQuizSubscription(id) {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'u.email',
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "u.email"
           // // 'up.first_name',
           // // 'up.last_name',
           // // 'ca.serial',
@@ -207,81 +236,97 @@ export class User extends Model {
           // // 'ga.google_id',
           // // 'ga.display_name AS googleDisplayName'
         )
-        .from('user AS u')
+        .from("user AS u")
         // .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         // .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
         // .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
         // .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
         // .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
         // .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
-        .where('u.id', '=', id)
+        .where("u.id", "=", id)
         .first()
     );
   }
 
-  async getUsersWithIdArray(idArray){
+  async getUsersWithIdArray(idArray) {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'u.email',
-          'up.first_name',
-          'up.last_name',
-          'ca.serial',
-          'fa.fb_id',
-          'fa.display_name AS fbDisplayName',
-          'lna.ln_id',
-          'lna.display_name AS lnDisplayName',
-          'gha.gh_id',
-          'gha.display_name AS ghDisplayName',
-          'ga.google_id',
-          'ga.display_name AS googleDisplayName'
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "u.email",
+          "up.first_name",
+          "up.last_name",
+          "ca.serial",
+          "fa.fb_id",
+          "fa.display_name AS fbDisplayName",
+          "lna.ln_id",
+          "lna.display_name AS lnDisplayName",
+          "gha.gh_id",
+          "gha.display_name AS ghDisplayName",
+          "ga.google_id",
+          "ga.display_name AS googleDisplayName"
         )
-        .from('user AS u')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
-        .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
-        .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
-        .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
-        .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
+        .from("user AS u")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
+        .leftJoin("auth_certificate AS ca", "ca.user_id", "u.id")
+        .leftJoin("auth_facebook AS fa", "fa.user_id", "u.id")
+        .leftJoin("auth_google AS ga", "ga.user_id", "u.id")
+        .leftJoin("auth_github AS gha", "gha.user_id", "u.id")
+        .leftJoin("auth_linkedin AS lna", "lna.user_id", "u.id")
         .where(function() {
-          this.whereIn('u.id', idArray);
+          this.whereIn("u.id", idArray);
         })
     );
   }
 
-
   async register(params) {
+    console.log('sqlRegister', params);
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
     const res = await User.query()
       .eager(user_eager)
       .insertGraph(decamelizeKeys(params));
     console.log(res);
     // Add Profile
-    const profile_id = await returnId(knex('user_profile')).insert({
-      user_id: res.id
+    const profile_id = await returnId(knex("user_profile")).insert({
+      user_id: res.id,
     });
     console.log(profile_id);
-    return res.id;
+    return [res.id];
   }
 
   createFacebookAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex("auth_facebook")).insert({
+      fb_id: id,
+      display_name: displayName,
+      user_id: userId,
+    });
   }
 
   createGithubAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_github')).insert({ gh_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex("auth_github")).insert({
+      gh_id: id,
+      display_name: displayName,
+      user_id: userId,
+    });
   }
 
   createGoogleOAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_google')).insert({ google_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex("auth_google")).insert({
+      google_id: id,
+      display_name: displayName,
+      user_id: userId,
+    });
   }
 
   createLinkedInAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_linkedin')).insert({ ln_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex("auth_linkedin")).insert({
+      ln_id: id,
+      display_name: displayName,
+      user_id: userId,
+    });
   }
 
   async editUser(params) {
@@ -293,45 +338,49 @@ export class User extends Model {
     const res = await User.query().upsertGraph(decamelizeKeys(params));
     if (userId)
       await returnId(
-        knex('user_profile')
-          .where('user_id', '=', res.id)
-          .update('referrer_id', userId)
+        knex("user_profile")
+          .where("user_id", "=", res.id)
+          .update("referrer_id", userId)
       );
     return res.id;
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex("user_profile")
+        .count("id as count")
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
     if (isExists) {
-      return knex('user_profile')
+      return knex("user_profile")
         .update(decamelizeKeys(profile))
         .where({ user_id: id });
     } else {
-      return returnId(knex('user_profile')).insert({ ...decamelizeKeys(profile), user_id: id });
+      return returnId(knex("user_profile")).insert({
+        ...decamelizeKeys(profile),
+        user_id: id,
+      });
     }
   }
 
   async patchProfile(id, params) {
     const user = await User.query().findById(id);
-    const profile = await user.$relatedQuery('profile').patch(params);
+    const profile = await user.$relatedQuery("profile").patch(params);
     if (!profile) {
-      await user.$relatedQuery('profile').insert(params);
+      await user.$relatedQuery("profile").insert(params);
     }
     return camelizeKeys(profile);
   }
 
   async addUserMobile(id, params) {
     const user = await User.query().findById(id);
-    const mobile = await user.$relatedQuery('mobile').insert(params);
+    const mobile = await user.$relatedQuery("mobile").insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);
@@ -341,9 +390,9 @@ export class User extends Model {
   async updateUserVerification(id, params) {
     const user = await User.query().findById(id);
 
-    let verification = await user.$relatedQuery('verification').patch(params);
+    let verification = await user.$relatedQuery("verification").patch(params);
     if (!verification) {
-      verification = await user.$relatedQuery('verification').insert(params);
+      verification = await user.$relatedQuery("verification").insert(params);
     }
 
     return camelizeKeys(verification);
@@ -352,40 +401,40 @@ export class User extends Model {
   async editAuthCertificate({
     id,
     auth: {
-      certificate: { serial }
-    }
+      certificate: { serial },
+    },
   }) {
     const userProfile = await knex
-      .select('id')
-      .from('auth_certificate')
+      .select("id")
+      .from("auth_certificate")
       .where({ user_id: id })
       .first();
 
     if (userProfile) {
-      return knex('auth_certificate')
+      return knex("auth_certificate")
         .update({ serial })
         .where({ user_id: id });
     } else {
-      return returnId(knex('auth_certificate')).insert({ serial, user_id: id });
+      return returnId(knex("auth_certificate")).insert({ serial, user_id: id });
     }
   }
 
   deleteUser(id) {
-    return knex('user')
-      .where('id', '=', id)
+    return knex("user")
+      .where("id", "=", id)
       .del();
   }
 
   async updatePassword(id, newPassword) {
     const passwordHash = await bcrypt.hash(newPassword, 12);
 
-    return knex('user')
+    return knex("user")
       .update({ password_hash: passwordHash })
       .where({ id });
   }
 
   updateActive(id, isActive) {
-    return knex('user')
+    return knex("user")
       .update({ is_active: isActive })
       .where({ id });
   }
@@ -394,17 +443,17 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.password_hash',
-          'u.role',
-          'u.is_active',
-          'u.email',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.password_hash",
+          "u.role",
+          "u.is_active",
+          "u.email",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .from("user AS u")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
         .where({ email })
         .first()
     );
@@ -414,21 +463,21 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'fa.fb_id',
-          'u.email',
-          'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "fa.fb_id",
+          "u.email",
+          "u.password_hash",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .where('fa.fb_id', '=', id)
-        .orWhere('u.email', '=', email)
+        .from("user AS u")
+        .leftJoin("auth_facebook AS fa", "fa.user_id", "u.id")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
+        .where("fa.fb_id", "=", id)
+        .orWhere("u.email", "=", email)
         .first()
     );
   }
@@ -437,21 +486,21 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'lna.ln_id',
-          'u.email',
-          'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "lna.ln_id",
+          "u.email",
+          "u.password_hash",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .where('lna.ln_id', '=', id)
-        .orWhere('u.email', '=', email)
+        .from("user AS u")
+        .leftJoin("auth_linkedin AS lna", "lna.user_id", "u.id")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
+        .where("lna.ln_id", "=", id)
+        .orWhere("u.email", "=", email)
         .first()
     );
   }
@@ -460,21 +509,21 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'gha.gh_id',
-          'u.email',
-          'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "gha.gh_id",
+          "u.email",
+          "u.password_hash",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .where('gha.gh_id', '=', id)
-        .orWhere('u.email', '=', email)
+        .from("user AS u")
+        .leftJoin("auth_github AS gha", "gha.user_id", "u.id")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
+        .where("gha.gh_id", "=", id)
+        .orWhere("u.email", "=", email)
         .first()
     );
   }
@@ -483,21 +532,21 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.role',
-          'u.is_active',
-          'ga.google_id',
-          'u.email',
-          'u.password_hash',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "ga.google_id",
+          "u.email",
+          "u.password_hash",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
-        .where('ga.google_id', '=', id)
-        .orWhere('u.email', '=', email)
+        .from("user AS u")
+        .leftJoin("auth_google AS ga", "ga.user_id", "u.id")
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
+        .where("ga.google_id", "=", id)
+        .orWhere("u.email", "=", email)
         .first()
     );
   }
@@ -505,10 +554,18 @@ export class User extends Model {
   async getUserByUsername(username) {
     return camelizeKeys(
       await knex
-        .select('u.id', 'u.username', 'u.role', 'u.is_active', 'u.email', 'up.first_name', 'up.last_name')
-        .from('user AS u')
-        .where('u.username', '=', username)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .select(
+          "u.id",
+          "u.username",
+          "u.role",
+          "u.is_active",
+          "u.email",
+          "up.first_name",
+          "up.last_name"
+        )
+        .from("user AS u")
+        .where("u.username", "=", username)
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
         .first()
     );
   }
@@ -517,19 +574,19 @@ export class User extends Model {
     return camelizeKeys(
       await knex
         .select(
-          'u.id',
-          'u.username',
-          'u.password_hash',
-          'u.role',
-          'u.is_active',
-          'u.email',
-          'up.first_name',
-          'up.last_name'
+          "u.id",
+          "u.username",
+          "u.password_hash",
+          "u.role",
+          "u.is_active",
+          "u.email",
+          "up.first_name",
+          "up.last_name"
         )
-        .from('user AS u')
-        .where('u.username', '=', usernameOrEmail)
-        .orWhere('u.email', '=', usernameOrEmail)
-        .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+        .from("user AS u")
+        .where("u.username", "=", usernameOrEmail)
+        .orWhere("u.email", "=", usernameOrEmail)
+        .leftJoin("user_profile AS up", "up.user_id", "u.id")
         .first()
     );
   }
@@ -541,11 +598,11 @@ export default userDAO;
 // UserProfile model.
 export class UserProfile extends Model {
   static get tableName() {
-    return 'user_profile';
+    return "user_profile";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -554,18 +611,18 @@ export class UserProfile extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'user_profile.user_id',
-          to: 'user.id'
-        }
+          from: "user_profile.user_id",
+          to: "user.id",
+        },
       },
       referred_by: {
         relation: Model.HasOneRelation,
         modelClass: User,
         join: {
-          from: 'user_profile.referrer_id',
-          to: 'user.id'
-        }
-      }
+          from: "user_profile.referrer_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -573,11 +630,11 @@ export class UserProfile extends Model {
 // UserVerification model.
 class UserVerification extends Model {
   static get tableName() {
-    return 'user_verification';
+    return "user_verification";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -586,10 +643,10 @@ class UserVerification extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'user_verification.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "user_verification.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -597,11 +654,11 @@ class UserVerification extends Model {
 // UserMobile model.
 class UserMobile extends Model {
   static get tableName() {
-    return 'user_mobile';
+    return "user_mobile";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -610,10 +667,10 @@ class UserMobile extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'user_mobile.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "user_mobile.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -621,11 +678,11 @@ class UserMobile extends Model {
 // AuthLinkedin model.
 class AuthLinkedin extends Model {
   static get tableName() {
-    return 'auth_linkedin';
+    return "auth_linkedin";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -634,10 +691,10 @@ class AuthLinkedin extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'auth_linkedin.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "auth_linkedin.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -645,11 +702,11 @@ class AuthLinkedin extends Model {
 // AuthGithub model.
 class AuthGithub extends Model {
   static get tableName() {
-    return 'auth_github';
+    return "auth_github";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -658,10 +715,10 @@ class AuthGithub extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'auth_github.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "auth_github.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -669,11 +726,11 @@ class AuthGithub extends Model {
 // AuthGoogle model.
 class AuthGoogle extends Model {
   static get tableName() {
-    return 'auth_google';
+    return "auth_google";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -682,10 +739,10 @@ class AuthGoogle extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'auth_google.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "auth_google.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -693,11 +750,11 @@ class AuthGoogle extends Model {
 // AuthFacebook model.
 class AuthFacebook extends Model {
   static get tableName() {
-    return 'auth_facebook';
+    return "auth_facebook";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -706,10 +763,10 @@ class AuthFacebook extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'auth_facebook.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "auth_facebook.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }
@@ -717,11 +774,11 @@ class AuthFacebook extends Model {
 // AuthCertificate model.
 class AuthCertificate extends Model {
   static get tableName() {
-    return 'auth_certificate';
+    return "auth_certificate";
   }
 
   static get idColumn() {
-    return 'id';
+    return "id";
   }
 
   static get relationMappings() {
@@ -730,10 +787,10 @@ class AuthCertificate extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'auth_certificate.user_id',
-          to: 'user.id'
-        }
-      }
+          from: "auth_certificate.user_id",
+          to: "user.id",
+        },
+      },
     };
   }
 }

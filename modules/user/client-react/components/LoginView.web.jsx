@@ -84,7 +84,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
             boxShadow: "0px 4px 30px 20px rgba(0, 0, 0, 0.03)",
           }}
         >
-          <Col xs={"0"} lg={6} md={10} style={{ padding: "40px" }}>
+          <Col xs={"0"} lg={6} md={'0'} style={{ padding: "40px" }}>
             <img
               src="https://res.cloudinary.com/approxyma/image/upload/v1597225742/Brainayan-Unleash-Unrealized-Potential_gligmg.png"
               // height="46px"
