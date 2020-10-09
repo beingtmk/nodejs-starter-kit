@@ -10,10 +10,11 @@ const LogoutPage = (props) => {
       <div
       >
         <Result
+          
           icon={
             <img
               src="https://res.cloudinary.com/approxyma/image/upload/v1601452372/DangerousSociableGalago_drjy9s.webp"
-              height="200px"
+              height="150px"
             />
           }
           status="success"
