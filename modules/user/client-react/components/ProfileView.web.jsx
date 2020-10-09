@@ -10,7 +10,7 @@ import {
   CardText,
   //  CardTitle,
   PageLayout,
-  Underline,
+  Heading,
   EditIcon
 } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon, Spin as Loader } from 'antd';
@@ -76,11 +76,9 @@ class ProfileView extends React.Component {
                     position: 'relative'
                   }}
                 >
-                  <Underline>
-                    <div>
-                      <Icon type="user" /> {t(`profile.card.title`)}
-                    </div>
-                  </Underline>
+                  <Heading type="2">
+                    <Icon type="user" /> {t(`profile.card.title`)}
+                  </Heading>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`/users/${currentUser.id}`}>
                       <EditIcon />

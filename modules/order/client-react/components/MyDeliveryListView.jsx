@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
-import { Spin, Row, Col, Button, Icon } from 'antd';
+import { Row, Col } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { Heading } from '@gqlapp/look-client-react';
 
 import settings from '../../../../settings';
 import ListingItemComponent from './CartItemComponent';
@@ -31,7 +31,7 @@ class MyListingsView extends Component {
   //   }
   // }
   render() {
-    const { orders, loading, deleteListing, history, currentUser } = this.props;
+    const { orders, deleteListing, history, currentUser } = this.props;
     // const { status } = this.state;
     const delListing = async id => {
       try {
@@ -58,7 +58,9 @@ class MyListingsView extends Component {
         <>
           <Row>
             <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
-              <h2 className="MyListHead">My Delivery</h2>
+              <Heading type="2" className="MyListHead">
+                My Delivery
+              </Heading>
               <br />
             </Col>
           </Row>

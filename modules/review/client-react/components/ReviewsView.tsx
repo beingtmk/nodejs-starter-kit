@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
-import { PageLayout, AddButton } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
@@ -35,7 +35,7 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
       {renderMetaData(t)}
       <Row>
         <Col span={12}>
-          <h2>{t('adminPanel.title')}</h2>
+          <Heading type="2">{t('adminPanel.title')}</Heading>
         </Col>
         <Col span={12}>
           <Row type="flex" justify="end">

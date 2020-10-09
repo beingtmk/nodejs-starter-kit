@@ -22,7 +22,7 @@ const PostForm = ({ values, handleSubmit, submitting, t }) => {
         label={t('post.field.content')}
         value={values.content}
       />
-      <SubmitButton color="primary" type="submit" disabled={submitting}>
+      <SubmitButton color="primary" type="submit" disabled={submitting} style={{ width: 'auto' }}>
         {t('post.btn.submit')}
       </SubmitButton>
     </Form>

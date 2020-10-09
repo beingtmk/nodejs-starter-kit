@@ -23,13 +23,13 @@ class Underline extends Component {
     } else {
       Length = array.length;
     }
-    // console.log(Length);
+    console.log(Length);
     Length = Length * 10;
     return (
       <React.Fragment>
         <div>
           {this.props.children}
-          <div key="line" className="title-line-wrapper" align="left" style={{ maxWidth: `${Length}px` }}>
+          <div key="line" className="title-line-wrapper" align="left" style={{ MaxWidth: `${Length}px` }}>
             <div
               className="title-line"
               // style={{ transform: "translateX(-64px)" }}

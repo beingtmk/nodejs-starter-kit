@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Card, PageLayout, Underline } from '@gqlapp/look-client-react';
+import { Card, PageLayout, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import UserForm from './UserForm';
@@ -25,11 +25,9 @@ const UserAddView = ({ t, onSubmit }) => {
   const renderContent = () => (
     <Card className="form-card">
       <Link to="/users">Back</Link>
-      <Underline>
-        <h2>
-          {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
-        </h2>
-      </Underline>
+      <Heading type="2">
+        {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
+      </Heading>
       <UserForm onSubmit={onSubmit} initialValues={{}} shouldDisplayRole={true} shouldDisplayActive={true} />
     </Card>
   );

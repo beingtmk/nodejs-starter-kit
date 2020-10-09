@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, AddButton, Row, Col } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton, Row, Col, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import UsersFilterView from '../components/UsersFilterView';
 import UsersListView from '../components/UsersListView';
@@ -47,7 +47,7 @@ const Users = props => {
       {renderMetaData()}
       <Row>
         <Col span={20}>
-          <h2>{t('users.list.title')}</h2>
+          <Heading type="2">{t('users.list.title')}</Heading>
         </Col>
         <Col span={4}>
           <Row type="flex" justify="end">
@@ -57,6 +57,7 @@ const Users = props => {
           </Row>
         </Col>
       </Row>
+      <br />
       <hr />
       <UsersFilterView {...props} filter={filter} />
       <hr />

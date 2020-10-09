@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Underline } from '@gqlapp/look-client-react';
+import { PageLayout, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import PostForm from './PostForm';
@@ -30,11 +30,9 @@ const PostAddView = ({ addPost, t }) => {
     <>
       {renderMetaData()}
       <Link to="/posts">{t('post.btn.back')}</Link>
-      <Underline>
-        <h2>
-          {t(`post.label.create`)} {t('post.label.post')}
-        </h2>
-      </Underline>
+      <Heading type="2">
+        {t(`post.label.create`)} {t('post.label.post')}
+      </Heading>
       <PostForm onSubmit={onSubmit(addPost)} />
       <br />
     </>

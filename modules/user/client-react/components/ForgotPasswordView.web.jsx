@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Row, Col } from 'antd';
-import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Underline } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
@@ -23,11 +23,11 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
   const renderContent = () => (
     <>
       <Card>
-        <Underline>
-          <CardTitle>
+        <CardTitle>
+          <Heading type="2">
             <Icon type="undo" /> {t('forgotPass.form.title')}
-          </CardTitle>
-        </Underline>
+          </Heading>
+        </CardTitle>
         <h1 className="text-center"></h1>
         <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
       </Card>

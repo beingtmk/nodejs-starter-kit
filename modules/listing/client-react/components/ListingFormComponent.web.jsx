@@ -12,7 +12,8 @@ import {
   FormItem,
   RenderCheckBox,
   NextButton,
-  SubmitButton
+  SubmitButton,
+  Heading
 } from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
@@ -63,10 +64,10 @@ const ListingFormComponent = props => {
   return (
     <Card
       title={
-        <h1>
+        <Heading type="1">
           <Icon type="solution" /> &nbsp;
           <strong>{cardTitle}</strong>
-        </h1>
+        </Heading>
       }
     >
       <Form onSubmit={handleSubmit}>

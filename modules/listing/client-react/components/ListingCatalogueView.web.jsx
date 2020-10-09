@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, Spin, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Heading } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import RelatedCardComponent from './RelatedCardComponent';
@@ -31,9 +31,9 @@ const ListingCatalogueView = props => {
   );
   const RenderListings = () => (
     <div>
-      <h2 className="headingTop">
+      <Heading type="2">
         <Icon type="solution" /> &nbsp; All Listings
-      </h2>
+      </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {showFilter && (
         <>

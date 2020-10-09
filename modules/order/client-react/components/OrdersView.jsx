@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
-import { Row, Col, Button, Icon, Divider } from 'antd';
+// import { Link } from 'react-router-dom';
+import { Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout, Spin } from '@gqlapp/look-client-react';
+import { PageLayout, Spin, Heading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
-import ROUTES from '../routes';
+// import ROUTES from '../routes';
 import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
 
@@ -25,10 +26,10 @@ const OrderView = props => {
       {renderMetaData(t)}
       <Row>
         <Col span={12}>
-          <h2>
+          <Heading type="2">
             <Icon type="solution" /> &nbsp;
             {t('list.subTitle')}
-          </h2>
+          </Heading>
         </Col>
         <Col span={12} align="right">
           {/* <Link to={ROUTES.add}>
@@ -54,6 +55,11 @@ const OrderView = props => {
       )}
     </PageLayout>
   );
+};
+
+OrderView.propTypes = {
+  t: PropTypes.func,
+  load: PropTypes.bool
 };
 
 export default OrderView;
