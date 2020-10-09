@@ -75,12 +75,42 @@ class NavBar extends React.Component {
           className={`navbar-top-layer-wrapper navbar-top-layer-wrapper-${layoutType}`}
         >
           <Row className="navbar-top-layer">
-            <Col md={12} xs={0}></Col>
-            <Col md={12} xs={24} align="right">
+            <Col md={12} xs={18}></Col>
+            <Col md={12} xs={0} align="right">
               <span style={{ paddingRight: "20px" }}>
-                <Icon type="phone" /> {"+91 999 999 9999"}
+                <a href="tel: +919848524333">
+                  <Icon type="phone" /> {"+919848524333"}
+                </a>
               </span>
-              <Icon type="mail" /> {"aaaaa@aaa.com"}
+              <span>
+                <a href="mailto: Info@brain-Ayan.com">
+                  <Icon type="mail" /> {"Info@brain-Ayan.com"}
+                </a>
+              </span>
+            </Col>
+            <Col md={0} xs={6} align='right'>
+              <DropDown
+                placement="bottomLeft"
+                overlayClassName='navbar-mobile-contact-dropdown'
+                // overlayStyle={{ top: "0", right: "0" }}
+                content={
+                  <p style={{ color: "white" }}>
+                    {"Contact "}
+                    <Icon type="down" />
+                  </p>
+                }
+              >
+                <MenuItem>
+                  <a href="tel: +919848524333">
+                    <Icon type="phone" /> {"+919848524333"}
+                  </a>
+                </MenuItem>
+                <MenuItem>
+                  <a href="mailto: Info@brain-Ayan.com">
+                    <Icon type="mail" /> {"Info@brain-Ayan.com"}
+                  </a>
+                </MenuItem>
+              </DropDown>
             </Col>
           </Row>
         </div>

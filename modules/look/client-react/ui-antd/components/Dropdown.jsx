@@ -1,27 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Menu, Icon, Dropdown } from 'antd';
+import React from "react";
+import PropTypes from "prop-types";
+import { Menu, Icon, Dropdown } from "antd";
 
 class DropDown extends React.Component {
   static propTypes = {
     children: PropTypes.node,
-    type: PropTypes.string
+    type: PropTypes.string,
   };
-  componentDidMOunt() {
-  }
+  componentDidMOunt() {}
 
   render() {
-    const { children, ...props } = this.props;
+    const { children, content, noicon, type, placement, ...props } = this.props;
     // return <Menu.Item {...props}>{children}</Menu.Item>;
 
     const menu = <Menu>{children}</Menu>;
 
-    const content = props.content ? props.content : null;
     return (
-      <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomRight">
+      <Dropdown
+        overlay={menu}
+        trigger={["click", "hover"]}
+        placement={placement || "bottomRight"}
+        {...props}
+      >
         <a className="ant-dropdown-link" href="#">
           {content}
-          {!props.noicon ? <Icon className="dropdown" type={props.type ? props.type : 'down'} /> : null}
+          {!noicon ? (
+            <Icon className="dropdown" type={type ? type : "down"} />
+          ) : null}
         </a>
       </Dropdown>
     );
