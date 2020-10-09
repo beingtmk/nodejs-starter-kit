@@ -179,23 +179,6 @@ const ListingDetailView = props => {
                     marginBottom: '30px'
                   }}
                 >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '5',
-                      right: '0'
-                    }}
-                  >
-                    <IfLoggedIn>
-                      {listing && (
-                        <BookmarkComponent
-                          handleBookmark={() => handleBookmark(listing.id, listing.userId)}
-                          bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
-                          listing={listing}
-                        />
-                      )}
-                    </IfLoggedIn>
-                  </div>
                   <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
                     <Icon type="left" className="carousel-arrow-icon" />
                   </div>
@@ -239,7 +222,19 @@ const ListingDetailView = props => {
                 <Col span={22}>
                   <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
                 </Col>
-                <Col span={2} align="right">
+                <Col span={1} align="right">
+                  <IfLoggedIn>
+                    {listing && (
+                      <BookmarkComponent
+                        handleBookmark={() => handleBookmark(listing.id, listing.user.id)}
+                        bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                        listing={listing}
+                        right={'12%'}
+                      />
+                    )}
+                  </IfLoggedIn>
+                </Col>
+                <Col span={1} align="right">
                   <SocialSharingButtons {...message} onShare={onShare} />
                 </Col>
               </Row>

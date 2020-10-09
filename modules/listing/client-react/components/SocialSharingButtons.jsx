@@ -103,10 +103,8 @@ const SocialSharingButtons = props => {
   );
   return (
     <Col span={24} style={{ height: '50px' }}>
-      <Dropdown overlay={sharingMenu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
-          <Button shape="circle" type="primary" ghost size="large" style={{ fontSize: '22px' }} icon="share-alt" />
-        </a>
+      <Dropdown overlay={sharingMenu} trigger={['hover']}>
+        <Button shape="circle" type="primary" ghost icon="share-alt" />
       </Dropdown>
 
       <Modal title="Share listing by mail" centered footer={null} visible={visible} onCancel={() => setVisible(false)}>

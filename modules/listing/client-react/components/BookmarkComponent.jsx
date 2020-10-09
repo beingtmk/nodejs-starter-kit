@@ -7,13 +7,13 @@ import { withListingBookmarkStatus } from '../containers/ListingOperations';
 
 const BookmarkStyle = styled.div`
   position: absolute;
-  right: 6%;
+  right: ${props => (props.right ? props.right : '6%')};
   top: 3%;
   z-index: 1;
 `;
 
 const BookmarkComponent = props => {
-  const { handleBookmark, listingBookmarkStatus } = props;
+  const { handleBookmark, listingBookmarkStatus, right } = props;
   const [status, setStatus] = useState(listingBookmarkStatus);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ const BookmarkComponent = props => {
   };
 
   return (
-    <BookmarkStyle>
-      <Button shape="circle" onClick={handleClick}>
+    <BookmarkStyle right={right}>
+      <Button shape="circle" type={'primary'} ghost onClick={handleClick}>
         {status && status ? (
           <Icon type="star" theme="filled" style={{ fontSize: '15px' }} />
         ) : (
@@ -45,7 +45,8 @@ const BookmarkComponent = props => {
 
 BookmarkComponent.propTypes = {
   handleBookmark: PropTypes.func,
-  listingBookmarkStatus: PropTypes.bool
+  listingBookmarkStatus: PropTypes.bool,
+  right: PropTypes.string
 };
 
 export default compose(withListingBookmarkStatus)(BookmarkComponent);
