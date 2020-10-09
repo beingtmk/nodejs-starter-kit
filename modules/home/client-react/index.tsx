@@ -8,6 +8,7 @@ import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import loadable from '@loadable/component';
 import { MenuItem } from '@gqlapp/look-client-react';
 
+import ROUTES from './routes';
 import resolvers from './resolvers';
 import resources from './locales';
 
@@ -18,7 +19,7 @@ import resources from './locales';
 // ));
 
 const NavLinkDynamicCarouselWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to="/dynamic-carousel" className="nav-link" activeClassName="active">
+  <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     Dynamic Carousel
   </NavLink>
 ));
@@ -27,28 +28,44 @@ const { SubMenu } = Menu;
 
 export default new ClientModule({
   route: [
-    <Route exact path="/" component={loadable(() => import('./components/HomeView4').then(c => c.default))} />,
-    <Route exact path="/home1" component={loadable(() => import('./components/HomeView1').then(c => c.default))} />,
-    <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
-    <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />,
-    <Route exact path="/home4" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.home}
+      component={loadable(() => import('./components/HomeView4').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path={ROUTES.home1}
+      component={loadable(() => import('./components/HomeView1').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path={ROUTES.home2}
+      component={loadable(() => import('./components/HomeView2').then(c => c.default))}
+    />,
+    <Route
+      exact
+      path={ROUTES.home3}
+      component={loadable(() => import('./components/HomeView3').then(c => c.default))}
+    />,
+    <Route exact path={ROUTES.home4} component={loadable(() => import('./containers/Home').then(c => c.default))} />,
 
     // Dynamic Carousel
     <AuthRoute
       exact
-      path="/dynamic-carousel"
+      path={ROUTES.adminPanel}
       redirect="/profile"
       role="admin"
       component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default))}
     />,
     <Route
       exact
-      path="/new/dynamic-carousel"
+      path={ROUTES.add}
       component={loadable(() => import('./containers/DCComponents/AddDynamicCarousel').then(c => c.default))}
     />,
     <Route
       exact
-      path="/edit/dynamic-carousel/:id"
+      path={ROUTES.edit}
       component={loadable(() => import('./containers/DCComponents/EditDynamicCarousel').then(c => c.default))}
     />
   ],
@@ -57,7 +74,7 @@ export default new ClientModule({
   navItemAdmin: [
     <IfLoggedIn key="/home" role="admin">
       <SubMenu title="Home">
-        <MenuItem key="/dynamic-carousel">
+        <MenuItem key={ROUTES.adminPanel}>
           <NavLinkDynamicCarouselWithI18n />
         </MenuItem>
       </SubMenu>

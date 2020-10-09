@@ -1,17 +1,20 @@
+const base = '/listing';
+const myListing = '/my-listings';
+
 const ROUTES = {
-  adminPanel: '/listings',
-  listing: '/listing',
+  adminPanel: base + '/admin-panel',
+  listing: base + '/listing',
 
-  listingCatalogue: '/listing/catalogue',
-  listingDetail: '/listing/detail/:id',
-  listingDetailLink: '/listing/detail/',
+  listingCatalogue: base + '/catalogue',
+  listingDetail: base + '/detail/:id',
+  listingDetailLink: base + '/detail/',
 
-  myListing: '/my-listing',
-  listingBookmark: '/my-listings/bookmark',
+  myListing: base + myListing,
+  listingBookmark: base + myListing + '/bookmark',
 
-  add: '/listing/new',
-  edit: '/listing/edit/:id',
-  editLink: '/listing/edit/'
+  add: base + '/new',
+  edit: base + '/edit/:id',
+  editLink: base + '/edit/'
 };
 
 export default ROUTES;

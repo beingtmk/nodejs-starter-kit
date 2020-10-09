@@ -1,21 +1,23 @@
+const base = '/order';
+
 const ROUTES = {
-  adminPanel: '/orders',
-  order: '/order',
+  adminPanel: base + '/admin-panel',
+  order: base + '/order',
 
-  orderDetail: '/order/detail/:id',
-  orderDetailLink: '/order/detail/',
+  orderDetail: base + '/detail/:id',
+  orderDetailLink: base + '/detail/',
 
-  myOrder: '/my-order',
-  myDelivery: '/my-deliveries',
+  myOrder: base + '/my-order',
+  myDelivery: base + '/my-deliveries',
 
-  checkoutCart: '/checkout/cart',
-  checkoutBill: '/checkout/bill',
-  checkoutOrder: '/checkout/order/:id',
-  checkoutOrderLink: '/checkout/order/',
+  checkoutCart: base + '/checkout/cart',
+  checkoutBill: base + '/checkout/bill',
+  checkoutOrder: base + '/checkout/order/:id',
+  checkoutOrderLink: base + '/checkout/order/',
 
-  add: '/order/new',
-  edit: '/order/edit/:id',
-  editLink: '/order/edit/'
+  add: base + '/new',
+  edit: base + '/edit/:id',
+  editLink: base + '/edit/'
 };
 
 export default ROUTES;

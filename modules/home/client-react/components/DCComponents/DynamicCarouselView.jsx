@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 import { Row, Col, Button, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
+import ROUTES from '../../routes';
 import DynamicCarouselFilterView from './DynamicCarouselFilterView';
 import DynamicCarouselListView from './DynamicCarouselListView';
 
@@ -29,7 +30,7 @@ const DynamicCarouselView = props => {
           <h2>Dynamic Carousel</h2>
         </Col>
         <Col span={12} align="right">
-          <Link to="/new/dynamic-carousel">
+          <Link to={ROUTES.add}>
             <Button color="primary">Add</Button>
           </Link>
         </Col>

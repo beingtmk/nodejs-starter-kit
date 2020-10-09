@@ -1,9 +1,11 @@
+const base = '/pages';
+
 const ROUTES = {
-  aboutUs: '/about-us',
-  faq: 'faq',
-  termsOfService: '/terms-of-service',
-  privacyPolicy: '/privacy-policy',
-  email: '/email'
+  aboutUs: base + '/about-us',
+  faq: base + 'faq',
+  termsOfService: base + '/terms-of-service',
+  privacyPolicy: base + '/privacy-policy',
+  email: base + '/email'
 };
 
 export default ROUTES;

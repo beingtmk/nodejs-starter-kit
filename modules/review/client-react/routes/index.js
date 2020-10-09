@@ -1,10 +1,14 @@
+const base = '/review';
+
 const ROUTES = {
-  adminPanel: '/reviews',
-  add: '/review/new',
-  edit: '/review/edit/:id',
-  editLink: '/review/edit',
-  review: '/review',
-  myReview: '/my-review'
+  adminPanel: base + '/admin-panel',
+
+  review: base + '/review',
+  myReview: base + '/my-review',
+
+  add: base + '/new',
+  edit: base + '/edit/:id',
+  editLink: base + '/edit'
 };
 
 export default ROUTES;
