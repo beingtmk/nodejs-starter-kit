@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { Tooltip, message, Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
@@ -20,272 +20,266 @@ const ListingFormSchema = {
   title: [required, minLength(3)]
 };
 
-const ButtonGroup = Button.Group;
-class ListingFormComponent extends React.Component {
-  state = {
-    load: false,
-    video:
-      (this.props.listing &&
-        this.props.listing.listingMedia &&
-        this.props.listing.listingMedia.filter(lM => lM.type === VIDEO).length) ||
-      0
-  };
-  add = () => {
+const ListingFormComponent = props => {
+  const [load, setLoad] = useState(false);
+  const { step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
+  const videos = values.listingMedia.video;
+  let formItems = null;
+
+  if (videos.length > 0) {
+    formItems = videos.map((v, index) => (
+      <FormItem required={false} key={index} style={{ margin: '0px' }}>
+        <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={index}>
+          <Field
+            name={`listingMedia.video[${index}].url`}
+            component={RenderField}
+            placeholder={'Video url'}
+            type="text"
+            label={'Video url'}
+            value={v.url}
+            key={index}
+          />
+        </FormItem>
+        <Icon
+          style={{ paddingTop: '40px' }}
+          title="Remove "
+          className="dynamic-delete-button"
+          type="minus-circle-o"
+          onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
+        />
+      </FormItem>
+    ));
+  }
+
+  const add = () => {
     let obj = {
       url: '',
       type: VIDEO
     };
-    this.props.setFieldValue('listingMedia.video', [...this.props.values.listingMedia.video, obj]);
+    props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
   };
-  render() {
-    const { step, setStep, setFieldValue, cardTitle, values, handleSubmit } = this.props;
-    const videos = values.listingMedia.video;
-    let formItems = null;
 
-    if (videos.length > 0) {
-      formItems = videos.map((v, index) => (
-        <FormItem required={false} key={index} style={{ margin: '0px' }}>
-          <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={index}>
-            <Field
-              name={`listingMedia.video[${index}].url`}
-              component={RenderField}
-              placeholder={'Video url'}
-              type="text"
-              label={'Video url'}
-              value={v.url}
-              key={index}
-            />
-          </FormItem>
-          <Icon
-            style={{ paddingTop: '40px' }}
-            title="Remove "
-            className="dynamic-delete-button"
-            type="minus-circle-o"
-            onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
-          />
-        </FormItem>
-      ));
-    }
+  // console.log('props form component', props.values);
+  return (
+    <Card
+      title={
+        <h1>
+          <Icon type="solution" /> &nbsp;
+          <strong>{cardTitle}</strong>
+        </h1>
+      }
+    >
+      <Form onSubmit={handleSubmit}>
+        {step === 0 && (
+          <Row type="flex" gutter={24}>
+            <Col md={12} xs={24} align="left">
+              <Field
+                name="title"
+                component={RenderField}
+                placeholder="Listing Title"
+                type="text"
+                label="Listing Title"
+                value={values.title}
+              />
+              <Field
+                name="description"
+                component={RenderField}
+                placeholder="Description"
+                type="textarea"
+                label="Description"
+                value={values.description}
+              />
+            </Col>
+            <Col md={12} xs={24} align="left">
+              <Field
+                name="sku"
+                component={RenderField}
+                placeholder="Listing SKU"
+                type="text"
+                label="Listing SKU"
+                value={values.sku}
+              />
+              <Field
+                name="listingCostArray[0].cost"
+                component={RenderField}
+                placeholder="Cost"
+                type="number"
+                label="Cost"
+                min={0}
+                value={values.listingCostArray[0].cost}
+              />
+            </Col>
+            <Col md={12} xs={24} align="left">
+              <Field
+                name="listingDetail.inventoryCount"
+                component={RenderField}
+                placeholder="Listing Invontory Count"
+                type="number"
+                label="Listing Invontory Count"
+                min={0}
+                value={values.listingDetail.inventoryCount}
+              />
+            </Col>
+            <Col md={12} xs={24} align="left">
+              <Field
+                name="listingOptions.fixedQuantity"
+                component={RenderField}
+                placeholder="Fixed Quantity (Enter -1 for false)"
+                type="number"
+                label={
+                  <>
+                    Fixed Quantity &nbsp;
+                    <Tooltip title={'Enter -1 for false'}>
+                      <Icon type="info-circle" />
+                    </Tooltip>
+                  </>
+                }
+                min={-1}
+                max={values.listingDetail.inventoryCount}
+                value={values.listingOptions.fixedQuantity}
+              />
+            </Col>
 
-    // console.log('props form component', this.props.values);
-    return (
-      <Card
-        title={
-          <h1>
-            <Icon type="solution" /> &nbsp;
-            <strong>{cardTitle}</strong>
-          </h1>
-        }
-      >
-        <Form onSubmit={handleSubmit}>
-          {step === 0 && (
-            <Row type="flex" gutter={24}>
-              <Col md={12} xs={24} align="left">
+            <Col span={24} align="right">
+              <br />
+              <NextButton style={{ width: 'auto' }} onClick={() => setStep(1)}>
+                Next
+              </NextButton>
+            </Col>
+          </Row>
+        )}
+        {step === 1 && (
+          <Row gutter={24}>
+            <Col md={8} xs={24} align="left">
+              <Field
+                name="listingFlags.isFeatured"
+                component={RenderCheckBox}
+                type="checkbox"
+                label={'Is Featured'}
+                checked={values.listingFlags.isFeatured}
+              />
+              <Field
+                name="listingFlags.isDiscount"
+                component={RenderCheckBox}
+                type="checkbox"
+                label={'Is Discount'}
+                checked={values.listingFlags.isDiscount}
+              />
+            </Col>
+            <Col md={8} xs={24} align="left">
+              <Field
+                name="isActive"
+                component={RenderCheckBox}
+                type="checkbox"
+                label={'Is Active'}
+                checked={values.isActive}
+              />
+              {values.listingFlags.isDiscount && (
                 <Field
-                  name="title"
+                  name="listingCostArray[0].discount"
                   component={RenderField}
-                  placeholder="Listing Title"
-                  type="text"
-                  label="Listing Title"
-                  value={values.title}
-                />
-                <Field
-                  name="description"
-                  component={RenderField}
-                  placeholder="Description"
-                  type="textarea"
-                  label="Description"
-                  value={values.description}
-                />
-              </Col>
-              <Col md={12} xs={24} align="left">
-                <Field
-                  name="sku"
-                  component={RenderField}
-                  placeholder="Listing SKU"
-                  type="text"
-                  label="Listing SKU"
-                  value={values.sku}
-                />
-                <Field
-                  name="listingCostArray[0].cost"
-                  component={RenderField}
-                  placeholder="Cost"
+                  placeholder="Discount"
                   type="number"
-                  label="Cost"
+                  label="Discount"
                   min={0}
-                  value={values.listingCostArray[0].cost}
+                  max={100}
+                  value={values.listingCostArray[0].discount}
                 />
-              </Col>
-              <Col md={12} xs={24} align="left">
+              )}
+            </Col>
+            <Col md={8} xs={24} align="left">
+              <Field
+                name="listingFlags.isNew"
+                component={RenderCheckBox}
+                type="checkbox"
+                label={'Is New'}
+                checked={values.listingFlags.isNew}
+              />
+              {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
                 <Field
-                  name="listingDetail.inventoryCount"
+                  name="finalPrice"
                   component={RenderField}
-                  placeholder="Listing Invontory Count"
                   type="number"
-                  label="Listing Invontory Count"
-                  min={0}
-                  value={values.listingDetail.inventoryCount}
+                  label={'Final Price'}
+                  disabled={true}
+                  value={(
+                    values.listingCostArray[0].cost -
+                    values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
+                  ).toFixed(2)}
                 />
-              </Col>
-              <Col md={12} xs={24} align="left">
-                <Field
-                  name="listingOptions.fixedQuantity"
-                  component={RenderField}
-                  placeholder="Fixed Quantity (Enter -1 for false)"
-                  type="number"
-                  label={
-                    <>
-                      Fixed Quantity &nbsp;
-                      <Tooltip title={'Enter -1 for false'}>
-                        <Icon type="info-circle" />
-                      </Tooltip>
-                    </>
-                  }
-                  min={-1}
-                  max={values.listingDetail.inventoryCount}
-                  value={values.listingOptions.fixedQuantity}
-                />
-              </Col>
-              <Col span={24} align="right">
+              )}
+            </Col>
+            <Col span={24} align="right">
+              <Col span={12} align="left">
                 <br />
-                <NextButton style={{ width: 'auto' }} onClick={() => setStep(1)}>
+                <Button onClick={() => setStep(0)}>
+                  <Icon type="arrow-left" /> Previous
+                </Button>
+              </Col>
+              <Col span={12} align="right">
+                <br />
+                <NextButton style={{ width: 'auto' }} onClick={() => setStep(2)}>
                   Next
                 </NextButton>
               </Col>
-            </Row>
-          )}
-          {step === 1 && (
-            <Row gutter={24}>
-              <Col md={8} xs={24} align="left">
-                <Field
-                  name="listingFlags.isFeatured"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={'Is Featured'}
-                  checked={values.listingFlags.isFeatured}
-                />
-                <Field
-                  name="listingFlags.isDiscount"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={'Is Discount'}
-                  checked={values.listingFlags.isDiscount}
-                />
-              </Col>
-              <Col md={8} xs={24} align="left">
-                <Field
-                  name="isActive"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={'Is Active'}
-                  checked={values.isActive}
-                />
-                {values.listingFlags.isDiscount && (
-                  <Field
-                    name="listingCostArray[0].discount"
-                    component={RenderField}
-                    placeholder="Discount"
-                    type="number"
-                    label="Discount"
-                    min={0}
-                    max={100}
-                    value={values.listingCostArray[0].discount}
-                  />
-                )}
-              </Col>
-              <Col md={8} xs={24} align="left">
-                <Field
-                  name="listingFlags.isNew"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={'Is New'}
-                  checked={values.listingFlags.isNew}
-                />
-                {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
-                  <Field
-                    name="finalPrice"
-                    component={RenderField}
-                    type="number"
-                    label={'Final Price'}
-                    disabled={true}
-                    value={(
-                      values.listingCostArray[0].cost -
-                      values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
-                    ).toFixed(2)}
-                  />
-                )}
-              </Col>
-              <Col span={24} align="right">
-                <br />
-                <ButtonGroup>
-                  <Button size="large" onClick={() => setStep(0)}>
-                    <Icon type="arrow-left" /> Previous
-                  </Button>
-                  <NextButton style={{ width: 'auto' }} size="lg" onClick={() => setStep(2)}>
-                    Next
-                  </NextButton>
-                </ButtonGroup>
-              </Col>
-            </Row>
-          )}
-          {step === 2 && (
-            <Row gutter={24}>
-              <Col md={12} xs={24} align="left">
-                <Col span={24}>
-                  <Col span={18}>
-                    <FormItem label={'Add video url'}>{formItems}</FormItem>
-                  </Col>
-                  <Col span={6} align="right">
-                    <FormItem>
-                      <Button type="primary" onClick={this.add}>
-                        <Icon type="video-camera" />
-                        Add
-                      </Button>
-                    </FormItem>
-                  </Col>
+            </Col>
+          </Row>
+        )}
+        {step === 2 && (
+          <Row gutter={24}>
+            <Col md={12} xs={24} align="left">
+              <Col span={24}>
+                <Col span={18}>
+                  <FormItem label={'Add video url'}>{formItems}</FormItem>
+                </Col>
+                <Col span={6} align="right">
+                  <FormItem>
+                    <Button type="primary" onClick={add}>
+                      <Icon type="video-camera" />
+                      Add
+                    </Button>
+                  </FormItem>
                 </Col>
               </Col>
-              <Col md={12} xs={24} align="left">
-                <FormItem label={'Add images'}>
-                  <FieldArray
-                    name="listingMedia.image"
-                    label={'Listing Image'}
-                    render={arrayHelpers => (
-                      <RenderUploadMultiple
-                        setload={load => this.setState({ load: load })}
-                        arrayHelpers={arrayHelpers}
-                        values={values.listingMedia.image}
-                        getType={true}
-                        dictKey="url"
-                      />
-                    )}
-                  />
-                </FormItem>
-              </Col>
-              <Col span={24} align="right">
+            </Col>
+            <Col md={12} xs={24} align="left">
+              <FormItem label={'Add images'}>
+                <FieldArray
+                  name="listingMedia.image"
+                  label={'Listing Image'}
+                  render={arrayHelpers => (
+                    <RenderUploadMultiple
+                      setload={load => setLoad(load)}
+                      arrayHelpers={arrayHelpers}
+                      values={values.listingMedia.image}
+                      getType={true}
+                      dictKey="url"
+                    />
+                  )}
+                />
+              </FormItem>
+            </Col>
+            <Col span={24} align="right">
+              <Col span={12} align="left">
                 <br />
-                <ButtonGroup>
-                  <Button size="large" onClick={() => setStep(1)}>
-                    <Icon type="arrow-left" /> Previous
-                  </Button>
-                  <SubmitButton
-                    size="lg"
-                    style={{ width: 'auto' }}
-                    disable={!this.state.load}
-                    onClick={() => handleSubmit(values)}
-                  >
-                    Submit
-                  </SubmitButton>
-                </ButtonGroup>
+                <Button onClick={() => setStep(1)}>
+                  <Icon type="arrow-left" /> Previous
+                </Button>
               </Col>
-            </Row>
-          )}
-        </Form>
-      </Card>
-    );
-  }
-}
+
+              <Col span={12} align="right">
+                <br />
+                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                  Submit
+                </SubmitButton>
+              </Col>
+            </Col>
+          </Row>
+        )}
+      </Form>
+    </Card>
+  );
+};
 
 ListingFormComponent.propTypes = {
   cardTitle: PropTypes.string,
