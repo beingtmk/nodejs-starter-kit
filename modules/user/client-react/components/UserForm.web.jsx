@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { isEmpty } from 'lodash';
@@ -19,6 +19,7 @@ import {
   RenderUpload
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import { Button, Modal } from 'antd';
 
 const userFormSchema = {
   username: [required, minLength(3)],
@@ -38,7 +39,8 @@ const updateUserFormSchema = {
 };
 
 const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
-  const [load, setLoad] = React.useState(false);
+  const [load, setLoad] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
 
   console.log('props', values);
@@ -124,24 +126,41 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
           onChange={value => setFieldValue('auth', { ...auth, certificate: { ...auth.certificate, serial: value } })}
         />
       )}
-      <Field
-        name="password"
-        component={RenderField}
-        type="password"
-        label={t('userEdit.form.field.pass')}
-        value={password}
-      />
-      <Field
-        name="passwordConfirmation"
-        component={RenderField}
-        type="password"
-        label={t('userEdit.form.field.passConf')}
-        value={passwordConfirmation}
-      />
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <SubmitButton color="primary" type="submit" disabled={load}>
-        {t('userEdit.form.btnSubmit')}
-      </SubmitButton>
+      <Row gutter={24}>
+        <Col span={12}>
+          <Button ghost block onClick={() => setVisible(true)}>
+            Reset password
+          </Button>
+          <Modal
+            centered
+            title={'Reset password'}
+            visible={visible}
+            onOk={() => handleSubmit(values)}
+            onCancel={() => setVisible(false)}
+          >
+            <Field
+              name="password"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.pass')}
+              value={password}
+            />
+            <Field
+              name="passwordConfirmation"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.passConf')}
+              value={passwordConfirmation}
+            />
+          </Modal>
+        </Col>
+        <Col span={12}>
+          <SubmitButton color="primary" type="submit" disabled={load}>
+            {t('userEdit.form.btnSubmit')}
+          </SubmitButton>
+        </Col>
+      </Row>
     </Form>
   );
 };
@@ -183,6 +202,10 @@ const UserFormWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { setErrors, props: { onSubmit } }) {
+    if (values.password === '' || values.passwordConfirmation === '') {
+      delete values.passwordConfirmation;
+      delete values.password;
+    }
     await onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

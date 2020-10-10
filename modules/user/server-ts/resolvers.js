@@ -211,12 +211,14 @@ export default pubsub => ({
         const userInfo = !isSelf() && isAdmin() ? input : pick(input, ['id', 'username', 'email', 'password']);
 
         const isProfileExists = await User.isUserProfileExists(input.id);
-        const passwordHash = await createPasswordHash(input.password);
+        const passwordHash = input.password && (await createPasswordHash(input.password));
 
         const trx = await createTransaction();
         try {
-          await User.editUser(userInfo, passwordHash).transacting(trx);
-          await User.editUserProfile(input, isProfileExists).transacting(trx);
+          await User.editUser(userInfo, passwordHash);
+          // .transacting(trx);
+          await User.editUserProfile(input, isProfileExists);
+          // .transacting(trx);
 
           if (mailer && input.password && password.sendPasswordChangesEmail) {
             const url = `${__WEBSITE_URL__}/profile`;
