@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content3 extends React.PureComponent {
@@ -22,7 +23,13 @@ class Content3 extends React.PureComponent {
         children: [
           {
             name: 'title',
-            children: t('feature3.titleWrapper.title'),
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('feature3.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
             className: 'title-h1'
           },
           {

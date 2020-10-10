@@ -23,9 +23,9 @@ const Underline = props => {
   // console.log(props);
   return (
     <React.Fragment>
-      <div>
-        {props.children}
-        <div key="line" className="title-line-wrapper" align="left" style={{ Width: `${Length}px` }} {...props.style}>
+      {props.children}
+      <div {...props}>
+        <div key="line" className="title-line-wrapper" style={{ Width: `${Length}px` }}>
           <div
             className="title-line"
             // style={{ transform: "translateX(-64px)" }}

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content extends React.PureComponent {
@@ -22,7 +22,9 @@ class Content extends React.PureComponent {
             className: 'title-text',
             children: (
               <>
-                {t('feature0.titleWrapper')}
+                <Heading type="3" align="center">
+                  {t('feature0.titleWrapper')}
+                </Heading>
                 {/* <div className="home-underline"></div> */}
               </>
             )

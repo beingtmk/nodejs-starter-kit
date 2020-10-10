@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Steps, Col, Row } from 'antd';
+import { PropTypes } from 'prop-types';
+
 import { Heading } from '@gqlapp/look-client-react';
 
 const CheckoutSteps = styled.div`
@@ -19,7 +21,7 @@ class CheckoutStepsComponent extends Component {
         <Col span={24}>
           <Row justify="center">
             <CheckoutSteps>
-              <Heading type="3" style={{ marginLeft: '40%' }}>
+              <Heading type="3" align="center">
                 Checkout
               </Heading>
             </CheckoutSteps>
@@ -36,5 +38,7 @@ class CheckoutStepsComponent extends Component {
     );
   }
 }
-
+CheckoutStepsComponent.propTypes = {
+  step: PropTypes.number
+};
 export default CheckoutStepsComponent;

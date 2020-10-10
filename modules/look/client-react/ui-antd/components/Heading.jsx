@@ -5,19 +5,19 @@ import Underline from './underline';
 const Heading = ({ children, type, ...props }) => {
   if (type === '2')
     return (
-      <Underline>
-        <h2 {...props}>{children}</h2>
+      <Underline {...props}>
+        <h2>{children}</h2>
       </Underline>
     );
   if (type === '3')
     return (
-      <Underline>
+      <Underline {...props}>
         <h3>{children}</h3>
       </Underline>
     );
   else
     return (
-      <Underline>
+      <Underline {...props}>
         <h1 {...props}>{children}</h1>
       </Underline>
     );
