@@ -31,17 +31,6 @@ const ListingCatalogueView = props => {
   );
   const RenderListings = () => (
     <div>
-      <Heading type="2">
-        <Icon type="solution" /> &nbsp; All Listings
-      </Heading>
-      <Divider style={{ margin: '5px 0px 10px' }} />
-      {showFilter && (
-        <>
-          <br />
-          <ListingFilterComponent showIsActive={false} {...props} />
-          <Divider />
-        </>
-      )}
       <SuggestedListComponent {...props} items={listings} renderFunc={renderFunc} />
     </div>
   );
@@ -56,6 +45,21 @@ const ListingCatalogueView = props => {
           <br />
           <Spin size="large" />
         </div>
+      )}
+      {!loading && (
+        <>
+          <Heading type="2">
+            <Icon type="solution" /> &nbsp; All Listings
+          </Heading>
+          <Divider style={{ margin: '5px 0px 10px' }} />
+          {showFilter && (
+            <>
+              <br />
+              <ListingFilterComponent showIsActive={false} {...props} />
+              <Divider />
+            </>
+          )}
+        </>
       )}
       {!loading && listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
     </PageLayout>
