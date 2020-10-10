@@ -21,6 +21,8 @@ import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../../graphql/DynamicCarouselSubscrip
 import DYNAMIC_CAROUSEL_STATE_QUERY from '../../graphql/DynamicCarouselStateQuery.client.graphql';
 import DYNAMIC_CAROUSEL_UPDATE_FILTER from '../../graphql/DynamicCarouselUpdateFilter.client.graphql';
 
+import ROUTES from '../../routes';
+
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
@@ -140,7 +142,7 @@ export const withAddDynamicCarousel = Component =>
 
           message.destroy();
           message.success('Banner added.');
-          history.push('/dynamic-carousel');
+          history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");
@@ -165,7 +167,7 @@ export const withEditDynamicCarousel = Component =>
           });
           message.destroy();
           message.success('Changes Saved.');
-          history.push('/dynamic-carousel');
+          history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");
@@ -273,7 +275,7 @@ function onEditDynamicCarousel(prev, node) {
 const onDeleteDynamicCarousel = (prev, id, history) => {
   if (prev.dynamicCarousel.id === id) {
     message.error('Banner was deleted');
-    history.push('/dynamic-carousel');
+    history.push(`${ROUTES.adminPanel}`);
   }
 };
 
