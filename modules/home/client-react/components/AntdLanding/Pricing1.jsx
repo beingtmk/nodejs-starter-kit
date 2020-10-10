@@ -4,6 +4,7 @@ import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button } from 'antd';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Pricing1 extends React.PureComponent {
@@ -40,7 +41,19 @@ class Pricing1 extends React.PureComponent {
       OverPack: { playScale: 0.3, className: 'pricing1-content-wrapper' },
       titleWrapper: {
         className: 'pricing1-title-wrapper',
-        children: [{ name: 'title', children: t('pricing1.titleWrapper.title'), className: 'pricing1-title-h1' }]
+        children: [
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('pricing1.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'pricing1-title-h1'
+          }
+        ]
       },
       block: {
         className: 'pricing1-block-wrapper',

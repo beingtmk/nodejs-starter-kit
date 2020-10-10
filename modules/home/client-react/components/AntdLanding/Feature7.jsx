@@ -5,7 +5,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Row, Col } from 'antd';
-
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 function Feature7(props) {
@@ -20,7 +20,13 @@ function Feature7(props) {
         {
           name: 'title',
           className: 'feature7-title-h1',
-          children: t('feature7.titleWrapper.title')
+          children: (
+            <>
+              <Heading type="3" align="center">
+                {t('feature7.titleWrapper.title')}
+              </Heading>
+            </>
+          )
         },
         {
           name: 'content',

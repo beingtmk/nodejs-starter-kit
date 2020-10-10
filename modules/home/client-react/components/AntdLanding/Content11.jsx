@@ -2,6 +2,7 @@ import React from 'react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
+import { Heading } from '@gqlapp/look-client-react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import { Button } from 'antd';
@@ -23,7 +24,17 @@ class Content11 extends React.PureComponent {
             children: 'https://gw.alipayobjects.com/zos/rmsportal/PiqyziYmvbgAudYfhuBr.svg',
             className: 'title-image'
           },
-          { name: 'title', children: t('content11.titleWrapper.title'), className: 'title-h1' },
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('content11.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'title-h1'
+          },
           {
             name: 'content',
             children: t('content11.titleWrapper.content'),

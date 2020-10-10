@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { TweenOneGroup } from 'rc-tween-one';
 import PropTypes from 'prop-types';
+import { Heading } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { getChildrenToRender } from './utils';
@@ -34,7 +35,17 @@ class Content12 extends React.PureComponent {
             children: 'https://gw.alipayobjects.com/zos/rmsportal/PiqyziYmvbgAudYfhuBr.svg',
             className: 'title-image'
           },
-          { name: 'title', children: t('content12.titleWrapper.title'), className: 'title-h1' }
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('content12.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'title-h1'
+          }
         ]
       },
       block: {

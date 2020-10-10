@@ -4,6 +4,7 @@ import { TweenOneGroup } from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content5 extends React.PureComponent {
@@ -30,7 +31,17 @@ class Content5 extends React.PureComponent {
       titleWrapper: {
         className: 'title-wrapper',
         children: [
-          { name: 'title', children: t('content5.titleWrapper.title'), className: 'title-h1' },
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="2" align="center">
+                  {t('content5.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'title-h1'
+          },
           {
             name: 'content',
             className: 'title-content',

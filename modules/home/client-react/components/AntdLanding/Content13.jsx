@@ -3,6 +3,7 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content13 extends React.PureComponent {
@@ -21,7 +22,17 @@ class Content13 extends React.PureComponent {
             children: 'https://gw.alipayobjects.com/zos/rmsportal/PiqyziYmvbgAudYfhuBr.svg',
             className: 'title-image'
           },
-          { name: 'title', children: t('content13.titleWrapper.title'), className: 'title-h1' },
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('content13.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'title-h1'
+          },
           {
             name: 'content',
             children: t('content13.titleWrapper.content'),

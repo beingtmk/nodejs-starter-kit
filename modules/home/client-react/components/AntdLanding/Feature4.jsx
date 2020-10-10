@@ -5,6 +5,7 @@ import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content7 extends React.Component {
@@ -36,7 +37,13 @@ class Content7 extends React.Component {
         children: [
           {
             name: 'title',
-            children: t('feature4.titleWrapper.title'),
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('feature4.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
             className: 'title-h1'
           },
           {
