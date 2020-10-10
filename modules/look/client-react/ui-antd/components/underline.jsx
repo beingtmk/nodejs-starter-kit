@@ -20,12 +20,12 @@ const Underline = props => {
     Length = array.length;
   }
   Length = Length * 10;
-  console.log(Length);
+  // console.log(props);
   return (
     <React.Fragment>
       <div>
         {props.children}
-        <div key="line" className="title-line-wrapper" align="left" style={{ Width: `${Length}px` }}>
+        <div key="line" className="title-line-wrapper" align="left" style={{ Width: `${Length}px` }} {...props.style}>
           <div
             className="title-line"
             // style={{ transform: "translateX(-64px)" }}
@@ -38,6 +38,7 @@ const Underline = props => {
 
 Underline.propTypes = {
   length: PropTypes.object,
-  children: PropTypes.object
+  children: PropTypes.object,
+  style: PropTypes.object
 };
 export default Underline;

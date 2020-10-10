@@ -12,7 +12,7 @@ const Heading = ({ children, type, ...props }) => {
   if (type === '3')
     return (
       <Underline>
-        <h3 {...props}>{children}</h3>
+        <h3>{children}</h3>
       </Underline>
     );
   else

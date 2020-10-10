@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Steps, Col } from 'antd';
+import { Steps, Col, Row } from 'antd';
+import { Heading } from '@gqlapp/look-client-react';
 
 const CheckoutSteps = styled.div`
   text-align: center;
@@ -15,7 +16,15 @@ class CheckoutStepsComponent extends Component {
   render() {
     return (
       <Col lg={24} md={24} align="left">
-        <CheckoutSteps>Checkout</CheckoutSteps>
+        <Col span={24}>
+          <Row justify="center">
+            <CheckoutSteps>
+              <Heading type="3" style={{ marginLeft: '40%' }}>
+                Checkout
+              </Heading>
+            </CheckoutSteps>
+          </Row>
+        </Col>
         <Steps current={this.props.step} size="small">
           <Step title={<span className="font13">Cart</span>} />
           <Step title={<span className="font13">Billing Address</span>} />
