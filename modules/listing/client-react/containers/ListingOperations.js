@@ -24,6 +24,7 @@ import UPDATE_ORDER_BY_LISTING from '../graphql/UpdateOrderByListing.client.grap
 import UPDATE_LISTING_FILTER from '../graphql/UpdateListingFilter.client.graphql';
 
 import settings from '../../../../settings';
+import ROUTES from '../routes';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
@@ -257,7 +258,7 @@ export const withAddListing = Component =>
           });
           message.destroy();
           message.success('Listing added.');
-          history.push('/listings');
+          history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");
@@ -316,8 +317,8 @@ export const withEditListing = Component =>
           message.destroy();
           message.success('Changes Saved.');
           if (history) {
-            if (role === 'admin') return history.push('/listings');
-            else return history.push('/my-listings');
+            if (role === 'admin') return history.push(`${ROUTES.adminPanel}`);
+            else return history.push(`${ROUTES.myListing}`);
           }
           if (navigation) {
             if (role === 'admin') return navigation.navigate('ListingCatalogue');
