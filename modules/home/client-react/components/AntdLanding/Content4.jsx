@@ -4,6 +4,7 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import VideoPlay from 'react-sublime-video';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 function Content4(props) {
@@ -17,7 +18,13 @@ function Content4(props) {
       children: [
         {
           name: 'title',
-          children: t('content4.titleWrapper.title'),
+          children: (
+            <>
+              <Heading type="3" align="center">
+                {t('content4.titleWrapper.title')}
+              </Heading>
+            </>
+          ),
           className: 'title-h1'
         },
         {

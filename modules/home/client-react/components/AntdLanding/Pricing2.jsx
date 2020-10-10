@@ -4,6 +4,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Table } from 'antd';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender, isImg } from './utils';
 
 class Pricing2 extends React.PureComponent {
@@ -72,7 +73,20 @@ class Pricing2 extends React.PureComponent {
       OverPack: { playScale: 0.3, className: 'pricing2-content-wrapper' },
       titleWrapper: {
         className: 'pricing2-title-wrapper',
-        children: [{ name: 'title', children: t('pricing2.title'), className: 'pricing2-title-h1' }]
+
+        children: [
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('pricing2.title')}
+                </Heading>
+              </>
+            ),
+            className: 'pricing2-title-h1'
+          }
+        ]
       },
       Table: {
         name: 'tabsTitle',

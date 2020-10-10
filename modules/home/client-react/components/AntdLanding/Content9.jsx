@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-
+import { Heading } from '@gqlapp/look-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { getChildrenToRender } from './utils';
@@ -68,7 +68,17 @@ class Content9 extends React.PureComponent {
             children: 'https://gw.alipayobjects.com/zos/rmsportal/PiqyziYmvbgAudYfhuBr.svg',
             className: 'title-image'
           },
-          { name: 'title', children: t('content9.titleWrapper.title'), className: 'title-h1' }
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('content9.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
+            className: 'title-h1'
+          }
         ]
       },
       block: {

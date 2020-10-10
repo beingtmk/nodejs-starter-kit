@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
+import { Heading } from '@gqlapp/look-client-react';
 import { Carousel as AntCarousel, Row, Col } from 'antd';
 import { getChildrenToRender } from './utils';
 
@@ -104,7 +105,13 @@ class Feature8 extends React.PureComponent {
           {
             name: 'title',
             className: 'feature8-title-h1',
-            children: t('feature8.titleWrapper.title')
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('feature8.titleWrapper.title')}
+                </Heading>
+              </>
+            )
           },
           {
             name: 'content',

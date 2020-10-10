@@ -3,6 +3,7 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Banner5 extends React.PureComponent {
@@ -14,7 +15,15 @@ class Banner5 extends React.PureComponent {
       childWrapper: {
         className: 'banner5-title-wrapper',
         children: [
-          { name: 'title', children: t('banner5.title'), className: 'banner5-title' },
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3">{t('banner5.title')}</Heading>
+              </>
+            ),
+            className: 'banner5-title'
+          },
           {
             name: 'explain',
             className: 'banner5-explain',

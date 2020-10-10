@@ -30,7 +30,7 @@ export default new ClientModule({
     <Route exact path="/" component={loadable(() => import('./components/HomeView4').then(c => c.default))} />,
     <Route exact path="/home1" component={loadable(() => import('./components/HomeView1').then(c => c.default))} />,
     <Route exact path="/home2" component={loadable(() => import('./components/HomeView2').then(c => c.default))} />,
-    <Route exact path="/home3" component={loadable(() => import('./components/HomeView3').then(c => c.default))} />,
+    <Route exact path="/home3" component={loadable(() => import('./components/HomeViewAll').then(c => c.default))} />,
     <Route exact path="/home4" component={loadable(() => import('./containers/Home').then(c => c.default))} />,
 
     // Dynamic Carousel

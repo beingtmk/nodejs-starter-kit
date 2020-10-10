@@ -4,6 +4,7 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import { Tabs, Icon, Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 const TabPane = Tabs.TabPane;
@@ -75,7 +76,13 @@ class Content7 extends React.Component {
         children: [
           {
             name: 'title',
-            children: t('feature5.titleWrapper.title'),
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('feature5.titleWrapper.title')}
+                </Heading>
+              </>
+            ),
             className: 'title-h1'
           },
           { name: 'content', children: t('feature5.titleWrapper.content') }

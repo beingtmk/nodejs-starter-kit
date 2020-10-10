@@ -4,6 +4,7 @@ import { Row, Col, Divider } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Teams3 extends React.PureComponent {
@@ -46,7 +47,18 @@ class Teams3 extends React.PureComponent {
       OverPack: { playScale: 0.3, className: '' },
       titleWrapper: {
         className: 'title-wrapper',
-        children: [{ name: 'title', children: t('teams3.titleWrapper.title') }]
+        children: [
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('teams3.titleWrapper.title')}
+                </Heading>
+              </>
+            )
+          }
+        ]
       },
       blockTop: {
         className: 'block-top-wrapper',
