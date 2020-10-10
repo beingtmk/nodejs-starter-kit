@@ -157,7 +157,7 @@ const Footer10DataSource = {
     children: (
       <>
         <span>
-          <a href="https://approxyma.com">Approxyma</a>
+          <a href="https://approxyma.com">Approxyma &copy; 2020</a>
         </span>
       </>
     )

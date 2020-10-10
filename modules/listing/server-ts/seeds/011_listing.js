@@ -52,7 +52,7 @@ exports.seed = async function(knex) {
         [...Array(3).keys()].map(async () => {
           return returnId(knex('listing_medium')).insert({
             listing_id: listing[0],
-            ...MEDIA[Math.floor(Math.random() * (1 - 0 + 1) + 0)],
+            ...MEDIA[Math.floor(Math.random() * (MEDIA.length - 0 + 1) + 0)],
             is_active: Math.random() < 0.6 ? false : true
           });
         })
