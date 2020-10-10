@@ -94,7 +94,7 @@ class NavBar extends React.Component {
                     </ScrollParallax>
                   </NavLink>
                 </Col>
-                <Col xs={0} md={0} lg={3}>
+                <Col xs={0} md={0} lg={4}>
                   <Menu
                     onClick={this.handleClick}
                     selectedKeys={[this.props.location.pathname]}
@@ -112,7 +112,9 @@ class NavBar extends React.Component {
                         </DropDown>
                       </MenuItem>
                     )}
-
+                    <MenuItem>
+                      <DropDown type="apartment">{ref.modules.navItemsBrowse}</DropDown>
+                    </MenuItem>
                     <LoggedIn role="admin">
                       <MenuItem>
                         <DropDown type="safety-certificate">{ref.modules.navItemsAdmin}</DropDown>
@@ -121,7 +123,7 @@ class NavBar extends React.Component {
                   </Menu>
                 </Col>
 
-                <Col xs={0} md={0} lg={15} align="right">
+                <Col xs={0} md={0} lg={14} align="right">
                   <Menu
                     onClick={this.handleClick}
                     selectedKeys={[this.props.location.pathname]}
@@ -189,6 +191,9 @@ class NavBar extends React.Component {
                     </MenuItem>
                   </SubMenu>
                 )}
+                <MenuItem>
+                  <DropDown type="apartment">{ref.modules.navItemsBrowse}</DropDown>
+                </MenuItem>
                 <LoggedIn role="admin">
                   <SubMenu
                     key="admin"

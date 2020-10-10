@@ -13,6 +13,8 @@ export interface ClientModuleShape extends BaseModuleShape {
   navItemRight?: Array<React.ReactElement<any>>;
   // Development tools
   navItemTest?: Array<React.ReactElement<any>>;
+  // Browse tools
+  navItemBrowse?: Array<React.ReactElement<any>>;
   // User specific
   navItemUser?: Array<React.ReactElement<any>>;
   // Admin specific
@@ -41,9 +43,10 @@ class ClientModule extends BaseModule {
    * @returns client-side React route components list
    */
   get routes() {
-    return (this.route || []).map(
-      (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
-        React.cloneElement(component, { key: component.key || idx + items.length })
+    return (
+      this.route || []
+    ).map((component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+      React.cloneElement(component, { key: component.key || idx + items.length })
     );
   }
 
@@ -77,6 +80,17 @@ class ClientModule extends BaseModule {
           React.cloneElement(component, {
             key: component.key || idx + items.length
           })
+        )
+      : false;
+  }
+
+  get navItemsBrowse() {
+    return this.navItemBrowse
+      ? this.navItemBrowse.map(
+          (component: React.ReactElement<any>, idx: number, items: Array<React.ReactElement<any>>) =>
+            React.cloneElement(component, {
+              key: component.key || idx + items.length
+            })
         )
       : false;
   }

@@ -87,9 +87,13 @@ export default (pubsub: any) => ({
     listingBookmarkStatus: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
       return context.Listing.listingBookmarkStatus(listingId, userId || context.req.identity.id);
     }),
-    canUserReview: withAuth(async (obj: any, { listingId, userId }: any, context: any) => {
-      return context.Listing.canUserReview(listingId, userId || context.req.identity.id);
-    })
+    async canUserReview(obj: any, { listingId, userId }: any, context: any) {
+      if (userId || (context.req.identity && context.req.identity.id)) {
+        return context.Listing.canUserReview(listingId, userId || context.req.identity.id);
+      } else {
+        return false;
+      }
+    }
   },
   Mutation: {
     addListing: withAuth(async (obj: any, { input }: ListingInput, context: any) => {

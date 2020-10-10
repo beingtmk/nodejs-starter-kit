@@ -1,5 +1,6 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 
+import { MEDIA } from '@gqlapp/listing-common';
 import { ORDER_STATES_ARRAY } from '@gqlapp/order-common';
 
 exports.seed = async function(knex) {
@@ -37,7 +38,7 @@ exports.seed = async function(knex) {
         modal_id: id,
         order_detail_state_id: 1,
 
-        image_url: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
+        image_url: MEDIA[Math.floor(Math.random() * (MEDIA.length - 2 - 0 + 1) + 0)].url,
         title: modal[0].title,
         cost: modal[0].cost
       });
@@ -105,8 +106,7 @@ exports.seed = async function(knex) {
             modal_id: id2,
             order_detail_state_id: 2,
 
-            image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
+            image_url: MEDIA[Math.floor(Math.random() * (MEDIA.length - 2 - 0 + 1) + 0)].url,
             title: modal2[0].title,
             cost: modal2[0].cost
           });
@@ -132,8 +132,7 @@ exports.seed = async function(knex) {
             modal_id: id3,
             order_detail_state_id: 3,
 
-            image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
+            image_url: MEDIA[Math.floor(Math.random() * (MEDIA.length - 2 - 0 + 1) + 0)].url,
             title: modal3[0].title,
             cost: modal3[0].cost
           });
@@ -158,8 +157,7 @@ exports.seed = async function(knex) {
             modal_id: id4,
             order_detail_state_id: 4,
 
-            image_url:
-              'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601053519/nnjhydr7idqmc0ftercl.jpg',
+            image_url: MEDIA[Math.floor(Math.random() * (MEDIA.length - 2 - 0 + 1) + 0)].url,
             title: modal4[0].title,
             cost: modal4[0].cost
           });

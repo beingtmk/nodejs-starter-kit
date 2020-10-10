@@ -223,16 +223,16 @@ const ListingDetailView = props => {
                   <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
                 </Col>
                 <Col span={1} align="right">
-                  <IfLoggedIn>
-                    {listing && (
+                  {listing && currentUser && (
+                    <IfLoggedIn>
                       <BookmarkComponent
                         handleBookmark={() => handleBookmark(listing.id, listing.user.id)}
                         bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
                         listing={listing}
                         right={'12%'}
                       />
-                    )}
-                  </IfLoggedIn>
+                    </IfLoggedIn>
+                  )}
                 </Col>
                 <Col span={1} align="right">
                   <SocialSharingButtons {...message} onShare={onShare} />

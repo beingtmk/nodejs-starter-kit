@@ -45,12 +45,12 @@ const NavLinkAddListings = () => {
   );
 };
 
-const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
-  <NavLink to={ROUTES.myListing} className=" AccDetItem" activeClassName="AccDetItemSelected">
-    <Icon style={{ paddingRight: '5px' }} type="solution" />
-    {t('listing:navLinkMyListings')}
-  </NavLink>
-));
+// const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
+//   <NavLink to={ROUTES.myListing} className=" AccDetItem" activeClassName="AccDetItemSelected">
+//     <Icon style={{ paddingRight: '5px' }} type="solution" />
+//     {t('listing:navLinkMyListings')}
+//   </NavLink>
+// ));
 
 const NavLinkTestWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.listingCatalogue} className="nav-link" activeClassName="active">
@@ -118,7 +118,12 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
-  navItemTest: [
+  // navItemTest: [
+  //   <MenuItem key={ROUTES.listingCatalogue}>
+  //     <NavLinkTestWithI18n />
+  //   </MenuItem>
+  // ],
+  navItemBrowse: [
     <MenuItem key={ROUTES.listingCatalogue}>
       <NavLinkTestWithI18n />
     </MenuItem>
@@ -146,13 +151,13 @@ export default new ClientModule({
       </SubMenu>
     </IfLoggedIn>
   ],
-  navItemAccount: [
-    <IfLoggedIn key={ROUTES.myListing}>
-      <MenuItem>
-        <NavLinkMyListingsWithI18n />
-      </MenuItem>
-    </IfLoggedIn>
-  ],
+  // navItemAccount: [
+  //   <IfLoggedIn key={ROUTES.myListing}>
+  //     <MenuItem>
+  //       <NavLinkMyListingsWithI18n />
+  //     </MenuItem>
+  //   </IfLoggedIn>
+  // ],
   resolver: [resolvers],
   localization: [{ ns: 'listing', resources }]
 });
