@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Carousel as ADCarousel, Icon } from 'antd';
+import { Carousel as ADCarousel } from 'antd';
+
+import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
 
 export default class Carousel extends React.Component {
   constructor(props) {
@@ -78,11 +80,7 @@ export default class Carousel extends React.Component {
     return (
       <>
         <div style={{ position: 'relative', height: this.props.height || '370px' }}>
-          {showArrow && (
-            <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
-              <Icon type="left" className="carousel-arrow-icon" />
-            </div>
-          )}
+          {showArrow && <LeftArrow prevSlide={prevSlide} />}
           <ADCarousel ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
             {this.props.data.map((item, key) => (
               <Compo
@@ -93,11 +91,7 @@ export default class Carousel extends React.Component {
               />
             ))}
           </ADCarousel>
-          {showArrow && (
-            <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
-              <Icon type="right" className="carousel-arrow-icon" />
-            </div>
-          )}
+          {showArrow && <RightArrow nextSlide={nextSlide} />}
         </div>
       </>
     );

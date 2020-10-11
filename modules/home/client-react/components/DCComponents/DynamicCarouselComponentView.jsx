@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
-import BannerAnim, { Element } from 'rc-banner-anim';
+import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
+
+import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
 
 const { BgElement } = Element;
 
@@ -50,6 +52,16 @@ class Banner extends React.PureComponent {
           <div className="banner1-wrapper" key="wrapper">
             <BannerAnim key="BannerAnim" autoPlay {...dataSource.BannerAnim}>
               {childrenToRender}
+              <Arrow
+                arrowType="prev"
+                key="prev"
+                //  prefixCls="user-arrow"
+              >
+                <LeftArrow />
+              </Arrow>
+              <Arrow arrowType="next" key="next" prefixCls="rightZero">
+                <RightArrow />
+              </Arrow>
             </BannerAnim>
           </div>
         </TweenOneGroup>
