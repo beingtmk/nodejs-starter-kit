@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import Helmet from 'react-helmet';
-
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import settings from '@gqlapp/config';
 import { Row, Col, Checkbox, Spin, Tooltip } from 'antd';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-
+import { MetaTags } from '@gqlapp/look-client-react';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
@@ -32,13 +29,6 @@ interface ReviewViewProps {
   deleteReview: (id: number) => null;
   handleHelpful: (id: number, value: number) => Promise<void>;
 }
-
-const renderMetaData = (t: TranslateFunction) => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 
 export const NoReviews: React.FC = () => (
   <div align="center">
@@ -77,7 +67,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
   );
   return (
     <>
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={t('meta')} />
       <Row>
         <Col span={8}>
           <div align="center">

@@ -1,28 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, Card, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { LayoutCenter, PageLayout, Card, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 import UserForm from './UserForm';
 
 const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
   const isNotSelf = !user || (user && user.id !== currentUser.id);
-
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('userEdit.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('userEdit.meta')}`
-        }
-      ]}
-    />
-  );
 
   const renderContent = () => (
     <Card>
@@ -41,7 +27,7 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData()}
+      <MetaTags title={t('userEdit.title')} description={t('userEdit.meta')} />
       {loading && !user ? (
         <div className="text-center">{t('userEdit.loadMsg')}</div>
       ) : (

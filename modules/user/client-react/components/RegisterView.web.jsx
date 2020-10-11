@@ -1,26 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Card, CardGroup, Icon, CardTitle, CardText, Underline } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardGroup, Icon, CardTitle, CardText, Underline, MetaTags } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RegisterForm from './RegisterForm';
 
 const RegisterView = ({ t, onSubmit, isRegistered }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('reg.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('reg.meta')}`
-        }
-      ]}
-    />
-  );
-
   const renderConfirmationModal = () => (
     <Card>
       <CardGroup style={{ textAlign: 'center' }}>
@@ -47,7 +34,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData(t)}
+      <MetaTags title={t('reg.title')} description={t('reg.meta')} />
 
       {renderContent()}
     </PageLayout>

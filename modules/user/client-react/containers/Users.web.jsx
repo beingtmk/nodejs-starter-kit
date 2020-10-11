@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, AddButton, Row, Col, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, AddButton, Row, Col, Heading, MetaTags } from '@gqlapp/look-client-react';
 import UsersFilterView from '../components/UsersFilterView';
 import UsersListView from '../components/UsersListView';
 import { useUsersWithSubscription } from './withSubscription';
@@ -30,21 +28,9 @@ const Users = props => {
     }
   });
 
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('users.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('users.meta')}`
-        }
-      ]}
-    />
-  );
-
   return (
     <PageLayout>
-      {renderMetaData()}
+      <MetaTags title={t('users.title')} description={t('users.meta')} />
       <Row>
         <Col span={20}>
           <Heading type="2">{t('users.list.title')}</Heading>

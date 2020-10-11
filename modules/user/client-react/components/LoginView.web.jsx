@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 
-import { PageLayout, Card, CardGroup, CardTitle, CardText, Button, Underline, Icon } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import {
+  PageLayout,
+  Card,
+  CardGroup,
+  CardTitle,
+  CardText,
+  Button,
+  Underline,
+  Icon,
+  MetaTags
+} from '@gqlapp/look-client-react';
 
 import LoginForm from './LoginForm';
 
 const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('login.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('login.meta')}`
-        }
-      ]}
-    />
-  );
-
   const renderConfirmationModal = () => (
     <Card>
       <CardGroup style={{ textAlign: 'center' }}>
@@ -61,7 +57,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData()}
+      <MetaTags title={t('login.title')} description={t('login.meta')} />
 
       {renderContent()}
     </PageLayout>

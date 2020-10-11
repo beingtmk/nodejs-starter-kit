@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -11,7 +10,8 @@ import {
   //  CardTitle,
   PageLayout,
   Heading,
-  EditIcon
+  EditIcon,
+  MetaTags
 } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon, Spin as Loader } from 'antd';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
@@ -35,19 +35,6 @@ class ProfileView extends React.Component {
   };
 
   render() {
-    const renderMetaData = t => {
-      return (
-        <Helmet
-          title={`${settings.app.name} - ${t('profile.title')}`}
-          meta={[
-            {
-              name: 'description',
-              content: `${settings.app.name} - ${t('profile.meta')}`
-            }
-          ]}
-        />
-      );
-    };
     const { t } = this.props;
     const { currentUser, currentUserLoading } = this.props;
 
@@ -55,14 +42,14 @@ class ProfileView extends React.Component {
     if (currentUserLoading && !currentUser) {
       return (
         <PageLayout select="/profile">
-          {renderMetaData(t)}
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
           <Loader text={t('profile.loadMsg')} />
         </PageLayout>
       );
     } else if (currentUser) {
       return (
         <PageLayout select="/profile">
-          {renderMetaData(t)}
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
 
           <Row gutter={5}>
             <Col xs={{ span: 24 }} lg={{ span: 16 }}>
@@ -191,7 +178,8 @@ class ProfileView extends React.Component {
     } else {
       return (
         <PageLayout>
-          {renderMetaData(t)}
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
+
           <h2>{t('profile.errorMsg')}</h2>
         </PageLayout>
       );

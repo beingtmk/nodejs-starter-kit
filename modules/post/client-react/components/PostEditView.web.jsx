@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Underline } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { MetaTags, PageLayout, Underline } from '@gqlapp/look-client-react';
 
 import PostForm from './PostForm';
 import PostComments from '../containers/PostComments';
@@ -20,18 +18,6 @@ const PostEditView = ({ loading, post, match, location, subscribeToMore, editPos
   if (!postObj && location.state) {
     postObj = location.state.post;
   }
-
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('post.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: t('post.meta')
-        }
-      ]}
-    />
-  );
 
   const renderContent = () => (
     <>
@@ -52,7 +38,7 @@ const PostEditView = ({ loading, post, match, location, subscribeToMore, editPos
   if (loading && !postObj) {
     return (
       <PageLayout>
-        {renderMetaData()}
+        <MetaTags title={t('post.title')} description={t('post.meta')} />
         <div className="text-center">{t('post.loadMsg')}</div>
       </PageLayout>
     );
