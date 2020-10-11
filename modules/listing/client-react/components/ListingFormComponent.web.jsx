@@ -24,11 +24,11 @@ const ListingFormSchema = [
   Yup.object().shape({
     title: Yup.string()
       .min(5)
-      .required()
-      .when(['listingCostArray', 'listingDetail'], (listingCostArray, listingDetail, schema) => {
-        console.log('listingCostArray', listingCostArray, listingDetail);
-        return schema.required('bleh');
-      }),
+      .required(),
+    // .when(['listingCostArray', 'listingDetail'], (listingCostArray, listingDetail, schema) => {
+    //   console.log('listingCostArray', listingCostArray, listingDetail);
+    //   return schema.required('bleh');
+    // }),
     listingCostArray: Yup.array().of(
       Yup.object().shape({
         cost: Yup.number()
@@ -42,25 +42,32 @@ const ListingFormSchema = [
         .required()
     }),
     listingOptions: Yup.object().shape({
-      fixedQuantity: Yup.number().required()
-      // .when(['listingCostArray', 'listingDetail'], (listingCostArray, listingDetail, schema) => {
-      //   console.log('listingCostArray', listingCostArray, listingDetail);
-      //   return schema.required('bleh');
-      // }),
+      fixedQuantity: Yup.mixed()
+        .required()
+        .test('lessThanInventoryCount', 'Fixed quantity must be less than or equal to "Inventory Count"', function(
+          value
+        ) {
+          const inventoryCount = this.options.from[1].value.listingDetail.inventoryCount;
+          if (value === 0) {
+            return this.createError({ message: 'Fixed quantity is required (Use -1)' });
+          }
+          return value <= inventoryCount ? true : false;
+        })
+        .required()
     })
   }),
   Yup.object().shape({
-    // listingFlags: Yup.object().shape({
-    //   isDiscount: Yup.boolean(),
-    // }),
-    // listingCostArray: Yup.array().of(
-    //   Yup.object().shape({
-    //     discount: Yup.number().when(['listingCostArray', 'listingFlags'], (listingCostArray, listingFlags, schema) => {
-    //       console.log('listingCostArray', listingCostArray, listingFlags);
-    //       return schema.required('bleh');
-    //     }),
-    //   })
-    // ),
+    listingFlags: Yup.object().shape({
+      isDiscount: Yup.boolean()
+    }),
+    listingCostArray: Yup.array().of(
+      Yup.object().shape({
+        discount: Yup.mixed().test('hasDiscount', 'Discount is required or disable Is discount', function(value) {
+          const isDiscount = this.options.from[1].value.listingFlags.isDiscount;
+          return isDiscount && value === 0 ? false : true;
+        })
+      })
+    )
   })
 ];
 
@@ -262,7 +269,7 @@ const ListingFormComponent = props => {
               </Col>
               <Col span={12} align="right">
                 <br />
-                <NextButton style={{ width: 'auto' }} onClick={() => setStep(2)}>
+                <NextButton style={{ width: 'auto' }} type="submit">
                   Next
                 </NextButton>
               </Col>
@@ -377,7 +384,7 @@ const ListingWithFormik = withFormik({
         {
           id: null,
           cost: '',
-          discount: null,
+          discount: 0,
           type: '',
           label: ''
         }
