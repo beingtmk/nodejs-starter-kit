@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
 import { Tooltip, message, Row, Col, Icon, Form, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
@@ -17,9 +18,51 @@ import {
 } from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
-const ListingFormSchema = {
-  title: [required, minLength(3)]
-};
+const LAST_STEP = 3;
+
+const ListingFormSchema = [
+  Yup.object().shape({
+    title: Yup.string()
+      .min(5)
+      .required()
+      .when(['listingCostArray', 'listingDetail'], (listingCostArray, listingDetail, schema) => {
+        console.log('listingCostArray', listingCostArray, listingDetail);
+        return schema.required('bleh');
+      }),
+    listingCostArray: Yup.array().of(
+      Yup.object().shape({
+        cost: Yup.number()
+          .required()
+          .typeError('Cost is required field')
+      })
+    ),
+    listingDetail: Yup.object().shape({
+      inventoryCount: Yup.number()
+        .min(1, 'Inventory count must be greater than or equal to 1')
+        .required()
+    }),
+    listingOptions: Yup.object().shape({
+      fixedQuantity: Yup.number().required()
+      // .when(['listingCostArray', 'listingDetail'], (listingCostArray, listingDetail, schema) => {
+      //   console.log('listingCostArray', listingCostArray, listingDetail);
+      //   return schema.required('bleh');
+      // }),
+    })
+  }),
+  Yup.object().shape({
+    // listingFlags: Yup.object().shape({
+    //   isDiscount: Yup.boolean(),
+    // }),
+    // listingCostArray: Yup.array().of(
+    //   Yup.object().shape({
+    //     discount: Yup.number().when(['listingCostArray', 'listingFlags'], (listingCostArray, listingFlags, schema) => {
+    //       console.log('listingCostArray', listingCostArray, listingFlags);
+    //       return schema.required('bleh');
+    //     }),
+    //   })
+    // ),
+  })
+];
 
 const ListingFormComponent = props => {
   const [load, setLoad] = useState(false);
@@ -143,7 +186,7 @@ const ListingFormComponent = props => {
 
             <Col span={24} align="right">
               <br />
-              <NextButton style={{ width: 'auto' }} onClick={() => setStep(1)}>
+              <NextButton style={{ width: 'auto' }} type="submit">
                 Next
               </NextButton>
             </Col>
@@ -333,7 +376,7 @@ const ListingWithFormik = withFormik({
         props.listing.listingCostArray.map(getCost)) || [
         {
           id: null,
-          cost: null,
+          cost: '',
           discount: null,
           type: '',
           label: ''
@@ -364,64 +407,72 @@ const ListingWithFormik = withFormik({
       }
     };
   },
-  async handleSubmit(values, { props: { onSubmit } }) {
-    if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Invontory Count - Less than zero');
-    if (values.listingCostArray[0].cost < 0) return message.error('Invalid Listing Cost - Less than zero');
-    if (
-      values.listingOptions.fixedQuantity < -1 ||
-      values.listingOptions.fixedQuantity > values.listingDetail.inventoryCount
-    )
-      return message.error('Invalid Fixed Quantity - Cannot be less than zero/more than Inventory Count');
-    if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
-      return message.error('Invalid Discount - Less than zero/more than 100');
-    // if (< 0) return message.error('Invalid - Less than zero');
+  async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
+    if (step === LAST_STEP) {
+      if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Invontory Count - Less than zero');
+      if (values.listingCostArray[0].cost < 0) return message.error('Invalid Listing Cost - Less than zero');
+      if (
+        values.listingOptions.fixedQuantity < -1 ||
+        values.listingOptions.fixedQuantity > values.listingDetail.inventoryCount
+      )
+        return message.error('Invalid Fixed Quantity - Cannot be less than zero/more than Inventory Count');
+      if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
+        return message.error('Invalid Discount - Less than zero/more than 100');
+      // if (< 0) return message.error('Invalid - Less than zero');
 
-    const input = {
-      id: values.id,
-      userId: values.userId,
-      title: values.title,
-      description: values.description,
-      sku: values.sku,
-      isActive: values.isActive
-    };
-    input.listingCostArray = [];
-    const cost = {
-      cost: values.listingCostArray[0].cost,
-      discount: values.listingCostArray[0].discount,
-      type: values.listingCostArray[0].type,
-      label: values.listingCostArray[0].label
-    };
-    input.listingCostArray.push(cost);
-    input.listingFlags = {
-      id: values.listingFlags.id,
-      isFeatured: values.listingFlags.isFeatured,
-      isNew: values.listingFlags.isNew,
-      isDiscount: values.listingFlags.isDiscount
-    };
-    input.listingOptions = {
-      id: values.listingOptions.id,
-      fixedQuantity: values.listingOptions.fixedQuantity
-    };
-    input.listingDetail = {
-      id: values.listingDetail.id,
-      inventoryCount: values.listingDetail.inventoryCount
-    };
-    input.listingMedia = [];
-    if (values.listingMedia.image.length > 0) {
-      input.listingMedia = [...input.listingMedia, ...values.listingMedia.image];
+      const input = {
+        id: values.id,
+        userId: values.userId,
+        title: values.title,
+        description: values.description,
+        sku: values.sku,
+        isActive: values.isActive
+      };
+      input.listingCostArray = [];
+      const cost = {
+        cost: values.listingCostArray[0].cost,
+        discount: values.listingCostArray[0].discount,
+        type: values.listingCostArray[0].type,
+        label: values.listingCostArray[0].label
+      };
+      input.listingCostArray.push(cost);
+      input.listingFlags = {
+        id: values.listingFlags.id,
+        isFeatured: values.listingFlags.isFeatured,
+        isNew: values.listingFlags.isNew,
+        isDiscount: values.listingFlags.isDiscount
+      };
+      input.listingOptions = {
+        id: values.listingOptions.id,
+        fixedQuantity: values.listingOptions.fixedQuantity
+      };
+      input.listingDetail = {
+        id: values.listingDetail.id,
+        inventoryCount: values.listingDetail.inventoryCount
+      };
+      input.listingMedia = [];
+      if (values.listingMedia.image.length > 0) {
+        input.listingMedia = [...input.listingMedia, ...values.listingMedia.image];
+      } else {
+        input.listingMedia.push({
+          url: NO_IMG,
+          type: 'image'
+        });
+      }
+      if (values.listingMedia.video.length > 0) {
+        input.listingMedia = [...input.listingMedia, ...values.listingMedia.video];
+      }
+      // console.log(input);
+      await onSubmit(input);
     } else {
-      input.listingMedia.push({
-        url: NO_IMG,
-        type: 'image'
-      });
+      console.log('bleh');
+      setStep(step + 1);
+      setTouched({});
+      setSubmitting(false);
     }
-    if (values.listingMedia.video.length > 0) {
-      input.listingMedia = [...input.listingMedia, ...values.listingMedia.video];
-    }
-    // console.log(input);
-    await onSubmit(input);
   },
-  validate: values => validate(values, ListingFormSchema),
+  // validate: values => validate(values, ListingFormSchema),
+  validationSchema: ({ step }) => ListingFormSchema[step],
   displayName: 'Listing Form' // helps with React DevTools
 });
 
