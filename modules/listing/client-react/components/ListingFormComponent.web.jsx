@@ -6,7 +6,6 @@ import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { minLength, required, validate } from '@gqlapp/validation-common-react';
 import {
   RenderField,
   RenderUploadMultiple,
@@ -68,6 +67,15 @@ const ListingFormSchema = [
         })
       })
     )
+  }),
+  Yup.object().shape({
+    listingMedia: Yup.object().shape({
+      video: Yup.array().of(
+        Yup.object().shape({
+          url: Yup.string().required('Url is required or delete field')
+        })
+      )
+    })
   })
 ];
 
@@ -79,25 +87,33 @@ const ListingFormComponent = props => {
 
   if (videos.length > 0) {
     formItems = videos.map((v, index) => (
-      <FormItem required={false} key={index} style={{ margin: '0px' }}>
-        <FormItem style={{ display: 'inline-block', margin: '0px 5px' }} key={index}>
-          <Field
-            name={`listingMedia.video[${index}].url`}
-            component={RenderField}
-            placeholder={'Video url'}
-            type="text"
-            label={'Video url'}
-            value={v.url}
-            key={index}
-          />
-        </FormItem>
-        <Icon
-          style={{ paddingTop: '40px' }}
-          title="Remove "
-          className="dynamic-delete-button"
-          type="minus-circle-o"
-          onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
-        />
+      <FormItem required={false} key={index} style={{ margin: '0 5px' }}>
+        <Row type="flex" align="middle">
+          <Col span={20}>
+            <FormItem
+              //  style={{ display: 'inline-block', margin: '0px 5px' }}
+              key={index}
+            >
+              <Field
+                name={`listingMedia.video[${index}].url`}
+                component={RenderField}
+                placeholder={'Video url'}
+                type="text"
+                label={'Video url'}
+                value={v.url}
+                key={index}
+              />
+            </FormItem>
+          </Col>
+          <Col span={4} align="right">
+            <Icon
+              title="Remove "
+              className="dynamic-delete-button"
+              type="minus-circle-o"
+              onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
+            />
+          </Col>
+        </Row>
       </FormItem>
     ));
   }
@@ -281,7 +297,7 @@ const ListingFormComponent = props => {
             <Col md={12} xs={24} align="left">
               <Col span={24}>
                 <Col span={18}>
-                  <FormItem label={'Add video url'}>{formItems}</FormItem>
+                  <FormItem label={'Add video url'}></FormItem>
                 </Col>
                 <Col span={6} align="right">
                   <FormItem>
@@ -292,6 +308,7 @@ const ListingFormComponent = props => {
                   </FormItem>
                 </Col>
               </Col>
+              <Col span={24}>{formItems}</Col>
             </Col>
             <Col md={12} xs={24} align="left">
               <FormItem label={'Add images'}>
@@ -363,8 +380,8 @@ const ListingWithFormik = withFormik({
     function getCost(listingCost) {
       return {
         id: (listingCost && listingCost.id) || null,
-        cost: (listingCost && listingCost.cost) || null,
-        discount: (listingCost && listingCost.discount) || null,
+        cost: (listingCost && listingCost.cost) || '',
+        discount: (listingCost && listingCost.discount) || 0,
         type: (listingCost && listingCost.type) || '',
         label: (listingCost && listingCost.label) || ''
       };
@@ -415,7 +432,8 @@ const ListingWithFormik = withFormik({
     };
   },
   async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
-    if (step === LAST_STEP) {
+    setStep(step + 1);
+    if (step + 1 === LAST_STEP) {
       if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Invontory Count - Less than zero');
       if (values.listingCostArray[0].cost < 0) return message.error('Invalid Listing Cost - Less than zero');
       if (
@@ -472,8 +490,6 @@ const ListingWithFormik = withFormik({
       // console.log(input);
       await onSubmit(input);
     } else {
-      console.log('bleh');
-      setStep(step + 1);
       setTouched({});
       setSubmitting(false);
     }
