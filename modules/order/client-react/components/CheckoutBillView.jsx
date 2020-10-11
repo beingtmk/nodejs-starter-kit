@@ -1,21 +1,12 @@
 import React from 'react';
 import { Spin, Card, Row, Col } from 'antd';
-import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { FieldArray, withFormik } from 'formik';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
 
-import settings from '../../../../settings';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
-
-const renderMetaData = () => (
-  <Helmet
-    title={`${settings.app.name} - Bill`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${'meta'}` }]}
-  />
-);
 
 const CheckoutBillView = props => {
   // const addresses = getAddresses();
@@ -26,7 +17,7 @@ const CheckoutBillView = props => {
 
   return (
     <PageLayout>
-      {renderMetaData()}
+      <MetaTags type="Bill" description="meta" />
       {cartLoading && (
         <div align="center">
           <br />

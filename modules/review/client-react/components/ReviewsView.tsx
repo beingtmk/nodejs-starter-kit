@@ -1,22 +1,13 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 
-import { PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, AddButton, Heading, MetaTags } from '@gqlapp/look-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';
 import ReviewListComponent from './ReviewListComponent.web';
 import ROUTES from '../routes';
-
-const renderMetaData = (t: TranslateFunction) => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 
 export interface ReviewViewProps {
   t: TranslateFunction;
@@ -32,7 +23,8 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
 
   return (
     <PageLayout>
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={t('meta')} />
+
       <Row>
         <Col span={12}>
           <Heading type="2">{t('adminPanel.title')}</Heading>

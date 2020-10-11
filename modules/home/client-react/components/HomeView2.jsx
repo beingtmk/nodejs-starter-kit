@@ -1,9 +1,7 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
@@ -46,12 +44,7 @@ class HomeView extends React.Component {
 
   render() {
     console.log(this.props);
-    const renderMetaData = t => (
-      <Helmet
-        title={`${settings.app.name} - ${t('title')}`}
-        meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-      />
-    );
+    const { t } = this.props;
     const children = [
       <Banner5 id="Banner5_0" key="Banner5_0" isMobile={this.state.isMobile} />,
       <Feature6 id="Feature6_0" key="Feature6_0" isMobile={this.state.isMobile} />,
@@ -61,7 +54,8 @@ class HomeView extends React.Component {
     ];
     return (
       <PageLayout type="home">
-        {renderMetaData(this.props.t)}
+        <MetaTags title={t('title')} description={t('meta')} />
+
         <div
           className="templates-wrapper"
           ref={d => {

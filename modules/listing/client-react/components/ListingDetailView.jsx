@@ -1,5 +1,4 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
@@ -18,13 +17,12 @@ import {
   Tabs
 } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
-import settings from '@gqlapp/config';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -50,18 +48,6 @@ const ListingDetailView = props => {
     onShare,
     canUserReview
   } = props;
-
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('listingDetail.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: t('listingDetail.meta')
-        }
-      ]}
-    />
-  );
 
   const prevSlide = () => {
     carousel.prev();
@@ -134,7 +120,7 @@ const ListingDetailView = props => {
 
   return (
     <PageLayout>
-      {renderMetaData()}
+      <MetaTags type={t('listingDetail.title')} description={t('listingDetail.meta')} />
       {!loading && !listing && (
         <div align="center">
           <br />

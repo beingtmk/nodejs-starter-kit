@@ -1,24 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Row, Card, Spin } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
 
 const EditReviewView = props => {
   const { review, onSubmit, currentUser, t } = props;
-  const renderMetaData = t => (
-    <Helmet
-      title={`${settings.app.name} - ${t('title')}`}
-      meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-    />
-  );
   return (
     <PageLayout type="forms">
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={t('meta')} />
+
       <br />
       <br />
       <br />
