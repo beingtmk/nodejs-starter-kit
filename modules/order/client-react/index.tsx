@@ -93,10 +93,9 @@ export default new ClientModule({
       <SubMenu
         key={ROUTES.order}
         title={
-          <span>
-            <Icon type="solution" />
-            <span>Order</span>
-          </span>
+          <>
+            <Icon type="solution" /> Order
+          </>
         }
       >
         <MenuItem>

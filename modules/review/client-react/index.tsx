@@ -14,16 +14,17 @@ import ROUTES from './routes';
 
 const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">
-    <Icon type="book" /> &nbsp;
-    {t('review:navLinkUser')}
+    <div>
+      <Icon type="book" /> {t('review:navLinkUser')}
+    </div>
   </NavLink>
 ));
 
-const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to={ROUTES.review} className="nav-link" activeClassName="active">
-    {t('review:navLinkTest')}
-  </NavLink>
-));
+// const NavLinkWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
+//   <NavLink to={ROUTES.review} className="nav-link" activeClassName="active">
+//     {t('review:navLinkTest')}
+//   </NavLink>
+// ));
 
 const NavLinkAdminWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">

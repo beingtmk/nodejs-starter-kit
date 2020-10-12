@@ -133,10 +133,9 @@ export default new ClientModule({
       <SubMenu
         key="/listing"
         title={
-          <span>
-            <Icon type="solution" />
-            <span>Listing</span>
-          </span>
+          <>
+            <Icon type="solution" /> Listing
+          </>
         }
       >
         <MenuItem>

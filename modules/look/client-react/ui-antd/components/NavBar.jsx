@@ -167,7 +167,7 @@ class NavBar extends React.Component {
                 mode="inline"
                 selectedKeys={[this.props.location.pathname]}
                 theme="light"
-                style={{ lineHeight: '50px' }}
+                style={{ lineHeight: '50px', border: '0px' }}
               >
                 {ref.modules.navItemsRight}
                 <LoggedIn>
@@ -193,9 +193,16 @@ class NavBar extends React.Component {
                     </MenuItem>
                   </SubMenu>
                 )}
-                <MenuItem>
-                  <DropDown type="apartment">{ref.modules.navItemsBrowse}</DropDown>
-                </MenuItem>
+                <SubMenu
+                  key="admin"
+                  title={
+                    <MenuItem>
+                      <Icon type="apartment" /> Browse
+                    </MenuItem>
+                  }
+                >
+                  {ref.modules.navItemsBrowse}
+                </SubMenu>
                 <LoggedIn role="admin">
                   <SubMenu
                     key="admin"
