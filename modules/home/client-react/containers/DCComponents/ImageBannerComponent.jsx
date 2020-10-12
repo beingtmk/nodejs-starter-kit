@@ -11,7 +11,7 @@ import ImageBannerComponentView from '../../components/DCComponents/ImageBannerC
 const ImageBannerComponent = props => {
   const { loading, dynamicCarousels } = props;
 
-  console.log('props', props);
+  // console.log('props', props);
   return !loading && dynamicCarousels ? (
     <ImageBannerComponentView {...props} id="Banner1_0" key="Banner1_0" data={dynamicCarousels} />
   ) : (

@@ -78,7 +78,7 @@ class HomeView4 extends React.Component {
       // <Feature3 id="Feature3_0" key="Feature3_0" isMobile={this.state.isMobile} />,
     ];
 
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <PageLayout type="home">
         <MetaTags title="Home" description="This is the homepage." />

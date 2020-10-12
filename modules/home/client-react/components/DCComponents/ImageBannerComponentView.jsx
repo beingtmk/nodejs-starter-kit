@@ -46,8 +46,9 @@ class Content extends React.PureComponent {
             return {
               name: `block${indx}`,
               className: 'current-content0-block',
-              md: 7,
-              xs: 12,
+              lg: 7,
+              md: 12,
+              xs: 24,
               children: {
                 className: 'current-content0-block-item',
                 children: [

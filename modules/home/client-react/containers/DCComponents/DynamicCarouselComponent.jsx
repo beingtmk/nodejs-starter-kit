@@ -11,7 +11,7 @@ import DynamicCarouselComponentView from '../../components/DCComponents/DynamicC
 const DynamicCarouselComponent = props => {
   const { loading, dynamicCarousels } = props;
 
-  console.log('props', props);
+  // console.log('props', props);
   return !loading && dynamicCarousels ? (
     <DynamicCarouselComponentView {...props} id="Banner1_0" key="Banner1_0" data={dynamicCarousels} />
   ) : (
