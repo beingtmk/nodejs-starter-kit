@@ -6,6 +6,7 @@ import { enquireScreen } from 'enquire-js';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 
+import { settings } from '@gqlapp/config';
 import Banner5 from './AntdLanding/Banner5';
 import Feature6 from './AntdLanding/Feature6';
 import Feature0 from './AntdLanding/Feature0';
@@ -54,7 +55,7 @@ class HomeView extends React.Component {
     ];
     return (
       <PageLayout type="home">
-        <MetaTags title={t('title')} description={t('meta')} />
+        <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
         <div
           className="templates-wrapper"

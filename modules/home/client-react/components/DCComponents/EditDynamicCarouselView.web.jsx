@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import { MetaTags, Row, PageLayout } from '@gqlapp/look-client-react';
 
+import { settings } from '@gqlapp/config';
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 
 const EditDynamicCarouselView = props => {
@@ -11,7 +12,7 @@ const EditDynamicCarouselView = props => {
 
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('title')} description={t('meta')} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       {loading ? (
         <div align="center">

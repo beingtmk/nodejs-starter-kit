@@ -5,6 +5,7 @@ import { FieldArray, withFormik } from 'formik';
 import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
 
+import { settings } from '@gqlapp/config';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 
@@ -17,7 +18,7 @@ const CheckoutBillView = props => {
 
   return (
     <PageLayout>
-      <MetaTags type="Bill" description="meta" />
+      <MetaTags type="Bill" description={`${settings.app.name} - ${'meta'}`} />
       {cartLoading && (
         <div align="center">
           <br />

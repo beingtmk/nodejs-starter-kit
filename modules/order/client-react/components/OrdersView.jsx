@@ -6,6 +6,7 @@ import { Row, Col, Icon, Divider } from 'antd';
 import { PageLayout, Spin, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 // import ROUTES from '../routes';
+import { settings } from '@gqlapp/config';
 import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
 
@@ -14,7 +15,7 @@ const OrderView = props => {
 
   return (
     <PageLayout>
-      <MetaTags title={t('title')} description={t('meta')} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${'meta'}`} />
 
       <Row>
         <Col span={12}>

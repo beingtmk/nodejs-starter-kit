@@ -1,9 +1,8 @@
 import React from 'react';
 import { Steps, Spin } from 'antd';
-import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ListingFormComponent from './ListingFormComponent.web';
@@ -11,12 +10,6 @@ import ListingFormComponent from './ListingFormComponent.web';
 const { Step } = Steps;
 
 const EditListingView = props => {
-  const renderMetaData = t => (
-    <Helmet
-      title={`${settings.app.name} - ${t('title')}`}
-      meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-    />
-  );
   const { t, listing, loading, onSubmit, currentUser } = props;
   const [step, setStep] = React.useState(0);
   const steps = [
@@ -33,7 +26,8 @@ const EditListingView = props => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData(t)}
+      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
       {loading ? (
         <div align="center">
           <br />
