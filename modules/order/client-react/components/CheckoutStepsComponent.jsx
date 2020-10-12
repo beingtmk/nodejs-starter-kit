@@ -27,11 +27,15 @@ class CheckoutStepsComponent extends Component {
             </CheckoutSteps>
           </Row>
         </Col>
-        <Steps current={this.props.step} size="small">
-          <Step title={<span className="font13">Cart</span>} />
-          <Step title={<span className="font13">Billing Address</span>} />
-          <Step title={<span className="font13">Payment options</span>} />
-        </Steps>
+        <Row justify="center">
+          <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 6 }}>
+            <Steps current={this.props.step} size="small">
+              <Step title={<span className="font13">Cart</span>} />
+              <Step title={<span className="font13">Billing Address</span>} />
+              <Step title={<span className="font13">Payment options</span>} />
+            </Steps>
+          </Col>
+        </Row>
         <br />
         <br />
       </Col>

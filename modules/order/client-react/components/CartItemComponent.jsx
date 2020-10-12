@@ -118,7 +118,7 @@ const CartItemComponent = props => {
               align="center"
               style={{ maxHeight: props.mobile ? '130px' : '250px', overflow: 'hidden' }}
             >
-              <img alt="" src={item.imageUrl || NO_IMG} width="100%" />
+              <img alt="" src={item.imageUrl || NO_IMG} height="100%" />
             </Col>
             <Col {...infoGrid}>
               <Card
