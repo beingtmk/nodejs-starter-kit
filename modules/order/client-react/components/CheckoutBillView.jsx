@@ -38,7 +38,7 @@ const CheckoutBillView = props => {
               <br />
             </Col>
 
-            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
               {addresses && (
                 <Card style={{ height: '100%' }}>
                   <h3 className="billingAddress">Shipping Address</h3>
@@ -65,7 +65,7 @@ const CheckoutBillView = props => {
                 </Card>
               )}
             </Col>
-            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
               <CheckoutCardComponent
                 onSubmit={() => {
                   console.log('Working!');

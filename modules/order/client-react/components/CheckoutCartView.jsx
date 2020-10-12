@@ -54,11 +54,11 @@ const CheckoutCartView = props => {
         (getCart && getCart.orderDetails.length > 0 ? (
           <div>
             <Row>
-              <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
+              <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 0 }} align="center">
                 <CheckoutStepsComponent step={0} />
               </Col>
               <Col lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
-                <Col span={24}>
+                <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 5 }}>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
                     <h2>
                       <Icon type="shopping" />

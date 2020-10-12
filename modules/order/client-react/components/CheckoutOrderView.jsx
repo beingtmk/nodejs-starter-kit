@@ -56,7 +56,12 @@ const CheckoutOrderView = props => {
                         completed={3}
                       />
                       <Divider />
-                      <Col lg={{ span: 24, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                      <Col
+                        lg={{ span: 24, offset: 0 }}
+                        sm={{ span: 24, offset: 0 }}
+                        xs={{ span: 24, offset: 0 }}
+                        style={{ paddingBottom: '5%' }}
+                      >
                         {/* <div style={{ marginTop: "200px" }} /> */}
                         <Card className="boxShadowTheme borderRadius9">
                           <h4>The order will be delivered to the address below:</h4>

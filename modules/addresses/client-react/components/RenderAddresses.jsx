@@ -169,8 +169,8 @@ class RenderAddress extends React.Component {
       arrayHelpers,
       name,
       addresses,
-      t,
-      label,
+      // t,
+      // label,
       onSubmit,
       backgroundColor,
       borderColor,
@@ -226,7 +226,7 @@ class RenderAddress extends React.Component {
               </AddressLines>
 
               <Row>
-                <Col xl={20} lg={20} md={20} sm={4}>
+                <Col xl={20} lg={20} md={20} sm={4} xs={20}>
                   <AddEditbtn>
                     <Button shape="circle" size="large" onClick={() => this.modalControl(indexa, true)}>
                       <Icon type="edit" />
@@ -246,7 +246,7 @@ class RenderAddress extends React.Component {
                     </div>
                   </Modal>
                 </Col>
-                <Col xl={4} lg={4} md={1} sm={1}>
+                <Col xl={4} lg={4} md={1} sm={1} xs={4}>
                   <Popconfirm
                     title="Are you sure to delete this address?"
                     onConfirm={() => arrayHelpers.remove(indexa) || handleDeleteAddress(address.id)}
