@@ -69,6 +69,10 @@
       }
     }
   },
+  "listAdd":{
+    "title":"Add listing",
+    "meta":"Add Listing page"
+  },
 
   "list": {
     "title": "Listings",

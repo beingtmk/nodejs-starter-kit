@@ -24,7 +24,7 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
   ];
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('listAdd.title')} description={`${settings.app.name} - ${t('listAdd.meta')}`} />
 
       {loading ? (
         <div align="center">

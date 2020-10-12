@@ -20,7 +20,7 @@ const UserAddView = ({ t, onSubmit }) => {
 
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('userEdit.title')} description={t('userEdit.meta')} />
+      <MetaTags title={t('userAdd.title')} description={t('userAdd.meta')} />
 
       {renderContent()}
     </PageLayout>

@@ -26,7 +26,7 @@ const EditListingView = props => {
 
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('listing.title')} description={`${settings.app.name} - ${t('listing.meta')}`} />
 
       {loading ? (
         <div align="center">
