@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
+import USER_ROUTES from '@gqlapp/user-client-react/routes';
 
 import ROUTES from '../routes';
 
@@ -102,7 +103,7 @@ const ListingItemComponent = props => {
               <br />
               <br />
               <br />
-              <Link target="_blank" to={`/Todo/${item.user.id}`}>
+              <Link target="_blank" to={`${USER_ROUTES.userPublicProfileLink}${item.user.id}`}>
                 <Tooltip placement="topLeft" title="Visit User's Profile">
                   <Meta
                     avatar={<Avatar src={sellerAvatar} />}

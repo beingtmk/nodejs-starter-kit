@@ -7,6 +7,7 @@ import { Spin } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
+import USER_ROUTES from '@gqlapp/user-client-react/routes';
 
 import OrderStatusMail from '../containers/OrderStatusMail';
 import settings from '../../../../settings';
@@ -77,7 +78,11 @@ const OrderListComponent = props => {
       dataIndex: 'consumer',
       key: 'consumer',
       render: (text, record) => (
-        <a href={`/todo`} target={'_blank'} rel="noopener noreferrer">
+        <a
+          href={`${USER_ROUTES.userPublicProfileLink}${record.consumer.id}`}
+          target={'_blank'}
+          rel="noopener noreferrer"
+        >
           {record.consumer && record.consumer.username}
         </a>
       )

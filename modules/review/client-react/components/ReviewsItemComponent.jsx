@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Card, Rate, Menu, Button } from 'antd';
 
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
+import USER_ROUTES from '@gqlapp/user-client-react/routes';
 
 import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
@@ -61,10 +62,7 @@ const ReviewsItemComponent = props => {
 
   return (
     <Row>
-      <Link
-        to={'/todo'}
-        // to={`/${review.user.id}`}
-      >
+      <Link to={`${USER_ROUTES.userPublicProfileLink}${review.user.id}`}>
         <Avatar
           alt=""
           src={
@@ -88,43 +86,43 @@ const ReviewsItemComponent = props => {
           </Button>
         )}
       </HelpfulPosition>
-      <Link to={`/todo`}>
-        <Card
-          style={{
-            margin: '28px 0px 0px 16px',
-            borderWidth: '0px',
-            borderRadius: '8px'
-          }}
-        >
-          <Col span={10}>
-            <h3>
-              <strong>{review.user.profile && review.user.profile.fullName}</strong>
-            </h3>
-          </Col>
-          <Col span={12}>
-            <Row type="flex" justify="end">
-              <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
-            </Row>
-          </Col>
-          <Col span={2}>
-            <Row type="flex" justify="end"></Row>
-          </Col>
+      {/* <Link to={`/todo`}> */}
+      <Card
+        style={{
+          margin: '28px 0px 0px 16px',
+          borderWidth: '0px',
+          borderRadius: '8px'
+        }}
+      >
+        <Col span={10}>
+          <h3>
+            <strong>{review.user.profile && review.user.profile.fullName}</strong>
+          </h3>
+        </Col>
+        <Col span={12}>
+          <Row type="flex" justify="end">
+            <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
+          </Row>
+        </Col>
+        <Col span={2}>
+          <Row type="flex" justify="end"></Row>
+        </Col>
+        <Col span={24}>
+          <div style={{ padding: '10px' }}>
+            <p>{review.feedback}</p>
+          </div>
+        </Col>
+        {showPhotos && (
           <Col span={24}>
-            <div style={{ padding: '10px' }}>
-              <p>{review.feedback}</p>
-            </div>
+            <ImagesSlickComponent images={review.reviewMedia} />
           </Col>
-          {showPhotos && (
-            <Col span={24}>
-              <ImagesSlickComponent images={review.reviewMedia} />
-            </Col>
-          )}
-          <Col span={12}>
-            <>{new Date(Number(review.createdAt)).toLocaleDateString('en-IN')}</>
-          </Col>
-          <Col span={12}></Col>
-        </Card>
-      </Link>
+        )}
+        <Col span={12}>
+          <>{new Date(Number(review.createdAt)).toLocaleDateString('en-IN')}</>
+        </Col>
+        <Col span={12}></Col>
+      </Card>
+      {/* </Link> */}
     </Row>
   );
 };
