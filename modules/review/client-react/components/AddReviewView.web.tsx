@@ -5,6 +5,7 @@ import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
+import settings from '@gqlapp/config';
 
 export interface AddReviewViewProps {
   t: TranslateFunction;
@@ -16,7 +17,7 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
   const { t, loading, addReview } = props;
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('title')} description={t('meta')} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <br />
       <br />

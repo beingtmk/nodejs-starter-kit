@@ -6,7 +6,7 @@ import { enquireScreen } from 'enquire-js';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 
-import { settings } from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import Banner5 from './AntdLanding/Banner5';
 import Feature6 from './AntdLanding/Feature6';
 import Feature0 from './AntdLanding/Feature0';

@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 
 import { MetaTags, Row, PageLayout } from '@gqlapp/look-client-react';
 
-import { settings } from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 
 const EditDynamicCarouselView = props => {

@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import Helmet from 'react-helmet';
 import { PropTypes } from 'prop-types';
-import { Select, Option, Row, Col, Card } from '@gqlapp/look-client-react';
+import { Select, Option, Row, Col, Card, MetaTags } from '@gqlapp/look-client-react';
 import { FieldArray, withFormik } from 'formik';
 
 import settings from '@gqlapp/config';
 
 import RenderAddress from './RenderAddresses';
-
-const renderMetaData = t => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 
 const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
   const [type, setType] = useState(false);
@@ -28,7 +20,8 @@ const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
 
   return (
     <>
-      {renderMetaData(t)}
+      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
       <Select onChange={() => setType(!type)}>
         <Option value="dispaly">Display</Option>
         <Option value="selectable">Selectable</Option>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { MetaTags, PageLayout, Select, Option } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 
+import settings from '@gqlapp/config';
 import PaginationDemoView from '../components/PaginationDemoView.web';
 import { useDataProvider } from './DataProvider';
 
@@ -27,7 +28,7 @@ const PaginationDemo = ({ t }) => {
 
   return (
     <PageLayout>
-      <MetaTags title={t('title')} description={t('meta')} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <Select onChange={onPaginationTypeChange} className="pagination-select">
         <Option value="standard">{t('list.title.standard')}</Option>

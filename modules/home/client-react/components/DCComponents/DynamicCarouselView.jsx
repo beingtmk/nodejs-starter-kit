@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Row, Col, Button, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 
-import { settings } from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import ROUTES from '../../routes';
 import DynamicCarouselFilterView from './DynamicCarouselFilterView';
 import DynamicCarouselListView from './DynamicCarouselListView';

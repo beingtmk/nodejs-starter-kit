@@ -6,7 +6,7 @@ import { Row, Col, Icon, Divider } from 'antd';
 import { PageLayout, Spin, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 // import ROUTES from '../routes';
-import { settings } from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
 

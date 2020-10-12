@@ -6,7 +6,7 @@ import { Icon, Button, Spin } from 'antd';
 import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
-import { settings } from '@gqlapp/config';
+import settings from '@gqlapp/config';
 import ROUTES from '../routes';
 import ListingItemComponent from './ListingItemComponent';
 
