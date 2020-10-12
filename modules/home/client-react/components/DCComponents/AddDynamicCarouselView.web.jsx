@@ -10,7 +10,7 @@ import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser }) => {
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('banner')} description={`${settings.app.name} - ${t('meta')}`} />
 
       {loading ? (
         <div align="center">
