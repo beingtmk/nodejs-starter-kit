@@ -11,7 +11,7 @@ interface OrderViewProps {
 const OrderView = ({ t }: OrderViewProps) => {
   return (
     <PageLayout>
-      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <div className="text-center">
         <p>{t('welcomeText')}</p>

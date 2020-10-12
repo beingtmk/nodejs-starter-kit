@@ -9,7 +9,7 @@ import StaticPageComponent from './StaticPageComponent';
 const FaqView = () => {
   return (
     <PageLayout type="home">
-      <MetaTags type="FAQ" description={`${settings.app.name}`} />
+      <MetaTags title="FAQ" description={`${settings.app.name}`} />
 
       <StaticPageComponent title={'FAQ'}>
         <div style={{ height: '100vh' }}>This is Faq.</div>

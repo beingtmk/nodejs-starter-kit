@@ -120,7 +120,7 @@ const ListingDetailView = props => {
 
   return (
     <PageLayout>
-      <MetaTags type={t('listingDetail.title')} description={t('listingDetail.meta')} />
+      <MetaTags title={t('listingDetail.title')} description={t('listingDetail.meta')} />
       {!loading && !listing && (
         <div align="center">
           <br />

@@ -9,7 +9,7 @@ import StaticPageComponent from './StaticPageComponent';
 const AboutUsView = () => {
   return (
     <PageLayout type="home">
-      <MetaTags type="About Us" description={settings.app.name} />
+      <MetaTags title="About Us" description={settings.app.name} />
 
       <StaticPageComponent title={'About Us'}>
         <div style={{ height: '100vh' }}>This is About Us.</div>

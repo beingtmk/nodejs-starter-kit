@@ -9,7 +9,7 @@ import StaticPageComponent from './StaticPageComponent';
 const PrivacyPolicyView = () => {
   return (
     <PageLayout type="home">
-      <MetaTags type="Privacy Policy" description={`${settings.app.name}`} />
+      <MetaTags title="Privacy Policy" description={`${settings.app.name}`} />
 
       <StaticPageComponent title={'Privacy Policy'}>
         <div style={{ height: '100vh' }}>This is Privacy policy.</div>
