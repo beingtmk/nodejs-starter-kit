@@ -46,6 +46,7 @@ class HomeView4 extends React.Component {
   }
 
   render() {
+    const { history, currentUser } = this.props;
     const children = [
       <DynamicCarousel
         id="Banner_0"
@@ -61,13 +62,15 @@ class HomeView4 extends React.Component {
       />,
       <ListingsCarousel
         filter={{ isFeatured: true, isActive: true }}
-        currentUser={this.props.currentUser}
+        currentUser={currentUser}
         title={'Featured Listings'}
+        history={history}
       />,
       <ListingsCarousel
         filter={{ isNew: true, isActive: true }}
-        currentUser={this.props.currentUser}
+        currentUser={currentUser}
         title={'Our Latest Additions'}
+        history={history}
       />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,
@@ -96,7 +99,8 @@ class HomeView4 extends React.Component {
 }
 
 HomeView4.propTypes = {
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default compose(withCurrentUser)(HomeView4);

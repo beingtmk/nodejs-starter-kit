@@ -148,7 +148,7 @@ const ListingItemComponent = props => {
                     position: 'relative'
                   }}
                 >
-                  <h3>{`Event-Id: ${item.id}`}</h3>
+                  <h3>{`Listing-Id: ${item.id}`}</h3>
                   <Divider style={{ margin: '5px 0px' }} />
 
                   <OrderTotalDate span={24}>

@@ -24,10 +24,17 @@ type Review {
   feedback: String
   isActive: Boolean
   helpful: Int
+  modalReview: ModalReview
   reviewMedia: [ReviewMedium]
   createdAt: String!
   updatedAt: String!
 }
+
+type ModalReview {
+  modalName: String
+  modalId: Int
+}
+
 type ReviewMedium {
   id: Int
   url: String

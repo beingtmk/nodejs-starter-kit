@@ -3,7 +3,7 @@ import { has } from 'lodash';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import _ from 'lodash';
 
-import { knex, returnId } from '@gqlapp/database-server-ts';
+import { knex } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 
 Model.knex(knex);
@@ -26,7 +26,7 @@ export interface ModalReview {
   review: Reviews & Identifier;
 }
 
-const eager = '[user.[profile], review_media]';
+const eager = '[user.[profile], review_media, modal_review]';
 
 export default class Review extends Model {
   private id: any;
@@ -54,6 +54,14 @@ export default class Review extends Model {
         join: {
           from: 'review.id',
           to: 'review_medium.review_id'
+        }
+      },
+      modal_review: {
+        relation: Model.HasOneRelation,
+        modelClass: ModalReview,
+        join: {
+          from: 'review.id',
+          to: 'modal_review.review_id'
         }
       }
     };
@@ -123,6 +131,7 @@ export default class Review extends Model {
         .eager(eager)
         .orderBy('id', 'desc')
     );
+    // console.log(res);
     return res;
   }
 

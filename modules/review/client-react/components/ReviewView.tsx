@@ -38,7 +38,18 @@ export const NoReviews: React.FC = () => (
 );
 
 const ReviewView: React.SFC<ReviewViewProps> = props => {
-  const { reviews, filter, loading, ratingAverage, handleHelpful, addReview, deleteReview, t, showAdd } = props;
+  const {
+    reviews,
+    filter,
+    loading,
+    ratingAverage,
+    handleHelpful,
+    addReview,
+    deleteReview,
+    t,
+    showAdd,
+    currentUser
+  } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
@@ -47,6 +58,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
       showPhotos={photo}
       handleHelpful={handleHelpful}
       deleteReview={deleteReview}
+      currentUser={currentUser}
     />
   );
 

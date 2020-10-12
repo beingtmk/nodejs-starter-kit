@@ -9,6 +9,10 @@ fragment ReviewInfo on Review {
   feedback
   isActive
   helpful
+  modalReview {
+    modalName
+    modalId
+  }
   reviewMedia {
     id
     url

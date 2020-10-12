@@ -20,9 +20,10 @@ class ProfileView extends React.Component {
   };
 
   render() {
-    const { t, user } = this.props;
-    const { profile } = user.user;
-    console.log('bleh', profile && profile);
+    const { t } = this.props;
+    const user = this.props.user;
+    const { profile } = user && user.user;
+
     if (profile) {
       return (
         <PageLayout select="/profile">

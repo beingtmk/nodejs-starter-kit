@@ -302,6 +302,7 @@ const ListingDetailView = props => {
               filter={{ userId: listing.user.id }}
               currentUser={currentUser}
               title={'Similar Listing (same user)'}
+              history={history}
             />
           </>
           {listing && (
@@ -313,6 +314,7 @@ const ListingDetailView = props => {
                   modalName: 'listing'
                 }}
                 showAdd={canUserReview}
+                currentUser={currentUser}
                 t={t}
               />
             </>

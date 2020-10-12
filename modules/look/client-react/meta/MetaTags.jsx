@@ -5,7 +5,7 @@ import settings from '@gqlapp/config';
 
 const MataTags = props => {
   const { title, url, description, image } = props;
-  console.log(props);
+  // console.log(props);
   const displayImage =
     image || 'https://res.cloudinary.com/dpvrqxttb/image/upload/v1585145914/edgenus/tkv2wuwutfj0brqbmbja.svg';
   return (

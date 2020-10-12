@@ -9,9 +9,18 @@ import ReviewsItemComponent from './ReviewsItemComponent';
 import { NoReviews } from './ReviewView';
 
 const MyReviewView = props => {
-  const { t, reviews, loading, setModalName, deleteReview } = props;
+  const { t, reviews, loading, setModalName, deleteReview, currentUser, history } = props;
 
-  const renderFunc = (key, review) => <ReviewsItemComponent key={key} review={review} deleteReview={deleteReview} />;
+  const renderFunc = (key, review) => (
+    <ReviewsItemComponent
+      key={key}
+      review={review}
+      deleteReview={deleteReview}
+      currentUser={currentUser}
+      history={history}
+      showModal={true}
+    />
+  );
   const RenderReviews = () => (
     <div>
       <SuggestedListComponent
@@ -83,6 +92,7 @@ MyReviewView.propTypes = {
   setModalName: PropTypes.func,
   deleteReview: PropTypes.func,
   reviews: PropTypes.object,
+  currentUser: PropTypes.object,
   history: PropTypes.object,
   loading: PropTypes.bool
 };

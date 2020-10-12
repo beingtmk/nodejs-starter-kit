@@ -26,7 +26,7 @@ export const getChildrenToRender = (item, i) => {
 };
 
 const ListingCarousel = props => {
-  const { listings, loading: loading1, currentUser, currentUserLoading } = props;
+  const { listings, loading: loading1, currentUser, currentUserLoading, history } = props;
   const dataSource = {
     wrapper: { className: 'home-page-wrapper newArrivals-wrapper' },
     page: { className: 'home-page newArrivals' },
@@ -129,7 +129,7 @@ const ListingCarousel = props => {
             data={listings.edges}
             height={'500px'}
             node={true}
-            componentProps={{ currentUser: currentUser }}
+            componentProps={{ currentUser: currentUser, history: history }}
             componentStyle={{
               margin: '0 10px',
               width: '265px'
@@ -145,6 +145,7 @@ const ListingCarousel = props => {
 
 ListingCarousel.propTypes = {
   currentUser: PropTypes.object,
+  history: PropTypes.object.isRequired,
   title: PropTypes.string,
   currentUserLoading: PropTypes.bool,
   loading: PropTypes.bool,

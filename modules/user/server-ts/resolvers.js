@@ -27,17 +27,15 @@ export default pubsub => ({
     users: withAuth(['user:view:all'], (obj, { orderBy, filter }, { User }) => {
       return User.getUsers(orderBy, filter);
     }),
-    user: withAuth(['user:view:self'], (obj, { id }, { User, req: { identity, t } }) => {
-      if (identity.id === id || identity.role === 'admin') {
+    user(obj, { id }, { User, req: { identity, t } }) {
+      if (id) {
         try {
           return { user: User.getUser(id) };
         } catch (e) {
           return { errors: e };
         }
       }
-
-      throw new Error(t('user:accessDenied'));
-    }),
+    },
     async currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
         const user = await User.getUser(identity.id);
