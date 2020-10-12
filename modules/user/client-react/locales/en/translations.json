@@ -194,6 +194,8 @@
     "btnBack": "Back"
   },
   "userAdd": {
+    "title":"Add User",
+    "meta":"A Add User page example",
     "errorMsg": "Add user failed!"
   },
 
