@@ -57,6 +57,7 @@ input AddDynamicCarouselInput {
   label: String
   link: String
   imageUrl: String!
+  isActive: Boolean
 }
 
 input EditDynamicCarouselInput {
@@ -65,7 +66,8 @@ input EditDynamicCarouselInput {
   description: String
   label: String
   link: String
-  imageUrl: String!
+  imageUrl: String
+  isActive: Boolean
 }
 
 extend type Subscription {

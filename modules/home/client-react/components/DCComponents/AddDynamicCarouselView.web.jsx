@@ -28,6 +28,7 @@ const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser })
             <DynamicCarouselFormComponent
               cardTitle="Add banner"
               t={t}
+              dynamicCarousel={{ isActive: true }}
               onSubmit={addDynamicCarousel}
               currentUser={currentUser}
             />

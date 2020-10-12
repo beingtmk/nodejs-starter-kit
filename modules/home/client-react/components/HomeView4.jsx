@@ -47,14 +47,28 @@ class HomeView4 extends React.Component {
 
   render() {
     const children = [
-      <DynamicCarousel id="Banner_0" key="Banner_0" filter={{ label: LABEL[0] }} isMobile={this.state.isMobile} />,
-      <ImageBanner id="Banner_1" key="Banner_1" filter={{ label: LABEL[1] }} isMobile={this.state.isMobile} />,
+      <DynamicCarousel
+        id="Banner_0"
+        key="Banner_0"
+        filter={{ label: LABEL[0], isActive: true }}
+        isMobile={this.state.isMobile}
+      />,
+      <ImageBanner
+        id="Banner_1"
+        key="Banner_1"
+        filter={{ label: LABEL[1], isActive: true }}
+        isMobile={this.state.isMobile}
+      />,
       <ListingsCarousel
-        filter={{ isFeatured: true }}
+        filter={{ isFeatured: true, isActive: true }}
         currentUser={this.props.currentUser}
         title={'Featured Listings'}
       />,
-      <ListingsCarousel filter={{ isNew: true }} currentUser={this.props.currentUser} title={'Our Latest Additions'} />
+      <ListingsCarousel
+        filter={{ isNew: true, isActive: true }}
+        currentUser={this.props.currentUser}
+        title={'Our Latest Additions'}
+      />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,
       // <Content5 id="Content5_0" key="Content5_0" isMobile={this.state.isMobile} />,

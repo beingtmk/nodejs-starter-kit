@@ -1,11 +1,11 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Form, Card } from 'antd';
+import { Row, Col, Form, Card } from 'antd';
 import { withFormik } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { FormItem, Select, Option, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
+import { RenderCheckBox, FormItem, Select, Option, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 
 const DynamicCarouselFormSchema = {
@@ -19,7 +19,7 @@ class DynamicCarouselFormComponent extends React.Component {
   render() {
     const { cardTitle, values, handleSubmit, setFieldValue } = this.props;
 
-    console.log('props form component', this.props.values);
+    // console.log('props form component', this.props.values);
     return (
       <Card
         title={
@@ -45,24 +45,37 @@ class DynamicCarouselFormComponent extends React.Component {
           value={values.description}
         />
         <Form onSubmit={handleSubmit}>
-          <FormItem label={'Label'}>
-            <Select
-              name="label"
-              defaultValue={values.label}
-              style={{ width: '130px' }}
-              onChange={e => setFieldValue('label', e)}
-            >
-              <Option key={1} value={''}>
-                All
-              </Option>
-              {LABEL &&
-                LABEL.map((l, i) => (
-                  <Option key={i + 2} value={l}>
-                    {l}
+          <Row type="flex" gutter={24}>
+            <Col span={12}>
+              <FormItem label={'Label'}>
+                <Select
+                  name="label"
+                  defaultValue={values.label}
+                  style={{ width: '130px' }}
+                  onChange={e => setFieldValue('label', e)}
+                >
+                  <Option key={1} value={''}>
+                    All
                   </Option>
-                ))}
-            </Select>
-          </FormItem>
+                  {LABEL &&
+                    LABEL.map((l, i) => (
+                      <Option key={i + 2} value={l}>
+                        {l}
+                      </Option>
+                    ))}
+                </Select>
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <Field
+                name="isActive"
+                component={RenderCheckBox}
+                type="checkbox"
+                label={'Is Active'}
+                checked={values.isActive}
+              />
+            </Col>
+          </Row>
           <Field name="link" component={RenderField} placeholder="Link" type="text" label="Link" value={values.link} />
           <Field
             name="imageUrl"
@@ -97,7 +110,8 @@ const DynamicCarouselWithFormik = withFormik({
     description: (props.dynamicCarousel && props.dynamicCarousel.description) || '',
     link: (props.dynamicCarousel && props.dynamicCarousel.link) || null,
     label: (props.dynamicCarousel && props.dynamicCarousel.label) || '',
-    imageUrl: (props.dynamicCarousel && props.dynamicCarousel.imageUrl) || ''
+    imageUrl: (props.dynamicCarousel && props.dynamicCarousel.imageUrl) || '',
+    isActive: props.dynamicCarousel && (props.dynamicCarousel.isActive ? true : false)
   }),
 
   async handleSubmit(values, { setErrors, props: { onSubmit } }) {
