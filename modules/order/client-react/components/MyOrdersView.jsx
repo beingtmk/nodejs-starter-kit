@@ -53,7 +53,7 @@ const MyOrdersView = props => {
   console.log('props', props);
   return (
     <PageLayout>
-      <MetaTags title="MyOrders" description="" />
+      <MetaTags title=" MyOrders" description="" />
 
       <Row>
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
