@@ -11,6 +11,8 @@ import { Form, RenderField, Alert, Button } from '@gqlapp/look-client-react';
 import { LinkedInButton, GoogleButton, GitHubButton, FacebookButton } from '@gqlapp/authentication-client-react';
 import settings from '@gqlapp/config';
 
+import ROUTES from '../routes';
+
 const loginFormSchema = {
   usernameOrEmail: [required, minLength(3)],
   password: [required, minLength(settings.auth.password.minLength)]
@@ -109,12 +111,12 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
         {renderSocialButtons(buttonsLength, t)}
       </div>
       <div className="text-center" style={{ marginTop: 10 }}>
-        <Link to="/forgot-password">{t('login.btn.forgotPass')}</Link>
+        <Link to={`${ROUTES.forgotPassword}`}>{t('login.btn.forgotPass')}</Link>
       </div>
       <hr />
       <div className="text-center" style={{ marginBottom: 16 }}>
         <span style={{ lineHeight: '58px' }}>{t('login.btn.notReg')}</span>
-        <NavLink className="btn btn-primary" to="/register" activeClassName="active" style={{ margin: 10 }}>
+        <NavLink className="btn btn-primary" to={`${ROUTES.register}`} activeClassName="active" style={{ margin: 10 }}>
           {t('login.btn.sign')}
         </NavLink>
       </div>

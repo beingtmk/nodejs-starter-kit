@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Icon, Row, Col, Layout } from 'antd';
-import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+
+import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
+import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
@@ -21,7 +23,7 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: '/'
+      current: `${HOME_ROUTES.home}`
     };
   }
 
@@ -72,7 +74,7 @@ class NavBar extends React.Component {
             <Col span={24}>
               <Row>
                 <Col align="left" xs={12} md={12} lg={6}>
-                  <NavLink to="/" className="nav-link">
+                  <NavLink to={`${HOME_ROUTES.home}`} className="nav-link">
                     <ScrollParallax
                       location="page-layout"
                       className="navbar-logo-lg"

@@ -8,6 +8,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { FormError } from '@gqlapp/forms-client-react';
 
 import authentication from '@gqlapp/authentication-client-react';
+import ROUTES from '../routes';
 
 import LoginView from '../components/LoginView';
 
@@ -44,7 +45,7 @@ const Login = props => {
     await authentication.doLogin(client);
 
     const params = queryString.parse(location.search);
-    history.push(params.redirectBack ? params.redirectBack : '/profile');
+    history.push(params.redirectBack ? params.redirectBack : `${ROUTES.profile}`);
   };
 
   return (

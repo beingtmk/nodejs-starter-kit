@@ -1,6 +1,9 @@
 import { message } from 'antd';
 import update from 'immutability-helper';
 
+// eslint-disable-next-line import/no-named-default
+import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
+
 import LISTINGS_BOOKMARK_SUBSCRIPTION from '../graphql/MyListingsBookmarkSubscription.graphql';
 import LISTINGS_SUBSCRIPTION from '../graphql/ListingsSubscription.graphql';
 import LISTING_SUBSCRIPTION from '../graphql/ListingSubscription.graphql';
@@ -46,7 +49,7 @@ const onDeleteListing = history => {
   if (history) {
     return history.push(`${ROUTES.myListing}`);
   } else {
-    return history.push('/');
+    return history.push(`${HOME_ROUTES.home}`);
   }
 };
 

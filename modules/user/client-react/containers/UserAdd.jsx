@@ -7,6 +7,7 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FormError } from '@gqlapp/forms-client-react';
 import settings from '@gqlapp/config';
+import ROUTES from '../routes';
 
 import UserAddView from '../components/UserAddView';
 import ADD_USER from '../graphql/AddUser.graphql';
@@ -33,7 +34,7 @@ const UserAdd = props => {
     }
 
     if (history) {
-      return history.push('/users/');
+      return history.push(`${ROUTES.adminPanel}`);
     }
     if (navigation) {
       return navigation.goBack();

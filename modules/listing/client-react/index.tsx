@@ -79,7 +79,7 @@ export default new ClientModule({
       component={loadable(() => import('./containers/ListingCatalogue.web').then(c => c.default))}
     />,
     <AuthRoute
-      redirect="/profile"
+      redirect={ROUTES.profile}
       role={['user', 'admin']}
       exact
       path={ROUTES.myListing}
@@ -91,7 +91,7 @@ export default new ClientModule({
       component={loadable(() => import('./containers/ListingDetail').then(c => c.default))}
     />,
     <AuthRoute
-      redirect="/profile"
+      redirect={ROUTES.profile}
       role={['user', 'admin']}
       exact
       path={ROUTES.listingBookmark}

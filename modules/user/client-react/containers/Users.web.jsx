@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { PageLayout, AddButton, Row, Col, Heading, MetaTags } from '@gqlapp/look-client-react';
+import ROUTES from '../routes';
+
 import UsersFilterView from '../components/UsersFilterView';
 import UsersListView from '../components/UsersListView';
 import { useUsersWithSubscription } from './withSubscription';
@@ -37,7 +39,7 @@ const Users = props => {
         </Col>
         <Col span={4}>
           <Row type="flex" justify="end">
-            <Link to="/users/new">
+            <Link to={`${ROUTES.add}`}>
               <AddButton color="primary">{t('users.btn.add')}</AddButton>
             </Link>
           </Row>

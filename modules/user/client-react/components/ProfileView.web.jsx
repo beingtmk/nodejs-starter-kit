@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Row, Col, Divider, Icon, Spin as Loader } from 'antd';
+
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -13,7 +15,8 @@ import {
   EditIcon,
   MetaTags
 } from '@gqlapp/look-client-react';
-import { Row, Col, Divider, Icon, Spin as Loader } from 'antd';
+
+import ROUTES from '../routes';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
@@ -41,14 +44,14 @@ class ProfileView extends React.Component {
     console.log('bleh', currentUser.profile && currentUser.profile);
     if (currentUserLoading && !currentUser) {
       return (
-        <PageLayout select="/profile">
+        <PageLayout select={ROUTES.profile}>
           <MetaTags title={t('profile.title')} description={t('profile.meta')} />
           <Loader text={t('profile.loadMsg')} />
         </PageLayout>
       );
     } else if (currentUser) {
       return (
-        <PageLayout select="/profile">
+        <PageLayout select={ROUTES.profile}>
           <MetaTags title={t('profile.title')} description={t('profile.meta')} />
 
           <Row gutter={5}>
@@ -67,7 +70,7 @@ class ProfileView extends React.Component {
                     <Icon type="user" /> {t(`profile.card.title`)}
                   </Heading>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
-                    <Link to={`/users/${currentUser.id}`}>
+                    <Link to={`${ROUTES.editLink}${currentUser.id}`}>
                       <EditIcon />
                     </Link>
                   </div>

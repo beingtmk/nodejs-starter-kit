@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Card, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import ROUTES from '../routes';
 
 import UserForm from './UserForm';
 
 const UserAddView = ({ t, onSubmit }) => {
   const renderContent = () => (
     <Card className="form-card">
-      <Link to="/users">Back</Link>
+      <Link to={`${ROUTES.adminPanel}`}>Back</Link>
       <Heading type="2">
         {t('userEdit.form.titleCreate')} {t('userEdit.form.title')}
       </Heading>

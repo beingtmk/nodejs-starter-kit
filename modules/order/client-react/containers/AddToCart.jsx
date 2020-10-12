@@ -5,6 +5,8 @@ import { message } from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
+// eslint-disable-next-line import/no-named-default
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart } from './OrderOperations';
@@ -27,7 +29,7 @@ const AddToCart = props => {
     const imageUrl = (image && image.length > 0 && image[0].url) || NO_IMG;
 
     if (!currentUser) {
-      history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
+      history.push(`${USER_ROUTES.login}?redirectBack=${history && history.location && history.location.pathname}`);
       return null;
     }
 

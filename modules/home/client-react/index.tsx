@@ -54,7 +54,7 @@ export default new ClientModule({
     <AuthRoute
       exact
       path={ROUTES.adminPanel}
-      redirect="/profile"
+      redirect={ROUTES.profile}
       role="admin"
       component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default))}
     />,

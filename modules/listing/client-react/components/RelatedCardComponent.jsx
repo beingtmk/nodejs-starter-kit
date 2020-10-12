@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-default */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -8,10 +9,9 @@ import { AddButton } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
-
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
-// eslint-disable-next-line import/no-named-default
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
 import ROUTES from '../routes';
@@ -57,7 +57,7 @@ const RelatedCardComponent = props => {
 
   const handleSubmit = async (redirect = false) => {
     if (!currentUser) {
-      history.push(`/login?redirectBack=${history && history.location && history.location.pathname}`);
+      history.push(`${USER_ROUTES.login}?redirectBack=${history && history.location && history.location.pathname}`);
     }
 
     if ((currentUser && currentUser.id) === (listing && listing.user && listing.user.id)) {

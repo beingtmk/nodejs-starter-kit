@@ -23,6 +23,7 @@ import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
+import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -148,7 +149,7 @@ const ListingDetailView = props => {
                 }}
               >
                 <BreadCrumbItem key="home">
-                  <NavLink to="/">
+                  <NavLink to={`${HOME_ROUTES.home}`}>
                     <Icon type="home" />
                   </NavLink>
                 </BreadCrumbItem>

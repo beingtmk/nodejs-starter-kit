@@ -6,6 +6,7 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FormError } from '@gqlapp/forms-client-react';
 import settings from '@gqlapp/config';
+import ROUTES from '../routes';
 
 import RegisterView from '../components/RegisterView';
 import REGISTER from '../graphql/Register.graphql';
@@ -19,7 +20,7 @@ const Register = props => {
     try {
       await register(values);
       if (!settings.auth.password.requireEmailConfirmation) {
-        history.push('/login');
+        history.push(`${ROUTES.login}`);
       } else {
         setIsRegistered(true);
       }
