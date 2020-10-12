@@ -1,29 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 // import { Link } from 'react-router-dom';
 import { Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout, Spin, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, Spin, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 // import ROUTES from '../routes';
+import settings from '@gqlapp/config';
 import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
-
-const renderMetaData = t => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 
 const OrderView = props => {
   const { t, load } = props;
 
   return (
     <PageLayout>
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${'meta'}`} />
+
       <Row>
         <Col span={12}>
           <Heading type="2">

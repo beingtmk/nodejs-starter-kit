@@ -1,26 +1,13 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
 
-import { PageLayout, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 
 const ButtonGroup = Button.Group;
-const renderMetaData = () => (
-  <Helmet
-    title={`${settings.app.name} - ${'MyOrders'}`}
-    meta={[
-      {
-        name: 'description',
-        content: `${settings.app.name} - ${''}`
-      }
-    ]}
-  />
-);
 
 const MyOrdersView = props => {
   const [status, setStatus] = React.useState('');
@@ -66,7 +53,8 @@ const MyOrdersView = props => {
   console.log('props', props);
   return (
     <PageLayout>
-      {renderMetaData()}
+      <MetaTags title="MyOrders" description="" />
+
       <Row>
         <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">

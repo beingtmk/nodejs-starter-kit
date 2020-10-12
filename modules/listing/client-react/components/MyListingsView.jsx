@@ -1,27 +1,14 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Icon, Button, Spin } from 'antd';
 
-import { Row, Col, PageLayout, Heading } from '@gqlapp/look-client-react';
+import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 import ROUTES from '../routes';
 import ListingItemComponent from './ListingItemComponent';
-
-const renderMetaData = () => (
-  <Helmet
-    title={`${settings.app.name} - My Listings`}
-    meta={[
-      {
-        name: 'description',
-        content: `${settings.app.name} - My Listings)}`
-      }
-    ]}
-  />
-);
 
 const MyListingsView = props => {
   const { listings, loading, onDelete, history, t } = props;
@@ -71,7 +58,8 @@ const MyListingsView = props => {
   );
   return (
     <PageLayout>
-      {renderMetaData(t)}
+      <MetaTags title="My Listings" description={`${settings.app.name} - My Listings)}`} />
+
       {loading && (
         <div align="center">
           <br />

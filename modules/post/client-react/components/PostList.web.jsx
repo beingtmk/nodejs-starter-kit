@@ -2,11 +2,20 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Pagination, DeleteIcon, AddButton, Row, Col, Heading } from '@gqlapp/look-client-react';
+import {
+  PageLayout,
+  Table,
+  Pagination,
+  DeleteIcon,
+  AddButton,
+  Row,
+  Col,
+  Heading,
+  MetaTags
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -81,18 +90,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   return (
     <PageLayout>
-      {/* Render metadata */}
-
-      <Helmet
-        title={`${settings.app.name} - ${t('list.title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('list.meta')}`
-          }
-        ]}
-      />
-
+      <MetaTags title={t('list.title')} description={t('list.meta')} />
       {renderContent()}
     </PageLayout>
   );

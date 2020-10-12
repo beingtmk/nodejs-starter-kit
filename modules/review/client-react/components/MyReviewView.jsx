@@ -1,22 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Row, Col, Spin } from 'antd';
-import Helmet from 'react-helmet';
-
-import settings from '@gqlapp/config';
 import { MODAL } from '@gqlapp/review-common';
-import { Form, FormItem, Select, Option, Heading } from '@gqlapp/look-client-react';
+import { Form, FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
 import { NoReviews } from './ReviewView';
 
-const renderMetaData = t => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 const MyReviewView = props => {
   const { t, reviews, loading, setModalName, deleteReview } = props;
 
@@ -40,7 +31,7 @@ const MyReviewView = props => {
   console.log('props', props);
   return (
     <>
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={t('meta')} />
       <Row>
         <Col span={12}>
           <Heading type="1">

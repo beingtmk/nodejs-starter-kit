@@ -1,25 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Row, Col } from 'antd';
-import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
 const ForgotPasswordView = ({ onSubmit, t, sent }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('forgotPass.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('forgotPass.meta')}`
-        }
-      ]}
-    />
-  );
-
   const renderContent = () => (
     <>
       <Card>
@@ -36,7 +22,7 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData()}
+      <MetaTags title={t('forgotPass.title')} description={t('forgotPass.meta')} />
       <Row>
         <Col md={0} lg={0}>
           {renderContent()}

@@ -1,27 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
 
-import { Row, Col, PageLayout, Table, Alert, DeleteIcon } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { Row, Col, PageLayout, Table, Alert, DeleteIcon, MetaTags } from '@gqlapp/look-client-react';
 
 const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile, t }) => {
-  const renderMetaData = () => {
-    return (
-      <Helmet
-        title={`${settings.app.name} - ${t('title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('meta')}`
-          }
-        ]}
-      />
-    );
-  };
-
   const columns = [
     {
       title: t('table.column.name'),
@@ -47,8 +31,7 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
 
   return (
     <PageLayout>
-      {/* {renderMetaData()}
-      <div className="text-center">
+      {/* <div className="text-center">
         <Row>
           <Col xs={4}>
             <Dropzone onDrop={handleUploadFiles}>
@@ -61,9 +44,9 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
             {files && <Table dataSource={files} columns={columns} />}
           </Col>
         </Row>
-      </div> */}
+      </div>  */}
 
-      {renderMetaData()}
+      <MetaTags title={t('title')} description={t('meta')} />
       <Row justify="center">
         <Col xs={24} sm={8} md={6} lg={4}>
           <Dropzone onDrop={handleUploadFiles}>

@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { enquireScreen } from 'enquire-js';
 
 import { compose } from '@gqlapp/core-common';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
-import settings from '@gqlapp/config';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 
 import ListingsCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
@@ -21,18 +19,6 @@ let isMobile;
 enquireScreen(b => {
   isMobile = b;
 });
-
-const renderMetaData = () => (
-  <Helmet
-    title={`${settings.app.name} - Home`}
-    meta={[
-      {
-        name: 'description',
-        content: 'This is the homepage.'
-      }
-    ]}
-  />
-);
 
 class HomeView4 extends React.Component {
   constructor(props) {
@@ -60,12 +46,6 @@ class HomeView4 extends React.Component {
   }
 
   render() {
-    // const renderMetaData = t => (
-    //   <Helmet
-    //     title={`${settings.app.name} - ${t('title')}`}
-    //     meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-    //   />
-    // );
     const children = [
       <DynamicCarousel id="Banner_0" key="Banner_0" filter={{ label: LABEL[0] }} isMobile={this.state.isMobile} />,
       <ImageBanner id="Banner_1" key="Banner_1" filter={{ label: LABEL[1] }} isMobile={this.state.isMobile} />,
@@ -84,7 +64,8 @@ class HomeView4 extends React.Component {
     console.log(this.props);
     return (
       <PageLayout type="home">
-        {renderMetaData()}
+        <MetaTags title="Home" description="This is the homepage." />
+
         <div
           className="templates-wrapper"
           ref={d => {

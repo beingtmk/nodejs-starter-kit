@@ -1,22 +1,14 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Spin, Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
 import ListingFilterComponent from './ListingFilterComponent.web';
 import ListingListComponent from './ListingListComponent.web';
-
-const renderMetaData = (t: TranslateFunction) => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
 
 export interface ListingViewProps {
   t: TranslateFunction;
@@ -28,7 +20,8 @@ const ListingView: React.FC<ListingViewProps> = props => {
   // console.log(loading);
   return (
     <PageLayout>
-      {renderMetaData(t)}
+      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
       <Row>
         <Col span={22}>
           <Heading type="2">

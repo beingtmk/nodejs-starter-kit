@@ -1,27 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Card, PageLayout, Heading } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { Card, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 import UserForm from './UserForm';
 
 const UserAddView = ({ t, onSubmit }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('userEdit.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('userEdit.meta')}`
-        }
-      ]}
-    />
-  );
-
   const renderContent = () => (
     <Card className="form-card">
       <Link to="/users">Back</Link>
@@ -34,7 +20,7 @@ const UserAddView = ({ t, onSubmit }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData()}
+      <MetaTags title={t('userEdit.title')} description={t('userEdit.meta')} />
 
       {renderContent()}
     </PageLayout>

@@ -1,19 +1,11 @@
 import React from 'react';
 import { Row, Card, Spin } from 'antd';
-import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import settings from '@gqlapp/config';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
-
-const renderMetaData = (t: TranslateFunction) => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
+import settings from '@gqlapp/config';
 
 export interface AddReviewViewProps {
   t: TranslateFunction;
@@ -25,7 +17,8 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
   const { t, loading, addReview } = props;
   return (
     <PageLayout type="forms">
-      {renderMetaData(t)}
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
       <br />
       <br />
       <br />

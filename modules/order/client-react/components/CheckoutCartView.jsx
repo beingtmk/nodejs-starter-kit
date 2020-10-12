@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Spin, Row, Col, Card, Icon, Checkbox, Empty, Divider } from 'antd';
 
-import { PageLayout, NextButton, AddButton } from '@gqlapp/look-client-react';
+import { PageLayout, NextButton, AddButton, MetaTags } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import ROUTES from '../routes';
 
-import settings from '../../../../settings';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
 
@@ -33,13 +31,6 @@ export function TotalPrice(cartArray) {
   return totalCartPrice;
 }
 
-const renderMetaData = () => (
-  <Helmet
-    title={`${settings.app.name} - Cart`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${'meta'}` }]}
-  />
-);
-
 const CheckoutCartView = props => {
   const [checkout, setCheckout] = React.useState(false);
 
@@ -49,7 +40,8 @@ const CheckoutCartView = props => {
 
   return (
     <PageLayout>
-      {renderMetaData()}
+      <MetaTags title="Cart" description="meta" />
+
       {cartLoading && (
         <div align="center">
           <br />

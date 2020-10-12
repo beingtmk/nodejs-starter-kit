@@ -1,7 +1,6 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
@@ -9,17 +8,11 @@ interface OrderViewProps {
   t: TranslateFunction;
 }
 
-const renderMetaData = (t: TranslateFunction) => (
-  <Helmet
-    title={`${settings.app.name} - ${t('title')}`}
-    meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-  />
-);
-
 const OrderView = ({ t }: OrderViewProps) => {
   return (
     <PageLayout>
-      {renderMetaData(t)}
+      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
       <div className="text-center">
         <p>{t('welcomeText')}</p>
       </div>
