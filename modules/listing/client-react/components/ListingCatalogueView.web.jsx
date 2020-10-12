@@ -24,7 +24,7 @@ const ListingCatalogueView = props => {
 
   return (
     <PageLayout>
-      <MetaTags type={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
+      <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
 
       {loading && (
         <div align="center">

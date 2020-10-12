@@ -9,7 +9,7 @@ import StaticPageComponent from './StaticPageComponent';
 const TermsOfServiceView = () => {
   return (
     <PageLayout type="home">
-      <MetaTags type="Terms of Service" description={`${settings.app.name}`} />
+      <MetaTags title="Terms of Service" description={`${settings.app.name}`} />
 
       <StaticPageComponent title={'Terms Of Service'}>
         <div style={{ height: '100vh' }}>This is Terms of service.</div>

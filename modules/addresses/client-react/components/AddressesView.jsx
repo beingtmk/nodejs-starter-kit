@@ -20,7 +20,7 @@ const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
 
   return (
     <>
-      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <Select onChange={() => setType(!type)}>
         <Option value="dispaly">Display</Option>

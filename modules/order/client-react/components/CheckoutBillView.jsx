@@ -18,7 +18,7 @@ const CheckoutBillView = props => {
 
   return (
     <PageLayout>
-      <MetaTags type="Bill" description={`${settings.app.name} - ${'meta'}`} />
+      <MetaTags title="Bill" description={`${settings.app.name} - ${'meta'}`} />
       {cartLoading && (
         <div align="center">
           <br />

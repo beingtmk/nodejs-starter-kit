@@ -20,7 +20,7 @@ const ListingView: React.FC<ListingViewProps> = props => {
   // console.log(loading);
   return (
     <PageLayout>
-      <MetaTags type={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+      <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <Row>
         <Col span={22}>
