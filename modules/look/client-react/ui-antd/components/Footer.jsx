@@ -142,6 +142,7 @@ const Footer10DataSource = {
         className: 'block',
         title: { children: 'Keep in Touch' },
         childWrapper: {
+          align: 'center',
           children: [
             { href: '/contact', name: 'link0', children: 'Contact Us' },
             { href: PAGES_ROUTES.email, name: 'link1', children: 'Email' }
@@ -189,7 +190,7 @@ class Footer extends React.Component {
     data.map((item, i) => {
       const { title, childWrapper, ...itemProps } = item;
       return (
-        <Col key={i.toString()} {...itemProps} title={null} content={null}>
+        <Col key={i.toString()} {...itemProps} title={null} content={null} align="center">
           <h2 {...title}>
             {typeof title.children === 'string' && title.children.match(isImg) ? (
               <img src={title.children} width="100%" alt="img" />
@@ -197,7 +198,9 @@ class Footer extends React.Component {
               title.children
             )}
           </h2>
-          <div {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</div>
+          <div style={{ display: 'inline-grid' }} {...childWrapper}>
+            {childWrapper.children.map(getChildrenToRender)}
+          </div>
         </Col>
       );
     });
@@ -212,7 +215,7 @@ class Footer extends React.Component {
       <div {...props} {...dataSource.wrapper}>
         <OverPack {...dataSource.OverPack}>
           <QueueAnim type="bottom" key="ul" leaveReverse component={Row} {...dataSource.block}>
-            {childrenToRender}
+            <Row>{childrenToRender}</Row>
           </QueueAnim>
           <TweenOne
             animation={{ y: '+=30', opacity: 0, type: 'from' }}
