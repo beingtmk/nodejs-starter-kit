@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Icon, Tooltip } from 'antd';
+import { Row, Col, Form, Button, Icon, Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
@@ -10,8 +10,6 @@ import { RenderField } from '@gqlapp/look-client-react';
 const AddToCartFormSchema = {
   quantity: [required]
 };
-
-const ButtonGroup = Button.Group;
 
 const AddToCartForm = props => {
   const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned, showBtn = true } = props;
@@ -31,33 +29,36 @@ const AddToCartForm = props => {
         min={0}
         max={max}
       />
-      <div align="right">
-        {!showBtn ? (
-          <Button type={'primary'} onClick={handleSubmit}>
-            Save
-          </Button>
-        ) : (
-          <Tooltip
-            title={
-              !currentUser
-                ? 'SignIn To Continue'
-                : disabled
-                ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
-                : 'Continue to Booking'
-            }
-          >
-            <ButtonGroup>
-              <Button size="large" onClick={handleSubmit} disabled={disabled}>
+      {!showBtn ? (
+        <Button type={'primary'} onClick={handleSubmit}>
+          Save
+        </Button>
+      ) : (
+        <Tooltip
+          title={
+            !currentUser
+              ? 'SignIn To Continue'
+              : disabled
+              ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+              : 'Continue to Booking'
+          }
+        >
+          <Row type="flex" gutter={24}>
+            <Col span={12}>
+              <Button block size="large" onClick={handleSubmit} disabled={disabled}>
                 <Icon type="shopping" />
                 ADD TO CART
               </Button>
-              <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
+            </Col>
+            <Col span={12}>
+              <Button block type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
                 BOOK NOW
+                <Icon type="shopping-cart" />
               </Button>
-            </ButtonGroup>
-          </Tooltip>
-        )}
-      </div>
+            </Col>
+          </Row>
+        </Tooltip>
+      )}
     </Form>
   );
 };
