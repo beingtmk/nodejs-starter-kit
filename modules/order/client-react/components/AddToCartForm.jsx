@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Form, Button, Icon, Tooltip } from 'antd';
+import { Form, Button, Icon, Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
@@ -7,12 +7,27 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import { RenderField } from '@gqlapp/look-client-react';
 
+import ROUTES from '../routes';
+
+const ButtonGroup = Button.Group;
 const AddToCartFormSchema = {
   quantity: [required]
 };
 
 const AddToCartForm = props => {
-  const { values, handleSubmit, currentUser, onSubmit, max, fixedQuantity, listingOwned, showBtn = true } = props;
+  const {
+    values,
+    handleSubmit,
+    currentUser,
+    onSubmit,
+    max,
+    fixedQuantity,
+    listingOwned,
+    showBtn = true,
+    inCart = true,
+    loading,
+    onDelete
+  } = props;
   const disabled = max <= 0 || listingOwned || !currentUser;
 
   // console.log('props', props);
@@ -34,30 +49,56 @@ const AddToCartForm = props => {
           Save
         </Button>
       ) : (
-        <Tooltip
-          title={
-            !currentUser
-              ? 'SignIn To Continue'
-              : disabled
-              ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
-              : 'Continue to Booking'
-          }
-        >
-          <Row type="flex" gutter={24}>
-            <Col span={12}>
-              <Button block size="large" onClick={handleSubmit} disabled={disabled}>
-                <Icon type="shopping" />
-                ADD TO CART
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button block type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
-                BOOK NOW
-                <Icon type="shopping-cart" />
-              </Button>
-            </Col>
-          </Row>
-        </Tooltip>
+        <div align="right">
+          <Tooltip
+            title={
+              !currentUser
+                ? 'SignIn To Continue'
+                : disabled
+                ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+                : 'Continue to Booking'
+            }
+          >
+            {inCart ? (
+              <ButtonGroup>
+                <Button
+                  size="large"
+                  onClick={handleSubmit}
+                  disabled={loading || disabled}
+                  type="primary"
+                  ghost
+                  loading={loading}
+                >
+                  {/* {loading ? (
+                    <Spin />
+                  ) : (
+                    <> */}
+                  <Icon type="shopping" />
+                  ADD TO CART
+                  {/* </>
+                  )} */}
+                </Button>
+                <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
+                  BOOK NOW
+                  <Icon type="shopping-cart" />
+                </Button>
+              </ButtonGroup>
+            ) : (
+              <ButtonGroup>
+                <Button size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
+                  <Icon type="delete" />
+                  Remove from CART
+                </Button>
+                <a href={`${ROUTES.checkoutCart}`}>
+                  <Button type="primary" size="large" disabled={disabled}>
+                    Go to CART
+                    <Icon type="shopping-cart" />
+                  </Button>
+                </a>
+              </ButtonGroup>
+            )}
+          </Tooltip>
+        </div>
       )}
     </Form>
   );
@@ -65,13 +106,16 @@ const AddToCartForm = props => {
 
 AddToCartForm.propTypes = {
   onSubmit: PropTypes.func,
+  onDelete: PropTypes.func,
   currentUser: PropTypes.object,
   values: PropTypes.object,
   handleSubmit: PropTypes.func,
   max: PropTypes.number,
   fixedQuantity: PropTypes.number,
   listingOwned: PropTypes.bool,
-  showBtn: PropTypes.bool
+  loading: PropTypes.bool,
+  showBtn: PropTypes.bool,
+  inCart: PropTypes.bool
 };
 
 const AddToCartWithFormik = withFormik({

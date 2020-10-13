@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { message } from 'antd';
 
@@ -9,12 +9,18 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import AddToCartView from '../components/AddToCartView';
-import { withAddToCart } from './OrderOperations';
+import { withAddToCart, withGetCart, withDeleteCartItem } from './OrderOperations';
 
 import ROUTES from '../routes';
+import { subscribeToCart } from './OrderSubscriptions';
 
 const AddToCart = props => {
-  const { history, currentUser, listing, addToCart } = props;
+  const { history, currentUser, listing, addToCart, deleteOrderDetail, subscribeToMore, getCart } = props;
+
+  useEffect(() => {
+    const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, {});
+    return () => subscribe();
+  });
 
   const onSubmit = async (values, redirect = false) => {
     const max = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
@@ -70,15 +76,27 @@ const AddToCart = props => {
     }
   };
 
+  const handleDelete = id => {
+    try {
+      deleteOrderDetail(id);
+      message.error('Removed from Cart.');
+    } catch (e) {
+      throw Error(e);
+    }
+  };
+
   // console.log('AddToCart, props', props);
-  return <AddToCartView onSubmit={onSubmit} {...props} />;
+  return <AddToCartView onSubmit={onSubmit} onDelete={handleDelete} {...props} />;
 };
 
 AddToCart.propTypes = {
   history: PropTypes.object,
   listing: PropTypes.object,
   currentUser: PropTypes.object,
-  addToCart: PropTypes.func
+  getCart: PropTypes.object,
+  addToCart: PropTypes.func,
+  deleteOrderDetail: PropTypes.func,
+  subscribeToMore: PropTypes.func
 };
 
-export default compose(withAddToCart, translate('orders'))(AddToCart);
+export default compose(withAddToCart, withGetCart, withDeleteCartItem, translate('orders'))(AddToCart);

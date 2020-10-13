@@ -129,7 +129,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
       <Row gutter={24}>
         <Col span={12}>
-          <Button ghost block onClick={() => setVisible(true)}>
+          <Button ghost type={'primary'} block onClick={() => setVisible(true)}>
             Reset password
           </Button>
           <Modal
