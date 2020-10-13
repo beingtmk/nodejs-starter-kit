@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Row, Col, Spin } from 'antd';
 import { MODAL } from '@gqlapp/review-common';
-import { Form, FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import ReviewsItemComponent from './ReviewsItemComponent';
@@ -37,40 +37,34 @@ const MyReviewView = props => {
     </div>
   );
 
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <>
       <MetaTags title={t('title')} description={t('meta')} />
-      <Row>
-        <Col span={12}>
+      <Row type={'flex'}>
+        <Col xs={24} md={24} lg={12}>
           <Heading type="1">
             <Icon type="book" /> &nbsp; My Reviews
           </Heading>
+          <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
         </Col>
-        <Col span={12}>
-          <Row type="flex" justify="end">
-            <Form layout="inline">
-              <FormItem label={t('users.list.item.role.label')}>
-                <Row type="flex" justify="end">
-                  <Select
-                    name="modal"
-                    defaultValue={MODAL[0].value}
-                    style={{ width: '100px' }}
-                    onChange={e => setModalName(e)}
-                  >
-                    {MODAL.map((m, i) => (
-                      <Option key={i} value={m.value}>
-                        {m.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </Row>
-              </FormItem>
-            </Form>
-          </Row>
+        <Col xs={24} md={24} lg={12} align="right">
+          <FormItem label={'Modal'} style={{ display: 'inline-flex' }}>
+            <Select
+              name="modal"
+              defaultValue={MODAL[0].value}
+              style={{ width: '100px' }}
+              onChange={e => setModalName(e)}
+            >
+              {MODAL.map((m, i) => (
+                <Option key={i} value={m.value}>
+                  {m.label}
+                </Option>
+              ))}
+            </Select>
+          </FormItem>
         </Col>
       </Row>
-      <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
       <br />
 
       <Row>
