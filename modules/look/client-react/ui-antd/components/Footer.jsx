@@ -25,6 +25,12 @@ const Container = styled.a`
   }
 `;
 
+const ChildLink = styled.div`
+  @media only screen and (max-width: 768px) {
+    display: inline-grid;
+  }
+`;
+
 const Footer10DataSource = {
   wrapper: { className: 'home-page-wrapper footer1-wrapper' },
   OverPack: { className: 'footer1', playScale: 0.2 },
@@ -190,7 +196,7 @@ class Footer extends React.Component {
     data.map((item, i) => {
       const { title, childWrapper, ...itemProps } = item;
       return (
-        <Col key={i.toString()} {...itemProps} title={null} content={null} align="center">
+        <Col key={i.toString()} {...itemProps} title={null} content={null}>
           <h2 {...title}>
             {typeof title.children === 'string' && title.children.match(isImg) ? (
               <img src={title.children} width="100%" alt="img" />
@@ -198,9 +204,7 @@ class Footer extends React.Component {
               title.children
             )}
           </h2>
-          <div style={{ display: 'inline-grid' }} {...childWrapper}>
-            {childWrapper.children.map(getChildrenToRender)}
-          </div>
+          <ChildLink {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</ChildLink>
         </Col>
       );
     });
