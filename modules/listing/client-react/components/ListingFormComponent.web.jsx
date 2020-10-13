@@ -110,12 +110,18 @@ const ListingFormComponent = props => {
             </FormItem>
           </Col>
           <Col span={4} align="right">
-            <Icon
-              title="Remove "
-              className="dynamic-delete-button"
-              type="minus-circle-o"
+            <Button
+              type={'danger'}
+              shape="circle"
+              icon={'delete'}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
             />
+            {/* <Icon
+              title="Remove "
+              className="dynamic-delete-button"
+              type="delete"
+              onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
+            /> */}
           </Col>
         </Row>
       </FormItem>
@@ -130,7 +136,7 @@ const ListingFormComponent = props => {
     props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
   };
 
-  // console.log('props form component', props.values);
+  console.log('props form component', props.values.listingMedia);
   return (
     <Card
       title={
@@ -371,15 +377,15 @@ const ListingWithFormik = withFormik({
       image: [],
       video: []
     };
-    function getListingImage(listingImg) {
+    function getListingImage(listingMedium) {
       const obj = {
-        id: (listingImg && listingImg.id) || null,
-        url: (listingImg && listingImg.url) || '',
-        type: (listingImg && listingImg.type) || '',
-        isActive: (listingImg && listingImg.isActive) || true
+        id: (listingMedium && listingMedium.id) || null,
+        url: (listingMedium && listingMedium.url) || '',
+        type: (listingMedium && listingMedium.type) || '',
+        isActive: (listingMedium && listingMedium.isActive) || true
       };
       obj.type === 'image' && listingMedia.image.push(obj);
-      obj.type === 'video' && listingMedia.image.push(obj);
+      obj.type === 'video' && listingMedia.video.push(obj);
     }
     function getCost(listingCost) {
       return {
