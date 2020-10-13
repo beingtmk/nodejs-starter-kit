@@ -25,6 +25,9 @@ const DropDownPosition = styled.div`
   right: 0;
   z-index: 1;
   margin: 60px;
+  @media only screen and (max-width: 768px) {
+    margin: 60px 10px 10px 10px;
+  }
 `;
 
 const HelpfulPosition = styled.div`

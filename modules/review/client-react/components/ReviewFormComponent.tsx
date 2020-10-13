@@ -1,10 +1,10 @@
 import React from 'react';
-import { Row, Col, Icon, Form, Rate } from 'antd';
+import { Row, Col, Icon, Form, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderUploadMultiple, RenderField, Select, Option, SubmitButton, Button } from '@gqlapp/look-client-react';
+import { RenderUploadMultiple, RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 
@@ -121,10 +121,10 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         value={values.feedback}
       />
       <Row gutter={24}>
-        <Col md={12} xs={24} align="left">
-          <Col span={24}>
+        <Col md={24} sm={24} xs={24} lg={12} align="left">
+          <Row>
             <Col span={18}>
-              <FormItem label={'Add video url'}>{formItems}</FormItem>
+              <FormItem label={'Add video url'}></FormItem>
             </Col>
             <Col span={6} align="right">
               <FormItem>
@@ -134,9 +134,16 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
                 </Button>
               </FormItem>
             </Col>
-          </Col>
+            <Col span={24}>{formItems}</Col>
+          </Row>
         </Col>
-        <Col md={12} xs={24} align="left">
+        <Col
+          md={{ span: 24, offset: 0 }}
+          sm={{ span: 24, offset: 0 }}
+          xs={{ span: 24, offset: 0 }}
+          lg={{ span: 11, offset: 1 }}
+          align="left"
+        >
           <FormItem label={'Add images'}>
             <FieldArray
               name="reviewMedia.image"

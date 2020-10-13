@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Card, Spin } from 'antd';
 
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
 
@@ -21,9 +21,9 @@ const EditReviewView = props => {
         {review ? (
           <Card
             title={
-              <h1>
+              <Heading type="1">
                 <strong>{'Edit Review'}</strong>
-              </h1>
+              </Heading>
             }
           >
             <ReviewFormComponent

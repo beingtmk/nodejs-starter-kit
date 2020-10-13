@@ -15,14 +15,14 @@ const Position1 = styled.h4`
   position: absolute;
   bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
   @media only screen and (max-width: 768px) {
-    bottom: ${props => props.bottom && `${parseInt(props.bottom) - 35}px`};
+    bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
   }
 `;
 const Position = styled.h4`
   position: absolute;
   bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
   @media only screen and (max-width: 768px) {
-    bottom: ${props => props.bottom && `${parseInt(props.bottom) - 15}px`};
+    bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
   }
 `;
 
@@ -116,13 +116,19 @@ const CartItemComponent = props => {
             <Col
               {...coverGrid}
               align="center"
-              style={{ maxHeight: props.mobile ? '130px' : '250px', overflow: 'hidden' }}
+              style={{
+                maxHeight: props.mobile ? '130px' : '250px',
+                overflow: 'hidden'
+              }}
             >
               <img alt="" src={item.imageUrl || NO_IMG} height="100%" />
             </Col>
             <Col {...infoGrid}>
               <Card
-                style={{ height: props.mobile ? '180px' : '250px', borderWidth: '0px' }}
+                style={{
+                  height: props.mobile ? '180px' : '250px',
+                  borderWidth: '0px'
+                }}
                 title={<h3>{item.title}</h3>}
               >
                 <br />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Steps, Spin } from 'antd';
+import { Steps, Spin, Col, Row } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
@@ -37,11 +37,21 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
         <>
           <br />
           <br />
-          <Steps current={step}>
-            {steps.map(item => (
-              <Step key={item.title} title={item.title} />
-            ))}
-          </Steps>
+          <Row justify="center">
+            <Col
+              xl={{ span: 24, offset: 0 }}
+              lg={{ span: 24, offset: 0 }}
+              md={{ span: 24, offset: 0 }}
+              sm={{ span: 24, offset: 0 }}
+              xs={{ span: 24, offset: 6 }}
+            >
+              <Steps current={step}>
+                {steps.map(item => (
+                  <Step key={item.title} title={item.title} />
+                ))}
+              </Steps>
+            </Col>
+          </Row>
           <br />
           <br />
           <div align="center">

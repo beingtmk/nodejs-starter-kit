@@ -294,8 +294,8 @@ const ListingFormComponent = props => {
         )}
         {step === 2 && (
           <Row gutter={24}>
-            <Col md={12} xs={24} align="left">
-              <Col span={24}>
+            <Col md={12} sm={24} xs={24} lg={12} align="left">
+              <Row>
                 <Col span={18}>
                   <FormItem label={'Add video url'}></FormItem>
                 </Col>
@@ -307,10 +307,10 @@ const ListingFormComponent = props => {
                     </Button>
                   </FormItem>
                 </Col>
-              </Col>
+              </Row>
               <Col span={24}>{formItems}</Col>
             </Col>
-            <Col md={12} xs={24} align="left">
+            <Col md={12} sm={24} xs={24} lg={12} align="left">
               <FormItem label={'Add images'}>
                 <FieldArray
                   name="listingMedia.image"
