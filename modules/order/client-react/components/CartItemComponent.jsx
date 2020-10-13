@@ -1,5 +1,10 @@
 import React from 'react';
-import { Row, Col, Card } from 'antd';
+import {
+  // Badge,
+  Row,
+  Col,
+  Card
+} from 'antd';
 import { Link } from 'react-router-dom';
 import { DeleteIcon } from '@gqlapp/look-client-react';
 
@@ -10,6 +15,8 @@ import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
 
 import EditCart from './EditCart';
+
+// const BadgeRibbon = Badge.Ribbon;
 
 const Position1 = styled.h4`
   position: absolute;
@@ -99,6 +106,8 @@ const CartItemComponent = props => {
           {item.orderOptions.quantity}
         </Ribbon>
         <Ribbon bottom={props.mobile ? '15px' : '30px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
+        {/* <BadgeRibbon text={item.orderOptions.quantity}> */}
+        {/* <BadgeRibbon text={'&#8377; {` ${item.cost * item.orderOptions.quantity}`}'}> */}
         <Card
           // type={props.inner && 'inner'}
           // style={
@@ -149,6 +158,8 @@ const CartItemComponent = props => {
             </Col>
           </Row>
         </Card>
+        {/* </BadgeRibbon> */}
+        {/* </BadgeRibbon> */}
       </Link>
     </Row>
   );
