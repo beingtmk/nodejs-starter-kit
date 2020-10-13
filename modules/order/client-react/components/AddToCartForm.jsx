@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Icon, Tooltip } from 'antd';
+import { Row, Col, Form, Button, Icon, Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
@@ -61,40 +61,78 @@ const AddToCartForm = props => {
           >
             {inCart ? (
               <ButtonGroup>
-                <Button
-                  size="large"
-                  onClick={handleSubmit}
-                  disabled={loading || disabled}
-                  type="primary"
-                  ghost
-                  loading={loading}
-                >
-                  {/* {loading ? (
-                    <Spin />
-                  ) : (
-                    <> */}
-                  <Icon type="shopping" />
-                  ADD TO CART
-                  {/* </>
-                  )} */}
-                </Button>
-                <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
-                  BOOK NOW
-                  <Icon type="shopping-cart" />
-                </Button>
+                <Row type="flex">
+                  <Col xs={0} md={0} lg={24}>
+                    <Button
+                      size="large"
+                      onClick={handleSubmit}
+                      disabled={loading || disabled}
+                      type="primary"
+                      ghost
+                      loading={loading}
+                    >
+                      <Icon type="shopping" />
+                      ADD TO CART
+                    </Button>
+                    <Button type="primary" size="large" onClick={() => onSubmit(values, true)} disabled={disabled}>
+                      BOOK NOW
+                      <Icon type="shopping-cart" />
+                    </Button>
+                  </Col>
+                  <Col xs={24} md={24} lg={0}>
+                    <Button
+                      block
+                      size="large"
+                      onClick={handleSubmit}
+                      disabled={loading || disabled}
+                      type="primary"
+                      ghost
+                      loading={loading}
+                    >
+                      <Icon type="shopping" />
+                      ADD TO CART
+                    </Button>
+                    <Button
+                      block
+                      type="primary"
+                      size="large"
+                      onClick={() => onSubmit(values, true)}
+                      disabled={disabled}
+                    >
+                      BOOK NOW
+                      <Icon type="shopping-cart" />
+                    </Button>
+                  </Col>
+                </Row>
               </ButtonGroup>
             ) : (
               <ButtonGroup>
-                <Button size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
-                  <Icon type="delete" />
-                  Remove from CART
-                </Button>
-                <a href={`${ROUTES.checkoutCart}`}>
-                  <Button type="primary" size="large" disabled={disabled}>
-                    Go to CART
-                    <Icon type="shopping-cart" />
-                  </Button>
-                </a>
+                <Row type="flex">
+                  <Col xs={0} md={0} lg={24}>
+                    <Button size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
+                      <Icon type="delete" />
+                      Remove from CART
+                    </Button>
+                    <a href={`${ROUTES.checkoutCart}`}>
+                      <Button type="primary" size="large" disabled={disabled}>
+                        Go to CART
+                        <Icon type="shopping-cart" />
+                      </Button>
+                    </a>
+                  </Col>
+                  <Col xs={24} md={24} lg={0}>
+                    <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
+                      <Icon type="delete" />
+                      Remove from CART
+                    </Button>
+                    <a href={`${ROUTES.checkoutCart}`}>
+                      <Button block type="primary" size="large" disabled={disabled}>
+                        Go to CART
+                        <Icon type="shopping-cart" />
+                      </Button>
+                    </a>
+                  </Col>
+                </Row>
               </ButtonGroup>
             )}
           </Tooltip>

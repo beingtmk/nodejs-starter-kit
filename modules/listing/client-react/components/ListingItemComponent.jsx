@@ -52,6 +52,9 @@ const ListingItemComponent = props => {
 
   const sellerFirstName = (item && item.user && item.user.profile && item.user.profile.firstName) || null;
   const sellerLastName = (item && item.user && item.user.profile && item.user.profile.lastName) || null;
+  const listing_media =
+    item && item.listingMedia && item.listingMedia.length > 0 && item.listingMedia.filter(lM => lM.type === 'image');
+
   const sellerName = (f, l) => {
     if (f && l) {
       return `${f} ${l}`;
@@ -137,7 +140,7 @@ const ListingItemComponent = props => {
                 align="center"
                 style={{ maxHeight: '200px', overflow: 'hidden' }}
               >
-                <img alt="" src={(item.listingMedia[0] && item.listingMedia[0].url) || NO_IMG} width="100%" />
+                <img alt="" src={(listing_media.length > 0 && listing_media[0].url) || NO_IMG} width="100%" />
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }}>
                 <div
