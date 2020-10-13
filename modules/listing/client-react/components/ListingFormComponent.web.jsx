@@ -228,63 +228,75 @@ const ListingFormComponent = props => {
         {step === 1 && (
           <Row gutter={24}>
             <Col md={8} xs={24} align="left">
-              <Field
-                name="listingFlags.isFeatured"
-                component={RenderCheckBox}
-                type="checkbox"
-                label={'Is Featured'}
-                checked={values.listingFlags.isFeatured}
-              />
-              <Field
-                name="listingFlags.isDiscount"
-                component={RenderCheckBox}
-                type="checkbox"
-                label={'Is Discount'}
-                checked={values.listingFlags.isDiscount}
-              />
+              <Col xs={12} lg={24}>
+                <Field
+                  name="listingFlags.isFeatured"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={'Is Featured'}
+                  checked={values.listingFlags.isFeatured}
+                />
+              </Col>
+              <Col xs={12} lg={24}>
+                <Field
+                  name="listingFlags.isDiscount"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={'Is Discount'}
+                  checked={values.listingFlags.isDiscount}
+                />
+              </Col>
             </Col>
             <Col md={8} xs={24} align="left">
-              <Field
-                name="isActive"
-                component={RenderCheckBox}
-                type="checkbox"
-                label={'Is Active'}
-                checked={values.isActive}
-              />
-              {values.listingFlags.isDiscount && (
+              <Col xs={12} lg={24}>
                 <Field
-                  name="listingCostArray[0].discount"
-                  component={RenderField}
-                  placeholder="Discount"
-                  type="number"
-                  label="Discount"
-                  min={0}
-                  max={100}
-                  value={values.listingCostArray[0].discount}
+                  name="isActive"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={'Is Active'}
+                  checked={values.isActive}
                 />
-              )}
+              </Col>
+              <Col xs={12} lg={24}>
+                {values.listingFlags.isDiscount && (
+                  <Field
+                    name="listingCostArray[0].discount"
+                    component={RenderField}
+                    placeholder="Discount"
+                    type="number"
+                    label="Discount"
+                    min={0}
+                    max={100}
+                    value={values.listingCostArray[0].discount}
+                  />
+                )}
+              </Col>
             </Col>
             <Col md={8} xs={24} align="left">
-              <Field
-                name="listingFlags.isNew"
-                component={RenderCheckBox}
-                type="checkbox"
-                label={'Is New'}
-                checked={values.listingFlags.isNew}
-              />
-              {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
+              <Col xs={12} lg={24}>
                 <Field
-                  name="finalPrice"
-                  component={RenderField}
-                  type="number"
-                  label={'Final Price'}
-                  disabled={true}
-                  value={(
-                    values.listingCostArray[0].cost -
-                    values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
-                  ).toFixed(2)}
+                  name="listingFlags.isNew"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={'Is New'}
+                  checked={values.listingFlags.isNew}
                 />
-              )}
+              </Col>
+              <Col xs={12} lg={24}>
+                {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
+                  <Field
+                    name="finalPrice"
+                    component={RenderField}
+                    type="number"
+                    label={'Final Price'}
+                    disabled={true}
+                    value={(
+                      values.listingCostArray[0].cost -
+                      values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
+                    ).toFixed(2)}
+                  />
+                )}
+              </Col>
             </Col>
             <Col span={24} align="right">
               <Col span={12} align="left">
