@@ -103,15 +103,9 @@ const CheckoutCartView = props => {
                       </Checkbox>
                       <br />
                       <br />
-                      {checkout ? (
-                        <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block>
-                          Next
-                        </NextButton>
-                      ) : (
-                        <NextButton disabled block>
-                          Checkout
-                        </NextButton>
-                      )}
+                      <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
+                        {checkout ? 'Next' : 'Checkout'}
+                      </NextButton>
                       <br />
                       <br />
                       <Link className="listing-link" to={`${LISTING_ROUTES.listingCatalogue}`} target="_blank">
