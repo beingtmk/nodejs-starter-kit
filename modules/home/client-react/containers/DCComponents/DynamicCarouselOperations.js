@@ -32,7 +32,7 @@ const limit =
 export const withDynamicCarousels = Component =>
   graphql(DYNAMIC_CAROUSELS_QUERY, {
     options: ({ orderBy, filter }) => {
-      console.log(filter);
+      // console.log(filter);
       return {
         fetchPolicy: 'network-only',
         variables: { limit: limit, after: 0, orderBy, filter }
@@ -297,7 +297,7 @@ export const withDynamicCarouselFilterUpdating = Component =>
         mutate({ variables: { filter: { label } } });
       },
       onIsActiveChange(isActive) {
-        console.log(isActive);
+        // console.log(isActive);
         mutate({ variables: { filter: { isActive } } });
       }
     })

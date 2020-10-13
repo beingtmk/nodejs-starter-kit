@@ -9,7 +9,7 @@ import { getChildrenToRender } from '../AntdLanding/utils';
 
 const Img = styled.img`
   height: 300px;
-  width: 300px;
+  width: 100%;
   &:hover {
     transform: scale(1.1);
   }
