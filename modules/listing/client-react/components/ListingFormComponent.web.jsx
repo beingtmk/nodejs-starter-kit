@@ -61,9 +61,13 @@ const ListingFormSchema = [
     }),
     listingCostArray: Yup.array().of(
       Yup.object().shape({
-        discount: Yup.mixed().test('hasDiscount', 'Discount is required or disable Is discount', function(value) {
+        discount: Yup.mixed().test('hasDiscount', 'Discount is required (>0) or disable Is discount', function(value) {
           const isDiscount = this.options.from[1].value.listingFlags.isDiscount;
-          return isDiscount && value === 0 ? false : true;
+          return isDiscount && value <= 0
+            ? false
+            : value < 100
+            ? true
+            : this.createError({ message: 'Discount must be less than 100' });
         })
       })
     )
