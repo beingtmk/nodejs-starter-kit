@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Card, Spin } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
 import settings from '@gqlapp/config';
@@ -23,7 +23,6 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
       <br />
       <br />
       <br />
-      <br />
       {loading ? (
         <div align="center">
           <br />
@@ -35,9 +34,9 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
         <Row type="flex" justify="center">
           <Card
             title={
-              <h1>
+              <Heading type="1">
                 <strong>{'Add Review'}</strong>
-              </h1>
+              </Heading>
             }
           >
             <ReviewFormComponent t={t} onSubmit={addReview} showModal={true} />

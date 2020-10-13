@@ -42,18 +42,20 @@ const MyReviewView = props => {
           <Row type="flex" justify="end">
             <Form layout="inline">
               <FormItem label={t('users.list.item.role.label')}>
-                <Select
-                  name="modal"
-                  defaultValue={MODAL[0].value}
-                  style={{ width: '100px' }}
-                  onChange={e => setModalName(e)}
-                >
-                  {MODAL.map((m, i) => (
-                    <Option key={i} value={m.value}>
-                      {m.label}
-                    </Option>
-                  ))}
-                </Select>
+                <Row type="flex" justify="end">
+                  <Select
+                    name="modal"
+                    defaultValue={MODAL[0].value}
+                    style={{ width: '100px' }}
+                    onChange={e => setModalName(e)}
+                  >
+                    {MODAL.map((m, i) => (
+                      <Option key={i} value={m.value}>
+                        {m.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </Row>
               </FormItem>
             </Form>
           </Row>
