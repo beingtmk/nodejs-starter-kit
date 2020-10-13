@@ -6,6 +6,7 @@ import { ORDER_STATES } from '@gqlapp/order-common';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 import OrderDAO, { OrderState } from '@gqlapp/order-server-ts/sql';
+import Review from '@gqlapp/review-server-ts/sql';
 
 Model.knex(knex);
 
@@ -396,7 +397,17 @@ export default class ListingDAO extends Model {
     orderQueryBuilder.from('order').leftJoin('order_detail', 'order_detail.order_id', 'order.id');
 
     const orders = camelizeKeys(await orderQueryBuilder);
-    return orders.length > 0;
+    if (orders.length > 0) {
+      const reviewQueryBuilder = Review.query()
+        .where('review.user_id', userId)
+        .andWhere('modal_review.modal_id', listingId);
+      reviewQueryBuilder.from('review').leftJoin('modal_review', 'modal_review.review_id', 'review.id');
+      const reviews = await reviewQueryBuilder;
+      // console.log('order', reviews);
+      return reviews.length === 0;
+    } else {
+      return false;
+    }
   }
 
   public async listingBookmarkStatus(listingId: number, userId: number) {

@@ -17,6 +17,7 @@ interface ReviewViewProps {
   reviews: Reviews;
   loading: boolean;
   showAdd: boolean;
+  currentUser: object;
   ratingAverage: {
     id: number;
     one: string;
@@ -37,7 +38,7 @@ export const NoReviews: React.FC = () => (
   </div>
 );
 
-const ReviewView: React.SFC<ReviewViewProps> = props => {
+const ReviewView: React.FC<ReviewViewProps> = props => {
   const {
     reviews,
     filter,
@@ -122,7 +123,7 @@ const ReviewView: React.SFC<ReviewViewProps> = props => {
           <br />
           <Col span={12}>
             <h3>
-              <strong>{`${reviews && reviews.totalCount} reviews`}</strong>
+              <strong>{`${(reviews && reviews.totalCount) || 0} reviews`}</strong>
             </h3>
           </Col>
         </Col>
