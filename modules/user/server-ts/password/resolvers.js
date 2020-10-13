@@ -30,13 +30,7 @@ const validateUserPassword = async (user, password, t) => {
 
 export default () => ({
   Mutation: {
-    async login(
-      obj,
-      {
-        input: { usernameOrEmail, password }
-      },
-      { req }
-    ) {
+    async login(obj, { input: { usernameOrEmail, password } }, { req }) {
       const user = await User.getUserByUsernameOrEmail(usernameOrEmail);
       const errors = await validateUserPassword(user, password, req.t);
       if (!isEmpty(errors)) throw new UserInputError('Failed valid user password', { errors });
@@ -59,7 +53,7 @@ export default () => ({
       if (!emailExists) {
         const passwordHash = await createPasswordHash(input.password);
         const isActive = !settings.auth.password.requireEmailConfirmation;
-        [userId] = await User.register({ ...input, isActive }, passwordHash);
+        userId = await User.register({ ...input, isActive }, passwordHash);
         // if user has previously logged with facebook auth
       } else {
         await User.updatePassword(emailExists.userId, input.password);
@@ -114,15 +108,7 @@ export default () => ({
         // don't throw error so you can't discover users this way
       }
     },
-    async resetPassword(
-      obj,
-      { input },
-      {
-        req: { t },
-        User,
-        mailer
-      }
-    ) {
+    async resetPassword(obj, { input }, { req: { t }, User, mailer }) {
       const errors = {};
       const reset = pick(input, ['password', 'passwordConfirmation', 'token']);
       if (reset.password !== reset.passwordConfirmation) {
