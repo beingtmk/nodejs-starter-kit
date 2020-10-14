@@ -16,12 +16,11 @@ import {
   Table,
   Button,
   Pagination,
-  // CatalogueWithInfiniteScroll
+  CatalogueWithInfiniteScroll,
+  RenderTableLoading
   // UserCardAdmin
   // , ListingTitle
 } from "@gqlapp/look-client-react";
-import CatalogueWithInfiniteScroll from "@gqlapp/look-client-react/ui-antd/components/CatalogueWithInfiniteScroll";
-import RenderTableLoading from "@gqlapp/look-client-react/ui-antd/components/RenderTableLoading";
 
 import settings from "../../../../settings";
 // import { ONSHELF, IDLE } from '../constants/ListingStates';

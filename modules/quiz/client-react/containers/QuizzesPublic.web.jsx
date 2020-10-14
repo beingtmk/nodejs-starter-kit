@@ -28,7 +28,7 @@ const Quizzes = (props) => {
 
   useEffect(() => {
     if (quizzesUpdated) {
-      updateQuizzesState(quizzesUpdated, updateQuery);
+      updateQuizListState(quizzesUpdated, updateQuery);
     }
   });
 

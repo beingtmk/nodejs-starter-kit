@@ -7,6 +7,10 @@ fragment QuizSmallFragment on Quiz {
   description
   isEditableByUser
   cover
+  user{
+    id
+    username
+  }
   quizGroups {
     quizId
     id

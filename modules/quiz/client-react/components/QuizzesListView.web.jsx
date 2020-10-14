@@ -1,15 +1,27 @@
 /* eslint-disable react/display-name */
 
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { translate } from '@gqlapp/i18n-client-react';
-import { Table, Button } from '@gqlapp/look-client-react';
-import { Spin as Loader, Tooltip, Popconfirm } from 'antd';
+import React, { useState, Fragment } from "react";
+import PropTypes from "prop-types";
+import { Spin as Loader, Tooltip, Popconfirm } from "antd";
+import { Link } from "react-router-dom";
+import { translate } from "@gqlapp/i18n-client-react";
+import {
+  Table,
+  Button,
+  CatalogueWithInfiniteScroll,
+  RenderTableLoading,
+} from "@gqlapp/look-client-react";
 
-const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, currentUser }) => {
-  // 
-
+const QuizzesView = ({
+  loading,
+  quizList,
+  t,
+  deleteQuiz,
+  duplicateQuiz,
+  currentUser,
+  loadDataQuizList,
+}) => {
+  //
 
   // const renderOrderByArrow = name => {
   //   if (orderBy && orderBy.column === name) {
@@ -55,16 +67,16 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
         </a> */}
         </>
       ),
-      dataIndex: 'id',
-      key: 'id',
+      dataIndex: "id",
+      key: "id",
       render: (text, record) => (
         <>
-          {record.id}
+          {record.node.id}
           {/* <Link className="user-link" to={`/users/${record.id}`}>
           {text}
         </Link> */}
         </>
-      )
+      ),
     },
     {
       title: (
@@ -75,8 +87,8 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
         </a> */}
         </>
       ),
-      dataIndex: 'title',
-      key: 'title'
+      dataIndex: "node.title",
+      key: "title",
     },
     {
       title: (
@@ -87,13 +99,11 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
         </a> */}
         </>
       ),
-      dataIndex: 'record.user.username',
-      key: 'username',
+      dataIndex: "record.user.username",
+      key: "username",
       render: (text, record) => (
-        <h5>
-          {record.user && record.user.username}
-        </h5>
-      )
+        <h5>{record.node.user && record.node.user.username}</h5>
+      ),
     },
     // {
     //   title: (
@@ -105,35 +115,35 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
     //   key: 'role'
     // },
     {
-      title: 'View Answer Count',
-      key: 'count',
+      title: "View Answer Count",
+      key: "count",
       render: (text, record) => (
         <Button color="primary" size="sm" href={`/quiz/count/${record.id}`}>
           View Answer Count
         </Button>
-      )
+      ),
     },
     {
-      title: 'View Userwise Result',
-      key: 'userWiseResult',
+      title: "View Userwise Result",
+      key: "userWiseResult",
       render: (text, record) => (
         <Button color="primary" size="sm" href={`/quiz/report/${record.id}`}>
           View Report
         </Button>
-      )
+      ),
     },
     {
-      title: 'View Attendees',
-      key: 'attendees',
+      title: "View Attendees",
+      key: "attendees",
       render: (text, record) => (
         <Button color="primary" size="sm" href={`/quiz/attendees/${record.id}`}>
           View Attendees
         </Button>
-      )
+      ),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (text, record) => (
         <>
           <Tooltip title="Edit">
@@ -142,21 +152,24 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
               shape="circle"
               icon="edit"
               type="secondary"
-              size="small"
+              size="medium"
               style={{ marginBottom: "10px", marginRight: "3px" }}
             />
           </Tooltip>
           <Tooltip title="Duplicate Quiz">
-
             <Popconfirm
               title="Duplicate Quiz?"
-              onConfirm={() => duplicateQuiz({quizId:record.id, userId: currentUser && currentUser.id})}
+              onConfirm={() =>
+                duplicateQuiz({
+                  quizId: record.id,
+                  userId: currentUser && currentUser.id,
+                })
+              }
               onCancel={cancel}
               okText="Yes"
               cancelText="No"
             >
-              <Button type='primary' icon='copy' shape='circle' size="md" />
-
+              <Button type="primary" icon="copy" shape="circle" size="md" />
             </Popconfirm>
           </Tooltip>
 
@@ -167,32 +180,48 @@ const QuizzesView = ({ loadingQuizzes, quizzes, t, deleteQuiz, duplicateQuiz, cu
             okText="Yes"
             cancelText="No"
           >
-            <Button color="danger" icon='delete' shape='circle' size="md" />
-
+            <Button type="danger" icon="delete" shape="circle" size="md" />
           </Popconfirm>
         </>
-      )
-    }
+      ),
+    },
   ];
+
+  const RenderQuizComponent = () => {
+    return (
+      <Fragment>
+        <Table dataSource={quizList.edges} columns={columns} />
+      </Fragment>
+    );
+  };
 
   return (
     <>
-      {loadingQuizzes && !quizzes ? (
-        <div className="text-center" align='center'><Loader /></div>
-      ) : (
-          <>
-            {/* {errors &&
-            errors.map(error => (
-              <div className="alert alert-danger" role="alert" key={error.field}>
-                {error.message}
-              </div>
-            ))} */}
-            {/* for horizontal table responsive on smaller screens */}
-            <div style={{ overflowX: 'auto' }}>
-              <Table dataSource={quizzes} columns={columns} />
-            </div>
-          </>
+      <div style={{ overflowX: "scroll", overflowY: "hidden" }}>
+        {loading && <RenderTableLoading rows={6} columns={5} />}
+        {/* Render main quizzes content */}
+        {quizList && !loading && (
+          <CatalogueWithInfiniteScroll
+            grid={{
+              gutter: 24,
+              xs: 1,
+              sm: 2,
+              md: 3,
+              lg: 4,
+              xl: 4,
+              xxl: 4,
+            }}
+            TableComponent={RenderQuizComponent}
+            endMessage={"End Of Quizzes"}
+            loadData={loadDataQuizList}
+            list={quizList}
+            loading={loading}
+            hasMore={quizList.pageInfo.hasNextPage}
+            endCursor={quizList.pageInfo.endCursor}
+            totalCount={quizList.totalCount}
+          />
         )}
+      </div>
     </>
   );
 };
@@ -203,7 +232,7 @@ QuizzesView.propTypes = {
   // orderBy: PropTypes.object,
   // onOrderBy: PropTypes.func.isRequired,
   // deleteUser: PropTypes.func.isRequired,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
-export default translate('quiz')(QuizzesView);
+export default translate("quiz")(QuizzesView);
