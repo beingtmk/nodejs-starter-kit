@@ -14,7 +14,6 @@ import { useQuizzesWithSubscription } from "./withSubscription";
 import {
   withQuizListState,
   withCardQuizList,
-  withAdminCardQuizList,
   withFeaturedQuizList,
   withFilterUpdating,
   updateQuizListState,

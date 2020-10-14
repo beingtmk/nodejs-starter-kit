@@ -11,6 +11,7 @@ export async function seed(knex) {
       return returnId(knex('quiz')).insert({
         user_id:1,
         active:true,
+        cover:'https://picsum.photos/id/390/500/300',
         title: `Placement Quiz ${i + 1}`,
         description: `Who wants to get hired?`,
         is_public:i%2 === 0,

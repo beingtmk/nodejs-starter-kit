@@ -27,7 +27,7 @@ const QuizView = (props) => {
           <Loader />
         </div>
       ) : (
-        <div style={{maxWidth:'800px', margin:'0 auto 60px', }}>
+        <div style={{maxWidth:'800px', width:'100%',  margin:'0 auto 60px', }}>
           {props.quiz ? (<QuizForm {...props} />): <h4>Quiz doesn't exists</h4>}
         </div>
       )}

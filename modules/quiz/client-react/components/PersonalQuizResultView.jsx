@@ -106,7 +106,7 @@ const PersonalQuizResultView = (props) => {
         </div>
       ) : (
         <Card
-          style={{ maxWidth: "500px", margin: "auto" }}
+          style={{ maxWidth: "500px", width:'100%', margin: "auto" }}
           title={<h1>{props.quiz && props.quiz.title}</h1>}
         >
           <ResultComponent {...props} />

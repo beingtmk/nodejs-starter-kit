@@ -5,7 +5,7 @@ const { Meta } = Card;
 const { Title, Text } = Typography;
 
 const QuizCatalogueComponent = (props) => {
-  const { id, cover, title, description } = props.node;
+  const { id, cover, title, description } = props.item;
   return (
     <Link to={`/quiz/${id}`}>
       <Card

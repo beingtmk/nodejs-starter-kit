@@ -19,7 +19,7 @@ import QuizAddForm from "./QuizAddForm";
 const QuizAddView = (props) => {
   const { t } = props;
   const renderContent = (loading) => (
-    <div style={{ maxWidth: '800px', margin: 'auto' }}>
+    <div style={{ maxWidth: '800px', width:'100%', margin: 'auto' }}>
       <Card style={{marginBottom:'30px'}}>
         <h1 style={{fontSize:"25px"}}>
         <Icon type="plus" /> {'Add Quiz'}
