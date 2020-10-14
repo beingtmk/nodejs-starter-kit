@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Spin, Row, Col, Card, Icon, Checkbox, Empty, Divider } from 'antd';
+import { Row, Col, Card, Icon, Checkbox, Empty, Divider } from 'antd';
 
 import { PageLayout, NextButton, AddButton, MetaTags } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+
 import ROUTES from '../routes';
 
 import CheckoutStepsComponent from './CheckoutStepsComponent';
@@ -42,14 +44,7 @@ const CheckoutCartView = props => {
     <PageLayout>
       <MetaTags title="Cart" description="meta" />
 
-      {cartLoading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {cartLoading && <Spinner />}
       {!cartLoading &&
         (getCart && getCart.orderDetails.length > 0 ? (
           <div>

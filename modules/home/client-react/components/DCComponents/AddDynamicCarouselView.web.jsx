@@ -1,8 +1,8 @@
 import React from 'react';
-import { Spin } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import { Row, PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '@gqlapp/config';
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
@@ -13,12 +13,7 @@ const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser })
       <MetaTags title={t('banner')} description={`${settings.app.name} - ${t('meta')}`} />
 
       {loading ? (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
+        <Spinner />
       ) : (
         <>
           <br />

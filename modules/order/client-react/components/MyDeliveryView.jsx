@@ -4,6 +4,7 @@ import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 
@@ -34,13 +35,7 @@ const MyDeliveriesView = props => {
   const Icons = [<Icon type="appstore" />, <Icon type="hdd" />, <Icon type="shop" />, <Icon type="delete" />];
   const RenderMyDeliveries = () => (
     <div>
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );

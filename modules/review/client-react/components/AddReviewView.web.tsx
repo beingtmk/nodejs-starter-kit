@@ -3,6 +3,7 @@ import { Row, Card, Spin } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ReviewFormComponent from './ReviewFormComponent';
 import settings from '@gqlapp/config';
@@ -19,29 +20,26 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
     <PageLayout type="forms">
       <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
-      <br />
-      <br />
-      <br />
-      <br />
       {loading ? (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin />
-        </div>
+        <Spinner size="small" />
       ) : (
-        <Row type="flex" justify="center">
-          <Card
-            title={
-              <Heading type="1">
-                <strong>{'Add Review'}</strong>
-              </Heading>
-            }
-          >
-            <ReviewFormComponent t={t} onSubmit={addReview} showModal={true} />
-          </Card>
-        </Row>
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+          <Row type="flex" justify="center">
+            <Card
+              title={
+                <Heading type="1">
+                  <strong>{'Add Review'}</strong>
+                </Heading>
+              }
+            >
+              <ReviewFormComponent t={t} onSubmit={addReview} showModal={true} />
+            </Card>
+          </Row>
+        </>
       )}
     </PageLayout>
   );

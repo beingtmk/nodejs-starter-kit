@@ -1,23 +1,18 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { translate } from '@gqlapp/i18n-client-react';
-import { Pagination, PageLayout, CatalogueWithInfiniteScroll } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Button, Spin } from 'antd';
+
+import { translate } from '@gqlapp/i18n-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Pagination, PageLayout, CatalogueWithInfiniteScroll } from '@gqlapp/look-client-react';
+
 import ProfileCatalogueCard from './components/ProfileCatalogueCard';
 import settings from '../../../../settings';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => (
-  <div style={{ minHeight: '20vh', paddingTop: '10vh' }} align="center">
-    {/* <Loader text={'Loading'} /> */}
-    <br />
-    <br />
-    <br />
-    <Spin size="large" />
-  </div>
-);
+const Loading = ({ t }) => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NoUserMessage = ({ t }) => (
@@ -63,7 +58,7 @@ class UsersProfileCatalogueView extends Component {
         <Row gutter={24}>
           <Col xs={24} md={18}>
             {/* Render loader */}
-            {loading && <Spin t={t} />}
+            {loading && <Spinner />}
             {/* Render main listing content */}
             {users && users.totalCount ? <RenderUserList /> : !loading ? <NoUserMessage t={t} /> : null}
           </Col>

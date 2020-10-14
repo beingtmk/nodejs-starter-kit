@@ -47,7 +47,7 @@ const Listing = props => {
       throw Error(e);
     }
   };
-  console.log('props', props);
+  // console.log('props', props);
   return <ListingView onToggle={handleToggle} onDuplicate={handleDuplicate} filter={{}} orderBy={{}} {...props} />;
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { PageLayout } from '@gqlapp/look-client-react';
-import { Spin, Row, Col, Divider, Card } from 'antd';
+import { Row, Col, Divider, Card } from 'antd';
 
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
@@ -19,14 +20,7 @@ const OrderDetailsView = props => {
 
   return (
     <PageLayout>
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {order && (
         <div className="checkoutDiv">
           <Row gutter={24}>

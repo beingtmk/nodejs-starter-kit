@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { PageLayout } from '@gqlapp/look-client-react';
-import { Spin, Row, Col, Card, Divider } from 'antd';
+import { Row, Col, Card, Divider } from 'antd';
 
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
-import settings from '../../../../settings';
 
+import settings from '../../../../settings';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
@@ -32,13 +33,7 @@ const CheckoutOrderView = props => {
   return (
     <PageLayout>
       {renderMetaData()}
-      {getCartLoading && (
-        <div align="center">
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {getCartLoading && <Spinner />}
       <div className="checkoutDiv">
         <Row gutter={24}>
           <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">

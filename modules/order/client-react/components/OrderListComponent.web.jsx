@@ -2,12 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Spin } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import { Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import OrderStatusMail from '../containers/OrderStatusMail';
 import settings from '../../../../settings';
@@ -15,14 +15,7 @@ import ROUTES from '../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = () => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Spin size="large" />
-  </div>
-);
+const Loading = () => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NoOrdersMessage = ({ t }) => <div align="center">{t('order.noOrdersMsg')}</div>;
@@ -131,9 +124,13 @@ const OrderListComponent = props => {
               <ViewIcon />
             </Link>
           )}
-          &nbsp; &nbsp;
-          {record.orderState.state === ORDER_STATES.DISPATCHED && <OrderStatusMail orderId={record.id} />}
-          &nbsp; &nbsp;
+          <Divider type="vertical" />
+          {record.orderState.state === ORDER_STATES.DISPATCHED && (
+            <>
+              <OrderStatusMail orderId={record.id} />
+              <Divider type="vertical" />
+            </>
+          )}
           <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
         </div>
       )

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Steps, Spin } from 'antd';
+import { Steps } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ListingFormComponent from './ListingFormComponent.web';
 
@@ -29,12 +30,7 @@ const EditListingView = props => {
       <MetaTags title={t('listing.title')} description={`${settings.app.name} - ${t('listing.meta')}`} />
 
       {loading ? (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" text={t('listing.loadMsg')} />
-        </div>
+        <Spinner />
       ) : (
         <>
           <br />

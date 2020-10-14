@@ -6,7 +6,6 @@ import {
   Col,
   Breadcrumb,
   Divider,
-  Spin,
   // Card,
   Descriptions,
   // Avatar,
@@ -24,6 +23,7 @@ import Review from '@gqlapp/review-client-react/containers/Review';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -130,14 +130,7 @@ const ListingDetailView = props => {
           <h3>{'Listing not found!'}</h3>
         </div>
       )}
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {!loading && listing && (
         <>
           <Row gutter={24}>

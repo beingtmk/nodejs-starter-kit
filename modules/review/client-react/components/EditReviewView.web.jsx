@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Card, Spin } from 'antd';
+import { Row, Card } from 'antd';
 
 import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ReviewFormComponent from './ReviewFormComponent';
 
@@ -35,12 +36,7 @@ const EditReviewView = props => {
             />
           </Card>
         ) : (
-          <div align="center">
-            <br />
-            <br />
-            <br />
-            <Spin />
-          </div>
+          <Spinner size="small" />
         )}
       </Row>
     </PageLayout>

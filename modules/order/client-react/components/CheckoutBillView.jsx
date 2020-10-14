@@ -1,9 +1,11 @@
 import React from 'react';
-import { Spin, Card, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import { FieldArray, withFormik } from 'formik';
+
 import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '@gqlapp/config';
 import CheckoutCardComponent from './CheckoutCardComponent';
@@ -19,14 +21,7 @@ const CheckoutBillView = props => {
   return (
     <PageLayout>
       <MetaTags title="Bill" description={`${settings.app.name} - ${'meta'}`} />
-      {cartLoading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {cartLoading && <Spinner />}
       {getCart && (
         <div className="checkoutDiv">
           <Row type="flex" style={{ alignContent: 'center' }} gutter={24}>

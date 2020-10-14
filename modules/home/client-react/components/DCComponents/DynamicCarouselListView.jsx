@@ -1,25 +1,19 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { Spin, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
+import { Icon, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Pagination } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ROUTES from '../../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Spin text={t('listing.loadMsg')} />
-  </div>
-);
+const Loading = ({ t }) => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NodynaDicCarouselsMessage = ({ t }) => (

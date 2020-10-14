@@ -1,7 +1,8 @@
 import React from 'react';
-import { Spin } from 'antd';
 import PropTypes from 'prop-types';
+
 import { compose } from '@gqlapp/core-common';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import { Modal, EditIcon } from '@gqlapp/look-client-react';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
@@ -41,13 +42,7 @@ const EditCart = props => {
         onCancel={() => setVisible(false)}
         // onOk={() => setVisible(false)}
       >
-        {loading && (
-          <div align="center">
-            <br />
-            <br />
-            <Spin />
-          </div>
-        )}
+        {loading && <Spinner size="small" />}
         {listing && (
           <AddToCartView
             currentUser={currentUser}

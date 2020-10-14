@@ -1,9 +1,10 @@
 import React from 'react';
-import { Steps, Spin, Col, Row } from 'antd';
+import { Steps, Col, Row } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
 import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ListingFormComponent from './ListingFormComponent.web';
 
@@ -27,12 +28,7 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
       <MetaTags title={t('listAdd.title')} description={`${settings.app.name} - ${t('listAdd.meta')}`} />
 
       {loading ? (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
+        <Spinner />
       ) : (
         <>
           <br />

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Spin, Divider } from 'antd';
+import { Icon, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';
@@ -26,14 +27,7 @@ const ListingCatalogueView = props => {
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
 
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {!loading && (
         <>
           <Heading type="2">

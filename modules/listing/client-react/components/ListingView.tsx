@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Spin, Row, Col, Icon, Divider } from 'antd';
+import { Row, Col, Icon, Divider } from 'antd';
 
 import { MetaTags, PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ROUTES from '../routes';
 import ListingFilterComponent from './ListingFilterComponent.web';
@@ -41,14 +42,7 @@ const ListingView: React.FC<ListingViewProps> = props => {
       <ListingFilterComponent showIsActive={true} {...props} />
       <Divider />
       <hr />
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin />
-        </div>
-      )}
+      {loading && <Spinner />}
       {!loading && <ListingListComponent {...props} />}
     </PageLayout>
   );

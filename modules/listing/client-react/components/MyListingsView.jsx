@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Icon, Button, Spin } from 'antd';
+import { Icon, Button } from 'antd';
 
 import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '@gqlapp/config';
 import ROUTES from '../routes';
@@ -60,14 +61,7 @@ const MyListingsView = props => {
     <PageLayout>
       <MetaTags title="My Listings" description={`${settings.app.name} - My Listings)}`} />
 
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
     </PageLayout>
   );

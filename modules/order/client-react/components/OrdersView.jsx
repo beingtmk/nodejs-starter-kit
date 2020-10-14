@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { Row, Col, Icon, Divider } from 'antd';
 
-import { PageLayout, Spin, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import settings from '@gqlapp/config';
 
 // import ROUTES from '../routes';
-import settings from '@gqlapp/config';
 import OrderFilterComponent from './OrderFilterComponent.web';
 import OrderListComponent from './OrderListComponent.web';
 
@@ -36,16 +36,7 @@ const OrderView = props => {
       <OrderFilterComponent {...props} />
       <Divider />
       <hr />
-      {!load ? (
-        <OrderListComponent {...props} />
-      ) : (
-        <div align="center">
-          <br />
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {!load ? <OrderListComponent {...props} /> : <Spinner />}
     </PageLayout>
   );
 };

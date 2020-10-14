@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { Spin, Button } from '@gqlapp/look-client-react';
+import { Button } from '@gqlapp/look-client-react';
 import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
@@ -113,14 +114,7 @@ const ListingCarousel = props => {
         <div key="title" {...dataSource.titleWrapper}>
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </div>
-        {(loading1 || currentUserLoading) && (
-          <div align="center">
-            <br />
-            <br />
-            <br />
-            <Spin />
-          </div>
-        )}
+        {(loading1 || currentUserLoading) && <Spinner size="small" />}
         {listings && listings.totalCount ? (
           <SlickCarousel
             Compo={RelatedCardComponent}

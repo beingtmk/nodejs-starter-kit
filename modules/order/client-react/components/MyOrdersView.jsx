@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Spin, Divider, Icon, Button, Row, Col } from 'antd';
+import { Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 
@@ -40,13 +41,7 @@ const MyOrdersView = props => {
   ];
   const RenderMyOrders = () => (
     <div>
-      {loading && (
-        <div align="center">
-          <br />
-          <br />
-          <Spin size="large" />
-        </div>
-      )}
+      {loading && <Spinner />}
       {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );

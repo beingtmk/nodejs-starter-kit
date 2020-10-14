@@ -17,6 +17,7 @@ export { default as RenderUploadMultiple } from './RenderUploadMultiple';
 export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';
 export { default as SuggestedListComponent } from './SuggestedListComponent';
+export { default as Spinner } from './Spinner';
 export * from './CarouselArrows';
 
 export { default as Container } from './Container';

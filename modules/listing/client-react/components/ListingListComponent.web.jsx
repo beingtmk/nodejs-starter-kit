@@ -2,24 +2,18 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Tooltip, Button, Icon, Spin } from 'antd';
+import { Divider, Tooltip, Button, Icon } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Spin size="large" text={t('listing.loadMsg')} />
-  </div>
-);
+const Loading = ({ t }) => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
@@ -247,13 +241,13 @@ const ListingListComponent = props => {
           <Link className="listing-link" to={`${ROUTES.editLink}${record.id}`}>
             <EditIcon />
           </Link>
-          &nbsp; &nbsp;
+          <Divider type="vertical" />
           <Tooltip title="Duplicate Listing">
             <Button type="primary" shape="circle" size="sm" onClick={() => onDuplicate(record.id)}>
               <Icon type="copy" />
             </Button>
           </Tooltip>
-          &nbsp; &nbsp;
+          <Divider type="vertical" />
           <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" />
         </div>
       )

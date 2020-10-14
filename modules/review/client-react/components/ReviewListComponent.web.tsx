@@ -5,6 +5,7 @@ import { Divider, Empty, Spin } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
@@ -13,13 +14,7 @@ import ROUTES from '../routes/index';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }: { t: TranslateFunction }) => (
-  <div align="center">
-    <br />
-    <br />
-    <Spin text={t('review.loadMsg')} />
-  </div>
-);
+const Loading = ({ t }: { t: TranslateFunction }) => <Spinner />;
 
 const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
   <div style={{ margin: '50px' }}>
@@ -84,6 +79,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       ),
       dataIndex: 'owner',
       key: 'owner',
+      width: 100,
       render: (text: string, record: Review) => (
         <Link to={`/public-profile/${record && record.user && record.user.id}`}>
           {record && record.user && record.user.username}
@@ -111,6 +107,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       ),
       dataIndex: 'feedback',
       key: 'feedback',
+      width: 800,
       render: (text: string) => <div>{text}</div>
     },
     {
