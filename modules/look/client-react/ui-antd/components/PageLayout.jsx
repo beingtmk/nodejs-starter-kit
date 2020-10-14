@@ -81,6 +81,16 @@ class PageLayout extends React.Component {
           </Helmet>
         )}
         {renderContent()}
+        <Tooltip title="Install app" placement="right">
+          <Button
+            shape="circle"
+            id="install-button"
+            style={{ display: 'none' }}
+            size="large"
+            type="primary"
+            icon="plus"
+          />
+        </Tooltip>
         <BackTop>
           <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
             <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />

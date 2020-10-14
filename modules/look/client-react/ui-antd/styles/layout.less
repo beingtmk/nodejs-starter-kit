@@ -29,6 +29,12 @@
   margin: auto;
 }
 
+#install-button{
+  position: fixed;
+  z-index: 10;
+  left: 100px;
+  bottom: 50px;
+}
 @media only screen and (max-width: 767px) {
   .content-layout {
     margin-top: @navbar-height-small;
@@ -36,6 +42,9 @@
   }
   .form-layout-outer {
     padding: 100px 202% 24px 202%;
+  }
+  #install-button{
+    left: 60px;
   }
   .home-content-layout {
     margin-top: @navbar-height-small;
@@ -50,4 +59,10 @@
 
 .hideOverflow {
   overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  #install-button{
+    left: 20px;
+  }
 }
