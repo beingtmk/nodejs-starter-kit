@@ -411,12 +411,15 @@ const ListingWithFormik = withFormik({
 
     return {
       id: (props.listing && props.listing.id) || null,
-      userId: (props.listing && props.listing.user.id) || (props.currentUser && props.currentUser.id) || null,
+      userId:
+        (props.listing && props.listing.user && props.listing.user.id) ||
+        (props.currentUser && props.currentUser.id) ||
+        null,
 
       title: (props.listing && props.listing.title) || '',
       description: (props.listing && props.listing.description) || '',
       sku: (props.listing && props.listing.sku) || '',
-      isActive: (props.listing && props.listing.isActive) || true,
+      isActive: props.listing && (props.listing.isActive ? true : false),
       listingCostArray: (props.listing &&
         props.listing.listingCostArray &&
         props.listing.listingCostArray.map(getCost)) || [

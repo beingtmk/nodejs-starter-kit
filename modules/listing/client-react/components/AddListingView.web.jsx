@@ -59,6 +59,7 @@ const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
               step={step}
               setStep={setStep}
               cardTitle="Add Listing"
+              listing={{ isActive: true }}
               t={t}
               onSubmit={onSubmit}
               currentUser={currentUser}
