@@ -34,7 +34,7 @@ const defaults = {
 const resolvers = {
   Mutation: {
     updateOrderByListing: (_, { orderBy }, { cache }) => {
-      console.log('updateOrderBy', orderBy);
+      // console.log('updateOrderBy', orderBy);
       const { listingsState } = cache.readQuery({ query: LISTINGS_STATE_QUERY });
 
       const newListingsState = update(listingsState, {
@@ -50,12 +50,13 @@ const resolvers = {
 
       return null;
     },
-    updateFilterListing: (_, { filter }, { cache }) => {
-      console.log('updateFilter', filter);
+    updateFilterListing: (_, { filter, orderBy }, { cache }) => {
+      console.log('updateFilter', filter, orderBy);
       const { listingsState } = cache.readQuery({ query: LISTINGS_STATE_QUERY });
 
       const newListingsState = update(listingsState, {
-        filter: { $merge: filter }
+        filter: { $merge: filter },
+        orderBy: { $merge: orderBy }
       });
 
       cache.writeData({

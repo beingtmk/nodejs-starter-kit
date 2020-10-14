@@ -10,7 +10,7 @@ import { Select, Option, Form, FormItem, Label, Input } from '@gqlapp/look-clien
 import SliderControlled from './FIlterSliderControlledComponent';
 
 const ListingsFilterComponent = props => {
-  console.log('listings filter component', props);
+  // console.log('listings filter component', props);
   const {
     filter: { searchText, lowerCost, upperCost, isActive },
     onIsActiveChange,
@@ -41,7 +41,8 @@ const ListingsFilterComponent = props => {
       upperCost: 0,
       isActive: true
     };
-    onFiltersRemove(filter);
+    const orderBy = { column: '', order: '' };
+    onFiltersRemove(filter, orderBy);
   };
 
   const minCostRangeValues = Math.round(rangeValues && rangeValues.minCost);

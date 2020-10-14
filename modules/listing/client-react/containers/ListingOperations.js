@@ -405,10 +405,11 @@ export const withFilterUpdating = Component =>
       // onIsNewChange(isNew) {
       //   mutate({ variables: { filter: { isNew } } });
       // },
-      onFiltersRemove(filter) {
+      onFiltersRemove(filter, orderBy) {
         mutate({
           variables: {
-            filter
+            filter,
+            orderBy
           }
         });
       }
