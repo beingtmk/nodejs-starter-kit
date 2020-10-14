@@ -5,97 +5,81 @@ import { Form, Upload, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
-export default class RenderUpload extends React.Component {
-  onChangeHandler = ({ file }) => {
+const RenderUploadMultiple = props => {
+  const { values, label, setload, arrayHelpers } = props;
+
+  const cloudinary_url = 'https://api.cloudinary.com/v1_1/gemspremium/image/upload';
+  const cloudinary_data = { upload_preset: 'nu4nfnxt' };
+
+  let validateStatus = '';
+  let defaultFileList = [];
+  if (values) {
+    defaultFileList = values.map((img, index) => ({
+      uid: index,
+      name: 'link',
+      status: 'done',
+      url: img.url,
+      thumbUrl: img.url
+    }));
+  }
+  const onChangeHandler = ({ file }) => {
     // console.log(file.response.secure_url);
-    const arrayHelpers = this.props.arrayHelpers;
 
     if (file.status === 'uploading') {
-      this.props.setload(true);
+      setload(true);
     }
     if (file.status == 'done') {
-      this.props.setload(false);
+      setload(false);
       if (file.response) {
-        // console.log('response', file.response);
         let url = file.response.secure_url;
         if (url) {
           //set value in form
-          const dictKey = this.props.dictKey;
+          const dictKey = dictKey;
           let obj = {};
           obj[dictKey] = url;
-          if (this.props.getType) {
-            obj.type = file.response.resource_type;
-          }
           arrayHelpers.push(obj);
         }
       }
     } else if (file.status == 'removed') {
       //remove value in form
-      this.props.setload(false);
-      arrayHelpers.remove(file.uid);
+      const index = defaultFileList.indexOf(
+        defaultFileList.filter(f => file.url == f.url && file.status == 'removed' && f)[0]
+      );
+      setload(false);
+      arrayHelpers.remove(index);
     }
   };
-  render() {
-    // { input, label, meta: { touched, error }, defaultFileList }) = this.props
-    // const touched = this.props.meta.touched;
-    // const error = this.props.meta.error;
-    const label = this.props.label;
-    // const input = this.props.input;
-    // const defaultFileList = this.props.defaultFileList;
+  console.log(defaultFileList);
 
-    const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
-    // const cloudinary_url =
-    //   'https://api.cloudinary.com/v1_1/www-lenshood-in/image/upload';
-    // { upload_preset: 'nxzf2ip6' }
-    // const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    // const cloudinary_data = { upload_preset: 'nxzf2ip6' };
-    const cloudinary_data = { upload_preset: 'hycdtdxe' };
+  return (
+    <FormItem label={label} validateStatus={validateStatus}>
+      <div className="dropbox">
+        <Upload.Dragger
+          defaultFileList={defaultFileList}
+          name="file"
+          listType="picture"
+          className="upload-list-inline"
+          onChange={onChangeHandler}
+          action={cloudinary_url}
+          data={cloudinary_data}
+          // headers={headers}
+        >
+          <p className="ant-upload-drag-icon">
+            <Icon type="inbox" />
+          </p>
+          <p className="ant-upload-text">Click or drag file to this area to upload</p>
+          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+        </Upload.Dragger>
+      </div>
+    </FormItem>
+  );
+};
 
-    let validateStatus = '';
-    // if (touched && error) {
-    //   validateStatus = 'error';
-    // }
-    let defaultFileList = [];
-    if (this.props.values) {
-      defaultFileList = this.props.values.map((img, index) => ({
-        uid: index,
-        name: 'link',
-        status: 'done',
-        url: img.imageUrl,
-        thumbUrl: img.imageUrl
-      }));
-    }
-
-    return (
-      <FormItem label={label} validateStatus={validateStatus}>
-        <div className="dropbox">
-          <Upload.Dragger
-            defaultFileList={defaultFileList}
-            name="file"
-            listType="picture"
-            className="upload-list-inline"
-            onChange={this.onChangeHandler}
-            action={cloudinary_url}
-            data={cloudinary_data}
-            // headers={headers}
-          >
-            <p className="ant-upload-drag-icon">
-              <Icon type="inbox" />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-          </Upload.Dragger>
-        </div>
-      </FormItem>
-    );
-  }
-}
-RenderUpload.propTypes = {
+RenderUploadMultiple.propTypes = {
   dictKey: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
   setload: PropTypes.func,
-  getType: PropTypes.bool,
   defaultFileList: PropTypes.arrayOf(
     PropTypes.shape({
       uid: PropTypes.number,
@@ -108,3 +92,4 @@ RenderUpload.propTypes = {
   arrayHelpers: PropTypes.object,
   values: PropTypes.array
 };
+export default RenderUploadMultiple;
