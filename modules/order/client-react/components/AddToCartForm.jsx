@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Form, Button, Icon, Tooltip } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
+// import * as Yup from 'yup';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
@@ -21,7 +22,6 @@ const AddToCartForm = props => {
     currentUser,
     onSubmit,
     max,
-    fixedQuantity,
     listingOwned,
     showBtn = true,
     inCart = true,
@@ -38,9 +38,8 @@ const AddToCartForm = props => {
         component={RenderField}
         placeholder="Quantity"
         type="number"
-        label="Quantity"
+        label={`Quantity (<=${max}) `}
         value={values.quantity}
-        disabled={fixedQuantity !== -1}
         min={0}
         max={max}
       />
@@ -149,7 +148,6 @@ AddToCartForm.propTypes = {
   values: PropTypes.object,
   handleSubmit: PropTypes.func,
   max: PropTypes.number,
-  fixedQuantity: PropTypes.number,
   listingOwned: PropTypes.bool,
   loading: PropTypes.bool,
   showBtn: PropTypes.bool,
@@ -159,18 +157,14 @@ AddToCartForm.propTypes = {
 const AddToCartWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
-      quantity:
-        (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || props.max > 0
-          ? props.fixedQuantity === -1
-            ? 1
-            : props.fixedQuantity
-          : 0
+      quantity: (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || props.max > 0 ? 1 : 0
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {
     onSubmit(values);
   },
   validate: values => validate(values, AddToCartFormSchema),
+  // validationSchema: AddToCartFormSchema,
   displayName: 'AddToCart Form' // helps with React DevTools
 });
 

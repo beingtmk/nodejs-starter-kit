@@ -13,8 +13,14 @@ const AddToCartView = props => {
       <AddToCartForm
         currentUser={currentUser}
         onSubmit={onSubmit}
-        max={listing && listing.listingDetail && listing.listingDetail.inventoryCount}
-        fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
+        max={
+          (listing &&
+            listing.listingOptions &&
+            listing.listingOptions.fixedQuantity !== -1 &&
+            listing.listingOptions.fixedQuantity) ||
+          (listing && listing.listingDetail && listing.listingDetail.inventoryCount)
+        }
+        // fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
         listingOwned={listingOwned}
         showBtn={showBtn}
         item={item}
