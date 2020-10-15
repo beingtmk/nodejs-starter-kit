@@ -35,7 +35,12 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
   return (
     <PageLayout type="forms">
       <MetaTags title={t('reg.title')} description={t('reg.meta')} />
-
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       {renderContent()}
     </PageLayout>
   );

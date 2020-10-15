@@ -58,7 +58,10 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
   return (
     <PageLayout type="forms">
       <MetaTags title={t('login.title')} description={t('login.meta')} />
-
+      <br />
+      <br />
+      <br />
+      <br />
       {renderContent()}
     </PageLayout>
   );
