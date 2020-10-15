@@ -78,6 +78,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
       />
     </div>
   );
+
   return (
     <>
       <MetaTags title={t('title')} description={t('meta')} />

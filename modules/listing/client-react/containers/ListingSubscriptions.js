@@ -119,14 +119,14 @@ function onEditListings(prev, node) {
   const edge = {
     cursor: node.id,
     node: node,
-    __typename: 'OrderEdges'
+    __typename: 'ListingEdges'
   };
   if (index) {
     prev.listings.edges.splice(index, 1, edge);
     return update(prev, {
       listings: {
         edges: {
-          $set: [...prev.listings]
+          $set: [...prev.listings.edges]
         }
       }
     });
@@ -217,13 +217,21 @@ function onAddListingsBookmark(prev, node) {
 
 function onEditListingsBookmark(prev, node) {
   const index = prev.myListingsBookmark.edges.findIndex(x => x.id === node.id);
-  prev.myListingsBookmark.edges.splice(index, 1, node);
-
-  return update(prev, {
-    myListingsBookmark: {
-      $set: [...prev.myListingsBookmark]
-    }
-  });
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: 'ListingEdges'
+  };
+  if (index) {
+    prev.myListingsBookmark.edges.splice(index, 1, edge);
+    return update(prev, {
+      myListingsBookmark: {
+        edges: {
+          $set: [...prev.myListingsBookmark.edges]
+        }
+      }
+    });
+  }
 }
 
 const onDeleteListingsBookmark = (prev, id) => {

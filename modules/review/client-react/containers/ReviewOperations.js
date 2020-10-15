@@ -254,13 +254,21 @@ function onAddReviews(prev, node) {
 
 function onEditReviews(prev, node) {
   const index = prev.reviews.edges.findIndex(x => x.id === node.id);
-  prev.reviews.edges.splice(index, 1, node);
-
-  return update(prev, {
-    reviews: {
-      $set: [...prev.reviews]
-    }
-  });
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: 'ReviewEdges'
+  };
+  if (index) {
+    prev.reviews.edges.splice(index, 1, edge);
+    return update(prev, {
+      reviews: {
+        edges: {
+          $set: [...prev.reviews.edges]
+        }
+      }
+    });
+  }
 }
 
 const onDeleteReviews = (prev, id) => {
