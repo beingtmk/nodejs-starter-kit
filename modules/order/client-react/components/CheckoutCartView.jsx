@@ -99,7 +99,7 @@ const CheckoutCartView = props => {
                       <br />
                       <br />
                       <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
-                        Next
+                        Checkout
                       </NextButton>
                       <br />
                       <br />

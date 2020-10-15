@@ -34,7 +34,7 @@ interface ReviewViewProps {
 export const NoReviews: React.FC = () => (
   <div align="center">
     <br />
-    Not review yet
+    Not Reviews
   </div>
 );
 

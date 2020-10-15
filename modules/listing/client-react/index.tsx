@@ -29,7 +29,7 @@ const NavLinkMyListingsBookmark = () => {
   return (
     <NavLink to={ROUTES.listingBookmark}>
       <div>
-        <Icon type="star" /> {'My Listings Bookmarks'}
+        <Icon type="star" /> {'My Bookmarks'}
       </div>
     </NavLink>
   );
@@ -39,7 +39,7 @@ const NavLinkAddListings = () => {
   return (
     <NavLink to={ROUTES.add}>
       <div>
-        <Icon type="solution" /> {'Add listing'}
+        <Icon type="solution" /> {'Create listing'}
       </div>
     </NavLink>
   );
@@ -139,13 +139,13 @@ export default new ClientModule({
         }
       >
         <MenuItem>
-          <MyListingsNavItemAccount />
+          <NavLinkAddListings />
         </MenuItem>
         <MenuItem>
           <NavLinkMyListingsBookmark />
         </MenuItem>
         <MenuItem>
-          <NavLinkAddListings />
+          <MyListingsNavItemAccount />
         </MenuItem>
       </SubMenu>
     </IfLoggedIn>

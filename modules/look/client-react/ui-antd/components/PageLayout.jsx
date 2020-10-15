@@ -85,7 +85,7 @@ class PageLayout extends React.Component {
           <Button
             shape="circle"
             id="install-button"
-            style={{ display: 'none' }}
+            // style={{ display: 'none' }}
             size="large"
             type="primary"
             icon="plus"

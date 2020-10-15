@@ -26,23 +26,18 @@ const ListingCatalogueView = props => {
   return (
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
-
-      {loading && <Spinner />}
-      {!loading && (
+      <Heading type="2">
+        <Icon type="solution" /> &nbsp; All Listings
+      </Heading>
+      <Divider style={{ margin: '5px 0px 10px' }} />
+      {showFilter && (
         <>
-          <Heading type="2">
-            <Icon type="solution" /> &nbsp; All Listings
-          </Heading>
-          <Divider style={{ margin: '5px 0px 10px' }} />
-          {showFilter && (
-            <>
-              <br />
-              <ListingFilterComponent showIsActive={false} {...props} />
-              <Divider />
-            </>
-          )}
+          <br />
+          <ListingFilterComponent showIsActive={false} {...props} filter={{ isActive: true }} orderBy={{}} />
+          <Divider />
         </>
       )}
+      {loading && <Spinner />}
       {!loading && listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
     </PageLayout>
   );
