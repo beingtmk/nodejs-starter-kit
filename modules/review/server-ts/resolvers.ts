@@ -2,6 +2,7 @@ import { withFilter } from 'graphql-subscriptions';
 import withAuth from 'graphql-auth';
 
 import { Reviews, Identifier, ModalReview } from './sql';
+import { LISTING_REVIEW_SUBSCRIPTION } from '@gqlapp/listing-server-ts/resolvers';
 
 const REVIEW_SUBSCRIPTION = 'review_subscription';
 
@@ -63,6 +64,13 @@ export default (pubsub: any) => ({
             node: review
           }
         });
+        pubsub.publish(LISTING_REVIEW_SUBSCRIPTION, {
+          listingReview: {
+            mutation: 'CREATED',
+            id: input.modalId,
+            node: false
+          }
+        });
         return true;
       } catch (e) {
         return false;
@@ -94,12 +102,19 @@ export default (pubsub: any) => ({
             node: review
           }
         });
+        pubsub.publish(LISTING_REVIEW_SUBSCRIPTION, {
+          listingReview: {
+            mutation: 'DELETED',
+            id,
+            node: false
+          }
+        });
         return true;
       } else {
         return false;
       }
     }),
-    refresh: async (obj: any, {}: object, context: any) => {
+    refresh: async (obj: any, { }: object, context: any) => {
       await context.Review.refresh();
     }
   },

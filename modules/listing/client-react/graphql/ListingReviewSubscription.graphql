@@ -1,0 +1,7 @@
+subscription onListingReviewUpdated($id: Int) {
+  listingReview(id: $id) {
+    mutation
+    id
+    node
+  }
+}

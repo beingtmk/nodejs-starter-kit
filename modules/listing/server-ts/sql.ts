@@ -125,52 +125,52 @@ export default class ListingDAO extends Model {
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing.is_active', filter.isActive);
           // .andWhere('listing_cost.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_flag.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_flag.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
       if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.whereNot('user.id', userId);
         });
       }
 
       if (has(filter, 'userId') && filter.userId !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('user.id', filter.userId);
         });
       }
 
       if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_cost.cost', '>', filter.lowerCost);
         });
       }
 
       if (has(filter, 'upperCost') && filter.upperCost !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_cost.cost', '<', filter.upperCost);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
@@ -298,46 +298,46 @@ export default class ListingDAO extends Model {
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing.is_discount', filter.isDiscount);
         });
       }
 
       if (has(filter, 'userId') && filter.userId !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('user.id', filter.userId);
         });
       }
 
       if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_cost.cost', '>', filter.lowerCost);
         });
       }
 
       if (has(filter, 'upperCost') && filter.upperCost !== 0) {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('listing_cost.cost', '<', filter.upperCost);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
@@ -400,7 +400,8 @@ export default class ListingDAO extends Model {
     if (orders.length > 0) {
       const reviewQueryBuilder = Review.query()
         .where('review.user_id', userId)
-        .andWhere('modal_review.modal_id', listingId);
+        .andWhere('modal_review.modal_id', listingId)
+        .andWhere('review.is_active', true);
       reviewQueryBuilder.from('review').leftJoin('modal_review', 'modal_review.review_id', 'review.id');
       const reviews = await reviewQueryBuilder;
       // console.log('order', reviews);

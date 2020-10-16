@@ -19,6 +19,7 @@ interface ListingInputWithId {
 export const LISTING_SUBSCRIPTION = 'listing_subscription';
 export const LISTINGS_SUBSCRIPTION = 'listings_subscription';
 export const LISTINGS_BOOKMARK_SUBSCRIPTION = 'listings_bookmark_subscription';
+export const LISTING_REVIEW_SUBSCRIPTION = 'listing_review_subscription';
 
 export default (pubsub: any) => ({
   Query: {
@@ -252,6 +253,14 @@ export default (pubsub: any) => ({
           } else {
             return true;
           }
+        }
+      )
+    },
+    listingReview: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(LISTING_REVIEW_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.listingReview.id === variables.id;
         }
       )
     }

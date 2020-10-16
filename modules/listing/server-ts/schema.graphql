@@ -214,6 +214,9 @@ extend type Subscription {
 
   # Bookmark
   listingsBookmarkUpdated(endCursor: Int): UpdateListingPayload
+
+  # Review
+  listingReview(id: Int): UpdateListingReviewPayload
 }
 
 # Payload for listingsUpdated Subscription
@@ -221,4 +224,10 @@ type UpdateListingPayload {
   mutation: String!
   id: Int
   node: Listing
+}
+
+type UpdateListingReviewPayload {
+  mutation: String!
+  id: Int
+  node: Boolean
 }

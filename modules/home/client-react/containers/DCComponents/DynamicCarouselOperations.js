@@ -204,27 +204,57 @@ export const subscribeToDynamicCarousels = subscribeToMore =>
   });
 
 function onAddDynamicCarousels(prev, node) {
-  // check if it is duplicate
-  if (prev.dynamicCarousels.some(dC => dC.id === node.id)) {
-    return prev;
+  // console.log('prev', prev, node);
+  if (prev.dynamicCarousels.edges.some(dC => node.id === dC.cursor)) {
+    return update(prev, {
+      dynamicCarousels: {
+        totalCount: {
+          $set: prev.dynamicCarousels.totalCount - 1
+        },
+        edges: {
+          $set: prev.dynamicCarousels.edges
+        }
+      }
+    });
   }
+
+  const filteredListings = prev.dynamicCarousels.edges.filter(dC => dC.node.id !== null);
+
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: 'DynamicCarouselEdges'
+  };
 
   return update(prev, {
     dynamicCarousels: {
-      $set: [...prev.dynamicCarousels, node]
+      totalCount: {
+        $set: prev.dynamicCarousels.totalCount + 1
+      },
+      edges: {
+        $set: [edge, ...filteredListings]
+      }
     }
   });
 }
 
 function onEditDynamicCarousels(prev, node) {
   const index = prev.dynamicCarousels.findIndex(x => x.id === node.id);
-  prev.dynamicCarousels.splice(index, 1, node);
-
-  return update(prev, {
-    dynamicCarousels: {
-      $set: [...prev.dynamicCarousels]
-    }
-  });
+  const edge = {
+    cursor: node.id,
+    node: node,
+    __typename: 'ListingEdges'
+  };
+  if (index) {
+    prev.dynamicCarousels.splice(index, 1, edge);
+    return update(prev, {
+      dynamicCarousels: {
+        edges: {
+          $set: [...prev.dynamicCarousels]
+        }
+      }
+    });
+  }
 }
 
 const onDeleteDynamicCarousels = (prev, id) => {

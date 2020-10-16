@@ -7,6 +7,7 @@ import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
 import LISTINGS_BOOKMARK_SUBSCRIPTION from '../graphql/MyListingsBookmarkSubscription.graphql';
 import LISTINGS_SUBSCRIPTION from '../graphql/ListingsSubscription.graphql';
 import LISTING_SUBSCRIPTION from '../graphql/ListingSubscription.graphql';
+import LISTING_REVIEW_SUBSCRIPTION from '../graphql/ListingReviewSubscription.graphql';
 
 import ROUTES from '../routes';
 
@@ -45,8 +46,8 @@ function onEditListing(prev, node) {
 
 const onDeleteListing = history => {
   message.info('This listing has been deleted!');
-  message.warn('Redirecting to my listings');
   if (history) {
+    message.warn('Redirecting to my listings');
     return history.push(`${ROUTES.myListing}`);
   } else {
     return history.push(`${HOME_ROUTES.home}`);
@@ -253,4 +254,47 @@ const onDeleteListingsBookmark = (prev, id) => {
       }
     }
   });
+};
+
+export const subscribeToListingReview = (subscribeToMore, listingId, history) =>
+  subscribeToMore({
+    document: LISTING_REVIEW_SUBSCRIPTION,
+    variables: { id: listingId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            listingReview: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      // console.log('mutation', mutation, node);
+      if (mutation === 'CREATED') {
+        newResult = onAddListingReview(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteListingReview(history);
+      }
+      return newResult;
+    }
+  });
+
+function onAddListingReview(prev, node) {
+  return update(prev, {
+    listing: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteListingReview = history => {
+  message.info('This listing has been deleted!');
+  if (history) {
+    message.warn('Redirecting to my listings');
+    return history.push(`${ROUTES.myListing}`);
+  } else {
+    return history.push(`${HOME_ROUTES.home}`);
+  }
 };
