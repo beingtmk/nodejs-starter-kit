@@ -5,6 +5,7 @@ import { message } from 'antd';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { withGetCart, withDeleteCartItem } from '@gqlapp/order-client-react/containers/OrderOperations';
+import { subscribeToCart } from '@gqlapp/order-client-react/containers/OrderSubscriptions';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 import { subscribeToListings } from './ListingSubscriptions';
@@ -17,11 +18,15 @@ import {
 } from './ListingOperations';
 
 const ListingsCatalogue = props => {
-  const { subscribeToMore, filter, deleteOrderDetail } = props;
+  const { subscribeToMore, filter, deleteOrderDetail, getCart } = props;
 
   useEffect(() => {
     const subscribe = subscribeToListings(subscribeToMore, filter);
-    return () => subscribe();
+    const subscribeCart = subscribeToCart(subscribeToMore, getCart && getCart.id, {});
+    return () => {
+      () => subscribe();
+      () => subscribeCart();
+    };
   });
 
   const handleDelete = id => {
@@ -38,6 +43,8 @@ const ListingsCatalogue = props => {
 
 ListingsCatalogue.propTypes = {
   subscribeToMore: PropTypes.func,
+  deleteOrderDetail: PropTypes.func,
+  getCart: PropTypes.object,
   filter: PropTypes.object
 };
 
