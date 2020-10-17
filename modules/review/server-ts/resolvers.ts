@@ -96,6 +96,7 @@ export default (pubsub: any) => ({
     }),
     deleteReview: withAuth(async (obj: any, { id }: { id: number }, context: any) => {
       const review = await context.Review.review(id);
+      // console.log(review);
       const isDeleted = await context.Review.deleteReview(id);
       if (isDeleted) {
         // console.log('called isDelete', review);
@@ -108,8 +109,8 @@ export default (pubsub: any) => ({
         pubsub.publish(LISTING_REVIEW_SUBSCRIPTION, {
           listingReview: {
             mutation: 'DELETED',
-            id,
-            node: false
+            id: review.modalReview.modalId,
+            node: true
           }
         });
         return true;

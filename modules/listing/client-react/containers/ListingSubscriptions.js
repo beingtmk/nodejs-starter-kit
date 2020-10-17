@@ -256,7 +256,7 @@ const onDeleteListingsBookmark = (prev, id) => {
   });
 };
 
-export const subscribeToListingReview = (subscribeToMore, listingId, history) =>
+export const subscribeToListingReview = (subscribeToMore, listingId) =>
   subscribeToMore({
     document: LISTING_REVIEW_SUBSCRIPTION,
     variables: { id: listingId },
@@ -271,11 +271,11 @@ export const subscribeToListingReview = (subscribeToMore, listingId, history) =>
       }
     ) => {
       let newResult = prev;
-      // console.log('mutation', mutation, node);
+      // console.log("mutation", mutation, node);
       if (mutation === 'CREATED') {
         newResult = onAddListingReview(prev, node);
       } else if (mutation === 'DELETED') {
-        newResult = onDeleteListingReview(history);
+        newResult = onDeleteListingReview(prev, node);
       }
       return newResult;
     }
@@ -283,18 +283,16 @@ export const subscribeToListingReview = (subscribeToMore, listingId, history) =>
 
 function onAddListingReview(prev, node) {
   return update(prev, {
-    listing: {
+    canUserReview: {
       $set: node
     }
   });
 }
 
-const onDeleteListingReview = history => {
-  message.info('This listing has been deleted!');
-  if (history) {
-    message.warn('Redirecting to my listings');
-    return history.push(`${ROUTES.myListing}`);
-  } else {
-    return history.push(`${HOME_ROUTES.home}`);
-  }
+const onDeleteListingReview = (prev, node) => {
+  return update(prev, {
+    canUserReview: {
+      $set: node
+    }
+  });
 };
