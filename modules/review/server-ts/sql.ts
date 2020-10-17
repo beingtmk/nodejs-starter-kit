@@ -63,6 +63,14 @@ export default class Review extends Model {
           from: 'review.id',
           to: 'modal_review.review_id'
         }
+      },
+      review_helpful_user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ReviewHelpfulUser,
+        join: {
+          from: 'review.id',
+          to: 'review_helpful_user.review_id'
+        }
       }
     };
   }
@@ -276,6 +284,19 @@ export default class Review extends Model {
 
     return true;
   }
+  public async reviewHelpfulStatus(reviewId: number, userId: number) {
+    const count = camelizeKeys(
+      await ReviewHelpfulUser.query()
+        .where('user_id', userId)
+        .where('review_id', reviewId)
+    ).length;
+    let wStatus = false;
+    // console.log('count', count);
+    if (count > 0) {
+      wStatus = true;
+    }
+    return wStatus;
+  }
 }
 
 export class ModalReview extends Model {
@@ -339,6 +360,27 @@ class ReviewMedium extends Model {
         modelClass: Review,
         join: {
           from: 'review_medium.review_id',
+          to: 'review.id'
+        }
+      }
+    };
+  }
+}
+
+class ReviewHelpfulUser extends Model {
+  static get tableName() {
+    return 'review_helpful_user';
+  }
+  static get idColumn() {
+    return 'id';
+  }
+  static get relationMappings() {
+    return {
+      review: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Review,
+        join: {
+          from: 'review_helpful_user',
           to: 'review.id'
         }
       }

@@ -3,7 +3,8 @@ import { MEDIA } from '@gqlapp/listing-common';
 
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [
-    'review'
+    'review',
+    'review_helpful_user'
     // , 'review_image'
   ]);
 
@@ -26,6 +27,11 @@ exports.seed = async function(knex) {
           });
         })
       );
+      (Math.random() < 0.6 ? false : true) &&
+        (await returnId(knex('review_helpful_user')).insert({
+          review_id: review[0],
+          user_id: Math.floor(Math.random() * 2) + 1
+        }));
       return returnId(knex('modal_review')).insert({
         modal_name: 'listing',
         modal_id: Math.floor(Math.random() * (100 - 1 + 1) + 1),

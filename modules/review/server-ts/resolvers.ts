@@ -47,7 +47,10 @@ export default (pubsub: any) => ({
     },
     async ratingAverage(obj: any, { modalName, modalId }: { modalName: string; modalId: number }, context: any) {
       return context.Review.ratingAverage(modalName, modalId);
-    }
+    },
+    reviewHelpfulStatus: withAuth(async (obj: any, { reviewId, userId }: any, context: any) => {
+      return context.Review.reviewHelpfulStatus(reviewId, userId || context.req.idetity.id);
+    })
   },
   Mutation: {
     addReview: withAuth(async (obj: any, { input }: ModalReviewInput, context: any) => {
@@ -114,7 +117,7 @@ export default (pubsub: any) => ({
         return false;
       }
     }),
-    refresh: async (obj: any, { }: object, context: any) => {
+    refresh: async (obj: any, {}: object, context: any) => {
       await context.Review.refresh();
     }
   },
