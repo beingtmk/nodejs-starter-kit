@@ -12,11 +12,22 @@ import ListingFilterComponent from './ListingFilterComponent.web';
 import settings from '../../../../settings';
 
 const ListingCatalogueView = props => {
-  const { t, loading, listings, history, currentUser, showFilter } = props;
+  const { t, loading, listings, history, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
 
-  const renderFunc = (key, listing) => (
-    <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
-  );
+  const renderFunc = (key, listing) => {
+    const cartItemArray = getCart ? getCart.orderDetails.filter(oD => oD.modalId === listing.id) : [];
+    return (
+      <RelatedCardComponent
+        key={key}
+        listing={listing}
+        history={history}
+        currentUser={currentUser}
+        inCart={cartItemArray.length === 0}
+        loading={cartLoading}
+        onDelete={() => onDelete(cartItemArray[0].id)}
+      />
+    );
+  };
   const RenderListings = () => (
     <div>
       <SuggestedListComponent {...props} items={listings} renderFunc={renderFunc} />

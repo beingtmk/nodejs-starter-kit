@@ -12,6 +12,7 @@ import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
 import ROUTES from '../routes';
@@ -36,7 +37,7 @@ const ListingWraper = styled.div`
 `;
 
 const RelatedCardComponent = props => {
-  const { currentUser, history, addToCart, componentStyle } = props;
+  const { currentUser, history, addToCart, componentStyle, inCart, loading, onDelete } = props;
 
   let listing = props.listing;
   // console.log(props);
@@ -54,7 +55,11 @@ const RelatedCardComponent = props => {
     listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].discount;
   const cost =
     listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
-
+  const max =
+    (fixedQuantity !== -1 && fixedQuantity) ||
+    (listing && listing.listingDetail && listing.listingDetail.inventoryCount);
+  const listingOwned = (listing && listing.user && listing.user.id) === (currentUser && currentUser.id);
+  const disabled = max <= 0 || listingOwned || !currentUser;
   const handleSubmit = async (redirect = false) => {
     if (!currentUser) {
       history.push(`${USER_ROUTES.login}?redirectBack=${history && history.location && history.location.pathname}`);
@@ -112,15 +117,40 @@ const RelatedCardComponent = props => {
         />
       </IfLoggedIn>
       {listing_is_new && <NewLabel>{'New'}</NewLabel>}
-      <div align="center" style={{ padding: '20px', zIndex: 1, position: 'absolute', bottom: 0, width: '100%' }}>
-        <AddButton block color="default" onClick={() => handleSubmit(false)}>
+      <div
+        align="center"
+        style={{
+          padding: '20px',
+          zIndex: 1,
+          position: 'absolute',
+          bottom: 0,
+          width: '100%'
+        }}
+      >
+        <AddToCartFormBtns
+          // title={
+          //   !currentUser
+          //     ? "SignIn To Continue"
+          //     : disabled
+          //     ? (max <= 0 && "Out of Stock") ||
+          //       (listingOwned && "Listing owned")
+          //     : "Continue to Booking"
+          // }
+          inCart={inCart}
+          onSubmit={() => handleSubmit(false)}
+          onDelete={onDelete}
+          onSubmitRedirect={() => handleSubmit(true)}
+          loading={loading}
+          disabled={disabled}
+        />
+        {/* <AddButton block color="default" onClick={() => handleSubmit(false)}>
           Add to Cart
         </AddButton>
         <br />
         <br />
         <Button type="primary" block onClick={() => handleSubmit(true)}>
           <Icon type="shopping" /> Book Now
-        </Button>
+        </Button> */}
       </div>
       <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
         <Card
