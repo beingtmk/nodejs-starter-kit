@@ -297,6 +297,20 @@ export default class Review extends Model {
     }
     return wStatus;
   }
+  public async addOrRemoveReviewHelpful(reviewId: number, userId: number) {
+    const status = await this.reviewHelpfulStatus(reviewId, userId);
+    // console.log('status1', status);
+    if (status) {
+      await ReviewHelpfulUser.query()
+        .where('review_id', '=', reviewId)
+        .andWhere('user_id', '=', userId)
+        .del();
+      return false;
+    } else {
+      await ReviewHelpfulUser.query().insertGraph(decamelizeKeys({ reviewId, userId }));
+      return true;
+    }
+  }
 }
 
 export class ModalReview extends Model {

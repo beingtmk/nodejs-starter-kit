@@ -98,6 +98,8 @@ extend type Mutation {
   # Delete a review
   deleteReview(id: Int): Boolean
   refresh: Boolean
+
+  addOrRemoveReviewHelpful(reviewId: Int, userId: Int): String
 }
 input AddModalReviewInput {
   modalName: String
