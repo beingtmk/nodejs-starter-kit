@@ -184,9 +184,9 @@ export const withCanUserReview = Component =>
         fetchPolicy: 'network-only'
       };
     },
-    props({ data: { loading, error, canUserReview } }) {
+    props({ data: { loading, error, canUserReview, subscribeToMore } }) {
       if (error) throw new Error(error);
-      return { loading, canUserReview };
+      return { loading, canUserReview, canUserReviewsubscribeToMore: subscribeToMore };
     }
   })(Component);
 

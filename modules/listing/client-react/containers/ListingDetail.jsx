@@ -13,16 +13,28 @@ import {
 } from './ListingOperations';
 
 import ListingDetailView from '../components/ListingDetailView';
-import { subscribeToListing } from './ListingSubscriptions';
+import { subscribeToListing, subscribeToListingReview } from './ListingSubscriptions';
 
 const ListingDetail = props => {
-  const { subscribeToMore, listing, history, location, shareListingByEmail, addOrRemoveListingBookmark } = props;
+  const {
+    subscribeToMore,
+    listing,
+    history,
+    location,
+    shareListingByEmail,
+    addOrRemoveListingBookmark,
+    canUserReviewsubscribeToMore
+  } = props;
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const subscribe = subscribeToListing(subscribeToMore, listing && listing.id, history);
-    return () => subscribe();
-  }, [history, subscribeToMore, listing, location]);
+    const subscribeAddReview = subscribeToListingReview(canUserReviewsubscribeToMore, listing && listing.id);
+    return () => {
+      subscribe();
+      subscribeAddReview();
+    };
+  }, [history, subscribeToMore, listing, location, canUserReviewsubscribeToMore]);
 
   const bookmarkListing = async (id, userId) => {
     try {
@@ -44,7 +56,7 @@ const ListingDetail = props => {
     message.success('Email sent!');
   };
 
-  // console.log('props', props);
+  console.log('props', props);
   return <ListingDetailView onShare={handleShare} handleBookmark={bookmarkListing} {...props} />;
 };
 
@@ -52,6 +64,7 @@ ListingDetail.propTypes = {
   loading: PropTypes.bool.isRequired,
   updateQuery: PropTypes.func,
   subscribeToMore: PropTypes.func,
+  canUserReviewsubscribeToMore: PropTypes.func,
   listing: PropTypes.object,
   history: PropTypes.object,
   navigation: PropTypes.object,
