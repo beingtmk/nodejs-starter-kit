@@ -1,5 +1,5 @@
 type Order {
-  id: Int!
+  id: Int
 
   consumer: User
 

@@ -74,9 +74,16 @@ export default (pubsub: any) => ({
         };
       }
     ),
-    getCart: withAuth((obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) => {
-      return Order.getCart(userId || identity.id);
-    }),
+    getCart(obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) {
+      if (identity && identity.id) {
+        return Order.getCart(userId || identity.id);
+      } else {
+        return { orderDetails: [] };
+      }
+    },
+    // getCart: withAuth((obj: any, { userId }: { userId: number }, { Order, req: { identity } }: any) => {
+    //   return Order.getCart(userId || identity.id);
+    // }),
     orderStates: withAuth((obj: any, {}: any, { Order, req: { identity } }: any) => {
       return Order.orderStates();
     })

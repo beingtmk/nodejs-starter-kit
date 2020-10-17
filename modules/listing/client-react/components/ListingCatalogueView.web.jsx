@@ -15,7 +15,11 @@ const ListingCatalogueView = props => {
   const { t, loading, listings, history, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
 
   const renderFunc = (key, listing) => {
-    const cartItemArray = getCart ? getCart.orderDetails.filter(oD => oD.modalId === listing.id) : [];
+    const cartItemArray = getCart
+      ? getCart.orderDetails &&
+        getCart.orderDetails.length > 0 &&
+        getCart.orderDetails.filter(oD => oD.modalId === listing.id)
+      : [];
     return (
       <RelatedCardComponent
         key={key}
@@ -60,7 +64,10 @@ ListingCatalogueView.propTypes = {
   showFilter: PropTypes.bool,
   listings: PropTypes.object,
   history: PropTypes.object,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  getCart: PropTypes.object,
+  cartLoading: PropTypes.bool,
+  onDelete: PropTypes.func
 };
 
 export default translate('listing')(ListingCatalogueView);
