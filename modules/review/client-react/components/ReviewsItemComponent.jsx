@@ -109,9 +109,20 @@ const ReviewsItemComponent = props => {
         {handleHelpful && (
           <Button type="link" onClick={foundHelpful} style={{ color: 'black' }}>
             <strong>
-              Found helpful &nbsp;
-              <Icon type="like" theme="filled" />
-              &nbsp;
+              {status ? (
+                <>
+                  Found helpful &nbsp;
+                  <Icon type="like" theme="filled" />
+                  &nbsp;
+                </>
+              ) : (
+                <>
+                  Found unhelpful &nbsp;
+                  <Icon type="dislike" theme="filled" />
+                  &nbsp;
+                </>
+              )}
+
               {`(${review.helpful})`}
             </strong>
           </Button>
