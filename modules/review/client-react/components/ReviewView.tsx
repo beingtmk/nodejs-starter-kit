@@ -17,6 +17,7 @@ interface ReviewViewProps {
   reviews: Reviews;
   loading: boolean;
   showAdd: boolean;
+  reviewHelpfulStatus: boolean;
   currentUser: object;
   ratingAverage: {
     id: number;
@@ -47,6 +48,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
     handleHelpful,
     addReview,
     deleteReview,
+    reviewHelpfulStatus,
     t,
     showAdd,
     currentUser
@@ -55,6 +57,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
       key={key}
+      reviewHelpfulStatus={reviewHelpfulStatus}
       review={review}
       showPhotos={photo}
       handleHelpful={handleHelpful}

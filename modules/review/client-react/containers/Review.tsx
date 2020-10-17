@@ -10,7 +10,8 @@ import {
   withReviews,
   withReviewAdding,
   withReviewEditing,
-  withReviewsDeleting
+  withReviewsDeleting,
+  withToogleReviewHelpful
 } from './ReviewOperations';
 interface ReviewProps {
   t: TranslateFunction;
@@ -31,10 +32,13 @@ const Review: React.FC<ReviewProps> = props => {
     return () => subscribe();
   });
 
-  const handleHelpful = async (id: number, helpful: number) => {
+  const handleHelpful = async (id: number, helpful: number, userId: number) => {
     try {
       const input = { id, helpful };
+      const reviewId = id;
+      // console.log(id)  ;
       await props.editReview(input);
+      await props.addOrRemoveReviewHelpful(reviewId, userId);
     } catch (e) {
       throw Error(e);
     }
@@ -49,5 +53,6 @@ export default compose(
   withReviewAdding,
   withReviewEditing,
   withReviewsDeleting,
+  withToogleReviewHelpful,
   translate('review')
 )(Review);
