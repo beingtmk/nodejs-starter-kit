@@ -13,8 +13,8 @@ const AddToCartFormBtns = props => {
         lg: 12
       }
     : {
-        xs: 24,
-        md: 24,
+        xs: 0,
+        md: 0,
         lg: 24
       };
 
