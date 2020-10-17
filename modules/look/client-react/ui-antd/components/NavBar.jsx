@@ -63,14 +63,19 @@ class NavBar extends React.Component {
                 <Row style={{ lineHeight: '37px' }}>
                   <Col span={10} />
                   <Col span={6}>
-                    <Icon type="phone" /> +918888888888
+                    <a href="tel: +919848524333">
+                      <Icon type="phone" /> +918888888888
+                    </a>
                   </Col>
                   <Col span={8}>
-                    <Icon type="mail" /> nodejs-starterkit@approxyma.com
+                    <a target="_blank" href="mailto: Info@brain-Ayan.com" rel="noopener noreferrer">
+                      <Icon type="mail" /> nodejs-starterkit@approxyma.com
+                    </a>
                   </Col>
                 </Row>
               </div>
             </Col>
+
             <Col span={24}>
               <Row>
                 <Col align="left" xs={12} md={12} lg={6}>
