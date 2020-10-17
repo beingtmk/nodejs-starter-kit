@@ -1,16 +1,34 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import { Button, Icon, Row, Col, Tooltip } from 'antd';
 
 import ROUTES from '../routes';
 
 const AddToCartFormBtns = props => {
-  const { inCart, onSubmit, loading, disabled, onSubmitRedirect, onDelete, title } = props;
+  const { inCart, onSubmit, loading, disabled, onSubmitRedirect, onDelete, title, catalogueCard = false } = props;
+  const customGridLG = !catalogueCard
+    ? {
+        xs: 0,
+        md: 0,
+        lg: 12
+      }
+    : {
+        xs: 24,
+        md: 24,
+        lg: 24
+      };
+
+  const customGridXS = {
+    xs: 24,
+    md: 24,
+    lg: 0
+  };
 
   return (
     <Tooltip title={title}>
       {inCart ? (
         <Row type="flex" gutter={24}>
-          <Col xs={0} md={0} lg={12}>
+          <Col {...customGridLG}>
             <Button
               size="large"
               block
@@ -24,7 +42,7 @@ const AddToCartFormBtns = props => {
               ADD TO CART
             </Button>
           </Col>
-          <Col xs={0} md={0} lg={12}>
+          <Col {...customGridLG}>
             <Button
               type="primary"
               block
@@ -37,7 +55,7 @@ const AddToCartFormBtns = props => {
               <Icon type="shopping-cart" />
             </Button>
           </Col>
-          <Col xs={24} md={24} lg={0}>
+          <Col {...customGridXS}>
             <Button
               block
               size="large"
@@ -58,13 +76,13 @@ const AddToCartFormBtns = props => {
         </Row>
       ) : (
         <Row type="flex" gutter={24}>
-          <Col xs={0} md={0} lg={12}>
+          <Col {...customGridLG}>
             <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
               <Icon type="delete" />
               Remove from CART
             </Button>
           </Col>
-          <Col xs={0} md={0} lg={12}>
+          <Col {...customGridLG}>
             <a href={`${ROUTES.checkoutCart}`}>
               <Button type="primary" size="large" block disabled={disabled}>
                 Go to CART
@@ -72,7 +90,7 @@ const AddToCartFormBtns = props => {
               </Button>
             </a>
           </Col>
-          <Col xs={24} md={24} lg={0}>
+          <Col {...customGridXS}>
             <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
               <Icon type="delete" />
               Remove from CART
@@ -88,6 +106,17 @@ const AddToCartFormBtns = props => {
       )}
     </Tooltip>
   );
+};
+
+AddToCartFormBtns.propTypes = {
+  inCart: PropTypes.bool,
+  onSubmit: PropTypes.func,
+  loading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onSubmitRedirect: PropTypes.func,
+  onDelete: PropTypes.func,
+  title: PropTypes.string,
+  catalogueCard: PropTypes.bool
 };
 
 export default AddToCartFormBtns;

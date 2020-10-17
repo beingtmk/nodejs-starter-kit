@@ -3,8 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Statistic, Card, Icon, message, Button } from 'antd';
-import { AddButton } from '@gqlapp/look-client-react';
+import { Row, Col, Statistic, Card, Icon, message } from 'antd';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
@@ -128,20 +127,20 @@ const RelatedCardComponent = props => {
         }}
       >
         <AddToCartFormBtns
-          // title={
-          //   !currentUser
-          //     ? "SignIn To Continue"
-          //     : disabled
-          //     ? (max <= 0 && "Out of Stock") ||
-          //       (listingOwned && "Listing owned")
-          //     : "Continue to Booking"
-          // }
+          title={
+            !currentUser
+              ? 'SignIn To Continue'
+              : disabled
+              ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+              : 'Continue to Booking'
+          }
           inCart={inCart}
           onSubmit={() => handleSubmit(false)}
           onDelete={onDelete}
           onSubmitRedirect={() => handleSubmit(true)}
           loading={loading}
           disabled={disabled}
+          catalogueCard={true}
         />
         {/* <AddButton block color="default" onClick={() => handleSubmit(false)}>
           Add to Cart
@@ -242,8 +241,11 @@ RelatedCardComponent.propTypes = {
   componentStyle: PropTypes.object,
   addToCart: PropTypes.func,
   addOrRemoveListingBookmark: PropTypes.func,
+  onDelete: PropTypes.func,
   currentUser: PropTypes.object,
-  listingBookmarkStatus: PropTypes.bool
+  listingBookmarkStatus: PropTypes.bool,
+  inCart: PropTypes.bool,
+  loading: PropTypes.bool
 };
 
 export default compose(withAddToCart, withToogleListingBookmark)(RelatedCardComponent);
