@@ -25,7 +25,7 @@ interface ReviewProps {
 }
 
 const Review: React.FC<ReviewProps> = props => {
-  const { subscribeToMore, filter } = props;
+  const { subscribeToMore, filter, addOrRemoveReviewHelpful } = props;
 
   useEffect(() => {
     const subscribe = subscribeToReviews(subscribeToMore, filter);
@@ -38,7 +38,7 @@ const Review: React.FC<ReviewProps> = props => {
       const reviewId = id;
       // console.log(id)  ;
       await props.editReview(input);
-      await props.addOrRemoveReviewHelpful(reviewId, userId);
+      await addOrRemoveReviewHelpful(reviewId, userId);
     } catch (e) {
       throw Error(e);
     }

@@ -61,14 +61,12 @@ const ReviewsItemComponent = props => {
   React.useEffect(() => {
     setStatus(reviewHelpfulStatus);
   }, [reviewHelpfulStatus]);
-
   const foundHelpful = () => {
-    console.log(status);
     if (!status) {
-      handleHelpful(review.id, review.helpful + 1, review.user.id);
+      handleHelpful(review.id, review.helpful + 1, currentUser.id);
       // setDisabled(true);
     } else {
-      handleHelpful(review.id, review.helpful - 1, review.user.id);
+      handleHelpful(review.id, review.helpful - 1, currentUser.id);
     }
   };
 
@@ -109,7 +107,7 @@ const ReviewsItemComponent = props => {
         {handleHelpful && (
           <Button type="link" onClick={foundHelpful} style={{ color: 'black' }}>
             <strong>
-              {status ? (
+              {!status ? (
                 <>
                   Found helpful &nbsp;
                   <Icon type="like" theme="filled" />
