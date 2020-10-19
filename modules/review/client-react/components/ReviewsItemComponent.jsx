@@ -56,7 +56,7 @@ const ReviewsItemComponent = props => {
     history,
     reviewHelpfulStatus
   } = props;
-  const [status, setStatus] = React.useState(reviewHelpfulStatus);
+  const [status, setStatus] = React.useState(reviewHelpfulStatus && reviewHelpfulStatus);
 
   React.useEffect(() => {
     setStatus(reviewHelpfulStatus);

@@ -48,7 +48,6 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
     handleHelpful,
     addReview,
     deleteReview,
-    reviewHelpfulStatus,
     t,
     showAdd,
     currentUser
@@ -57,7 +56,6 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
       key={key}
-      reviewHelpfulStatus={reviewHelpfulStatus && reviewHelpfulStatus}
       review={review}
       showPhotos={photo}
       handleHelpful={handleHelpful}
