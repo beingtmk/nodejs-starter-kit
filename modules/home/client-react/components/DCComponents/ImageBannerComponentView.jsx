@@ -34,6 +34,20 @@ class Content extends React.PureComponent {
             name: 'title',
             children: 'Image Banner',
             className: 'title-h1 featuredHome-title'
+          },
+          {
+            name: 'content',
+            className: 'content-underline',
+            children: (
+              <div align="center">
+                <div key="line" className="title-line-wrapper" align="left">
+                  <div
+                    className="title-line"
+                    // style={{ transform: "translateX(-64px)" }}
+                  />
+                </div>
+              </div>
+            )
           }
         ]
       },
