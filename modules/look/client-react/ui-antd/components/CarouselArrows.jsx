@@ -1,13 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'antd';
+import { enquireScreen } from 'enquire-js';
+
+let isMobile;
+enquireScreen(b => {
+  isMobile = b;
+});
 
 export const LeftArrow = ({ prevSlide }) => {
-  return (
+  return !isMobile ? (
     <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
       <Icon type="left" className="carousel-arrow-icon" />
     </div>
-  );
+  ) : null;
 };
 
 LeftArrow.propTypes = {
@@ -15,11 +21,11 @@ LeftArrow.propTypes = {
 };
 
 export const RightArrow = ({ nextSlide }) => {
-  return (
+  return !isMobile ? (
     <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
       <Icon type="right" className="carousel-arrow-icon" />
     </div>
-  );
+  ) : null;
 };
 
 RightArrow.propTypes = {
