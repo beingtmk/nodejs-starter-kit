@@ -123,7 +123,7 @@ export default (pubsub: any) => ({
     },
     addOrRemoveReviewHelpful: withAuth(async (obj: any, { reviewId, userId }: any, context: any) => {
       // console.log('listingId resolvers', listingId, 'userId', userId);
-      const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId);
+      const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId || context.req.idetity.id);
       // console.log('status', status);
 
       // const list = await context.Listing.listing(listingId);

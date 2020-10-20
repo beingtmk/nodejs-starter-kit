@@ -61,6 +61,7 @@ const ReviewsItemComponent = props => {
   React.useEffect(() => {
     setStatus(reviewHelpfulStatus);
   }, [reviewHelpfulStatus]);
+
   const foundHelpful = () => {
     if (!status) {
       handleHelpful(review.id, review.helpful + 1, currentUser.id);

@@ -37,8 +37,8 @@ const Review: React.FC<ReviewProps> = props => {
       const input = { id, helpful };
       const reviewId = id;
       // console.log(id)  ;
-      await props.editReview(input);
       await addOrRemoveReviewHelpful(reviewId, userId);
+      await props.editReview(input);
     } catch (e) {
       throw Error(e);
     }
