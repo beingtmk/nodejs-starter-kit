@@ -90,16 +90,16 @@ const ListingsFilterComponent = props => {
                     defaultValue={orderBy.order}
                     style={{ width: '170px' }}
                     onChange={e =>
-                      e === ''
-                        ? onOrderBy({ order: e, column: '' })
-                        : onOrderBy({ order: e, column: 'listing_cost.cost' })
+                      SORT_BY[e].sortBy === ''
+                        ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
+                        : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
                     }
                   >
                     <Option key={1} value="">
                       None
                     </Option>
                     {SORT_BY.map((sB, i) => (
-                      <Option key={i + 2} value={sB.sortBy}>
+                      <Option key={i + 2} value={i}>
                         {sB.label}
                       </Option>
                     ))}
