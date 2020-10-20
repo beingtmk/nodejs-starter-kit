@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 import { Drawer, Menu, Icon, Row, Col, Layout } from 'antd';
@@ -6,6 +7,7 @@ import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
+import { CONTACT } from '@gqlapp/look-common/';
 
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
@@ -16,6 +18,10 @@ const { SubMenu } = Menu;
 const ref = { modules: null };
 
 const { Header } = Layout;
+
+const BannerLink = styled.a`
+  color: white;
+`;
 
 export const onAppCreate = async modules => (ref.modules = modules);
 
@@ -63,14 +69,14 @@ class NavBar extends React.Component {
                 <Row style={{ lineHeight: '37px' }}>
                   <Col span={10} />
                   <Col span={6}>
-                    <a href="tel: +919848524333">
-                      <Icon type="phone" /> +918888888888
-                    </a>
+                    <BannerLink href={`tel: ${CONTACT.phone}`}>
+                      <Icon type="phone" /> {CONTACT.phone}
+                    </BannerLink>
                   </Col>
                   <Col span={8}>
-                    <a target="_blank" href="mailto: Info@brain-Ayan.com" rel="noopener noreferrer">
-                      <Icon type="mail" /> nodejs-starterkit@approxyma.com
-                    </a>
+                    <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
+                      <Icon type="mail" /> {CONTACT.mail}
+                    </BannerLink>
                   </Col>
                 </Row>
               </div>
