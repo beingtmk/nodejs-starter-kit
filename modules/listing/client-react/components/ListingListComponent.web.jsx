@@ -10,6 +10,7 @@ import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import settings from '../../../../settings';
 import ROUTES from '../routes';
+import { displayDataCheck } from './functions';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -186,7 +187,7 @@ const ListingListComponent = props => {
       width: 120,
       dataIndex: 'listingFlags.isDiscount',
       key: 'listing_flag.isDiscount',
-      render: (text, record) => <>{record.listingFlags && record.listingFlags.isDiscount ? 'True' : 'False'}</>
+      render: (text, record) => <>{record.listingFlags && displayDataCheck(record.listingFlags.isDiscount, true)}</>
     },
     {
       title: (
@@ -202,10 +203,9 @@ const ListingListComponent = props => {
           {record.listingFlags && record.listingFlags.isDiscount
             ? record.listingCostArray &&
               record.listingCostArray.length > 0 &&
-              (record.listingCostArray[0].discount
-                ? record.listingCostArray[0].discount.toFixed(2)
-                : 'Discount not provided')
-            : 'No Discount'}
+              record.listingCostArray[0].discount &&
+              displayDataCheck(record.listingCostArray[0].discount.toFixed(2))
+            : 'Not applicable'}
         </>
       )
     },
