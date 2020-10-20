@@ -42,27 +42,48 @@ const MyReviewView = props => {
     <>
       <MetaTags title={t('title')} description={t('meta')} />
       <Row type={'flex'}>
-        <Col xs={24} md={24} lg={12}>
+        <Col xs={24} md={12} lg={12}>
           <Heading type="1">
             <Icon type="book" /> &nbsp; My Reviews
           </Heading>
           <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
         </Col>
-        <Col xs={24} md={24} lg={12} align="right">
-          <FormItem label={'Modal'} style={{ display: 'inline-flex' }}>
-            <Select
-              name="modal"
-              defaultValue={MODAL[0].value}
-              style={{ width: '100px' }}
-              onChange={e => setModalName(e)}
+        <Col xs={24} md={12} lg={12} align="right">
+          <Col lg={0} md={0}>
+            <FormItem
+              label={'Modal'}
+              //  style={{ display: 'inline-flex' }}
             >
-              {MODAL.map((m, i) => (
-                <Option key={i} value={m.value}>
-                  {m.label}
-                </Option>
-              ))}
-            </Select>
-          </FormItem>
+              <Select
+                name="modal"
+                defaultValue={MODAL[0].value}
+                style={{ width: '100%' }}
+                onChange={e => setModalName(e)}
+              >
+                {MODAL.map((m, i) => (
+                  <Option key={i} value={m.value}>
+                    {m.label}
+                  </Option>
+                ))}
+              </Select>
+            </FormItem>
+          </Col>
+          <Col xs={0} md={24} lg={24}>
+            <FormItem label={'Modal'} style={{ display: 'inline-flex' }}>
+              <Select
+                name="modal"
+                defaultValue={MODAL[0].value}
+                style={{ width: '100px' }}
+                onChange={e => setModalName(e)}
+              >
+                {MODAL.map((m, i) => (
+                  <Option key={i} value={m.value}>
+                    {m.label}
+                  </Option>
+                ))}
+              </Select>
+            </FormItem>
+          </Col>
         </Col>
       </Row>
       <br />
