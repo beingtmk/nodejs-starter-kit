@@ -86,6 +86,8 @@ extend type Query {
 
   # Rating
   ratingAverage(modalName: String!, modalId: Int!): Rating
+
+  reviewHelpfulStatus(reviewId: Int, userId: Int): Boolean
 }
 
 extend type Mutation {
@@ -96,6 +98,8 @@ extend type Mutation {
   # Delete a review
   deleteReview(id: Int): Boolean
   refresh: Boolean
+
+  addOrRemoveReviewHelpful(reviewId: Int, userId: Int): String
 }
 input AddModalReviewInput {
   modalName: String

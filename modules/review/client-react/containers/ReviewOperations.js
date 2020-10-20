@@ -8,11 +8,13 @@ import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 import REVIEW_QUERY from '../graphql/ReviewQuery.graphql';
 import REVIEWS_QUERY from '../graphql/ReviewsQuery.graphql';
 import RATING_QUERY from '../graphql/RatingQuery.graphql';
+import REVIEW_HELPFUL_STATUS from '../graphql/reviewHelpfulStatus.graphql';
 
 // Mutation
 import ADD_REVIEW from '../graphql/AddReview.graphql';
 import EDIT_REVIEW from '../graphql/EditReview.graphql';
 import DELETE_REVIEW from '../graphql/DeleteReview.graphql';
+import TOOGLE_REVIEW_HELPFUL from '../graphql/ToggleReviewHelpful.graphql';
 
 // Subscription
 import REVIEWS_SUBSCRIPTION from '../graphql/ReviewSubscription.graphql';
@@ -402,3 +404,45 @@ export const withUpdateReviewsFilter = Component =>
 
 // export const with = Component =>
 // (Component)
+
+export const withReviewHelpfulStatus = Component =>
+  graphql(REVIEW_HELPFUL_STATUS, {
+    options: props => {
+      return {
+        variables: {
+          reviewId: Number(props.review && props.review.id),
+          userId: props.currentUser && props.currentUser.id
+        },
+        fetchPolicy: 'network-only'
+      };
+    },
+    props({ data: { loading, error, reviewHelpfulStatus } }) {
+      if (error) throw new Error(error);
+      return { loading, reviewHelpfulStatus };
+    }
+  })(Component);
+
+export const withToogleReviewHelpful = Component =>
+  graphql(TOOGLE_REVIEW_HELPFUL, {
+    props: ({ mutate }) => ({
+      addOrRemoveReviewHelpful: async (reviewId, userId) => {
+        message.destroy();
+        message.loading('Please wait...', 0);
+        try {
+          console.log(reviewId, userId);
+          const {
+            data: { addOrRemoveReviewHelpful }
+          } = await mutate({
+            variables: { reviewId, userId }
+          });
+
+          message.destroy();
+          message.success(addOrRemoveReviewHelpful);
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);

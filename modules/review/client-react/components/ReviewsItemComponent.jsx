@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { compose } from '@gqlapp/core-common';
 import { PropTypes } from 'prop-types';
 import { Row, Col, Icon, Card, Rate, Menu, Button } from 'antd';
 
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
-
+import { withReviewHelpfulStatus } from '../containers/ReviewOperations';
 import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
 
@@ -45,12 +46,24 @@ const ReviewModala = styled.a`
 `;
 
 const ReviewsItemComponent = props => {
-  const { review, showPhotos, handleHelpful, deleteReview, currentUser, showModal = false, history } = props;
-  const [disabled, setDisabled] = React.useState(false);
+  const {
+    review,
+    showPhotos,
+    handleHelpful,
+    deleteReview,
+    currentUser,
+    showModal = false,
+    history,
+    reviewHelpfulStatus
+  } = props;
+  const [status, setStatus] = React.useState(reviewHelpfulStatus && reviewHelpfulStatus);
+
+  React.useEffect(() => {
+    setStatus(reviewHelpfulStatus);
+  }, [reviewHelpfulStatus]);
 
   const foundHelpful = () => {
-    handleHelpful(review.id, review.helpful + 1);
-    setDisabled(true);
+    handleHelpful(review.id, currentUser.id);
   };
 
   function dropDownOpts() {
@@ -88,11 +101,22 @@ const ReviewsItemComponent = props => {
       )}
       <HelpfulPosition>
         {handleHelpful && (
-          <Button type="link" disabled={disabled} onClick={foundHelpful} style={{ color: 'black' }}>
+          <Button type="link" onClick={foundHelpful} style={{ color: 'black' }}>
             <strong>
-              Found helpful &nbsp;
-              <Icon type="like" theme="filled" />
-              &nbsp;
+              {!status ? (
+                <>
+                  Found helpful &nbsp;
+                  <Icon type="like" theme="filled" />
+                  &nbsp;
+                </>
+              ) : (
+                <>
+                  Found unhelpful &nbsp;
+                  <Icon type="dislike" theme="filled" />
+                  &nbsp;
+                </>
+              )}
+
               {`(${review.helpful})`}
             </strong>
           </Button>
@@ -148,8 +172,9 @@ ReviewsItemComponent.propTypes = {
   history: PropTypes.object,
   showPhotos: PropTypes.bool,
   showModal: PropTypes.bool,
+  reviewHelpfulStatus: PropTypes.bool,
   handleHelpful: PropTypes.func,
   deleteReview: PropTypes.func
 };
 
-export default ReviewsItemComponent;
+export default compose(withReviewHelpfulStatus)(ReviewsItemComponent);

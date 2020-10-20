@@ -17,6 +17,7 @@ interface ReviewViewProps {
   reviews: Reviews;
   loading: boolean;
   showAdd: boolean;
+  reviewHelpfulStatus: boolean;
   currentUser: object;
   ratingAverage: {
     id: number;

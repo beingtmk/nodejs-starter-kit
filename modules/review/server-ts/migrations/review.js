@@ -65,6 +65,24 @@ exports.up = function(knex) {
         table.integer('five').defaultTo(0);
         table.timestamps(false, true);
       })
+      .createTable('review_helpful_user', table => {
+        table.increments();
+        table
+          .integer('user_id')
+          .unsigned()
+          .references('id')
+          .inTable('user')
+          .onDelete('CASCADE');
+        table
+          .integer('review_id')
+          .unsigned()
+          .references('id')
+          .inTable('review')
+          .onDelete('CASCADE');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
   ]);
 };
 
@@ -73,6 +91,7 @@ exports.down = function(knex) {
     knex.schema.dropTable('modal_review'),
     knex.schema.dropTable('review_medium'),
     knex.schema.dropTable('average_rating'),
-    knex.schema.dropTable('review')
+    knex.schema.dropTable('review'),
+    knex.schema.dropTable('review_helpful_user')
   ]);
 };
