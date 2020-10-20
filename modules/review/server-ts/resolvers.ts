@@ -48,9 +48,13 @@ export default (pubsub: any) => ({
     async ratingAverage(obj: any, { modalName, modalId }: { modalName: string; modalId: number }, context: any) {
       return context.Review.ratingAverage(modalName, modalId);
     },
-    reviewHelpfulStatus: withAuth(async (obj: any, { reviewId, userId }: any, context: any) => {
-      return context.Review.reviewHelpfulStatus(reviewId, userId || context.req.idetity.id);
-    })
+    async reviewHelpfulStatus(obj: any, { reviewId, userId }: any, context: any) {
+      if (context.req.identity && context.req.identity.id) {
+        return context.Review.reviewHelpfulStatus(reviewId, userId || context.req.identity.id);
+      } else {
+        return false;
+      }
+    }
   },
   Mutation: {
     addReview: withAuth(async (obj: any, { input }: ModalReviewInput, context: any) => {
@@ -121,28 +125,32 @@ export default (pubsub: any) => ({
     refresh: async (obj: any, {}: object, context: any) => {
       await context.Review.refresh();
     },
-    addOrRemoveReviewHelpful: withAuth(async (obj: any, { reviewId, userId }: any, context: any) => {
-      const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId || context.req.idetity.id);
+    async addOrRemoveReviewHelpful(obj: any, { reviewId, userId }: any, context: any) {
+      if (context.req.identity && context.req.identity.id) {
+        const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId || context.req.identity.id);
 
-      // const review = await context.Review.review(reviewId);
-      if (status) {
-        // pubsub.publish(REVIEW_SUBSCRIPTION, {
-        //   reviewUpdated: {
-        //     mutation: 'UPDATED',
-        //     node: review
-        //   }
-        // });
-        return 'Added SuccessFully';
+        // const review = await context.Review.review(reviewId);
+        if (status) {
+          // pubsub.publish(REVIEW_SUBSCRIPTION, {
+          //   reviewUpdated: {
+          //     mutation: 'UPDATED',
+          //     node: review
+          //   }
+          // });
+          return 'Added SuccessFully';
+        } else {
+          // pubsub.publish(REVIEW_SUBSCRIPTION, {
+          //   reviewUpdated: {
+          //     mutation: 'UPDATED',
+          //     node: review
+          //   }
+          // });
+          return 'Removed SuccessFully';
+        }
       } else {
-        // pubsub.publish(REVIEW_SUBSCRIPTION, {
-        //   reviewUpdated: {
-        //     mutation: 'UPDATED',
-        //     node: review
-        //   }
-        // });
-        return 'Removed SuccessFully';
+        return false;
       }
-    })
+    }
   },
   Subscription: {
     reviewUpdated: {
