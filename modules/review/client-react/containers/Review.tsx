@@ -22,6 +22,7 @@ interface ReviewProps {
   };
   showAdd: boolean;
   subscribeToMore: () => null;
+  addOrRemoveReviewHelpful: (reviewId: number, userId: number) => null;
 }
 
 const Review: React.FC<ReviewProps> = props => {
@@ -32,13 +33,9 @@ const Review: React.FC<ReviewProps> = props => {
     return () => subscribe();
   });
 
-  const handleHelpful = async (id: number, helpful: number, userId: number) => {
+  const handleHelpful = async (reviewId: number, userId: number) => {
     try {
-      const input = { id, helpful };
-      const reviewId = id;
-      // console.log(id)  ;
       await addOrRemoveReviewHelpful(reviewId, userId);
-      await props.editReview(input);
     } catch (e) {
       throw Error(e);
     }

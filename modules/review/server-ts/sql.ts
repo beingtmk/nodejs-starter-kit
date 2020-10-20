@@ -178,7 +178,6 @@ export default class Review extends Model {
     //     .update(decamelizeKeys({ id: modalId, moduleId, reviewId: res.id }));
     //   // console.log('res for modalName table', res1);
     // }
-    // console.log('res for review', res);
     return res.id;
   }
 
@@ -291,7 +290,6 @@ export default class Review extends Model {
         .where('review_id', reviewId)
     ).length;
     let wStatus = false;
-    // console.log('count', count);
     if (count > 0) {
       wStatus = true;
     }
@@ -300,14 +298,18 @@ export default class Review extends Model {
   public async addOrRemoveReviewHelpful(reviewId: number, userId: number) {
     const status = await this.reviewHelpfulStatus(reviewId, userId);
     // console.log('status1', status);
+    const review = await this.review(reviewId);
     if (status) {
       await ReviewHelpfulUser.query()
         .where('review_id', '=', reviewId)
         .andWhere('user_id', '=', userId)
         .del();
+      await this.editReview({ id: review.id, helpful: review.helpful - 1 });
       return false;
     } else {
       await ReviewHelpfulUser.query().insertGraph(decamelizeKeys({ reviewId, userId }));
+      await this.editReview({ id: review.id, helpful: review.helpful + 1 });
+
       return true;
     }
   }
@@ -394,7 +396,7 @@ class ReviewHelpfulUser extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: Review,
         join: {
-          from: 'review_helpful_user',
+          from: 'review_helpful_user.review_id',
           to: 'review.id'
         }
       }

@@ -122,26 +122,22 @@ export default (pubsub: any) => ({
       await context.Review.refresh();
     },
     addOrRemoveReviewHelpful: withAuth(async (obj: any, { reviewId, userId }: any, context: any) => {
-      // console.log('listingId resolvers', listingId, 'userId', userId);
       const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId || context.req.idetity.id);
-      // console.log('status', status);
 
-      // const list = await context.Listing.listing(listingId);
+      // const review = await context.Review.review(reviewId);
       if (status) {
-        // pubsub.publish(LISTINGS_BOOKMARK_SUBSCRIPTION, {
-        //   listingsBookmarkUpdated: {
-        //     mutation: 'CREATED',
-        //     id: list.id,
-        //     node: list
+        // pubsub.publish(REVIEW_SUBSCRIPTION, {
+        //   reviewUpdated: {
+        //     mutation: 'UPDATED',
+        //     node: review
         //   }
         // });
         return 'Added SuccessFully';
       } else {
-        // pubsub.publish(LISTINGS_BOOKMARK_SUBSCRIPTION, {
-        //   listingsBookmarkUpdated: {
-        //     mutation: 'DELETED',
-        //     id: list.id,
-        //     node: list
+        // pubsub.publish(REVIEW_SUBSCRIPTION, {
+        //   reviewUpdated: {
+        //     mutation: 'UPDATED',
+        //     node: review
         //   }
         // });
         return 'Removed SuccessFully';
