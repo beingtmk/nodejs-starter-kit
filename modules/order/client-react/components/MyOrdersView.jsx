@@ -51,14 +51,30 @@ const MyOrdersView = props => {
       <MetaTags title=" MyOrders" description="" />
 
       <Row>
-        <Col md={{ span: 10 }} sm={{ span: 7 }} xs={{ span: 24 }}>
+        <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
             <Icon type="solution" />
             &nbsp; My Orders
           </Heading>
           <br />
         </Col>
-        <Col md={{ span: 14 }} sm={{ span: 17 }} xs={{ span: 24 }}>
+        <Col lg={0} md={0} align="center">
+          {orderStates && orderStates.length !== 0 && (
+            <ButtonGroup className="width100">
+              <Button block onClick={() => filterItems('')} type={classNamesgroup('')}>
+                {Icons[0]}
+                ALL
+              </Button>
+              {orderStates.map((oS, i) => (
+                <Button key={i} block onClick={() => filterItems(oS.state)} type={classNamesgroup(oS.state)}>
+                  {Icons[i + 1]}
+                  {oS.state}
+                </Button>
+              ))}
+            </ButtonGroup>
+          )}
+        </Col>
+        <Col lg={{ span: 16 }} md={{ span: 24 }} sm={0} xs={0} align="center">
           {orderStates && orderStates.length !== 0 && (
             <ButtonGroup className="width100">
               <Button onClick={() => filterItems('')} type={classNamesgroup('')}>
