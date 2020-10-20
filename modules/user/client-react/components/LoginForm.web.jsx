@@ -116,9 +116,18 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
       <hr />
       <div className="text-center" style={{ marginBottom: 16 }}>
         <span style={{ lineHeight: '58px' }}>{t('login.btn.notReg')}</span>
-        <NavLink className="btn btn-primary" to={`${ROUTES.register}`} activeClassName="active" style={{ margin: 10 }}>
-          {t('login.btn.sign')}
-        </NavLink>
+        {window.location.search !== '' ? (
+          <NavLink to={`${ROUTES.register}${window.location.search}`}>{t('login.btn.sign')}</NavLink>
+        ) : (
+          <NavLink
+            className="btn btn-primary"
+            to={`${ROUTES.register}`}
+            activeClassName="active"
+            style={{ margin: 10 }}
+          >
+            {t('login.btn.sign')}
+          </NavLink>
+        )}
       </div>
     </Form>
   );
