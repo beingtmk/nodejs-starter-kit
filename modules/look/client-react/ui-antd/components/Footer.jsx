@@ -7,6 +7,7 @@ import { Row, Col, Button } from 'antd';
 
 // eslint-disable-next-line import/no-named-default
 import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';
+import { SOCIAL } from '@gqlapp/look-common';
 
 const Img = styled.img`
   &:hover {
@@ -60,7 +61,7 @@ const Footer10DataSource = {
               children: (
                 <h1 style={{ fontSize: '25px', color: 'white' }}>
                   <div align="center" className="row" style={{ display: 'flex' }}>
-                    <Container href="https://google.com" target="_blank">
+                    <Container href={SOCIAL.facebook} target="_blank">
                       <Img
                         src={
                           'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170780/ypoeagxzxrcwfnhxydir.svg'
@@ -70,7 +71,7 @@ const Footer10DataSource = {
                         align="centre"
                       />
                     </Container>
-                    <Container href="https://google.com" target="_blank">
+                    <Container href={SOCIAL.youtube} target="_blank">
                       <Img
                         src={
                           'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170807/nqwlv8ulatkj8qnml6uq.png'
@@ -80,7 +81,7 @@ const Footer10DataSource = {
                         align="centre"
                       />
                     </Container>
-                    <Container href="https://google.com" target="_blank">
+                    <Container href={SOCIAL.twitter} target="_blank">
                       <Img
                         src={
                           'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170822/ieq0oplvvympjnwqdhvm.svg'
@@ -90,7 +91,7 @@ const Footer10DataSource = {
                         align="centre"
                       />
                     </Container>
-                    <Container href="https://google.com" target="_blank">
+                    <Container href={SOCIAL.linkedIn} target="_blank">
                       <Img
                         src={
                           'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170837/q0hfnknlfdrsnlfq6chx.svg'
@@ -100,7 +101,7 @@ const Footer10DataSource = {
                         align="centre"
                       />
                     </Container>
-                    <Container href="https://google.com" target="_blank">
+                    <Container href={SOCIAL.instagram} target="_blank">
                       <Img
                         src={
                           'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170860/twtea5mc1wxflssxbwx9.png'
