@@ -64,7 +64,7 @@ const ListingCarousel = props => {
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',
-      // variableWidth: true,
+      variableWidth: true,
       autoplay: true,
       easing: 1000,
       infinite: true,
@@ -73,6 +73,7 @@ const ListingCarousel = props => {
       slidesToShow: itemLength >= 4 ? 4 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
+      lazyLoad: true,
 
       arrows: true,
       dots: false,
