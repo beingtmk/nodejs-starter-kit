@@ -15,11 +15,10 @@ const ListingCatalogueView = props => {
   const { t, loading, listings, history, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
 
   const renderFunc = (key, listing) => {
-    const cartItemArray = getCart
-      ? getCart.orderDetails &&
-        getCart.orderDetails.length > 0 &&
-        getCart.orderDetails.filter(oD => oD.modalId === listing.id)
-      : [];
+    const cartItemArray =
+      getCart && getCart.orderDetails && getCart.orderDetails.length > 0
+        ? getCart.orderDetails.filter(oD => oD.modalId === listing.id)
+        : [];
     return (
       <RelatedCardComponent
         key={key}

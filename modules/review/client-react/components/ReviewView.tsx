@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Row, Col, Checkbox, Spin, Tooltip } from 'antd';
+import { Row, Col, Checkbox, Spin } from 'antd';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import { MetaTags } from '@gqlapp/look-client-react';
 import { Reviews, Review } from '../containers/Reviews.web';
@@ -107,11 +107,9 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
               </>
             )}
             <br />
-            <Tooltip title={`review_image table dosn't exist`}>
-              <Checkbox onChange={() => setPhoto(!photo)}>
-                <strong>With photo</strong>
-              </Checkbox>
-            </Tooltip>
+            <Checkbox onChange={() => setPhoto(!photo)}>
+              <strong>With photo</strong>
+            </Checkbox>
           </div>
         </Col>
         <Col span={12}>

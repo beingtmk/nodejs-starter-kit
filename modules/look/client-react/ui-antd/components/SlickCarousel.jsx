@@ -83,12 +83,10 @@ export default class Carousel extends React.Component {
           <ADCarousel ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
             {this.props.data.map((item, key) => {
               const listing = this.props.node ? item.node : item;
-              const cartItemArray = getCart
-                ? getCart.orderDetails &&
-                  getCart.orderDetails.length > 0 &&
-                  getCart.orderDetails.filter(oD => oD.modalId === listing.id)
-                : [];
-              console.log(listing, getCart && getCart.orderDetails);
+              const cartItemArray =
+                getCart && getCart.orderDetails && getCart.orderDetails.length > 0
+                  ? getCart.orderDetails.filter(oD => oD.modalId === listing.id)
+                  : [];
               return (
                 <Compo
                   inCart={cartItemArray.length === 0}
