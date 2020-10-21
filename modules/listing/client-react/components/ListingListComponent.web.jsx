@@ -14,7 +14,7 @@ import { displayDataCheck } from './functions';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => <Spinner />;
+const Loading = () => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
@@ -61,7 +61,7 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'user.username',
       key: 'user.username',
-      render: (text, record) => <div>{record.user && record.user.username}</div>
+      render: (text, record) => <div>{record.user && displayDataCheck(record.user.username)}</div>
     },
     {
       title: (
@@ -75,7 +75,7 @@ const ListingListComponent = props => {
       key: 'title',
       render: (text, record) => (
         <a href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank">
-          {text}
+          {displayDataCheck(text)}
         </a>
       )
     },
@@ -122,7 +122,7 @@ const ListingListComponent = props => {
           {record.listingCostArray &&
             record.listingCostArray.length > 0 &&
             record.listingCostArray[0].cost &&
-            record.listingCostArray[0].cost.toFixed(2)}
+            displayDataCheck(record.listingCostArray[0].cost.toFixed(2))}
         </>
       )
     },
@@ -218,7 +218,7 @@ const ListingListComponent = props => {
       width: 180,
       dataIndex: 'listingOptions.fixedQuantity',
       key: 'listing_option.fixedQuantity',
-      render: (text, record) => <>{record.listingOptions && record.listingOptions.fixedQuantity}</>
+      render: (text, record) => <>{record.listingOptions && displayDataCheck(record.listingOptions.fixedQuantity)}</>
     },
     {
       title: (
@@ -229,7 +229,7 @@ const ListingListComponent = props => {
       width: 200,
       dataIndex: 'listingDetail.inventoryCount',
       key: 'listingDetail.inventoryCount',
-      render: (text, record) => <>{record.listingDetail && record.listingDetail.inventoryCount}</>
+      render: (text, record) => <>{record.listingDetail && displayDataCheck(record.listingDetail.inventoryCount)}</>
     },
     {
       title: t('list.column.actions'),

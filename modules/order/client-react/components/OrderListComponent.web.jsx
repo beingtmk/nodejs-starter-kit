@@ -9,6 +9,7 @@ import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import OrderStatusMail from '../containers/OrderStatusMail';
 import settings from '../../../../settings';
 import ROUTES from '../routes';
@@ -60,7 +61,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'id',
       key: 'id',
-      render: (text, record) => <div>{record && record.id}</div>
+      render: (text, record) => <div>{record && displayDataCheck(record.id)}</div>
     },
     {
       title: (
@@ -76,7 +77,7 @@ const OrderListComponent = props => {
           target={'_blank'}
           rel="noopener noreferrer"
         >
-          {record.consumer && record.consumer.username}
+          {record.consumer && displayDataCheck(record.consumer.username)}
         </a>
       )
     },
@@ -112,7 +113,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text, record) => <>{new Date(Number(record.createdAt)).toLocaleDateString('en-IN')}</>
+      render: (text, record) => <>{displayDataCheck(new Date(Number(record.createdAt)).toLocaleDateString('en-IN'))}</>
     },
     {
       title: t('list.column.actions'),
