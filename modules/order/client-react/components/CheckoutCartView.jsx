@@ -9,6 +9,7 @@ import { PageLayout, NextButton, AddButton, MetaTags } from '@gqlapp/look-client
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import ROUTES from '../routes';
 
 import CheckoutStepsComponent from './CheckoutStepsComponent';
@@ -61,11 +62,11 @@ const CheckoutCartView = props => {
                     </h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
-                    <h2>Order id - {getCart.id}</h2>
+                    <h2>Order id - {displayDataCheck(getCart.id)}</h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
                     <h2>
-                      Total price: <strong>&#8377; {TotalPrice(getCart.orderDetails)} </strong>
+                      Total price: <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
                     </h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
@@ -138,7 +139,7 @@ const CheckoutCartView = props => {
                         <br />
                         <h3>
                           Total amount
-                          <ColorFloat>&#8377; {` ${TotalPrice(getCart.orderDetails)}`}</ColorFloat>
+                          <ColorFloat>&#8377; {` ${TotalPrice(displayDataCheck(getCart.orderDetails))}`}</ColorFloat>
                         </h3>
                       </span>
                     </Card>

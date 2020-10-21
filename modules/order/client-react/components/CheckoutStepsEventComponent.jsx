@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
-import { Icon, Button, Row, Col, Card, Rate, Avatar, Divider, Modal, Tooltip } from 'antd';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { Row, Col, Card, Rate, Avatar, Divider, Tooltip } from 'antd';
 
 const OrderCard = styled(Card)`
   margin: 0px 0px 15px 0px !important;
@@ -54,27 +56,27 @@ const CardRate = styled(Rate)`
   font-size: 11px !important;
 `;
 
-const OrderTotalDate = styled(Col)`
-  margin-top: 13px !important;
-  margin-bottom: 2px !important;
-`;
+// const OrderTotalDate = styled(Col)`
+//   margin-top: 13px !important;
+//   margin-bottom: 2px !important;
+// `;
 
-const OrderGrey = styled(Col)`
-  color: #676767;
-  position: relative;
-  bottom: 10px;
-`;
+// const OrderGrey = styled(Col)`
+//   color: #676767;
+//   position: relative;
+//   bottom: 10px;
+// `;
 
-const BorderListzero = styled(Button)`
-  border: 0 !important;
-  padding: 0 !important;
-  padding-right: 20px !important;
-`;
+// const BorderListzero = styled(Button)`
+//   border: 0 !important;
+//   padding: 0 !important;
+//   padding-right: 20px !important;
+// `;
 
 class CheckoutStepsOrderComponent extends Component {
   render() {
     const item = this.props.item;
-    console.log(item);
+    // console.log(item);
 
     const event = item && item.events;
 
@@ -102,7 +104,7 @@ class CheckoutStepsOrderComponent extends Component {
     const rating = (user && user.profile && user.profile.rating) || null;
 
     const item_img = event.eventPoster;
-    console.log('item', item);
+    // console.log('item', item);
     return (
       <OrderCard
         bodyStyle={{
@@ -133,12 +135,12 @@ class CheckoutStepsOrderComponent extends Component {
                 position: 'relative'
               }}
             >
-              <h3>{`Order-Id: ${item.orderId}`}</h3>
+              <h3>{`Order-Id: ${displayDataCheck(item.orderId)}`}</h3>
               <Divider style={{ margin: '5px 0px' }} />
 
               <ItemName>
                 <span>
-                  <b>{<Title>{event.title}</Title>}</b>
+                  <b>{<Title>{displayDataCheck(event.title)}</Title>}</b>
                 </span>
               </ItemName>
 
@@ -149,7 +151,7 @@ class CheckoutStepsOrderComponent extends Component {
                     avatar={<Avatar src={sellerAvatar} />}
                     title={
                       <CatalogUserName>
-                        {seller}
+                        {displayDataCheck(seller)}
                         <br />
                         {rating ? <CardRate disabled defaultValue={Number(rating)} /> : <a>Not Reviewed</a>}
                       </CatalogUserName>
@@ -167,4 +169,7 @@ class CheckoutStepsOrderComponent extends Component {
   }
 }
 
+CheckoutStepsOrderComponent.propTypes = {
+  item: PropTypes.object
+};
 export default CheckoutStepsOrderComponent;

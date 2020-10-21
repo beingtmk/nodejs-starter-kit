@@ -29,7 +29,6 @@ import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
 import CurrencyDisplay from './CurrencyDisplay';
 import SocialSharingButtons from './SocialSharingButtons';
-import { displayDataCheck } from './functions';
 
 const { TabPane } = Tabs;
 // const { Meta } = Card;
@@ -61,16 +60,10 @@ const ListingDetailView = props => {
 
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
   const discount =
-    listing &&
-    listing.listingCostArray &&
-    listing.listingCostArray.length > 0 &&
-    displayDataCheck(listing.listingCostArray[0].discount);
+    listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].discount;
   const cost =
-    listing &&
-    listing.listingCostArray &&
-    listing.listingCostArray.length > 0 &&
-    displayDataCheck(listing.listingCostArray[0].cost);
-  const inventoryCount = listing && listing.listingDetail && displayDataCheck(listing.listingDetail.inventoryCount);
+    listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
+  const inventoryCount = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
   const images =
     listing &&
     listing.listingMedia &&

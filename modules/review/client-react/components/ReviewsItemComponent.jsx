@@ -8,6 +8,7 @@ import { Row, Col, Icon, Card, Rate, Menu, Button } from 'antd';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { withReviewHelpfulStatus } from '../containers/ReviewOperations';
 import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
@@ -117,7 +118,7 @@ const ReviewsItemComponent = props => {
                 </>
               )}
 
-              {`(${review.helpful})`}
+              {`(${displayDataCheck(review.helpful)})`}
             </strong>
           </Button>
         )}
@@ -135,7 +136,7 @@ const ReviewsItemComponent = props => {
         >
           <Col span={10}>
             <h3>
-              <strong>{review.user.profile && review.user.profile.fullName}</strong>
+              <strong>{review.user.profile && displayDataCheck(review.user.profile.fullName)}</strong>
             </h3>
           </Col>
           <Col span={12}>
@@ -148,7 +149,7 @@ const ReviewsItemComponent = props => {
           </Col>
           <Col span={24}>
             <div style={{ padding: '10px' }}>
-              <p>{review.feedback}</p>
+              <p>{displayDataCheck(review.feedback)}</p>
             </div>
           </Col>
           {showPhotos && (
@@ -157,7 +158,7 @@ const ReviewsItemComponent = props => {
             </Col>
           )}
           <Col span={12}>
-            <>{new Date(Number(review.createdAt)).toLocaleDateString('en-IN')}</>
+            <>{displayDataCheck(new Date(Number(review.createdAt))).toLocaleDateString('en-IN')}</>
           </Col>
           <Col span={12}></Col>
         </Card>

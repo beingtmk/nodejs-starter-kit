@@ -6,6 +6,7 @@ import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import {
   RenderField,
   RenderUploadMultiple,
@@ -142,7 +143,7 @@ const ListingFormComponent = props => {
         <>
           <h3>
             <Icon type="solution" /> &nbsp;
-            <strong>{cardTitle}</strong>
+            <strong>{displayDataCheck(cardTitle)}</strong>
           </h3>
           <div align="center">
             <div key="line" className="title-line-wrapper" align="left">

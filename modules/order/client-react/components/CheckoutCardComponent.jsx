@@ -5,6 +5,7 @@ import { Row, Col, Card, Divider } from 'antd';
 
 import { NextButton } from '@gqlapp/look-client-react';
 
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import CartItemComponent from './CartItemComponent';
 import { TotalPrice } from './CheckoutCartView';
 
@@ -27,7 +28,7 @@ const OrderCardComponent = props => {
           <Col span={12} align="right">
             <h3>
               <StatusText status={getCart.orderState && getCart.orderState.state.toLowerCase()}>
-                {getCart.orderState && getCart.orderState.state}
+                {getCart.orderState && displayDataCheck(getCart.orderState.state)}
               </StatusText>
             </h3>
           </Col>
@@ -65,7 +66,7 @@ const OrderCardComponent = props => {
           Total amount
           <h2 style={{ float: 'right' }}>
             &#8377;
-            {` ${TotalPrice(getCart && getCart.orderDetails.length !== 0 && getCart.orderDetails)}`}
+            {` ${TotalPrice(getCart && getCart.orderDetails.length !== 0 && displayDataCheck(getCart.orderDetails))}`}
           </h2>
         </h3>
       </div>
@@ -73,7 +74,7 @@ const OrderCardComponent = props => {
       {getCart.paid === true ? (
         <h4 className="lightText">
           You paid <strong className="colorFloat"> &#8377; {TotalPrice(getCart)}</strong>
-          <h6 className="PaidMethodColor">{product.youPaid.method}</h6>
+          <h6 className="PaidMethodColor">{displayDataCheck(product.youPaid.method)}</h6>
         </h4>
       ) : null}
       <br />
@@ -83,7 +84,7 @@ const OrderCardComponent = props => {
             <SubmitButton />
           ) : (
             <NextButton onClick={onSubmit} disabled={btnDisabled} size="lg">
-              {buttonText}
+              {displayDataCheck(buttonText)}
             </NextButton>
           ))}
       </div>
