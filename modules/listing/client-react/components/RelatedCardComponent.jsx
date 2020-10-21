@@ -126,6 +126,7 @@ const RelatedCardComponent = props => {
           width: '100%'
         }}
       >
+        {console.log(inCart)}
         <AddToCartFormBtns
           title={
             !currentUser

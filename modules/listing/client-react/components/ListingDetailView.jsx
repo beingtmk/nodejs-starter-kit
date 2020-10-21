@@ -296,6 +296,7 @@ const ListingDetailView = props => {
               currentUser={currentUser}
               title={'Similar Listing (same user)'}
               history={history}
+              {...props}
             />
           </>
           {listing && (

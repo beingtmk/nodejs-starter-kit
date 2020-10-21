@@ -5,6 +5,7 @@ import { Route, NavLink } from 'react-router-dom';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import loadable from '@loadable/component';
 import { MenuItem } from '@gqlapp/look-client-react';
 
@@ -28,11 +29,7 @@ const { SubMenu } = Menu;
 
 export default new ClientModule({
   route: [
-    <Route
-      exact
-      path={ROUTES.home}
-      component={loadable(() => import('./components/HomeView4').then(c => c.default))}
-    />,
+    <Route exact path={ROUTES.home} component={loadable(() => import('./containers/Home4').then(c => c.default))} />,
     <Route
       exact
       path={ROUTES.home1}
@@ -54,7 +51,7 @@ export default new ClientModule({
     <AuthRoute
       exact
       path={ROUTES.adminPanel}
-      redirect={ROUTES.profile}
+      redirect={USER_ROUTES.profile}
       role="admin"
       component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default))}
     />,

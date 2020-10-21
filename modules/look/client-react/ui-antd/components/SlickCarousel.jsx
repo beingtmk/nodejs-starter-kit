@@ -21,7 +21,7 @@ export default class Carousel extends React.Component {
   }
   render() {
     // console.log('carousel', this.props);
-    const { Compo, componentProps, showArrow = true } = this.props;
+    const { Compo, componentProps, showArrow = true, getCart, onDelete } = this.props;
 
     const prevSlide = () => {
       this.carousel.prev();
@@ -76,20 +76,30 @@ export default class Carousel extends React.Component {
       // nextArrow: <SampleNextArrow />,
       // prevArrow: <SamplePrevArrow />
     };
-
     return (
       <>
         <div style={{ position: 'relative', height: this.props.height || '370px' }}>
           {showArrow && <LeftArrow prevSlide={prevSlide} />}
           <ADCarousel ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
-            {this.props.data.map((item, key) => (
-              <Compo
-                {...componentProps}
-                componentStyle={this.props.componentStyle}
-                listing={this.props.node ? item.node : item}
-                key={key}
-              />
-            ))}
+            {this.props.data.map((item, key) => {
+              const listing = this.props.node ? item.node : item;
+              const cartItemArray = getCart
+                ? getCart.orderDetails &&
+                  getCart.orderDetails.length > 0 &&
+                  getCart.orderDetails.filter(oD => oD.modalId === listing.id)
+                : [];
+              console.log(listing, getCart && getCart.orderDetails);
+              return (
+                <Compo
+                  inCart={cartItemArray.length === 0}
+                  onDelete={() => onDelete(cartItemArray[0].id)}
+                  {...componentProps}
+                  componentStyle={this.props.componentStyle}
+                  listing={listing}
+                  key={key}
+                />
+              );
+            })}
           </ADCarousel>
           {showArrow && <RightArrow nextSlide={nextSlide} />}
         </div>
@@ -106,5 +116,7 @@ Carousel.propTypes = {
   Compo: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   autoplay: PropTypes.bool,
-  showArrow: PropTypes.bool
+  showArrow: PropTypes.bool,
+  onDelete: PropTypes.func,
+  getCart: PropTypes.object
 };
