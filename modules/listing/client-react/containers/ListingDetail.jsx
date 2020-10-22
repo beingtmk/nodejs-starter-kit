@@ -69,7 +69,7 @@ const ListingDetail = props => {
       throw Error(e);
     }
   };
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <ListingDetailView onDelete={handleDelete} onShare={handleShare} handleBookmark={bookmarkListing} {...props} />
   );

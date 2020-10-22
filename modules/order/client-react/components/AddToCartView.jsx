@@ -8,7 +8,7 @@ const AddToCartView = props => {
   const { currentUser, listing, onSubmit, onDelete, showBtn, item, getCart, cartLoading } = props;
   const listingOwned = (listing && listing.user && listing.user.id) === (currentUser && currentUser.id);
   const cartItemArray = getCart ? getCart.orderDetails.filter(oD => oD.modalId === listing.id) : [];
-  console.log(listing, cartItemArray);
+  // console.log(listing, cartItemArray);
   return (
     <Card>
       <AddToCartForm

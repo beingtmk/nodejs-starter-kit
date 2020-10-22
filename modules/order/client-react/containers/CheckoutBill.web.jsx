@@ -26,7 +26,7 @@ const CheckoutBill = props => {
   });
 
   const handleSelect = id => {
-    console.log('addresses id', id);
+    // console.log('addresses id', id);
     setAddressId(id);
   };
 
@@ -43,7 +43,7 @@ const CheckoutBill = props => {
     }
   }
 
-  console.log('props', props);
+  // console.log('props', props);
   return <CheckoutBillView onSubmit={onSubmit} btnDisabled={addressId === 0} onSelect={handleSelect} {...props} />;
 };
 
