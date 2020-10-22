@@ -160,7 +160,7 @@ class CheckoutStepsOrderComponent extends Component {
                 </Tooltip>
               </Link>
               <Divider style={{ margin: '10px 0px 5px 0' }} />
-              <h5>Price : {item.events.price}</h5>
+              <h5>Price : {displayDataCheck(item.events.price)}</h5>
             </div>
           </OrderCardCol>
         </Row>

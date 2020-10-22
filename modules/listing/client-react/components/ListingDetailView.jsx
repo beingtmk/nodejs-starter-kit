@@ -29,6 +29,7 @@ import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
 import CurrencyDisplay from './CurrencyDisplay';
 import SocialSharingButtons from './SocialSharingButtons';
+import { displayDataCheck } from './functions';
 
 const { TabPane } = Tabs;
 // const { Meta } = Card;
@@ -146,7 +147,7 @@ const ListingDetailView = props => {
                     <Icon type="home" />
                   </NavLink>
                 </BreadCrumbItem>
-                <BreadCrumbItem key="listing-title">{listing && listing.title}</BreadCrumbItem>
+                <BreadCrumbItem key="listing-title">{listing && displayDataCheck(listing.title)}</BreadCrumbItem>
               </Breadcrumb>
             </Col>
 
@@ -189,7 +190,7 @@ const ListingDetailView = props => {
                 </div>
                 <div align="left" style={{ padding: '5px' }}>
                   <h3>Details: </h3>
-                  <p>{listing.description}</p>
+                  <p>{displayDataCheck(listing.description)}</p>
                 </div>
               </div>
               <Row>
@@ -200,7 +201,7 @@ const ListingDetailView = props => {
             <Col xl={14} lg={14} md={11} sm={24}>
               <Row>
                 <Col span={22}>
-                  <h1 style={{ fontSize: '25px' }}>{listing && listing.title}</h1>
+                  <h1 style={{ fontSize: '25px' }}>{listing && displayDataCheck(listing.title)}</h1>
                 </Col>
                 <Col span={1} align="right">
                   {listing && currentUser && (
@@ -286,7 +287,7 @@ const ListingDetailView = props => {
                 </Descriptions>
               </TabPane>
               <TabPane tab="Details" key="2">
-                <p>{listing.description}</p>
+                <p>{displayDataCheck(listing.description)}</p>
               </TabPane>
             </Tabs>
           </div>
