@@ -6,6 +6,7 @@ import {
   // NavLink
 } from 'react-router-dom';
 import loadable from '@loadable/component';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 // import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import ClientModule from '@gqlapp/module-client-react';
@@ -20,7 +21,11 @@ import resources from './locales';
 
 export default new ClientModule({
   route: [
-    <Route exact path="/contact" component={loadable(() => import('./containers/Contact').then(c => c.default))} />
+    <Route
+      exact
+      path="/contact"
+      component={loadable(() => import('./containers/Contact').then(c => c.default), { fallback: <Spinner /> })}
+    />
   ],
 
   localization: [{ ns: 'contact', resources }]

@@ -8,6 +8,7 @@ import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import loadable from '@loadable/component';
 import { MenuItem } from '@gqlapp/look-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';
@@ -29,23 +30,31 @@ const { SubMenu } = Menu;
 
 export default new ClientModule({
   route: [
-    <Route exact path={ROUTES.home} component={loadable(() => import('./containers/Home4').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.home}
+      component={loadable(() => import('./containers/Home4').then(c => c.default), { fallback: <Spinner /> })}
+    />,
     <Route
       exact
       path={ROUTES.home1}
-      component={loadable(() => import('./components/HomeView1').then(c => c.default))}
+      component={loadable(() => import('./components/HomeView1').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.home2}
-      component={loadable(() => import('./components/HomeView2').then(c => c.default))}
+      component={loadable(() => import('./components/HomeView2').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.home3}
-      component={loadable(() => import('./components/HomeView3').then(c => c.default))}
+      component={loadable(() => import('./components/HomeView3').then(c => c.default), { fallback: <Spinner /> })}
     />,
-    <Route exact path={ROUTES.home4} component={loadable(() => import('./containers/Home').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.home4}
+      component={loadable(() => import('./containers/Home').then(c => c.default), { fallback: <Spinner /> })}
+    />,
 
     // Dynamic Carousel
     <AuthRoute
@@ -53,17 +62,23 @@ export default new ClientModule({
       path={ROUTES.adminPanel}
       redirect={USER_ROUTES.profile}
       role="admin"
-      component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/DynamicCarousel.web').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />,
     <Route
       exact
       path={ROUTES.add}
-      component={loadable(() => import('./containers/DCComponents/AddDynamicCarousel').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/AddDynamicCarousel').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />,
     <Route
       exact
       path={ROUTES.edit}
-      component={loadable(() => import('./containers/DCComponents/EditDynamicCarousel').then(c => c.default))}
+      component={loadable(() => import('./containers/DCComponents/EditDynamicCarousel').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />
   ],
 
