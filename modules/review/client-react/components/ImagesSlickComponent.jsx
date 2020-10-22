@@ -5,7 +5,7 @@ import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
 
 const ImagesSlickComponent = props => {
   const { images } = props;
-  console.log('props', props);
+  // console.log('props', props);
   const itemLength = images && images.length;
 
   const SlickComponent = ({ listing }) => (
@@ -94,7 +94,8 @@ const ImagesSlickComponent = props => {
   ) : null;
 };
 ImagesSlickComponent.propTypes = {
-  images: PropTypes.array
+  images: PropTypes.array,
+  listing: PropTypes.obj
 };
 
 export default ImagesSlickComponent;

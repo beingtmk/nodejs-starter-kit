@@ -10,6 +10,7 @@ import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ROUTES from '../routes/index';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 // import { , DeleteIcon } from '@gqlapp/look-client-react';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -82,7 +83,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       width: 100,
       render: (text: string, record: Review) => (
         <Link to={`/public-profile/${record && record.user && record.user.id}`}>
-          {record && record.user && record.user.username}
+          {record && record.user && displayDataCheck(record.user.username)}
         </Link>
       )
     },
@@ -96,7 +97,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       dataIndex: 'rating',
       key: 'rating',
       width: 100,
-      render: (text: string) => <div>{text}</div>
+      render: (text: string) => <div>{displayDataCheck(text)}</div>
     },
     {
       title: (
@@ -108,7 +109,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
       dataIndex: 'feedback',
       key: 'feedback',
       width: 800,
-      render: (text: string) => <div>{text}</div>
+      render: (text: string) => <div>{displayDataCheck(text)}</div>
     },
     {
       title: t('adminPanel.list.column4'),

@@ -6,6 +6,7 @@ import { Button } from '@gqlapp/look-client-react';
 import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
 
@@ -44,7 +45,11 @@ const ListingCarousel = props => {
     titleWrapper: {
       className: 'title-wrapper',
       children: [
-        { name: 'title', children: props.title, className: 'title-h1 newArrivals-title' },
+        {
+          name: 'title',
+          children: props.title,
+          className: 'title-h1 newArrivals-title'
+        },
         {
           name: 'content',
           className: 'content-underline',
@@ -69,7 +74,7 @@ const ListingCarousel = props => {
 
   delete props.isMobile;
 
-  const itemLength = listings && listings.edges && listings.edges.length;
+  const itemLength = listings && listings.edges && displayDataCheck(listings.edges.length);
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',

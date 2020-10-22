@@ -5,6 +5,7 @@ import { withFormik } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { RenderField } from '@gqlapp/look-client-react';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 const OrderStatusMailView = props => {
   const [visible, setVisible] = useState(false);
@@ -16,7 +17,7 @@ const OrderStatusMailView = props => {
         <Icon type="mail" />
       </Button>
       <Modal
-        title={`Mail details for order id: ${props.orderId}`}
+        title={`Mail details for order id: ${displayDataCheck(props.orderId)}`}
         // visible={true}
         visible={visible}
         onOk={() => handleSubmit() || setVisible(false)}

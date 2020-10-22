@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { TotalPrice } from './CheckoutCartView';
 import ROUTES from '../routes';
 
@@ -60,14 +61,14 @@ const CartItemComponent = props => {
               </Col>
               <Col span={12}>
                 <Row type="flex" justify="start">
-                  <h3>Items: {item.orderDetails && item.orderDetails.length}</h3>
+                  <h3>Items: {item.orderDetails && displayDataCheck(item.orderDetails.length)}</h3>
                 </Row>
               </Col>
               <Col span={12}>
                 <Row type="flex" justify="end">
                   <h3>
                     <StatusText status={item.orderState && item.orderState.state.toLowerCase()}>
-                      {item.orderState && item.orderState.state}
+                      {item.orderState && displayDataCheck(item.orderState.state)}
                     </StatusText>
                   </h3>
                 </Row>
@@ -79,7 +80,7 @@ const CartItemComponent = props => {
               <span>
                 <strong>
                   &#8377;
-                  {TotalPrice(item.orderDetails)}
+                  {TotalPrice(displayDataCheck(item.orderDetails))}
                 </strong>
                 <br />
                 <span>Total</span>

@@ -5,6 +5,7 @@ import { MODAL } from '@gqlapp/review-common';
 import { FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import { NoReviews } from './ReviewView';
 
@@ -46,7 +47,9 @@ const MyReviewView = props => {
           <Heading type="1">
             <Icon type="book" /> &nbsp; My Reviews
           </Heading>
-          <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount} reviews`}</h3>
+          <h3>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${displayDataCheck(reviews.totalCount)} reviews`}
+          </h3>
         </Col>
         <Col xs={24} md={12} lg={12} align="right">
           <Col lg={0} md={0}>
