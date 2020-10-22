@@ -51,7 +51,7 @@ const resolvers = {
       return null;
     },
     updateFilterListing: (_, { filter, orderBy }, { cache }) => {
-      console.log('updateFilter', filter, orderBy);
+      // console.log('updateFilter', filter, orderBy);
       const { listingsState } = cache.readQuery({ query: LISTINGS_STATE_QUERY });
 
       const newListingsState = update(listingsState, {

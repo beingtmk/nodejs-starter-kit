@@ -47,7 +47,7 @@ const ListingCatalogueView = props => {
       {showFilter && (
         <>
           <br />
-          <ListingFilterComponent showIsActive={false} {...props} filter={{ isActive: true }} orderBy={{}} />
+          <ListingFilterComponent showIsActive={false} filter={{ isActive: true }} orderBy={{}} {...props} />
           <Divider />
         </>
       )}

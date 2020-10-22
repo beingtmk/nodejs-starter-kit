@@ -122,7 +122,6 @@ const ListingsFilterComponent = props => {
                   marks={costMarks}
                   range
                   value={[lowerCost, upperCost]}
-                  // value={[lowerCost, upperCost]}
                   // disabled={false}
                   handleSliderChange={e => handleChangeSlider(e)}
                 />
