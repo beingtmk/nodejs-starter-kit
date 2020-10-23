@@ -116,6 +116,20 @@ exports.up = function(knex) {
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
+      .createTable('listing_highlight', table => {
+        table.increments();
+        table
+          .integer('listing_id')
+          .unsigned()
+          .references('id')
+          .inTable('listing')
+          .onDelete('CASCADE');
+
+        table.string('highlight');
+
+        table.boolean('is_active').defaultTo(true);
+        table.timestamps(false, true);
+      })
   ]);
 };
 
