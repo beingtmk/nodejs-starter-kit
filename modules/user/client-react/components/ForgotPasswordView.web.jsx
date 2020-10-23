@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
-import { LayoutCenter, PageLayout, Card, CardTitle, Icon, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardTitle, Icon, Heading, MetaTags } from '@gqlapp/look-client-react';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
@@ -23,12 +23,30 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
   return (
     <PageLayout type="forms">
       <MetaTags title={t('forgotPass.title')} description={t('forgotPass.meta')} />
-      <Row>
-        <Col md={0} lg={0}>
+      <Row justify="center">
+        <Col xs={0} md={0} lg={6} />
+        <Col xs={24} lg={12}>
+          <Col xs={24} md={24} lg={0}>
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
+          <Col xs={0} md={0} lg={24}>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
           {renderContent()}
-        </Col>
-        <Col xs={0} md={24} lg={24}>
-          <LayoutCenter>{renderContent()}</LayoutCenter>
         </Col>
       </Row>
     </PageLayout>
