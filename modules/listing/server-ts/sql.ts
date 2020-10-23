@@ -268,6 +268,9 @@ export default class ListingDAO extends Model {
       if (listing.listingMedia && listing.listingMedia.length > 0) {
         listing.listingMedia.map(lM => delete lM.id);
       }
+      if (listing.listingHighlight && listing.listingHighlight.length > 0) {
+        listing.listingHighlight.map(lM => delete lM.id);
+      }
       if (listing.listingCostArray && listing.listingCostArray.length > 0) {
         listing.listingCostArray.map(lM => delete lM.id);
       }

@@ -156,6 +156,7 @@ input AddListingInput {
   listingOptions: ListingOptionInput
   listingDetail: ListingDetailInput
   listingMedia: [ListingMediumInput]
+  listingHighlight: [ListingHighlightInput]
   listingCostArray: [ListingCostInput]
   isActive: Boolean
 }
@@ -186,6 +187,11 @@ input ListingMediumInput {
   isActive: Boolean
 }
 
+input ListingHighlightInput {
+  id: Int
+  highlight: String!
+}
+
 input ListingCostInput {
   id: Int
   cost: Int
@@ -208,6 +214,7 @@ input EditListingInput {
   listingOptions: ListingOptionInput
   listingDetail: ListingDetailInput
   listingMedia: [ListingMediumInput]
+  listingHighlight: [ListingHighlightInput]
   listingCostArray: [ListingCostInput]
   isActive: Boolean
 }
