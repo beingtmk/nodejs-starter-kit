@@ -6,7 +6,7 @@ import {
   Col,
   Breadcrumb,
   Divider,
-  // Card,
+  Badge, // Card,
   Descriptions,
   // Avatar,
   Statistic,
@@ -280,9 +280,17 @@ const ListingDetailView = props => {
             <Tabs defaultActiveKey="1">
               <TabPane tab="Additional Info" key="1">
                 <Descriptions layout="horizontal" bordered column={1} size="small">
-                  {/* {listing && listing.listingInfo && listing.listingInfo.size && ( */}
-                  <Descriptions.Item label="Something">{'Something'}</Descriptions.Item>
-                  {/* )} */}
+                  <Descriptions.Item label={'Highlight'}>
+                    {listing &&
+                      listing.listingHighlight &&
+                      listing.listingHighlight.length > 0 &&
+                      listing.listingHighlight.map(lH => (
+                        <>
+                          <Badge status="processing" text={lH.highlight} />
+                          <br />
+                        </>
+                      ))}
+                  </Descriptions.Item>
                   {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
                 </Descriptions>
               </TabPane>
