@@ -3,6 +3,7 @@ import { TranslationFunction } from 'i18next';
 
 import { mailer } from '@gqlapp/mailer-server-ts';
 import settings from '@gqlapp/config';
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import StripeSubscriptionDAO from './sql';
 
@@ -74,7 +75,7 @@ const notifyFailedSubscription = async (stripeEvent: any, websiteUrl: string, t:
 
   if (subscription) {
     const { userId } = subscription;
-    const url = `${websiteUrl}/profile`;
+    const url = `${websiteUrl}${USER_ROUTES.profile}`;
 
     await sendEmailToUser(
       userId,

@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { LayoutCenter, PageLayout, Card, Heading, MetaTags } from '@gqlapp/look-client-react';
+// eslint-disable-next-line import/no-named-default
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import UserForm from './UserForm';
 
@@ -12,7 +15,9 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
 
   const renderContent = () => (
     <Card>
-      <Link to={currentUser && currentUser.role === 'admin' ? '/users' : '/profile'}>Back</Link>
+      <Link to={currentUser && currentUser.role === 'admin' ? `${USER_ROUTES.adminPanel}` : `${USER_ROUTES.profile}`}>
+        Back
+      </Link>
       <Heading type="2">
         {t('userEdit.form.titleEdit')} {t('userEdit.form.title')}
       </Heading>
