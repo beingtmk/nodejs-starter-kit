@@ -34,7 +34,8 @@ export interface Identifier {
   id: number;
 }
 
-const eager = '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost_array]';
+const eager =
+  '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost_array, listing_highlight]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -104,6 +105,14 @@ export default class ListingDAO extends Model {
           from: 'listing.id',
           to: 'listing_bookmark.listing_id'
         }
+      },
+      listing_highlight: {
+        relation: Model.HasManyRelation,
+        modelClass: ListingHighlight,
+        join: {
+          from: 'listing.id',
+          to: 'listing_highlight.listing_id'
+        }
       }
     };
   }
@@ -125,52 +134,52 @@ export default class ListingDAO extends Model {
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing.is_active', filter.isActive);
           // .andWhere('listing_cost.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_flag.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_flag.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
       if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.whereNot('user.id', userId);
         });
       }
 
       if (has(filter, 'userId') && filter.userId !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('user.id', filter.userId);
         });
       }
 
       if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_cost.cost', '>', filter.lowerCost);
         });
       }
 
       if (has(filter, 'upperCost') && filter.upperCost !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_cost.cost', '<', filter.upperCost);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
@@ -298,46 +307,46 @@ export default class ListingDAO extends Model {
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing.is_discount', filter.isDiscount);
         });
       }
 
       if (has(filter, 'userId') && filter.userId !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('user.id', filter.userId);
         });
       }
 
       if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_cost.cost', '>', filter.lowerCost);
         });
       }
 
       if (has(filter, 'upperCost') && filter.upperCost !== 0) {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where('listing_cost.cost', '<', filter.upperCost);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function () {
+        queryBuilder.where(function() {
           this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
             .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
@@ -575,6 +584,30 @@ class ListingBookmark extends Model {
         modelClass: ListingDAO,
         join: {
           from: 'listing_bookmark.listing_id',
+          to: 'listing.id'
+        }
+      }
+    };
+  }
+}
+
+// ListingHighlight model.
+class ListingHighlight extends Model {
+  static get tableName() {
+    return 'listing_highlight';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      listing: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: ListingDAO,
+        join: {
+          from: 'listing_highlight.listing_id',
           to: 'listing.id'
         }
       }

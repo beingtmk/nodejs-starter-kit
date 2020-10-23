@@ -8,6 +8,7 @@ type Listing {
   sku: String
 
   listingFlags: ListingFlag
+  listingHighlight: [ListingHighlight]
   listingOptions: ListingOption
   listingDetail: ListingDetail
   listingMedia: [ListingMedium]
@@ -41,6 +42,12 @@ type ListingMedium {
   isActive: Boolean
   createdAt: String!
   updatedAt: String!
+}
+
+type ListingHighlight {
+  id: Int
+  highlight: String
+  isActive: Boolean
 }
 
 type ListingCost {
