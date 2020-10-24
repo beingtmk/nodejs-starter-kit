@@ -12,7 +12,7 @@ import ListingFilterComponent from './ListingFilterComponent.web';
 import settings from '../../../../settings';
 
 const ListingCatalogueView = props => {
-  const { t, loading, listings, history, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
+  const { t, loading, listings, history, title, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
 
   const renderFunc = (key, listing) => {
     const cartItemArray =
@@ -41,7 +41,7 @@ const ListingCatalogueView = props => {
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <Heading type="2">
-        <Icon type="solution" /> &nbsp; All Listings
+        <Icon type="solution" /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {showFilter && (
@@ -59,6 +59,7 @@ const ListingCatalogueView = props => {
 
 ListingCatalogueView.propTypes = {
   t: PropTypes.func,
+  title: PropTypes.string,
   loading: PropTypes.bool,
   showFilter: PropTypes.bool,
   listings: PropTypes.object,

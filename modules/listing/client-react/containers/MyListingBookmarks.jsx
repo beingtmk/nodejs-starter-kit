@@ -18,7 +18,7 @@ const MyListingsBookmark = props => {
   });
 
   console.log('props', props);
-  return <ListingCatalogueView listings={props.myListingsBookmark} {...props} />;
+  return <ListingCatalogueView title={"My Bookmark's"} listings={props.myListingsBookmark} {...props} />;
 };
 
 MyListingsBookmark.propTypes = {

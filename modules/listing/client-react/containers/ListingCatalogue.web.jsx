@@ -38,7 +38,7 @@ const ListingsCatalogue = props => {
     }
   };
   console.log('props', props);
-  return <ListingCatalogueView onDelete={handleDelete} {...props} showFilter={true} />;
+  return <ListingCatalogueView title={"All Listing's"} onDelete={handleDelete} {...props} showFilter={true} />;
 };
 
 ListingsCatalogue.propTypes = {
