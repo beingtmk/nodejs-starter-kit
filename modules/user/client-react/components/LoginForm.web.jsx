@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -76,7 +76,7 @@ const renderSocialButtons = (buttonsLength, t) => {
   );
 };
 
-const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
+const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => {
   const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button)
     .length;
   return (
@@ -107,27 +107,15 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
         <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
           <Icon type="login" /> {t('login.form.btnSubmit')}
         </Button>
+        <hr style={{ width: '100%' }} />
+        <Button block={true} ghost size="lg" color="primary" onClick={() => history.push(`${ROUTES.register}`)}>
+          <Icon type="login" /> {t('login.btn.sign')}
+        </Button>
 
         {renderSocialButtons(buttonsLength, t)}
       </div>
       <div className="text-center" style={{ marginTop: 10 }}>
         <Link to={`${ROUTES.forgotPassword}`}>{t('login.btn.forgotPass')}</Link>
-      </div>
-      <hr />
-      <div className="text-center" style={{ marginBottom: 16 }}>
-        <span style={{ lineHeight: '58px' }}>{t('login.btn.notReg')}</span>
-        {window.location.search !== '' ? (
-          <NavLink to={`${ROUTES.register}${window.location.search}`}>{t('login.btn.sign')}</NavLink>
-        ) : (
-          <NavLink
-            className="btn btn-primary"
-            to={`${ROUTES.register}`}
-            activeClassName="active"
-            style={{ margin: 10 }}
-          >
-            {t('login.btn.sign')}
-          </NavLink>
-        )}
       </div>
     </Form>
   );
@@ -139,6 +127,7 @@ LoginForm.propTypes = {
   submitting: PropTypes.bool,
   errors: PropTypes.object,
   values: PropTypes.object,
+  history: PropTypes.object,
   t: PropTypes.func
 };
 
