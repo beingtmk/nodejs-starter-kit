@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Divider, Tooltip, Button, Icon } from 'antd';
+import { Empty, Divider, Tooltip, Button, Icon } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
@@ -17,7 +17,18 @@ const { itemsNumber, type } = settings.pagination.web;
 const Loading = () => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
-const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
+const NoListingsMessage = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${ROUTES.add}`}>
+        <Button type="primary">Add</Button>
+      </Link>
+    </Empty>
+  </div>
+);
 NoListingsMessage.propTypes = { t: PropTypes.func };
 
 const ListingListComponent = props => {

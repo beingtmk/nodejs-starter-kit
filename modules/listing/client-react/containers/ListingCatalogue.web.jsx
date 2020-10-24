@@ -16,6 +16,7 @@ import {
   withListings,
   withCurrentUser
 } from './ListingOperations';
+import ROUTES from '../routes';
 
 const ListingsCatalogue = props => {
   const { subscribeToMore, filter, deleteOrderDetail, getCart } = props;
@@ -38,7 +39,15 @@ const ListingsCatalogue = props => {
     }
   };
   console.log('props', props);
-  return <ListingCatalogueView title={'All Listings'} onDelete={handleDelete} {...props} showFilter={true} />;
+  return (
+    <ListingCatalogueView
+      title={'All Listings'}
+      onDelete={handleDelete}
+      emptyLink={`${ROUTES.add}`}
+      {...props}
+      showFilter={true}
+    />
+  );
 };
 
 ListingsCatalogue.propTypes = {

@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Divider, Empty, Spin } from 'antd';
+import { Divider, Empty, Button } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
@@ -11,15 +11,21 @@ import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ROUTES from '../routes/index';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
-// import { , DeleteIcon } from '@gqlapp/look-client-react';
 
 const { itemsNumber, type } = settings.pagination.web;
 
 const Loading = ({ t }: { t: TranslateFunction }) => <Spinner />;
 
 const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
-  <div style={{ margin: '50px' }}>
-    <Empty />
+  <div align="center">
+    <br />
+    <br />
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${ROUTES.add}`}>
+        <Button type="primary">{t('listing.noListingsMsg')}</Button>
+      </Link>
+    </Empty>
   </div>
 );
 

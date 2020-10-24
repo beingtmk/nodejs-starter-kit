@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import { Button, Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
@@ -19,7 +20,18 @@ const { itemsNumber, type } = settings.pagination.web;
 const Loading = () => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
-const NoOrdersMessage = ({ t }) => <div align="center">{t('order.noOrdersMsg')}</div>;
+const NoOrdersMessage = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${ROUTES.add}`}>
+        <Button color="primary">{t('order.noOrdersMsg')}</Button>
+      </Link>
+    </Empty>
+  </div>
+);
 NoOrdersMessage.propTypes = { t: PropTypes.func };
 
 const OrderListComponent = props => {

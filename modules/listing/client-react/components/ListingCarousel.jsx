@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 import { Button } from '@gqlapp/look-client-react';
 import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+
+import ROUTES from '../routes';
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
 
@@ -152,7 +155,15 @@ const ListingCarousel = props => {
             }}
           />
         ) : (
-          (!loading1 || !currentUserLoading) && <h3 style={{ textAlign: 'center' }}>No Listings</h3>
+          (!loading1 || !currentUserLoading) && (
+            <div align="center">
+              <Empty description={'No Listings.'}>
+                <Link to={`${ROUTES.add}`}>
+                  <Button color="primary">Add</Button>
+                </Link>
+              </Empty>
+            </div>
+          )
         )}
       </div>
     </div>

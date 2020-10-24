@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import { Button, Empty, Icon } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
 import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+
+import ROUTES from '../../routes';
 
 const { BgElement } = Element;
 
@@ -35,17 +38,30 @@ class Banner extends React.PureComponent {
     const dataSource = Banner10DataSource;
     delete props.dataSource;
     delete props.isMobile;
-    const childrenToRender = dataSource.BannerAnim.children.map((item, i) => {
-      const elem = item.BannerElement;
-      const elemClassName = elem.className;
-      delete elem.className;
-      const { bg } = item;
-      return (
-        <Element key={i.toString()} {...elem} prefixCls={elemClassName}>
-          <StyledBgElement key="bg" {...bg} />
+    const childrenToRender =
+      dataSource.BannerAnim.children.length > 0 ? (
+        dataSource.BannerAnim.children.map((item, i) => {
+          const elem = item.BannerElement;
+          const elemClassName = elem.className;
+          delete elem.className;
+          const { bg } = item;
+          return (
+            <Element key={i.toString()} {...elem} prefixCls={elemClassName}>
+              <StyledBgElement key="bg" {...bg} />
+            </Element>
+          );
+        })
+      ) : (
+        <Element>
+          <div className={'HVCenter'}>
+            <Empty description={'No Carousels to show.'}>
+              <Link to={`${ROUTES.add}`}>
+                <Button type="primary">Add</Button>
+              </Link>
+            </Empty>
+          </div>
         </Element>
       );
-    });
     return (
       <div {...props} {...dataSource.wrapper}>
         <TweenOneGroup key="bannerGroup" enter={{ opacity: 0, type: 'from' }} leave={{ opacity: 0 }} component="">

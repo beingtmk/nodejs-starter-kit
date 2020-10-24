@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon, Divider } from 'antd';
+import { Button, Empty, Icon, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
@@ -12,7 +13,19 @@ import ListingFilterComponent from './ListingFilterComponent.web';
 import settings from '../../../../settings';
 
 const ListingCatalogueView = props => {
-  const { t, loading, listings, history, title, currentUser, showFilter, getCart, cartLoading, onDelete } = props;
+  const {
+    t,
+    loading,
+    listings,
+    history,
+    title,
+    currentUser,
+    showFilter,
+    getCart,
+    cartLoading,
+    onDelete,
+    emptyLink
+  } = props;
 
   const renderFunc = (key, listing) => {
     const cartItemArray =
@@ -52,7 +65,11 @@ const ListingCatalogueView = props => {
         </>
       )}
       {loading && <Spinner />}
-      {!loading && listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
+      {!loading && listings && listings.totalCount ? (
+        <RenderListings />
+      ) : !loading ? (
+        <NoListingsMessage t={t} emptyLink={emptyLink} />
+      ) : null}
     </PageLayout>
   );
 };
@@ -67,10 +84,21 @@ ListingCatalogueView.propTypes = {
   currentUser: PropTypes.object,
   getCart: PropTypes.object,
   cartLoading: PropTypes.bool,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  emptyLink: PropTypes.string
 };
 
 export default translate('listing')(ListingCatalogueView);
 
-const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
-NoListingsMessage.propTypes = { t: PropTypes.func };
+const NoListingsMessage = ({ t, emptyLink }) => (
+  <div align="center">
+    <br />
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${emptyLink}`}>
+        <Button type="primary">Add</Button>
+      </Link>
+    </Empty>
+  </div>
+);
+NoListingsMessage.propTypes = { t: PropTypes.func, emptyLink: PropTypes.string };
