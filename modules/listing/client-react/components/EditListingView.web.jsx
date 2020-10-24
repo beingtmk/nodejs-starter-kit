@@ -15,13 +15,13 @@ const EditListingView = props => {
   const [step, setStep] = React.useState(0);
   const steps = [
     {
-      title: 'Details'
+      title: t('listing.stpes.title1')
     },
     {
-      title: 'Flags'
+      title: t('listing.stpes.title2')
     },
     {
-      title: 'Media'
+      title: t('listing.stpes.title3')
     }
   ];
 
@@ -46,7 +46,7 @@ const EditListingView = props => {
             <ListingFormComponent
               step={step}
               setStep={setStep}
-              cardTitle="Edit Listing"
+              cardTitle={t('listing.cardTitle')}
               t={t}
               listing={listing}
               onSubmit={onSubmit}

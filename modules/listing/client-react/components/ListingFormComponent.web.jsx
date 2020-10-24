@@ -85,7 +85,7 @@ const ListingFormSchema = [
 
 const ListingFormComponent = props => {
   const [load, setLoad] = useState(false);
-  const { step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
+  const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   let formItems = null;
 
@@ -163,17 +163,17 @@ const ListingFormComponent = props => {
               <Field
                 name="title"
                 component={RenderField}
-                placeholder="Listing Title"
+                placeholder={t('listingForm.title')}
                 type="text"
-                label="Listing Title"
+                label={t('listingForm.title')}
                 value={values.title}
               />
               <Field
                 name="description"
                 component={RenderField}
-                placeholder="Description"
+                placeholder={t('listingForm.description')}
                 type="textarea"
-                label="Description"
+                label={t('listingForm.description')}
                 value={values.description}
               />
             </Col>
@@ -181,17 +181,17 @@ const ListingFormComponent = props => {
               <Field
                 name="sku"
                 component={RenderField}
-                placeholder="Listing SKU"
+                placeholder={t('listinForm.SKU')}
                 type="text"
-                label="Listing SKU"
+                label={t('listinForm.SKU')}
                 value={values.sku}
               />
               <Field
                 name="listingCostArray[0].cost"
                 component={RenderField}
-                placeholder="Cost"
+                placeholder={t('listingForm.cost')}
                 type="number"
-                label="Cost"
+                label={t('listingForm.cost')}
                 min={0}
                 value={values.listingCostArray[0].cost}
               />
@@ -200,9 +200,9 @@ const ListingFormComponent = props => {
               <Field
                 name="listingDetail.inventoryCount"
                 component={RenderField}
-                placeholder="Listing Invontory Count"
+                placeholder={t('listingForm.invontoryCount')}
                 type="number"
-                label="Listing Invontory Count"
+                label={t('listingForm.invontoryCount')}
                 min={0}
                 value={values.listingDetail.inventoryCount}
               />
@@ -211,12 +211,12 @@ const ListingFormComponent = props => {
               <Field
                 name="listingOptions.fixedQuantity"
                 component={RenderField}
-                placeholder="Fixed Quantity (Enter -1 for false)"
+                placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
                 type="number"
                 label={
                   <>
-                    Fixed Quantity &nbsp;
-                    <Tooltip title={'Enter -1 for false'}>
+                    {t('listingForm.fixedQuantity')} &nbsp;
+                    <Tooltip title={t('listingForm.tooltip')}>
                       <Icon type="info-circle" />
                     </Tooltip>
                   </>
@@ -230,7 +230,7 @@ const ListingFormComponent = props => {
             <Col span={24} align="right">
               <br />
               <NextButton style={{ width: 'auto' }} type="submit">
-                Next
+                {t('listingForm.btn.next')}
               </NextButton>
             </Col>
           </Row>

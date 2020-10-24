@@ -31,6 +31,12 @@
     "meta": "Edit Listing page",
     "loadMsg": "Loading...",
     "noListingsMsg": "There are no listings yet.",
+    "cardTitle":"Edit Listing",
+    "steps":{
+      "title1":"Details",
+      "title2":"Flags",
+      "title3":"Media"
+    },
     "btn": {
       "edit": "Edit",
       "submit": "Save",
@@ -69,9 +75,28 @@
       }
     }
   },
+  "listingForm":{
+    "title":"Listing Title",
+    "description":"Description",
+    "SKU":"Listing SKU",
+    "cost":"Cost",
+    "invontoryCount":"Listing Invontory Count",
+    "fixedQuantity":"Fixed Quantity",
+    "tooltip":"Enter -1 for false",
+    "btn":{
+      "next":"Next"
+    }
+
+  },
   "listAdd":{
     "title":"Add listing",
-    "meta":"Add Listing page"
+    "meta":"Add Listing page",
+    "cardTitle":"Add Listing",
+    "steps":{
+      "title1":"Details",
+      "title2":"Flags",
+      "title3":"Media"
+    }
   },
 
   "list": {
@@ -94,6 +119,14 @@
   "listingDetail": {
     "title": "Listing Detail Page",
     "meta": "Detailed View of Listing",
+    "details":"Details:",
+    "availability":"Availability:",
+    "inStock":"In Stock",
+    "outOfStock":"Out of Stock",
+    "savingAmount":"Saving Amount:",
+    "includingGST":"*Including GST",
+    "freeShipping":"*free shipping",
+    "certified":"*certified",
     "content": {
       "cancellationPolicy": "Borrowers can cancel a rental request before it is accepted, or within 2 hours of rental acceptance for free. If the Borrower cancels within 48 hours of the rental pick-up date, they will receive a 50% refund. If the Borrower cancels within 24 hours of the rental pick-up date, the rental is non-refundable.",
       "damagePolicy": "Borrower will liable for any damages that happen during the period of the rental. Please get in touch with the LensHood team and let them know what happened; also take photographs of the damage."
