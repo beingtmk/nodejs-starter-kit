@@ -127,8 +127,8 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         />
       )}
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <Row gutter={24}>
-        <Col span={12}>
+      <Row gutter={[24, 24]}>
+        <Col lg={12} md={12} xs={24}>
           <Button ghost type={'primary'} block onClick={() => setVisible(true)}>
             Reset password
           </Button>
@@ -155,7 +155,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
             />
           </Modal>
         </Col>
-        <Col span={12}>
+        <Col lg={12} md={12} xs={24}>
           <SubmitButton color="primary" type="submit" disabled={load}>
             {t('userEdit.form.btnSubmit')}
           </SubmitButton>
