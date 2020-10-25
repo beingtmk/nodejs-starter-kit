@@ -10,6 +10,7 @@ const Rating = styled(Rate)`
 `;
 
 const AvgRatingComponent = props => {
+  const { t } = props;
   const { one, two, three, four, five } = props.rating;
   const totalRatings = one + two + three + four + five;
   function avgRating() {
@@ -28,7 +29,9 @@ const AvgRatingComponent = props => {
         </Col>
         <Col span={24}>
           <Row type="flex" justify="center">
-            <h3>{totalRatings} rating</h3>
+            <h3>
+              {totalRatings} {t('avgRating')}
+            </h3>
           </Row>
         </Col>
       </Col>
@@ -139,7 +142,8 @@ const AvgRatingComponent = props => {
 };
 
 AvgRatingComponent.propTypes = {
-  rating: PropTypes.object
+  rating: PropTypes.object,
+  t: PropTypes.func
 };
 
 export default AvgRatingComponent;

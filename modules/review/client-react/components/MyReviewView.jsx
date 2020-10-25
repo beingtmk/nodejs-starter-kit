@@ -45,7 +45,8 @@ const MyReviewView = props => {
       <Row type={'flex'}>
         <Col xs={24} md={12} lg={12}>
           <Heading type="1">
-            <Icon type="book" /> &nbsp; My Reviews
+            <Icon type="book" />
+            {t('myReview')}
           </Heading>
           <h3>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${displayDataCheck(reviews.totalCount)} reviews`}

@@ -27,5 +27,9 @@
       "column3": "Feedback",
       "column4": "Actions"
     }
-  }
+  },
+  "addReview":"Add Review",
+  "editReview":"Edit Review",
+  "myReview":" My Reviews",
+  "avgRating":"rating"
 }

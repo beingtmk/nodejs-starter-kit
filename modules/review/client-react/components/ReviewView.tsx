@@ -117,7 +117,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
         <Col span={12}>
           {ratingAverage && (
             <>
-              <AvgRatingComponent rating={ratingAverage} />
+              <AvgRatingComponent rating={ratingAverage} t={t} />
             </>
           )}
         </Col>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Card, Spin } from 'antd';
+import { Row, Card } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
@@ -32,7 +32,7 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
             <Card
               title={
                 <Heading type="1">
-                  <strong>{'Add Review'}</strong>
+                  <strong>{t('addReview')}</strong>
                 </Heading>
               }
             >

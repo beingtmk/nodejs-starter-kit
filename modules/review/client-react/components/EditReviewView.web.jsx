@@ -23,7 +23,7 @@ const EditReviewView = props => {
           <Card
             title={
               <Heading type="1">
-                <strong>{'Edit Review'}</strong>
+                <strong>{t('editReview')}</strong>
               </Heading>
             }
           >
