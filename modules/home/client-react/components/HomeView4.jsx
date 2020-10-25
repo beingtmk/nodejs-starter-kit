@@ -53,24 +53,28 @@ class HomeView4 extends React.Component {
         key="Banner_0"
         filter={{ label: LABEL[0], isActive: true }}
         isMobile={this.state.isMobile}
+        {...this.props}
       />,
       <ImageBanner
         id="Banner_1"
         key="Banner_1"
         filter={{ label: LABEL[1], isActive: true }}
         isMobile={this.state.isMobile}
+        {...this.props}
       />,
       <ListingsCarousel
         filter={{ isFeatured: true, isActive: true }}
         currentUser={currentUser}
         title={'Featured Listings'}
         history={history}
+        {...this.props}
       />,
       <ListingsCarousel
         filter={{ isNew: true, isActive: true }}
         currentUser={currentUser}
         title={'Our Latest Additions'}
         history={history}
+        {...this.props}
       />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,

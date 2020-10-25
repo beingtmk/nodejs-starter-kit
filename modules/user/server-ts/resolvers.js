@@ -6,6 +6,8 @@ import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 import { UserInputError } from 'apollo-server-errors';
 
+// eslint-disable-next-line import/no-named-default
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import { createTransaction } from '@gqlapp/database-server-ts';
 import { log } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
@@ -219,7 +221,7 @@ export default pubsub => ({
           // .transacting(trx);
 
           if (mailer && input.password && password.sendPasswordChangesEmail) {
-            const url = `${__WEBSITE_URL__}/profile`;
+            const url = `${__WEBSITE_URL__}${USER_ROUTES.profile}`;
 
             mailer.sendMail({
               from: `${settings.app.name} <${process.env.EMAIL_USER}>`,

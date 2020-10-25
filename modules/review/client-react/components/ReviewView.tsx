@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Empty, Button, Row, Col, Checkbox, Spin } from 'antd';
+
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Row, Col, Checkbox, Spin, Tooltip } from 'antd';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import { MetaTags } from '@gqlapp/look-client-react';
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
@@ -32,10 +36,16 @@ interface ReviewViewProps {
   handleHelpful: (id: number, value: number) => Promise<void>;
 }
 
-export const NoReviews: React.FC = () => (
+export const NoReviews: React.FC = ({ t }: { t: TranslateFunction }) => (
   <div align="center">
     <br />
-    Not Reviews
+    <br />
+    <br />
+    <Empty description={'No Review'}>
+      <Link to={`${LISTING_ROUTES.add}`}>
+        <Button type="primary">{'Review listings'}</Button>
+      </Link>
+    </Empty>
   </div>
 );
 
@@ -108,11 +118,9 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
               </>
             )}
             <br />
-            <Tooltip title={`review_image table dosn't exist`}>
-              <Checkbox onChange={() => setPhoto(!photo)}>
-                <strong>With photo</strong>
-              </Checkbox>
-            </Tooltip>
+            <Checkbox onChange={() => setPhoto(!photo)}>
+              <strong>With photo</strong>
+            </Checkbox>
           </div>
         </Col>
         <Col span={12}>
@@ -140,7 +148,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
             </div>
           )}
         </Col>
-        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : <NoReviews />}</Col>
+        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading && <NoReviews t={t} />}</Col>
       </Row>
     </>
   );

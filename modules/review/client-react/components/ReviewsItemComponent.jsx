@@ -38,6 +38,9 @@ const HelpfulPosition = styled.div`
   bottom: 0;
   z-index: 1;
   margin: 20px 40px;
+  @media screen and (max-width: 767px) {
+    margin: 20px;
+  }
 `;
 
 const ReviewModala = styled.a`
@@ -135,33 +138,35 @@ const ReviewsItemComponent = props => {
             borderRadius: '8px'
           }}
         >
-          <Col span={10}>
+          <Col lg={10} md={10} xs={24}>
             <h3>
               <strong>{review.user.profile && displayDataCheck(review.user.profile.fullName)}</strong>
             </h3>
           </Col>
-          <Col span={12}>
+          <Col lg={12} md={12} xs={16}>
             <Row type="flex" justify="end">
               <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
             </Row>
           </Col>
-          <Col span={2}>
+          <Col lg={2} md={2} xs={4}>
             <Row type="flex" justify="end"></Row>
           </Col>
-          <Col span={24}>
+          <Col lg={24} md={24} xs={24}>
             <div style={{ padding: '10px' }}>
               <p>{displayDataCheck(review.feedback)}</p>
             </div>
           </Col>
           {showPhotos && (
-            <Col span={24}>
+            <Col lg={24} md={24} xs={24}>
               <ImagesSlickComponent images={review.reviewMedia} />
             </Col>
           )}
-          <Col span={12}>
+          <Col lg={12} md={12} xs={24}>
             <>{displayDataCheck(new Date(Number(review.createdAt))).toLocaleDateString('en-IN')}</>
           </Col>
-          <Col span={12}></Col>
+          <Col lg={0} md={0} xs={24}>
+            <br />
+          </Col>
         </Card>
       </ReviewModala>
     </Row>

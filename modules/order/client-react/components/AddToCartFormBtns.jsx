@@ -76,12 +76,14 @@ const AddToCartFormBtns = props => {
         </Row>
       ) : (
         <Row type="flex" gutter={24}>
-          <Col {...customGridLG}>
-            <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
-              <Icon type="delete" />
-              Remove from CART
-            </Button>
-          </Col>
+          {onDelete && (
+            <Col {...customGridLG}>
+              <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
+                <Icon type="delete" />
+                Remove from CART
+              </Button>
+            </Col>
+          )}
           <Col {...customGridLG}>
             <a href={`${ROUTES.checkoutCart}`}>
               <Button type="primary" size="large" block disabled={disabled}>
@@ -91,10 +93,12 @@ const AddToCartFormBtns = props => {
             </a>
           </Col>
           <Col {...customGridXS}>
-            <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
-              <Icon type="delete" />
-              Remove from CART
-            </Button>
+            {onDelete && (
+              <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
+                <Icon type="delete" />
+                Remove from CART
+              </Button>
+            )}
             <a href={`${ROUTES.checkoutCart}`}>
               <Button block type="primary" size="large" disabled={disabled}>
                 Go to CART

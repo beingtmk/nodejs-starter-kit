@@ -15,7 +15,7 @@ import {
 
 import LoginForm from './LoginForm';
 
-const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
+const LoginView = ({ onSubmit, t, isRegistered, hideModal, history }) => {
   const renderConfirmationModal = () => (
     <Card>
       <CardGroup style={{ textAlign: 'center' }}>
@@ -41,7 +41,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
               <Icon type="login" /> {t('login.form.title')}
             </CardTitle>
           </Underline>
-          <LoginForm onSubmit={onSubmit} />
+          <LoginForm onSubmit={onSubmit} history={history} />
           <hr />
           <Card>
             <CardGroup>
@@ -71,6 +71,7 @@ LoginView.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func,
   isRegistered: PropTypes.bool,
+  history: PropTypes.object,
   hideModal: PropTypes.func
 };
 

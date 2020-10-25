@@ -49,7 +49,7 @@ const RenderUploadMultiple = props => {
       arrayHelpers.remove(index);
     }
   };
-  console.log(defaultFileList);
+  // console.log(defaultFileList);
 
   return (
     <FormItem label={label} validateStatus={validateStatus}>

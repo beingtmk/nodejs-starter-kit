@@ -128,23 +128,23 @@ export default (pubsub: any) => ({
     async addOrRemoveReviewHelpful(obj: any, { reviewId, userId }: any, context: any) {
       if (context.req.identity && context.req.identity.id) {
         const status = await context.Review.addOrRemoveReviewHelpful(reviewId, userId || context.req.identity.id);
-
-        // const review = await context.Review.review(reviewId);
+        const review = await context.Review.review(reviewId);
+        // console.log(review);
         if (status) {
-          // pubsub.publish(REVIEW_SUBSCRIPTION, {
-          //   reviewUpdated: {
-          //     mutation: 'UPDATED',
-          //     node: review
-          //   }
-          // });
+          pubsub.publish(REVIEW_SUBSCRIPTION, {
+            reviewUpdated: {
+              mutation: 'UPDATED',
+              node: review
+            }
+          });
           return 'Added SuccessFully';
         } else {
-          // pubsub.publish(REVIEW_SUBSCRIPTION, {
-          //   reviewUpdated: {
-          //     mutation: 'UPDATED',
-          //     node: review
-          //   }
-          // });
+          pubsub.publish(REVIEW_SUBSCRIPTION, {
+            reviewUpdated: {
+              mutation: 'UPDATED',
+              node: review
+            }
+          });
           return 'Removed SuccessFully';
         }
       } else {

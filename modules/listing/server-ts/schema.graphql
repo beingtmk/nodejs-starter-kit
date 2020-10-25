@@ -8,6 +8,7 @@ type Listing {
   sku: String
 
   listingFlags: ListingFlag
+  listingHighlight: [ListingHighlight]
   listingOptions: ListingOption
   listingDetail: ListingDetail
   listingMedia: [ListingMedium]
@@ -41,6 +42,12 @@ type ListingMedium {
   isActive: Boolean
   createdAt: String!
   updatedAt: String!
+}
+
+type ListingHighlight {
+  id: Int
+  highlight: String
+  isActive: Boolean
 }
 
 type ListingCost {
@@ -149,6 +156,7 @@ input AddListingInput {
   listingOptions: ListingOptionInput
   listingDetail: ListingDetailInput
   listingMedia: [ListingMediumInput]
+  listingHighlight: [ListingHighlightInput]
   listingCostArray: [ListingCostInput]
   isActive: Boolean
 }
@@ -179,6 +187,11 @@ input ListingMediumInput {
   isActive: Boolean
 }
 
+input ListingHighlightInput {
+  id: Int
+  highlight: String!
+}
+
 input ListingCostInput {
   id: Int
   cost: Int
@@ -201,6 +214,7 @@ input EditListingInput {
   listingOptions: ListingOptionInput
   listingDetail: ListingDetailInput
   listingMedia: [ListingMediumInput]
+  listingHighlight: [ListingHighlightInput]
   listingCostArray: [ListingCostInput]
   isActive: Boolean
 }

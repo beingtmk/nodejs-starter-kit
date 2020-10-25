@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Card, MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import { Row, Col, Divider, Icon } from 'antd';
-
+// eslint-disable-next-line import/no-named-default
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 // import UserListings from '@gqlapp/listing-client-react/containers/UserListings';
+
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 import userCardData from '../helpers/userCardData';
 
@@ -26,7 +28,7 @@ class ProfileView extends React.Component {
 
     if (profile) {
       return (
-        <PageLayout select="/profile">
+        <PageLayout select={`${USER_ROUTES.profile}`}>
           <MetaTags title={t('profile.title')} description={t('profile.meta')} />
 
           <Row gutter={5}>

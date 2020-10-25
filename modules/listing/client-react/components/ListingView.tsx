@@ -24,13 +24,16 @@ const ListingView: React.FC<ListingViewProps> = props => {
       <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
 
       <Row>
-        <Col span={22}>
+        <Col lg={22} md={20} xs={24}>
           <Heading type="2">
             <Icon type="solution" /> &nbsp;
             {t('list.subTitle')}
           </Heading>
         </Col>
-        <Col span={2} align="right">
+        <Col lg={0} md={0} xs={24}>
+          <br />
+        </Col>
+        <Col lg={2} md={4} xs={24} align="right">
           <Link to={ROUTES.add}>
             <AddButton>{t('list.btn.add')}</AddButton>
           </Link>

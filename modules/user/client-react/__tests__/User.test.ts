@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 // Components and helpers
 import { Renderer, updateContent, waitForElementRender } from '@gqlapp/testing-client-react';
+import { default as USER_ROUTES } from '../routes';
 
 const mocks = {
   Query: () => ({
@@ -28,8 +29,8 @@ describe('User UI works', () => {
 
   it('User page renders on mount', async () => {
     app = renderer.mount();
-    renderer.history.push('/profile');
-    await waitForElementRender(app.container, 'a[href="/profile"]');
+    renderer.history.push(`${USER_ROUTES.profile}`);
+    await waitForElementRender(app.container, `a[href="${USER_ROUTES.profile}"]`);
     content = updateContent(app.container);
     // tslint:disable-next-line:no-unused-expression
     expect(content).to.not.be.empty;

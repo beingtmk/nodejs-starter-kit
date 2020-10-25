@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { Icon, Popconfirm, Row, Col, message, Button } from 'antd';
+import { Empty, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -13,14 +13,19 @@ import ROUTES from '../../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
 
-const Loading = ({ t }) => <Spinner />;
+const Loading = () => <Spinner />;
 Loading.propTypes = { t: PropTypes.func };
 
 const NodynaDicCarouselsMessage = ({ t }) => (
   <div align="center">
     <br />
     <br />
-    {t('listing.noListingsMsg')}
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${ROUTES.add}`}>
+        <Button type="primary">Add</Button>
+      </Link>
+    </Empty>
   </div>
 );
 NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };

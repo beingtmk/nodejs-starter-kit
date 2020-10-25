@@ -8,6 +8,8 @@ import loadable from '@loadable/component';
 import { Route, NavLink } from 'react-router-dom';
 import { MenuItem } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import resolvers from './resolvers';
 import resources from './locales';
@@ -40,45 +42,63 @@ export default new ClientModule({
     <AuthRoute
       exact
       path={ROUTES.adminPanel}
-      redirect={ROUTES.profile}
+      redirect={USER_ROUTES.profile}
       role="admin"
-      component={loadable(() => import('./containers/Orders.web').then(c => c.default))}
+      component={loadable(() => import('./containers/Orders.web').then(c => c.default), { fallback: <Spinner /> })}
     />,
 
-    <Route exact path={ROUTES.order} component={loadable(() => import('./containers/Order').then(c => c.default))} />,
+    <Route
+      exact
+      path={ROUTES.order}
+      component={loadable(() => import('./containers/Order').then(c => c.default), { fallback: <Spinner /> })}
+    />,
 
     <Route
       exact
       path={ROUTES.orderDetail}
-      component={loadable(() => import('./containers/OrderDetails.web').then(c => c.default))}
+      component={loadable(() => import('./containers/OrderDetails.web').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />,
 
     <Route
       exact
       path={ROUTES.myOrder}
-      component={loadable(() => import('./containers/MyOrder').then(c => c.default))}
+      component={loadable(() => import('./containers/MyOrder').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.myDelivery}
-      component={loadable(() => import('./containers/MyDelivery').then(c => c.default))}
+      component={loadable(() => import('./containers/MyDelivery').then(c => c.default), { fallback: <Spinner /> })}
     />,
 
     // Checkout
-    <Route
+    <AuthRoute
       exact
+      redirect={USER_ROUTES.profile}
+      role={['admin', 'user']}
       path={ROUTES.checkoutCart}
-      component={loadable(() => import('./containers/CheckoutCart.web').then(c => c.default))}
+      component={loadable(() => import('./containers/CheckoutCart.web').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />,
-    <Route
+    <AuthRoute
       exact
+      redirect={USER_ROUTES.profile}
+      role={['admin', 'user']}
       path={ROUTES.checkoutBill}
-      component={loadable(() => import('./containers/CheckoutBill.web').then(c => c.default))}
+      component={loadable(() => import('./containers/CheckoutBill.web').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />,
-    <Route
+    <AuthRoute
       exact
+      redirect={USER_ROUTES.profile}
+      role={['admin', 'user']}
       path={ROUTES.checkoutOrder}
-      component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default))}
+      component={loadable(() => import('./containers/CheckoutOrder.web').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />
   ],
   navItemUser: [

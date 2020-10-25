@@ -27,7 +27,7 @@ const CheckoutCart = props => {
           quantity: values.quantity
         }
       };
-      console.log(input);
+      // console.log(input);
       const output = editOrderDetail(input);
       output ? message.success('Edited successfully') : message.error('Try again');
     } catch (e) {
@@ -44,7 +44,7 @@ const CheckoutCart = props => {
     }
   };
 
-  console.log('props', props);
+  // console.log('props', props);
   return <CheckoutCartView onEdit={handleEdit} onDelete={handleDelete} {...props} />;
 };
 CheckoutCart.propTypes = {

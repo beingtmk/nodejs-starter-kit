@@ -8,6 +8,7 @@ import ListingCatalogueView from '../components/ListingCatalogueView.web';
 
 import { withCurrentUser, withMyListingsBookmark } from './ListingOperations';
 import { subscribeToListingsBookmark } from './ListingSubscriptions';
+import ROUTES from '../routes';
 
 const MyListingsBookmark = props => {
   const { subscribeToMore } = props;
@@ -18,7 +19,14 @@ const MyListingsBookmark = props => {
   });
 
   console.log('props', props);
-  return <ListingCatalogueView listings={props.myListingsBookmark} {...props} />;
+  return (
+    <ListingCatalogueView
+      title={'My Bookmarks'}
+      emptyLink={`${ROUTES.listingCatalogue}`}
+      listings={props.myListingsBookmark}
+      {...props}
+    />
+  );
 };
 
 MyListingsBookmark.propTypes = {

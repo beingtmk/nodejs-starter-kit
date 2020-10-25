@@ -6,6 +6,8 @@ import { UserInputError } from 'apollo-server-errors';
 import { access } from '@gqlapp/authentication-server-ts';
 import { log } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
+// eslint-disable-next-line import/no-named-default
+import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import User from '../sql';
 
@@ -126,7 +128,7 @@ export default () => ({
       }
       if (user) {
         await User.updatePassword(user.id, reset.password);
-        const url = `${__WEBSITE_URL__}/profile`;
+        const url = `${__WEBSITE_URL__}${USER_ROUTES.profile}`;
         if (mailer && settings.auth.password.sendPasswordChangesEmail) {
           mailer.sendMail({
             from: `${settings.app.name} <${process.env.EMAIL_SENDER || process.env.EMAIL_USER}>`,

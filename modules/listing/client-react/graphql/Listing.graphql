@@ -17,6 +17,11 @@ fragment ListingInfo on Listing {
     isDiscount
   }
 
+  listingHighlight {
+    id
+    highlight
+  }
+
   listingOptions {
     id
     fixedQuantity

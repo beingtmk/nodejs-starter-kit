@@ -85,7 +85,7 @@ const RelatedCardComponent = props => {
     };
 
     try {
-      console.log('input', input);
+      // console.log('input', input);
       await addToCart(input);
       if (redirect) {
         history.push(`${ORDER_ROUTES.checkoutCart}`);
@@ -126,6 +126,7 @@ const RelatedCardComponent = props => {
           width: '100%'
         }}
       >
+        {/* {console.log(inCart)} */}
         <AddToCartFormBtns
           title={
             !currentUser

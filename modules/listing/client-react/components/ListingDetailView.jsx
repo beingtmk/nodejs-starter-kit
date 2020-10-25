@@ -6,7 +6,7 @@ import {
   Col,
   Breadcrumb,
   Divider,
-  // Card,
+  Badge, // Card,
   Descriptions,
   // Avatar,
   Statistic,
@@ -15,6 +15,7 @@ import {
   // Tooltip,
   Tabs
 } from 'antd';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
@@ -24,6 +25,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -46,6 +48,7 @@ const ListingDetailView = props => {
     currentUser,
     handleBookmark,
     listingBookmarkStatus,
+    showArrow = true,
     t,
     onShare,
     canUserReview
@@ -151,8 +154,8 @@ const ListingDetailView = props => {
               </Breadcrumb>
             </Col>
 
-            <Col xl={10} lg={10} md={13} sm={24} style={{ marginBottom: '30px' }}>
-              <div style={{ height: '50vh', paddingTop: '10px' }} align="center">
+            <Col xs={24} md={13} lg={10} xl={10} style={{ marginBottom: '30px' }}>
+              <div align="center">
                 <div
                   style={{
                     height: '300px',
@@ -160,10 +163,8 @@ const ListingDetailView = props => {
                     marginBottom: '30px'
                   }}
                 >
-                  <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
-                    <Icon type="left" className="carousel-arrow-icon" />
-                  </div>
-                  <Carousel className="listing-detail-carousel" ref={node => (carousel = node)} {...status}>
+                  {showArrow && <LeftArrow prevSlide={prevSlide} />}
+                  <Carousel ref={node => (carousel = node)} {...status}>
                     {youtubeUrl.length > 0 &&
                       youtubeUrl.map(yT => (
                         <div key="video">
@@ -184,9 +185,7 @@ const ListingDetailView = props => {
                         </div>
                       ))}
                   </Carousel>
-                  <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
-                    <Icon type="right" className="carousel-arrow-icon" />
-                  </div>
+                  {showArrow && <RightArrow nextSlide={nextSlide} />}
                 </div>
                 <div align="left" style={{ padding: '5px' }}>
                   <h3>{t('listingDetail.details')}</h3>
@@ -194,16 +193,16 @@ const ListingDetailView = props => {
                 </div>
               </div>
               <Row>
-                <Col xl={23} lg={23} md={23} sm={23}></Col>
-                <Col xl={1} lg={1} md={1} sm={1}></Col>
+                <Col xl={23} lg={23} md={23} xs={23}></Col>
+                <Col xl={1} lg={1} md={1} xs={1}></Col>
               </Row>
             </Col>
-            <Col xl={14} lg={14} md={11} sm={24}>
+            <Col xl={14} lg={14} md={11} xs={24}>
               <Row>
-                <Col span={22}>
+                <Col lg={22} xs={18}>
                   <h1 style={{ fontSize: '25px' }}>{listing && displayDataCheck(listing.title)}</h1>
                 </Col>
-                <Col span={1} align="right">
+                <Col lg={1} xs={3} align="right">
                   {listing && currentUser && (
                     <IfLoggedIn>
                       <BookmarkComponent
@@ -215,7 +214,7 @@ const ListingDetailView = props => {
                     </IfLoggedIn>
                   )}
                 </Col>
-                <Col span={1} align="right">
+                <Col lg={1} xs={3} align="right">
                   <SocialSharingButtons {...message} onShare={onShare} t={t} />
                 </Col>
               </Row>
@@ -282,9 +281,17 @@ const ListingDetailView = props => {
             <Tabs defaultActiveKey="1">
               <TabPane tab="Additional Info" key="1">
                 <Descriptions layout="horizontal" bordered column={1} size="small">
-                  {/* {listing && listing.listingInfo && listing.listingInfo.size && ( */}
-                  <Descriptions.Item label="Something">{'Something'}</Descriptions.Item>
-                  {/* )} */}
+                  <Descriptions.Item label={'Highlight'}>
+                    {listing &&
+                      listing.listingHighlight &&
+                      listing.listingHighlight.length > 0 &&
+                      listing.listingHighlight.map(lH => (
+                        <>
+                          <Badge status="processing" text={lH.highlight} />
+                          <br />
+                        </>
+                      ))}
+                  </Descriptions.Item>
                   {/* {<Descriptions.Item label="Is Active">{listing.isActive}</Descriptions.Item>} */}
                 </Descriptions>
               </TabPane>
@@ -299,6 +306,7 @@ const ListingDetailView = props => {
               currentUser={currentUser}
               title={'Similar Listing (same user)'}
               history={history}
+              {...props}
             />
           </>
           {listing && (
@@ -335,6 +343,7 @@ ListingDetailView.propTypes = {
   currentUser: PropTypes.object,
   handleBookmark: PropTypes.func,
   listingBookmarkStatus: PropTypes.bool,
+  showArrow: PropTypes.bool,
   listingBookmarkStatusLoading: PropTypes.bool
 };
 

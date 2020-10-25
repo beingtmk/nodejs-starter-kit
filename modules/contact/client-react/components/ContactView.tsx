@@ -1,9 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import Helmet from 'react-helmet';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Card, CardTitle, Icon, Underline, LayoutCenter, PageLayout } from '@gqlapp/look-client-react';
+import { Card, CardTitle, Icon, Underline, MetaTags, PageLayout } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ContactForm from './ContactForm';
@@ -29,22 +28,19 @@ const ContactView = (props: ContactViewProps) => {
     </>
   );
   return (
-    <PageLayout>
-      <Helmet
-        title={`${settings.app.name} - ${t('title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('meta')}`
-          }
-        ]}
-      />
-      <Row>
-        <Col md={0} lg={0}>
+    <PageLayout type="forms">
+      <MetaTags title={t('title')} description={t('meta')} />
+      <Row justify="center">
+        <Col xs={0} md={0} lg={6} />
+        <Col xs={24} lg={12}>
+          <Col xs={0} md={0} lg={24}>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
           {renderContent()}
-        </Col>
-        <Col xs={0} md={24} lg={24}>
-          <LayoutCenter>{renderContent()}</LayoutCenter>
         </Col>
       </Row>
     </PageLayout>

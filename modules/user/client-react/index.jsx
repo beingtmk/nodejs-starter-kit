@@ -9,6 +9,7 @@ import { MenuItem } from '@gqlapp/look-client-react';
 import ClientModule from '@gqlapp/module-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
+import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';
@@ -71,70 +72,72 @@ export default new ClientModule({
       path={ROUTES.profile}
       role={['user', 'admin']}
       redirect={ROUTES.login}
-      component={loadable(() => import('./containers/Profile').then(c => c.default))}
+      component={loadable(() => import('./containers/Profile').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.adminPanel}
       redirect={ROUTES.profile}
       role="admin"
-      component={loadable(() => import('./containers/Users').then(c => c.default))}
+      component={loadable(() => import('./containers/Users').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.add}
       role={['admin']}
-      component={loadable(() => import('./containers/UserAdd').then(c => c.default))}
+      component={loadable(() => import('./containers/UserAdd').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       path={ROUTES.edit}
       redirect={ROUTES.profile}
       role={['user', 'admin']}
-      component={loadable(() => import('./containers/UserEdit').then(c => c.default))}
+      component={loadable(() => import('./containers/UserEdit').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.register}
       redirectOnLoggedIn
       redirect={ROUTES.profile}
-      component={loadable(() => import('./containers/Register').then(c => c.default))}
+      component={loadable(() => import('./containers/Register').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.login}
       redirectOnLoggedIn
       redirect={HOME_ROUTES.home}
-      component={loadable(() => import('./containers/Login').then(c => c.default))}
+      component={loadable(() => import('./containers/Login').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.logoutPage}
       redirect={HOME_ROUTES.home}
-      component={loadable(() => import('./containers/LogoutPage').then(c => c.default))}
+      component={loadable(() => import('./containers/LogoutPage').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.forgotPassword}
       redirectOnLoggedIn
       redirect={ROUTES.profile}
-      component={loadable(() => import('./containers/ForgotPassword').then(c => c.default))}
+      component={loadable(() => import('./containers/ForgotPassword').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <AuthRoute
       exact
       path={ROUTES.resetPassword}
       redirectOnLoggedIn
       redirect={ROUTES.profile}
-      component={loadable(() => import('./containers/ResetPassword').then(c => c.default))}
+      component={loadable(() => import('./containers/ResetPassword').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.userPublicProfile}
-      component={loadable(() => import('./containers/PublicProfile').then(c => c.default))}
+      component={loadable(() => import('./containers/PublicProfile').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
       path={ROUTES.userList}
-      component={loadable(() => import('./containers/UsersProfileCatalogue').then(c => c.default))}
+      component={loadable(() => import('./containers/UsersProfileCatalogue').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />
   ],
   navItemAdmin: [

@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 import { Button } from '@gqlapp/look-client-react';
 import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+
+import ROUTES from '../routes';
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
 
@@ -28,7 +31,16 @@ export const getChildrenToRender = (item, i) => {
 };
 
 const ListingCarousel = props => {
-  const { listings, loading: loading1, currentUser, currentUserLoading, history } = props;
+  const {
+    listings,
+    loading: loading1,
+    currentUser,
+    currentUserLoading,
+    history,
+    cartLoading,
+    onDelete,
+    getCart
+  } = props;
   const dataSource = {
     wrapper: { className: 'home-page-wrapper newArrivals-wrapper' },
     page: { className: 'home-page newArrivals' },
@@ -69,7 +81,7 @@ const ListingCarousel = props => {
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',
-      // variableWidth: true,
+      variableWidth: true,
       autoplay: true,
       easing: 1000,
       infinite: true,
@@ -78,6 +90,7 @@ const ListingCarousel = props => {
       slidesToShow: itemLength >= 4 ? 4 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
+      lazyLoad: true,
 
       arrows: true,
       dots: false,
@@ -113,6 +126,7 @@ const ListingCarousel = props => {
       ]
     };
   };
+
   return (
     <div {...props} {...dataSource.wrapper}>
       <div {...dataSource.page}>
@@ -128,14 +142,28 @@ const ListingCarousel = props => {
             data={listings.edges}
             height={'500px'}
             node={true}
-            componentProps={{ currentUser: currentUser, history: history }}
+            getCart={getCart}
+            onDelete={onDelete}
+            componentProps={{
+              currentUser,
+              history,
+              loading: cartLoading
+            }}
             componentStyle={{
               margin: '0 10px',
               width: '265px'
             }}
           />
         ) : (
-          (!loading1 || !currentUserLoading) && <h3 style={{ textAlign: 'center' }}>No Listings</h3>
+          (!loading1 || !currentUserLoading) && (
+            <div align="center">
+              <Empty description={'No Listings.'}>
+                <Link to={`${ROUTES.add}`}>
+                  <Button color="primary">Add</Button>
+                </Link>
+              </Empty>
+            </div>
+          )
         )}
       </div>
     </div>
@@ -144,10 +172,13 @@ const ListingCarousel = props => {
 
 ListingCarousel.propTypes = {
   currentUser: PropTypes.object,
+  getCart: PropTypes.object,
   history: PropTypes.object.isRequired,
   title: PropTypes.string,
   currentUserLoading: PropTypes.bool,
   loading: PropTypes.bool,
+  onDelete: PropTypes.func,
+  cartLoading: PropTypes.bool,
   listings: PropTypes.object,
   isMobile: PropTypes.bool
 };

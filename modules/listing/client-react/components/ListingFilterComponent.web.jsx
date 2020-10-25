@@ -56,8 +56,8 @@ const ListingsFilterComponent = props => {
     <>
       <Form layout="inline">
         <Row type="flex" align="middle">
-          <Col span={24}>
-            <Col span={16}>
+          <Col lg={24} xs={24}>
+            <Col lg={16} xs={24} md={14}>
               <FormItem label={'search'}>
                 <DebounceInput
                   minLength={2}
@@ -83,13 +83,13 @@ const ListingsFilterComponent = props => {
                 </FormItem>
               )}
             </Col>
-            <Col span={8} align="right">
-              {SORT_BY && SORT_BY.length !== 0 && (
-                <FormItem label={t('listingFilter.sortBy')}>
+            <Col lg={8} xs={24} md={10} align="right">
+              <Col lg={0} md={0}>
+                <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
                   <Select
                     name="sortBy"
                     defaultValue={orderBy.order}
-                    style={{ width: '170px' }}
+                    style={{ width: '100%' }}
                     onChange={e =>
                       SORT_BY[e].sortBy === ''
                         ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
@@ -106,11 +106,37 @@ const ListingsFilterComponent = props => {
                     ))}
                   </Select>
                 </FormItem>
-              )}
+              </Col>
+              <Col xs={0} md={24} lg={24}>
+                {SORT_BY && SORT_BY.length !== 0 && (
+                  <FormItem label={'Sort By'}>
+                    <Select
+                      name="sortBy"
+                      defaultValue={orderBy.order}
+                      style={{ width: '170px' }}
+                      onChange={e =>
+                        SORT_BY[e].sortBy === ''
+                          ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
+                          : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
+                      }
+                    >
+                      <Option key={1} value="">
+                        None
+                      </Option>
+                      {SORT_BY.map((sB, i) => (
+                        <Option key={i + 2} value={i}>
+                          {sB.label}
+                        </Option>
+                      ))}
+                    </Select>
+                  </FormItem>
+                )}
+              </Col>
             </Col>
           </Col>
-          <Col span={24} align="right">
-            <Col span={20}>
+          <Col lg={24} xs={24} align="right">
+            <Col lg={0} md={0} xs={1} />
+            <Col lg={20} md={18} xs={21}>
               <div style={{ display: 'block' }}>
                 <h5 style={{ fontSize: '' }}>{t('listingFilter.costFilter')}</h5>
                 <SliderControlled
@@ -123,19 +149,27 @@ const ListingsFilterComponent = props => {
                   marks={costMarks}
                   range
                   value={[lowerCost, upperCost]}
-                  // value={[lowerCost, upperCost]}
                   // disabled={false}
                   handleSliderChange={e => handleChangeSlider(e)}
                 />
               </div>
             </Col>
-            <Col span={4}>
-              <br />
-              <FormItem>
-                <Button type="primary" onClick={handleFiltersRemove}>
+            <Col lg={0} md={2} xs={2} />
+            <Col lg={4} md={4} xs={24}>
+              <Col lg={0} md={0}>
+                <br />
+                <Button block type="primary" onClick={handleFiltersRemove}>
                   {t('listingFilter.btn.reset')}
                 </Button>
-              </FormItem>
+              </Col>
+              <Col xs={0} md={24} lg={24}>
+                <br />
+                <FormItem>
+                  <Button type="primary" onClick={handleFiltersRemove}>
+                    {t('listingFilter.btn.reset')}
+                  </Button>
+                </FormItem>
+              </Col>
             </Col>
           </Col>
         </Row>

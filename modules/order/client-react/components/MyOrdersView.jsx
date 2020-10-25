@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Divider, Icon, Button, Row, Col } from 'antd';
+import { Empty, Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 
@@ -27,7 +30,17 @@ const MyOrdersView = props => {
     }
   }
 
-  const NoMyOrdersMessage = () => <div align="center">{t('orders.noListingsMsg')}</div>;
+  const NoMyOrdersMessage = () => (
+    <div align="center">
+      <br />
+      <br />
+      <Empty description={t('orders.noListingsMsg')}>
+        <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
+          <Button type="primary">Add</Button>
+        </Link>
+      </Empty>
+    </div>
+  );
 
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />

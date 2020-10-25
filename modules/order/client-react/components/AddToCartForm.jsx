@@ -1,19 +1,23 @@
 import React from 'react';
-import { Row, Col, Form, Button, Icon, Tooltip } from 'antd';
+import { Form, Button } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { required, validate } from '@gqlapp/validation-common-react';
 import { RenderField } from '@gqlapp/look-client-react';
 
-import ROUTES from '../routes';
 import AddToCartFormBtns from './AddToCartFormBtns';
 
-const AddToCartFormSchema = {
-  quantity: [required]
-};
+const AddToCartFormSchema = Yup.object().shape({
+  quantity: Yup.number().test('quantityValidCheck', 'Invalid quantity.', function(value) {
+    const inventoryCount = this.options.from[0].value.inventoryCount;
+    if (value === 0) {
+      return this.createError({ message: 'Quantity is required' });
+    }
+    return value > 0 && value <= inventoryCount ? true : false;
+  })
+});
 
 const AddToCartForm = props => {
   const {
@@ -86,14 +90,15 @@ AddToCartForm.propTypes = {
 const AddToCartWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
+      inventoryCount: (props.max && props.max) || 0,
       quantity: (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || props.max > 0 ? 1 : 0
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {
     onSubmit(values);
   },
-  validate: values => validate(values, AddToCartFormSchema),
-  // validationSchema: AddToCartFormSchema,
+  // validate: values => validate(values, AddToCartFormSchema),
+  validationSchema: AddToCartFormSchema,
   displayName: 'AddToCart Form' // helps with React DevTools
 });
 

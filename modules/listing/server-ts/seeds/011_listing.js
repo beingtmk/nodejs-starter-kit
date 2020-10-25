@@ -1,6 +1,8 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 import { MEDIA } from '@gqlapp/listing-common';
 
+const HIGHLIGHT = ['High quality: Yes', 'Superhigh quality: Yes', 'Break resistance: Yes', 'Super light: Yes'];
+
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [
     'listing',
@@ -60,11 +62,19 @@ exports.seed = async function(knex) {
       await returnId(knex('listing_cost')).insert({
         listing_id: listing[0],
         cost: Math.floor(Math.random() * (999 - 100 + 1) + 100),
-        discount: isDiscount ? Math.random() * (60 - 2) + 2 : 0,
+        discount: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1) : 0,
         type: '',
         label: '',
         is_active: isActive
       });
+      await Promise.all(
+        [...Array(4).keys()].map(async i => {
+          return returnId(knex('listing_highlight')).insert({
+            listing_id: listing[0],
+            highlight: HIGHLIGHT[i]
+          });
+        })
+      );
       (Math.random() < 0.6 ? false : true) &&
         (await returnId(knex('listing_bookmark')).insert({
           listing_id: listing[0],

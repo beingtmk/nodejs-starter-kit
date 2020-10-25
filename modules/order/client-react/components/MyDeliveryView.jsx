@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Divider, Icon, Button, Row, Col } from 'antd';
+import { Empty, Divider, Icon, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -27,7 +27,13 @@ const MyDeliveriesView = props => {
     }
   }
 
-  const NoMyDeliveriesMessage = () => <div align="center">{t('orders.noListingsMsg')}</div>;
+  const NoMyDeliveriesMessage = () => (
+    <div align="center">
+      <br />
+      <br />
+      <Empty description={t('orders.noListingsMsg')} />
+    </div>
+  );
 
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />

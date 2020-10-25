@@ -14,7 +14,7 @@ const MyReview = props => {
   return (
     <PageLayout>
       <MyReviewContainer
-        filter={{ userId: currentUser && currentUser.id, modalName }}
+        filter={{ isActive: true, userId: currentUser && currentUser.id, modalName }}
         setModalName={setModalName}
         {...props}
       >

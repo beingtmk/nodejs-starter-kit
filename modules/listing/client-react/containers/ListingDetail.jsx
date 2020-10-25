@@ -3,6 +3,8 @@ import { message } from 'antd';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
+import { withGetCart, withDeleteCartItem } from '@gqlapp/order-client-react/containers/OrderOperations';
+import { subscribeToCart } from '@gqlapp/order-client-react/containers/OrderSubscriptions';
 
 import {
   withListing,
@@ -23,18 +25,22 @@ const ListingDetail = props => {
     location,
     shareListingByEmail,
     addOrRemoveListingBookmark,
-    canUserReviewsubscribeToMore
+    canUserReviewsubscribeToMore,
+    getCart,
+    deleteOrderDetail
   } = props;
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const subscribe = subscribeToListing(subscribeToMore, listing && listing.id, history);
     const subscribeAddReview = subscribeToListingReview(canUserReviewsubscribeToMore, listing && listing.id);
+    const subscribeCart = subscribeToCart(subscribeToMore, getCart && getCart.id, {});
     return () => {
-      subscribe();
-      subscribeAddReview();
+      () => subscribe();
+      () => subscribeAddReview();
+      () => subscribeCart();
     };
-  }, [history, subscribeToMore, listing, location, canUserReviewsubscribeToMore]);
+  }, [history, subscribeToMore, listing, location, canUserReviewsubscribeToMore, getCart]);
 
   const bookmarkListing = async (id, userId) => {
     try {
@@ -55,9 +61,18 @@ const ListingDetail = props => {
     message.destroy();
     message.success('Email sent!');
   };
-
-  console.log('props', props);
-  return <ListingDetailView onShare={handleShare} handleBookmark={bookmarkListing} {...props} />;
+  const handleDelete = id => {
+    try {
+      deleteOrderDetail(id);
+      message.error('Removed from Cart.');
+    } catch (e) {
+      throw Error(e);
+    }
+  };
+  // console.log('props', props);
+  return (
+    <ListingDetailView onDelete={handleDelete} onShare={handleShare} handleBookmark={bookmarkListing} {...props} />
+  );
 };
 
 ListingDetail.propTypes = {
@@ -67,10 +82,12 @@ ListingDetail.propTypes = {
   canUserReviewsubscribeToMore: PropTypes.func,
   listing: PropTypes.object,
   history: PropTypes.object,
+  getCart: PropTypes.object,
   navigation: PropTypes.object,
   location: PropTypes.object,
   addOrRemoveListingBookmark: PropTypes.func,
-  shareListingByEmail: PropTypes.func
+  shareListingByEmail: PropTypes.func,
+  deleteOrderDetail: PropTypes.func
 };
 
 export default compose(
@@ -78,5 +95,7 @@ export default compose(
   withCurrentUser,
   withToogleListingBookmark,
   withCanUserReview,
-  withShareListingByEmail
+  withShareListingByEmail,
+  withGetCart,
+  withDeleteCartItem
 )(ListingDetail);

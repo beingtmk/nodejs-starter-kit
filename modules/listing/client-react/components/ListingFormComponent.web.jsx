@@ -87,10 +87,12 @@ const ListingFormComponent = props => {
   const [load, setLoad] = useState(false);
   const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
-  let formItems = null;
+  const listingHighlight = values.listingHighlight;
+  let formItemsVideos = null;
+  let formItemsListingHighlight = null;
 
   if (videos.length > 0) {
-    formItems = videos.map((v, index) => (
+    formItemsVideos = videos.map((v, index) => (
       <FormItem required={false} key={index} style={{ margin: '0 5px' }}>
         <Row type="flex" align="middle">
           <Col span={20}>
@@ -116,27 +118,62 @@ const ListingFormComponent = props => {
               icon={'delete'}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
             />
-            {/* <Icon
-              title="Remove "
-              className="dynamic-delete-button"
-              type="delete"
-              onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
-            /> */}
           </Col>
         </Row>
       </FormItem>
     ));
   }
 
-  const add = () => {
-    let obj = {
+  if (listingHighlight.length > 0) {
+    formItemsListingHighlight = listingHighlight.map((v, index) => (
+      <Col span={12}>
+        <FormItem required={false} key={index} style={{ margin: '0 5px' }}>
+          <Row type="flex" align="middle">
+            <Col span={20}>
+              <FormItem
+                //  style={{ display: 'inline-block', margin: '0px 5px' }}
+                key={index}
+              >
+                <Field
+                  name={`listingHighlight[${index}].highlight`}
+                  component={RenderField}
+                  placeholder={`Hightlight ${index + 1}`}
+                  type="text"
+                  label={`Hightlight ${index + 1}`}
+                  value={v.highlight}
+                  key={index}
+                />
+              </FormItem>
+            </Col>
+            <Col span={4} align="right">
+              <Button
+                type={'danger'}
+                shape="circle"
+                icon={'delete'}
+                onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
+              />
+            </Col>
+          </Row>
+        </FormItem>
+      </Col>
+    ));
+  }
+
+  const addVideo = () => {
+    const obj = {
       url: '',
       type: VIDEO
     };
     props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
   };
+  const addHighlight = () => {
+    const obj = {
+      highlight: ''
+    };
+    props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
+  };
 
-  console.log('props form component', props.values.listingMedia);
+  // console.log('props form component', props.values.listingHighlight);
   return (
     <Card
       title={
@@ -225,6 +262,26 @@ const ListingFormComponent = props => {
                 max={values.listingDetail.inventoryCount}
                 value={values.listingOptions.fixedQuantity}
               />
+            </Col>
+            <Col span={24} align="left">
+              <Row>
+                <Col span={18}>
+                  <FormItem label={'Add Highlight'}></FormItem>
+                </Col>
+                <Col span={6} align="right">
+                  <FormItem>
+                    <Button type="primary" onClick={addHighlight}>
+                      <Icon type="video-camera" />
+                      Add
+                    </Button>
+                  </FormItem>
+                </Col>
+              </Row>
+              <Col span={24}>
+                <Row type="flex" gutter={24}>
+                  {formItemsListingHighlight}
+                </Row>
+              </Col>
             </Col>
 
             <Col span={24} align="right">
@@ -333,14 +390,14 @@ const ListingFormComponent = props => {
                 </Col>
                 <Col span={6} align="right">
                   <FormItem>
-                    <Button type="primary" onClick={add}>
+                    <Button type="primary" onClick={addVideo}>
                       <Icon type="video-camera" />
                       {t('listingForm.btn.add')}
                     </Button>
                   </FormItem>
                 </Col>
               </Row>
-              <Col span={24}>{formItems}</Col>
+              <Col span={24}>{formItemsVideos}</Col>
             </Col>
             <Col md={12} sm={24} xs={24} lg={12} align="left">
               <FormItem label={'Add images'}>
@@ -418,6 +475,12 @@ const ListingWithFormik = withFormik({
         label: (listingCost && listingCost.label) || ''
       };
     }
+    function getListingHighlight(listingHighlight) {
+      return {
+        id: (listingHighlight && listingHighlight.id) || null,
+        highlight: (listingHighlight && listingHighlight.highlight) || ''
+      };
+    }
 
     return {
       id: (props.listing && props.listing.id) || null,
@@ -430,6 +493,9 @@ const ListingWithFormik = withFormik({
       description: (props.listing && props.listing.description) || '',
       sku: (props.listing && props.listing.sku) || '',
       isActive: props.listing && (props.listing.isActive ? true : false),
+      listingHighlight:
+        (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) ||
+        [],
       listingCostArray: (props.listing &&
         props.listing.listingCostArray &&
         props.listing.listingCostArray.map(getCost)) || [
@@ -522,7 +588,10 @@ const ListingWithFormik = withFormik({
       if (values.listingMedia.video.length > 0) {
         input.listingMedia = [...input.listingMedia, ...values.listingMedia.video];
       }
-      // console.log(input);
+      if (values.listingHighlight.length > 0) {
+        input.listingHighlight = values.listingHighlight;
+      }
+      console.log(input);
       await onSubmit(input);
     } else {
       setTouched({});

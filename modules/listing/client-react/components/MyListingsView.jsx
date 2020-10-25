@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Icon, Button } from 'antd';
+import { Empty, Icon, Button } from 'antd';
 
 import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -79,5 +79,15 @@ MyListingsView.propTypes = {
 
 export default MyListingsView;
 
-const NoListingsMessage = ({ t }) => <div align="center">{t('listing.noListingsMsg')}</div>;
+const NoListingsMessage = ({ t }) => (
+  <div align="center">
+    <br />
+    <br />
+    <Empty description={t('listing.noListingsMsg')}>
+      <Link to={`${ROUTES.add}`}>
+        <Button type="primary">Add</Button>
+      </Link>
+    </Empty>
+  </div>
+);
 NoListingsMessage.propTypes = { t: PropTypes.func };

@@ -85,7 +85,7 @@ const CheckoutOrder = props => {
       message.destroy();
       message.warning('Processing.');
       const output = await patchOrderState(getCart.id, ORDER_STATES.INITIATED);
-      console.log(output);
+      // console.log(output);
       if (output) {
         message.destroy();
         message.success(`State change to ${ORDER_STATES.INITIATED}`);
