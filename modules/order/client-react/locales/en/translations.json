@@ -2,5 +2,27 @@
   "navLink": "Order nav link",
   "title": "Order module",
   "meta": "Order example",
-  "welcomeText": "Hello, This is the Order module"
+  "welcomeText": "Hello, This is the Order module",
+  "addToCart":{
+    "form":{
+      "btn":{
+        "save":"Save",
+        "add":"ADD TO CART",
+        "book":"BOOK NOW"
+      }
+    }
+  },
+  "noOrdersMsg":"No orders",
+  "orders":{
+    "subTitle":"Orders",
+    "orderId":"Order Id: ",
+    "items":"Items ",
+    "total":"Total",
+    "item":{
+      "search":"Search",
+      "sortBy":"Sort By"
+    }
+  },
+  "myOrders":" My Orders",
+  "myDeliveries":" My Deliveries"
 }

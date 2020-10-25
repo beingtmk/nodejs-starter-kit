@@ -22,12 +22,12 @@ const StatusText = styled.div`
   color: ${props => props.status === 'cancelled' && 'red'};
 `;
 
-const CartItemComponent = props => {
+const OrderItemComponent = props => {
   const {
-    item
+    item,
+    t
     // edit,
   } = props;
-  // console.log(item);
   return (
     <Link to={`${ROUTES.orderDetailLink}${item.id}`}>
       <Card
@@ -57,11 +57,17 @@ const CartItemComponent = props => {
               }}
             >
               <Col span={24}>
-                <h2>Order Id: {item.id}</h2>
+                <h2>
+                  {t('orders.orderId')}
+                  {item.id}
+                </h2>
               </Col>
               <Col span={12}>
                 <Row type="flex" justify="start">
-                  <h3>Items: {item.orderDetails && displayDataCheck(item.orderDetails.length)}</h3>
+                  <h3>
+                    {t('orders.items')}
+                    {item.orderDetails && displayDataCheck(item.orderDetails.length)}
+                  </h3>
                 </Row>
               </Col>
               <Col span={12}>
@@ -83,7 +89,7 @@ const CartItemComponent = props => {
                   {TotalPrice(displayDataCheck(item.orderDetails))}
                 </strong>
                 <br />
-                <span>Total</span>
+                <span>{t('orders.total')}</span>
               </span>
             </Price>
           </Col>
@@ -93,9 +99,10 @@ const CartItemComponent = props => {
   );
 };
 
-CartItemComponent.propTypes = {
+OrderItemComponent.propTypes = {
   item: PropTypes.object,
-  deleteProduct: PropTypes.func
+  deleteProduct: PropTypes.func,
+  t: PropTypes.func
 };
 
-export default CartItemComponent;
+export default OrderItemComponent;

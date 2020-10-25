@@ -7,10 +7,10 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { withCurrentUser, withOrdersState, withFilterUpdating, withOrderStates, withOrders } from './OrderOperations';
 
 import MyOrdersView from '../components/MyOrdersView';
-import { subscribeToOrders, SubscribeToOrdersForMyOrders, updateOrdersState } from './OrderSubscriptions';
+import { subscribeToOrders } from './OrderSubscriptions';
 
 const MyOrdersContainer = compose(withOrders)(props => {
-  const { ordersSubscribeToMore, refetch, updateOrdersQuery } = props;
+  const { ordersSubscribeToMore, refetch } = props;
 
   // const listingsUpdated = SubscribeToOrdersForMyOrders(ordersSubscribeToMore, props.filter);
 

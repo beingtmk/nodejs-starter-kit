@@ -21,7 +21,7 @@ const OrderView = props => {
         <Col span={12}>
           <Heading type="2">
             <Icon type="solution" /> &nbsp;
-            {t('list.subTitle')}
+            {t('orders.subTitle')}
           </Heading>
         </Col>
         <Col span={12} align="right">
