@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'antd';
+import { Row, Col, Form, Button } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -48,9 +48,20 @@ const AddToCartForm = props => {
         max={max}
       />
       {!showBtn ? (
-        <Button type={'primary'} onClick={handleSubmit}>
-          Save
-        </Button>
+        <div align="right">
+          <Row type="flex">
+            <Col lg={24} md={24} xs={0}>
+              <Button type={'primary'} onClick={handleSubmit}>
+                Save
+              </Button>
+            </Col>
+            <Col lg={0} md={0} xs={24}>
+              <Button block type={'primary'} onClick={handleSubmit}>
+                Save
+              </Button>
+            </Col>
+          </Row>
+        </div>
       ) : (
         <div align="right">
           <AddToCartFormBtns

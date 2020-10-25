@@ -7,8 +7,6 @@ import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
 import {
-  Row,
-  Col,
   Form,
   RenderField,
   RenderSelect,
@@ -19,7 +17,7 @@ import {
   RenderUpload
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { Button, Modal } from 'antd';
+import { Row, Col, Button, Modal, Drawer } from 'antd';
 
 const userFormSchema = {
   username: [required, minLength(3)],
@@ -40,7 +38,8 @@ const updateUserFormSchema = {
 
 const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
   const [load, setLoad] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [visibleDrawer, setVisibleDrawer] = useState(false);
   const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
 
   console.log('props', values);
@@ -127,17 +126,17 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         />
       )}
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <Row gutter={[24, 24]}>
-        <Col lg={12} md={12} xs={24}>
-          <Button ghost type={'primary'} block onClick={() => setVisible(true)}>
+      <Row type="flex" gutter={[24, 24]}>
+        <Col lg={12} md={12} xs={0}>
+          <Button ghost type={'primary'} block onClick={() => setVisibleModal(true)}>
             Reset password
           </Button>
           <Modal
             centered
             title={'Reset password'}
-            visible={visible}
+            visible={visibleModal}
             onOk={() => handleSubmit(values)}
-            onCancel={() => setVisible(false)}
+            onCancel={() => setVisibleModal(false)}
           >
             <Field
               name="password"
@@ -154,6 +153,39 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
               value={passwordConfirmation}
             />
           </Modal>
+        </Col>
+        <Col lg={0} md={0} xs={24}>
+          <Button ghost type={'primary'} block onClick={() => setVisibleDrawer(true)}>
+            Reset password
+          </Button>
+          <Drawer
+            height={'auto'}
+            title={'Reset password'}
+            placement={'bottom'}
+            closable={true}
+            onClose={() => setVisibleDrawer(false)}
+            visible={visibleDrawer}
+          >
+            <Field
+              name="password"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.pass')}
+              value={password}
+            />
+            <Field
+              name="passwordConfirmation"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.passConf')}
+              value={passwordConfirmation}
+            />
+            <div align="right">
+              <Button type={'primary'} onClick={() => handleSubmit(values)}>
+                Save
+              </Button>
+            </div>
+          </Drawer>
         </Col>
         <Col lg={12} md={12} xs={24}>
           <SubmitButton color="primary" type="submit" disabled={load}>
