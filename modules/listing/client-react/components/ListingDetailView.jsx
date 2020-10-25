@@ -216,7 +216,7 @@ const ListingDetailView = props => {
                   )}
                 </Col>
                 <Col span={1} align="right">
-                  <SocialSharingButtons {...message} onShare={onShare} />
+                  <SocialSharingButtons {...message} onShare={onShare} t={t} />
                 </Col>
               </Row>
               <br /> <p>{`SKU: ${listing && listing.sku}`}</p>

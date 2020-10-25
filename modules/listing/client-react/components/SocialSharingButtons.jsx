@@ -18,7 +18,7 @@ const Img = styled.img`
 `;
 
 const SocialSharingButtons = props => {
-  const { values, handleSubmit, submitting, errors, twitterMessage, whatsappMessage, link, hideEmailButton } = props;
+  const { values, handleSubmit, submitting, errors, twitterMessage, whatsappMessage, link, hideEmailButton, t } = props;
   const [visible, setVisible] = useState(false);
   const inputForm = 'email';
 
@@ -107,14 +107,20 @@ const SocialSharingButtons = props => {
         <Button shape="circle" type="primary" ghost icon="share-alt" />
       </Dropdown>
 
-      <Modal title="Share listing by mail" centered footer={null} visible={visible} onCancel={() => setVisible(false)}>
+      <Modal
+        title={t('socialSharingButton.title')}
+        centered
+        footer={null}
+        visible={visible}
+        onCancel={() => setVisible(false)}
+      >
         <Form name="invite" onShare={handleSubmit}>
           {inputForm === 'email' ? (
             <Field
               name="inviteVal.email"
               component={RenderField}
               type="email"
-              placeholder="Enter E-mail to invite"
+              placeholder={t('socialSharingButton.email')}
               value={values.inviteVal.email}
             />
           ) : (
@@ -122,19 +128,19 @@ const SocialSharingButtons = props => {
               name="inviteVal.number"
               component={RenderField}
               type="number"
-              placeholder="Enter Number to invite"
+              placeholder={t('socialSharingButton.number')}
               value={values.inviteVal.number}
             />
           )}
           <h3>
-            <strong>Text:</strong>
+            <strong>{t('socialSharingButton.text')}</strong>
           </h3>
           <br />
           <Card>{whatsappMessage}</Card>
           <br />
           <div align="right">
             <Button disabled={submitting} type="primary" onClick={() => handleSubmit(values)}>
-              Share
+              {t('socialSharingButton.btn.share')}
             </Button>
           </div>
           <div>{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
@@ -154,7 +160,8 @@ SocialSharingButtons.propTypes = {
   submitting: PropTypes.bool,
   errors: PropTypes.object,
   hideEmailButton: PropTypes.bool,
-  values: PropTypes.object
+  values: PropTypes.object,
+  t: PropTypes.func
 };
 
 const SocialSharingButtonsWithFormik = withFormik({

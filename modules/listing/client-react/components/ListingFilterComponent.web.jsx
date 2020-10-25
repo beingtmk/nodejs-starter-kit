@@ -21,7 +21,8 @@ const ListingsFilterComponent = props => {
     listings,
     showIsActive = false,
     orderBy,
-    onOrderBy
+    onOrderBy,
+    t
   } = props;
   const rangeValues = listings && listings.rangeValues;
   const handleChangeSlider = e => {
@@ -77,14 +78,14 @@ const ListingsFilterComponent = props => {
                       checked={isActive}
                       onChange={() => onIsActiveChange(!isActive)}
                     />
-                    &nbsp;Is Active
+                    &nbsp;{t('listingFilter.isActive')}
                   </Label>
                 </FormItem>
               )}
             </Col>
             <Col span={8} align="right">
               {SORT_BY && SORT_BY.length !== 0 && (
-                <FormItem label={'Sort By'}>
+                <FormItem label={t('listingFilter.sortBy')}>
                   <Select
                     name="sortBy"
                     defaultValue={orderBy.order}
@@ -111,7 +112,7 @@ const ListingsFilterComponent = props => {
           <Col span={24} align="right">
             <Col span={20}>
               <div style={{ display: 'block' }}>
-                <h5 style={{ fontSize: '' }}>Cost Filter</h5>
+                <h5 style={{ fontSize: '' }}>{t('listingFilter.costFilter')}</h5>
                 <SliderControlled
                   style={{
                     width: '100%',
@@ -132,7 +133,7 @@ const ListingsFilterComponent = props => {
               <br />
               <FormItem>
                 <Button type="primary" onClick={handleFiltersRemove}>
-                  Reset Filters
+                  {t('listingFilter.btn.reset')}
                 </Button>
               </FormItem>
             </Col>
