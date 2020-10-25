@@ -32,7 +32,7 @@ const EditCart = props => {
     setVisibleModal(false);
   };
 
-  console.log(('props editcart', props));
+  // console.log(('props editcart', props));
   return (
     <Row type={'flex'}>
       <Col lg={24} md={24} xs={0}>
