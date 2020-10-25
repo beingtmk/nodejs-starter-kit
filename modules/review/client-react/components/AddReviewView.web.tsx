@@ -15,6 +15,7 @@ export interface AddReviewViewProps {
 }
 
 const AddReviewView: React.FC<AddReviewViewProps> = props => {
+  console.log(props);
   const { t, loading, addReview } = props;
   return (
     <PageLayout type="forms">

@@ -10,7 +10,7 @@ const ReviewModal = props => {
   const { t, cardTitle, addReview, modalName, modalId } = props;
   return (
     <>
-      <AddButton onClick={() => setVisible(true)}>{'Add review'}</AddButton>
+      <AddButton onClick={() => setVisible(true)}>{t('addReview')}</AddButton>
       <Modal title={cardTitle} visible={visible} onCancel={() => setVisible(false)} footer={null}>
         <ReviewFormComponent
           t={t}

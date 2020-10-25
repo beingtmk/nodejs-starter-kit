@@ -14,6 +14,7 @@ const MyReviewView = props => {
 
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
+      t={t}
       key={key}
       review={review}
       deleteReview={deleteReview}

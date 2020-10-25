@@ -55,6 +55,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key: number, review: Review) => (
     <ReviewsItemComponent
+      t={t}
       key={key}
       review={review}
       showPhotos={photo}

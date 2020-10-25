@@ -48,6 +48,7 @@ const ReviewModala = styled.a`
 
 const ReviewsItemComponent = props => {
   const {
+    t,
     review,
     showPhotos,
     handleHelpful,
@@ -72,12 +73,12 @@ const ReviewsItemComponent = props => {
       <>
         <Menu.Item key="0">
           <Button style={{ color: 'black' }} type="link" href={`${ROUTES.editLink}/${review.id}`}>
-            {'Edit'}
+            {t('reviewItem.btn.edit')}
           </Button>
         </Menu.Item>
         <Menu.Item key="1">
           <Button style={{ color: 'black' }} type="link" onClick={() => deleteReview(review.id)}>
-            Delete
+            {t('reviewItem.btn.delete')}
           </Button>
         </Menu.Item>
       </>
@@ -106,13 +107,13 @@ const ReviewsItemComponent = props => {
             <strong>
               {!status ? (
                 <>
-                  Found helpful &nbsp;
+                  {t('reviewItem.helpful')}
                   <Icon type="like" theme="filled" />
                   &nbsp;
                 </>
               ) : (
                 <>
-                  Found unhelpful &nbsp;
+                  {t('reviewItem.unhelpful')}
                   <Icon type="dislike" theme="filled" />
                   &nbsp;
                 </>
@@ -175,7 +176,8 @@ ReviewsItemComponent.propTypes = {
   showModal: PropTypes.bool,
   reviewHelpfulStatus: PropTypes.bool,
   handleHelpful: PropTypes.func,
-  deleteReview: PropTypes.func
+  deleteReview: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default compose(withReviewHelpfulStatus)(ReviewsItemComponent);
