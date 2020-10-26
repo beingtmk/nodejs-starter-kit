@@ -95,35 +95,42 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
     <>
       <MetaTags title={t('title')} description={t('meta')} />
       <Row>
-        <Col span={8}>
-          <div align="center">
-            <h1>{'Rating'}</h1>
+        <Col lg={17} xs={24}>
+          {/* <div align="center"> */}
+          {/* <h1>{'Rating'}</h1>
             <h1>{' & '}</h1>
-            <h1>{'Reviews'}</h1>
-          </div>
-        </Col>
-        <Col span={4}>
+            <h1>{'Reviews'}</h1> */}
+          <h1>{'Rating & Reviews'}</h1>
+          {/* </div> */}
           <br />
-          <div align="center">
-            {showAdd && (
-              <>
-                <ReviewModal
-                  cardTitle={'Add Review'}
-                  t={t}
-                  addReview={addReview}
-                  modalName={filter.modalName}
-                  modalId={filter.modalId}
-                />
-                <br />
-              </>
-            )}
-            <br />
-            <Checkbox onChange={() => setPhoto(!photo)}>
-              <strong>With photo</strong>
-            </Checkbox>
-          </div>
         </Col>
-        <Col span={12}>
+        <Col lg={4} xs={24}>
+          <Checkbox onChange={() => setPhoto(!photo)}>
+            <strong>With photo</strong>
+          </Checkbox>
+        </Col>
+        <Col lg={0} xs={24}>
+          <br />
+        </Col>
+        <Col lg={3} xs={10}>
+          {/* <div align="center"> */}
+          {showAdd && (
+            <>
+              <ReviewModal
+                cardTitle={'Add Review'}
+                t={t}
+                addReview={addReview}
+                modalName={filter.modalName}
+                modalId={filter.modalId}
+              />
+              <br />
+            </>
+          )}
+          {/* </div> */}
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
           {ratingAverage && (
             <>
               <AvgRatingComponent rating={ratingAverage} t={t} />

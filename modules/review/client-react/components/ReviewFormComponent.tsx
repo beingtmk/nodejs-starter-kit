@@ -7,6 +7,7 @@ import { required, validate } from '@gqlapp/validation-common-react';
 import { RenderUploadMultiple, RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
+import styled from 'styled-components';
 
 import UserAutoCompleteComponent from './UserAutoCompleteComponent';
 import { Review } from '../containers/Reviews.web';
@@ -15,6 +16,13 @@ import { TranslateFunction } from '@gqlapp/i18n-client-react';
 const ReviewFormSchema = { rating: [required], feedback: [required] };
 const FormItem = Form.Item;
 
+const Rating = styled(Rate)`
+  font-size: 50px !important;
+  padding-right: 10px;
+  @media screen and (max-width: 600px) {
+    font-size: 40px !important;
+  }
+`;
 interface FormValues {
   id: number;
   modalName: string;
@@ -110,10 +118,9 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         </>
       )}
       <FormItem label={t('reviewForm.rate')}>
-        <Rate
+        <Rating
           // allowHalf
           defaultValue={parseInt(values.rating)}
-          style={{ fontSize: '50px' }}
           onChange={e => setFieldValue('rating', String(e))}
         />
       </FormItem>
