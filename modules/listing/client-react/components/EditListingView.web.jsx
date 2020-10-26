@@ -15,13 +15,13 @@ const EditListingView = props => {
   const [step, setStep] = React.useState(0);
   const steps = [
     {
-      title: t('listing.stpes.title1')
+      title: t('listing.steps.title1')
     },
     {
-      title: t('listing.stpes.title2')
+      title: t('listing.steps.title2')
     },
     {
-      title: t('listing.stpes.title3')
+      title: t('listing.steps.title3')
     }
   ];
 
