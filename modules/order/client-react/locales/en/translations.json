@@ -24,5 +24,24 @@
     }
   },
   "myOrders":" My Orders",
-  "myDeliveries":" My Deliveries"
+  "myDeliveries":" My Deliveries",
+  "orderDetails":{
+    "id":"Order id - ",
+    "addressText":"The order will be delivered to the address below:",
+    "status":{
+      "title":"Status",
+      "step1":"Payment Done.",
+      "step2":"Event pass booked."
+    }
+  },
+  "checkoutCard":{
+    "orderSummary":"Order summary",
+    "cartSummary":"Cart summary",
+    "total":"Total amount",
+    "youPaid":"You paid "
+  },
+  "cartItem":{
+    "quantity":"Quantity: ",
+    "amount":"Amount"
+  }
 }

@@ -21,7 +21,7 @@ const renderMetaData = () => (
 );
 
 const CheckoutOrderView = props => {
-  const { getCart, getCartLoading, onSubmit } = props;
+  const { t, getCart, getCartLoading, onSubmit } = props;
 
   const address =
     getCart &&
@@ -37,7 +37,7 @@ const CheckoutOrderView = props => {
       <div className="checkoutDiv">
         <Row gutter={24}>
           <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-            <CheckoutStepsComponent step={3} />
+            <CheckoutStepsComponent step={3} t={t} />
           </Col>
           <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
             <Row gutter={24}>
@@ -46,6 +46,7 @@ const CheckoutOrderView = props => {
                   {getCart && (
                     <>
                       <OrderTrackCardComponent
+                        t={t}
                         orderStatus={getCart.orderState}
                         // status={state.status}
                         completed={3}
@@ -96,7 +97,8 @@ const CheckoutOrderView = props => {
 CheckoutOrderView.propTypes = {
   getCart: PropTypes.object,
   getCartLoading: PropTypes.bool,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default CheckoutOrderView;

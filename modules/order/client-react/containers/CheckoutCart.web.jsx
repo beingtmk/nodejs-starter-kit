@@ -61,5 +61,5 @@ export default compose(
   withDeleteCartItem,
   withEditOrderDetail,
 
-  translate('orders')
+  translate('order')
 )(CheckoutCart);

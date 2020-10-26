@@ -37,7 +37,7 @@ export function TotalPrice(cartArray) {
 const CheckoutCartView = props => {
   const [checkout, setCheckout] = React.useState(false);
 
-  const { history, cartLoading, onSubmit, getCart, onDelete, currentUser, onEdit } = props;
+  const { t, history, cartLoading, onSubmit, getCart, onDelete, currentUser, onEdit } = props;
 
   const cartLength = getCart && getCart.length;
 
@@ -51,7 +51,7 @@ const CheckoutCartView = props => {
           <div>
             <Row>
               <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 0 }} align="center">
-                <CheckoutStepsComponent step={0} />
+                <CheckoutStepsComponent step={0} t={t} />
               </Col>
               <Col lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
                 <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 5 }}>
@@ -81,6 +81,7 @@ const CheckoutCartView = props => {
                       getCart.orderDetails.map(cartItem => (
                         <>
                           <CartItemComponent
+                            t={t}
                             item={cartItem}
                             edit={true}
                             onSubmit={onSubmit}
@@ -168,7 +169,8 @@ CheckoutCartView.propTypes = {
   cartLoading: PropTypes.bool,
   onSubmit: PropTypes.func,
   onDelete: PropTypes.func,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default CheckoutCartView;

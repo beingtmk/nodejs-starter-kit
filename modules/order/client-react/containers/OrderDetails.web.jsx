@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 
+import { translate } from '@gqlapp/i18n-client-react';
 import OrderDetailsView from '../components/OrderDetailsView';
 
 import { withOrder } from './OrderOperations';
@@ -15,7 +16,6 @@ const OrderDetails = props => {
     return () => subscribe();
   });
 
-  // console.log('props', props);
   return <OrderDetailsView {...props} />;
 };
 
@@ -25,4 +25,4 @@ OrderDetails.propTypes = {
   history: PropTypes.object
 };
 
-export default compose(withOrder)(OrderDetails);
+export default compose(withOrder, translate('order'))(OrderDetails);

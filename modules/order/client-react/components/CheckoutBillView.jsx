@@ -26,7 +26,7 @@ const CheckoutBillView = props => {
         <div className="checkoutDiv">
           <Row type="flex" style={{ alignContent: 'center' }} gutter={24}>
             <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-              <CheckoutStepsComponent step={1} />
+              <CheckoutStepsComponent step={1} t={t} />
             </Col>
             <Col span={24}>
               <h3 className="billingAddress">Billing Address</h3>
