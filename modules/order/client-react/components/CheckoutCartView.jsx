@@ -58,15 +58,19 @@ const CheckoutCartView = props => {
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
                     <h2>
                       <Icon type="shopping" />
-                      {' My cart - '} {cartLength} items
+                      {t('checkoutCart.myCart')} {cartLength} items
                     </h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
-                    <h2>Order id - {displayDataCheck(getCart.id)}</h2>
+                    <h2>
+                      {t('checkoutCart.orderId')}
+                      {displayDataCheck(getCart.id)}
+                    </h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
                     <h2>
-                      Total price: <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
+                      {t('checkoutCart.totalPrice')}
+                      <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
                     </h2>
                   </Col>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
@@ -95,19 +99,17 @@ const CheckoutCartView = props => {
                   </Col>
                   <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                     <Card>
-                      <Checkbox onChange={e => setCheckout(e.target.checked)}>
-                        I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.
-                      </Checkbox>
+                      <Checkbox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</Checkbox>
                       <br />
                       <br />
                       <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
-                        Checkout
+                        {t('checkoutCart.btn.checkout')}
                       </NextButton>
                       <br />
                       <br />
                       <Link className="listing-link" to={`${LISTING_ROUTES.listingCatalogue}`} target="_blank">
                         <AddButton ghost block>
-                          Add more products
+                          {t('checkoutCart.btn.add')}
                         </AddButton>
                       </Link>
                       <br />
@@ -115,15 +117,18 @@ const CheckoutCartView = props => {
                       <hr />
                       <br />
                       <h2>
-                        <u>Cart Summary</u>
+                        <u>{t('checkoutCart.cartSummary')}</u>
                       </h2>
                       <br />
                       <span>
                         {getCart.orderDetails.map((item, key) => (
                           <div key={key}>
-                            <strong>Item {key + 1}:</strong>
+                            <strong>
+                              {t('checkoutCart.item')}
+                              {key + 1}:
+                            </strong>
                             <p>
-                              Price{' '}
+                              {t('checkoutCart.price')}
                               <Rightfloat>
                                 &#8377;{' '}
                                 {item.cost && item.cost !== '0'
@@ -139,7 +144,7 @@ const CheckoutCartView = props => {
                         <hr />
                         <br />
                         <h3>
-                          Total amount
+                          {t('checkoutCart.totalAmount')}
                           <ColorFloat>&#8377; {` ${TotalPrice(displayDataCheck(getCart.orderDetails))}`}</ColorFloat>
                         </h3>
                       </span>
@@ -153,7 +158,7 @@ const CheckoutCartView = props => {
           <div className="width100 centerAlign marginT30">
             <Empty description="You have no items in your Cart">
               <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
-                <AddButton style={{ width: 'fit-content' }}>Add some products</AddButton>
+                <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>
               </Link>
             </Empty>
           </div>

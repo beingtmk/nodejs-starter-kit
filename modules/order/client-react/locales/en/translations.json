@@ -43,5 +43,33 @@
   "cartItem":{
     "quantity":"Quantity: ",
     "amount":"Amount"
+  },
+  "checkoutSteps":{
+    "heading":"Checkout",
+    "step1":"Cart",
+    "step2":"Billing Address",
+    "step3":"Payment options"
+  },
+  "checkoutCart":{
+    "myCart":" My cart - ",
+    "orderId":"Order Id - ",
+    "totalPrice":"Total price: ",
+    "checkbox":"I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.",
+    "btn":{
+      "checkout":"Checkout",
+      "add":"Add more products"
+    },
+    "cartSummary":"Cart summary",
+    "item":"Item ",
+    "price":"Price ",
+    "totalAmount":"Total amount"
+  },
+  "checkoutBill":{
+    "billingAddress":"Billing Address",
+    "shippingAddress":"Shipping Address",
+    "selectAddress":"Select the address you want the order to be delivered at:"
+  },
+  "checkoutOrder":{
+    "orderAddress":"The order will be delivered to the address below:"
   }
 }

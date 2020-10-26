@@ -60,7 +60,7 @@ const CheckoutOrderView = props => {
                       >
                         {/* <div style={{ marginTop: "200px" }} /> */}
                         <Card className="boxShadowTheme borderRadius9">
-                          <h4>The order will be delivered to the address below:</h4>
+                          <h4>{t('checkoutOrder.orderAddress')}</h4>
                           <hr />
                           <Row type="flex" justify="center" align="middle">
                             {address && <AddressView addresses={[address]} addressId={address.id} />}
@@ -75,6 +75,7 @@ const CheckoutOrderView = props => {
                 {getCart && (
                   <CheckoutCardComponent
                     // onSubmit={openCheckout}
+                    t={t}
                     onSubmit={onSubmit}
                     getCart={getCart}
                     product={{}}
