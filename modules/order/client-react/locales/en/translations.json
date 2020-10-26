@@ -8,7 +8,9 @@
       "btn":{
         "save":"Save",
         "add":"ADD TO CART",
-        "book":"BOOK NOW"
+        "book":"BOOK NOW",
+        "remove":"Remove from CART",
+        "go":"Go to CART"
       }
     }
   },

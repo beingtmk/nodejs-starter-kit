@@ -1,11 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Button, Icon, Row, Col, Tooltip } from 'antd';
+import { translate } from '@gqlapp/i18n-client-react';
 
 import ROUTES from '../routes';
 
 const AddToCartFormBtns = props => {
-  const { inCart, onSubmit, loading, disabled, onSubmitRedirect, onDelete, title, catalogueCard = false } = props;
+  const { t, inCart, onSubmit, loading, disabled, onSubmitRedirect, onDelete, title, catalogueCard = false } = props;
   const customGridLG = !catalogueCard
     ? {
         xs: 0,
@@ -23,7 +24,7 @@ const AddToCartFormBtns = props => {
     md: 24,
     lg: 0
   };
-
+  console.log(props);
   return (
     <Tooltip title={title}>
       {inCart ? (
@@ -39,7 +40,7 @@ const AddToCartFormBtns = props => {
               loading={loading}
             >
               <Icon type="shopping" />
-              ADD TO CART
+              {t('addToCart.form.btn.add')}
             </Button>
           </Col>
           <Col {...customGridLG}>
@@ -51,7 +52,7 @@ const AddToCartFormBtns = props => {
               disabled={loading || disabled}
               loading={loading}
             >
-              BOOK NOW
+              {t('addToCart.form.btn.book')}
               <Icon type="shopping-cart" />
             </Button>
           </Col>
@@ -66,10 +67,10 @@ const AddToCartFormBtns = props => {
               loading={loading}
             >
               <Icon type="shopping" />
-              ADD TO CART
+              {t('addToCart.form.btn.add')}
             </Button>
             <Button block type="primary" size="large" onClick={onSubmitRedirect} disabled={disabled}>
-              BOOK NOW
+              {t('addToCart.form.btn.book')}
               <Icon type="shopping-cart" />
             </Button>
           </Col>
@@ -80,14 +81,14 @@ const AddToCartFormBtns = props => {
             <Col {...customGridLG}>
               <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
                 <Icon type="delete" />
-                Remove from CART
+                {t('addToCart.form.btn.remove')}
               </Button>
             </Col>
           )}
           <Col {...customGridLG}>
             <a href={`${ROUTES.checkoutCart}`}>
               <Button type="primary" size="large" block disabled={disabled}>
-                Go to CART
+                {t('addToCart.form.btn.go')}
                 <Icon type="shopping-cart" />
               </Button>
             </a>
@@ -96,12 +97,12 @@ const AddToCartFormBtns = props => {
             {onDelete && (
               <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
                 <Icon type="delete" />
-                Remove from CART
+                {t('addToCart.form.btn.remove')}
               </Button>
             )}
             <a href={`${ROUTES.checkoutCart}`}>
               <Button block type="primary" size="large" disabled={disabled}>
-                Go to CART
+                {t('addToCart.form.btn.go')}
                 <Icon type="shopping-cart" />
               </Button>
             </a>
@@ -120,7 +121,8 @@ AddToCartFormBtns.propTypes = {
   onSubmitRedirect: PropTypes.func,
   onDelete: PropTypes.func,
   title: PropTypes.string,
-  catalogueCard: PropTypes.bool
+  catalogueCard: PropTypes.bool,
+  t: PropTypes.func
 };
 
-export default AddToCartFormBtns;
+export default translate('order')(AddToCartFormBtns);

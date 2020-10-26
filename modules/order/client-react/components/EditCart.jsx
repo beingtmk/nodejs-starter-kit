@@ -10,7 +10,7 @@ import { withListing } from '@gqlapp/listing-client-react/containers/ListingOper
 import AddToCartView from './AddToCartView';
 
 const EditCart = props => {
-  const { loading, listing, currentUser, onEdit, item } = props;
+  const { t, loading, listing, currentUser, onEdit, item } = props;
   const [visible, setVisible] = React.useState(false);
 
   const handleSubmit = values => {
@@ -45,6 +45,7 @@ const EditCart = props => {
         {loading && <Spinner size="small" />}
         {listing && (
           <AddToCartView
+            t={t}
             currentUser={currentUser}
             onSubmit={handleSubmit}
             showBtn={false}
@@ -62,7 +63,8 @@ EditCart.propTypes = {
   item: PropTypes.object,
   currentUser: PropTypes.object,
   loading: PropTypes.bool,
-  onEdit: PropTypes.func
+  onEdit: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default compose(withListing)(EditCart);

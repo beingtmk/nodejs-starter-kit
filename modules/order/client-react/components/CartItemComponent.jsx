@@ -86,7 +86,7 @@ const CartItemComponent = props => {
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {onEdit && (
             <Col span={8}>
-              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} />
+              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} t={t} />
             </Col>
           )}
 
