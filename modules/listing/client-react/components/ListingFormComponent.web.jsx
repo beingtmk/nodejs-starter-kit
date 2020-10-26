@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
-import { Tooltip, message, Row, Col, Icon, Form, Card, Button } from 'antd';
+
+import { ArrowLeftOutlined, InfoCircleOutlined, SolutionOutlined, VideoCameraOutlined } from '@ant-design/icons';
+
+import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Tooltip, message, Row, Col, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
@@ -115,7 +121,7 @@ const ListingFormComponent = props => {
             <Button
               type={'danger'}
               shape="circle"
-              icon={'delete'}
+              icon={<LegacyIcon type={'delete'} />}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
             />
           </Col>
@@ -149,7 +155,7 @@ const ListingFormComponent = props => {
               <Button
                 type={'danger'}
                 shape="circle"
-                icon={'delete'}
+                icon={<LegacyIcon type={'delete'} />}
                 onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
               />
             </Col>
@@ -179,7 +185,7 @@ const ListingFormComponent = props => {
       title={
         <>
           <h3>
-            <Icon type="solution" /> &nbsp;
+            <SolutionOutlined /> &nbsp;
             <strong>{displayDataCheck(cardTitle)}</strong>
           </h3>
           <div align="center">
@@ -254,7 +260,7 @@ const ListingFormComponent = props => {
                   <>
                     Fixed Quantity &nbsp;
                     <Tooltip title={'Enter -1 for false'}>
-                      <Icon type="info-circle" />
+                      <InfoCircleOutlined />
                     </Tooltip>
                   </>
                 }
@@ -271,7 +277,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addHighlight}>
-                      <Icon type="video-camera" />
+                      <VideoCameraOutlined />
                       Add
                     </Button>
                   </FormItem>
@@ -369,7 +375,7 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(0)}>
-                  <Icon type="arrow-left" /> Previous
+                  <ArrowLeftOutlined /> Previous
                 </Button>
               </Col>
               <Col span={12} align="right">
@@ -391,7 +397,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addVideo}>
-                      <Icon type="video-camera" />
+                      <VideoCameraOutlined />
                       Add
                     </Button>
                   </FormItem>
@@ -420,7 +426,7 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(1)}>
-                  <Icon type="arrow-left" /> Previous
+                  <ArrowLeftOutlined /> Previous
                 </Button>
               </Col>
 

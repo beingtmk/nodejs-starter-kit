@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Empty, Divider, Icon, Button, Row, Col } from 'antd';
+
+import {
+  AppstoreOutlined,
+  DeleteOutlined,
+  HddOutlined,
+  ShopOutlined,
+  SolutionOutlined,
+  ToTopOutlined
+} from '@ant-design/icons';
+
+import { Empty, Divider, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -45,13 +55,7 @@ const MyOrdersView = props => {
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
   );
-  const Icons = [
-    <Icon type="appstore" />,
-    <Icon type="hdd" />,
-    <Icon type="shop" />,
-    <Icon type="to-top" />,
-    <Icon type="delete" />
-  ];
+  const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <ToTopOutlined />, <DeleteOutlined />];
   const RenderMyOrders = () => (
     <div>
       {loading && <Spinner />}
@@ -66,7 +70,7 @@ const MyOrdersView = props => {
       <Row>
         <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
-            <Icon type="solution" />
+            <SolutionOutlined />
             &nbsp; My Orders
           </Heading>
           <br />

@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { ArrowDownOutlined, HomeOutlined } from '@ant-design/icons';
 import {
   Row,
   Col,
   Breadcrumb,
-  Divider,
-  Badge, // Card,
-  Descriptions,
-  // Avatar,
+  Divider, // Card,
+  Badge,
+  Descriptions, // Avatar,
   Statistic,
-  Carousel,
-  Icon,
-  // Tooltip,
+  Carousel, // Tooltip,
   Tabs
 } from 'antd';
 
@@ -147,7 +145,7 @@ const ListingDetailView = props => {
               >
                 <BreadCrumbItem key="home">
                   <NavLink to={`${HOME_ROUTES.home}`}>
-                    <Icon type="home" />
+                    <HomeOutlined />
                   </NavLink>
                 </BreadCrumbItem>
                 <BreadCrumbItem key="listing-title">{listing && displayDataCheck(listing.title)}</BreadCrumbItem>
@@ -239,7 +237,7 @@ const ListingDetailView = props => {
                       valueStyle={{ color: '#cf1322' }}
                       value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
                       suffix={'%'}
-                      prefix={<Icon type="arrow-down" />}
+                      prefix={<ArrowDownOutlined />}
                     />
                   </Col>
                 )}

@@ -2,7 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Drawer, Menu, Icon, Row, Col, Layout } from 'antd';
+
+import {
+  ApartmentOutlined,
+  DeploymentUnitOutlined,
+  MailOutlined,
+  MenuOutlined,
+  PhoneOutlined,
+  SafetyCertificateOutlined
+} from '@ant-design/icons';
+
+import { Drawer, Menu, Row, Col, Layout } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
@@ -70,12 +80,12 @@ class NavBar extends React.Component {
                   <Col span={10} />
                   <Col span={6}>
                     <BannerLink href={`tel: ${CONTACT.phone}`}>
-                      <Icon type="phone" /> {CONTACT.phone}
+                      <PhoneOutlined /> {CONTACT.phone}
                     </BannerLink>
                   </Col>
                   <Col span={8}>
                     <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
-                      <Icon type="mail" /> {CONTACT.mail}
+                      <MailOutlined /> {CONTACT.mail}
                     </BannerLink>
                   </Col>
                 </Row>
@@ -158,8 +168,7 @@ class NavBar extends React.Component {
                 </Col>
                 <Col xs={12} md={12} lg={0}>
                   <div onClick={this.showDrawer} className="navbar-drawer-logo">
-                    <Icon
-                      type="menu"
+                    <MenuOutlined
                       style={{
                         color: 'inherit',
                         fontSize: '20px',
@@ -194,7 +203,7 @@ class NavBar extends React.Component {
                     style={{ color: 'black !important' }}
                     title={
                       <MenuItem>
-                        <Icon type="deployment-unit" /> Dev
+                        <DeploymentUnitOutlined /> Dev
                       </MenuItem>
                     }
                   >
@@ -208,7 +217,7 @@ class NavBar extends React.Component {
                   key="admin"
                   title={
                     <MenuItem>
-                      <Icon type="apartment" /> Browse
+                      <ApartmentOutlined /> Browse
                     </MenuItem>
                   }
                 >
@@ -219,7 +228,7 @@ class NavBar extends React.Component {
                     key="admin"
                     title={
                       <MenuItem>
-                        <Icon type="safety-certificate" /> Admin
+                        <SafetyCertificateOutlined /> Admin
                       </MenuItem>
                     }
                   >

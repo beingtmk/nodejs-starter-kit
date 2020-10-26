@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 class NextIcon extends React.Component {
@@ -14,7 +15,9 @@ class NextIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    return <Button type={color} htmlType={type} size={buttonSize} icon="arrow-right" shape="circle" {...props} />;
+    return (
+      <Button type={color} htmlType={type} size={buttonSize} icon={<ArrowRightOutlined />} shape="circle" {...props} />
+    );
   }
 }
 

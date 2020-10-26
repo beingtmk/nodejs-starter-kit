@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Statistic, Card, Icon, message } from 'antd';
+import { ArrowDownOutlined } from '@ant-design/icons';
+import { Row, Col, Statistic, Card, message } from 'antd';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
@@ -219,7 +220,7 @@ const RelatedCardComponent = props => {
                       valueStyle={{ color: '#cf1322' }}
                       value={discount && discount.toFixed(2)}
                       suffix={'%'}
-                      prefix={<Icon type="arrow-down" />}
+                      prefix={<ArrowDownOutlined />}
                     />
                   </Col>
                 )}

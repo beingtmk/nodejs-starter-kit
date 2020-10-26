@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
-import { Icon, Badge } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Badge } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 
@@ -21,7 +22,7 @@ const NavItemCart = props => {
     <>
       {!currentUserLoading && (
         <>
-          <Icon type="shopping-cart" /> Cart{' '}
+          <ShoppingCartOutlined /> Cart{' '}
           <Badge style={{ marginTop: '-5px' }} count={getCart && getCart.orderDetails && getCart.orderDetails.length} />
         </>
       )}

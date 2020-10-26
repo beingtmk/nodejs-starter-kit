@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from 'antd';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { enquireScreen } from 'enquire-js';
 
 let isMobile;
@@ -11,7 +11,7 @@ enquireScreen(b => {
 export const LeftArrow = ({ prevSlide }) => {
   return !isMobile ? (
     <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
-      <Icon type="left" className="carousel-arrow-icon" />
+      <LeftOutlined className="carousel-arrow-icon" />
     </div>
   ) : null;
 };
@@ -23,7 +23,7 @@ LeftArrow.propTypes = {
 export const RightArrow = ({ nextSlide }) => {
   return !isMobile ? (
     <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
-      <Icon type="right" className="carousel-arrow-icon" />
+      <RightOutlined className="carousel-arrow-icon" />
     </div>
   ) : null;
 };

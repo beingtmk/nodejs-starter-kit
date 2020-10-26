@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Icon, Checkbox, Empty, Divider } from 'antd';
+import { ShoppingOutlined } from '@ant-design/icons';
+import { Row, Col, Card, Checkbox, Empty, Divider } from 'antd';
 
 import { PageLayout, NextButton, AddButton, MetaTags } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
@@ -57,7 +58,7 @@ const CheckoutCartView = props => {
                 <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 5 }}>
                   <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
                     <h2>
-                      <Icon type="shopping" />
+                      <ShoppingOutlined />
                       {' My cart - '} {cartLength} items
                     </h2>
                   </Col>

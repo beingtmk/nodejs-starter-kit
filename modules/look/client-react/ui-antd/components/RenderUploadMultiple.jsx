@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Upload, Icon } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Upload } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -65,7 +70,7 @@ const RenderUploadMultiple = props => {
           // headers={headers}
         >
           <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
+            <InboxOutlined />
           </p>
           <p className="ant-upload-text">Click or drag file to this area to upload</p>
           <p className="ant-upload-hint">Support for a single or bulk upload.</p>

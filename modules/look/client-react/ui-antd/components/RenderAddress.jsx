@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 // import styled, { css } from 'styled-components';
 import { RenderField } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Icon, Button, Form, Modal, Popconfirm, message } from 'antd';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Button, Modal, Popconfirm, message } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -178,7 +181,7 @@ class RenderAddress extends React.Component {
                     size="large"
                     onClick={() => this.modalControl(indexa, true)}
                   >
-                    <Icon type="edit" />
+                    <EditOutlined />
                   </Button>
                   <Modal
                     visible={this.state.visible[indexa]}
@@ -203,7 +206,7 @@ class RenderAddress extends React.Component {
                     cancelText="No"
                   >
                     <Button className="addDelbtn" type="danger" shape="circle" size="large">
-                      <Icon type="delete" />
+                      <DeleteOutlined />
                     </Button>
                   </Popconfirm>
                 </Grid.Box>
@@ -256,7 +259,7 @@ class RenderAddress extends React.Component {
                     style={{ marginTop: !isSelectable ? '15px' : null }}
                   >
                     <div className="AddNewAddress">
-                      <Icon type="plus" />
+                      <PlusOutlined />
                     </div>
                     <h4 style={{ position: 'relative', top: '30px' }}>Add a new address</h4>
                   </div>

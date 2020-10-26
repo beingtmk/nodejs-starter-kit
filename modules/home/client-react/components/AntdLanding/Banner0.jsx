@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import PropTypes from 'prop-types';
@@ -51,7 +52,7 @@ class Banner extends React.PureComponent {
           className="banner0-icon"
           key="icon"
         >
-          <Icon type="down" />
+          <DownOutlined />
         </TweenOne>
       </div>
     );

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { RobotOutlined, StarFilled } from '@ant-design/icons';
+
 // import { CardGroup } from '@gqlapp/look-client-react';
-import { Avatar, Icon, Row, Col, Divider } from 'antd';
+import { Avatar, Row, Col, Divider } from 'antd';
 import { ImgUser } from '../../constants/DefaultImages';
 
 const ProfileHeadComponent = ({ profile, description }) => {
@@ -12,7 +14,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
       <br />
 
       <h2 style={{ textAlign: 'center' }}>
-        <Icon type="robot" />{' '}
+        <RobotOutlined />{' '}
         {profile && profile.firstName && profile.lastName ? profile.firstName + ' ' + profile.lastName : 'Not Provided'}
       </h2>
 
@@ -40,7 +42,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
             <h2>
               <span className="StarRate">
                 {profile && profile.rating ? profile.rating : 'Not Rated'}
-                <Icon type="star" theme="filled" />
+                <StarFilled />
               </span>
             </h2>
 

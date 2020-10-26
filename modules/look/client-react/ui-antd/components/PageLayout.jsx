@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
+import { ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import { Layout, BackTop, Button, Tooltip } from 'antd';
 import { enquireScreen } from 'enquire-js';
 
@@ -88,12 +89,12 @@ class PageLayout extends React.Component {
             // style={{ display: 'none' }}
             size="large"
             type="primary"
-            icon="plus"
+            icon={<PlusOutlined />}
           />
         </Tooltip>
         <BackTop>
           <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
-            <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />
+            <Button icon={<ArrowUpOutlined />} type="primary" shape="circle-outline" size="large" />
           </Tooltip>
         </BackTop>
         <Footer />

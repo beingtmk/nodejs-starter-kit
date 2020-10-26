@@ -2,7 +2,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Empty, Divider, Tooltip, Button, Icon } from 'antd';
+import { CopyOutlined } from '@ant-design/icons';
+import { Empty, Divider, Tooltip, Button } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
@@ -255,7 +256,7 @@ const ListingListComponent = props => {
           <Divider type="vertical" />
           <Tooltip title="Duplicate Listing">
             <Button type="primary" shape="circle" size="sm" onClick={() => onDuplicate(record.id)}>
-              <Icon type="copy" />
+              <CopyOutlined />
             </Button>
           </Tooltip>
           <Divider type="vertical" />

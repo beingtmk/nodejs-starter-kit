@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { LoginOutlined } from '@ant-design/icons';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -105,11 +105,11 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => 
         }}
       >
         <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
-          <Icon type="login" /> {t('login.form.btnSubmit')}
+          <LoginOutlined /> {t('login.form.btnSubmit')}
         </Button>
         <hr style={{ width: '100%' }} />
         <Button block={true} ghost size="lg" color="primary" onClick={() => history.push(`${ROUTES.register}`)}>
-          <Icon type="login" /> {t('login.btn.sign')}
+          <LoginOutlined /> {t('login.btn.sign')}
         </Button>
 
         {renderSocialButtons(buttonsLength, t)}

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EyeOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 class ViewIcon extends React.Component {
@@ -13,7 +14,7 @@ class ViewIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    return <Button type={color} htmlType={type} size={buttonSize} icon="eye" shape="circle" {...props} />;
+    return <Button type={color} htmlType={type} size={buttonSize} icon={<EyeOutlined />} shape="circle" {...props} />;
   }
 }
 

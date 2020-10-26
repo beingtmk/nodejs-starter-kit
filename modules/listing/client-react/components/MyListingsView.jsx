@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Empty, Icon, Button } from 'antd';
+import { PlusOutlined, SolutionOutlined } from '@ant-design/icons';
+import { Empty, Button } from 'antd';
 
 import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -29,13 +30,13 @@ const MyListingsView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <Icon type="solution" /> &nbsp; My Listings
+            <SolutionOutlined /> &nbsp; My Listings
           </Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>
             <Button type="primary">
-              <Icon type="plus" /> Add
+              <PlusOutlined /> Add
             </Button>
           </Link>
         </Col>

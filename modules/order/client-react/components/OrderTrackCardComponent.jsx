@@ -1,5 +1,6 @@
 import React from 'react';
-import { Steps, Card, Icon } from 'antd';
+import { CheckCircleFilled, ClockCircleOutlined } from '@ant-design/icons';
+import { Steps, Card } from 'antd';
 import { ORDER_STATES } from '@gqlapp/order-common';
 
 const { Step } = Steps;
@@ -30,12 +31,12 @@ export default class OrderTrackCardComponent extends React.Component {
     console.log(val, this.getStep());
     var state = this.getStep();
     if (state >= 0) {
-      if (val <= this.getStep() && this.getStep() !== 0) return <Icon type="check-circle" theme="filled" />;
-      else return <Icon type="clock-circle" style={{ color: '#FFCC99' }} />;
+      if (val <= this.getStep() && this.getStep() !== 0) return <CheckCircleFilled />;
+      else return <ClockCircleOutlined style={{ color: '#FFCC99' }} />;
     } else if (state < 0) {
       state = state * -1;
-      if (val <= this.getStep() && this.getStep() !== 0) return <Icon type="check-circle" theme="filled" />;
-      else return <Icon type="clock-circle" style={{ color: '#FFCC99' }} />;
+      if (val <= this.getStep() && this.getStep() !== 0) return <CheckCircleFilled />;
+      else return <ClockCircleOutlined style={{ color: '#FFCC99' }} />;
     }
   }
   render() {

@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Upload, Modal, Icon } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Upload, Modal } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -100,7 +105,7 @@ export default class RenderUpload extends React.Component {
     const { previewVisible, previewImage, fileList } = this.state;
     const uploadButton = (
       <div>
-        <Icon type="plus" />
+        <PlusOutlined />
         <div className="ant-upload-text">Upload</div>
       </div>
     );

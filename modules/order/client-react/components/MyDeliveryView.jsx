@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Empty, Divider, Icon, Button, Row, Col } from 'antd';
+
+import { AppstoreOutlined, DeleteOutlined, HddOutlined, ShopOutlined, SolutionOutlined } from '@ant-design/icons';
+
+import { Empty, Divider, Button, Row, Col } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -38,7 +41,7 @@ const MyDeliveriesView = props => {
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
   );
-  const Icons = [<Icon type="appstore" />, <Icon type="hdd" />, <Icon type="shop" />, <Icon type="delete" />];
+  const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <DeleteOutlined />];
   const RenderMyDeliveries = () => (
     <div>
       {loading && <Spinner />}
@@ -52,7 +55,7 @@ const MyDeliveriesView = props => {
       <Row>
         <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
-            <Icon type="solution" />
+            <SolutionOutlined />
             &nbsp; My Deliveries
           </Heading>
           <br />

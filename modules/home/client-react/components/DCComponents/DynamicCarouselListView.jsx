@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { Empty, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Empty, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -74,7 +75,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
           <Col span={5}>
             <Link to={`${ROUTES.editLink}${record.id}`}>
               <Button shape="circle" size="large">
-                <Icon type="edit" />
+                <EditOutlined />
               </Button>
             </Link>
           </Col>
@@ -87,7 +88,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
               cancelText="No"
             >
               <Button type="danger" shape="circle" size="large">
-                <Icon type="delete" />
+                <DeleteOutlined />
               </Button>
             </Popconfirm>
           </Col>

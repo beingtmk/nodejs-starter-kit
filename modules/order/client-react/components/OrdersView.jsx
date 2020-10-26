@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Icon, Divider } from 'antd';
+import { SolutionOutlined } from '@ant-design/icons';
+import { Row, Col, Divider } from 'antd';
 
 import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
@@ -20,7 +21,7 @@ const OrderView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <Icon type="solution" /> &nbsp;
+            <SolutionOutlined /> &nbsp;
             {t('list.subTitle')}
           </Heading>
         </Col>
