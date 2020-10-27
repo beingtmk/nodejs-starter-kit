@@ -35,7 +35,7 @@
   "reviewForm":{
     "modal":"Modal",
     "username":"username",
-    "rate":"rate",
+    "rate":"Rate",
     "addVideo":"Add video url",
     "btn":{
       "add":"Add",
