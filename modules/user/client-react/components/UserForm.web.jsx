@@ -14,10 +14,12 @@ import {
   Option,
   Alert,
   SubmitButton,
-  RenderUpload
+  RenderUpload,
+  // Row,
+  Col
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { Row, Col, Button, Modal, Drawer } from 'antd';
+import { Row, /* Col, */ Button, Modal, Drawer } from 'antd';
 
 const userFormSchema = {
   username: [required, minLength(3)],
@@ -154,7 +156,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
             />
           </Modal>
         </Col>
-        <Col lg={0} md={0} xs={24}>
+        <Col lg={0} md={0} xs={12}>
           <Button ghost type={'primary'} block onClick={() => setVisibleDrawer(true)}>
             Reset password
           </Button>
@@ -187,7 +189,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
             </div>
           </Drawer>
         </Col>
-        <Col lg={12} md={12} xs={24}>
+        <Col lg={12} md={12} xs={12}>
           <SubmitButton color="primary" type="submit" disabled={load}>
             {t('userEdit.form.btnSubmit')}
           </SubmitButton>
