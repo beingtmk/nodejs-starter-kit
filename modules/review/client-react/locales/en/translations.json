@@ -50,5 +50,9 @@
     },
     "helpful":"Found helpful ",
     "unhelpful":"Found unhelpful "
+  },
+  "review":{
+    "heading":"Rating & Reviews",
+    "withPhoto":"With photo"
   }
 }

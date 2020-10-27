@@ -7,6 +7,11 @@ const Rating = styled(Rate)`
   font-size: 12px;
   padding-right: 10px;
 `;
+const TotalRating = styled.h3`
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+`;
 
 const AvgRatingComponent = props => {
   const { t } = props;
@@ -18,7 +23,7 @@ const AvgRatingComponent = props => {
   // console.log('props', totalRatings * 5, one + two * 2 + three * 3 + four * 4 + five * 5);
   return (
     <Row>
-      <Col span={3}>
+      <Col lg={3} xs={6}>
         <br />
         <br />
         <Col span={24}>
@@ -26,15 +31,15 @@ const AvgRatingComponent = props => {
             <h1>{avgRating()}</h1>
           </Row>
         </Col>
-        <Col span={24}>
+        <Col lg={{ offset: 0, span: 24 }} xs={{ offset: 6, span: 18 }}>
           <Row type="flex" justify="center">
-            <h3>
+            <TotalRating>
               {totalRatings} {t('avgRating')}
-            </h3>
+            </TotalRating>
           </Row>
         </Col>
       </Col>
-      <Col span={21}>
+      <Col lg={21} xs={18}>
         <Row>
           <Col span={22}>
             <Col span={14}>
