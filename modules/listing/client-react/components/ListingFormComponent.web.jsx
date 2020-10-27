@@ -179,7 +179,7 @@ const ListingFormComponent = props => {
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
 
-  // console.log('props form component', props.values.listingHighlight);
+  console.log('props form component', props.values.listingMedia);
   return (
     <Card
       title={
@@ -417,6 +417,7 @@ const ListingFormComponent = props => {
                       values={values.listingMedia.image}
                       getType={true}
                       dictKey="url"
+                      extraFields={[{ type: 'image' }]}
                     />
                   )}
                 />
@@ -432,7 +433,7 @@ const ListingFormComponent = props => {
 
               <Col span={12} align="right">
                 <br />
-                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                <SubmitButton style={{ width: 'auto' }} disabled={load} type="submit">
                   Submit
                 </SubmitButton>
               </Col>

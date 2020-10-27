@@ -11,10 +11,10 @@ import { Upload } from 'antd';
 const FormItem = Form.Item;
 
 const RenderUploadMultiple = props => {
-  const { values, label, setload, arrayHelpers } = props;
+  const { values, label, setload, arrayHelpers, extraFields } = props;
 
-  const cloudinary_url = 'https://api.cloudinary.com/v1_1/gemspremium/image/upload';
-  const cloudinary_data = { upload_preset: 'nu4nfnxt' };
+  const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
+  const cloudinary_data = { upload_preset: 'hycdtdxe' };
 
   let validateStatus = '';
   let defaultFileList = [];
@@ -39,9 +39,13 @@ const RenderUploadMultiple = props => {
         let url = file.response.secure_url;
         if (url) {
           //set value in form
-          const dictKey = dictKey;
+          const dictKey = props.dictKey;
           let obj = {};
           obj[dictKey] = url;
+          if (extraFields && extraFields.length > 0) {
+            extraFields.map(eF => Object.assign(obj, eF));
+          }
+          console.log(obj);
           arrayHelpers.push(obj);
         }
       }
@@ -95,6 +99,7 @@ RenderUploadMultiple.propTypes = {
     })
   ),
   arrayHelpers: PropTypes.object,
-  values: PropTypes.array
+  values: PropTypes.array,
+  extraFields: PropTypes.array
 };
 export default RenderUploadMultiple;
