@@ -50,36 +50,36 @@ const CheckoutCartView = props => {
       {!cartLoading &&
         (getCart && getCart.orderDetails.length > 0 ? (
           <div>
-            <Row>
+            <Row type="flex">
               <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 0 }} align="center">
                 <CheckoutStepsComponent step={0} t={t} />
               </Col>
               <Col lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
-                <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 5 }}>
-                  <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                <Row type="flex" justify="center" align="middle">
+                  <Col lg={8} md={8} xs={24}>
                     <h2>
                       <ShoppingOutlined />
                       {t('checkoutCart.myCart')} {cartLength} items
                     </h2>
                   </Col>
-                  <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <Col lg={8} md={8} xs={24}>
                     <h2>
                       {t('checkoutCart.orderId')}
                       {displayDataCheck(getCart.id)}
                     </h2>
                   </Col>
-                  <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <Col lg={8} md={8} xs={24}>
                     <h2>
                       {t('checkoutCart.totalPrice')}
                       <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
                     </h2>
                   </Col>
-                  <Col lg={{ span: 8 }} xs={{ span: 24, offset: 0 }}>
+                  <Col lg={8} md={8} xs={24}>
                     <br />
                   </Col>
-                </Col>
-                <br />
-                <br />
+                </Row>
+                {/* <br />
+                <br /> */}
                 <Row gutter={24}>
                   <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                     {getCart &&
