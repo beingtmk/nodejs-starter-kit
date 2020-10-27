@@ -94,7 +94,7 @@ class PageLayout extends React.Component {
         </Tooltip>
         <BackTop>
           <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
-            <Button icon={<ArrowUpOutlined />} type="primary" shape="circle-outline" size="large" />
+            <Button icon={<ArrowUpOutlined />} type="primary" shape="circle" size="large" />
           </Tooltip>
         </BackTop>
         <Footer />

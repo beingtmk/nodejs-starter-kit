@@ -152,18 +152,20 @@ class NavBar extends React.Component {
                     selectedKeys={[this.props.location.pathname]}
                     mode="horizontal"
                     theme="light"
-                    style={{ lineHeight: '39px' }}
+                    className="navbar-menu"
                   >
-                    {ref.modules.navItems}
-                    {ref.modules.navItemsRight}
+                    <Row type="flex" justify="end">
+                      {ref.modules.navItems}
+                      {ref.modules.navItemsRight}
 
-                    <LoggedIn>
-                      <MenuItem>
-                        <DropDown content={<UserAvatar />} noicon>
-                          {ref.modules.navItemsUser}
-                        </DropDown>
-                      </MenuItem>
-                    </LoggedIn>
+                      <LoggedIn>
+                        <MenuItem>
+                          <DropDown content={<UserAvatar />} noicon>
+                            {ref.modules.navItemsUser}
+                          </DropDown>
+                        </MenuItem>
+                      </LoggedIn>
+                    </Row>
                   </Menu>
                 </Col>
                 <Col xs={12} md={12} lg={0}>
