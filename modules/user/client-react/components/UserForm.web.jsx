@@ -15,11 +15,11 @@ import {
   Alert,
   SubmitButton,
   RenderUpload,
-  // Row,
+  Row,
   Col
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { Row, /* Col, */ Button, Modal, Drawer } from 'antd';
+import ModalDrawer from './ModalDrawer';
 
 const userFormSchema = {
   username: [required, minLength(3)],
@@ -40,8 +40,6 @@ const updateUserFormSchema = {
 
 const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
   const [load, setLoad] = useState(false);
-  const [visibleModal, setVisibleModal] = useState(false);
-  const [visibleDrawer, setVisibleDrawer] = useState(false);
   const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
 
   console.log('props', values);
@@ -129,65 +127,28 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       )}
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
       <Row type="flex" gutter={[24, 24]}>
-        <Col lg={12} md={12} xs={0}>
-          <Button ghost type={'primary'} block onClick={() => setVisibleModal(true)}>
-            Reset password
-          </Button>
-          <Modal
-            centered
-            title={'Reset password'}
-            visible={visibleModal}
-            onOk={() => handleSubmit(values)}
-            onCancel={() => setVisibleModal(false)}
-          >
-            <Field
-              name="password"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.pass')}
-              value={password}
-            />
-            <Field
-              name="passwordConfirmation"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.passConf')}
-              value={passwordConfirmation}
-            />
-          </Modal>
-        </Col>
-        <Col lg={0} md={0} xs={12}>
-          <Button ghost type={'primary'} block onClick={() => setVisibleDrawer(true)}>
-            Reset password
-          </Button>
-          <Drawer
-            height={'auto'}
-            title={'Reset password'}
-            placement={'bottom'}
-            closable={true}
-            onClose={() => setVisibleDrawer(false)}
-            visible={visibleDrawer}
-          >
-            <Field
-              name="password"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.pass')}
-              value={password}
-            />
-            <Field
-              name="passwordConfirmation"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.passConf')}
-              value={passwordConfirmation}
-            />
-            <div align="right">
-              <Button type={'primary'} onClick={() => handleSubmit(values)}>
-                Save
-              </Button>
+        <Col lg={12} md={12} xs={12}>
+          <ModalDrawer buttonText="Reset password" height="auto">
+            <div>
+              <Field
+                name="password"
+                component={RenderField}
+                type="password"
+                label={t('userEdit.form.field.pass')}
+                value={password}
+              />
+              <Field
+                name="passwordConfirmation"
+                component={RenderField}
+                type="password"
+                label={t('userEdit.form.field.passConf')}
+                value={passwordConfirmation}
+              />
+              <SubmitButton type="submit" disabled={load} onClick={() => handleSubmit(values)}>
+                {t('userEdit.form.btnSubmit')}
+              </SubmitButton>
             </div>
-          </Drawer>
+          </ModalDrawer>
         </Col>
         <Col lg={12} md={12} xs={12}>
           <SubmitButton color="primary" type="submit" disabled={load}>

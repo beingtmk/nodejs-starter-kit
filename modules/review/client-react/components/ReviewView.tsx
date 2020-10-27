@@ -12,17 +12,8 @@ import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import AvgRatingComponent from './AvgRatingComponent';
-
-const H1Title = styled.h1`
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
-const StrongTitle = styled.strong`
-  @media screen and (max-width: 600px) {
-    font-size: 16px;
-  }
-`;
+import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';
+import ReviewFormComponent from './ReviewFormComponent';
 interface ReviewViewProps {
   t: TranslateFunction;
   filter: {
@@ -101,7 +92,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
       />
     </div>
   );
-
+  const { modalName, modalId } = filter;
   return (
     <>
       <MetaTags title={t('title')} description={t('meta')} />
@@ -118,19 +109,13 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
           <br />
         </Col>
         <Col lg={3} xs={24}>
-          {/* <div align="center"> */}
           {showAdd && (
             <>
-              <ReviewModal
-                cardTitle={t('addReview')}
-                t={t}
-                addReview={addReview}
-                modalName={filter.modalName}
-                modalId={filter.modalId}
-              />
+              <ModalDrawer buttonText={t('addReview')} height="80%">
+                <ReviewFormComponent t={t} onSubmit={addReview} modalData={{ modalName, modalId }} />
+              </ModalDrawer>
             </>
           )}
-          {/* </div> */}
         </Col>
       </Row>
       <Row>
