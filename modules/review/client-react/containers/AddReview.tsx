@@ -16,4 +16,4 @@ const AddReview: React.FC<AddReviewProps> = props => {
   return <AddReviewView {...props} />;
 };
 
-export default compose(withReviewAdding, translate('review'))(translate('user')(AddReview));
+export default compose(withReviewAdding, translate('review'))(AddReview);

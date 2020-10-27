@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Card, Spin } from 'antd';
+import { Row, Card } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
@@ -16,6 +16,7 @@ export interface AddReviewViewProps {
 
 const AddReviewView: React.FC<AddReviewViewProps> = props => {
   const { t, loading, addReview } = props;
+  // console.log(props);
   return (
     <PageLayout type="forms">
       <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
@@ -32,7 +33,7 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
             <Card
               title={
                 <Heading type="1">
-                  <strong>{'Add Review'}</strong>
+                  <strong>{t('addReview')}</strong>
                 </Heading>
               }
             >

@@ -8,7 +8,7 @@ import {
   HddOutlined,
   ShopOutlined,
   SolutionOutlined,
-  ToTopOutlined
+  ToTopOutlined,
 } from '@ant-design/icons';
 
 import { Empty, Divider, Button, Row, Col } from 'antd';
@@ -44,7 +44,7 @@ const MyOrdersView = props => {
     <div align="center">
       <br />
       <br />
-      <Empty description={t('orders.noListingsMsg')}>
+      <Empty description={t('noOrdersMsg')}>
         <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
           <Button type="primary">Add</Button>
         </Link>
@@ -53,7 +53,7 @@ const MyOrdersView = props => {
   );
 
   const renderFunc = (key, item) => (
-    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
+    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
   const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <ToTopOutlined />, <DeleteOutlined />];
   const RenderMyOrders = () => (
@@ -62,7 +62,6 @@ const MyOrdersView = props => {
       {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
-  console.log('props', props);
   return (
     <PageLayout>
       <MetaTags title=" MyOrders" description="" />
@@ -71,7 +70,7 @@ const MyOrdersView = props => {
         <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
             <SolutionOutlined />
-            &nbsp; My Orders
+            {t('myOrders')}
           </Heading>
           <br />
         </Col>
@@ -121,7 +120,7 @@ MyOrdersView.propTypes = {
   currentUser: PropTypes.object,
   orderStates: PropTypes.array,
   onUserStateChange: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
 export default MyOrdersView;

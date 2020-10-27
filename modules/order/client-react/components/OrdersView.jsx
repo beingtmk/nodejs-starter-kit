@@ -22,7 +22,7 @@ const OrderView = props => {
         <Col span={12}>
           <Heading type="2">
             <SolutionOutlined /> &nbsp;
-            {t('list.subTitle')}
+            {t('orders.subTitle')}
           </Heading>
         </Col>
         <Col span={12} align="right">
@@ -44,7 +44,7 @@ const OrderView = props => {
 
 OrderView.propTypes = {
   t: PropTypes.func,
-  load: PropTypes.bool
+  load: PropTypes.bool,
 };
 
 export default OrderView;

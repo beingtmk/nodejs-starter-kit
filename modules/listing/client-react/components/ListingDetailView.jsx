@@ -186,7 +186,7 @@ const ListingDetailView = props => {
                   {showArrow && <RightArrow nextSlide={nextSlide} />}
                 </div>
                 <div align="left" style={{ padding: '5px' }}>
-                  <h3>Details: </h3>
+                  <h3>{t('listingDetail.details')}</h3>
                   <p>{displayDataCheck(listing.description)}</p>
                 </div>
               </div>
@@ -213,7 +213,7 @@ const ListingDetailView = props => {
                   )}
                 </Col>
                 <Col lg={1} xs={3} align="right">
-                  <SocialSharingButtons {...message} onShare={onShare} />
+                  <SocialSharingButtons {...message} onShare={onShare} t={t} />
                 </Col>
               </Row>
               <br /> <p>{`SKU: ${listing && listing.sku}`}</p>
@@ -244,7 +244,9 @@ const ListingDetailView = props => {
 
                 <Col lg={8} md={24} xs={24}>
                   <p style={{ fontSize: '16px', marginTop: '5px' }}>
-                    {`Availability: ${inventoryCount > 0 ? 'In Stock' : 'Out of Stock'}`}
+                    {`${t('listingDetail.availability')} ${
+                      inventoryCount > 0 ? t('listingDetail.inStock') : t('listingDetail.outOfStock')
+                    }`}
                   </p>
                 </Col>
                 <Col span={24}>
@@ -254,16 +256,16 @@ const ListingDetailView = props => {
                       &nbsp; &nbsp;
                       <div style={{ lineHeight: '45px', display: 'flex' }}>
                         <div style={{ fontSize: '15px' }}>
-                          <b>Saving Amount: &nbsp;</b>
+                          <b>{t('listingDetail.savingAmount')} &nbsp;</b>
                         </div>
                         {(cost.toFixed(2) - (cost - cost * (discount / 100)).toFixed(2)).toFixed(2)}
                       </div>
                     </div>
                   )}
                   <i>
-                    *Including GST
-                    <br /> *free shipping
-                    <br /> *certified
+                    {t('listingDetail.includingGST')}
+                    <br /> {t('listingDetail.freeShipping')}
+                    <br /> {t('listingDetail.certified')}
                   </i>
                 </Col>
               </Row>

@@ -18,6 +18,7 @@ const MyListingsView = props => {
   const renderFunc = (key, listing) => (
     // <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
     <ListingItemComponent
+      t={t}
       key={key}
       history={history}
       item={listing}
@@ -30,13 +31,14 @@ const MyListingsView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <SolutionOutlined /> &nbsp; My Listings
+            <SolutionOutlined />
+            {t('myListings.heading')}
           </Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>
             <Button type="primary">
-              <PlusOutlined /> Add
+              <PlusOutlined /> {t('myListings.btn.add')}
             </Button>
           </Link>
         </Col>
@@ -50,7 +52,7 @@ const MyListingsView = props => {
           gutter: 24,
           sm: 1,
           md: 1,
-          lg: 1
+          lg: 1,
         }}
         {...props}
         items={listings}
@@ -60,7 +62,7 @@ const MyListingsView = props => {
   );
   return (
     <PageLayout>
-      <MetaTags title="My Listings" description={`${settings.app.name} - My Listings)}`} />
+      <MetaTags title={t('myListings.title')} description={`${settings.app.name} - ${t('myListings.title')})}`} />
 
       {loading && <Spinner />}
       {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
@@ -73,7 +75,7 @@ MyListingsView.propTypes = {
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default MyListingsView;

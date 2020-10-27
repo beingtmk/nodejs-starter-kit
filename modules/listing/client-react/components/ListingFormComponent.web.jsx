@@ -19,7 +19,7 @@ import {
   FormItem,
   RenderCheckBox,
   NextButton,
-  SubmitButton
+  SubmitButton,
 } from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
@@ -38,32 +38,30 @@ const ListingFormSchema = [
       Yup.object().shape({
         cost: Yup.number()
           .required()
-          .typeError('Cost is required field')
+          .typeError('Cost is required field'),
       })
     ),
     listingDetail: Yup.object().shape({
       inventoryCount: Yup.number()
         .min(1, 'Inventory count must be greater than or equal to 1')
-        .required()
+        .required(),
     }),
     listingOptions: Yup.object().shape({
       fixedQuantity: Yup.mixed()
         .required()
-        .test('lessThanInventoryCount', 'Fixed quantity must be less than or equal to "Inventory Count"', function(
-          value
-        ) {
+        .test('lessThanInventoryCount', 'Fixed quantity must be less than or equal to "Inventory Count"', function(value) {
           const inventoryCount = this.options.from[1].value.listingDetail.inventoryCount;
           if (value === 0) {
             return this.createError({ message: 'Fixed quantity is required (Use -1)' });
           }
           return value <= inventoryCount ? true : false;
         })
-        .required()
-    })
+        .required(),
+    }),
   }),
   Yup.object().shape({
     listingFlags: Yup.object().shape({
-      isDiscount: Yup.boolean()
+      isDiscount: Yup.boolean(),
     }),
     listingCostArray: Yup.array().of(
       Yup.object().shape({
@@ -74,24 +72,24 @@ const ListingFormSchema = [
             : value < 100
             ? true
             : this.createError({ message: 'Discount must be less than 100' });
-        })
+        }),
       })
-    )
+    ),
   }),
   Yup.object().shape({
     listingMedia: Yup.object().shape({
       video: Yup.array().of(
         Yup.object().shape({
-          url: Yup.string().required('Url is required or delete field')
+          url: Yup.string().required('Url is required or delete field'),
         })
-      )
-    })
-  })
+      ),
+    }),
+  }),
 ];
 
 const ListingFormComponent = props => {
   const [load, setLoad] = useState(false);
-  const { step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
+  const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
   let formItemsVideos = null;
@@ -109,9 +107,9 @@ const ListingFormComponent = props => {
               <Field
                 name={`listingMedia.video[${index}].url`}
                 component={RenderField}
-                placeholder={'Video url'}
+                placeholder={t('listingForm.videoUrl')}
                 type="text"
-                label={'Video url'}
+                label={t('listingForm.videoUrl')}
                 value={v.url}
                 key={index}
               />
@@ -168,13 +166,13 @@ const ListingFormComponent = props => {
   const addVideo = () => {
     const obj = {
       url: '',
-      type: VIDEO
+      type: VIDEO,
     };
     props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
   };
   const addHighlight = () => {
     const obj = {
-      highlight: ''
+      highlight: '',
     };
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
@@ -206,17 +204,17 @@ const ListingFormComponent = props => {
               <Field
                 name="title"
                 component={RenderField}
-                placeholder="Listing Title"
+                placeholder={t('listingForm.title')}
                 type="text"
-                label="Listing Title"
+                label={t('listingForm.title')}
                 value={values.title}
               />
               <Field
                 name="description"
                 component={RenderField}
-                placeholder="Description"
+                placeholder={t('listingForm.description')}
                 type="textarea"
-                label="Description"
+                label={t('listingForm.description')}
                 value={values.description}
               />
             </Col>
@@ -224,17 +222,17 @@ const ListingFormComponent = props => {
               <Field
                 name="sku"
                 component={RenderField}
-                placeholder="Listing SKU"
+                placeholder={t('listingForm.SKU')}
                 type="text"
-                label="Listing SKU"
+                label={t('listingForm.SKU')}
                 value={values.sku}
               />
               <Field
                 name="listingCostArray[0].cost"
                 component={RenderField}
-                placeholder="Cost"
+                placeholder={t('listingForm.cost')}
                 type="number"
-                label="Cost"
+                label={t('listingForm.cost')}
                 min={0}
                 value={values.listingCostArray[0].cost}
               />
@@ -243,9 +241,9 @@ const ListingFormComponent = props => {
               <Field
                 name="listingDetail.inventoryCount"
                 component={RenderField}
-                placeholder="Listing Invontory Count"
+                placeholder={t('listingForm.invontoryCount')}
                 type="number"
-                label="Listing Invontory Count"
+                label={t('listingForm.invontoryCount')}
                 min={0}
                 value={values.listingDetail.inventoryCount}
               />
@@ -254,12 +252,12 @@ const ListingFormComponent = props => {
               <Field
                 name="listingOptions.fixedQuantity"
                 component={RenderField}
-                placeholder="Fixed Quantity (Enter -1 for false)"
+                placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
                 type="number"
                 label={
                   <>
-                    Fixed Quantity &nbsp;
-                    <Tooltip title={'Enter -1 for false'}>
+                    {t('listingForm.fixedQuantity')} &nbsp;
+                    <Tooltip title={t('listingForm.tooltip')}>
                       <InfoCircleOutlined />
                     </Tooltip>
                   </>
@@ -293,7 +291,7 @@ const ListingFormComponent = props => {
             <Col span={24} align="right">
               <br />
               <NextButton style={{ width: 'auto' }} type="submit">
-                Next
+                {t('listingForm.btn.next')}
               </NextButton>
             </Col>
           </Row>
@@ -306,7 +304,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isFeatured"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Featured'}
+                  label={t('listingForm.isFeatured')}
                   checked={values.listingFlags.isFeatured}
                 />
               </Col>
@@ -315,7 +313,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isDiscount"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Discount'}
+                  label={t('listingForm.isDiscount')}
                   checked={values.listingFlags.isDiscount}
                 />
               </Col>
@@ -326,7 +324,7 @@ const ListingFormComponent = props => {
                   name="isActive"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Active'}
+                  label={t('listingForm.isActive')}
                   checked={values.isActive}
                 />
               </Col>
@@ -335,9 +333,9 @@ const ListingFormComponent = props => {
                   <Field
                     name="listingCostArray[0].discount"
                     component={RenderField}
-                    placeholder="Discount"
+                    placeholder={t('listingForm.discount')}
                     type="number"
-                    label="Discount"
+                    label={t('listingForm.discount')}
                     min={0}
                     max={100}
                     value={values.listingCostArray[0].discount}
@@ -351,7 +349,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isNew"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is New'}
+                  label={t('listingForm.isNew')}
                   checked={values.listingFlags.isNew}
                 />
               </Col>
@@ -361,7 +359,7 @@ const ListingFormComponent = props => {
                     name="finalPrice"
                     component={RenderField}
                     type="number"
-                    label={'Final Price'}
+                    label={t('listingForm.finalPrice')}
                     disabled={true}
                     value={(
                       values.listingCostArray[0].cost -
@@ -375,13 +373,13 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(0)}>
-                  <ArrowLeftOutlined /> Previous
+                  <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
                 </Button>
               </Col>
               <Col span={12} align="right">
                 <br />
                 <NextButton style={{ width: 'auto' }} type="submit">
-                  Next
+                  {t('listingForm.btn.next')}
                 </NextButton>
               </Col>
             </Col>
@@ -392,13 +390,13 @@ const ListingFormComponent = props => {
             <Col md={12} sm={24} xs={24} lg={12} align="left">
               <Row>
                 <Col span={18}>
-                  <FormItem label={'Add video url'}></FormItem>
+                  <FormItem label={t('listingForm.addVideo')}></FormItem>
                 </Col>
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addVideo}>
                       <VideoCameraOutlined />
-                      Add
+                      {t('listingForm.btn.add')}
                     </Button>
                   </FormItem>
                 </Col>
@@ -409,7 +407,7 @@ const ListingFormComponent = props => {
               <FormItem label={'Add images'}>
                 <FieldArray
                   name="listingMedia.image"
-                  label={'Listing Image'}
+                  label={t('listingForm.image')}
                   render={arrayHelpers => (
                     <RenderUploadMultiple
                       setload={load => setLoad(load)}
@@ -427,14 +425,14 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(1)}>
-                  <ArrowLeftOutlined /> Previous
+                  <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
                 </Button>
               </Col>
 
               <Col span={12} align="right">
                 <br />
-                <SubmitButton style={{ width: 'auto' }} disabled={load} type="submit">
-                  Submit
+                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                  {t('listingForm.btn.submit')}
                 </SubmitButton>
               </Col>
             </Col>
@@ -453,7 +451,7 @@ ListingFormComponent.propTypes = {
   setStep: PropTypes.func,
   handleSubmit: PropTypes.func,
   values: PropTypes.object,
-  listing: PropTypes.object
+  listing: PropTypes.object,
 };
 
 const ListingWithFormik = withFormik({
@@ -461,14 +459,14 @@ const ListingWithFormik = withFormik({
   mapPropsToValues: props => {
     let listingMedia = {
       image: [],
-      video: []
+      video: [],
     };
     function getListingImage(listingMedium) {
       const obj = {
         id: (listingMedium && listingMedium.id) || null,
         url: (listingMedium && listingMedium.url) || '',
         type: (listingMedium && listingMedium.type) || '',
-        isActive: (listingMedium && listingMedium.isActive) || true
+        isActive: (listingMedium && listingMedium.isActive) || true,
       };
       obj.type === 'image' && listingMedia.image.push(obj);
       obj.type === 'video' && listingMedia.video.push(obj);
@@ -479,13 +477,13 @@ const ListingWithFormik = withFormik({
         cost: (listingCost && listingCost.cost) || '',
         discount: (listingCost && listingCost.discount) || 0,
         type: (listingCost && listingCost.type) || '',
-        label: (listingCost && listingCost.label) || ''
+        label: (listingCost && listingCost.label) || '',
       };
     }
     function getListingHighlight(listingHighlight) {
       return {
         id: (listingHighlight && listingHighlight.id) || null,
-        highlight: (listingHighlight && listingHighlight.highlight) || ''
+        highlight: (listingHighlight && listingHighlight.highlight) || '',
       };
     }
 
@@ -501,33 +499,30 @@ const ListingWithFormik = withFormik({
       sku: (props.listing && props.listing.sku) || '',
       isActive: props.listing && (props.listing.isActive ? true : false),
       listingHighlight:
-        (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) ||
-        [],
-      listingCostArray: (props.listing &&
-        props.listing.listingCostArray &&
-        props.listing.listingCostArray.map(getCost)) || [
+        (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) || [],
+      listingCostArray: (props.listing && props.listing.listingCostArray && props.listing.listingCostArray.map(getCost)) || [
         {
           id: null,
           cost: '',
           discount: 0,
           type: '',
-          label: ''
-        }
+          label: '',
+        },
       ],
 
       listingFlags: (props.listing && props.listing.listingFlags) || {
         id: null,
         isFeatured: false,
         isNew: true,
-        isDiscount: false
+        isDiscount: false,
       },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
-        fixedQuantity: -1
+        fixedQuantity: -1,
       },
       listingDetail: (props.listing && props.listing.listingDetail) || {
         id: null,
-        inventoryCount: 1
+        inventoryCount: 1,
       },
 
       listingMedia: (props.listing &&
@@ -535,8 +530,8 @@ const ListingWithFormik = withFormik({
         props.listing.listingMedia.map(getListingImage) &&
         listingMedia) || {
         image: [],
-        video: []
-      }
+        video: [],
+      },
     };
   },
   async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
@@ -559,29 +554,29 @@ const ListingWithFormik = withFormik({
         title: values.title,
         description: values.description,
         sku: values.sku,
-        isActive: values.isActive
+        isActive: values.isActive,
       };
       input.listingCostArray = [];
       const cost = {
         cost: values.listingCostArray[0].cost,
         discount: values.listingCostArray[0].discount,
         type: values.listingCostArray[0].type,
-        label: values.listingCostArray[0].label
+        label: values.listingCostArray[0].label,
       };
       input.listingCostArray.push(cost);
       input.listingFlags = {
         id: values.listingFlags.id,
         isFeatured: values.listingFlags.isFeatured,
         isNew: values.listingFlags.isNew,
-        isDiscount: values.listingFlags.isDiscount
+        isDiscount: values.listingFlags.isDiscount,
       };
       input.listingOptions = {
         id: values.listingOptions.id,
-        fixedQuantity: values.listingOptions.fixedQuantity
+        fixedQuantity: values.listingOptions.fixedQuantity,
       };
       input.listingDetail = {
         id: values.listingDetail.id,
-        inventoryCount: values.listingDetail.inventoryCount
+        inventoryCount: values.listingDetail.inventoryCount,
       };
       input.listingMedia = [];
       if (values.listingMedia.image.length > 0) {
@@ -589,7 +584,7 @@ const ListingWithFormik = withFormik({
       } else {
         input.listingMedia.push({
           url: NO_IMG,
-          type: 'image'
+          type: 'image',
         });
       }
       if (values.listingMedia.video.length > 0) {
@@ -607,7 +602,7 @@ const ListingWithFormik = withFormik({
   },
   // validate: values => validate(values, ListingFormSchema),
   validationSchema: ({ step }) => ListingFormSchema[step],
-  displayName: 'Listing Form' // helps with React DevTools
+  displayName: 'Listing Form', // helps with React DevTools
 });
 
 export default ListingWithFormik(ListingFormComponent);

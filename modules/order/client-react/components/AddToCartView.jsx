@@ -5,13 +5,14 @@ import { Card } from 'antd';
 import AddToCartForm from './AddToCartForm';
 
 const AddToCartView = props => {
-  const { currentUser, listing, onSubmit, onDelete, showBtn, item, getCart, cartLoading } = props;
+  const { currentUser, listing, onSubmit, onDelete, showBtn, item, getCart, cartLoading, t } = props;
   const listingOwned = (listing && listing.user && listing.user.id) === (currentUser && currentUser.id);
   const cartItemArray = getCart ? getCart.orderDetails.filter(oD => oD.modalId === listing.id) : [];
   // console.log(listing, cartItemArray);
   return (
     <Card>
       <AddToCartForm
+        t={t}
         currentUser={currentUser}
         onSubmit={onSubmit}
         max={
@@ -41,7 +42,8 @@ AddToCartView.propTypes = {
   currentUser: PropTypes.object,
   item: PropTypes.object,
   listing: PropTypes.object,
-  getCart: PropTypes.object
+  getCart: PropTypes.object,
+  t: PropTypes.func
 };
 
 export default AddToCartView;

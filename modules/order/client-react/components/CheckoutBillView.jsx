@@ -17,7 +17,6 @@ const CheckoutBillView = props => {
   const { addresses: address } = values;
   const addresses = [...address];
   const getCart = !props.loading && props.getCart;
-
   return (
     <PageLayout>
       <MetaTags title="Bill" description={`${settings.app.name} - ${'meta'}`} />
@@ -26,21 +25,21 @@ const CheckoutBillView = props => {
         <div className="checkoutDiv">
           <Row type="flex" style={{ alignContent: 'center' }} gutter={24}>
             <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-              <CheckoutStepsComponent step={1} />
+              <CheckoutStepsComponent step={1} t={t} />
             </Col>
             <Col span={24}>
-              <h3 className="billingAddress">Billing Address</h3>
+              <h3 className="billingAddress">{t('checkoutBill.billingAddress')}</h3>
               <br />
             </Col>
 
             <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
               {addresses && (
                 <Card style={{ height: '100%' }}>
-                  <h3 className="billingAddress">Shipping Address</h3>
+                  <h3 className="billingAddress">{t('checkoutBill.shippingAddress')}</h3>
                   <br />
                   <hr />
                   <br />
-                  <h4>Select the address you want the order to be delivered at:</h4>
+                  <h4>{t('checkoutBill.selectAddress')}</h4>
                   <FieldArray
                     name="addresses"
                     render={arrayHelpers => (
@@ -62,6 +61,7 @@ const CheckoutBillView = props => {
             </Col>
             <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
               <CheckoutCardComponent
+                t={t}
                 onSubmit={() => {
                   console.log('Working!');
                   props.onSubmit();

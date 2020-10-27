@@ -59,7 +59,7 @@ const Align = styled.div`
 `;
 
 const CartItemComponent = props => {
-  const { item, onEdit, onDelete, currentUser } = props;
+  const { t, item, onEdit, onDelete, currentUser } = props;
   // console.log('cart item', props);
   var coverGrid = {
     xs: { span: 24 },
@@ -86,7 +86,7 @@ const CartItemComponent = props => {
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {onEdit && (
             <Col span={8}>
-              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} />
+              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} t={t} />
             </Col>
           )}
 
@@ -143,7 +143,7 @@ const CartItemComponent = props => {
                 <br />
                 <h3>
                   <Position1 bottom={'100'}>
-                    <span>Quantity: </span>
+                    <span>{t('cartItem.quantity')}</span>
                   </Position1>
                 </h3>
 
@@ -151,7 +151,7 @@ const CartItemComponent = props => {
                 <br />
                 <Position bottom={'30'}>
                   <strong>
-                    <span>Amount</span> &#8377; {`${item.cost} X ${item.orderOptions.quantity}`}
+                    <span>{t('cartItem.amount')}</span> &#8377; {`${item.cost} X ${item.orderOptions.quantity}`}
                   </strong>
                 </Position>
               </Card>
@@ -171,7 +171,8 @@ CartItemComponent.propTypes = {
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   onSubmit: PropTypes.func,
-  mobile: PropTypes.func
+  mobile: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default CartItemComponent;

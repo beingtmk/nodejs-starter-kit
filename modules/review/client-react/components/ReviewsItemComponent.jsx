@@ -13,6 +13,7 @@ import { displayDataCheck } from '@gqlapp/listing-client-react/components/functi
 import { withReviewHelpfulStatus } from '../containers/ReviewOperations';
 import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
+import { displayDateCheck } from './functions';
 
 const Avatar = styled.img`
   border-radius: 50%;
@@ -52,6 +53,7 @@ const ReviewModala = styled.a`
 
 const ReviewsItemComponent = props => {
   const {
+    t,
     review,
     showPhotos,
     handleHelpful,
@@ -59,7 +61,7 @@ const ReviewsItemComponent = props => {
     currentUser,
     showModal = false,
     history,
-    reviewHelpfulStatus
+    reviewHelpfulStatus,
   } = props;
   const [status, setStatus] = React.useState(reviewHelpfulStatus && reviewHelpfulStatus);
 
@@ -76,12 +78,12 @@ const ReviewsItemComponent = props => {
       <>
         <Menu.Item key="0">
           <Button style={{ color: 'black' }} type="link" href={`${ROUTES.editLink}/${review.id}`}>
-            {'Edit'}
+            {t('reviewItem.btn.edit')}
           </Button>
         </Menu.Item>
         <Menu.Item key="1">
           <Button style={{ color: 'black' }} type="link" onClick={() => deleteReview(review.id)}>
-            Delete
+            {t('reviewItem.btn.delete')}
           </Button>
         </Menu.Item>
       </>
@@ -110,13 +112,13 @@ const ReviewsItemComponent = props => {
             <strong>
               {!status ? (
                 <>
-                  Found helpful &nbsp;
+                  {t('reviewItem.helpful')}
                   <LikeFilled />
                   &nbsp;
                 </>
               ) : (
                 <>
-                  Found unhelpful &nbsp;
+                  {t('reviewItem.unhelpful')}
                   <DislikeFilled />
                   &nbsp;
                 </>
@@ -135,7 +137,7 @@ const ReviewsItemComponent = props => {
           style={{
             margin: '28px 0px 0px 16px',
             borderWidth: '0px',
-            borderRadius: '8px'
+            borderRadius: '8px',
           }}
         >
           <Col lg={10} md={10} xs={24}>
@@ -162,7 +164,7 @@ const ReviewsItemComponent = props => {
             </Col>
           )}
           <Col lg={12} md={12} xs={24}>
-            <>{displayDataCheck(new Date(Number(review.createdAt))).toLocaleDateString('en-IN')}</>
+            <>{displayDateCheck(review.createdAt)}</>
           </Col>
           <Col lg={0} md={0} xs={24}>
             <br />
@@ -181,7 +183,8 @@ ReviewsItemComponent.propTypes = {
   showModal: PropTypes.bool,
   reviewHelpfulStatus: PropTypes.bool,
   handleHelpful: PropTypes.func,
-  deleteReview: PropTypes.func
+  deleteReview: PropTypes.func,
+  t: PropTypes.func,
 };
 
 export default compose(withReviewHelpfulStatus)(ReviewsItemComponent);

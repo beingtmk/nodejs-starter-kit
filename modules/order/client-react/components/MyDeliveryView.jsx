@@ -34,12 +34,12 @@ const MyDeliveriesView = props => {
     <div align="center">
       <br />
       <br />
-      <Empty description={t('orders.noListingsMsg')} />
+      <Empty description={t('noOrdersMsg')} />
     </div>
   );
 
   const renderFunc = (key, item) => (
-    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
+    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
   const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <DeleteOutlined />];
   const RenderMyDeliveries = () => (
@@ -56,7 +56,7 @@ const MyDeliveriesView = props => {
         <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
             <SolutionOutlined />
-            &nbsp; My Deliveries
+            {t('myDeliveries')}
           </Heading>
           <br />
         </Col>
@@ -106,7 +106,7 @@ MyDeliveriesView.propTypes = {
   currentUser: PropTypes.object,
   orderStates: PropTypes.object,
   onUserStateChange: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
 export default MyDeliveriesView;

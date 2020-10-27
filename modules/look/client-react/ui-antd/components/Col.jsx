@@ -6,6 +6,8 @@ const Col = ({ children, xs, md, ...props }) => {
   const newProps = props;
   if (xs) newProps.xs = xs * 2;
   if (md) newProps.md = md * 2;
+  if (xs === 0) newProps.xs = 0;
+  if (md === 0) newProps.md = 0;
   return <ADCol {...newProps}>{children}</ADCol>;
 };
 

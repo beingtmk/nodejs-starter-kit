@@ -15,6 +15,7 @@ const MyReviewView = props => {
 
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
+      t={t}
       key={key}
       review={review}
       deleteReview={deleteReview}
@@ -30,7 +31,7 @@ const MyReviewView = props => {
           gutter: 24,
           sm: 1,
           md: 1,
-          lg: 1
+          lg: 1,
         }}
         items={reviews}
         {...props}
@@ -46,11 +47,10 @@ const MyReviewView = props => {
       <Row type={'flex'}>
         <Col xs={24} md={12} lg={12}>
           <Heading type="1">
-            <BookOutlined /> &nbsp; My Reviews
+            <BookOutlined />
+            {t('myReview')}
           </Heading>
-          <h3>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${displayDataCheck(reviews.totalCount)} reviews`}
-          </h3>
+          <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${displayDataCheck(reviews.totalCount)} reviews`}</h3>
         </Col>
         <Col xs={24} md={12} lg={12} align="right">
           <Col lg={0} md={0}>
@@ -58,12 +58,7 @@ const MyReviewView = props => {
               label={'Modal'}
               //  style={{ display: 'inline-flex' }}
             >
-              <Select
-                name="modal"
-                defaultValue={MODAL[0].value}
-                style={{ width: '100%' }}
-                onChange={e => setModalName(e)}
-              >
+              <Select name="modal" defaultValue={MODAL[0].value} style={{ width: '100%' }} onChange={e => setModalName(e)}>
                 {MODAL.map((m, i) => (
                   <Option key={i} value={m.value}>
                     {m.label}
@@ -74,12 +69,7 @@ const MyReviewView = props => {
           </Col>
           <Col xs={0} md={24} lg={24}>
             <FormItem label={'Modal'} style={{ display: 'inline-flex' }}>
-              <Select
-                name="modal"
-                defaultValue={MODAL[0].value}
-                style={{ width: '100px' }}
-                onChange={e => setModalName(e)}
-              >
+              <Select name="modal" defaultValue={MODAL[0].value} style={{ width: '100px' }} onChange={e => setModalName(e)}>
                 {MODAL.map((m, i) => (
                   <Option key={i} value={m.value}>
                     {m.label}
@@ -115,6 +105,6 @@ MyReviewView.propTypes = {
   reviews: PropTypes.object,
   currentUser: PropTypes.object,
   history: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 };
 export default MyReviewView;

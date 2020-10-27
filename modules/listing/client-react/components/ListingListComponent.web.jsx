@@ -7,16 +7,13 @@ import { Empty, Divider, Tooltip, Button } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
+import settings from '@gqlapp/config';
 
-import settings from '../../../../settings';
 import ROUTES from '../routes';
 import { displayDataCheck } from './functions';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const Loading = () => <Spinner />;
-Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => (
   <div align="center">
@@ -66,7 +63,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'user.username')} href="#">
-          Created by {renderOrderByArrow('user.username')}
+          {t('list.column.createdBy')} {renderOrderByArrow('user.username')}
         </a>
       ),
       width: 130,
@@ -78,7 +75,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'title')} href="#">
-          Title {renderOrderByArrow('title')}
+          {t('list.column.listTitle')} {renderOrderByArrow('title')}
         </a>
       ),
       width: 100,
@@ -94,7 +91,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'is_active')} href="#">
-          {t('Active')} {renderOrderByArrow('is_active')}
+          {t('list.column.active')} {renderOrderByArrow('is_active')}
         </a>
       ),
       width: 120,
@@ -120,7 +117,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_cost.cost')} href="#">
-          {'Cost'} {renderOrderByArrow('listing_cost.cost')}
+          {t('list.column.cost')} {renderOrderByArrow('listing_cost.cost')}
         </a>
       ),
       width: 100,
@@ -141,7 +138,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isFeatured')} href="#">
-          {'Featured'} {renderOrderByArrow('listing_flag.isFeatured')}
+          {t('list.column.featured')} {renderOrderByArrow('listing_flag.isFeatured')}
         </a>
       ),
       width: 120,
@@ -166,7 +163,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isNew')} href="#">
-          {'New'} {renderOrderByArrow('listing_flag.isNew')}
+          {t('list.column.new')} {renderOrderByArrow('listing_flag.isNew')}
         </a>
       ),
       width: 100,
@@ -193,7 +190,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isDiscount')} href="#">
-          {'Discount'} {renderOrderByArrow('listing_flag.isDiscount')}
+          {t('list.column.discount')} {renderOrderByArrow('listing_flag.isDiscount')}
         </a>
       ),
       width: 120,
@@ -204,7 +201,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_cost.discount')} href="#">
-          {'Discount'} {renderOrderByArrow('listing_cost.discount')}
+          {t('list.column.discount')} {renderOrderByArrow('listing_cost.discount')}
         </a>
       ),
       width: 100,
@@ -224,7 +221,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_option.fixedQuantity')} href="#">
-          {'Fixed Quantity'} {renderOrderByArrow('listing_option.fixedQuantity')}
+          {t('list.column.fixedQuantity')} {renderOrderByArrow('listing_option.fixedQuantity')}
         </a>
       ),
       width: 180,
@@ -235,7 +232,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listingDetail.inventoryCount')} href="#">
-          {'Inventory Count'} {renderOrderByArrow('listingDetail.inventoryCount')}
+          {t('list.column.inventoryCount')} {renderOrderByArrow('listingDetail.inventoryCount')}
         </a>
       ),
       width: 200,
@@ -275,7 +272,12 @@ const ListingListComponent = props => {
 
   const RenderListings = () => (
     <Fragment>
-      <Table scroll={{ x: 1300 }} dataSource={listings.edges.map(({ node }) => node)} columns={columns} />
+      <Table
+        scroll={{ x: 1300 }}
+        dataSource={listings.edges.map(({ node }) => node)}
+        columns={columns}
+        // loading={true}
+      />
       <div align="center">
         <Pagination
           itemsPerPage={listings.edges.length}
@@ -293,7 +295,7 @@ const ListingListComponent = props => {
   return (
     <>
       {/* Render loader */}
-      {loading && !listings && <Loading t={t} />}
+      {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}
       {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
     </>
