@@ -12,6 +12,7 @@ import { displayDataCheck } from '@gqlapp/listing-client-react/components/functi
 import { withReviewHelpfulStatus } from '../containers/ReviewOperations';
 import ImagesSlickComponent from './ImagesSlickComponent';
 import ROUTES from '../routes';
+import { displayDateCheck } from './functions';
 
 const Avatar = styled.img`
   border-radius: 50%;
@@ -162,7 +163,7 @@ const ReviewsItemComponent = props => {
             </Col>
           )}
           <Col lg={12} md={12} xs={24}>
-            <>{displayDataCheck(new Date(Number(review.createdAt))).toLocaleDateString('en-IN')}</>
+            <>{displayDateCheck(review.createdAt)}</>
           </Col>
           <Col lg={0} md={0} xs={24}>
             <br />

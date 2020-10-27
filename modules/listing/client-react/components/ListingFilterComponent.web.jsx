@@ -58,7 +58,7 @@ const ListingsFilterComponent = props => {
         <Row type="flex" align="middle">
           <Col lg={24} xs={24}>
             <Col lg={16} xs={24} md={14}>
-              <FormItem label={'search'}>
+              <FormItem label={'search'} style={{ width: '100%' }}>
                 <DebounceInput
                   minLength={2}
                   debounceTimeout={300}
