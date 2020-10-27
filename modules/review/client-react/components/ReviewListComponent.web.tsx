@@ -5,7 +5,7 @@ import { Divider, Empty, Button } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 import settings from '../../../../settings';
 import { Reviews, Review } from '../containers/Reviews.web';
@@ -13,8 +13,6 @@ import ROUTES from '../routes/index';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const Loading = ({ t }: { t: TranslateFunction }) => <Spinner />;
 
 const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
   <div align="center">
@@ -163,7 +161,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   return (
     <div>
       {/* Render loader */}
-      {loading && !reviews && <Loading t={t} />}
+      {loading && <RenderTableLoading columns={columns} />}
       {/* Render main review content */}
       {reviews && reviews.totalCount ? <RenderReviews /> : <NoReviewsMessage t={t} />}
     </div>
