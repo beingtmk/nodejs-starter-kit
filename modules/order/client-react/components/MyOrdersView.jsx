@@ -8,7 +8,7 @@ import {
   HddOutlined,
   ShopOutlined,
   SolutionOutlined,
-  ToTopOutlined,
+  ToTopOutlined
 } from '@ant-design/icons';
 
 import { Empty, Divider, Button, Row, Col } from 'antd';
@@ -120,7 +120,7 @@ MyOrdersView.propTypes = {
   currentUser: PropTypes.object,
   orderStates: PropTypes.array,
   onUserStateChange: PropTypes.func,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default MyOrdersView;

@@ -52,7 +52,7 @@ const MyListingsView = props => {
           gutter: 24,
           sm: 1,
           md: 1,
-          lg: 1,
+          lg: 1
         }}
         {...props}
         items={listings}
@@ -75,7 +75,7 @@ MyListingsView.propTypes = {
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default MyListingsView;

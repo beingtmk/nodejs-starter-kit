@@ -166,7 +166,7 @@ import ROUTES from '../routes';
 
 const loginFormSchema = {
   usernameOrEmail: [required, minLength(3)],
-  password: [required, minLength(settings.auth.password.minLength)],
+  password: [required, minLength(settings.auth.password.minLength)]
 };
 const { github, facebook, linkedin, google } = settings.auth.social;
 
@@ -177,7 +177,7 @@ const renderSocialButtons = (buttonsLength, t) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: '100%',
+        width: '100%'
       }}
     >
       {facebook.enabled && (
@@ -228,7 +228,8 @@ const renderSocialButtons = (buttonsLength, t) => {
 };
 
 const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => {
-  const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button).length;
+  const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button)
+    .length;
   return (
     <Form name="login" onSubmit={handleSubmit}>
       <Field
@@ -251,7 +252,7 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => 
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
@@ -305,7 +306,7 @@ LoginForm.propTypes = {
   errors: PropTypes.object,
   values: PropTypes.object,
   history: PropTypes.object,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 const LoginFormWithFormik = withFormik({
@@ -322,7 +323,7 @@ const LoginFormWithFormik = withFormik({
     });
   },
   validate: values => validate(values, loginFormSchema),
-  displayName: 'LoginForm', // helps with React DevTools
+  displayName: 'LoginForm' // helps with React DevTools
 });
 
 export default translate('user')(LoginFormWithFormik(LoginForm));

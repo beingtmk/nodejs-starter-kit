@@ -61,7 +61,7 @@ const ReviewsItemComponent = props => {
     currentUser,
     showModal = false,
     history,
-    reviewHelpfulStatus,
+    reviewHelpfulStatus
   } = props;
   const [status, setStatus] = React.useState(reviewHelpfulStatus && reviewHelpfulStatus);
 
@@ -137,7 +137,7 @@ const ReviewsItemComponent = props => {
           style={{
             margin: '28px 0px 0px 16px',
             borderWidth: '0px',
-            borderRadius: '8px',
+            borderRadius: '8px'
           }}
         >
           <Col lg={10} md={10} xs={24}>
@@ -184,7 +184,7 @@ ReviewsItemComponent.propTypes = {
   reviewHelpfulStatus: PropTypes.bool,
   handleHelpful: PropTypes.func,
   deleteReview: PropTypes.func,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default compose(withReviewHelpfulStatus)(ReviewsItemComponent);

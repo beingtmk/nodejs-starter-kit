@@ -12,18 +12,18 @@ const AddToCartFormBtns = props => {
     ? {
         xs: 0,
         md: 0,
-        lg: 12,
+        lg: 12
       }
     : {
         xs: 0,
         md: 0,
-        lg: 24,
+        lg: 24
       };
 
   const customGridXS = {
     xs: 24,
     md: 24,
-    lg: 0,
+    lg: 0
   };
   console.log(props);
   return (
@@ -123,7 +123,7 @@ AddToCartFormBtns.propTypes = {
   onDelete: PropTypes.func,
   title: PropTypes.string,
   catalogueCard: PropTypes.bool,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default translate('order')(AddToCartFormBtns);

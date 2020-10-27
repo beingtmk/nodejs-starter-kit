@@ -44,7 +44,7 @@ const OrderView = props => {
 
 OrderView.propTypes = {
   t: PropTypes.func,
-  load: PropTypes.bool,
+  load: PropTypes.bool
 };
 
 export default OrderView;

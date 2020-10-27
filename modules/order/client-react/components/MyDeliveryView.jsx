@@ -106,7 +106,7 @@ MyDeliveriesView.propTypes = {
   currentUser: PropTypes.object,
   orderStates: PropTypes.object,
   onUserStateChange: PropTypes.func,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default MyDeliveriesView;

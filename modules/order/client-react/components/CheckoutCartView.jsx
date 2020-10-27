@@ -176,7 +176,7 @@ CheckoutCartView.propTypes = {
   onSubmit: PropTypes.func,
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default CheckoutCartView;
