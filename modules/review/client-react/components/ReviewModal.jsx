@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Row, Col, Drawer } from 'antd';
 
-import { AddButton } from '@gqlapp/look-client-react';
+import { AddButton, Heading } from '@gqlapp/look-client-react';
 import ReviewFormComponent from './ReviewFormComponent';
 
 const ReviewModal = props => {
@@ -14,8 +14,17 @@ const ReviewModal = props => {
   return (
     <Row type={'flex'}>
       <Col lg={24} md={24} xs={0}>
-        <AddButton onClick={() => setVisibleModal(true)}>{'Add review'}</AddButton>
-        <Modal title={cardTitle} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
+        <AddButton onClick={() => setVisibleModal(true)}>{t('addReview')}</AddButton>
+        <Modal
+          title={
+            <>
+              <Heading type="3">{cardTitle}</Heading>
+            </>
+          }
+          visible={visibleModal}
+          onCancel={() => setVisibleModal(false)}
+          footer={null}
+        >
           <ReviewFormComponent
             t={t}
             onSubmit={addReview}
@@ -26,7 +35,7 @@ const ReviewModal = props => {
         </Modal>
       </Col>
       <Col lg={0} md={0} xs={24}>
-        <AddButton onClick={() => setVisibleDrawer(true)}>{'Add review'}</AddButton>
+        <AddButton onClick={() => setVisibleDrawer(true)}>{t('addReview')}</AddButton>
         <Drawer
           height={'80%'}
           title={cardTitle}

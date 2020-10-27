@@ -34,7 +34,7 @@ const MyOrdersView = props => {
     <div align="center">
       <br />
       <br />
-      <Empty description={t('orders.noListingsMsg')}>
+      <Empty description={t('noOrdersMsg')}>
         <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
           <Button type="primary">Add</Button>
         </Link>
@@ -43,7 +43,7 @@ const MyOrdersView = props => {
   );
 
   const renderFunc = (key, item) => (
-    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} />
+    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
   const Icons = [
     <Icon type="appstore" />,
@@ -58,7 +58,6 @@ const MyOrdersView = props => {
       {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
-  console.log('props', props);
   return (
     <PageLayout>
       <MetaTags title=" MyOrders" description="" />
@@ -67,7 +66,7 @@ const MyOrdersView = props => {
         <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
             <Icon type="solution" />
-            &nbsp; My Orders
+            {t('myOrders')}
           </Heading>
           <br />
         </Col>

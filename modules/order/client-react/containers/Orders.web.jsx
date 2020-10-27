@@ -18,7 +18,8 @@ import {
 import { subscribeToOrders } from './OrderSubscriptions';
 
 const Orders = props => {
-  const { t, updateQuery, deleteOrder, ordersSubscribeToMore, patchOrderState } = props;
+  const { deleteOrder, ordersSubscribeToMore, patchOrderState } = props;
+  // eslint-disable-next-line no-unused-vars
   const [load, setLoad] = React.useState(false);
   const filter = {};
 
@@ -51,7 +52,6 @@ const Orders = props => {
     }
   };
 
-  console.log('props', props);
   return (
     <OrdersView
       load={load}
@@ -63,13 +63,12 @@ const Orders = props => {
   );
 };
 
-// Orders.propTypes = {
-//   usersUpdated: PropTypes.object,
-//   updateQuery: PropTypes.func,
-//   t: PropTypes.func,
-//   subscribeToMore: PropTypes.func,
-//   filter: PropTypes.object
-// };
+Orders.propTypes = {
+  ordersSubscribeToMore: PropTypes.func,
+  patchOrderState: PropTypes.func,
+  deleteOrder: PropTypes.func,
+  filter: PropTypes.object
+};
 
 export default compose(
   withOrdersState,

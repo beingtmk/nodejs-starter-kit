@@ -30,7 +30,8 @@ const AddToCartForm = props => {
     showBtn = true,
     inCart = true,
     loading,
-    onDelete
+    onDelete,
+    t
   } = props;
   const disabled = max <= 0 || listingOwned || !currentUser;
 
@@ -52,12 +53,12 @@ const AddToCartForm = props => {
           <Row type="flex">
             <Col lg={24} md={24} xs={0}>
               <Button type={'primary'} onClick={handleSubmit}>
-                Save
+                {t('addToCart.form.btn.save')}
               </Button>
             </Col>
             <Col lg={0} md={0} xs={24}>
               <Button block type={'primary'} onClick={handleSubmit}>
-                Save
+                {t('addToCart.form.btn.save')}
               </Button>
             </Col>
           </Row>
@@ -65,6 +66,7 @@ const AddToCartForm = props => {
       ) : (
         <div align="right">
           <AddToCartFormBtns
+            t={t}
             title={
               !currentUser
                 ? 'SignIn To Continue'
@@ -95,7 +97,8 @@ AddToCartForm.propTypes = {
   listingOwned: PropTypes.bool,
   loading: PropTypes.bool,
   showBtn: PropTypes.bool,
-  inCart: PropTypes.bool
+  inCart: PropTypes.bool,
+  t: PropTypes.func
 };
 
 const AddToCartWithFormik = withFormik({

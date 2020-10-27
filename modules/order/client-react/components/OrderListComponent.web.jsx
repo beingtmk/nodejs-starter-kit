@@ -11,6 +11,7 @@ import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDateCheck } from '@gqlapp/review-client-react/components/functions';
 import OrderStatusMail from '../containers/OrderStatusMail';
 import settings from '../../../../settings';
 import ROUTES from '../routes';
@@ -125,7 +126,7 @@ const OrderListComponent = props => {
       ),
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text, record) => <>{displayDataCheck(new Date(Number(record.createdAt)).toLocaleDateString('en-IN'))}</>
+      render: (text, record) => <>{displayDateCheck(record.createdAt)}</>
     },
     {
       title: t('list.column.actions'),

@@ -61,6 +61,7 @@ class HomeView4 extends React.Component {
         filter={{ label: LABEL[1], isActive: true }}
         isMobile={this.state.isMobile}
         {...this.props}
+        style={{ backgroundColor: '#f7f7f7' }}
       />,
       <ListingsCarousel
         filter={{ isFeatured: true, isActive: true }}
@@ -75,6 +76,7 @@ class HomeView4 extends React.Component {
         title={'Our Latest Additions'}
         history={history}
         {...this.props}
+        style={{ backgroundColor: '#f7f7f7' }}
       />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,

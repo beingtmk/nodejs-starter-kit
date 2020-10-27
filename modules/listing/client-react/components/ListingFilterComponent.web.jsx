@@ -21,7 +21,8 @@ const ListingsFilterComponent = props => {
     listings,
     showIsActive = false,
     orderBy,
-    onOrderBy
+    onOrderBy,
+    t
   } = props;
   const rangeValues = listings && listings.rangeValues;
   const handleChangeSlider = e => {
@@ -57,7 +58,7 @@ const ListingsFilterComponent = props => {
         <Row type="flex" align="middle">
           <Col lg={24} xs={24}>
             <Col lg={16} xs={24} md={14}>
-              <FormItem label={'search'}>
+              <FormItem label={'search'} style={{ width: '100%' }}>
                 <DebounceInput
                   minLength={2}
                   debounceTimeout={300}
@@ -77,14 +78,14 @@ const ListingsFilterComponent = props => {
                       checked={isActive}
                       onChange={() => onIsActiveChange(!isActive)}
                     />
-                    &nbsp;Is Active
+                    &nbsp;{t('listingFilter.isActive')}
                   </Label>
                 </FormItem>
               )}
             </Col>
             <Col lg={8} xs={24} md={10} align="right">
               <Col lg={0} md={0}>
-                <FormItem label={'Sort By'} style={{ width: '100%' }}>
+                <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
                   <Select
                     name="sortBy"
                     defaultValue={orderBy.order}
@@ -137,7 +138,7 @@ const ListingsFilterComponent = props => {
             <Col lg={0} md={0} xs={1} />
             <Col lg={20} md={18} xs={21}>
               <div style={{ display: 'block' }}>
-                <h5 style={{ fontSize: '' }}>Cost Filter</h5>
+                <h5 style={{ fontSize: '' }}>{t('listingFilter.costFilter')}</h5>
                 <SliderControlled
                   style={{
                     width: '100%',
@@ -158,14 +159,14 @@ const ListingsFilterComponent = props => {
               <Col lg={0} md={0}>
                 <br />
                 <Button block type="primary" onClick={handleFiltersRemove}>
-                  Reset Filters
+                  {t('listingFilter.btn.reset')}
                 </Button>
               </Col>
               <Col xs={0} md={24} lg={24}>
                 <br />
                 <FormItem>
                   <Button type="primary" onClick={handleFiltersRemove}>
-                    Reset Filters
+                    {t('listingFilter.btn.reset')}
                   </Button>
                 </FormItem>
               </Col>

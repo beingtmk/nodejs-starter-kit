@@ -21,7 +21,7 @@ const renderMetaData = () => (
 );
 
 const CheckoutOrderView = props => {
-  const { getCart, getCartLoading, onSubmit } = props;
+  const { t, getCart, getCartLoading, onSubmit } = props;
 
   const address =
     getCart &&
@@ -37,7 +37,7 @@ const CheckoutOrderView = props => {
       <div className="checkoutDiv">
         <Row gutter={24}>
           <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-            <CheckoutStepsComponent step={3} />
+            <CheckoutStepsComponent step={3} t={t} />
           </Col>
           <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
             <Row gutter={24}>
@@ -46,6 +46,7 @@ const CheckoutOrderView = props => {
                   {getCart && (
                     <>
                       <OrderTrackCardComponent
+                        t={t}
                         orderStatus={getCart.orderState}
                         // status={state.status}
                         completed={3}
@@ -59,7 +60,7 @@ const CheckoutOrderView = props => {
                       >
                         {/* <div style={{ marginTop: "200px" }} /> */}
                         <Card className="boxShadowTheme borderRadius9">
-                          <h4>The order will be delivered to the address below:</h4>
+                          <h4>{t('checkoutOrder.orderAddress')}</h4>
                           <hr />
                           <Row type="flex" justify="center" align="middle">
                             {address && <AddressView addresses={[address]} addressId={address.id} />}
@@ -74,6 +75,7 @@ const CheckoutOrderView = props => {
                 {getCart && (
                   <CheckoutCardComponent
                     // onSubmit={openCheckout}
+                    t={t}
                     onSubmit={onSubmit}
                     getCart={getCart}
                     product={{}}
@@ -96,7 +98,8 @@ const CheckoutOrderView = props => {
 CheckoutOrderView.propTypes = {
   getCart: PropTypes.object,
   getCartLoading: PropTypes.bool,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default CheckoutOrderView;

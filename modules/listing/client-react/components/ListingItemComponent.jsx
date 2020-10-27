@@ -48,7 +48,7 @@ const ListingItemComponent = props => {
     message.error('Click on No');
   };
 
-  const { item, history, loading, deleteProduct } = props;
+  const { item, history, loading, deleteProduct, t } = props;
 
   const sellerFirstName = (item && item.user && item.user.profile && item.user.profile.firstName) || null;
   const sellerLastName = (item && item.user && item.user.profile && item.user.profile.lastName) || null;
@@ -107,7 +107,7 @@ const ListingItemComponent = props => {
               <br />
               <br />
               <Link target="_blank" to={`${USER_ROUTES.userPublicProfileLink}${item.user.id}`}>
-                <Tooltip placement="topLeft" title="Visit User's Profile">
+                <Tooltip placement="topLeft" title={t('listingItem.tooltip')}>
                   <Meta
                     avatar={<Avatar src={sellerAvatar} />}
                     title={
@@ -167,7 +167,7 @@ const ListingItemComponent = props => {
                       <OrderGrey sm={7} xs={24} lg={24} align="right">
                         <span>
                           <strong>
-                            <span>Cost</span> &#8377; {item.listingCostArray[0].cost}
+                            <span>{t('listingItem.cost')}</span> &#8377; {item.listingCostArray[0].cost}
                           </strong>
                         </span>
                       </OrderGrey>
@@ -198,7 +198,8 @@ ListingItemComponent.propTypes = {
   currentUser: PropTypes.object,
   deleteProduct: PropTypes.func,
   history: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  t: PropTypes.func
 };
 
 export default ListingItemComponent;

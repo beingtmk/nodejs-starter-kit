@@ -65,7 +65,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'user.username')} href="#">
-          Created by {renderOrderByArrow('user.username')}
+          {t('list.column.createdBy')} {renderOrderByArrow('user.username')}
         </a>
       ),
       width: 130,
@@ -77,7 +77,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'title')} href="#">
-          Title {renderOrderByArrow('title')}
+          {t('list.column.listTitle')} {renderOrderByArrow('title')}
         </a>
       ),
       width: 100,
@@ -93,7 +93,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'is_active')} href="#">
-          {t('Active')} {renderOrderByArrow('is_active')}
+          {t('list.column.active')} {renderOrderByArrow('is_active')}
         </a>
       ),
       width: 120,
@@ -119,7 +119,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_cost.cost')} href="#">
-          {'Cost'} {renderOrderByArrow('listing_cost.cost')}
+          {t('list.column.cost')} {renderOrderByArrow('listing_cost.cost')}
         </a>
       ),
       width: 100,
@@ -140,7 +140,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isFeatured')} href="#">
-          {'Featured'} {renderOrderByArrow('listing_flag.isFeatured')}
+          {t('list.column.featured')} {renderOrderByArrow('listing_flag.isFeatured')}
         </a>
       ),
       width: 120,
@@ -165,7 +165,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isNew')} href="#">
-          {'New'} {renderOrderByArrow('listing_flag.isNew')}
+          {t('list.column.new')} {renderOrderByArrow('listing_flag.isNew')}
         </a>
       ),
       width: 100,
@@ -192,7 +192,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_flag.isDiscount')} href="#">
-          {'Discount'} {renderOrderByArrow('listing_flag.isDiscount')}
+          {t('list.column.discount')} {renderOrderByArrow('listing_flag.isDiscount')}
         </a>
       ),
       width: 120,
@@ -203,7 +203,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_cost.discount')} href="#">
-          {'Discount'} {renderOrderByArrow('listing_cost.discount')}
+          {t('list.column.discount')} {renderOrderByArrow('listing_cost.discount')}
         </a>
       ),
       width: 100,
@@ -223,7 +223,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_option.fixedQuantity')} href="#">
-          {'Fixed Quantity'} {renderOrderByArrow('listing_option.fixedQuantity')}
+          {t('list.column.fixedQuantity')} {renderOrderByArrow('listing_option.fixedQuantity')}
         </a>
       ),
       width: 180,
@@ -234,7 +234,7 @@ const ListingListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listingDetail.inventoryCount')} href="#">
-          {'Inventory Count'} {renderOrderByArrow('listingDetail.inventoryCount')}
+          {t('list.column.inventoryCount')} {renderOrderByArrow('listingDetail.inventoryCount')}
         </a>
       ),
       width: 200,

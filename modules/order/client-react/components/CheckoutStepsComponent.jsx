@@ -16,13 +16,14 @@ const Step = Steps.Step;
 
 class CheckoutStepsComponent extends Component {
   render() {
+    const { t } = this.props;
     return (
       <Col lg={24} md={24} align="left">
         <Col span={24}>
           <Row justify="center">
             <CheckoutSteps>
               <Heading type="3" align="center">
-                Checkout
+                {t('checkoutSteps.heading')}
               </Heading>
             </CheckoutSteps>
           </Row>
@@ -30,9 +31,9 @@ class CheckoutStepsComponent extends Component {
         <Row justify="center">
           <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 6 }}>
             <Steps current={this.props.step} size="small">
-              <Step title={<span className="font13">Cart</span>} />
-              <Step title={<span className="font13">Billing Address</span>} />
-              <Step title={<span className="font13">Payment options</span>} />
+              <Step title={<span className="font13">{t('checkoutSteps.step1')}</span>} />
+              <Step title={<span className="font13">{t('checkoutSteps.step2')}</span>} />
+              <Step title={<span className="font13">{t('checkoutSteps.step3')}</span>} />
             </Steps>
           </Col>
         </Row>
@@ -43,6 +44,7 @@ class CheckoutStepsComponent extends Component {
   }
 }
 CheckoutStepsComponent.propTypes = {
-  step: PropTypes.number
+  step: PropTypes.number,
+  t: PropTypes.func
 };
 export default CheckoutStepsComponent;

@@ -8,6 +8,7 @@ import { ORDER_STATES } from '@gqlapp/order-common';
 // import ORDER_PAYMENT from '../graphql/OrderPayment.graphql';
 // import PATCH_ORDER_PAYMENT from '../graphql/PatchOrderPayment.graphql';
 
+import { translate } from '@gqlapp/i18n-client-react';
 import ROUTES from '../routes';
 import CheckoutOrderView from '../components/CheckoutOrderView';
 
@@ -25,9 +26,9 @@ const CheckoutOrder = props => {
   const openCheckout = () => {
     // Variables
     // props.orderPaymentRefetch();
-    const orderId = orderPayment.orderId;
+    // const orderId = orderPayment.orderId;
     const amount = orderPayment.razorpayTransactionAmount;
-    const razorpayOrderId = orderPayment.razorpayOrderId;
+    // const razorpayOrderId = orderPayment.razorpayOrderId;
 
     let options = {
       key: 'rzp_test_vmG2tbpGt4EDR2',
@@ -67,9 +68,9 @@ const CheckoutOrder = props => {
     e.preventDefault();
 
     // console.log('onSubmit Called!');
-    const razorpayOrderId = document.getElementById('razorpay_order_id').value;
-    const razorpaySignature = document.getElementById('razorpay_signature').value;
-    const razorpayPaymentId = document.getElementById('razorpay_payment_id').value;
+    // const razorpayOrderId = document.getElementById('razorpay_order_id').value;
+    // const razorpaySignature = document.getElementById('razorpay_signature').value;
+    // const razorpayPaymentId = document.getElementById('razorpay_payment_id').value;
 
     // Get Values
     // const finalObj = {
@@ -150,5 +151,6 @@ export default compose(
   //   }),
   // }),
 
-  withPatchOrderState
+  withPatchOrderState,
+  translate('order')
 )(CheckoutOrder);

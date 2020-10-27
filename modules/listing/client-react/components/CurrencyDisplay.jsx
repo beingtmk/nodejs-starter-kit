@@ -1,4 +1,6 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
 import { Statistic } from 'antd';
 
 const symbols = {
@@ -11,22 +13,27 @@ const symbols = {
 };
 
 const currencyDisplayComponent = props => {
-  const { value, input, valueStyle, currency, style } = props;
+  const { /* value, currency, */ input, valueStyle, style } = props;
 
   const displayAmount = input * 1;
   const currentCurrency = symbols['INR'];
   return (
     <Statistic
-      style={style}
+      // style={style}
       title=""
       precision={2}
       valueStyle={valueStyle}
       value={displayAmount}
       prefix={currentCurrency}
       suffix={'/-'}
-      style={{ display: 'inline' }}
+      style={{ ...style, display: 'inline' }}
     />
   );
 };
-
+currencyDisplayComponent.propTypes = {
+  input: PropTypes.number,
+  valueStyle: PropTypes.obj,
+  currency: PropTypes.number,
+  style: PropTypes.obj
+};
 export default currencyDisplayComponent;

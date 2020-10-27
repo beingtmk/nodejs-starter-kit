@@ -85,7 +85,7 @@ const ListingFormSchema = [
 
 const ListingFormComponent = props => {
   const [load, setLoad] = useState(false);
-  const { step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
+  const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
   let formItemsVideos = null;
@@ -103,9 +103,9 @@ const ListingFormComponent = props => {
               <Field
                 name={`listingMedia.video[${index}].url`}
                 component={RenderField}
-                placeholder={'Video url'}
+                placeholder={t('listingForm.videoUrl')}
                 type="text"
-                label={'Video url'}
+                label={t('listingForm.videoUrl')}
                 value={v.url}
                 key={index}
               />
@@ -200,17 +200,17 @@ const ListingFormComponent = props => {
               <Field
                 name="title"
                 component={RenderField}
-                placeholder="Listing Title"
+                placeholder={t('listingForm.title')}
                 type="text"
-                label="Listing Title"
+                label={t('listingForm.title')}
                 value={values.title}
               />
               <Field
                 name="description"
                 component={RenderField}
-                placeholder="Description"
+                placeholder={t('listingForm.description')}
                 type="textarea"
-                label="Description"
+                label={t('listingForm.description')}
                 value={values.description}
               />
             </Col>
@@ -218,17 +218,17 @@ const ListingFormComponent = props => {
               <Field
                 name="sku"
                 component={RenderField}
-                placeholder="Listing SKU"
+                placeholder={t('listingForm.SKU')}
                 type="text"
-                label="Listing SKU"
+                label={t('listingForm.SKU')}
                 value={values.sku}
               />
               <Field
                 name="listingCostArray[0].cost"
                 component={RenderField}
-                placeholder="Cost"
+                placeholder={t('listingForm.cost')}
                 type="number"
-                label="Cost"
+                label={t('listingForm.cost')}
                 min={0}
                 value={values.listingCostArray[0].cost}
               />
@@ -237,9 +237,9 @@ const ListingFormComponent = props => {
               <Field
                 name="listingDetail.inventoryCount"
                 component={RenderField}
-                placeholder="Listing Invontory Count"
+                placeholder={t('listingForm.invontoryCount')}
                 type="number"
-                label="Listing Invontory Count"
+                label={t('listingForm.invontoryCount')}
                 min={0}
                 value={values.listingDetail.inventoryCount}
               />
@@ -248,12 +248,12 @@ const ListingFormComponent = props => {
               <Field
                 name="listingOptions.fixedQuantity"
                 component={RenderField}
-                placeholder="Fixed Quantity (Enter -1 for false)"
+                placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
                 type="number"
                 label={
                   <>
-                    Fixed Quantity &nbsp;
-                    <Tooltip title={'Enter -1 for false'}>
+                    {t('listingForm.fixedQuantity')} &nbsp;
+                    <Tooltip title={t('listingForm.tooltip')}>
                       <Icon type="info-circle" />
                     </Tooltip>
                   </>
@@ -287,7 +287,7 @@ const ListingFormComponent = props => {
             <Col span={24} align="right">
               <br />
               <NextButton style={{ width: 'auto' }} type="submit">
-                Next
+                {t('listingForm.btn.next')}
               </NextButton>
             </Col>
           </Row>
@@ -300,7 +300,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isFeatured"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Featured'}
+                  label={t('listingForm.isFeatured')}
                   checked={values.listingFlags.isFeatured}
                 />
               </Col>
@@ -309,7 +309,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isDiscount"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Discount'}
+                  label={t('listingForm.isDiscount')}
                   checked={values.listingFlags.isDiscount}
                 />
               </Col>
@@ -320,7 +320,7 @@ const ListingFormComponent = props => {
                   name="isActive"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Active'}
+                  label={t('listingForm.isActive')}
                   checked={values.isActive}
                 />
               </Col>
@@ -329,9 +329,9 @@ const ListingFormComponent = props => {
                   <Field
                     name="listingCostArray[0].discount"
                     component={RenderField}
-                    placeholder="Discount"
+                    placeholder={t('listingForm.discount')}
                     type="number"
-                    label="Discount"
+                    label={t('listingForm.discount')}
                     min={0}
                     max={100}
                     value={values.listingCostArray[0].discount}
@@ -345,7 +345,7 @@ const ListingFormComponent = props => {
                   name="listingFlags.isNew"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is New'}
+                  label={t('listingForm.isNew')}
                   checked={values.listingFlags.isNew}
                 />
               </Col>
@@ -355,7 +355,7 @@ const ListingFormComponent = props => {
                     name="finalPrice"
                     component={RenderField}
                     type="number"
-                    label={'Final Price'}
+                    label={t('listingForm.finalPrice')}
                     disabled={true}
                     value={(
                       values.listingCostArray[0].cost -
@@ -369,13 +369,13 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(0)}>
-                  <Icon type="arrow-left" /> Previous
+                  <Icon type="arrow-left" /> {t('listingForm.btn.previous')}
                 </Button>
               </Col>
               <Col span={12} align="right">
                 <br />
                 <NextButton style={{ width: 'auto' }} type="submit">
-                  Next
+                  {t('listingForm.btn.next')}
                 </NextButton>
               </Col>
             </Col>
@@ -386,13 +386,13 @@ const ListingFormComponent = props => {
             <Col md={12} sm={24} xs={24} lg={12} align="left">
               <Row>
                 <Col span={18}>
-                  <FormItem label={'Add video url'}></FormItem>
+                  <FormItem label={t('listingForm.addVideo')}></FormItem>
                 </Col>
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addVideo}>
                       <Icon type="video-camera" />
-                      Add
+                      {t('listingForm.btn.add')}
                     </Button>
                   </FormItem>
                 </Col>
@@ -403,7 +403,7 @@ const ListingFormComponent = props => {
               <FormItem label={'Add images'}>
                 <FieldArray
                   name="listingMedia.image"
-                  label={'Listing Image'}
+                  label={t('listingForm.image')}
                   render={arrayHelpers => (
                     <RenderUploadMultiple
                       setload={load => setLoad(load)}
@@ -421,14 +421,14 @@ const ListingFormComponent = props => {
               <Col span={12} align="left">
                 <br />
                 <Button onClick={() => setStep(1)}>
-                  <Icon type="arrow-left" /> Previous
+                  <Icon type="arrow-left" /> {t('listingForm.btn.previous')}
                 </Button>
               </Col>
 
               <Col span={12} align="right">
                 <br />
-                <SubmitButton style={{ width: 'auto' }} disabled={load} type="submit">
-                  Submit
+                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                  {t('listingForm.btn.submit')}
                 </SubmitButton>
               </Col>
             </Col>

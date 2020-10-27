@@ -1,6 +1,7 @@
 import React from 'react';
 import { Steps, Card, Icon } from 'antd';
 import { ORDER_STATES } from '@gqlapp/order-common';
+import PropTypes from 'prop-types';
 
 const { Step } = Steps;
 
@@ -18,7 +19,6 @@ export default class OrderTrackCardComponent extends React.Component {
   // }
   getStep() {
     const status = this.props.orderStatus;
-
     // var step = 0;
     if (status === ORDER_STATES.STALE) {
       return 0;
@@ -42,9 +42,11 @@ export default class OrderTrackCardComponent extends React.Component {
     // const status = this.props.orderStatus;
 
     // const dates = this.props.status.date;
+    const { t } = this.props;
+
     const stepsText = [
-      { id: 0, text: 'Payment Done.' },
-      { id: 2, text: 'Event pass booked.' }
+      { id: 0, text: t('orderDetails.status.step1') },
+      { id: 2, text: t('orderDetails.status.step2') }
       // {
       //   id: 2,
       //   text: 'Quality check done and prduct picked up from'
@@ -73,7 +75,7 @@ export default class OrderTrackCardComponent extends React.Component {
     return (
       <Card className="boxShadowTheme borderRadius9">
         <h4>
-          <strong>Status</strong>
+          <strong>{t('orderDetails.status.title')}</strong>
         </h4>
         <br />
 
@@ -99,3 +101,7 @@ export default class OrderTrackCardComponent extends React.Component {
     );
   }
 }
+OrderTrackCardComponent.propTypes = {
+  t: PropTypes.func,
+  orderStatus: PropTypes.string
+};
