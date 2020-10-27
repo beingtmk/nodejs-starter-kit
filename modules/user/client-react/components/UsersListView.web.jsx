@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Table, DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
   const [errors, setErrors] = useState([]);
@@ -108,8 +108,8 @@ const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
 
   return (
     <>
-      {loading && !users ? (
-        <div className="text-center">{t('users.loadMsg')}</div>
+      {loading ? (
+        <RenderTableLoading columns={columns} />
       ) : (
         <>
           {errors &&
