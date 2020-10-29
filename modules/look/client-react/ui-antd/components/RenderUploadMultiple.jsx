@@ -61,12 +61,7 @@ const RenderUploadMultiple = props => {
   // console.log(defaultFileList);
 
   return (
-    <FormItem
-      label={label}
-      validateStatus={validateStatus}
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24, offset: 1 }}
-    >
+    <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <Upload.Dragger
         defaultFileList={defaultFileList}
         name="file"

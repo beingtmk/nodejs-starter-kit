@@ -18,7 +18,7 @@ const RenderCheckBox = ({ input, label, meta: { touched, error } }) => {
       validateStatus={validateStatus}
       help={error}
       labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24, offset: 1 }}
+      wrapperCol={{ span: 24 }}
     >
       <div>
         <Checkbox {...input}>{label}</Checkbox>

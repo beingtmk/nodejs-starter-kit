@@ -20,7 +20,7 @@ const RenderField = ({ input, label, type, meta: { touched, error }, placeholder
       help={touched && error}
       tooltip={tooltip}
       labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24, offset: 1 }}
+      wrapperCol={{ span: 24 }}
     >
       {type != 'textarea' ? <Input {...input} placeholder={placeholder || label} type={type} /> : null}
 
