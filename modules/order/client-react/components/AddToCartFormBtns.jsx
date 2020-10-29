@@ -1,6 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Icon, Row, Col, Tooltip } from 'antd';
+import { DeleteOutlined, ShoppingCartOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { Button, Row, Col, Tooltip } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import ROUTES from '../routes';
@@ -24,6 +25,7 @@ const AddToCartFormBtns = props => {
     md: 24,
     lg: 0
   };
+  // console.log(props);
   return (
     <Tooltip title={title}>
       {inCart ? (
@@ -38,7 +40,7 @@ const AddToCartFormBtns = props => {
               ghost
               loading={loading}
             >
-              <Icon type="shopping" />
+              <ShoppingOutlined />
               {t('addToCart.form.btn.add')}
             </Button>
           </Col>
@@ -51,8 +53,8 @@ const AddToCartFormBtns = props => {
               disabled={loading || disabled}
               loading={loading}
             >
+              <ShoppingCartOutlined />
               {t('addToCart.form.btn.book')}
-              <Icon type="shopping-cart" />
             </Button>
           </Col>
           <Col {...customGridXS}>
@@ -65,12 +67,12 @@ const AddToCartFormBtns = props => {
               ghost
               loading={loading}
             >
-              <Icon type="shopping" />
+              <ShoppingOutlined />
               {t('addToCart.form.btn.add')}
             </Button>
             <Button block type="primary" size="large" onClick={onSubmitRedirect} disabled={disabled}>
+              <ShoppingCartOutlined />
               {t('addToCart.form.btn.book')}
-              <Icon type="shopping-cart" />
             </Button>
           </Col>
         </Row>
@@ -79,7 +81,7 @@ const AddToCartFormBtns = props => {
           {onDelete && (
             <Col {...customGridLG}>
               <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
-                <Icon type="delete" />
+                <DeleteOutlined />
                 {t('addToCart.form.btn.remove')}
               </Button>
             </Col>
@@ -88,21 +90,21 @@ const AddToCartFormBtns = props => {
             <a href={`${ROUTES.checkoutCart}`}>
               <Button type="primary" size="large" block disabled={disabled}>
                 {t('addToCart.form.btn.go')}
-                <Icon type="shopping-cart" />
+                <ShoppingCartOutlined />
               </Button>
             </a>
           </Col>
           <Col {...customGridXS}>
             {onDelete && (
               <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
-                <Icon type="delete" />
+                <DeleteOutlined />
                 {t('addToCart.form.btn.remove')}
               </Button>
             )}
             <a href={`${ROUTES.checkoutCart}`}>
               <Button block type="primary" size="large" disabled={disabled}>
                 {t('addToCart.form.btn.go')}
-                <Icon type="shopping-cart" />
+                <ShoppingCartOutlined />
               </Button>
             </a>
           </Col>

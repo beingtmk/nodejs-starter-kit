@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
-import { Tooltip, message, Row, Col, Icon, Form, Card, Button } from 'antd';
+
+import { ArrowLeftOutlined, InfoCircleOutlined, SolutionOutlined, VideoCameraOutlined } from '@ant-design/icons';
+
+import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Tooltip, message, Row, Col, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
@@ -115,8 +121,9 @@ const ListingFormComponent = props => {
             <Button
               type={'danger'}
               shape="circle"
-              icon={'delete'}
+              icon={<LegacyIcon type={'delete'} />}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
+              style={{ marginBottom: '25px' }}
             />
           </Col>
         </Row>
@@ -149,8 +156,9 @@ const ListingFormComponent = props => {
               <Button
                 type={'danger'}
                 shape="circle"
-                icon={'delete'}
+                icon={<LegacyIcon type={'delete'} />}
                 onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
+                style={{ marginBottom: '25px' }}
               />
             </Col>
           </Row>
@@ -179,7 +187,7 @@ const ListingFormComponent = props => {
       title={
         <>
           <h3>
-            <Icon type="solution" /> &nbsp;
+            <SolutionOutlined /> &nbsp;
             <strong>{displayDataCheck(cardTitle)}</strong>
           </h3>
           <div align="center">
@@ -193,7 +201,7 @@ const ListingFormComponent = props => {
         </>
       }
     >
-      <Form onSubmit={handleSubmit}>
+      <Form layout={'vertical'} onSubmit={handleSubmit}>
         {step === 0 && (
           <Row type="flex" gutter={24}>
             <Col md={12} xs={24} align="left">
@@ -250,11 +258,12 @@ const ListingFormComponent = props => {
                 component={RenderField}
                 placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
                 type="number"
+                // tooltip={{ title: t('listingForm.tooltip'), icon: <InfoCircleOutlined /> }}
                 label={
                   <>
-                    {t('listingForm.fixedQuantity')} &nbsp;
+                    {t('listingForm.fixedQuantity')}
                     <Tooltip title={t('listingForm.tooltip')}>
-                      <Icon type="info-circle" />
+                      <InfoCircleOutlined />
                     </Tooltip>
                   </>
                 }
@@ -271,7 +280,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addHighlight}>
-                      <Icon type="video-camera" />
+                      <VideoCameraOutlined />
                       Add
                     </Button>
                   </FormItem>
@@ -366,18 +375,20 @@ const ListingFormComponent = props => {
               </Col>
             </Col>
             <Col span={24} align="right">
-              <Col span={12} align="left">
-                <br />
-                <Button onClick={() => setStep(0)}>
-                  <Icon type="arrow-left" /> {t('listingForm.btn.previous')}
-                </Button>
-              </Col>
-              <Col span={12} align="right">
-                <br />
-                <NextButton style={{ width: 'auto' }} type="submit">
-                  {t('listingForm.btn.next')}
-                </NextButton>
-              </Col>
+              <Row>
+                <Col span={12} align="left">
+                  <br />
+                  <Button onClick={() => setStep(0)}>
+                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                  </Button>
+                </Col>
+                <Col span={12} align="right">
+                  <br />
+                  <NextButton style={{ width: 'auto' }} type="submit">
+                    {t('listingForm.btn.next')}
+                  </NextButton>
+                </Col>
+              </Row>
             </Col>
           </Row>
         )}
@@ -391,7 +402,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addVideo}>
-                      <Icon type="video-camera" />
+                      <VideoCameraOutlined />
                       {t('listingForm.btn.add')}
                     </Button>
                   </FormItem>
@@ -418,19 +429,21 @@ const ListingFormComponent = props => {
               </FormItem>
             </Col>
             <Col span={24} align="right">
-              <Col span={12} align="left">
-                <br />
-                <Button onClick={() => setStep(1)}>
-                  <Icon type="arrow-left" /> {t('listingForm.btn.previous')}
-                </Button>
-              </Col>
+              <Row>
+                <Col span={12} align="left">
+                  <br />
+                  <Button onClick={() => setStep(1)}>
+                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                  </Button>
+                </Col>
 
-              <Col span={12} align="right">
-                <br />
-                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
-                  {t('listingForm.btn.submit')}
-                </SubmitButton>
-              </Col>
+                <Col span={12} align="right">
+                  <br />
+                  <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                    {t('listingForm.btn.submit')}
+                  </SubmitButton>
+                </Col>
+              </Row>
             </Col>
           </Row>
         )}

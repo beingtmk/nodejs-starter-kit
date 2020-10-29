@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
-import { PageLayout, Card, CardTitle, Icon, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardTitle, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { UndoOutlined } from '@ant-design/icons';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
@@ -11,7 +12,7 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
       <Card>
         <CardTitle>
           <Heading type="2">
-            <Icon type="undo" /> {t('forgotPass.form.title')}
+            <UndoOutlined /> {t('forgotPass.form.title')}
           </Heading>
         </CardTitle>
         <h1 className="text-center"></h1>
@@ -24,7 +25,6 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
     <PageLayout type="forms">
       <MetaTags title={t('forgotPass.title')} description={t('forgotPass.meta')} />
       <Row justify="center">
-        <Col xs={0} md={0} lg={6} />
         <Col xs={24} lg={12}>
           <Col xs={24} md={24} lg={0}>
             <br />
@@ -33,8 +33,6 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
             <br />
           </Col>
           <Col xs={0} md={0} lg={24}>
-            <br />
-            <br />
             <br />
             <br />
             <br />

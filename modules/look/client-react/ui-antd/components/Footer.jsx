@@ -43,6 +43,8 @@ const Footer10DataSource = {
         name: 'block0',
         xs: 24,
         md: 6,
+        lg: 6,
+        xl: 6,
         className: 'block',
         title: {
           className: 'logo',
@@ -122,6 +124,8 @@ const Footer10DataSource = {
         name: 'block1',
         xs: 24,
         md: 6,
+        lg: 6,
+        xl: 6,
         className: 'block',
         title: { children: 'About Company' },
         childWrapper: {
@@ -132,6 +136,8 @@ const Footer10DataSource = {
         name: 'block2',
         xs: 24,
         md: 6,
+        lg: 6,
+        xl: 6,
         className: 'block',
         title: { children: 'Static Pages' },
         childWrapper: {
@@ -146,6 +152,8 @@ const Footer10DataSource = {
         name: 'block3',
         xs: 24,
         md: 6,
+        lg: 6,
+        xl: 6,
         className: 'block',
         title: { children: 'Keep in Touch' },
         childWrapper: {
@@ -222,7 +230,7 @@ class Footer extends React.Component {
       <div {...props} {...dataSource.wrapper}>
         <OverPack {...dataSource.OverPack}>
           <QueueAnim type="bottom" key="ul" leaveReverse component={Row} {...dataSource.block}>
-            <Row>{childrenToRender}</Row>
+            {childrenToRender}
           </QueueAnim>
           <TweenOne
             animation={{ y: '+=30', opacity: 0, type: 'from' }}

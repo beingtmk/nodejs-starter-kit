@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Empty, Icon, Button } from 'antd';
+import { PlusOutlined, SolutionOutlined } from '@ant-design/icons';
+import { Empty, Button } from 'antd';
 
 import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -15,7 +16,6 @@ const MyListingsView = props => {
   const { listings, loading, onDelete, history, t } = props;
 
   const renderFunc = (key, listing) => (
-    // <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
     <ListingItemComponent
       t={t}
       key={key}
@@ -30,14 +30,14 @@ const MyListingsView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <Icon type="solution" />
+            <SolutionOutlined />
             {t('myListings.heading')}
           </Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>
             <Button type="primary">
-              <Icon type="plus" /> {t('myListings.btn.add')}
+              <PlusOutlined /> {t('myListings.btn.add')}
             </Button>
           </Link>
         </Col>
@@ -49,9 +49,10 @@ const MyListingsView = props => {
       <SuggestedListComponent
         grid={{
           gutter: 24,
-          sm: 1,
+          xs: 1,
           md: 1,
-          lg: 1
+          lg: 1,
+          xxl: 1
         }}
         {...props}
         items={listings}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Row, Col, Spin } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
+import { Row, Col, Spin } from 'antd';
 import { MODAL } from '@gqlapp/review-common';
 import { FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
@@ -28,9 +29,10 @@ const MyReviewView = props => {
       <SuggestedListComponent
         grid={{
           gutter: 24,
-          sm: 1,
+          xs: 1,
           md: 1,
-          lg: 1
+          lg: 1,
+          xxl: 1
         }}
         items={reviews}
         {...props}
@@ -46,7 +48,7 @@ const MyReviewView = props => {
       <Row type={'flex'}>
         <Col xs={24} md={12} lg={12}>
           <Heading type="1">
-            <Icon type="book" />
+            <BookOutlined />
             {t('myReview')}
           </Heading>
           <h3>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
 export default class VerificationIconComponent extends React.Component {
   render() {
     if (!this.props.vStatus) {
-      return <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000" />;
+      return <CloseCircleTwoTone twoToneColor="#ff0000" />;
     } else {
-      return <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />;
+      return <CheckCircleTwoTone twoToneColor="#52c41a" />;
     }
   }
 }

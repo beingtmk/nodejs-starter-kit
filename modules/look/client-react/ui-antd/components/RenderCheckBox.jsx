@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Checkbox } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -11,7 +13,13 @@ const RenderCheckBox = ({ input, label, meta: { touched, error } }) => {
   }
 
   return (
-    <FormItem label={label} validateStatus={validateStatus} help={error}>
+    <FormItem
+      label={label}
+      validateStatus={validateStatus}
+      help={error}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <div>
         <Checkbox {...input}>{label}</Checkbox>
       </div>

@@ -63,7 +63,7 @@ const CheckoutBillView = props => {
               <CheckoutCardComponent
                 t={t}
                 onSubmit={() => {
-                  console.log('Working!');
+                  // console.log('Working!');
                   props.onSubmit();
                 }}
                 showState={false}

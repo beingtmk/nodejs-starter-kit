@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popconfirm, Icon } from 'antd';
+import { DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Popconfirm } from 'antd';
 
 class DeleteIcon extends React.Component {
   render() {
@@ -15,8 +16,8 @@ class DeleteIcon extends React.Component {
     }
 
     return (
-      <Popconfirm title={title} icon={<Icon type="question-circle-o" style={{ color: 'red' }} />} onConfirm={onClick}>
-        <Button type={color} htmlType={type} size={buttonSize} icon="delete" shape="circle" {...props} />
+      <Popconfirm title={title} icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={onClick}>
+        <Button type={color} htmlType={type} size={buttonSize} icon={<DeleteOutlined />} shape="circle" {...props} />
       </Popconfirm>
     );
   }

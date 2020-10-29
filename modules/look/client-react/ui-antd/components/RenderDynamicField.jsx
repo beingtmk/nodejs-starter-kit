@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Form, Icon } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
 import { RenderField, RenderUpload, Button } from '@gqlapp/look-client-react';
 
 const FormItem = Form.Item;
@@ -78,11 +80,10 @@ export default class DynamicFieldSet extends React.Component {
             </FormItem>
           ))}
           {keys.length > 1 ? (
-            <Icon
+            <MinusCircleOutlined
               style={{ paddingTop: '40px' }}
               title="Remove "
               className="dynamic-delete-button"
-              type="minus-circle-o"
               onClick={() => arrayHelpers.remove(indexv)}
             />
           ) : null}
@@ -95,7 +96,7 @@ export default class DynamicFieldSet extends React.Component {
           {formItems}
           <FormItem>
             <Button style={{ width: '200px' }} onClick={this.add}>
-              <Icon type="plus" /> {this.props.buttonText || 'Add Field'}
+              <PlusOutlined /> {this.props.buttonText || 'Add Field'}
             </Button>
           </FormItem>
         </FormItem>

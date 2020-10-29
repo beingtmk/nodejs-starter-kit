@@ -2,8 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Card, CardGroup, Icon, CardTitle, CardText, Underline, MetaTags } from '@gqlapp/look-client-react';
+import {
+  Row,
+  Col,
+  PageLayout,
+  Card,
+  CardGroup,
+  CardTitle,
+  CardText,
+  Underline,
+  MetaTags
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import { UserAddOutlined } from '@ant-design/icons';
 
 import RegisterForm from './RegisterForm';
 
@@ -21,7 +32,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
     <Card className="form-card">
       <Underline>
         <CardTitle>
-          <Icon type="user-add" /> {t('reg.form.title')}
+          <UserAddOutlined /> {t('reg.form.title')}
         </CardTitle>
       </Underline>
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
@@ -36,11 +47,13 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
     <PageLayout type="forms">
       <MetaTags title={t('reg.title')} description={t('reg.meta')} />
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Row>
+        <Col lg={24} md={0} xs={0}>
+          <br />
+          <br />
+          <br />
+        </Col>
+      </Row>
       {renderContent()}
     </PageLayout>
   );

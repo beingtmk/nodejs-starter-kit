@@ -35,13 +35,14 @@
   left: 100px;
   bottom: 50px;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   .content-layout {
     margin-top: @navbar-height-small;
     padding: 5px;
   }
   .form-layout-outer {
-    padding: 100px 202% 24px 202%;
+    margin-top: @navbar-height-small;
+    padding: @navbar-height-small 202% @navbar-height-small 202%;
   }
   #install-button{
     left: 60px;

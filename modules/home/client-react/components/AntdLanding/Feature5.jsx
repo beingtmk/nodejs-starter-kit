@@ -1,7 +1,8 @@
 import React from 'react';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { Tabs, Icon, Row, Col } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Tabs, Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import { Heading } from '@gqlapp/look-client-react';
@@ -33,7 +34,7 @@ class Content7 extends React.Component {
         key={i + 1}
         tab={
           <div className={tag.className}>
-            <Icon type={iconChildren} className={icon.className} />
+            <LegacyIcon type={iconChildren} className={icon.className} />
             <div {...tagText}>{tagText.children}</div>
           </div>
         }

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -113,7 +114,7 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <Icon type="down" />
+          <DownOutlined />
         </TweenOne>
       </div>
     );

@@ -1,7 +1,8 @@
 /* eslint-disable import/no-named-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Icon, Button, Result } from 'antd';
+import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
+import { Row, Col, Button, Result } from 'antd';
 
 import { PageLayout } from '@gqlapp/look-client-react';
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
@@ -42,10 +43,10 @@ const LogoutPageView = props => {
           subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
           extra={[
             <Button type="primary" key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
-              <Icon type="home" /> Go To Home
+              <HomeOutlined /> Go To Home
             </Button>,
             <Button key="signIn" onClick={() => history.push(`${USER_ROUTES.login}`)}>
-              <Icon type="login" />
+              <LoginOutlined />
               SignIn
             </Button>
           ]}

@@ -29,13 +29,7 @@ const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser })
             {renderContent()}
           </Col>
           <Col xs={0} md={24} lg={24}>
-            <LayoutCenter>
-              <br />
-              <br />
-              <br />
-              <br />
-              {renderContent()}
-            </LayoutCenter>
+            <LayoutCenter>{renderContent()}</LayoutCenter>
           </Col>
         </Row>
       )}

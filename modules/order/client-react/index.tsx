@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { SolutionOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -114,7 +115,7 @@ export default new ClientModule({
         key={ROUTES.order}
         title={
           <>
-            <Icon type="solution" /> Order
+            <SolutionOutlined /> Order
           </>
         }
       >

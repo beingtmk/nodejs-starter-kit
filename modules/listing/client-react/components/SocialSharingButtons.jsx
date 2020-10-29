@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ShareAltOutlined } from '@ant-design/icons';
 import { Button, Col, message, Modal, Card, Dropdown } from 'antd';
 import PropTypes from 'prop-types';
 import { Form, RenderField, Alert } from '@gqlapp/look-client-react';
@@ -104,7 +105,7 @@ const SocialSharingButtons = props => {
   return (
     <Col span={24} style={{ height: '50px' }}>
       <Dropdown overlay={sharingMenu} trigger={['hover']}>
-        <Button shape="circle" type="primary" ghost icon="share-alt" />
+        <Button shape="circle" type="primary" ghost icon={<ShareAltOutlined />} />
       </Dropdown>
 
       <Modal

@@ -1,5 +1,7 @@
 import React from 'react';
 import { withFormik, FormikProps } from 'formik';
+
+import { MailOutlined } from '@ant-design/icons';
 import { isFormError } from '@gqlapp/forms-client-react';
 import { contactFormSchema } from '@gqlapp/contact-common';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -35,7 +37,7 @@ const BaseContactForm = ({
     <div className="text-center">
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
       <Button block color="primary" type="submit">
-        <Icon type="mail" /> {t('form.btnSubmit')}
+        <MailOutlined /> {t('form.btnSubmit')}
       </Button>
     </div>
   </Form>

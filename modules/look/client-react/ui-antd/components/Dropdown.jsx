@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Icon, Dropdown } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Menu, Dropdown } from 'antd';
 
 class DropDown extends React.Component {
   static propTypes = {
@@ -22,7 +23,7 @@ class DropDown extends React.Component {
       <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomCenter">
         <a className="ant-dropdown-link" href="#">
           {content}
-          {!props.noicon ? <Icon className="dropdown" type={props.type ? props.type : 'down'} /> : null}
+          {!props.noicon ? <LegacyIcon className="dropdown" type={props.type ? props.type : 'down'} /> : null}
         </a>
       </Dropdown>
     );

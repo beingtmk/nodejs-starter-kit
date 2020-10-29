@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Upload, Icon } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+
+import { Upload } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -56,25 +61,22 @@ const RenderUploadMultiple = props => {
   // console.log(defaultFileList);
 
   return (
-    <FormItem label={label} validateStatus={validateStatus}>
-      <div className="dropbox">
-        <Upload.Dragger
-          defaultFileList={defaultFileList}
-          name="file"
-          listType="picture"
-          className="upload-list-inline"
-          onChange={onChangeHandler}
-          action={cloudinary_url}
-          data={cloudinary_data}
-          // headers={headers}
-        >
-          <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-        </Upload.Dragger>
-      </div>
+    <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+      <Upload.Dragger
+        defaultFileList={defaultFileList}
+        name="file"
+        listType="picture"
+        onChange={onChangeHandler}
+        action={cloudinary_url}
+        data={cloudinary_data}
+        // headers={headers}
+      >
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+        <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+      </Upload.Dragger>
     </FormItem>
   );
 };

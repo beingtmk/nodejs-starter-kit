@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popconfirm, Icon } from 'antd';
+import { MinusOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Popconfirm } from 'antd';
 
 class RemoveIcon extends React.Component {
   render() {
@@ -20,7 +21,7 @@ class RemoveIcon extends React.Component {
           type={color}
           htmlType={type}
           size={buttonSize}
-          icon="minus"
+          icon={<MinusOutlined />}
           shape="circle"
           {...props}
           onClick={onClick}
@@ -31,7 +32,7 @@ class RemoveIcon extends React.Component {
       return (
         <Popconfirm
           title="Are you sure？"
-          icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+          icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
           onConfirm={onClick}
         >
           <ADButton />

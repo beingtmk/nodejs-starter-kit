@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button, Empty, Icon } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Button, Empty } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
@@ -92,7 +93,7 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <Icon type="down" onClick={() => window.scrollBy(0, window.innerHeight)} />
+          <DownOutlined onClick={() => window.scrollBy(0, window.innerHeight)} />
         </TweenOne>
       </div>
     );

@@ -38,7 +38,7 @@ const ListingsCatalogue = props => {
       throw Error(e);
     }
   };
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <ListingCatalogueView
       title={'All Listings'}

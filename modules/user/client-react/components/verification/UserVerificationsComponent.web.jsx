@@ -3,8 +3,6 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Card } from '@gqlapp/look-client-react';
-// To Do Abstract Out
-import { Icon } from 'antd';
 // import DLVerification from '../../containers/verification/DLVerification';
 import MobileVerification from '../../containers/verification/MobileVerification';
 // import EmailVerification from '../../containers/verification/EmailVerification';

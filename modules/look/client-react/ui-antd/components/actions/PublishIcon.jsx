@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popconfirm, Icon } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Button, Popconfirm } from 'antd';
 
 class PublishIcon extends React.Component {
   render() {
@@ -19,12 +21,15 @@ class PublishIcon extends React.Component {
       icon = 'export';
     } else color = 'danger';
     return (
-      <Popconfirm
-        title="Are you sure？"
-        icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
-        onConfirm={onClick}
-      >
-        <Button type={color} htmlType={type} size={buttonSize} icon={icon} shape="circle" {...props} />
+      <Popconfirm title="Are you sure？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={onClick}>
+        <Button
+          type={color}
+          htmlType={type}
+          size={buttonSize}
+          icon={<LegacyIcon type={icon} />}
+          shape="circle"
+          {...props}
+        />
       </Popconfirm>
     );
   }

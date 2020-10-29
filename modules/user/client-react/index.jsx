@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter, Route } from 'react-router-dom';
@@ -21,7 +21,7 @@ import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from
 const ProfileName = withLoadedUser(({ currentUser }) => {
   return (
     <>
-      <Icon type="user" /> {currentUser ? currentUser.fullName || currentUser.username : null}
+      <UserOutlined /> {currentUser ? currentUser.fullName || currentUser.username : null}
     </>
   );
 });
@@ -40,7 +40,7 @@ const LogoutLink = withRouter(
         }}
         className="nav-link"
       >
-        <Icon type="logout" /> {t('navLink.logout')}
+        <LogoutOutlined /> {t('navLink.logout')}
       </a>
     ))
   )
@@ -56,7 +56,7 @@ const NavLinkUsersWithI18n = translate('user')(({ t }) => (
 ));
 const NavLinkLoginWithI18n = translate('user')(({ t }) => (
   <NavLink to={ROUTES.login} className="nav-link" activeClassName="active">
-    <Icon type="login" />
+    <LoginOutlined />
     {t('navLink.signIn')}
   </NavLink>
 ));

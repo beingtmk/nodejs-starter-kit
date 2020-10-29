@@ -1,5 +1,8 @@
 import React from 'react';
-import { Row, Col, Icon, Form, Rate, Button } from 'antd';
+import { MinusCircleOutlined, VideoCameraOutlined } from '@ant-design/icons';
+// import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Form, Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -69,11 +72,10 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             key={index}
           />
         </FormItem>
-        <Icon
+        <MinusCircleOutlined
           style={{ paddingTop: '40px' }}
           title="Remove "
           className="dynamic-delete-button"
-          type="minus-circle-o"
           onClick={() => setFieldValue('reviewMedia.video', videos.splice(index, 1) && videos)}
         />
       </FormItem>
@@ -83,14 +85,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
   const add = () => {
     const obj = {
       url: '',
-      type: 'video',
+      type: 'video'
     };
     setFieldValue('reviewMedia.video', [...values.reviewMedia.video, obj]);
   };
 
   // console.log('props', props);
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form layout="vertical" onSubmit={handleSubmit}>
       {showModal && (
         <>
           <FormItem label={t('reviewForm.modal')}>
@@ -107,7 +109,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
               ))}
             </Select>
           </FormItem>
-          <Field name="modalId" component={RenderField} placeholder="Modal id" type="number" value={values.modalId} />
+          <Field
+            name="modalId"
+            component={RenderField}
+            label={t('reviewForm.modalId')}
+            placeholder="Modal id"
+            type="number"
+            value={values.modalId}
+          />
           <UserAutoCompleteComponent
             name="username"
             label={t('reviewForm.username')}
@@ -126,7 +135,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           onChange={e => setFieldValue('rating', String(e))}
         />
       </FormItem>
-      <Field name="feedback" component={RenderField} placeholder="Your review" type="textarea" value={values.feedback} />
+      <Field
+        name="feedback"
+        component={RenderField}
+        placeholder="Your review"
+        label={'Feedback'}
+        type="textarea"
+        value={values.feedback}
+      />
       <Row gutter={24}>
         <Col md={24} sm={24} xs={24} lg={12} align="left">
           <Row>
@@ -136,7 +152,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             <Col span={6} align="right">
               <FormItem>
                 <Button type="primary" onClick={add}>
-                  <Icon type="video-camera" />
+                  <VideoCameraOutlined />
                   {t('reviewForm.btn.add')}
                 </Button>
               </FormItem>
@@ -180,14 +196,14 @@ const ReviewWithFormik = withFormik({
   mapPropsToValues: (props: ReviewFormComponentProps) => {
     const reviewMedia = {
       image: [],
-      video: [],
+      video: []
     };
     function getReviewImage(reviewImg: any) {
       const obj = {
         id: (reviewImg && reviewImg.id) || null,
         url: (reviewImg && reviewImg.url) || '',
         type: (reviewImg && reviewImg.type) || '',
-        isActive: (reviewImg && reviewImg.isActive) || true,
+        isActive: (reviewImg && reviewImg.isActive) || true
       };
       obj.type === 'image' && reviewMedia.image.push(obj);
       obj.type === 'video' && reviewMedia.image.push(obj);
@@ -204,8 +220,8 @@ const ReviewWithFormik = withFormik({
         props.review.reviewMedia.map(getReviewImage) &&
         reviewMedia) || {
         image: [],
-        video: [],
-      },
+        video: []
+      }
     };
   },
   async handleSubmit(values: Review, { props: { onSubmit, hideModal } }) {
@@ -216,14 +232,14 @@ const ReviewWithFormik = withFormik({
       userId: values.userId,
       rating: values.rating,
       feedback: values.feedback,
-      reviewMedia: [],
+      reviewMedia: []
     };
     if (values.reviewMedia.image.length > 0) {
       input.reviewMedia = [...input.reviewMedia, ...values.reviewMedia.image];
     } else {
       input.reviewMedia.push({
         url: NO_IMG,
-        type: 'image',
+        type: 'image'
       });
     }
     if (values.reviewMedia.video.length > 0) {
@@ -234,7 +250,7 @@ const ReviewWithFormik = withFormik({
     hideModal && hideModal();
   },
   validate: values => validate(values, ReviewFormSchema),
-  displayName: 'Review Form', // helps with React DevTools
+  displayName: 'Review Form' // helps with React DevTools
 });
 
 export default ReviewWithFormik(ReviewFormComponent);

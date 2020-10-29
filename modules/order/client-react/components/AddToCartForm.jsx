@@ -1,5 +1,7 @@
 import React from 'react';
-import { Row, Col, Form, Button } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Button } from 'antd';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';

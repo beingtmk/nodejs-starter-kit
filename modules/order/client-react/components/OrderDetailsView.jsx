@@ -24,26 +24,26 @@ const OrderDetailsView = props => {
       <MetaTags title={t('title')} description={`${settings.app.name} - ${'meta'}`} />
 
       {loading && <Spinner />}
-      {order && (
-        <div className="checkoutDiv">
-          <Row gutter={24}>
-            <Col span={24} align="left">
-              {order && (
-                <h2>
-                  {t('orderDetails.id')}
-                  {order.id}
-                </h2>
-              )}
-              <br />
-              <hr />
-              <br />
-            </Col>
-            <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
-              <Row gutter={24}>
-                <Col lg={{ span: 10, offset: 0 }} xs={{ span: 24, offset: 0 }} className="margin20">
-                  <Row>
-                    {order && (
-                      <>
+      {!loading && order && (
+        <Row gutter={24}>
+          <Col span={24} align="left">
+            {order && (
+              <h2>
+                {t('orderDetails.id')}
+                {order.id}
+              </h2>
+            )}
+            <br />
+            <hr />
+            <br />
+          </Col>
+          <Col lg={22} md={22} xs={24}>
+            <Row gutter={24}>
+              <Col lg={10} md={10} xs={24}>
+                <Row>
+                  {order && (
+                    <Row gutter={24}>
+                      <Col span={24}>
                         <OrderTrackCardComponent
                           t={t}
                           orderPayment={order.orderPayment}
@@ -52,42 +52,37 @@ const OrderDetailsView = props => {
                           completed={3}
                         />
                         <Divider />
-                        <Col
-                          lg={{ span: 24, offset: 0 }}
-                          sm={{ span: 24, offset: 0 }}
-                          xs={{ span: 24, offset: 0 }}
-                          style={{ paddingBottom: '5%' }}
-                        >
-                          <Card className="boxShadowTheme borderRadius9">
-                            <h4>{t('orderDetails.addressText')}</h4>
-                            <hr />
-                            <Row type="flex" justify="center" align="middle">
-                              {address && <AddressView addresses={[address]} addressId={address.id} />}
-                            </Row>
-                          </Card>
-                        </Col>
-                      </>
-                    )}
-                  </Row>
-                </Col>
-                <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
-                  {order && (
-                    <CheckoutCardComponent
-                      t={t}
-                      onSubmit={onSubmit}
-                      getCart={order}
-                      product={3}
-                      showState={true}
-                      showBtn={false}
-                      paid={true}
-                      buttonText={'View All Orders'}
-                    />
+                      </Col>
+                      <Col span={24}>
+                        <Card>
+                          <h4>{t('orderDetails.addressText')}</h4>
+                          <hr />
+                          <Row type="flex" justify="center" align="middle">
+                            {address && <AddressView addresses={[address]} addressId={address.id} />}
+                          </Row>
+                        </Card>
+                      </Col>
+                    </Row>
                   )}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </div>
+                </Row>
+              </Col>
+              <Col lg={14} md={14} xs={24}>
+                {!loading && order && (
+                  <CheckoutCardComponent
+                    t={t}
+                    onSubmit={onSubmit}
+                    getCart={order}
+                    product={3}
+                    showState={true}
+                    showBtn={false}
+                    paid={true}
+                    buttonText={'View All Orders'}
+                  />
+                )}
+              </Col>
+            </Row>
+          </Col>
+        </Row>
       )}
     </PageLayout>
   );

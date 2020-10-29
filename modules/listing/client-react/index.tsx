@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { SolutionOutlined, StarOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
@@ -21,7 +22,7 @@ const MyListingsNavItemAccount = () => {
   return (
     <NavLink to={ROUTES.myListing}>
       <div>
-        <Icon type="solution" /> {'My Listings'}
+        <SolutionOutlined /> {'My Listings'}
       </div>
     </NavLink>
   );
@@ -31,7 +32,7 @@ const NavLinkMyListingsBookmark = () => {
   return (
     <NavLink to={ROUTES.listingBookmark}>
       <div>
-        <Icon type="star" /> {'My Bookmarks'}
+        <StarOutlined /> {'My Bookmarks'}
       </div>
     </NavLink>
   );
@@ -41,7 +42,7 @@ const NavLinkAddListings = () => {
   return (
     <NavLink to={ROUTES.add}>
       <div>
-        <Icon type="solution" /> {'Create listing'}
+        <SolutionOutlined /> {'Create listing'}
       </div>
     </NavLink>
   );
@@ -140,7 +141,7 @@ export default new ClientModule({
         key="/listing"
         title={
           <>
-            <Icon type="solution" /> Listing
+            <SolutionOutlined /> Listing
           </>
         }
       >

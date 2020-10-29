@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Button, Empty, Icon, Divider } from 'antd';
+import { SolutionOutlined } from '@ant-design/icons';
+import { Button, Empty, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
@@ -54,7 +55,7 @@ const ListingCatalogueView = props => {
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <Heading type="2">
-        <Icon type="solution" /> &nbsp; {title}
+        <SolutionOutlined /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {showFilter && (

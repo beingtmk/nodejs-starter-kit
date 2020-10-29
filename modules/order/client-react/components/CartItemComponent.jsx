@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  // Badge,
-  Row,
-  Col,
-  Card
-} from 'antd';
+import { Row, Col, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import { DeleteIcon } from '@gqlapp/look-client-react';
 
@@ -15,8 +10,6 @@ import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
 
 import EditCart from './EditCart';
-
-// const BadgeRibbon = Badge.Ribbon;
 
 const Position1 = styled.h4`
   position: absolute;
@@ -55,7 +48,7 @@ const Align = styled.div`
   right: 0;
   z-index: 1;
   padding-right: 10px;
-  margin: 12px 20px;
+  margin: 16px 40px;
 `;
 
 const CartItemComponent = props => {
@@ -64,12 +57,14 @@ const CartItemComponent = props => {
   var coverGrid = {
     xs: { span: 24 },
     md: { span: 9 },
+    lg: { span: 6 },
     xxl: { span: 6 }
   };
 
   var infoGrid = {
     xs: { span: 24 },
     md: { span: 15 },
+    lg: { span: 18 },
     xxl: { span: 18 }
   };
 
@@ -81,7 +76,7 @@ const CartItemComponent = props => {
   }
 
   return (
-    <Row span={24} style={{ paddingRight: '10px' }}>
+    <div style={{ paddingRight: '10px' }}>
       <Align>
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {onEdit && (
@@ -102,21 +97,11 @@ const CartItemComponent = props => {
         </Row>
       </Align>
       <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
-        <Ribbon bottom={props.mobile ? '70px' : '105px'} width="120px" color="#df0303">
+        <Ribbon bottom={props.mobile ? '70px' : '155px'} width="120px" color="#df0303">
           {item.orderOptions.quantity}
         </Ribbon>
-        <Ribbon bottom={props.mobile ? '15px' : '30px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
-        {/* <BadgeRibbon text={item.orderOptions.quantity}> */}
-        {/* <BadgeRibbon text={'&#8377; {` ${item.cost * item.orderOptions.quantity}`}'}> */}
+        <Ribbon bottom={props.mobile ? '15px' : '80px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
         <Card
-          // type={props.inner && 'inner'}
-          // style={
-          //   (props.componentStyle && props.componentStyle) || {
-          //     boxShadow: '0px 1px 24px rgba(0, 0, 0, 0.12)'
-          //     // maxHeight: '250px',
-          //   }
-          // }
-          // className="order-cart-item"
           bodyStyle={{
             padding: '0px'
           }}
@@ -138,12 +123,14 @@ const CartItemComponent = props => {
                   height: props.mobile ? '180px' : '250px',
                   borderWidth: '0px'
                 }}
+                bodyStyle={{
+                  padding: '0px'
+                }}
                 title={<h3>{item.title}</h3>}
               >
-                <br />
                 <h3>
                   <Position1 bottom={'100'}>
-                    <span>{t('cartItem.quantity')}</span>
+                    <span>&nbsp;&nbsp;{t('cartItem.quantity')}</span>
                   </Position1>
                 </h3>
 
@@ -151,17 +138,16 @@ const CartItemComponent = props => {
                 <br />
                 <Position bottom={'30'}>
                   <strong>
-                    <span>{t('cartItem.amount')}</span> &#8377; {`${item.cost} X ${item.orderOptions.quantity}`}
+                    <span> &nbsp;&nbsp;{t('cartItem.amount')}</span> &#8377;{' '}
+                    {`${item.cost} X ${item.orderOptions.quantity}`}
                   </strong>
                 </Position>
               </Card>
             </Col>
           </Row>
         </Card>
-        {/* </BadgeRibbon> */}
-        {/* </BadgeRibbon> */}
       </Link>
-    </Row>
+    </div>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 class EditButton extends React.Component {
@@ -14,7 +15,7 @@ class EditButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} block size={buttonSize} icon="edit" {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon={<EditOutlined />} {...props}>
         {children}
       </Button>
     );
