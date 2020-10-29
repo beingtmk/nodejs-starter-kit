@@ -30,7 +30,7 @@ const DropDownPosition = styled.div`
   z-index: 1;
   margin: 60px;
   @media only screen and (max-width: 768px) {
-    margin: 60px 10px 10px 10px;
+    margin: 60px 40px 10px 10px;
   }
 `;
 
@@ -140,35 +140,37 @@ const ReviewsItemComponent = props => {
             borderRadius: '8px'
           }}
         >
-          <Col lg={10} md={10} xs={24}>
-            <h3>
-              <strong>{review.user.profile && displayDataCheck(review.user.profile.fullName)}</strong>
-            </h3>
-          </Col>
-          <Col lg={12} md={12} xs={16}>
-            <Row type="flex" justify="end">
-              <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
-            </Row>
-          </Col>
-          <Col lg={2} md={2} xs={4}>
-            <Row type="flex" justify="end"></Row>
-          </Col>
-          <Col lg={24} md={24} xs={24}>
-            <div style={{ padding: '10px' }}>
-              <p>{displayDataCheck(review.feedback)}</p>
-            </div>
-          </Col>
-          {showPhotos && (
-            <Col lg={24} md={24} xs={24}>
-              <ImagesSlickComponent images={review.reviewMedia} />
+          <Row>
+            <Col lg={10} md={10} xs={24}>
+              <h3>
+                <strong>{review.user.profile && displayDataCheck(review.user.profile.fullName)}</strong>
+              </h3>
             </Col>
-          )}
-          <Col lg={12} md={12} xs={24}>
-            <>{displayDateCheck(review.createdAt)}</>
-          </Col>
-          <Col lg={0} md={0} xs={24}>
-            <br />
-          </Col>
+            <Col lg={12} md={12} xs={16}>
+              <Row type="flex" justify="end">
+                <Rate disabled defaultValue={review.rating} style={{ fontSize: '20px' }} />
+              </Row>
+            </Col>
+            <Col lg={2} md={2} xs={4}>
+              <Row type="flex" justify="end"></Row>
+            </Col>
+            <Col lg={24} md={24} xs={24}>
+              <div style={{ padding: '10px' }}>
+                <p>{displayDataCheck(review.feedback)}</p>
+              </div>
+            </Col>
+            {showPhotos && (
+              <Col lg={24} md={24} xs={24}>
+                <ImagesSlickComponent images={review.reviewMedia} />
+              </Col>
+            )}
+            <Col lg={12} md={12} xs={24}>
+              <>{displayDateCheck(review.createdAt)}</>
+            </Col>
+            <Col lg={0} md={0} xs={24}>
+              <br />
+            </Col>
+          </Row>
         </Card>
       </ReviewModala>
     </Row>

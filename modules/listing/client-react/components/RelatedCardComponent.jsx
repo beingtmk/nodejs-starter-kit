@@ -110,7 +110,7 @@ const RelatedCardComponent = props => {
     }
   };
 
-  console.log('loaded', loaded);
+  // console.log('loaded', loaded);
 
   const cardImg = (display = false) =>
     listing_img && (

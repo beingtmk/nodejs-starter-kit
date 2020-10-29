@@ -25,7 +25,7 @@ const AddToCartFormBtns = props => {
     md: 24,
     lg: 0
   };
-  console.log(props);
+  // console.log(props);
   return (
     <Tooltip title={title}>
       {inCart ? (
