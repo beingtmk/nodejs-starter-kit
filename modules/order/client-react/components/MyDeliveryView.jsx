@@ -53,16 +53,16 @@ const MyDeliveriesView = props => {
       <MetaTags title="MyDeliveries" description="" />
 
       <Row>
-        <Col md={{ span: 8 }} sm={{ span: 7 }} xs={{ span: 24 }}>
+        <Col md={{ span: 8 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
             <SolutionOutlined />
             {t('myDeliveries')}
           </Heading>
           <br />
         </Col>
-        <Col lg={0} md={0} align="center">
+        <Col lg={0} md={0} xs={24} align="center">
           {orderStates && orderStates.length !== 0 && (
-            <ButtonGroup className="width100">
+            <>
               <Button block onClick={() => filterItems('')} type={classNamesgroup('')}>
                 {Icons[0]}
                 ALL
@@ -73,12 +73,12 @@ const MyDeliveriesView = props => {
                   {oS.state}
                 </Button>
               ))}
-            </ButtonGroup>
+            </>
           )}
         </Col>
-        <Col lg={{ span: 16 }} md={{ span: 24 }} sm={0} xs={0} align="center">
+        <Col lg={{ span: 16 }} md={{ span: 24 }} xs={0} align="center">
           {orderStates && orderStates.length !== 0 && (
-            <ButtonGroup className="width100">
+            <ButtonGroup>
               <Button onClick={() => filterItems('')} type={classNamesgroup('')}>
                 {Icons[0]}
                 ALL

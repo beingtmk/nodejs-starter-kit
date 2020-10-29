@@ -156,7 +156,7 @@ const CheckoutCartView = props => {
             </Row>
           </div>
         ) : (
-          <div className="width100 centerAlign marginT30">
+          <div className="centerAlign marginT30">
             <Empty description="You have no items in your Cart">
               <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
                 <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>

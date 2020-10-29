@@ -91,7 +91,7 @@ exports.down = function(knex) {
     knex.schema.dropTable('modal_review'),
     knex.schema.dropTable('review_medium'),
     knex.schema.dropTable('average_rating'),
-    knex.schema.dropTable('review'),
-    knex.schema.dropTable('review_helpful_user')
+    knex.schema.dropTable('review_helpful_user'),
+    knex.schema.dropTable('review')
   ]);
 };
