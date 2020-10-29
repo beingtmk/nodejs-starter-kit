@@ -6,14 +6,11 @@ import { Link } from 'react-router-dom';
 
 import { Table, Pagination } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 import ROUTES from '../../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const Loading = () => <Spinner />;
-Loading.propTypes = { t: PropTypes.func };
 
 const NodynaDicCarouselsMessage = ({ t }) => (
   <div align="center">
@@ -121,7 +118,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
   return (
     <>
       <div style={{ overflowX: 'auto' }}>
-        {loading && !dynamicCarousels && <Loading t={t} />}
+        {loading && <RenderTableLoading columns={columns} />}
         {/* Render main listing content */}
         {dynamicCarousels && dynamicCarousels.totalCount ? (
           <RenderDynamicCarousels />

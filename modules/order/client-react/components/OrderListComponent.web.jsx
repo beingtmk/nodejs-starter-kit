@@ -8,7 +8,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Button, Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { displayDateCheck } from '@gqlapp/review-client-react/components/functions';
@@ -17,9 +17,6 @@ import settings from '../../../../settings';
 import ROUTES from '../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const Loading = () => <Spinner />;
-Loading.propTypes = { t: PropTypes.func };
 
 const NoOrdersMessage = ({ t }) => (
   <div align="center">
@@ -129,7 +126,7 @@ const OrderListComponent = props => {
       render: (text, record) => <>{displayDateCheck(record.createdAt)}</>
     },
     {
-      title: t('list.column.actions'),
+      title: t('order.column.actions'),
       key: 'actions',
       render: (text, record) => (
         <div align="center">
@@ -179,7 +176,7 @@ const OrderListComponent = props => {
   return (
     <>
       {/* Render loader */}
-      {loading && !orders && <Loading t={t} />}
+      {loading && <RenderTableLoading columns={columns} />}
       {/* Render main order content */}
       {orders && orders.totalCount ? <RenderOrders /> : !loading && <NoOrdersMessage t={t} />}
     </>

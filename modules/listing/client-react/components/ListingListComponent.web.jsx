@@ -6,16 +6,13 @@ import { Empty, Divider, Tooltip, Button, Icon } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
+import settings from '@gqlapp/config';
 
-import settings from '../../../../settings';
 import ROUTES from '../routes';
 import { displayDataCheck } from './functions';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const Loading = () => <Spinner />;
-Loading.propTypes = { t: PropTypes.func };
 
 const NoListingsMessage = ({ t }) => (
   <div align="center">
@@ -274,7 +271,12 @@ const ListingListComponent = props => {
 
   const RenderListings = () => (
     <Fragment>
-      <Table scroll={{ x: 1300 }} dataSource={listings.edges.map(({ node }) => node)} columns={columns} />
+      <Table
+        scroll={{ x: 1300 }}
+        dataSource={listings.edges.map(({ node }) => node)}
+        columns={columns}
+        // loading={true}
+      />
       <div align="center">
         <Pagination
           itemsPerPage={listings.edges.length}
@@ -292,7 +294,7 @@ const ListingListComponent = props => {
   return (
     <>
       {/* Render loader */}
-      {loading && !listings && <Loading t={t} />}
+      {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}
       {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
     </>

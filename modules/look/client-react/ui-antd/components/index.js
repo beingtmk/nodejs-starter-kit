@@ -18,6 +18,7 @@ export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';
 export { default as SuggestedListComponent } from './SuggestedListComponent';
 export { default as Spinner } from './Spinner';
+export { default as RenderTableLoading } from './RenderTableLoading';
 export * from './CarouselArrows';
 
 export { default as Container } from './Container';

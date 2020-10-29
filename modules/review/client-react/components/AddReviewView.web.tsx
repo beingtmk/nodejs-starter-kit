@@ -15,8 +15,8 @@ export interface AddReviewViewProps {
 }
 
 const AddReviewView: React.FC<AddReviewViewProps> = props => {
-  console.log(props);
   const { t, loading, addReview } = props;
+  // console.log(props);
   return (
     <PageLayout type="forms">
       <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />

@@ -173,7 +173,7 @@ const ListingFormComponent = props => {
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
 
-  // console.log('props form component', props.values.listingHighlight);
+  console.log('props form component', props.values.listingMedia);
   return (
     <Card
       title={
@@ -411,6 +411,7 @@ const ListingFormComponent = props => {
                       values={values.listingMedia.image}
                       getType={true}
                       dictKey="url"
+                      extraFields={[{ type: 'image' }]}
                     />
                   )}
                 />
