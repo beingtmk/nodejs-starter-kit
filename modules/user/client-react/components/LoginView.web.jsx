@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { LoginOutlined } from '@ant-design/icons';
 import {
   PageLayout,
   Card,
@@ -9,7 +10,6 @@ import {
   CardText,
   Button,
   Underline,
-  Icon,
   MetaTags
 } from '@gqlapp/look-client-react';
 
@@ -38,7 +38,8 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal, history }) => {
         <Card className="form-card">
           <Underline>
             <CardTitle>
-              <Icon type="login" /> {t('login.form.title')}
+              <LoginOutlined />
+              {t('login.form.title')}
             </CardTitle>
           </Underline>
           <LoginForm onSubmit={onSubmit} history={history} />
