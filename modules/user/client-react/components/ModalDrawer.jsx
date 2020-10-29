@@ -43,8 +43,10 @@ const ModalDrawer = props => {
           closable={true}
           onClose={() => setVisibleDrawer(false)}
           visible={visibleDrawer}
-          // headerStyle={{ position: 'fixed' }}
+          headerStyle={{ position: 'fixed', zIndex: '10', width: '100%', borderRadius: '24px 24px 0 0' }}
         >
+          <br />
+          <br />
           {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })}
         </Drawer>
       </Col>
