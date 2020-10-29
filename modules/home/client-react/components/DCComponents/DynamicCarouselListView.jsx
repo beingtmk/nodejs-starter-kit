@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Empty, Popconfirm, Row, Col, message, Button } from 'antd';
+import { Empty, Popconfirm, Divider, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -68,28 +68,25 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <Row gutter={24}>
-          <Col span={5}>
-            <Link to={`${ROUTES.editLink}${record.id}`}>
-              <Button shape="circle" size="large">
-                <EditOutlined />
-              </Button>
-            </Link>
-          </Col>
-          <Col span={5}>
-            <Popconfirm
-              title="Are you sure delete this listing?"
-              onConfirm={() => deleteDynamicCarousel(record.id)}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="danger" shape="circle" size="large">
-                <DeleteOutlined />
-              </Button>
-            </Popconfirm>
-          </Col>
-        </Row>
+        <div align="center">
+          <Link to={`${ROUTES.editLink}${record.id}`}>
+            <Button shape="circle" size="large">
+              <EditOutlined />
+            </Button>
+          </Link>
+          <Divider type="vertical" />
+          <Popconfirm
+            title="Are you sure delete this listing?"
+            onConfirm={() => deleteDynamicCarousel(record.id)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="danger" shape="circle" size="large">
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
+        </div>
       )
     }
   ];
