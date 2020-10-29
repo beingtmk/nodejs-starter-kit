@@ -81,7 +81,7 @@ const CheckoutCartView = props => {
                 {/* <br />
                 <br /> */}
                 <Row gutter={24}>
-                  <Col lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                  <Col xxl={{ span: 16, offset: 0 }} lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
                     {getCart &&
                       getCart.orderDetails.map(cartItem => (
                         <>

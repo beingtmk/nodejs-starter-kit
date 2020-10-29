@@ -29,9 +29,10 @@ const MyReviewView = props => {
       <SuggestedListComponent
         grid={{
           gutter: 24,
-          sm: 1,
+          xs: 1,
           md: 1,
-          lg: 1
+          lg: 1,
+          xxl: 1
         }}
         items={reviews}
         {...props}

@@ -16,7 +16,6 @@ const MyListingsView = props => {
   const { listings, loading, onDelete, history, t } = props;
 
   const renderFunc = (key, listing) => (
-    // <RelatedCardComponent key={key} listing={listing} history={history} currentUser={currentUser} />
     <ListingItemComponent
       t={t}
       key={key}
@@ -50,9 +49,10 @@ const MyListingsView = props => {
       <SuggestedListComponent
         grid={{
           gutter: 24,
-          sm: 1,
+          xs: 1,
           md: 1,
-          lg: 1
+          lg: 1,
+          xxl: 1
         }}
         {...props}
         items={listings}

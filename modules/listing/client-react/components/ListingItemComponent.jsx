@@ -126,6 +126,7 @@ const ListingItemComponent = props => {
         </ProfileAlign>
         <Link to={`${ROUTES.listingDetailLink}${item.id}`}>
           <Card
+            type="inner"
             title={<h3>{item.title}</h3>}
             style={{ marginBottom: '24px' }}
             hoverable
