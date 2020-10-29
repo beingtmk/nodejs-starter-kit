@@ -46,7 +46,7 @@ class HomeView4 extends React.Component {
   }
 
   render() {
-    const { history, currentUser } = this.props;
+    const { history, currentUser, t } = this.props;
     const children = [
       <DynamicCarousel
         id="Banner_0"
@@ -56,6 +56,7 @@ class HomeView4 extends React.Component {
         {...this.props}
       />,
       <ImageBanner
+        t={t}
         id="Banner_1"
         key="Banner_1"
         filter={{ label: LABEL[1], isActive: true }}
@@ -66,14 +67,14 @@ class HomeView4 extends React.Component {
       <ListingsCarousel
         filter={{ isFeatured: true, isActive: true }}
         currentUser={currentUser}
-        title={'Featured Listings'}
+        title={t('listingCarousel.featuredListings')}
         history={history}
         {...this.props}
       />,
       <ListingsCarousel
         filter={{ isNew: true, isActive: true }}
         currentUser={currentUser}
-        title={'Our Latest Additions'}
+        title={t('listingCarousel.latestAdditions')}
         history={history}
         {...this.props}
         style={{ backgroundColor: '#f7f7f7' }}
@@ -87,7 +88,7 @@ class HomeView4 extends React.Component {
     // console.log(this.props);
     return (
       <PageLayout type="home">
-        <MetaTags title="Home" description="This is the homepage." />
+        <MetaTags title={t('title')} description={t('welcomeText')} />
 
         <div
           className="templates-wrapper"
@@ -106,7 +107,8 @@ class HomeView4 extends React.Component {
 
 HomeView4.propTypes = {
   currentUser: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  t: PropTypes.func
 };
 
 export default compose(withCurrentUser)(HomeView4);

@@ -10,7 +10,7 @@ import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 const AddDynamicCarouselView = ({ t, loading, addDynamicCarousel, currentUser }) => {
   const renderContent = () => (
     <DynamicCarouselFormComponent
-      cardTitle="Add banner"
+      cardTitle={t('dynamicCarousel.addBanner')}
       t={t}
       dynamicCarousel={{ isActive: true }}
       onSubmit={addDynamicCarousel}

@@ -1,4 +1,6 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+
 import { Link } from 'react-router-dom';
 
 import { Row, Col, Button, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
@@ -9,6 +11,7 @@ import DynamicCarouselFilterView from './DynamicCarouselFilterView';
 import DynamicCarouselListView from './DynamicCarouselListView';
 
 const DynamicCarouselView = props => {
+  const { t } = props;
   return (
     <PageLayout>
       <MetaTags
@@ -18,11 +21,11 @@ const DynamicCarouselView = props => {
 
       <Row>
         <Col span={12}>
-          <Heading type="2">Dynamic Carousel</Heading>
+          <Heading type="2">{t('dynamicCarousel.heading')}</Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={ROUTES.add}>
-            <Button color="primary">Add</Button>
+            <Button color="primary">{t('dynamicCarousel.btn.add')}</Button>
           </Link>
         </Col>
       </Row>
@@ -33,6 +36,9 @@ const DynamicCarouselView = props => {
       <DynamicCarouselListView {...props} />
     </PageLayout>
   );
+};
+DynamicCarouselView.propTypes = {
+  t: PropTypes.func
 };
 
 export default DynamicCarouselView;

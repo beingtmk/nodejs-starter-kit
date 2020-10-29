@@ -613,5 +613,44 @@
   "footer2":{
     "group":"Ant Financial Experience Technology Conference",
     "copyright":"Copyright © Ant Financial Services Group"
+  },
+  "imageBanner":{
+    "titleWrapper":{
+      "title":"Image Banner"
+    }
+  },
+  "listingCarousel":{
+    "featuredListings":"Featured Listings",
+    "latestAdditions":"Our Latest Additions"
+  },
+  "dynamicCarousel":{
+    "heading":"Dynamic Carousel",
+    "btn":{
+      "add":"Add",
+      "submit":"Submit"
+    },
+    "addBanner":"Add Banner",
+    "editBanner":"Edit home banner",
+    "filter":{
+      "search":"Search text",
+      "label":"Label",
+      "isActive":"Is active"
+    },
+    "columns":{
+      "carouselId":"Carousel Id",
+      "title":"Title",
+      "image":"Image",
+      "label":"Label",
+      "link":"Link",
+      "actions":"Actions"
+    },
+    "form":{
+      "title":"Title",
+      "description":"Description",
+      "label":"Label",
+      "isActive":"Is active",
+      "link":"Link",
+      "imageUrl":"Image Url"
+    }
   }
 }

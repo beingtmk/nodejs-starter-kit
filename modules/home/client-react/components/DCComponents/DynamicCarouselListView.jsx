@@ -4,7 +4,6 @@ import { Empty, Icon, Popconfirm, Row, Col, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { translate } from '@gqlapp/i18n-client-react';
 import { Table, Pagination } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
@@ -23,7 +22,7 @@ const NodynaDicCarouselsMessage = ({ t }) => (
     <br />
     <Empty description={t('listing.noListingsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">Add</Button>
+        <Button type="primary">{t('dynamicCarousel.btn.add')}</Button>
       </Link>
     </Empty>
   </div>
@@ -33,19 +32,19 @@ NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
 const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCarousels, loadData }) => {
   const columns = [
     {
-      title: <>Carousel Id</>,
+      title: t('dynamicCarousel.columns.carouselId'),
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => <>{record.id}</>
     },
     {
-      title: <>Title</>,
+      title: t('dynamicCarousel.columns.title'),
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => <>{record.title}</>
     },
     {
-      title: <>Image</>,
+      title: t('dynamicCarousel.columns.image'),
       dataIndex: 'imageUrl',
       key: 'imageUrl',
       render: (text, record) => (
@@ -55,19 +54,19 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       )
     },
     {
-      title: <>Label</>,
+      title: t('dynamicCarousel.columns.label'),
       dataIndex: 'label',
       key: 'label',
       render: (text, record) => <>{record.label}</>
     },
     {
-      title: <>Link</>,
+      title: t('dynamicCarousel.columns.link'),
       dataIndex: 'link',
       key: 'link',
       render: (text, record) => <>{record.link}</>
     },
     {
-      title: 'Actions',
+      title: t('dynamicCarousel.columns.actions'),
       key: 'actions',
       render: (text, record) => (
         <Row gutter={24}>
@@ -142,4 +141,4 @@ DynamicCarouselListView.propTypes = {
   t: PropTypes.func
 };
 
-export default translate('home')(DynamicCarouselListView);
+export default DynamicCarouselListView;

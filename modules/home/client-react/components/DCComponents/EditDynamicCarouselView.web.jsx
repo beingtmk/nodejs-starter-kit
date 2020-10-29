@@ -11,7 +11,7 @@ const EditDynamicCarouselView = props => {
   const { t, dynamicCarousel, loading, editDynamicCarousel, currentUser } = props;
   const renderContent = () => (
     <DynamicCarouselFormComponent
-      cardTitle="Edit home banner"
+      cardTitle={t('dynamicCarousel.editBanner')}
       t={t}
       dynamicCarousel={dynamicCarousel}
       onSubmit={editDynamicCarousel}

@@ -22,7 +22,7 @@ const DynamicCarousel = props => {
     return () => subscribe();
   });
 
-  console.log('props', props);
+  // console.log('props', props);
   return <DynamicCarouselView {...props} />;
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { message } from 'antd';
-
+import { translate } from '@gqlapp/i18n-client-react';
 import { compose } from '@gqlapp/core-common';
 import { withGetCart, withDeleteCartItem } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { subscribeToCart } from '@gqlapp/order-client-react/containers/OrderSubscriptions';
@@ -34,4 +34,4 @@ Home4.propTypes = {
   getCart: PropTypes.object
 };
 
-export default compose(withGetCart, withDeleteCartItem)(Home4);
+export default compose(withGetCart, withDeleteCartItem, translate('home'))(Home4);
