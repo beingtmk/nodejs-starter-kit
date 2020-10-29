@@ -41,10 +41,12 @@ const CheckoutCardComponent = props => {
         getCart.orderDetails &&
         getCart.orderDetails.length !== 0 &&
         getCart.orderDetails.map((item, key) => (
-          <>
-            <CartItemComponent inner={true} key={key} item={item} t={t} />
-            <Divider />
-          </>
+          <Row>
+            <Col span={24}>
+              <CartItemComponent inner={true} key={key} item={item} t={t} />
+              <Divider />
+            </Col>
+          </Row>
         ))}
       <hr />
       <br />
