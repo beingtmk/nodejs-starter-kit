@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { LoginOutlined } from '@ant-design/icons';
 import {
+  Row,
+  Col,
   PageLayout,
   Card,
   CardGroup,
@@ -59,10 +61,12 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal, history }) => {
   return (
     <PageLayout type="forms">
       <MetaTags title={t('login.title')} description={t('login.meta')} />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Row>
+        <Col lg={24} md={0} xs={0}>
+          <br />
+          <br />
+        </Col>
+      </Row>
       {renderContent()}
     </PageLayout>
   );

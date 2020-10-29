@@ -40,7 +40,7 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
           <Col md={0} lg={0}>
             {renderContent()}
           </Col>
-          <Col xs={0} md={24} lg={24}>
+          <Col xs={0} md={0} lg={24}>
             <LayoutCenter>
               <br />
               <br />

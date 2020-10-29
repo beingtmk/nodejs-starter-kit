@@ -32,15 +32,16 @@ const ContactView = (props: ContactViewProps) => {
     <PageLayout type="forms">
       <MetaTags title={t('title')} description={t('meta')} />
       <Row justify="center">
-        <Col xs={0} md={0} lg={6} />
-        <Col xs={24} lg={12}>
-          <Col xs={0} md={0} lg={24}>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-          </Col>
+        <Col xs={24} md={12} lg={12}>
+          <Row>
+            <Col xs={0} md={0} lg={24}>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </Col>
+          </Row>
           {renderContent()}
         </Col>
       </Row>

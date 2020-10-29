@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Card } from 'antd';
+import { Row, Col, Card } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
@@ -25,10 +25,6 @@ const AddReviewView: React.FC<AddReviewViewProps> = props => {
         <Spinner size="small" />
       ) : (
         <>
-          <br />
-          <br />
-          <br />
-          <br />
           <Row type="flex" justify="center">
             <Card
               title={
