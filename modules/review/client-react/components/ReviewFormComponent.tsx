@@ -1,8 +1,8 @@
 import React from 'react';
 import { MinusCircleOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
+// import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Row, Col, Rate, Button } from 'antd';
+import { Form, Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -92,7 +92,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
 
   // console.log('props', props);
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form layout="vertical" onSubmit={handleSubmit}>
       {showModal && (
         <>
           <FormItem label={t('reviewForm.modal')}>
@@ -109,7 +109,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
               ))}
             </Select>
           </FormItem>
-          <Field name="modalId" component={RenderField} placeholder="Modal id" type="number" value={values.modalId} />
+          <Field
+            name="modalId"
+            component={RenderField}
+            label={t('reviewForm.modalId')}
+            placeholder="Modal id"
+            type="number"
+            value={values.modalId}
+          />
           <UserAutoCompleteComponent
             name="username"
             label={t('reviewForm.username')}
@@ -132,6 +139,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         name="feedback"
         component={RenderField}
         placeholder="Your review"
+        label={'Feedback'}
         type="textarea"
         value={values.feedback}
       />

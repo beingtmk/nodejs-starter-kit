@@ -111,7 +111,12 @@ export default class RenderUpload extends React.Component {
     );
 
     return (
-      <FormItem label={label} validateStatus={validateStatus}>
+      <FormItem
+        label={label}
+        validateStatus={validateStatus}
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24, offset: 1 }}
+      >
         <div>
           <Upload
             action={cloudinary_url}

@@ -123,6 +123,7 @@ const ListingFormComponent = props => {
               shape="circle"
               icon={<LegacyIcon type={'delete'} />}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
+              style={{ marginBottom: '25px' }}
             />
           </Col>
         </Row>
@@ -157,6 +158,7 @@ const ListingFormComponent = props => {
                 shape="circle"
                 icon={<LegacyIcon type={'delete'} />}
                 onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
+                style={{ marginBottom: '25px' }}
               />
             </Col>
           </Row>
@@ -199,7 +201,7 @@ const ListingFormComponent = props => {
         </>
       }
     >
-      <Form onSubmit={handleSubmit}>
+      <Form layout={'vertical'} onSubmit={handleSubmit}>
         {step === 0 && (
           <Row type="flex" gutter={24}>
             <Col md={12} xs={24} align="left">
@@ -256,9 +258,10 @@ const ListingFormComponent = props => {
                 component={RenderField}
                 placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
                 type="number"
+                // tooltip={{ title: t('listingForm.tooltip'), icon: <InfoCircleOutlined /> }}
                 label={
                   <>
-                    {t('listingForm.fixedQuantity')} &nbsp;
+                    {t('listingForm.fixedQuantity')}
                     <Tooltip title={t('listingForm.tooltip')}>
                       <InfoCircleOutlined />
                     </Tooltip>
@@ -372,18 +375,20 @@ const ListingFormComponent = props => {
               </Col>
             </Col>
             <Col span={24} align="right">
-              <Col span={12} align="left">
-                <br />
-                <Button onClick={() => setStep(0)}>
-                  <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
-                </Button>
-              </Col>
-              <Col span={12} align="right">
-                <br />
-                <NextButton style={{ width: 'auto' }} type="submit">
-                  {t('listingForm.btn.next')}
-                </NextButton>
-              </Col>
+              <Row>
+                <Col span={12} align="left">
+                  <br />
+                  <Button onClick={() => setStep(0)}>
+                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                  </Button>
+                </Col>
+                <Col span={12} align="right">
+                  <br />
+                  <NextButton style={{ width: 'auto' }} type="submit">
+                    {t('listingForm.btn.next')}
+                  </NextButton>
+                </Col>
+              </Row>
             </Col>
           </Row>
         )}
@@ -424,19 +429,21 @@ const ListingFormComponent = props => {
               </FormItem>
             </Col>
             <Col span={24} align="right">
-              <Col span={12} align="left">
-                <br />
-                <Button onClick={() => setStep(1)}>
-                  <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
-                </Button>
-              </Col>
+              <Row>
+                <Col span={12} align="left">
+                  <br />
+                  <Button onClick={() => setStep(1)}>
+                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                  </Button>
+                </Col>
 
-              <Col span={12} align="right">
-                <br />
-                <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
-                  {t('listingForm.btn.submit')}
-                </SubmitButton>
-              </Col>
+                <Col span={12} align="right">
+                  <br />
+                  <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
+                    {t('listingForm.btn.submit')}
+                  </SubmitButton>
+                </Col>
+              </Row>
             </Col>
           </Row>
         )}

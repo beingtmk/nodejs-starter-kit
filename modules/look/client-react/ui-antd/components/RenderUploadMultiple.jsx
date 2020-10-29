@@ -61,25 +61,27 @@ const RenderUploadMultiple = props => {
   // console.log(defaultFileList);
 
   return (
-    <FormItem label={label} validateStatus={validateStatus}>
-      <div className="dropbox">
-        <Upload.Dragger
-          defaultFileList={defaultFileList}
-          name="file"
-          listType="picture"
-          className="upload-list-inline"
-          onChange={onChangeHandler}
-          action={cloudinary_url}
-          data={cloudinary_data}
-          // headers={headers}
-        >
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-        </Upload.Dragger>
-      </div>
+    <FormItem
+      label={label}
+      validateStatus={validateStatus}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24, offset: 1 }}
+    >
+      <Upload.Dragger
+        defaultFileList={defaultFileList}
+        name="file"
+        listType="picture"
+        onChange={onChangeHandler}
+        action={cloudinary_url}
+        data={cloudinary_data}
+        // headers={headers}
+      >
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+        <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+      </Upload.Dragger>
     </FormItem>
   );
 };
