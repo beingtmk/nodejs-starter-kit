@@ -34,17 +34,19 @@ const CheckoutOrderView = props => {
     <PageLayout>
       {renderMetaData()}
       {getCartLoading && <Spinner />}
-      <div className="checkoutDiv">
+      {!getCartLoading && (
         <Row gutter={24}>
-          <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-            <CheckoutStepsComponent step={3} t={t} />
+          <Col span={24} align="center">
+            <CheckoutStepsComponent step={0} t={t} />
+            <br />
+            <br />
           </Col>
-          <Col lg={{ span: 22, offset: 1 }} md={{ span: 22, offset: 1 }} xs={{ span: 24, offset: 0 }}>
+          <Col lg={22} md={22} xs={24}>
             <Row gutter={24}>
-              <Col lg={{ span: 10, offset: 0 }} xs={{ span: 24, offset: 0 }} className="margin20">
-                <Row>
-                  {getCart && (
-                    <>
+              <Col lg={10} md={10} xs={24}>
+                {getCart && (
+                  <Row gutter={24}>
+                    <Col span={24}>
                       <OrderTrackCardComponent
                         t={t}
                         orderStatus={getCart.orderState}
@@ -52,26 +54,20 @@ const CheckoutOrderView = props => {
                         completed={3}
                       />
                       <Divider />
-                      <Col
-                        lg={{ span: 24, offset: 0 }}
-                        sm={{ span: 24, offset: 0 }}
-                        xs={{ span: 24, offset: 0 }}
-                        style={{ paddingBottom: '5%' }}
-                      >
-                        {/* <div style={{ marginTop: "200px" }} /> */}
-                        <Card className="boxShadowTheme borderRadius9">
-                          <h4>{t('checkoutOrder.orderAddress')}</h4>
-                          <hr />
-                          <Row type="flex" justify="center" align="middle">
-                            {address && <AddressView addresses={[address]} addressId={address.id} />}
-                          </Row>
-                        </Card>
-                      </Col>
-                    </>
-                  )}
-                </Row>
+                    </Col>
+                    <Col span={24}>
+                      <Card className="boxShadowTheme borderRadius9">
+                        <h4>{t('checkoutOrder.orderAddress')}</h4>
+                        <hr />
+                        <Row type="flex" justify="center" align="middle">
+                          {address && <AddressView addresses={[address]} addressId={address.id} />}
+                        </Row>
+                      </Card>
+                    </Col>
+                  </Row>
+                )}
               </Col>
-              <Col lg={{ span: 14, offset: 0 }} xs={{ span: 24, offset: 0 }} className="marginT20">
+              <Col lg={14} md={14} xs={24}>
                 {getCart && (
                   <CheckoutCardComponent
                     // onSubmit={openCheckout}
@@ -89,8 +85,7 @@ const CheckoutOrderView = props => {
             </Row>
           </Col>
         </Row>
-      </div>
-      {/* )} */}
+      )}
     </PageLayout>
   );
 };
