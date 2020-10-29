@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Steps, Col, Row } from 'antd';
 import { PropTypes } from 'prop-types';
@@ -14,35 +14,31 @@ const CheckoutSteps = styled.div`
 
 const Step = Steps.Step;
 
-class CheckoutStepsComponent extends Component {
-  render() {
-    const { t } = this.props;
-    return (
-      <Col lg={24} md={24} align="left">
-        <Col span={24}>
-          <Row justify="center">
-            <CheckoutSteps>
-              <Heading type="3" align="center">
-                {t('checkoutSteps.heading')}
-              </Heading>
-            </CheckoutSteps>
-          </Row>
-        </Col>
+const CheckoutStepsComponent = props => {
+  const { t, step } = props;
+  return (
+    <Row justify="center">
+      <Col span={24}>
         <Row justify="center">
-          <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 6 }}>
-            <Steps current={this.props.step} size="small">
-              <Step title={<span className="font13">{t('checkoutSteps.step1')}</span>} />
-              <Step title={<span className="font13">{t('checkoutSteps.step2')}</span>} />
-              <Step title={<span className="font13">{t('checkoutSteps.step3')}</span>} />
-            </Steps>
-          </Col>
+          <CheckoutSteps>
+            <Heading type="3" align="center">
+              {t('checkoutSteps.heading')}
+            </Heading>
+          </CheckoutSteps>
         </Row>
-        <br />
-        <br />
       </Col>
-    );
-  }
-}
+      <Col span={3} />
+      <Col span={18}>
+        <Steps current={step} size="small">
+          <Step title={t('checkoutSteps.step1')} />
+          <Step title={t('checkoutSteps.step2')} />
+          <Step title={t('checkoutSteps.step3')} />
+        </Steps>
+      </Col>
+      <Col span={3} />
+    </Row>
+  );
+};
 CheckoutStepsComponent.propTypes = {
   step: PropTypes.number,
   t: PropTypes.func

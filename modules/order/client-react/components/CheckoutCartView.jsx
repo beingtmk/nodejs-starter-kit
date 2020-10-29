@@ -51,10 +51,12 @@ const CheckoutCartView = props => {
         (getCart && getCart.orderDetails.length > 0 ? (
           <div>
             <Row type="flex">
-              <Col xl={{ span: 24, offset: 0 }} lg={24} xs={{ span: 24, offset: 0 }} align="center">
+              <Col span={24} align="center">
                 <CheckoutStepsComponent step={0} t={t} />
+                <br />
+                <br />
               </Col>
-              <Col lg={{ span: 23, offset: 1 }} xs={{ span: 24, offset: 0 }}>
+              <Col span={24}>
                 <Row type="flex" justify="center" align="middle">
                   <Col lg={8} md={8} xs={24}>
                     <h2>
@@ -74,31 +76,31 @@ const CheckoutCartView = props => {
                       <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
                     </h2>
                   </Col>
-                  <Col lg={8} md={8} xs={24}>
+                  <Col span={24}>
                     <br />
                   </Col>
                 </Row>
-                {/* <br />
-                <br /> */}
                 <Row gutter={24}>
-                  <Col xxl={{ span: 16, offset: 0 }} lg={{ span: 16, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                  <Col xxl={16} lg={16} xs={24}>
                     {getCart &&
                       getCart.orderDetails.map(cartItem => (
-                        <>
-                          <CartItemComponent
-                            t={t}
-                            item={cartItem}
-                            edit={true}
-                            onSubmit={onSubmit}
-                            onDelete={onDelete}
-                            currentUser={currentUser}
-                            onEdit={onEdit}
-                          />
-                          <Divider />
-                        </>
+                        <Row>
+                          <Col span={24}>
+                            <CartItemComponent
+                              t={t}
+                              item={cartItem}
+                              edit={true}
+                              onSubmit={onSubmit}
+                              onDelete={onDelete}
+                              currentUser={currentUser}
+                              onEdit={onEdit}
+                            />
+                            <Divider />
+                          </Col>
+                        </Row>
                       ))}
                   </Col>
-                  <Col lg={{ span: 8, offset: 0 }} sm={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }}>
+                  <Col lg={8} sm={24} xs={24}>
                     <Card>
                       <Checkbox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</Checkbox>
                       <br />
