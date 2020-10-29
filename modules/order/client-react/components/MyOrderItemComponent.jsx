@@ -50,35 +50,34 @@ const OrderItemComponent = props => {
           <Col span={18}>
             <div
               style={{
-                padding: '15px',
-                align: 'center',
-                height: '100%',
-                position: 'relative'
+                padding: '10px 15px'
               }}
             >
-              <Col span={24}>
-                <h2>
-                  {t('orders.orderId')}
-                  {item.id}
-                </h2>
-              </Col>
-              <Col span={12}>
-                <Row type="flex" justify="start">
-                  <h3>
-                    {t('orders.items')}
-                    {item.orderDetails && displayDataCheck(item.orderDetails.length)}
-                  </h3>
-                </Row>
-              </Col>
-              <Col span={12}>
-                <Row type="flex" justify="end">
-                  <h3>
-                    <StatusText status={item.orderState && item.orderState.state.toLowerCase()}>
-                      {item.orderState && displayDataCheck(item.orderState.state)}
-                    </StatusText>
-                  </h3>
-                </Row>
-              </Col>
+              <Row>
+                <Col span={24}>
+                  <h2>
+                    {t('orders.orderId')}
+                    {item.id}
+                  </h2>
+                </Col>
+                <Col span={12}>
+                  <Row type="flex" justify="start">
+                    <h3>
+                      {t('orders.items')}
+                      {item.orderDetails && displayDataCheck(item.orderDetails.length)}
+                    </h3>
+                  </Row>
+                </Col>
+                <Col span={12}>
+                  <Row type="flex" justify="end">
+                    <h3>
+                      <StatusText status={item.orderState && item.orderState.state.toLowerCase()}>
+                        {item.orderState && displayDataCheck(item.orderState.state)}
+                      </StatusText>
+                    </h3>
+                  </Row>
+                </Col>
+              </Row>
             </div>
           </Col>
           <Col span={6}>
