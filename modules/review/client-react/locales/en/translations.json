@@ -34,6 +34,7 @@
   "avgRating":"rating",
   "reviewForm":{
     "modal":"Modal",
+    "modalId":"Modal Id",
     "username":"username",
     "rate":"Rate",
     "addVideo":"Add video url",
