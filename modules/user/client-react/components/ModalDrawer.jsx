@@ -10,6 +10,7 @@ const ModalBar = styled.div`
   height: 6px;
   background: #9b9b9b;
   border-radius: 3px;
+  margin-bottom: 5px;
 `;
 const ModalDrawer = props => {
   const { buttonText, height, children, ghost = false, modalTitle, type = 'primary' } = props;
@@ -31,27 +32,30 @@ const ModalDrawer = props => {
         <Button ghost={ghost} type={type} block onClick={() => setVisibleDrawer(true)}>
           {buttonText}
         </Button>
-        <Drawer
-          height={height}
-          title={
-            <>
-              <Row type="flex" justify="center">
-                <ModalBar />
-              </Row>
-              {modalTitle}
-            </>
-          }
-          placement={'bottom'}
-          closable={true}
-          onClose={() => setVisibleDrawer(false)}
-          visible={visibleDrawer}
-          headerStyle={{ position: 'fixed', zIndex: '10', width: '100%', borderRadius: '24px 24px 0 0' }}
-        >
-          <br />
-          <br />
-          {/* {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })} */}
-          {children}
-        </Drawer>
+        <div className="drawer">
+          <Drawer
+            height={height}
+            title={
+              <>
+                <Row type="flex" justify="center">
+                  <ModalBar />
+                </Row>
+                {modalTitle}
+              </>
+            }
+            className="drawer"
+            placement={'bottom'}
+            closable={true}
+            onClose={() => setVisibleDrawer(false)}
+            visible={visibleDrawer}
+            headerStyle={{ position: 'fixed', zIndex: '10', width: '100%', borderRadius: '24px 24px 0 0' }}
+          >
+            <br />
+            <br />
+            {/* {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })} */}
+            {children}
+          </Drawer>
+        </div>
       </Col>
     </Row>
   );

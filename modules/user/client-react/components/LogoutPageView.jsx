@@ -42,13 +42,26 @@ const LogoutPageView = props => {
           title="Successfully Logged Out"
           subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
           extra={[
-            <Button type="primary" key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
-              <HomeOutlined /> Go To Home
-            </Button>,
-            <Button key="signIn" onClick={() => history.push(`${USER_ROUTES.login}`)}>
-              <LoginOutlined />
-              SignIn
-            </Button>
+            <Row justify="center" type="flex">
+              <Col lg={4} md={5} xs={24}>
+                <Button type="primary" block={true} key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
+                  <HomeOutlined /> Go To Home
+                </Button>
+              </Col>
+            </Row>,
+            <Row justify="center" type="flex">
+              <Col lg={4} md={5} xs={24}>
+                <Button
+                  key="signIn"
+                  block={true}
+                  style={{ marginTop: '10px' }}
+                  onClick={() => history.push(`${USER_ROUTES.login}`)}
+                >
+                  <LoginOutlined />
+                  SignIn
+                </Button>
+              </Col>
+            </Row>
           ]}
         />
       </div>
