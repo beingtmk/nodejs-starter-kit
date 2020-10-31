@@ -12,21 +12,23 @@ const ModalBar = styled.div`
   border-radius: 3px;
 `;
 const ModalDrawer = props => {
-  const { buttonText, height, children, ghost = false } = props;
+  const { buttonText, height, children, ghost = false, modalTitle, type = 'primary' } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
+  console.log(children);
   return (
     <Row type="flex" gutter={[24, 24]}>
       <Col lg={24} md={12} sm={24} xs={0}>
-        <Button ghost={ghost} type={'primary'} block onClick={() => setVisibleModal(true)}>
+        <Button ghost={ghost} type={type} block onClick={() => setVisibleModal(true)}>
           {buttonText}
         </Button>
-        <Modal centered title={buttonText} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
-          {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })}
+        <Modal centered title={modalTitle} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
+          {/* {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })} */}
+          {children}
         </Modal>
       </Col>
       <Col lg={0} md={0} sm={0} xs={12}>
-        <Button ghost={ghost} type={'primary'} block onClick={() => setVisibleDrawer(true)}>
+        <Button ghost={ghost} type={type} block onClick={() => setVisibleDrawer(true)}>
           {buttonText}
         </Button>
         <Drawer
@@ -36,7 +38,7 @@ const ModalDrawer = props => {
               <Row type="flex" justify="center">
                 <ModalBar />
               </Row>
-              {buttonText}
+              {modalTitle}
             </>
           }
           placement={'bottom'}
@@ -47,7 +49,8 @@ const ModalDrawer = props => {
         >
           <br />
           <br />
-          {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })}
+          {/* {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })} */}
+          {children}
         </Drawer>
       </Col>
     </Row>
@@ -57,6 +60,8 @@ ModalDrawer.propTypes = {
   buttonText: PropTypes.string,
   height: PropTypes.string,
   children: PropTypes.func,
-  ghost: PropTypes.bool
+  ghost: PropTypes.bool,
+  modalTitle: PropTypes.string,
+  type: PropTypes.string
 };
 export default ModalDrawer;

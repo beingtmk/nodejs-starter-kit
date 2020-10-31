@@ -128,7 +128,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
       <Row type="flex" gutter={[24, 24]}>
         <Col lg={12} md={12} xs={12}>
-          <ModalDrawer buttonText="Reset password" height="auto" ghost={true}>
+          <ModalDrawer buttonText="Reset password" modalTitle="Reset Password" height="auto" ghost={true}>
             <div>
               <Field
                 name="password"

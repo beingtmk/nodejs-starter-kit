@@ -250,5 +250,12 @@
       }
     },
     "logout": "Log out"
+  },
+  "mobileOTP":{
+    "field":{
+      "mobile":"Mobile",
+      "otp":"OTP"
+    },
+    "btn":"verify OTP"
   }
 }
