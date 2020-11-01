@@ -20,7 +20,8 @@ const LogoutPageView = props => {
           <Col xs={0} sm={0} md={24} lg={24}>
             <br />
             <br />
-            <br />
+          </Col>
+          <Col xs={24} sm={24} md={0} lg={0}>
             <br />
           </Col>
         </Row>
@@ -53,34 +54,32 @@ const LogoutPageView = props => {
           subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
           extra={
             <>
-              {/* <Row justify="center" type="flex"> */}
-              <div
-                style={{
-                  // display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Col lg={{ offset: 10, span: 4 }} md={{ offset: 10, span: 6 }} sm={{ offset: 10, span: 6 }} xs={24}>
-                  <Button type="primary" block={true} key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
-                    <HomeOutlined /> Go To Home
-                  </Button>
+              <Row justify="center">
+                <Col lg={{ span: 12 }}>
+                  <Row type="flex" justify="center" gutter={[24, 24]}>
+                    <Col xs={24} sm={24} md={24} lg={12}>
+                      <Row justify="center">
+                        <Button
+                          type="primary"
+                          block={true}
+                          key="console"
+                          onClick={() => history.push(`${HOME_ROUTES.home}`)}
+                        >
+                          <HomeOutlined /> Go To Home
+                        </Button>
+                      </Row>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={12}>
+                      <div style={{ width: '100%' }}>
+                        <Button key="signIn" block={true} onClick={() => history.push(`${USER_ROUTES.login}`)}>
+                          <LoginOutlined />
+                          SignIn
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
                 </Col>
-                <Col lg={{ offset: 10, span: 4 }} md={{ offset: 10, span: 6 }} sm={{ offset: 10, span: 6 }} xs={24}>
-                  <div style={{ width: '100%' }}>
-                    <Button
-                      key="signIn"
-                      block={true}
-                      style={{ marginTop: '10px' }}
-                      onClick={() => history.push(`${USER_ROUTES.login}`)}
-                    >
-                      <LoginOutlined />
-                      SignIn
-                    </Button>
-                  </div>
-                </Col>
-              </div>
+              </Row>
             </>
           }
         />
