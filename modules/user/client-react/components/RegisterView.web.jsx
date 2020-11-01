@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Icon,
   Row,
   Col,
   PageLayout,
@@ -11,10 +12,9 @@ import {
   CardTitle,
   CardText,
   Underline,
-  MetaTags
+  MetaTags,
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { UserAddOutlined } from '@ant-design/icons';
 
 import RegisterForm from './RegisterForm';
 
@@ -32,7 +32,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
     <Card className="form-card">
       <Underline>
         <CardTitle>
-          <UserAddOutlined /> {t('reg.form.title')}
+          <Icon type="UserAddOutlined" /> {t('reg.form.title')}
         </CardTitle>
       </Underline>
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
@@ -62,7 +62,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
 RegisterView.propTypes = {
   t: PropTypes.func,
   onSubmit: PropTypes.func,
-  isRegistered: PropTypes.bool
+  isRegistered: PropTypes.bool,
 };
 
 export default translate('user')(RegisterView);

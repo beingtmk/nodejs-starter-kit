@@ -9,7 +9,7 @@ import DELETE_USER from '../graphql/DeleteUser.graphql';
 import UPDATE_FILTER from '../graphql/UpdateFilter.client.graphql';
 import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
 
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 
 export const withCurrentUser = Component =>
   graphql(CURRENT_USER_QUERY, {

@@ -1,11 +1,10 @@
 import React from 'react';
-import { LoginOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { translate } from '@gqlapp/i18n-client-react';
-import { MenuItem } from '@gqlapp/look-client-react';
+import { Icon, MenuItem } from '@gqlapp/look-client-react';
 import ClientModule from '@gqlapp/module-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
@@ -21,7 +20,7 @@ import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from
 const ProfileName = withLoadedUser(({ currentUser }) => {
   return (
     <>
-      <UserOutlined /> {currentUser ? currentUser.fullName || currentUser.username : null}
+      <Icon type="UserOutlined" /> {currentUser ? currentUser.fullName || currentUser.username : null}
     </>
   );
 });
@@ -40,7 +39,7 @@ const LogoutLink = withRouter(
         }}
         className="nav-link"
       >
-        <LogoutOutlined /> {t('navLink.logout')}
+        <Icon type="LogoutOutlined" /> {t('navLink.logout')}
       </a>
     ))
   )
@@ -56,7 +55,7 @@ const NavLinkUsersWithI18n = translate('user')(({ t }) => (
 ));
 const NavLinkLoginWithI18n = translate('user')(({ t }) => (
   <NavLink to={ROUTES.login} className="nav-link" activeClassName="active">
-    <LoginOutlined />
+    <Icon type="LoginOutlined" />
     {t('navLink.signIn')}
   </NavLink>
 ));
@@ -136,21 +135,21 @@ export default new ClientModule({
       exact
       path={ROUTES.userList}
       component={loadable(() => import('./containers/UsersProfileCatalogue').then(c => c.default), {
-        fallback: <Spinner />
+        fallback: <Spinner />,
       })}
-    />
+    />,
   ],
   navItemAdmin: [
     <IfLoggedIn key={ROUTES.adminPanel} role="admin">
       <MenuItem>
         <NavLinkUsersWithI18n />
       </MenuItem>
-    </IfLoggedIn>
+    </IfLoggedIn>,
   ],
   navItemTest: [
     <MenuItem key={ROUTES.userList}>
       <NavLinkTestWithI18n />
-    </MenuItem>
+    </MenuItem>,
   ],
   navItemUser: [
     <IfLoggedIn key={ROUTES.profile}>
@@ -164,18 +163,18 @@ export default new ClientModule({
       <MenuItem>
         <LogoutLink />
       </MenuItem>
-    </IfLoggedIn>
+    </IfLoggedIn>,
   ],
   navItemRight: [
     <IfNotLoggedIn key={ROUTES.login}>
       <MenuItem>
         <NavLinkLoginWithI18n />
       </MenuItem>
-    </IfNotLoggedIn>
+    </IfNotLoggedIn>,
   ],
   resolver: [resolvers],
   localization: [{ ns: 'user', resources }],
   dataRootComponent: [DataRootComponent],
   // eslint-disable-next-line react/display-name
-  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)]
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
 });

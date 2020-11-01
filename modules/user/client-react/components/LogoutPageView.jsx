@@ -1,15 +1,13 @@
 /* eslint-disable import/no-named-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
 import { Row, Col, Button, Result } from 'antd';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Icon } from '@gqlapp/look-client-react';
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
-const LOGOUT_PAGE_GIF =
-  'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601824605/cwy15kfennovwu6j4noe.webp';
+const LOGOUT_PAGE_GIF = 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601824605/cwy15kfennovwu6j4noe.webp';
 
 const LogoutPageView = props => {
   const { history } = props;
@@ -43,12 +41,12 @@ const LogoutPageView = props => {
           subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
           extra={[
             <Button type="primary" key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
-              <HomeOutlined /> Go To Home
+              <Icon type="HomeOutlined" /> Go To Home
             </Button>,
             <Button key="signIn" onClick={() => history.push(`${USER_ROUTES.login}`)}>
-              <LoginOutlined />
+              <Icon type="LoginOutlined" />
               SignIn
-            </Button>
+            </Button>,
           ]}
         />
       </div>
@@ -57,7 +55,7 @@ const LogoutPageView = props => {
 };
 
 LogoutPageView.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default LogoutPageView;

@@ -2,16 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import {
-  ContactsOutlined,
-  MailOutlined,
-  PaperClipOutlined,
-  ShakeOutlined,
-  SolutionOutlined,
-  TeamOutlined,
-  UserOutlined
-} from '@ant-design/icons';
-
 import { Row, Col, Divider, Spin as Loader } from 'antd';
 
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
@@ -24,14 +14,15 @@ import {
   PageLayout,
   Heading,
   EditIcon,
-  MetaTags
+  Icon,
+  MetaTags,
 } from '@gqlapp/look-client-react';
+import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
-import settings from '../../../../settings';
 import AddressCardComponent from './components/AddressCardComponent';
 import userCardData from '../helpers/userCardData';
 
@@ -74,11 +65,11 @@ class ProfileView extends React.Component {
                     fontWeight: 'bold',
                     height: '61px',
                     marginBottom: '0px',
-                    position: 'relative'
+                    position: 'relative',
                   }}
                 >
                   <Heading type="2">
-                    <UserOutlined /> {t(`profile.card.title`)}
+                    <Icon type="UserOutlined" /> {t(`profile.card.title`)}
                   </Heading>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
                     <Link to={`${ROUTES.editLink}${currentUser.id}`}>
@@ -96,13 +87,13 @@ class ProfileView extends React.Component {
                   <Col align="left" style={{ borderRight: '2px solid #23B195' }} span={12}>
                     <div>
                       <h2>
-                        <UserOutlined /> {t('profile.card.group.name')}:
+                        <Icon type="UserOutlined" /> {t('profile.card.group.name')}:
                       </h2>
                       <CardText>{currentUser.username}</CardText>
                     </div>
                     <div>
                       <h2>
-                        <SolutionOutlined /> {t('profile.card.group.about')}:
+                        <Icon type="SolutionOutlined" /> {t('profile.card.group.about')}:
                       </h2>
 
                       <CardText>
@@ -112,14 +103,15 @@ class ProfileView extends React.Component {
 
                     <div>
                       <h2>
-                        <TeamOutlined /> {t('profile.card.group.role')}:
+                        <Icon type="TeamOutlined" />
+                        {t('profile.card.group.role')}:
                       </h2>
                       <CardText>{currentUser.role ? currentUser.role : 'Not Provided'}</CardText>
                     </div>
 
                     {/* Portfolios */}
                     <h2>
-                      <PaperClipOutlined /> {t('profile.card.group.portfolios.title')}
+                      <Icon type="PaperClipOutlined" /> {t('profile.card.group.portfolios.title')}
                     </h2>
                     {currentUser.portfolios && currentUser.portfolios.length !== 0
                       ? currentUser.portfolios.map((portfolio, key) => (
@@ -134,7 +126,7 @@ class ProfileView extends React.Component {
                   <Col align="right" span={12}>
                     <div>
                       <h2>
-                        <MailOutlined /> {t('profile.card.group.email')}:
+                        <Icon type="MailOutlined" /> {t('profile.card.group.email')}:
                       </h2>
 
                       <CardText>{currentUser.email ? currentUser.email : 'Not Provided'}</CardText>
@@ -142,19 +134,17 @@ class ProfileView extends React.Component {
 
                     <div>
                       <h2>
-                        <ShakeOutlined /> Mobile
+                        <Icon type="ShakeOutlined" /> Mobile
                       </h2>
                       <CardText>
-                        {currentUser.profile && currentUser.profile.mobile
-                          ? currentUser.profile.mobile
-                          : 'Not Provided'}
+                        {currentUser.profile && currentUser.profile.mobile ? currentUser.profile.mobile : 'Not Provided'}
                       </CardText>
                     </div>
                   </Col>
                 </Row>
                 <Divider />
                 <h2>
-                  <ContactsOutlined /> {t('profile.card.group.addresses.title')}
+                  <Icon type="ContactsOutlined" /> {t('profile.card.group.addresses.title')}
                 </h2>
                 <Row gutter={10}>
                   {currentUser.addresses && currentUser.addresses.length !== 0
@@ -206,6 +196,6 @@ ProfileView.propTypes = {
   currentUser: PropTypes.object,
   t: PropTypes.func,
   match: PropTypes.object,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
 };
 export default translate('user')(ProfileView);

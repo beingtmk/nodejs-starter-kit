@@ -6,9 +6,9 @@ import { Row, Col, Divider, Button, Spin } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import { Pagination, PageLayout, CatalogueWithInfiniteScroll } from '@gqlapp/look-client-react';
+import settings from '@gqlapp/config';
 
 import ProfileCatalogueCard from './components/ProfileCatalogueCard';
-import settings from '../../../../settings';
 
 const { itemsNumber, type } = settings.pagination.web;
 
@@ -41,8 +41,8 @@ class UsersProfileCatalogueView extends Component {
           meta={[
             {
               name: 'description',
-              content: `${settings.app.name} - ${t('user.meta')}`
-            }
+              content: `${settings.app.name} - ${t('user.meta')}`,
+            },
           ]}
         />
         <h2 className="profile-catalogue-heading" style={{ fontSize: '32px', marginBottom: '24px' }}>
@@ -75,7 +75,7 @@ UsersProfileCatalogueView.propTypes = {
   t: PropTypes.func,
   toggleWatchList: PropTypes.func,
   currentUser: PropTypes.object,
-  watchlist: PropTypes.array
+  watchlist: PropTypes.array,
 };
 
 class UsersProfileListComponent extends Component {
@@ -91,7 +91,7 @@ class UsersProfileListComponent extends Component {
               md: 2,
               lg: 2,
               xl: 3,
-              xxl: 3
+              xxl: 3,
             }}
             endMessage={'End Of Profiles'}
             loadData={this.props.loadData}
@@ -111,9 +111,9 @@ class UsersProfileListComponent extends Component {
 UsersProfileListComponent.propTypes = {
   listings: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired
+      id: PropTypes.number.isRequired,
     })
-  ).isRequired
+  ).isRequired,
 };
 
 export default translate('listing')(UsersProfileCatalogueView);

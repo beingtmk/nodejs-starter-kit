@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
-import { LoginOutlined } from '@ant-design/icons';
 import { NavLink, Link } from 'react-router-dom';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { required, minLength, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Alert, Button } from '@gqlapp/look-client-react';
+import { Icon, Form, RenderField, Alert, Button } from '@gqlapp/look-client-react';
 import { LinkedInButton, GoogleButton, GitHubButton, FacebookButton } from '@gqlapp/authentication-client-react';
 import settings from '@gqlapp/config';
 
@@ -15,7 +14,7 @@ import ROUTES from '../routes';
 
 const loginFormSchema = {
   usernameOrEmail: [required, minLength(3)],
-  password: [required, minLength(settings.auth.password.minLength)]
+  password: [required, minLength(settings.auth.password.minLength)],
 };
 const { github, facebook, linkedin, google } = settings.auth.social;
 
@@ -26,7 +25,7 @@ const renderSocialButtons = (buttonsLength, t) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
       }}
     >
       {facebook.enabled && (
@@ -77,8 +76,7 @@ const renderSocialButtons = (buttonsLength, t) => {
 };
 
 const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => {
-  const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button)
-    .length;
+  const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button).length;
   return (
     <Form name="login" onSubmit={handleSubmit}>
       <Field
@@ -101,11 +99,11 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => 
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
-          <LoginOutlined /> {t('login.form.btnSubmit')}
+          <Icon type="LoginOutlined" /> {t('login.form.btnSubmit')}
         </Button>
 
         {renderSocialButtons(buttonsLength, t)}
@@ -127,7 +125,7 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => 
               color="primary"
               onClick={() => history.push(`${ROUTES.register}`)}
             >
-              <LoginOutlined /> {t('login.btn.sign')}
+              <Icon type="LoginOutlined" /> {t('login.btn.sign')}
             </Button>
           </div>
         )}
@@ -143,7 +141,7 @@ LoginForm.propTypes = {
   errors: PropTypes.object,
   values: PropTypes.object,
   history: PropTypes.object,
-  t: PropTypes.func
+  t: PropTypes.func,
 };
 
 const LoginFormWithFormik = withFormik({
@@ -160,7 +158,7 @@ const LoginFormWithFormik = withFormik({
     });
   },
   validate: values => validate(values, loginFormSchema),
-  displayName: 'LoginForm' // helps with React DevTools
+  displayName: 'LoginForm', // helps with React DevTools
 });
 
 export default translate('user')(LoginFormWithFormik(LoginForm));
