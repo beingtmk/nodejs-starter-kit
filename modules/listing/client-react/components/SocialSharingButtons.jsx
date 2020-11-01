@@ -105,8 +105,8 @@ const SocialSharingButtons = props => {
   );
   return (
     <Col span={24} style={{ height: '50px' }}>
-      <DropDown overlay={sharingMenu}>
-        <Button shape="circle" type="primary" ghost icon={<Icon type="ShareAltOutlined" />} />
+      <DropDown content={<Button shape="circle" type="primary" ghost icon={<Icon type="ShareAltOutlined" />} />} noicon>
+        {sharingMenu}
       </DropDown>
 
       <Modal
