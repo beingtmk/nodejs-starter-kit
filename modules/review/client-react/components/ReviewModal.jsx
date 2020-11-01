@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Row, Col, Drawer } from 'antd';
+import { Modal, Drawer } from 'antd';
 
-import { AddButton, Heading } from '@gqlapp/look-client-react';
+import { AddButton, Heading, Row, Col } from '@gqlapp/look-client-react';
 import ReviewFormComponent from './ReviewFormComponent';
 
 const ReviewModal = props => {

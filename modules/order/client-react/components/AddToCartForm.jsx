@@ -1,11 +1,11 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
-import { Row, Col, Button } from 'antd';
+import { Button } from 'antd';
 import * as Yup from 'yup';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Form, RenderField } from '@gqlapp/look-client-react';
+import { Form, RenderField, Row, Col } from '@gqlapp/look-client-react';
 
 import AddToCartFormBtns from './AddToCartFormBtns';
 

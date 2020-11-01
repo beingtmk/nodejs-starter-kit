@@ -4,7 +4,8 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'antd';
+import { Row, Col } from '@gqlapp/look-client-react';
+
 import { getChildrenToRender, isImg } from './utils';
 
 class Footer extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
-import { Row, Col, Divider, Card } from 'antd';
+import { PageLayout, MetaTags, Row, Col } from '@gqlapp/look-client-react';
+import { Divider, Card } from 'antd';
 import settings from '@gqlapp/config';
 
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';

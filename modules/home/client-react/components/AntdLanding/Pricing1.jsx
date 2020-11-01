@@ -3,8 +3,8 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
-import { Row, Col, Button } from 'antd';
-import { Heading } from '@gqlapp/look-client-react';
+import { Button } from 'antd';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Pricing1 extends React.PureComponent {

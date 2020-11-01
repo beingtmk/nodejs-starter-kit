@@ -1,8 +1,8 @@
 import React from 'react';
-import { Row, Col } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Card, CardTitle, Icon, Underline, MetaTags, PageLayout } from '@gqlapp/look-client-react';
+import { Card, CardTitle, Underline, Icon, MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
+// import { GlobalOutlined } from '@ant-design/icons';
 
 import ContactForm from './ContactForm';
 import { ContactForm as IContactForm } from '../types';

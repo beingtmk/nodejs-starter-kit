@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'antd';
-import { Icon, PageLayout, Card, CardTitle, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, Card, CardTitle, Icon, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
+// import { UndoOutlined } from '@ant-design/icons';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
@@ -55,7 +55,7 @@ ForgotPasswordView.propTypes = {
   onSubmit: PropTypes.func,
   forgotPassword: PropTypes.func,
   sent: PropTypes.bool,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 export default ForgotPasswordView;

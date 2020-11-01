@@ -1,8 +1,9 @@
 import React from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
-import { Row, Col } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
+import { Row, Col } from '@gqlapp/look-client-react';
+
 import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 

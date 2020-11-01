@@ -27,7 +27,7 @@ const ModalDrawer = props => {
           {children}
         </Modal>
       </Col>
-      <Col lg={0} md={0} sm={0} xs={12}>
+      <Col lg={0} md={0} sm={0} xs={24}>
         <Button ghost={ghost} type={type} block onClick={() => setVisibleDrawer(true)}>
           {buttonText}
         </Button>

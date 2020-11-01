@@ -1,11 +1,10 @@
 import React from 'react';
 import TweenOne from 'rc-tween-one';
-import { Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { Heading } from '@gqlapp/look-client-react';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Content7 extends React.Component {

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 
-import { Drawer, Menu, Row, Col, Layout } from 'antd';
+import { Drawer, Menu, Layout } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+import { Row, Col } from '@gqlapp/look-client-react';
 
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';

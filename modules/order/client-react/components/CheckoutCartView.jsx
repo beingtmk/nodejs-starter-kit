@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Row, Col, Card, Checkbox, Empty, Divider } from 'antd';
+import { Card, Checkbox, Empty, Divider } from 'antd';
 
-import { Icon, PageLayout, NextButton, AddButton, MetaTags } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, NextButton, AddButton, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';

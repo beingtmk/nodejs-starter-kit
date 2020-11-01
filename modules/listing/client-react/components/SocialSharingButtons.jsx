@@ -85,21 +85,62 @@ const SocialSharingButtons = props => {
         </Button>
       </a>
       {!hideEmailButton && (
-        <Button
-          shape="circle"
-          onClick={() => setVisible(true)}
-          type="link"
-          size="large"
-          ghost
-          style={{ fontSize: '22px' }}
-        >
-          <Img
-            src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171054/pueo2x3cpojocidoeou8.svg'}
-            height="30"
-            width="30"
-            align="centre"
-          />
-        </Button>
+        <>
+          <Button
+            shape="circle"
+            onClick={() => setVisible(true)}
+            type="link"
+            size="large"
+            ghost
+            style={{ fontSize: '22px' }}
+          >
+            <Img
+              src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171054/pueo2x3cpojocidoeou8.svg'}
+              height="30"
+              width="30"
+              align="centre"
+            />
+          </Button>
+          <Modal
+            title={t('socialSharingButton.title')}
+            centered
+            footer={null}
+            visible={visible}
+            onCancel={() => setVisible(false)}
+          >
+            <Form name="invite" onShare={handleSubmit}>
+              {inputForm === 'email' ? (
+                <Field
+                  name="inviteVal.email"
+                  component={RenderField}
+                  type="email"
+                  placeholder={t('socialSharingButton.email')}
+                  value={values.inviteVal.email}
+                />
+              ) : (
+                <Field
+                  name="inviteVal.number"
+                  component={RenderField}
+                  type="number"
+                  placeholder={t('socialSharingButton.number')}
+                  value={values.inviteVal.number}
+                />
+              )}
+              <h3>
+                <strong>{t('socialSharingButton.text')}</strong>
+              </h3>
+              <br />
+              <Card>{whatsappMessage}</Card>
+              <br />
+              <div align="right">
+                <Button disabled={submitting} type="primary" onClick={() => handleSubmit(values)}>
+                  {t('socialSharingButton.btn.share')}
+                </Button>
+              </div>
+              <div>{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
+            </Form>
+          </Modal>
+        </>
       )}
     </Card>
   );
@@ -109,7 +150,7 @@ const SocialSharingButtons = props => {
         {sharingMenu}
       </DropDown>
 
-      <Modal
+      {/* <Modal
         title={t('socialSharingButton.title')}
         centered
         footer={null}
@@ -147,7 +188,7 @@ const SocialSharingButtons = props => {
           </div>
           <div>{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
         </Form>
-      </Modal>
+      </Modal> */}
     </Col>
   );
 };

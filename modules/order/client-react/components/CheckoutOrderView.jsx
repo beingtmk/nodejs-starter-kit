@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
-import { PageLayout } from '@gqlapp/look-client-react';
-import { Row, Col, Card, Divider } from 'antd';
+import { PageLayout, Row, Col } from '@gqlapp/look-client-react';
+import { Card, Divider } from 'antd';
 
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';

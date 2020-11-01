@@ -1,11 +1,12 @@
 import React from 'react';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { Tabs, Row, Col } from 'antd';
+import { Tabs } from 'antd';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, Heading } from '@gqlapp/look-client-react';
+import { Icon, Heading, Row, Col } from '@gqlapp/look-client-react';
+
 import { getChildrenToRender } from './utils';
 
 const TabPane = Tabs.TabPane;

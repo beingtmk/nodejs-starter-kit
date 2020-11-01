@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Row, Col, Divider } from 'antd';
+import { Divider } from 'antd';
 
-import { Icon, Card, MetaTags, PageLayout } from '@gqlapp/look-client-react';
+import { Icon, Card, MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 // import UserListings from '@gqlapp/listing-client-react/containers/UserListings';
@@ -41,7 +41,7 @@ class ProfileView extends React.Component {
                     fontWeight: 'bold',
                     height: '61px',
                     marginBottom: '0px',
-                    position: 'relative',
+                    position: 'relative'
                   }}
                 >
                   <Icon type="UserOutlined" /> {user.user.username}
@@ -75,6 +75,6 @@ ProfileView.propTypes = {
   match: PropTypes.object,
   user: PropTypes.object,
   history: PropTypes.object,
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 export default translate('user')(ProfileView);

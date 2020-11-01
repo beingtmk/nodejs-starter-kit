@@ -1,10 +1,10 @@
 import React from 'react';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col, Divider } from 'antd';
+import { Divider } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { Heading } from '@gqlapp/look-client-react';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
 
 class Teams3 extends React.PureComponent {

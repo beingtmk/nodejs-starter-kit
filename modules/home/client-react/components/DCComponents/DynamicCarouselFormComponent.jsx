@@ -1,11 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Row, Col } from 'antd';
 import { withFormik } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import {
+  Row,
+  Col,
   Form,
   RenderCheckBox,
   FormItem,

@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Empty, Button, Row, Col, Checkbox, Spin } from 'antd';
+import { Empty, Button, Checkbox, Spin } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import { MetaTags, Heading } from '@gqlapp/look-client-react';
+import { MetaTags, Heading, Row, Col } from '@gqlapp/look-client-react';
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
-import styled from 'styled-components';
 
 import { Reviews, Review } from '../containers/Reviews.web';
-import ReviewModal from './ReviewModal';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import AvgRatingComponent from './AvgRatingComponent';
 import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';

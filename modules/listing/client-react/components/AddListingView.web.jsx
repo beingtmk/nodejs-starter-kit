@@ -1,9 +1,9 @@
 import React from 'react';
-import { Steps, Col, Row } from 'antd';
+import { Steps } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Col, Row } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ListingFormComponent from './ListingFormComponent.web';

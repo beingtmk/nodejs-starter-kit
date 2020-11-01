@@ -1,9 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Row, Col, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Row, Col } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col } from 'antd';
 
 import PropTypes from 'prop-types';
 
-import { LayoutCenter, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 
 import ResetPasswordForm from './ResetPasswordForm';
 
