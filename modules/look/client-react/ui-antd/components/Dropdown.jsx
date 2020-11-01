@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Menu, Dropdown } from 'antd';
 
 import Icon from './Icon';

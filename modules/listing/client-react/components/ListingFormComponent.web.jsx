@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
-
-import { Icon as LegacyIcon } from '@ant-design/compatible';
-
 import { Tooltip, message, Row, Col, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
@@ -120,7 +117,7 @@ const ListingFormComponent = props => {
             <Button
               type={'danger'}
               shape="circle"
-              icon={<LegacyIcon type={'delete'} />}
+              icon={<Icon type={'DeleteOutlined'} />}
               onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
               style={{ marginBottom: '25px' }}
             />
@@ -155,7 +152,7 @@ const ListingFormComponent = props => {
               <Button
                 type={'danger'}
                 shape="circle"
-                icon={<LegacyIcon type={'delete'} />}
+                icon={<Icon type={'DeleteOutlined'} />}
                 onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
                 style={{ marginBottom: '25px' }}
               />
