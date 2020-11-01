@@ -121,7 +121,7 @@ class NavBar extends React.Component {
                   >
                     {__DEV__ && (
                       <MenuItem>
-                        <DropDown type="deployment-unit">
+                        <DropDown type="DeploymentUnitOutlined">
                           {ref.modules.navItemsTest}
                           <MenuItem>
                             <a href="/graphiql">GraphiQL</a>
@@ -130,11 +130,11 @@ class NavBar extends React.Component {
                       </MenuItem>
                     )}
                     <MenuItem>
-                      <DropDown type="apartment">{ref.modules.navItemsBrowse}</DropDown>
+                      <DropDown type="ApartmentOutlined">{ref.modules.navItemsBrowse}</DropDown>
                     </MenuItem>
                     <LoggedIn role="admin">
                       <MenuItem>
-                        <DropDown type="safety-certificate">{ref.modules.navItemsAdmin}</DropDown>
+                        <DropDown type="SafetyCertificateOutlined">{ref.modules.navItemsAdmin}</DropDown>
                       </MenuItem>
                     </LoggedIn>
                   </Menu>
