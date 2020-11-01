@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Row, Col, Card, Divider } from 'antd';
+import { Card, Divider } from 'antd';
 
-import { NextButton } from '@gqlapp/look-client-react';
+import { NextButton, Col, Row } from '@gqlapp/look-client-react';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import CartItemComponent from './CartItemComponent';

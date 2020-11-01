@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col, Button } from 'antd';
+import { Button } from 'antd';
+import { Row, Col } from '@gqlapp/look-client-react';
 
 // eslint-disable-next-line import/no-named-default
 import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { LayoutCenter, PageLayout, Card, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { LayoutCenter, PageLayout, Card, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
@@ -37,10 +36,10 @@ const UserEditView = ({ loading, user, t, currentUser, onSubmit }) => {
         <div className="text-center">{t('userEdit.loadMsg')}</div>
       ) : (
         <Row>
-          <Col md={0} lg={0}>
+          <Col md={0} sm={24} xs={24} lg={0}>
             {renderContent()}
           </Col>
-          <Col xs={0} md={0} lg={24}>
+          <Col xs={0} md={24} lg={24}>
             <LayoutCenter>
               <br />
               <br />

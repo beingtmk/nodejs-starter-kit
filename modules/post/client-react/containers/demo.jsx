@@ -20,9 +20,11 @@ import {
   ActiveIcon,
   ActiveButton,
   PublishIcon,
-  PublishButton
+  PublishButton,
+  Row,
+  Col
 } from '@gqlapp/look-client-react';
-import { Row, Col, message } from 'antd';
+import { message } from 'antd';
 
 class Demo extends Component {
   state = {

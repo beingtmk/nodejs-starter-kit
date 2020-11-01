@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'antd';
 
-import { PageLayout, AddButton, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, AddButton, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';

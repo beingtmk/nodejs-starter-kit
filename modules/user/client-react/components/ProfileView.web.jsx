@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Row, Col, Divider, Spin as Loader } from 'antd';
+import { Divider, Spin as Loader } from 'antd';
 
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Row,
+  Col,
   Card,
   //  CardGroup,
   CardText,
@@ -15,7 +17,7 @@ import {
   Heading,
   EditIcon,
   Icon,
-  MetaTags,
+  MetaTags
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
@@ -65,7 +67,7 @@ class ProfileView extends React.Component {
                     fontWeight: 'bold',
                     height: '61px',
                     marginBottom: '0px',
-                    position: 'relative',
+                    position: 'relative'
                   }}
                 >
                   <Heading type="2">
@@ -137,7 +139,9 @@ class ProfileView extends React.Component {
                         <Icon type="ShakeOutlined" /> Mobile
                       </h2>
                       <CardText>
-                        {currentUser.profile && currentUser.profile.mobile ? currentUser.profile.mobile : 'Not Provided'}
+                        {currentUser.profile && currentUser.profile.mobile
+                          ? currentUser.profile.mobile
+                          : 'Not Provided'}
                       </CardText>
                     </div>
                   </Col>
@@ -196,6 +200,6 @@ ProfileView.propTypes = {
   currentUser: PropTypes.object,
   t: PropTypes.func,
   match: PropTypes.object,
-  navigation: PropTypes.object,
+  navigation: PropTypes.object
 };
 export default translate('user')(ProfileView);

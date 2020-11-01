@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import { Row, Col, Button } from 'antd';
 
 import { SORT_BY } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Select, Option, Form, FormItem, Label, Input } from '@gqlapp/look-client-react';
+import { Select, Option, Form, FormItem, Label, Input, Row, Col, Button } from '@gqlapp/look-client-react';
 
 import SliderControlled from './FIlterSliderControlledComponent';
 

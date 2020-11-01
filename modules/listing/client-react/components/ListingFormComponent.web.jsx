@@ -4,14 +4,14 @@ import { PropTypes } from 'prop-types';
 
 import { Icon as LegacyIcon } from '@ant-design/compatible';
 
-import { Tooltip, message, Row, Col, Card, Button } from 'antd';
+import { Tooltip, message, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
-import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import {
   Form,
+  Row,
+  Col,
   RenderField,
   RenderUploadMultiple,
   FormItem,
@@ -20,6 +20,8 @@ import {
   SubmitButton,
   Icon
 } from '@gqlapp/look-client-react';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 const VIDEO = 'video';
 const LAST_STEP = 3;

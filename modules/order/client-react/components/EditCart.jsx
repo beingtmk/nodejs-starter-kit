@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Drawer } from 'antd';
+import { Drawer } from 'antd';
 
 import { compose } from '@gqlapp/core-common';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
-import { Modal, EditIcon } from '@gqlapp/look-client-react';
+import { Modal, EditIcon, Row, Col } from '@gqlapp/look-client-react';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
 
 import AddToCartView from './AddToCartView';

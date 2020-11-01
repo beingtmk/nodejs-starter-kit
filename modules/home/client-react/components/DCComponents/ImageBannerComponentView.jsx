@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 
-import { Button, Empty, Row, Col } from 'antd';
+import { Button, Empty } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { Row, Col } from '@gqlapp/look-client-react';
 
 import ROUTES from '../../routes';
 import { getChildrenToRender } from '../AntdLanding/utils';

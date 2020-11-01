@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Row, Col, Spin } from 'antd';
+import { Spin } from 'antd';
 import { MODAL } from '@gqlapp/review-common';
-import { FormItem, Select, Option, Heading, MetaTags, Icon } from '@gqlapp/look-client-react';
+import { FormItem, Select, Option, Heading, MetaTags, Icon, Row, Col } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';

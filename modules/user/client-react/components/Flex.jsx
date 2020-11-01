@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
+import { Row, Col } from '@gqlapp/look-client-react';
 
 // import { Page, Row, Column } from 'hedron';
 

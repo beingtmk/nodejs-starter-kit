@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Divider } from 'antd';
 
-import { Icon, MetaTags, PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
+import { Icon, MetaTags, PageLayout, AddButton, Heading, Row, Col } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 

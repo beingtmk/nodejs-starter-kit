@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Heading } from '@gqlapp/look-client-react';
-import { Carousel as AntCarousel, Row, Col } from 'antd';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
+import { Carousel as AntCarousel } from 'antd';
 import { getChildrenToRender } from './utils';
 
 class Feature8 extends React.PureComponent {

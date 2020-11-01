@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
-  Row,
-  Col,
   Breadcrumb,
   Divider, // Card,
   Badge,
@@ -14,7 +12,7 @@ import {
 } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { MetaTags, PageLayout } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';

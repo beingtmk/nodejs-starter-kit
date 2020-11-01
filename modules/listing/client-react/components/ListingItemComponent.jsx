@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, Row, Col, Card, Avatar, Divider, Popconfirm, message, Tooltip } from 'antd';
+import { Button, Card, Avatar, Divider, Popconfirm, message, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Row, Col } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 

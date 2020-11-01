@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Row, Col } from '@gqlapp/look-client-react';
 // import { CardGroup } from '@gqlapp/look-client-react';
-import { Avatar, Row, Col, Divider } from 'antd';
+import { Avatar, Divider } from 'antd';
 import { ImgUser } from '../../constants/DefaultImages';
 
 const ProfileHeadComponent = ({ profile, description }) => {
@@ -23,7 +23,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
         <Col
           span={8}
           style={{
-            align: 'center',
+            align: 'center'
           }}
         >
           <h2>{profile && profile.acceptanceRate ? profile.acceptanceRate : 'Not Available'}</h2>
@@ -34,7 +34,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
         <Col
           span={8}
           style={{
-            align: 'center',
+            align: 'center'
           }}
         >
           <div>
@@ -52,7 +52,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
         <Col
           span={8}
           style={{
-            align: 'center',
+            align: 'center'
           }}
         >
           <h2>{profile && profile.rating ? profile.rating : 'Not Available '}</h2>
@@ -65,7 +65,7 @@ const ProfileHeadComponent = ({ profile, description }) => {
 
 ProfileHeadComponent.propTypes = {
   profile: PropTypes.object,
-  description: PropTypes.object,
+  description: PropTypes.object
 };
 
 export default ProfileHeadComponent;

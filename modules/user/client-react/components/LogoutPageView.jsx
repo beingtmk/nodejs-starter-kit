@@ -1,9 +1,9 @@
 /* eslint-disable import/no-named-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Button, Result } from 'antd';
+import { Button, Result } from 'antd';
 
-import { PageLayout, Icon } from '@gqlapp/look-client-react';
+import { PageLayout, Icon, Row, Col } from '@gqlapp/look-client-react';
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
