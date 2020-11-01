@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { Empty, Popconfirm, Divider, message, Button } from 'antd';
+import { Empty, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Icon, Table, Pagination } from '@gqlapp/look-client-react';
+import { Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
@@ -68,29 +68,13 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       render: (text, record) => (
         <div align="center">
           <Link to={`${ROUTES.editLink}${record.id}`}>
-            <Button shape="circle" size="large">
-              <Icon type="EditOutlined" />
-            </Button>
+            <EditIcon shape="circle" size="large" />
           </Link>
-          <Divider type="vertical" />
-          <Popconfirm
-            title="Are you sure delete this listing?"
-            onConfirm={() => deleteDynamicCarousel(record.id)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="danger" shape="circle" size="large">
-              <Icon type="DeleteOutlined" />
-            </Button>
-          </Popconfirm>
+          <DeleteIcon onClick={() => deleteDynamicCarousel(record.id)} title="Are you sure delete this listing?" />
         </div>
       )
     }
   ];
-  const cancel = () => {
-    message.error('Click on No');
-  };
   const handlePageChange = (pagination, pageNumber) => {
     const {
       pageInfo: { endCursor }

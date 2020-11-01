@@ -112,7 +112,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
         <Col lg={3} md={3} sm={5} xs={24}>
           {showAdd && (
             <>
-              <ModalDrawer buttonText={t('addReview')} height="80%">
+              <ModalDrawer buttonText={t('addReview')} modalTitle={t('addReview')} height="80%">
                 <ReviewFormComponent t={t} onSubmit={addReview} modalData={{ modalName, modalId }} />
               </ModalDrawer>
             </>

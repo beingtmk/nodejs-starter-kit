@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 // To Do Abstract Out
-import { Modal, Button } from 'antd';
 import VerificationIconComponent from './VerificationIconComponent';
+import ModalDrawer from '../ModalDrawer';
 
 class VerificationModalComponent extends React.Component {
   constructor(props) {
@@ -25,16 +25,20 @@ class VerificationModalComponent extends React.Component {
   };
 
   render() {
-    const { visible, loading } = this.state;
     return (
       <div>
-        <Button block type="dashed" onClick={this.showModal} disabled={this.props.vStatus}>
-          {this.props.button}
-          <VerificationIconComponent vStatus={this.props.vStatus} />
-        </Button>
-        <Modal title={this.props.title} visible={visible} onCancel={this.handleCancel} footer={null}>
+        <ModalDrawer
+          buttonText={
+            <>
+              {this.props.button}&nbsp;
+              <VerificationIconComponent vStatus={this.props.vStatus} />
+            </>
+          }
+          type="dashed"
+          modalTitle={this.props.title}
+        >
           {this.props.children}
-        </Modal>
+        </ModalDrawer>
       </div>
     );
   }

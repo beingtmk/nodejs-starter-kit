@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Row, Col, Card } from 'antd';
+import { Row, Col } from 'antd';
 import { withFormik } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -12,8 +12,8 @@ import {
   Select,
   Option,
   RenderField,
-  Button,
-  RenderUpload
+  RenderUpload,
+  SubmitButton
 } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 
@@ -26,17 +26,11 @@ class DynamicCarouselFormComponent extends React.Component {
     load: false
   };
   render() {
-    const { t, cardTitle, values, handleSubmit, setFieldValue } = this.props;
+    const { t, values, handleSubmit, setFieldValue } = this.props;
 
     // console.log('props form component', this.props.values);
     return (
-      <Card
-        title={
-          <h1>
-            <strong>{cardTitle}</strong>
-          </h1>
-        }
-      >
+      <>
         <Field
           name="title"
           component={RenderField}
@@ -101,11 +95,11 @@ class DynamicCarouselFormComponent extends React.Component {
             label={t('dynamicCarousel.form.imageUrl')}
             value={values.imageUrl}
           />
-          <Button color="primary" type="submit" disabled={this.state.load}>
+          <SubmitButton color="primary" type="submit" disabled={this.state.load}>
             {t('dynamicCarousel.btn.submit')}
-          </Button>
+          </SubmitButton>
         </Form>
-      </Card>
+      </>
     );
   }
 }
