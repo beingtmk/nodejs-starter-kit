@@ -3,8 +3,6 @@ import { Row, Col } from 'antd';
 
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Card, CardTitle, Icon, Underline, MetaTags, PageLayout } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
-import { GlobalOutlined } from '@ant-design/icons';
 
 import ContactForm from './ContactForm';
 import { ContactForm as IContactForm } from '../types';
@@ -21,7 +19,8 @@ const ContactView = (props: ContactViewProps) => {
       <Card>
         <Underline>
           <CardTitle>
-            <GlobalOutlined /> {t('form.title')}
+            <Icon type="GlobalOutlined" />
+            {t('form.title')}
           </CardTitle>
         </Underline>
         <ContactForm {...props} />
