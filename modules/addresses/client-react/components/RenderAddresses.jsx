@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { RenderField } from '@gqlapp/look-client-react';
+import { RenderField, Icon } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+
 import { Row, Col, Button, Modal, Popconfirm, message } from 'antd';
 
 const FormItem = Form.Item;
@@ -231,7 +230,7 @@ class RenderAddress extends React.Component {
                 <Col xxl={20} lg={20} md={20} xs={20}>
                   <AddEditbtn>
                     <Button shape="circle" size="large" onClick={() => this.modalControl(indexa, true)}>
-                      <EditOutlined />
+                      <Icon type="EditOutlined" />
                     </Button>
                   </AddEditbtn>
                   <Modal
@@ -258,7 +257,7 @@ class RenderAddress extends React.Component {
                   >
                     <AddDelbtn>
                       <Button type="danger" shape="circle" size="large">
-                        <DeleteOutlined />
+                        <Icon type="DeleteOutlined" />
                       </Button>
                     </AddDelbtn>
                   </Popconfirm>
@@ -304,7 +303,7 @@ class RenderAddress extends React.Component {
             <PadB30>
               <AddNewAddressBlock onClick={this.handleAddAddress} style={{ marginTop: !isSelectable ? '15px' : null }}>
                 <AddNewAddress>
-                  <PlusOutlined />
+                  <Icon type="PlusOutlined" />
                 </AddNewAddress>
                 <h4 style={{ position: 'relative', top: '30px' }}>Add a new address</h4>
               </AddNewAddressBlock>
