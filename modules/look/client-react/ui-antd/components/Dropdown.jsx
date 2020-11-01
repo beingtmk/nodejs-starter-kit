@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+// import { Icon as LegacyIcon } from '@ant-design/compatible';
 import { Menu, Dropdown } from 'antd';
+
+import Icon from './Icon';
 
 class DropDown extends React.Component {
   static propTypes = {
@@ -13,21 +15,25 @@ class DropDown extends React.Component {
   }
 
   render() {
-    const { children, ...props } = this.props;
+    const { children, onClick, ...props } = this.props;
     // return <Menu.Item {...props}>{children}</Menu.Item>;
 
-    const menu = <Menu>{children}</Menu>;
+    const menu = <Menu onClick={onClick}>{children}</Menu>;
 
     const content = props.content ? props.content : null;
     return (
       <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomCenter">
         <a className="ant-dropdown-link" href="#">
           {content}
-          {!props.noicon ? <LegacyIcon className="dropdown" type={props.type ? props.type : 'down'} /> : null}
+          {!props.noicon ? <Icon className="dropdown" type={props.type ? props.type : 'DownOutlined'} /> : null}
         </a>
       </Dropdown>
     );
   }
 }
+
+DropDown.propTypes = {
+  onClick: PropTypes.func
+};
 
 export default DropDown;

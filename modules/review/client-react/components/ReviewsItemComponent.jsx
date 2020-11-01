@@ -103,7 +103,7 @@ const ReviewsItemComponent = props => {
       </Link>
       {review.user.id === (currentUser && currentUser.id) && (
         <DropDownPosition>
-          <DropDown type="more">{dropDownOpts()}</DropDown>
+          <DropDown type="MoreOutlined">{dropDownOpts()}</DropDown>
         </DropDownPosition>
       )}
       <HelpfulPosition>

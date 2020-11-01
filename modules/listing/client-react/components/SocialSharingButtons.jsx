@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Col, message, Modal, Card, Dropdown } from 'antd';
+import { Button, Col, message, Modal, Card } from 'antd';
 import PropTypes from 'prop-types';
-import { Icon, Form, RenderField, Alert } from '@gqlapp/look-client-react';
+
+import { Icon, Form, RenderField, Alert, Dropdown } from '@gqlapp/look-client-react';
 import { withFormik } from 'formik';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
