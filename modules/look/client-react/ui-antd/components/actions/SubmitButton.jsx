@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EnterOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
+
+import Icon from '../Icon';
 
 class SubmitButton extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class SubmitButton extends React.Component {
           htmlType={type}
           block
           size={buttonSize}
-          icon={<EnterOutlined />}
+          icon={<Icon type="EnterOutlined" />}
           {...props}
           onClick={onClick}
         >
@@ -33,7 +34,7 @@ class SubmitButton extends React.Component {
       return (
         <Popconfirm
           title="Are you sure？"
-          icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+          icon={<Icon type="QuestionCircleOutlined" style={{ color: 'red' }} />}
           onConfirm={onClick}
         >
           <ADButton />

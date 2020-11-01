@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReadOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
+
+import Icon from './Icon';
+
 import MenuItem from './MenuItem';
 
 export default class LanguagePicker extends React.Component {
@@ -23,7 +25,8 @@ export default class LanguagePicker extends React.Component {
             trigger={['hover']}
           >
             <div>
-              <ReadOutlined /> {this.props.i18n.language.slice(0, 2).toUpperCase()}{' '}
+              <Icon type="ReadOutlined" />
+              {this.props.i18n.language.slice(0, 2).toUpperCase()}{' '}
             </div>
           </Dropdown>
         )}

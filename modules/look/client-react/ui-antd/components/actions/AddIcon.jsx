@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+
+import Icon from '../Icon';
 
 class AddIcon extends React.Component {
   render() {
@@ -15,7 +16,16 @@ class AddIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    return <Button type={color} htmlType={type} size={buttonSize} icon={<PlusOutlined />} shape="circle" {...props} />;
+    return (
+      <Button
+        type={color}
+        htmlType={type}
+        size={buttonSize}
+        icon={<Icon type="PlusOutlined" />}
+        shape="circle"
+        {...props}
+      />
+    );
   }
 }
 

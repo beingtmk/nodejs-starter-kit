@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+
+import Icon from '../Icon';
 
 class NextButton extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class NextButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} block size={buttonSize} icon={<ArrowRightOutlined />} {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon={<Icon type="ArrowRightOutlined" />} {...props}>
         {children}
       </Button>
     );

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+
+import Icon from '../Icon';
 
 class AddButton extends React.Component {
   render() {
@@ -16,7 +17,7 @@ class AddButton extends React.Component {
     }
 
     return (
-      <Button type={color} htmlType={type} block size={buttonSize} icon={<PlusOutlined />} {...props}>
+      <Button type={color} htmlType={type} block size={buttonSize} icon={<Icon type="PlusOutlined" />} {...props}>
         {children}
       </Button>
     );

@@ -3,15 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
 
-import {
-  ApartmentOutlined,
-  DeploymentUnitOutlined,
-  MailOutlined,
-  MenuOutlined,
-  PhoneOutlined,
-  SafetyCertificateOutlined
-} from '@ant-design/icons';
-
 import { Drawer, Menu, Row, Col, Layout } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
@@ -19,6 +10,7 @@ import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import { CONTACT } from '@gqlapp/look-common/';
 
+import Icon from './Icon';
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
 import DropDown from './Dropdown';
@@ -80,12 +72,14 @@ class NavBar extends React.Component {
                   <Col span={10} />
                   <Col span={6}>
                     <BannerLink href={`tel: ${CONTACT.phone}`}>
-                      <PhoneOutlined /> {CONTACT.phone}
+                      <Icon type="PhoneOutlined" />
+                      {CONTACT.phone}
                     </BannerLink>
                   </Col>
                   <Col span={8}>
                     <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
-                      <MailOutlined /> {CONTACT.mail}
+                      <Icon type="MailOutlined" />
+                      {CONTACT.mail}
                     </BannerLink>
                   </Col>
                 </Row>
@@ -170,7 +164,8 @@ class NavBar extends React.Component {
                 </Col>
                 <Col xs={12} md={12} lg={0}>
                   <div onClick={this.showDrawer} className="navbar-drawer-logo">
-                    <MenuOutlined
+                    <Icon
+                      type="MenuOutlined"
                       style={{
                         color: 'inherit',
                         fontSize: '20px',
@@ -198,14 +193,14 @@ class NavBar extends React.Component {
                   </div>
                 </LoggedIn>
                 {ref.modules.navItemsUser}
-                {/* {this.NavLinkMyInvitesWithI18n()} */}
                 {__DEV__ && (
                   <SubMenu
                     key="test"
                     style={{ color: 'black !important' }}
                     title={
                       <MenuItem>
-                        <DeploymentUnitOutlined /> Dev
+                        <Icon type="DeploymentUnitOutlined" />
+                        Dev
                       </MenuItem>
                     }
                   >
@@ -219,7 +214,7 @@ class NavBar extends React.Component {
                   key="admin"
                   title={
                     <MenuItem>
-                      <ApartmentOutlined /> Browse
+                      <Icon type="ApartmentOutlined" /> Browse
                     </MenuItem>
                   }
                 >
@@ -230,7 +225,8 @@ class NavBar extends React.Component {
                     key="admin"
                     title={
                       <MenuItem>
-                        <SafetyCertificateOutlined /> Admin
+                        <Icon type="SafetyCertificateOutlined" />
+                        Admin
                       </MenuItem>
                     }
                   >
