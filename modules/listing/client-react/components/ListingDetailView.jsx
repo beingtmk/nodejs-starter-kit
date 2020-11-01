@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { ArrowDownOutlined, HomeOutlined } from '@ant-design/icons';
 import {
   Row,
   Col,
@@ -23,7 +22,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+import { Icon, LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -145,7 +144,7 @@ const ListingDetailView = props => {
               >
                 <BreadCrumbItem key="home">
                   <NavLink to={`${HOME_ROUTES.home}`}>
-                    <HomeOutlined />
+                    <Icon type="HomeOutlined" />
                   </NavLink>
                 </BreadCrumbItem>
                 <BreadCrumbItem key="listing-title">{listing && displayDataCheck(listing.title)}</BreadCrumbItem>
@@ -237,7 +236,7 @@ const ListingDetailView = props => {
                       valueStyle={{ color: '#cf1322' }}
                       value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
                       suffix={'%'}
-                      prefix={<ArrowDownOutlined />}
+                      prefix={<Icon type="ArrowDownOutlined" />}
                     />
                   </Col>
                 )}

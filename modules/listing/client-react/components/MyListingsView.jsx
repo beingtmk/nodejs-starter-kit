@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { PlusOutlined, SolutionOutlined } from '@ant-design/icons';
 import { Empty, Button } from 'antd';
 
-import { Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
@@ -30,14 +29,14 @@ const MyListingsView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <SolutionOutlined />
+            <Icon type="SolutionOutlined" />
             {t('myListings.heading')}
           </Heading>
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>
             <Button type="primary">
-              <PlusOutlined /> {t('myListings.btn.add')}
+              <Icon type="PlusOutlined" /> {t('myListings.btn.add')}
             </Button>
           </Link>
         </Col>

@@ -4,6 +4,7 @@ import { message } from 'antd';
 
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
+import settings from '@gqlapp/config';
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
@@ -23,7 +24,6 @@ import SHARE_LISTING_BY_EMAIL from '../graphql/ShareListingByEmail.graphql';
 import UPDATE_ORDER_BY_LISTING from '../graphql/UpdateOrderByListing.client.graphql';
 import UPDATE_LISTING_FILTER from '../graphql/UpdateListingFilter.client.graphql';
 
-import settings from '../../../../settings';
 import ROUTES from '../routes';
 
 const limit =

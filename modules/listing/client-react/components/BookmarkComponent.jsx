@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { compose } from '@gqlapp/core-common';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+
+import { compose } from '@gqlapp/core-common';
+import { Icon } from '@gqlapp/look-client-react';
+
 import { withListingBookmarkStatus } from '../containers/ListingOperations';
 
 const BookmarkStyle = styled.div`
@@ -34,7 +36,11 @@ const BookmarkComponent = props => {
   return (
     <BookmarkStyle right={right}>
       <Button shape="circle" type={'primary'} ghost onClick={handleClick}>
-        {status && status ? <StarFilled style={{ fontSize: '15px' }} /> : <StarOutlined style={{ fontSize: '15px' }} />}
+        {status && status ? (
+          <Icon type="StarFilled" style={{ fontSize: '15px' }} />
+        ) : (
+          <Icon type="StarOutlined" style={{ fontSize: '15px' }} />
+        )}
       </Button>
     </BookmarkStyle>
   );

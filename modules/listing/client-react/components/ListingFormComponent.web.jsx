@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
 
-import { ArrowLeftOutlined, InfoCircleOutlined, SolutionOutlined, VideoCameraOutlined } from '@ant-design/icons';
-
 import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 
 import { Tooltip, message, Row, Col, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
@@ -19,7 +16,8 @@ import {
   FormItem,
   RenderCheckBox,
   NextButton,
-  SubmitButton
+  SubmitButton,
+  Icon
 } from '@gqlapp/look-client-react';
 
 const VIDEO = 'video';
@@ -187,7 +185,8 @@ const ListingFormComponent = props => {
       title={
         <>
           <h3>
-            <SolutionOutlined /> &nbsp;
+            <Icon type="SolutionOutlined" />
+            &nbsp;
             <strong>{displayDataCheck(cardTitle)}</strong>
           </h3>
           <div align="center">
@@ -263,7 +262,7 @@ const ListingFormComponent = props => {
                   <>
                     {t('listingForm.fixedQuantity')}
                     <Tooltip title={t('listingForm.tooltip')}>
-                      <InfoCircleOutlined />
+                      <Icon type="InfoCircleOutlined" />
                     </Tooltip>
                   </>
                 }
@@ -280,7 +279,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addHighlight}>
-                      <VideoCameraOutlined />
+                      <Icon type="VideoCameraOutlined" />
                       Add
                     </Button>
                   </FormItem>
@@ -379,7 +378,8 @@ const ListingFormComponent = props => {
                 <Col span={12} align="left">
                   <br />
                   <Button onClick={() => setStep(0)}>
-                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                    <Icon type="ArrowLeftOutlined" />
+                    {t('listingForm.btn.previous')}
                   </Button>
                 </Col>
                 <Col span={12} align="right">
@@ -402,7 +402,7 @@ const ListingFormComponent = props => {
                 <Col span={6} align="right">
                   <FormItem>
                     <Button type="primary" onClick={addVideo}>
-                      <VideoCameraOutlined />
+                      <Icon type="VideoCameraOutlined" />
                       {t('listingForm.btn.add')}
                     </Button>
                   </FormItem>
@@ -433,7 +433,8 @@ const ListingFormComponent = props => {
                 <Col span={12} align="left">
                   <br />
                   <Button onClick={() => setStep(1)}>
-                    <ArrowLeftOutlined /> {t('listingForm.btn.previous')}
+                    <Icon type="ArrowLeftOutlined" />
+                    {t('listingForm.btn.previous')}
                   </Button>
                 </Col>
 

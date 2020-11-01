@@ -1,5 +1,4 @@
 import React from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Card, Avatar, Divider, Popconfirm, message, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,6 +6,7 @@ import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
+import { Icon } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 
@@ -78,7 +78,7 @@ const ListingItemComponent = props => {
           <Row type="flex" justify="space-around" align="middle" gutter={12}>
             <Col span={12}>
               <BorderListzero block onClick={() => history.push(`${ROUTES.editLink}${item.id}`)}>
-                <EditOutlined />
+                <Icon type="EditOutlined" />
               </BorderListzero>
             </Col>
             {deleteProduct && (
@@ -91,7 +91,7 @@ const ListingItemComponent = props => {
                   cancelText="No"
                 >
                   <BorderListzero block>
-                    <DeleteOutlined />
+                    <Icon type="DeleteOutlined" />
                   </BorderListzero>
                 </Popconfirm>
               </Col>

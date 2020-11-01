@@ -1,17 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { SolutionOutlined } from '@ant-design/icons';
 import { Button, Empty, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
+import { Icon, MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import settings from '@gqlapp/config';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';
-import settings from '../../../../settings';
 
 const ListingCatalogueView = props => {
   const {
@@ -55,7 +54,7 @@ const ListingCatalogueView = props => {
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <Heading type="2">
-        <SolutionOutlined /> &nbsp; {title}
+        <Icon type="SolutionOutlined" /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {showFilter && (

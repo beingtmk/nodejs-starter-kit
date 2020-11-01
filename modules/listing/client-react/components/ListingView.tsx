@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SolutionOutlined } from '@ant-design/icons';
 import { Row, Col, Divider } from 'antd';
 
-import { MetaTags, PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
+import { Icon, MetaTags, PageLayout, AddButton, Heading } from '@gqlapp/look-client-react';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 
@@ -26,7 +25,8 @@ const ListingView: React.FC<ListingViewProps> = props => {
       <Row>
         <Col lg={22} md={20} xs={24}>
           <Heading type="2">
-            <SolutionOutlined /> &nbsp;
+            <Icon type="SolutionOutlined" />
+            &nbsp;
             {t('list.subTitle')}
           </Heading>
         </Col>
