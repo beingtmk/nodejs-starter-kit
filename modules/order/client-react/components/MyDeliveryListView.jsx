@@ -5,7 +5,7 @@ import { Row, Col } from 'antd';
 
 import { Heading } from '@gqlapp/look-client-react';
 
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 import ListingItemComponent from './CartItemComponent';
 
 // const ButtonGroup = Button.Group;

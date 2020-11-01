@@ -1,5 +1,4 @@
 import React from 'react';
-import { SolutionOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
@@ -7,7 +6,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 
 import { Route, NavLink } from 'react-router-dom';
-import { MenuItem } from '@gqlapp/look-client-react';
+import { Icon, MenuItem } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
@@ -115,7 +114,7 @@ export default new ClientModule({
         key={ROUTES.order}
         title={
           <>
-            <SolutionOutlined /> Order
+            <Icon type="SolutionOutlined" /> Order
           </>
         }
       >

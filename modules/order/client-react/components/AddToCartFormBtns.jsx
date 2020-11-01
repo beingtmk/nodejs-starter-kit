@@ -1,8 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { DeleteOutlined, ShoppingCartOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Tooltip } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
+
+import { Icon } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 
@@ -40,7 +41,7 @@ const AddToCartFormBtns = props => {
               ghost
               loading={loading}
             >
-              <ShoppingOutlined />
+              <Icon type="ShoppingOutlined" />
               {t('addToCart.form.btn.add')}
             </Button>
           </Col>
@@ -53,7 +54,7 @@ const AddToCartFormBtns = props => {
               disabled={loading || disabled}
               loading={loading}
             >
-              <ShoppingCartOutlined />
+              <Icon type="ShoppingCartOutlined" />
               {t('addToCart.form.btn.book')}
             </Button>
           </Col>
@@ -67,11 +68,11 @@ const AddToCartFormBtns = props => {
               ghost
               loading={loading}
             >
-              <ShoppingOutlined />
+              <Icon type="ShoppingOutlined" />
               {t('addToCart.form.btn.add')}
             </Button>
             <Button block type="primary" size="large" onClick={onSubmitRedirect} disabled={disabled}>
-              <ShoppingCartOutlined />
+              <Icon type="ShoppingCartOutlined" />
               {t('addToCart.form.btn.book')}
             </Button>
           </Col>
@@ -81,7 +82,7 @@ const AddToCartFormBtns = props => {
           {onDelete && (
             <Col {...customGridLG}>
               <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
-                <DeleteOutlined />
+                <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
             </Col>
@@ -90,21 +91,21 @@ const AddToCartFormBtns = props => {
             <a href={`${ROUTES.checkoutCart}`}>
               <Button type="primary" size="large" block disabled={disabled}>
                 {t('addToCart.form.btn.go')}
-                <ShoppingCartOutlined />
+                <Icon type="ShoppingCartOutlined" />
               </Button>
             </a>
           </Col>
           <Col {...customGridXS}>
             {onDelete && (
               <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
-                <DeleteOutlined />
+                <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
             )}
             <a href={`${ROUTES.checkoutCart}`}>
               <Button block type="primary" size="large" disabled={disabled}>
                 {t('addToCart.form.btn.go')}
-                <ShoppingCartOutlined />
+                <Icon type="ShoppingCartOutlined" />
               </Button>
             </a>
           </Col>

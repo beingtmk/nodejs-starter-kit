@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
-import { ShoppingCartOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
+import { Icon } from '@gqlapp/look-client-react';
 
 import { withCurrentUser, withGetCart } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
@@ -22,7 +22,7 @@ const NavItemCart = props => {
     <>
       {!currentUserLoading && (
         <>
-          <ShoppingCartOutlined /> Cart{' '}
+          <Icon type="ShoppingCartOutlined" /> Cart{' '}
           <Badge style={{ marginTop: '-5px' }} count={getCart && getCart.orderDetails && getCart.orderDetails.length} />
         </>
       )}

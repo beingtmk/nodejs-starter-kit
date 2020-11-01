@@ -7,7 +7,7 @@ import { Row, Col, Card, Divider } from 'antd';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
 
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';

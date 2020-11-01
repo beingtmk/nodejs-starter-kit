@@ -2,6 +2,7 @@ import { graphql } from 'react-apollo';
 import { message } from 'antd';
 
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
+import settings from '@gqlapp/config';
 
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
@@ -23,8 +24,6 @@ import COMPLETED_MAIL from '../graphql/OrderStatusMail.graphql';
 // Filter
 import UPDATE_ORDER_BY_ORDER from '../graphql/UpdateOrderByOrder.client.graphql';
 import UPDATE_ORDER_FILTER from '../graphql/UpdateOrderFilter.client.graphql';
-
-import settings from '../../../../settings';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'

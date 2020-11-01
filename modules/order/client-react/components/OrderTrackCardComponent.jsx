@@ -1,8 +1,9 @@
 import React from 'react';
-import { CheckCircleFilled, ClockCircleOutlined } from '@ant-design/icons';
 import { Steps, Card } from 'antd';
-import { ORDER_STATES } from '@gqlapp/order-common';
 import PropTypes from 'prop-types';
+
+import { ORDER_STATES } from '@gqlapp/order-common';
+import { Icon } from '@gqlapp/look-client-react';
 
 const { Step } = Steps;
 
@@ -21,12 +22,12 @@ const OrderTrackCardComponent = props => {
     // console.log(val, getStep());
     var state = getStep();
     if (state >= 0) {
-      if (val <= getStep() && getStep() !== 0) return <CheckCircleFilled />;
-      else return <ClockCircleOutlined style={{ color: '#FFCC99' }} />;
+      if (val <= getStep() && getStep() !== 0) return <Icon type="CheckCircleFilled" />;
+      else return <Icon type="ClockCircleOutlined" style={{ color: '#FFCC99' }} />;
     } else if (state < 0) {
       state = state * -1;
-      if (val <= getStep() && getStep() !== 0) return <CheckCircleFilled />;
-      else return <ClockCircleOutlined style={{ color: '#FFCC99' }} />;
+      if (val <= getStep() && getStep() !== 0) return <Icon type="CheckCircleFilled" />;
+      else return <Icon type="ClockCircleOutlined" style={{ color: '#FFCC99' }} />;
     }
   }
 

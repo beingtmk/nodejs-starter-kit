@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { AppstoreOutlined, DeleteOutlined, HddOutlined, ShopOutlined, SolutionOutlined } from '@ant-design/icons';
-
 import { Empty, Divider, Button, Row, Col } from 'antd';
 
-import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
@@ -41,7 +39,12 @@ const MyDeliveriesView = props => {
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
-  const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <DeleteOutlined />];
+  const Icons = [
+    <Icon type="AppstoreOutlined" />,
+    <Icon type="HddOutlined" />,
+    <Icon type="ShopOutlined" />,
+    <Icon type="DeleteOutlined" />
+  ];
   const RenderMyDeliveries = () => (
     <div>
       {loading && <Spinner />}
@@ -55,7 +58,7 @@ const MyDeliveriesView = props => {
       <Row>
         <Col md={{ span: 8 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
-            <SolutionOutlined />
+            <Icon type="SolutionOutlined" />
             {t('myDeliveries')}
           </Heading>
           <br />

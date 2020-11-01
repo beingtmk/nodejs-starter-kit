@@ -9,11 +9,11 @@ import { Button, Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIco
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
-
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { displayDateCheck } from '@gqlapp/review-client-react/components/functions';
+import settings from '@gqlapp/config';
+
 import OrderStatusMail from '../containers/OrderStatusMail';
-import settings from '../../../../settings';
 import ROUTES from '../routes';
 
 const { itemsNumber, type } = settings.pagination.web;

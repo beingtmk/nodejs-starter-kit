@@ -2,18 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {
-  AppstoreOutlined,
-  DeleteOutlined,
-  HddOutlined,
-  ShopOutlined,
-  SolutionOutlined,
-  ToTopOutlined
-} from '@ant-design/icons';
-
 import { Empty, Divider, Button, Row, Col } from 'antd';
 
-import { PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 // eslint-disable-next-line import/no-named-default
@@ -55,7 +46,13 @@ const MyOrdersView = props => {
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
-  const Icons = [<AppstoreOutlined />, <HddOutlined />, <ShopOutlined />, <ToTopOutlined />, <DeleteOutlined />];
+  const Icons = [
+    <Icon type="AppstoreOutlined" />,
+    <Icon type="HddOutlined" />,
+    <Icon type="ShopOutlined" />,
+    <Icon type="ToTopOutlined" />,
+    <Icon type="DeleteOutlined" />
+  ];
   const RenderMyOrders = () => (
     <div>
       {loading && <Spinner />}
@@ -69,7 +66,7 @@ const MyOrdersView = props => {
       <Row>
         <Col lg={{ span: 8 }} md={{ span: 8 }} xs={{ span: 24 }}>
           <Heading type="2" className="headingTop">
-            <SolutionOutlined />
+            <Icon type="SolutionOutlined" />
             {t('myOrders')}
           </Heading>
           <br />
