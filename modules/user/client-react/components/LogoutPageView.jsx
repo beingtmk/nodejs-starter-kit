@@ -22,10 +22,6 @@ const LogoutPageView = props => {
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
           </Col>
         </Row>
         <Result
@@ -39,30 +35,54 @@ const LogoutPageView = props => {
               </Col>
             </Row>
           }
-          title="Successfully Logged Out"
+          title={
+            <>
+              <Row justify="center">
+                <Col lg={24} md={24} sm={24} xs={0}>
+                  Successfully Logged Out
+                </Col>
+                <Col lg={0} md={0} xs={24}>
+                  Successfully
+                </Col>
+                <Col lg={0} md={0} xs={24}>
+                  Logged Out
+                </Col>
+              </Row>
+            </>
+          }
           subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
-          extra={[
-            <Row justify="center" type="flex">
-              <Col lg={4} md={5} xs={24}>
-                <Button type="primary" block={true} key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
-                  <HomeOutlined /> Go To Home
-                </Button>
-              </Col>
-            </Row>,
-            <Row justify="center" type="flex">
-              <Col lg={4} md={5} xs={24}>
-                <Button
-                  key="signIn"
-                  block={true}
-                  style={{ marginTop: '10px' }}
-                  onClick={() => history.push(`${USER_ROUTES.login}`)}
-                >
-                  <LoginOutlined />
-                  SignIn
-                </Button>
-              </Col>
-            </Row>
-          ]}
+          extra={
+            <>
+              {/* <Row justify="center" type="flex"> */}
+              <div
+                style={{
+                  // display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Col lg={{ offset: 10, span: 4 }} md={{ offset: 10, span: 6 }} sm={{ offset: 10, span: 6 }} xs={24}>
+                  <Button type="primary" block={true} key="console" onClick={() => history.push(`${HOME_ROUTES.home}`)}>
+                    <HomeOutlined /> Go To Home
+                  </Button>
+                </Col>
+                <Col lg={{ offset: 10, span: 4 }} md={{ offset: 10, span: 6 }} sm={{ offset: 10, span: 6 }} xs={24}>
+                  <div style={{ width: '100%' }}>
+                    <Button
+                      key="signIn"
+                      block={true}
+                      style={{ marginTop: '10px' }}
+                      onClick={() => history.push(`${USER_ROUTES.login}`)}
+                    >
+                      <LoginOutlined />
+                      SignIn
+                    </Button>
+                  </div>
+                </Col>
+              </div>
+            </>
+          }
         />
       </div>
     </PageLayout>

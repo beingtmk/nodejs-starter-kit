@@ -16,7 +16,6 @@ const ModalDrawer = props => {
   const { buttonText, height, children, ghost = false, modalTitle, type = 'primary' } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
-  console.log(children);
   return (
     <Row type="flex" gutter={[24, 24]}>
       <Col lg={24} md={12} sm={24} xs={0}>

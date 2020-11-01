@@ -22,7 +22,7 @@ export default class LanguagePicker extends React.Component {
             }
             trigger={['hover']}
           >
-            <div>
+            <div style={{ marginLeft: '8px' }}>
               <ReadOutlined /> {this.props.i18n.language.slice(0, 2).toUpperCase()}{' '}
             </div>
           </Dropdown>
