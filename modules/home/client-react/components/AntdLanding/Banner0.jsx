@@ -1,10 +1,12 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import PropTypes from 'prop-types';
+
 import { translate } from '@gqlapp/i18n-client-react';
+import { Icon } from '@gqlapp/look-client-react';
+
 import { isImg } from './utils';
 
 class Banner extends React.PureComponent {
@@ -52,7 +54,7 @@ class Banner extends React.PureComponent {
           className="banner0-icon"
           key="icon"
         >
-          <DownOutlined />
+          <Icon type="DownOutlined" />
         </TweenOne>
       </div>
     );

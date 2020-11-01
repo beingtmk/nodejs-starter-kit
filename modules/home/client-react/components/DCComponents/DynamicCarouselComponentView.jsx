@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { DownOutlined } from '@ant-design/icons';
 import { Button, Empty } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+import { LeftArrow, RightArrow, Icon } from '@gqlapp/look-client-react/ui-antd/components';
 
 import ROUTES from '../../routes';
 
@@ -93,7 +92,7 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <DownOutlined onClick={() => window.scrollBy(0, window.innerHeight)} />
+          <Icon type="DownOutlined" />
         </TweenOne>
       </div>
     );

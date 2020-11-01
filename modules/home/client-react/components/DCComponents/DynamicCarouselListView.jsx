@@ -1,11 +1,10 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Empty, Popconfirm, Divider, message, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Table, Pagination } from '@gqlapp/look-client-react';
+import { Icon, Table, Pagination } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
@@ -70,7 +69,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
         <div align="center">
           <Link to={`${ROUTES.editLink}${record.id}`}>
             <Button shape="circle" size="large">
-              <EditOutlined />
+              <Icon type="EditOutlined" />
             </Button>
           </Link>
           <Divider type="vertical" />
@@ -82,7 +81,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
             cancelText="No"
           >
             <Button type="danger" shape="circle" size="large">
-              <DeleteOutlined />
+              <Icon type="DeleteOutlined" />
             </Button>
           </Popconfirm>
         </div>
