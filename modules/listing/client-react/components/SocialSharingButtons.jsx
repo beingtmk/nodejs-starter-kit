@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, Col, message, Modal, Card } from 'antd';
 import PropTypes from 'prop-types';
-
-import { Icon, Form, RenderField, Alert, Dropdown } from '@gqlapp/look-client-react';
 import { withFormik } from 'formik';
+
+import { Icon, Form, RenderField, Alert } from '@gqlapp/look-client-react';
+import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 
@@ -104,9 +105,9 @@ const SocialSharingButtons = props => {
   );
   return (
     <Col span={24} style={{ height: '50px' }}>
-      <Dropdown overlay={sharingMenu} trigger={['hover']}>
+      <DropDown overlay={sharingMenu}>
         <Button shape="circle" type="primary" ghost icon={<Icon type="ShareAltOutlined" />} />
-      </Dropdown>
+      </DropDown>
 
       <Modal
         title={t('socialSharingButton.title')}
