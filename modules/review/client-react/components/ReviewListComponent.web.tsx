@@ -7,7 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ROUTES from '../routes/index';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';

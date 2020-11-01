@@ -1,13 +1,12 @@
 import React from 'react';
-import { MinusCircleOutlined, VideoCameraOutlined } from '@ant-design/icons';
 // import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+
 import { Form, Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderUploadMultiple, RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
+import { Icon, RenderUploadMultiple, RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 import styled from 'styled-components';
@@ -72,7 +71,8 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             key={index}
           />
         </FormItem>
-        <MinusCircleOutlined
+        <Icon
+          type="MinusCircleOutlined"
           style={{ paddingTop: '40px' }}
           title="Remove "
           className="dynamic-delete-button"
@@ -152,7 +152,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             <Col span={6} align="right">
               <FormItem>
                 <Button type="primary" onClick={add}>
-                  <VideoCameraOutlined />
+                  <Icon type="VideoCameraOutlined" />
                   {t('reviewForm.btn.add')}
                 </Button>
               </FormItem>

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { compose } from '@gqlapp/core-common';
 import { PropTypes } from 'prop-types';
-import { DislikeFilled, LikeFilled } from '@ant-design/icons';
 import { Row, Col, Card, Rate, Menu, Button } from 'antd';
 
+import { Icon } from '@gqlapp/look-client-react';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
@@ -113,13 +113,13 @@ const ReviewsItemComponent = props => {
               {!status ? (
                 <>
                   {t('reviewItem.helpful')}
-                  <LikeFilled />
+                  <Icon type="LikeFilled" />
                   &nbsp;
                 </>
               ) : (
                 <>
                   {t('reviewItem.unhelpful')}
-                  <DislikeFilled />
+                  <Icon type="DislikeFilled" />
                   &nbsp;
                 </>
               )}

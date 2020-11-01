@@ -3,6 +3,7 @@ import { message } from 'antd';
 import update from 'immutability-helper';
 
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
+import settings from '@gqlapp/config';
 
 // Query
 import REVIEW_QUERY from '../graphql/ReviewQuery.graphql';
@@ -24,7 +25,6 @@ import UPDATE_REVIEWS_FILTER from '../graphql/UpdateReviewsFilter.client.graphql
 import REVIEWS_STATE_QUERY from '../graphql/ReviewsStateQuery.client.graphql';
 import UPDATE_REVIEWS_ORDER_BY from '../graphql/UpdateReviewsOrderBy.client.graphql';
 
-import settings from '../../../../settings';
 import ROUTES from '../routes';
 
 const limit =

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BookOutlined } from '@ant-design/icons';
+
 import { Row, Col, Spin } from 'antd';
 import { MODAL } from '@gqlapp/review-common';
-import { FormItem, Select, Option, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { FormItem, Select, Option, Heading, MetaTags, Icon } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
@@ -48,7 +48,7 @@ const MyReviewView = props => {
       <Row type={'flex'}>
         <Col xs={24} md={12} lg={12}>
           <Heading type="1">
-            <BookOutlined />
+            <Icon type="BookOutlined" />
             {t('myReview')}
           </Heading>
           <h3>

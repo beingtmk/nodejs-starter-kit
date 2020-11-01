@@ -11,7 +11,7 @@ import USERS_STATE_QUERY from '@gqlapp/user-client-react/graphql/UsersStateQuery
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { PropTypes } from 'prop-types';
-import settings from '../../../../settings';
+import settings from '@gqlapp/config';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
