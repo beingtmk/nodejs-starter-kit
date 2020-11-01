@@ -41,9 +41,7 @@ const ListingView: React.FC<ListingViewProps> = props => {
       </Row>
       <br />
       <hr />
-      <br />
       <ListingFilterComponent showIsActive={true} {...props} />
-      <Divider />
       <hr />
       <ListingListComponent {...props} />
     </PageLayout>

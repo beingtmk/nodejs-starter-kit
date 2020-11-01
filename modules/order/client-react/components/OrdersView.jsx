@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Divider } from 'antd';
+import { Row, Col } from 'antd';
 
 import { Icon, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
@@ -24,17 +24,9 @@ const OrderView = props => {
             {t('orders.subTitle')}
           </Heading>
         </Col>
-        <Col span={12} align="right">
-          {/* <Link to={ROUTES.add}>
-            <Button color="primary">{t('list.btn.add')}</Button>
-          </Link> */}
-        </Col>
       </Row>
-      <br />
       <hr />
-      <br />
       <OrderFilterComponent {...props} />
-      <Divider />
       <hr />
       {!load ? <OrderListComponent {...props} /> : <Spinner />}
     </PageLayout>

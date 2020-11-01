@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Form } from '@ant-design/compatible';
-
 import { Upload } from 'antd';
 
-import Icon from './Icon';
+import { FormItem } from '@gqlapp/look-client-react';
 
-const FormItem = Form.Item;
+import Icon from './Icon';
 
 const RenderUploadMultiple = props => {
   const { values, label, setload, arrayHelpers, extraFields } = props;

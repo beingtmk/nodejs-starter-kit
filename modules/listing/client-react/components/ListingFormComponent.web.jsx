@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
 
-import { Form, Icon as LegacyIcon } from '@ant-design/compatible';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
 
 import { Tooltip, message, Row, Col, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
@@ -11,6 +11,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import {
+  Form,
   RenderField,
   RenderUploadMultiple,
   FormItem,

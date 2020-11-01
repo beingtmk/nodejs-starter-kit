@@ -53,143 +53,146 @@ const ListingsFilterComponent = props => {
     [`${maxCostRangeValues}`]: maxCostRangeValues
   };
   return (
-    <>
-      <Form layout="inline">
-        <Row type="flex" align="middle">
-          <Col lg={24} xs={24}>
-            <Row>
-              <Col lg={16} xs={24} md={14}>
-                <FormItem label={'search'} style={{ width: '100%' }}>
-                  <DebounceInput
-                    minLength={2}
-                    debounceTimeout={300}
-                    placeholder={'search'}
-                    element={Input}
-                    value={searchText}
-                    onChange={e => onSearchTextChange(e.target.value)}
-                  />
-                </FormItem>
-                &nbsp;
-                {showIsActive && (
-                  <FormItem>
-                    <Label>
-                      <Input
-                        type="checkbox"
-                        defaultChecked={isActive}
-                        checked={isActive}
-                        onChange={() => onIsActiveChange(!isActive)}
-                      />
-                      &nbsp;{t('listingFilter.isActive')}
-                    </Label>
+    <Form layout="inline">
+      <Row type="flex" align="middle">
+        <Col span={24}>
+          <Row>
+            <Col lg={16} xs={24} md={14}>
+              <Row gutter={24}>
+                <Col>
+                  <FormItem label={'search'} style={{ width: '100%' }}>
+                    <DebounceInput
+                      minLength={2}
+                      debounceTimeout={300}
+                      placeholder={'search'}
+                      element={Input}
+                      value={searchText}
+                      onChange={e => onSearchTextChange(e.target.value)}
+                    />
                   </FormItem>
-                )}
-              </Col>
-              <Col
-                lg={8}
-                xs={24}
-                md={10}
-                // align="right"
-              >
-                <Row>
-                  <Col lg={0} md={0} xs={24}>
-                    <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
-                      <Select
-                        name="sortBy"
-                        defaultValue={orderBy.order}
-                        style={{ width: '100%' }}
-                        onChange={e =>
-                          SORT_BY[e].sortBy === ''
-                            ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
-                            : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
-                        }
-                      >
-                        <Option key={1} value="">
-                          None
-                        </Option>
-                        {SORT_BY.map((sB, i) => (
-                          <Option key={i + 2} value={i}>
-                            {sB.label}
-                          </Option>
-                        ))}
-                      </Select>
+                </Col>
+                <Col>
+                  {showIsActive && (
+                    <FormItem>
+                      <Label>
+                        <Input
+                          type="checkbox"
+                          defaultChecked={isActive}
+                          checked={isActive}
+                          onChange={() => onIsActiveChange(!isActive)}
+                        />
+                        &nbsp;{t('listingFilter.isActive')}
+                      </Label>
                     </FormItem>
-                  </Col>
-                  <Col xs={0} md={24} lg={24}>
-                    <Row type="flex" justify="end">
-                      {SORT_BY && SORT_BY.length !== 0 && (
-                        <FormItem label={'Sort By'}>
-                          <Select
-                            name="sortBy"
-                            defaultValue={orderBy.order}
-                            style={{ width: '170px' }}
-                            onChange={e =>
-                              SORT_BY[e].sortBy === ''
-                                ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
-                                : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
-                            }
-                          >
-                            <Option key={1} value="">
-                              None
+                  )}
+                </Col>
+              </Row>
+            </Col>
+            <Col
+              lg={8}
+              xs={24}
+              md={10}
+              // align="right"
+            >
+              <Row>
+                <Col lg={0} md={0} xs={24}>
+                  <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
+                    <Select
+                      name="sortBy"
+                      defaultValue={orderBy.order}
+                      style={{ width: '100%' }}
+                      onChange={e =>
+                        SORT_BY[e].sortBy === ''
+                          ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
+                          : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
+                      }
+                    >
+                      <Option key={1} value="">
+                        None
+                      </Option>
+                      {SORT_BY.map((sB, i) => (
+                        <Option key={i + 2} value={i}>
+                          {sB.label}
+                        </Option>
+                      ))}
+                    </Select>
+                  </FormItem>
+                </Col>
+                <Col xs={0} md={24} lg={24}>
+                  <Row type="flex" justify="end">
+                    {SORT_BY && SORT_BY.length !== 0 && (
+                      <FormItem label={'Sort By'}>
+                        <Select
+                          name="sortBy"
+                          defaultValue={orderBy.order}
+                          style={{ width: '170px' }}
+                          onChange={e =>
+                            SORT_BY[e].sortBy === ''
+                              ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
+                              : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
+                          }
+                        >
+                          <Option key={1} value="">
+                            None
+                          </Option>
+                          {SORT_BY.map((sB, i) => (
+                            <Option key={i + 2} value={i}>
+                              {sB.label}
                             </Option>
-                            {SORT_BY.map((sB, i) => (
-                              <Option key={i + 2} value={i}>
-                                {sB.label}
-                              </Option>
-                            ))}
-                          </Select>
-                        </FormItem>
-                      )}
-                    </Row>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={24} xs={24} align="right">
-            <Row>
-              <Col lg={0} md={0} xs={1} />
-              <Col lg={20} md={18} xs={21}>
-                <div style={{ display: 'block' }}>
-                  <h5 style={{ fontSize: '' }}>{t('listingFilter.costFilter')}</h5>
-                  <SliderControlled
-                    style={{
-                      width: '100%',
-                      background: 'white'
-                    }}
-                    max={Math.round(rangeValues && rangeValues.maxCost + 1)}
-                    min={Math.floor(rangeValues && rangeValues.minCost)}
-                    marks={costMarks}
-                    range
-                    value={[lowerCost, upperCost]}
-                    // disabled={false}
-                    handleSliderChange={e => handleChangeSlider(e)}
-                  />
-                </div>
-              </Col>
-              <Col lg={0} md={2} xs={2} />
-              <Col lg={4} md={4} xs={24}>
-                <Row>
-                  <Col lg={0} md={0} xs={24}>
-                    <br />
-                    <Button block type="primary" onClick={handleFiltersRemove}>
+                          ))}
+                        </Select>
+                      </FormItem>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={24} align="right">
+          <Row>
+            <Col lg={0} md={0} xs={1} />
+            <Col lg={20} md={18} xs={21} align="left">
+              <div style={{ display: 'block' }}>
+                <h5>{t('listingFilter.costFilter')}</h5>
+                <SliderControlled
+                  style={{
+                    width: '100%',
+                    background: 'white'
+                  }}
+                  max={Math.round(rangeValues && rangeValues.maxCost + 1)}
+                  min={Math.floor(rangeValues && rangeValues.minCost)}
+                  marks={costMarks}
+                  range
+                  value={[lowerCost, upperCost]}
+                  // disabled={false}
+                  handleSliderChange={e => handleChangeSlider(e)}
+                />
+              </div>
+            </Col>
+            <Col lg={0} md={2} xs={2} />
+            <Col lg={4} md={4} xs={24}>
+              <Row>
+                <Col lg={0} md={0} xs={24}>
+                  <br />
+                  <Button block type="primary" onClick={handleFiltersRemove}>
+                    {t('listingFilter.btn.reset')}
+                  </Button>
+                </Col>
+                <Col xs={0} md={24} lg={24}>
+                  <br />
+                  <FormItem>
+                    <Button type="primary" onClick={handleFiltersRemove}>
                       {t('listingFilter.btn.reset')}
                     </Button>
-                  </Col>
-                  <Col xs={0} md={24} lg={24}>
-                    <br />
-                    <FormItem>
-                      <Button type="primary" onClick={handleFiltersRemove}>
-                        {t('listingFilter.btn.reset')}
-                      </Button>
-                    </FormItem>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Form>
-    </>
+                  </FormItem>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 

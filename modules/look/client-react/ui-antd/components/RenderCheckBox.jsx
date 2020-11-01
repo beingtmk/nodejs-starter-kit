@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Checkbox } from 'antd';
 
-const FormItem = Form.Item;
+import { FormItem } from '@gqlapp/look-client-react';
 
 const RenderCheckBox = ({ input, label, meta: { touched, error } }) => {
   let validateStatus = '';

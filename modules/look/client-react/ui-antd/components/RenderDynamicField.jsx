@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Form } from '@ant-design/compatible';
 
-import { RenderField, RenderUpload, Button } from '@gqlapp/look-client-react';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { FormItem, RenderField, RenderUpload, Button } from '@gqlapp/look-client-react';
 
 import Icon from './Icon';
-
-const FormItem = Form.Item;
 
 export default class DynamicFieldSet extends React.Component {
   add = () => {

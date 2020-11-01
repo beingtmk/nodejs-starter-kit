@@ -1,12 +1,20 @@
 import React from 'react';
-// import { Form } from '@ant-design/compatible';
 
-import { Form, Row, Col, Rate, Button } from 'antd';
+import { Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { Icon, RenderUploadMultiple, RenderField, Select, Option, SubmitButton } from '@gqlapp/look-client-react';
+import {
+  Form,
+  Icon,
+  RenderUploadMultiple,
+  RenderField,
+  Select,
+  Option,
+  FormItem,
+  SubmitButton
+} from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 import styled from 'styled-components';
@@ -16,7 +24,6 @@ import { Review } from '../containers/Reviews.web';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 
 const ReviewFormSchema = { rating: [required], feedback: [required] };
-const FormItem = Form.Item;
 
 const Rating = styled(Rate)`
   font-size: 50px !important;

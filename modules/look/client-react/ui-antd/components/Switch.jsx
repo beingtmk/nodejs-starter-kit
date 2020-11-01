@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Switch as ADSwitch } from 'antd';
 
-const FormItem = Form.Item;
+import { FormItem } from '@gqlapp/look-client-react';
 
 const Switch = ({ label, meta: { touched, error }, ...props }) => {
   let validateStatus = '';

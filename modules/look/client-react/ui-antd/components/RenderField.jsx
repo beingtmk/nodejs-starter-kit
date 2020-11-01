@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
 import { Input } from 'antd';
 
-const FormItem = Form.Item;
+import { FormItem } from '@gqlapp/look-client-react';
+
 const { TextArea } = Input;
 
 const RenderField = ({ input, label, type, meta: { touched, error }, placeholder, rows = 6, tooltip }) => {

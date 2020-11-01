@@ -1,12 +1,20 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Form } from '@ant-design/compatible';
 import { Row, Col, Card } from 'antd';
 import { withFormik } from 'formik';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { RenderCheckBox, FormItem, Select, Option, RenderField, Button, RenderUpload } from '@gqlapp/look-client-react';
+import {
+  Form,
+  RenderCheckBox,
+  FormItem,
+  Select,
+  Option,
+  RenderField,
+  Button,
+  RenderUpload
+} from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 
 const DynamicCarouselFormSchema = {

@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { RenderField, Icon } from '@gqlapp/look-client-react';
+
+import { RenderField, Icon, FormItem } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Form } from '@ant-design/compatible';
 
 import { Row, Col, Button, Modal, Popconfirm, message } from 'antd';
-
-const FormItem = Form.Item;
 
 const AddressFormItem = styled.div`
   display: inline-block;

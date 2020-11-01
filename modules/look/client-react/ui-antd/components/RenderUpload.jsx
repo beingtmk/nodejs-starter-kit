@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Form } from '@ant-design/compatible';
-
 import { Upload, Modal } from 'antd';
 
-import Icon from './Icon';
+import { FormItem } from '@gqlapp/look-client-react';
 
-const FormItem = Form.Item;
+import Icon from './Icon';
 
 export default class RenderUpload extends React.Component {
   constructor(props) {
