@@ -13,6 +13,7 @@ import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperat
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
+import { MODAL } from '@gqlapp/review-common';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
 import ROUTES from '../routes';
@@ -76,7 +77,7 @@ const RelatedCardComponent = props => {
       consumerId: currentUser && currentUser.id,
       orderDetail: {
         vendorId: listing && listing.user && listing.user.id,
-        modalName: 'listing',
+        modalName: MODAL[0].value,
         modalId: listing && listing.id,
 
         title: listing && listing.title,

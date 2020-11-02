@@ -7,6 +7,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { MODAL } from '@gqlapp/review-common';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart, withGetCart, withDeleteCartItem } from './OrderOperations';
@@ -48,7 +49,7 @@ const AddToCart = props => {
         consumerId: currentUser && currentUser.id,
         orderDetail: {
           vendorId: listing && listing.user && listing.user.id,
-          modalName: 'listing',
+          modalName: MODAL[0].value,
           modalId: listing && listing.id,
 
           title: listing && listing.title,

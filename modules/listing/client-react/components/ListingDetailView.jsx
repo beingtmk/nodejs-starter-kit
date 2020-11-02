@@ -21,6 +21,7 @@ import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import { Icon, LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+import { MODAL } from '@gqlapp/review-common';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
@@ -310,7 +311,7 @@ const ListingDetailView = props => {
                 filter={{
                   isActive: true,
                   modalId: listing && listing.id,
-                  modalName: 'listing'
+                  modalName: MODAL[0].value
                 }}
                 showAdd={canUserReview}
                 currentUser={currentUser}

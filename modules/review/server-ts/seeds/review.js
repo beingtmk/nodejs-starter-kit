@@ -1,5 +1,6 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 import { MEDIA } from '@gqlapp/listing-common';
+import { MODAL } from '@gqlapp/review-common';
 
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [
@@ -33,7 +34,7 @@ exports.seed = async function(knex) {
           user_id: Math.floor(Math.random() * 2) + 1
         }));
       return returnId(knex('modal_review')).insert({
-        modal_name: 'listing',
+        modal_name: MODAL[0].value,
         modal_id: Math.floor(Math.random() * (100 - 1 + 1) + 1),
         review_id: review[0]
       });
