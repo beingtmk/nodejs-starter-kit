@@ -29,6 +29,12 @@ export default (pubsub: any) => ({
           hasNextPage
         }
       };
+    },
+    async discount(obj: any, { id }: Identifier, { Discount }: any) {
+      return Discount.discount(id);
+    },
+    async modalDiscount(obj: any, { modalName, modalId }: { modalName: string; modalId: number }, { Discount }: any) {
+      return Discount.modalDiscount(modalName, modalId);
     }
   },
   Mutation: {},

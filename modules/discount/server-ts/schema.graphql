@@ -32,6 +32,8 @@ type DiscountPageInfo {
 }
 
 extend type Query {
+  discount(id: Int): Discount
+  modalDiscount(modalName: String, modalId: Int): Discount
   discounts(
     limit: Int!
     after: Int!

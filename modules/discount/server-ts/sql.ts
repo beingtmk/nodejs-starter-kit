@@ -114,6 +114,28 @@ export default class DiscountDAO extends Model {
       total
     };
   }
+
+  public async discount(id: number) {
+    const res = camelizeKeys(
+      await DiscountDAO.query()
+        .findById(id)
+        .eager(eager)
+        .orderBy('id', 'desc')
+    );
+    // console.log(res);
+    return res;
+  }
+
+  public async modalDiscount(modalName: string, modalId: number) {
+    const res = camelizeKeys(
+      await DiscountDAO.query()
+        .eager(eager)
+        .where('modal_name', modalName)
+        .andWhere('modal_id', modalId)
+    )[0];
+    // console.log(res);
+    return res;
+  }
 }
 
 // DiscountDuration model.
