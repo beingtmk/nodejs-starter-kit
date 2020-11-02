@@ -1,0 +1,11 @@
+fragment DiscountInfo on Discount {
+  id
+  discountPercent
+  discountDuration {
+    id
+    startDate
+    endDate
+    isActive
+  }
+  isActive
+}

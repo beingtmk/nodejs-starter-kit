@@ -49,7 +49,7 @@ const AddToCart = props => {
         consumerId: currentUser && currentUser.id,
         orderDetail: {
           vendorId: listing && listing.user && listing.user.id,
-          modalName: MODAL[0].value,
+          modalName: MODAL[1].value,
           modalId: listing && listing.id,
 
           title: listing && listing.title,

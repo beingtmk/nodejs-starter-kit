@@ -6,7 +6,6 @@ import {
   Divider, // Card,
   Badge,
   Descriptions, // Avatar,
-  Statistic,
   Carousel, // Tooltip,
   Tabs
 } from 'antd';
@@ -16,6 +15,8 @@ import { MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
+import DiscountComponent from '@gqlapp/discount-client-react/containers/DiscountComponent';
+import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
@@ -25,7 +26,6 @@ import { MODAL } from '@gqlapp/review-common';
 
 import ListingsCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
-import CurrencyDisplay from './CurrencyDisplay';
 import SocialSharingButtons from './SocialSharingButtons';
 import { displayDataCheck } from './functions';
 
@@ -217,28 +217,13 @@ const ListingDetailView = props => {
               <br /> <p>{`SKU: ${listing && listing.sku}`}</p>
               <Divider style={{ margin: '10px 5px' }} />
               <Row>
-                <Col lg={8} md={12} xs={12}>
-                  {isDiscount
-                    ? cost && (
-                        <CurrencyDisplay
-                          style={{ display: 'inline' }}
-                          input={(cost - cost * (discount / 100)).toFixed(2)}
-                        />
-                      )
-                    : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
+                <Col lg={16} md={24} xs={24}>
+                  {isDiscount ? (
+                    <DiscountComponentView t={t} isDiscount={isDiscount} discount={discount} cost={cost} />
+                  ) : (
+                    <DiscountComponent modalId={listing && listing.id} modalName={MODAL[1].value} cost={cost} />
+                  )}
                 </Col>
-                {isDiscount && (
-                  <Col lg={8} md={12} xs={12}>
-                    <Statistic
-                      title=""
-                      precision={2}
-                      valueStyle={{ color: '#cf1322' }}
-                      value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
-                      suffix={'%'}
-                      prefix={<Icon type="ArrowDownOutlined" />}
-                    />
-                  </Col>
-                )}
 
                 <Col lg={8} md={24} xs={24}>
                   <p style={{ fontSize: '16px', marginTop: '5px' }}>
@@ -246,25 +231,6 @@ const ListingDetailView = props => {
                       inventoryCount > 0 ? t('listingDetail.inStock') : t('listingDetail.outOfStock')
                     }`}
                   </p>
-                </Col>
-                <Col span={24}>
-                  {isDiscount && (
-                    <div style={{ display: 'flex' }}>
-                      <CurrencyDisplay input={cost.toFixed(2)} valueStyle={{ textDecoration: 'line-through' }} />
-                      &nbsp; &nbsp;
-                      <div style={{ lineHeight: '45px', display: 'flex' }}>
-                        <div style={{ fontSize: '15px' }}>
-                          <b>{t('listingDetail.savingAmount')} &nbsp;</b>
-                        </div>
-                        {(cost.toFixed(2) - (cost - cost * (discount / 100)).toFixed(2)).toFixed(2)}
-                      </div>
-                    </div>
-                  )}
-                  <i>
-                    {t('listingDetail.includingGST')}
-                    <br /> {t('listingDetail.freeShipping')}
-                    <br /> {t('listingDetail.certified')}
-                  </i>
                 </Col>
               </Row>
               <Divider />
@@ -311,7 +277,7 @@ const ListingDetailView = props => {
                 filter={{
                   isActive: true,
                   modalId: listing && listing.id,
-                  modalName: MODAL[0].value
+                  modalName: MODAL[1].value
                 }}
                 showAdd={canUserReview}
                 currentUser={currentUser}

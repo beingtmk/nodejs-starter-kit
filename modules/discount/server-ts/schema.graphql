@@ -9,6 +9,7 @@ type Discount {
 }
 
 type DiscountDuration {
+  id: Int
   startDate: String
   endDate: String
   isActive: Boolean

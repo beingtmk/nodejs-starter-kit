@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
     [...Array(100).keys()].map(async ii => {
       const isDiscount = Math.random() < 0.6 ? false : true;
       const discount = await returnId(knex('discount')).insert({
-        modal_name: MODAL[0].value,
+        modal_name: MODAL[1].value,
         modal_id: ii + 1,
         discount_percent: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1).toFixed(2) : 0
       });

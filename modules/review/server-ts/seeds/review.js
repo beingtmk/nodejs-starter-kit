@@ -34,7 +34,7 @@ exports.seed = async function(knex) {
           user_id: Math.floor(Math.random() * 2) + 1
         }));
       return returnId(knex('modal_review')).insert({
-        modal_name: MODAL[0].value,
+        modal_name: MODAL[1].value,
         modal_id: Math.floor(Math.random() * (100 - 1 + 1) + 1),
         review_id: review[0]
       });
