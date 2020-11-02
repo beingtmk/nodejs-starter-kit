@@ -62,7 +62,7 @@ exports.seed = async function(knex) {
       await returnId(knex('listing_cost')).insert({
         listing_id: listing[0],
         cost: Math.floor(Math.random() * (999 - 100 + 1) + 100),
-        discount: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1) : 0,
+        discount: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1).toFixed(2) : 0,
         type: '',
         label: '',
         is_active: isActive

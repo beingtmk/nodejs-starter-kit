@@ -60,7 +60,7 @@ exports.seed = async function(knex) {
       const addresses2 = await knex('user_address').where('user_id', '=', User2);
       const order2 = await returnId(knex('order')).insert({
         consumer_id: User2,
-        order_state_id: Math.floor(Math.random() * (4 - 1 + 1) + 1),
+        order_state_id: Math.floor(Math.random() * (4 - 2 + 1) + 2),
 
         tracking_id: Math.random()
           .toString(36)
