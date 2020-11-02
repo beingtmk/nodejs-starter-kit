@@ -127,7 +127,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       )}
       {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
       <Row type="flex" gutter={[24, 24]}>
-        <Col lg={12} md={12} xs={12}>
+        <Col lg={12} md={12} xs={24}>
           <ModalDrawer buttonText="Reset password" modalTitle="Reset Password" height="auto" ghost={true}>
             <div>
               <Field
@@ -150,7 +150,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
             </div>
           </ModalDrawer>
         </Col>
-        <Col lg={12} md={12} xs={12}>
+        <Col lg={12} md={12} xs={24}>
           <SubmitButton color="primary" type="submit" disabled={load}>
             {t('userEdit.form.btnSubmit')}
           </SubmitButton>

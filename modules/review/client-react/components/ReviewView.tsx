@@ -94,7 +94,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   const { modalName, modalId } = filter;
   return (
     <>
-      <MetaTags title={t('title')} description={t('meta')} />
+      {/* <MetaTags title={t('title')} description={t('meta')} /> */}
       <Row type="flex" align="middle">
         <Col lg={17} md={17} sm={15} xs={14}>
           <Heading type="1"> {t('review.heading')}</Heading>

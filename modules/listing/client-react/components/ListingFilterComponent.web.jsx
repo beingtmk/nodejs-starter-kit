@@ -174,14 +174,14 @@ const ListingsFilterComponent = props => {
               <Row>
                 <Col lg={0} md={0} xs={24}>
                   <br />
-                  <Button block type="primary" onClick={handleFiltersRemove}>
+                  <Button block color="primary" onClick={handleFiltersRemove}>
                     {t('listingFilter.btn.reset')}
                   </Button>
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <br />
                   <FormItem>
-                    <Button type="primary" onClick={handleFiltersRemove}>
+                    <Button color="primary" onClick={handleFiltersRemove}>
                       {t('listingFilter.btn.reset')}
                     </Button>
                   </FormItem>

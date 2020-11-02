@@ -13,13 +13,31 @@ const ModalBar = styled.div`
   margin-bottom: 5px;
 `;
 const ModalDrawer = props => {
-  const { buttonText, height, children, ghost = false, modalTitle, type = 'primary' } = props;
+  const {
+    buttonText,
+    height,
+    children,
+    ghost = false,
+    modalTitle,
+    type = 'primary',
+    shape = 'default',
+    style,
+    size
+  } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   return (
     <Row type="flex" gutter={[24, 24]}>
-      <Col lg={24} md={12} sm={24} xs={0}>
-        <Button ghost={ghost} type={type} block onClick={() => setVisibleModal(true)}>
+      <Col lg={24} md={24} sm={24} xs={0}>
+        <Button
+          ghost={ghost}
+          type={type}
+          shape={shape}
+          size={size}
+          {...style}
+          block
+          onClick={() => setVisibleModal(true)}
+        >
           {buttonText}
         </Button>
         <Modal centered title={modalTitle} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
@@ -28,7 +46,15 @@ const ModalDrawer = props => {
         </Modal>
       </Col>
       <Col lg={0} md={0} sm={0} xs={24}>
-        <Button ghost={ghost} type={type} block onClick={() => setVisibleDrawer(true)}>
+        <Button
+          ghost={ghost}
+          type={type}
+          shape={shape}
+          size={size}
+          {...style}
+          block
+          onClick={() => setVisibleDrawer(true)}
+        >
           {buttonText}
         </Button>
         <div className="drawer">
@@ -51,6 +77,7 @@ const ModalDrawer = props => {
           >
             <br />
             <br />
+            <br />
             {/* {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })} */}
             {children}
           </Drawer>
@@ -65,6 +92,9 @@ ModalDrawer.propTypes = {
   children: PropTypes.func,
   ghost: PropTypes.bool,
   modalTitle: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  shape: PropTypes.string,
+  style: PropTypes.object,
+  size: PropTypes.string
 };
 export default ModalDrawer;

@@ -45,7 +45,6 @@ const Users = props => {
           </Row>
         </Col>
       </Row>
-      <br />
       <hr />
       <UsersFilterView {...props} filter={filter} />
       <hr />
