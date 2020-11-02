@@ -64,7 +64,13 @@ const SocialSharingButtons = props => {
           />
         </Button>
       </a>
-      <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
+      <a
+        href={`https://api.whatsapp.com/send?text=${whatsappMessage}`}
+        // href={`https://api.whatsapp.com/send?phone=${phone_number}&text=${title}%20${url}`}
+        dataAction="share/whatsapp/share"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171220/gtd0x3gg3vcmirxdwr19.jpg'}

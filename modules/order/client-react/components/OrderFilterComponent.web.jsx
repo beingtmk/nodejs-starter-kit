@@ -5,7 +5,6 @@ import { translate } from '@gqlapp/i18n-client-react';
 import { Form, FormItem, Select, Option, Input } from '@gqlapp/look-client-react';
 
 const OrderFilterComponent = ({ filter: { searchText, state }, orderStates, onSearchTextChange, onStateChange, t }) => {
-  console.log('bleh');
   return (
     <Form layout="inline">
       <FormItem label={t('orders.item.search')}>
