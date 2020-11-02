@@ -1,7 +1,141 @@
+import { has } from 'lodash';
+import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
+import { Model, raw } from 'objection';
+
 import { knex } from '@gqlapp/database-server-ts';
 
-export default class Discount {
-  public discounts() {
-    return knex.select();
+Model.knex(knex);
+
+export interface Identifier {
+  id: number;
+}
+
+export interface Discount {
+  modalId: number;
+  modalName: string;
+  discountPercent: number;
+  isActive: boolean;
+  discountDuration: DiscountDurations;
+}
+
+interface DiscountDurations {
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+}
+
+const eager = '[discount_duration]';
+
+export default class DiscountDAO extends Model {
+  private id: any;
+
+  static get tableName() {
+    return 'discount';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      discount_duration: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: DiscountDuration,
+        join: {
+          from: 'discount.id',
+          to: 'discount_duration.discount_id'
+        }
+      }
+    };
+  }
+
+  public async discountsPagination(limit: number, after: number, orderBy: any, filter: any) {
+    const queryBuilder = DiscountDAO.query().eager(eager);
+
+    if (orderBy && orderBy.column) {
+      const column = orderBy.column;
+      let order = 'asc';
+      if (orderBy.order) {
+        order = orderBy.order;
+      }
+
+      queryBuilder.orderBy(decamelize(column), order);
+    } else {
+      queryBuilder.orderBy('id', 'desc');
+    }
+
+    if (filter) {
+      if (has(filter, 'isActive') && filter.isActive !== '') {
+        queryBuilder.where(function() {
+          this.where('discount.is_active', filter.isActive);
+          // .andWhere('discount_duration.is_active', filter.isActive);
+        });
+      }
+      if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
+        queryBuilder.where(function() {
+          if (filter.isDiscount) {
+            this.where('discount.discount_percent', '>', 0);
+          } else {
+            this.where('discount.discount_percent', 0);
+          }
+        });
+      }
+      if (has(filter, 'onGoing') && filter.onGoing !== false) {
+        const now = new Date().toISOString();
+        queryBuilder.where(function() {
+          this.where('discount_duration.start_date', '<=', now).andWhere('discount_duration.end_date', '>=', now);
+        });
+      }
+      if (has(filter, 'upComming') && filter.upComming !== false) {
+        const now = new Date().toISOString();
+        queryBuilder.where(function() {
+          this.where('discount_duration.start_date', '>=', now).andWhere('discount_duration.end_date', '>=', now);
+        });
+      }
+      // if (has(filter, 'searchText') && filter.searchText !== '') {
+      //   queryBuilder.where(function() {
+      //     this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
+      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
+      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
+      //     // .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['discount_duration.duration', `%${filter.searchText}%`]));
+      //   });
+      // }
+    }
+
+    queryBuilder.from('discount').leftJoin('discount_duration', 'discount_duration.discount_id', 'discount.id');
+
+    const allDiscount = camelizeKeys(await queryBuilder);
+    const total = allDiscount.length;
+    const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    // console.log(res);
+    return {
+      discounts: res,
+      total
+    };
+  }
+}
+
+// DiscountDuration model.
+class DiscountDuration extends Model {
+  static get tableName() {
+    return 'discount_duration';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      discount: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: DiscountDAO,
+        join: {
+          from: 'discount_duration.discount_id',
+          to: 'discount.id'
+        }
+      }
+    };
   }
 }
