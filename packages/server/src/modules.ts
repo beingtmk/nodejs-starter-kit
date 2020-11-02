@@ -1,3 +1,4 @@
+import discount from '@gqlapp/discount-server-ts';
 import addresses from '@gqlapp/addresses-server-ts';
 import order from '@gqlapp/order-server-ts';
 import listing from '@gqlapp/listing-server-ts';
@@ -25,6 +26,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  discount,
   addresses,
   order,
   listing,
