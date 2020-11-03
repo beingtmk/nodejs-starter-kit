@@ -55,9 +55,21 @@ input FilterDiscountInput {
   upComming: Boolean
 }
 
-# extend type Mutation {
-#   mutationName(varName: Int!): TypeName
-# }
+extend type Mutation {
+  addDiscount(input: AddDiscountInput!): Boolean
+}
+
+input AddDiscountInput {
+  modalId: Int
+  discountPercent: Int
+  modalName: String
+  discountDuration: DiscountDurationInput
+}
+
+input DiscountDurationInput {
+  startDate: String
+  endDate: String
+}
 
 # extend type Subscription {
 #   subscriptionName: TypeName

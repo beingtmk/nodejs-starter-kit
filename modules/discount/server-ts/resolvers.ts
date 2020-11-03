@@ -1,8 +1,13 @@
 import { Discount as Discounts, Identifier } from './sql';
+import withAuth from 'graphql-auth';
 
 interface Edges {
   cursor: number;
   node: Discounts & Identifier;
+}
+
+interface DiscountInput {
+  input: Discounts;
 }
 
 export default (pubsub: any) => ({
@@ -37,6 +42,24 @@ export default (pubsub: any) => ({
       return Discount.modalDiscount(modalName, modalId);
     }
   },
-  Mutation: {},
+  Mutation: {
+    addDiscount: withAuth(async (obj: any, { input }: DiscountInput, context: any) => {
+      try {
+        const id = await context.Discount.addDiscount(input);
+        // const discount = await context.Discount.discount(id);
+        // // publish for discount list
+        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+        //   discountUpdated: {
+        //     mutation: 'CREATED',
+        //     id,
+        //     node: discount
+        //   }
+        // });
+        return true;
+      } catch (e) {
+        return e;
+      }
+    })
+  },
   Subscription: {}
 });

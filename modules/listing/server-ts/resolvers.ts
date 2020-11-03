@@ -112,7 +112,7 @@ export default (pubsub: any) => ({
             node: listing
           }
         });
-        return true;
+        return id;
       } catch (e) {
         return e;
       }

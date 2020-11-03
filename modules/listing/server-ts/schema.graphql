@@ -106,7 +106,7 @@ extend type Query {
 
 extend type Mutation {
   # Create new listing
-  addListing(input: AddListingInput!): Boolean
+  addListing(input: AddListingInput!): Int
   duplicateListing(id: Int!): Int
   # # Edit a listing
   editListing(input: EditListingInput!): Boolean

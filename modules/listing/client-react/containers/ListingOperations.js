@@ -239,12 +239,12 @@ export const withListingsDeleting = Component =>
 
 export const withAddListing = Component =>
   graphql(ADD_LISTING, {
-    props: ({ ownProps: { history }, mutate }) => ({
+    props: ({ mutate }) => ({
       addListing: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
         try {
-          await mutate({
+          const {
+            data: { addListing: id }
+          } = await mutate({
             variables: {
               input: values
             },
@@ -256,9 +256,7 @@ export const withAddListing = Component =>
               }
             }
           });
-          message.destroy();
-          message.success('Listing added.');
-          history.push(`${ROUTES.adminPanel}`);
+          return id;
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

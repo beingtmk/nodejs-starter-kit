@@ -1,7 +1,11 @@
 import { graphql } from 'react-apollo';
+import { message } from 'antd';
 
 // Query
 import MODAL_DISCOUNT_QUERY from '../graphql/ModalDiscountQuery.graphql';
+
+// Mutation
+import ADD_DISCOUNT from '../graphql/AddDiscount.graphql';
 
 export const withModalDiscount = Component =>
   graphql(MODAL_DISCOUNT_QUERY, {
@@ -16,4 +20,31 @@ export const withModalDiscount = Component =>
     }
   })(Component);
 
-export const withDiscount = Component => console.log('bleh', Component);
+export const withAddDiscount = Component =>
+  graphql(ADD_DISCOUNT, {
+    props: ({ mutate }) => ({
+      addDiscount: async values => {
+        try {
+          const {
+            data: { id }
+          } = await mutate({
+            variables: {
+              input: values
+            },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              addDiscount: {
+                __typename: 'Discount',
+                ...values
+              }
+            }
+          });
+          return id;
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);

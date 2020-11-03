@@ -2,7 +2,7 @@ import { has } from 'lodash';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { Model, raw } from 'objection';
 
-import { knex } from '@gqlapp/database-server-ts';
+import { knex, returnId } from '@gqlapp/database-server-ts';
 
 Model.knex(knex);
 
@@ -135,6 +135,11 @@ export default class DiscountDAO extends Model {
     )[0];
     // console.log(res);
     return res;
+  }
+
+  public async addDiscount(params: Discount) {
+    const res = camelizeKeys(await returnId(DiscountDAO.query()).insertGraph(decamelizeKeys(params)));
+    return res.id;
   }
 }
 
