@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
 import { Tooltip, message, Card, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
+import moment from 'moment';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import {
@@ -15,10 +16,12 @@ import {
   RenderCheckBox,
   NextButton,
   SubmitButton,
-  Icon
+  Icon,
+  RenderDatePicker
 } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { MODAL } from '@gqlapp/review-common';
 
 const VIDEO = 'video';
 const LAST_STEP = 3;
@@ -179,7 +182,7 @@ const ListingFormComponent = props => {
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
 
-  console.log('props form component', props.values.listingMedia);
+  // console.log('props form component', props.values.isTimeStamp);
   return (
     <Card
       title={
@@ -373,6 +376,43 @@ const ListingFormComponent = props => {
                 )}
               </Col>
             </Col>
+            <Col md={8} xs={24} align="left">
+              {values.listingFlags.isDiscount && (
+                <Field
+                  name="isTimeStamp"
+                  component={RenderCheckBox}
+                  type="checkbox"
+                  label={t('listingForm.isTimeStamp')}
+                  checked={values.isTimeStamp}
+                />
+              )}
+            </Col>
+            <Col md={8} xs={24} align="left">
+              {values.isTimeStamp && (
+                <Field
+                  name={'discountDuration.startDate'}
+                  component={RenderDatePicker}
+                  // type="range"
+                  showTime
+                  label={t('listingForm.discountDuration.startDate')}
+                  onChange={e => setFieldValue('discountDuration.startDate', e.toISOString())}
+                  value={values.discountDuration.startDate ? moment(values.discountDuration.startDate) : moment()}
+                />
+              )}
+            </Col>
+            <Col md={8} xs={24} align="left">
+              {values.isTimeStamp && (
+                <Field
+                  name={'discountDuration.endDate'}
+                  component={RenderDatePicker}
+                  // type="range"
+                  showTime
+                  label={t('listingForm.discountDuration.endDate')}
+                  onChange={e => setFieldValue('discountDuration.endDate', e.toISOString())}
+                  value={values.discountDuration.endDate ? moment(values.discountDuration.endDate) : moment()}
+                />
+              )}
+            </Col>
             <Col span={24} align="right">
               <Row>
                 <Col span={12} align="left">
@@ -529,6 +569,11 @@ const ListingWithFormik = withFormik({
         isNew: true,
         isDiscount: false
       },
+      isTimeStamp: false,
+      discountDuration: {
+        startDate: null,
+        endDate: null
+      },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
         fixedQuantity: -1
@@ -550,7 +595,7 @@ const ListingWithFormik = withFormik({
   async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
     setStep(step + 1);
     if (step + 1 === LAST_STEP) {
-      if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Invontory Count - Less than zero');
+      if (values.listingDetail.inventoryCount < 0) return message.error('Invalid Inventory Count - Less than zero');
       if (values.listingCostArray[0].cost < 0) return message.error('Invalid Listing Cost - Less than zero');
       if (
         values.listingOptions.fixedQuantity < -1 ||
@@ -569,10 +614,19 @@ const ListingWithFormik = withFormik({
         sku: values.sku,
         isActive: values.isActive
       };
+      const discountInput = {
+        modalName: MODAL[1].value,
+        discountPercent: values.listingCostArray[0].discount,
+        discountDuration: {
+          startDate: values.discountDuration.startDate,
+          endDate: values.discountDuration.endDate
+        }
+      };
+      console.log(!values.isTimeStamp, values.listingCostArray[0].discount, values.listingFlags.isDiscount);
       input.listingCostArray = [];
       const cost = {
         cost: values.listingCostArray[0].cost,
-        discount: values.listingCostArray[0].discount,
+        discount: !values.isTimeStamp ? values.listingCostArray[0].discount : 0,
         type: values.listingCostArray[0].type,
         label: values.listingCostArray[0].label
       };
@@ -581,7 +635,7 @@ const ListingWithFormik = withFormik({
         id: values.listingFlags.id,
         isFeatured: values.listingFlags.isFeatured,
         isNew: values.listingFlags.isNew,
-        isDiscount: values.listingFlags.isDiscount
+        isDiscount: !values.isTimeStamp && values.listingFlags.isDiscount
       };
       input.listingOptions = {
         id: values.listingOptions.id,
@@ -606,8 +660,8 @@ const ListingWithFormik = withFormik({
       if (values.listingHighlight.length > 0) {
         input.listingHighlight = values.listingHighlight;
       }
-      console.log(input);
-      await onSubmit(input);
+      console.log(input, discountInput);
+      values.isTimeStamp ? await onSubmit(input, discountInput) : await onSubmit(input, false);
     } else {
       setTouched({});
       setSubmitting(false);

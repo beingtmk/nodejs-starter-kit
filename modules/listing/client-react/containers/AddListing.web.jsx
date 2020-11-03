@@ -8,14 +8,16 @@ import AddListingView from '../components/AddListingView.web';
 import { withAddListing, withCurrentUser } from './ListingOperations';
 
 const AddListing = props => {
-  const { addListing } = props;
-  const handleSubmit = values => {
+  const { addListing /* addDiscountValues */ } = props;
+  const handleSubmit = (values, discountValues) => {
+    console.log(values, discountValues);
     try {
       delete values.id;
       delete values.listingFlags.id;
       delete values.listingOptions.id;
       delete values.listingDetail.id;
       addListing(values);
+      // discountValues && addDiscountValues(discountValues);
     } catch (e) {
       throw Error(e);
     }
@@ -25,7 +27,8 @@ const AddListing = props => {
 };
 
 AddListing.propTypes = {
-  addListing: PropTypes.func
+  addListing: PropTypes.func,
+  addDiscountValues: PropTypes.func
 };
 
 export default compose(withAddListing, withCurrentUser, translate('listing'))(AddListing);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'formik';
 import { get as getPath } from 'lodash';
+// import moment from 'moment';
 
 import { PLATFORM } from '@gqlapp/core-common';
 
@@ -28,10 +29,12 @@ class FieldAdapter extends Component {
   }
 
   onChange = e => {
-    const { formik, onChange } = this.props;
-
+    const { formik, onChange /* name */ } = this.props;
     if (onChange) {
       onChange(e.target.value, e);
+      // } else if (Array.isArray(e) && Array.isArray(name)) {
+      //   formik.setFieldValue(name[0], e[0].toISOString());
+      //   formik.setFieldValue(name[1], e[1].toISOString());
     } else {
       formik.handleChange(e);
     }
