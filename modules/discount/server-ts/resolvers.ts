@@ -64,7 +64,7 @@ export default (pubsub: any) => ({
         //   }
         // });
         if (res) {
-          schedule.scheduleJob(res.discountDuration.endDate, async () => {
+          schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
             // console.log('job initialed', res.discountDuration.endDate);
             const filter = { state: ORDER_STATES.STALE };
             const orders = await Order.orders({}, filter);
@@ -108,10 +108,10 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    editDiscount: withAuth(async (obj: any, { input }: DiscountInputWithId, context: any) => {
+    editDiscount: withAuth(async (obj: any, { input }: DiscountInputWithId, { Discount, Order, Listing }: any) => {
       try {
-        await context.Discount.editDiscount(input);
-        // const discount = await context.Discount.discount(input.id);
+        const res = await Discount.editDiscount(input);
+        // const discount = await Discount.discount(input.id);
         // // publish for discount list
         // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
         //   discountsUpdated: {
@@ -122,12 +122,87 @@ export default (pubsub: any) => ({
         // });
         // // publish for edit discount page
         // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //   discountUpdated: {
+        //   discountUpdated: {scheduler = {};
         //     mutation: 'UPDATED',
         //     id: discount.id,
         //     node: discount
         //   }
         // });
+        if (res) {
+          const filter = { state: ORDER_STATES.STALE };
+          const orders = await Order.orders({}, filter);
+          Promise.all(
+            orders.map(async order => {
+              await Promise.all(
+                order.orderDetails.map(async ordDtl => {
+                  if (res.modalName === 'listing' && ordDtl.modalName === 'listing' && ordDtl.modalId === res.modalId) {
+                    const listing = await Listing.listing(ordDtl.modalId);
+                    const cost = listing.listingCostArray[0].cost;
+                    await Order.editOrderDetail({
+                      id: ordDtl.id,
+                      // tslint:disable-next-line:radix
+                      listingCost: parseInt(cost && (cost - cost * (res.discountPercent / 100)).toFixed())
+                    });
+                    await Discount.deleteDiscount(res.id);
+                  }
+                })
+              );
+              const newOrder = await Order.order(order.id);
+              pubsub.publish(ORDERS_SUBSCRIPTION, {
+                ordersUpdated: {
+                  mutation: 'UPDATED',
+                  node: newOrder
+                }
+              });
+              pubsub.publish(ORDER_SUBSCRIPTION, {
+                orderUpdated: {
+                  mutation: 'UPDATED',
+                  id: newOrder.id,
+                  node: newOrder
+                }
+              });
+            })
+          );
+          const discountSchedule = schedule.scheduledJobs[`discount_${res.id}`];
+          discountSchedule.cancel();
+          schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
+            // schedule.cancelJob(`discount_${res.id}`);
+            // console.log('job initialed', res.discountDuration.endDate);
+            Promise.all(
+              orders.map(async order => {
+                await Promise.all(
+                  order.orderDetails.map(async ordDtl => {
+                    if (
+                      res.modalName === 'listing' &&
+                      ordDtl.modalName === 'listing' &&
+                      ordDtl.modalId === res.modalId
+                    ) {
+                      const listing = await Listing.listing(ordDtl.modalId);
+                      const cost = listing.listingCostArray[0].cost;
+                      // tslint:disable-next-line:radix
+                      await Order.editOrderDetail({ id: ordDtl.id, listingCost: parseInt(cost.toFixed(2)) });
+                      await Discount.deleteDiscount(res.id);
+                    }
+                  })
+                );
+                const newOrder = await Order.order(order.id);
+                pubsub.publish(ORDERS_SUBSCRIPTION, {
+                  ordersUpdated: {
+                    mutation: 'UPDATED',
+                    node: newOrder
+                  }
+                });
+                pubsub.publish(ORDER_SUBSCRIPTION, {
+                  orderUpdated: {
+                    mutation: 'UPDATED',
+                    id: newOrder.id,
+                    node: newOrder
+                  }
+                });
+              })
+            );
+          });
+        }
         return true;
       } catch (e) {
         return e;

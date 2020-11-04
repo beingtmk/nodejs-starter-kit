@@ -141,8 +141,7 @@ export default class DiscountDAO extends Model {
     return camelizeKeys(await returnId(DiscountDAO.query()).insertGraph(decamelizeKeys(params)));
   }
   public async editDiscount(params: Discount & Identifier) {
-    const res = await DiscountDAO.query().upsertGraph(decamelizeKeys(params));
-    return res.id;
+    return camelizeKeys(await DiscountDAO.query().upsertGraph(decamelizeKeys(params)));
   }
   public deleteDiscount(id: number) {
     return knex('discount')
