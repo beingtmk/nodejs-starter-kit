@@ -346,7 +346,7 @@ const ListingFormComponent = props => {
                     label={t('listingForm.discount')}
                     min={0}
                     max={100}
-                    value={values.listingCostArray[0].discount || values.modalDiscount.discountPercent}
+                    value={values.listingCostArray[0].discount}
                   />
                 )}
               </Col>
