@@ -40,7 +40,7 @@ export default class DiscountDAO extends Model {
   static get relationMappings() {
     return {
       discount_duration: {
-        relation: Model.BelongsToOneRelation,
+        relation: Model.HasOneRelation,
         modelClass: DiscountDuration,
         join: {
           from: 'discount.id',
