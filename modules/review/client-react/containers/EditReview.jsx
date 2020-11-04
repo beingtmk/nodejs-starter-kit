@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import { PropTypes } from 'prop-types';
 
 import { compose, removeTypename } from '@gqlapp/core-common';
@@ -19,8 +19,8 @@ const EditReview = props => {
   });
 
   const onSubmit = async values => {
-    message.destroy();
-    message.loading('Please wait...', 0);
+    Message.destroy();
+    Message.loading('Please wait...', 0);
     try {
       values = removeTypename(values);
       const input = {
@@ -33,12 +33,12 @@ const EditReview = props => {
       };
       await props.editReview(input);
     } catch (e) {
-      message.destroy();
-      message.error("Couldn't perform the action");
+      Message.destroy();
+      Message.error("Couldn't perform the action");
       console.error(e);
     }
-    message.destroy();
-    message.success('Changes Saved.');
+    Message.destroy();
+    Message.success('Changes Saved.');
     if (props.history) {
       return props.history.push(ROUTES.adminPanel);
     }

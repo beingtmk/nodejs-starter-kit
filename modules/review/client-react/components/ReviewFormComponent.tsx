@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -13,7 +12,11 @@ import {
   Select,
   Option,
   FormItem,
-  SubmitButton
+  SubmitButton,
+  Row,
+  Col,
+  Rate,
+  Button
 } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
@@ -158,7 +161,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             </Col>
             <Col span={6} align="right">
               <FormItem>
-                <Button type="primary" onClick={add}>
+                <Button color="primary" onClick={add}>
                   <Icon type="VideoCameraOutlined" />
                   {t('reviewForm.btn.add')}
                 </Button>

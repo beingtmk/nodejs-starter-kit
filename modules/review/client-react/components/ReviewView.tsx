@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Empty, Button, Checkbox, Spin } from 'antd';
-
+import { Checkbox } from 'antd';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import { MetaTags, Heading, Row, Col } from '@gqlapp/look-client-react';
+// import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import { MetaTags, Heading, Row, Col, Empty, Button, Spin, SuggestedListComponent } from '@gqlapp/look-client-react';
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { Reviews, Review } from '../containers/Reviews.web';
@@ -43,7 +42,7 @@ export const NoReviews: React.FC = ({ t }: { t: TranslateFunction }) => (
     <br />
     <Empty description={'No Review'}>
       <Link to={`${LISTING_ROUTES.add}`}>
-        <Button type="primary">{'Review listings'}</Button>
+        <Button color="primary">{'Review listings'}</Button>
       </Link>
     </Empty>
   </div>

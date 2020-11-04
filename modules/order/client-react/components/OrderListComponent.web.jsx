@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +14,8 @@ import {
   ViewIcon,
   DeleteIcon,
   Col,
-  Row
+  Row,
+  Empty
 } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';

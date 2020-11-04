@@ -1,5 +1,5 @@
 import { graphql } from 'react-apollo';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
@@ -131,7 +131,7 @@ export const withReviewsDeleting = Component =>
             }
           }
         });
-        message.error('Review deleted.');
+        Message.error('Review deleted.');
       }
     })
   })(Component);
@@ -151,8 +151,8 @@ export const withReviewAdding = Component =>
           }
         };
         // console.log(input);
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           await mutate({
             variables: {
@@ -167,13 +167,13 @@ export const withReviewAdding = Component =>
             }
           });
 
-          message.destroy();
-          message.success('Review added.');
+          Message.destroy();
+          Message.success('Review added.');
           // console.log('addreview', values);
           history && history.push(ROUTES.adminPanel);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -365,7 +365,7 @@ function onEditReview(prev, node) {
 }
 
 const onDeleteReview = history => {
-  message.error('Review was deleted!');
+  Message.error('Review was deleted!');
   return history.push(ROUTES.adminPanel);
 };
 
@@ -426,8 +426,8 @@ export const withToogleReviewHelpful = Component =>
   graphql(TOOGLE_REVIEW_HELPFUL, {
     props: ({ mutate }) => ({
       addOrRemoveReviewHelpful: async (reviewId, userId) => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           console.log(reviewId, userId);
           const {
@@ -436,11 +436,11 @@ export const withToogleReviewHelpful = Component =>
             variables: { reviewId, userId }
           });
 
-          message.destroy();
-          message.success(addOrRemoveReviewHelpful);
+          Message.destroy();
+          Message.success(addOrRemoveReviewHelpful);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }

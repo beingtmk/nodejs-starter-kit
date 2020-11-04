@@ -1,5 +1,6 @@
 import React from 'react';
-import { Row, Col, Rate, Progress } from 'antd';
+import { Row, Col, Rate, Progress } from '@gqlapp/look-client-react';
+
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 

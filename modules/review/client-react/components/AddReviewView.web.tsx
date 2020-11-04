@@ -1,8 +1,6 @@
 import React from 'react';
-import { Card } from 'antd';
-
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { PageLayout, MetaTags, Heading, Row } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Heading, Row, Card } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ReviewFormComponent from './ReviewFormComponent';
