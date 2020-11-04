@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Modal, Button } from 'antd';
 import { withFormik } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { Form, Icon, RenderField } from '@gqlapp/look-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';
 
 const OrderStatusMailView = props => {
-  const [visible, setVisible] = useState(false);
   const { values, handleSubmit } = props;
-
   return (
     <>
-      <Button type="primary" shape="circle" size="sm" onClick={() => setVisible(true)}>
+      {/* <Button type="primary" shape="circle" size="sm" onClick={() => setVisible(true)}>
         <Icon type="MailOutlined" />
       </Button>
       <Modal
@@ -34,7 +32,30 @@ const OrderStatusMailView = props => {
             value={values.note}
           />
         </Form>
-      </Modal>
+      </Modal> */}
+      <ModalDrawer
+        buttonText={
+          <>
+            <Icon type="MailOutlined" />
+          </>
+        }
+        shape="circle"
+        size="sm"
+        modalTitle={`Mail details for order id: ${displayDataCheck(props.orderId)}`}
+        height="auto"
+        style={{ width: '0px' }}
+      >
+        <Form onSubmit={handleSubmit}>
+          <Field
+            name="note"
+            component={RenderField}
+            placeholder="Note"
+            type="textarea"
+            label="Extra note"
+            value={values.note}
+          />
+        </Form>
+      </ModalDrawer>
     </>
   );
 };

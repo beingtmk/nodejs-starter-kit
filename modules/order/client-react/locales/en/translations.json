@@ -14,7 +14,7 @@
       }
     }
   },
-  "noOrdersMsg":"No orders",
+  "noOrdersMsg":"There are no orders yet.",
   "orders":{
     "subTitle":"Orders",
     "orderId":"Order Id: ",
@@ -23,6 +23,16 @@
     "item":{
       "search":"Search",
       "sortBy":"Sort By"
+    },
+    "btn":{
+      "more":"Load more..."
+    },
+    "column":{
+      "orderId":"Order Id ",
+      "consumer":"Consumer",
+      "state":"State",
+      "createdAt":"Created at - (en-IN) ",
+      "actions":"actions"
     }
   },
   "myOrders":" My Orders",

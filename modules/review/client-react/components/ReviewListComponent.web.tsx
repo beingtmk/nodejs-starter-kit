@@ -19,9 +19,9 @@ const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
     <br />
     <br />
     <br />
-    <Empty description={t('listing.noListingsMsg')}>
+    <Empty description={t('adminPanel.noReviewsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">{t('listing.noListingsMsg')}</Button>
+        <Button type="primary">{t('adminPanel.noReviewsMsg')}</Button>
       </Link>
     </Empty>
   </div>
@@ -150,7 +150,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
           hasNextPage={reviews.pageInfo.hasNextPage}
           pagination={type}
           total={reviews.totalCount}
-          loadMoreText={t('list.btn.more')}
+          loadMoreText={t('adminPanel.btn.more')}
           defaultPageSize={itemsNumber}
         />
       </div>
@@ -159,7 +159,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   );
 
   return (
-    <div>
+    <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} />}
       {/* Render main review content */}

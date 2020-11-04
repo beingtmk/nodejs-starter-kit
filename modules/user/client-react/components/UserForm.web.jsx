@@ -129,25 +129,23 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       <Row type="flex" gutter={[24, 24]}>
         <Col lg={12} md={12} xs={24}>
           <ModalDrawer buttonText="Reset password" modalTitle="Reset Password" height="auto" ghost={true}>
-            <div>
-              <Field
-                name="password"
-                component={RenderField}
-                type="password"
-                label={t('userEdit.form.field.pass')}
-                value={password}
-              />
-              <Field
-                name="passwordConfirmation"
-                component={RenderField}
-                type="password"
-                label={t('userEdit.form.field.passConf')}
-                value={passwordConfirmation}
-              />
-              <SubmitButton type="submit" disabled={load} onClick={() => handleSubmit(values)}>
-                {t('userEdit.form.btnSubmit')}
-              </SubmitButton>
-            </div>
+            <Field
+              name="password"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.pass')}
+              value={password}
+            />
+            <Field
+              name="passwordConfirmation"
+              component={RenderField}
+              type="password"
+              label={t('userEdit.form.field.passConf')}
+              value={passwordConfirmation}
+            />
+            <SubmitButton type="submit" disabled={load} onClick={() => handleSubmit(values)}>
+              {t('userEdit.form.btnSubmit')}
+            </SubmitButton>
           </ModalDrawer>
         </Col>
         <Col lg={12} md={12} xs={24}>

@@ -292,12 +292,12 @@ const ListingListComponent = props => {
   );
 
   return (
-    <>
+    <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}
       {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
-    </>
+    </div>
   );
 };
 

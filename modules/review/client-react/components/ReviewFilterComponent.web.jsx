@@ -17,9 +17,9 @@ const ReviewsFilterView = ({
     <Row type="flex" align="middle">
       <Col span={24}>
         <Row>
-          <Col lg={16} xs={24} md={14}>
+          <Col lg={16} xs={24} sm={24} md={14}>
             <Row gutter={24}>
-              <Col>
+              <Col xs={24} md={24} sm={14} lg={16}>
                 <FormItem label={t('adminPanel.filter.field1')} style={{ width: '100%' }}>
                   <DebounceInput
                     minLength={2}
@@ -31,7 +31,7 @@ const ReviewsFilterView = ({
                   />
                 </FormItem>
               </Col>
-              <Col>
+              <Col xs={24} md={24} sm={10} lg={8}>
                 <FormItem>
                   <Label>
                     <Input type="checkbox" defaultChecked={isActive} onChange={() => onIsActiveChange(!isActive)} />
@@ -42,7 +42,7 @@ const ReviewsFilterView = ({
               </Col>
             </Row>
           </Col>
-          <Col lg={8} xs={24} md={10}>
+          <Col lg={8} xs={24} sm={24} md={10}>
             <Row>
               <Col lg={0} md={0} xs={24}>
                 <FormItem label={t('adminPanel.filter.field2')} style={{ width: '100%' }}>

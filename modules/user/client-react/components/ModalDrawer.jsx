@@ -27,14 +27,14 @@ const ModalDrawer = props => {
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
   return (
-    <Row type="flex" gutter={[24, 24]}>
+    <Row>
       <Col lg={24} md={24} sm={24} xs={0}>
         <Button
           ghost={ghost}
           type={type}
           shape={shape}
           size={size}
-          {...style}
+          style={style}
           block
           onClick={() => setVisibleModal(true)}
         >
@@ -78,7 +78,6 @@ const ModalDrawer = props => {
             <br />
             <br />
             <br />
-            {/* {React.cloneElement(children, { hideModal: () => setVisibleDrawer(false), showModal: false })} */}
             {children}
           </Drawer>
         </div>
