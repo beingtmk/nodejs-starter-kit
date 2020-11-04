@@ -6,6 +6,7 @@ import MODAL_DISCOUNT_QUERY from '../graphql/ModalDiscountQuery.graphql';
 
 // Mutation
 import ADD_DISCOUNT from '../graphql/AddDiscount.graphql';
+import EDIT_DISCOUNT from '../graphql/EditDiscount.graphql';
 
 export const withModalDiscount = Component =>
   graphql(MODAL_DISCOUNT_QUERY, {
@@ -40,6 +41,25 @@ export const withAddDiscount = Component =>
             }
           });
           return id;
+        } catch (e) {
+          message.destroy();
+          message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withEditDiscount = Component =>
+  graphql(EDIT_DISCOUNT, {
+    props: ({ mutate }) => ({
+      editDiscount: async input => {
+        try {
+          await mutate({
+            variables: {
+              input: input
+            }
+          });
         } catch (e) {
           message.destroy();
           message.error("Couldn't perform the action");

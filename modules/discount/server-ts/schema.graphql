@@ -57,16 +57,29 @@ input FilterDiscountInput {
 
 extend type Mutation {
   addDiscount(input: AddDiscountInput!): Boolean
+  editDiscount(input: EditDiscountInput!): Boolean
 }
 
 input AddDiscountInput {
   modalId: Int
   discountPercent: Int
   modalName: String
-  discountDuration: DiscountDurationInput
+  discountDuration: AddDiscountDurationInput
+}
+input EditDiscountInput {
+  id: Int
+  modalId: Int
+  discountPercent: Int
+  modalName: String
+  discountDuration: EditDiscountDurationInput
 }
 
-input DiscountDurationInput {
+input AddDiscountDurationInput {
+  startDate: String
+  endDate: String
+}
+input EditDiscountDurationInput {
+  id: Int
   startDate: String
   endDate: String
 }

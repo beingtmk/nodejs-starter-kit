@@ -1,0 +1,3 @@
+mutation editDiscount($input: EditDiscountInput!) {
+  editDiscount(input: $input)
+}

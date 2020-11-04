@@ -95,6 +95,7 @@ const ListingFormComponent = props => {
   const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
+  const isDiscount = values.listingFlags.isDiscount || (values.isTimeStamp && true);
   let formItemsVideos = null;
   let formItemsListingHighlight = null;
 
@@ -182,7 +183,7 @@ const ListingFormComponent = props => {
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
 
-  // console.log('props form component', props.values.isTimeStamp);
+  console.log('props', props.modalDiscount);
   return (
     <Card
       title={
@@ -321,7 +322,7 @@ const ListingFormComponent = props => {
                   component={RenderCheckBox}
                   type="checkbox"
                   label={t('listingForm.isDiscount')}
-                  checked={values.listingFlags.isDiscount}
+                  checked={isDiscount}
                 />
               </Col>
             </Col>
@@ -336,7 +337,7 @@ const ListingFormComponent = props => {
                 />
               </Col>
               <Col xs={12} lg={24}>
-                {values.listingFlags.isDiscount && (
+                {isDiscount && (
                   <Field
                     name="listingCostArray[0].discount"
                     component={RenderField}
@@ -345,7 +346,7 @@ const ListingFormComponent = props => {
                     label={t('listingForm.discount')}
                     min={0}
                     max={100}
-                    value={values.listingCostArray[0].discount}
+                    value={values.listingCostArray[0].discount || values.modalDiscount.discountPercent}
                   />
                 )}
               </Col>
@@ -361,7 +362,7 @@ const ListingFormComponent = props => {
                 />
               </Col>
               <Col xs={12} lg={24}>
-                {values.listingFlags.isDiscount && values.listingCostArray[0].discount && (
+                {isDiscount && values.listingCostArray[0].discount && (
                   <Field
                     name="finalPrice"
                     component={RenderField}
@@ -377,7 +378,7 @@ const ListingFormComponent = props => {
               </Col>
             </Col>
             <Col md={8} xs={24} align="left">
-              {values.listingFlags.isDiscount && (
+              {isDiscount && values.discountDuration && (
                 <Field
                   name="isTimeStamp"
                   component={RenderCheckBox}
@@ -501,7 +502,8 @@ ListingFormComponent.propTypes = {
   setStep: PropTypes.func,
   handleSubmit: PropTypes.func,
   values: PropTypes.object,
-  listing: PropTypes.object
+  listing: PropTypes.object,
+  modalDiscount: PropTypes.object
 };
 
 const ListingWithFormik = withFormik({
@@ -525,7 +527,8 @@ const ListingWithFormik = withFormik({
       return {
         id: (listingCost && listingCost.id) || null,
         cost: (listingCost && listingCost.cost) || '',
-        discount: (listingCost && listingCost.discount) || 0,
+        discount:
+          (listingCost && listingCost.discount) || (props.modalDiscount && props.modalDiscount.discountPercent) || 0,
         type: (listingCost && listingCost.type) || '',
         label: (listingCost && listingCost.label) || ''
       };
@@ -569,10 +572,22 @@ const ListingWithFormik = withFormik({
         isNew: true,
         isDiscount: false
       },
-      isTimeStamp: false,
+      discountId: (props.modalDiscount && props.modalDiscount.id) || null,
+      isTimeStamp: props.modalDiscount && props.modalDiscount.discountDuration ? true : false,
       discountDuration: {
-        startDate: null,
-        endDate: null
+        id:
+          (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.id) ||
+          null,
+        startDate:
+          (props.modalDiscount &&
+            props.modalDiscount.discountDuration &&
+            props.modalDiscount.discountDuration.startDate) ||
+          null,
+        endDate:
+          (props.modalDiscount &&
+            props.modalDiscount.discountDuration &&
+            props.modalDiscount.discountDuration.endDate) ||
+          null
       },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
@@ -615,9 +630,11 @@ const ListingWithFormik = withFormik({
         isActive: values.isActive
       };
       const discountInput = {
+        id: values.discountId,
         modalName: MODAL[1].value,
         discountPercent: values.listingCostArray[0].discount,
         discountDuration: {
+          id: values.discountDuration.id,
           startDate: values.discountDuration.startDate,
           endDate: values.discountDuration.endDate
         }

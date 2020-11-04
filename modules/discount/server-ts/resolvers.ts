@@ -10,6 +10,10 @@ interface DiscountInput {
   input: Discounts;
 }
 
+interface DiscountInputWithId {
+  input: Discounts & Identifier;
+}
+
 export default (pubsub: any) => ({
   Query: {
     async discounts(obj: any, { limit, after, orderBy, filter }: any, { Discount, req: { identity } }: any) {
@@ -48,10 +52,35 @@ export default (pubsub: any) => ({
         const id = await context.Discount.addDiscount(input);
         // const discount = await context.Discount.discount(id);
         // // publish for discount list
-        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+        // pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
         //   discountUpdated: {
         //     mutation: 'CREATED',
         //     id,
+        //     node: discount
+        //   }
+        // });
+        return true;
+      } catch (e) {
+        return e;
+      }
+    }),
+    editDiscount: withAuth(async (obj: any, { input }: DiscountInputWithId, context: any) => {
+      try {
+        await context.Discount.editDiscount(input);
+        // const discount = await context.Discount.discount(input.id);
+        // // publish for discount list
+        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+        //   listingsUpdated: {
+        //     mutation: 'UPDATED',
+        //     id: discount.id,
+        //     node: discount
+        //   }
+        // });
+        // // publish for edit discount page
+        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+        //   listingUpdated: {
+        //     mutation: 'UPDATED',
+        //     id: discount.id,
         //     node: discount
         //   }
         // });

@@ -141,6 +141,10 @@ export default class DiscountDAO extends Model {
     const res = camelizeKeys(await returnId(DiscountDAO.query()).insertGraph(decamelizeKeys(params)));
     return res.id;
   }
+  public async editDiscount(params: Discount & Identifier) {
+    const res = await DiscountDAO.query().upsertGraph(decamelizeKeys(params));
+    return res.id;
+  }
 }
 
 // DiscountDuration model.

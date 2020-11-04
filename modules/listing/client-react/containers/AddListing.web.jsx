@@ -23,7 +23,11 @@ const AddListing = props => {
       delete values.listingDetail.id;
       const id = await addListing(values);
       console.log(id, discountValues);
-      id && discountValues && (await addDiscount({ modalId: id, ...discountValues }));
+      if (id && discountValues) {
+        delete discountValues.id;
+        delete discountValues.discountDuration.id;
+        await addDiscount({ modalId: id, ...discountValues });
+      }
       message.destroy();
       message.success('Listing added.');
       history.push(`${ROUTES.adminPanel}`);

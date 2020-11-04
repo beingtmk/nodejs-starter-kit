@@ -9,5 +9,12 @@
     "includingGST":"*Including GST",
     "freeShipping":"*free shipping",
     "certified":"*certified"
+  },
+  "discountForm": {
+    "isTimeStamp": "Is TimeStamp",
+    "discountDuration": {
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    }
   }
 }
