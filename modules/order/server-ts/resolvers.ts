@@ -22,19 +22,19 @@ interface OrderInputWithId {
   input: Orders & Identifier;
 }
 
-const ORDER_SUBSCRIPTION = 'order_subscription';
-const ORDERS_SUBSCRIPTION = 'orders_subscription';
+export const ORDER_SUBSCRIPTION = 'order_subscription';
+export const ORDERS_SUBSCRIPTION = 'orders_subscription';
 
-const {
-  auth: { secret, certificate, password },
-  app
-} = settings;
+const { app } = settings;
 
 export default (pubsub: any) => ({
   Query: {
     order: withAuth((obj: any, { id }: Identifier, { Order }: any) => {
       return Order.order(id);
     }),
+    allOrders(obj: any, { orderBy, filter }: any, { Order }: any) {
+      return Order.orders(orderBy, filter);
+    },
     orders: withAuth(
       async (
         obj: any,

@@ -86,6 +86,66 @@ export default class OrderDAO extends Model {
     return res;
   }
 
+  public async orders(orderBy, filter) {
+    const queryBuilder = OrderDAO.query().eager(eager);
+    // console.log(orderBy, filter);
+    if (orderBy && orderBy.column) {
+      const column = orderBy.column;
+      let order = 'asc';
+      if (orderBy.order) {
+        order = orderBy.order;
+      }
+      queryBuilder.orderBy(decamelize(column), order);
+    } else {
+      queryBuilder.orderBy('id', 'desc');
+    }
+
+    if (filter) {
+      // if (has(filter, 'isActive') && filter.isActive !== '') {
+      //   queryBuilder.where(function () {
+      //     this.where('listing.is_active', filter.isActive);
+      //     // .andWhere('listing_cost.is_active', filter.isActive);
+      //   });
+      // }
+
+      if (has(filter, 'consumerId') && filter.consumerId !== 0) {
+        queryBuilder.where(function() {
+          this.where('consumer.id', filter.consumerId);
+        });
+      }
+
+      if (has(filter, 'vendorId') && filter.vendorId !== 0) {
+        queryBuilder.where(function() {
+          this.where('vendor.id', filter.vendorId);
+        });
+      }
+
+      if (has(filter, 'state') && filter.state !== '') {
+        const state = await OrderState.query().where('state', '=', filter.state);
+        queryBuilder.where(function() {
+          this.where('order.order_state_id', '=', state[0].id);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['consumer.username', `%${filter.searchText}%`]));
+          // this.where('consumer.username', 'ilike', `%${filter.searchText}%`);
+        });
+      }
+    }
+
+    queryBuilder
+      .from('order')
+      .leftJoin('user as consumer', 'consumer.id', 'order.consumer_id')
+      .leftJoin('order_state', 'order_state.id', 'order.order_state_id')
+      .leftJoin('order_detail', 'order_detail.order_id', 'order.id')
+      .leftJoin('user as vendor', 'vendor.id', 'order_detail.vendor_id')
+      .groupBy('order.id', 'consumer.username', 'order_state.state');
+
+    return camelizeKeys(await queryBuilder);
+  }
+
   public async ordersPagination(limit: number, after: number, orderBy: any, filter: any) {
     const orderState = camelizeKeys(await OrderState.query().where('state', '=', ORDER_STATES.STALE))[0];
     const queryBuilder = OrderDAO.query()
@@ -238,18 +298,29 @@ export default class OrderDAO extends Model {
 
   public async editOrderDetail(input: OrderDetail) {
     const orderDetail = camelizeKeys(await OrderDetail.query().findById(input.id));
-    const orderDetailUpdated = camelizeKeys(
-      await OrderDetail.query().upsertGraph(
-        decamelizeKeys({
-          id: orderDetail.id,
-          cost: input.listingCost,
-          orderOptions: {
-            id: input.orderOptions.id,
-            quantity: input.orderOptions.quantity
-          }
-        })
-      )
-    );
+    if (input.orderOptions) {
+      const orderDetailUpdated = camelizeKeys(
+        await OrderDetail.query().upsertGraph(
+          decamelizeKeys({
+            id: orderDetail.id,
+            cost: input.listingCost,
+            orderOptions: {
+              id: input.orderOptions.id,
+              quantity: input.orderOptions.quantity
+            }
+          })
+        )
+      );
+    } else {
+      const orderDetailUpdated = camelizeKeys(
+        await OrderDetail.query().upsertGraph(
+          decamelizeKeys({
+            id: orderDetail.id,
+            cost: input.listingCost
+          })
+        )
+      );
+    }
     // console.log(orderDetail);
     return orderDetail.orderId;
   }

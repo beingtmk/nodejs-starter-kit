@@ -1,5 +1,9 @@
 import { Discount as Discounts, Identifier } from './sql';
 import withAuth from 'graphql-auth';
+import schedule from 'node-schedule';
+
+import { ORDER_STATES } from '@gqlapp/order-common';
+import { ORDER_SUBSCRIPTION, ORDERS_SUBSCRIPTION } from '@gqlapp/order-server-ts/resolvers';
 
 interface Edges {
   cursor: number;
@@ -47,10 +51,10 @@ export default (pubsub: any) => ({
     }
   },
   Mutation: {
-    addDiscount: withAuth(async (obj: any, { input }: DiscountInput, context: any) => {
+    addDiscount: withAuth(async (obj: any, { input }: DiscountInput, { Discount, Order, Listing }: any) => {
       try {
-        const id = await context.Discount.addDiscount(input);
-        // const discount = await context.Discount.discount(id);
+        const res = await Discount.addDiscount(input);
+        // const discount = await Discount.discount(id);
         // // publish for discount list
         // pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
         //   discountUpdated: {
@@ -59,6 +63,46 @@ export default (pubsub: any) => ({
         //     node: discount
         //   }
         // });
+        if (res) {
+          schedule.scheduleJob(res.discountDuration.endDate, async () => {
+            // console.log('job initialed', res.discountDuration.endDate);
+            const filter = { state: ORDER_STATES.STALE };
+            const orders = await Order.orders({}, filter);
+            Promise.all(
+              orders.map(async order => {
+                await Promise.all(
+                  order.orderDetails.map(async ordDtl => {
+                    if (
+                      res.modalName === 'listing' &&
+                      ordDtl.modalName === 'listing' &&
+                      ordDtl.modalId === res.modalId
+                    ) {
+                      const listing = await Listing.listing(ordDtl.modalId);
+                      const cost = listing.listingCostArray[0].cost;
+                      // tslint:disable-next-line:radix
+                      await Order.editOrderDetail({ id: ordDtl.id, listingCost: parseInt(cost.toFixed(2)) });
+                      await Discount.deleteDiscount(res.id);
+                    }
+                  })
+                );
+                const newOrder = await Order.order(order.id);
+                pubsub.publish(ORDERS_SUBSCRIPTION, {
+                  ordersUpdated: {
+                    mutation: 'UPDATED',
+                    node: newOrder
+                  }
+                });
+                pubsub.publish(ORDER_SUBSCRIPTION, {
+                  orderUpdated: {
+                    mutation: 'UPDATED',
+                    id: newOrder.id,
+                    node: newOrder
+                  }
+                });
+              })
+            );
+          });
+        }
         return true;
       } catch (e) {
         return e;
@@ -70,7 +114,7 @@ export default (pubsub: any) => ({
         // const discount = await context.Discount.discount(input.id);
         // // publish for discount list
         // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //   listingsUpdated: {
+        //   discountsUpdated: {
         //     mutation: 'UPDATED',
         //     id: discount.id,
         //     node: discount
@@ -78,7 +122,7 @@ export default (pubsub: any) => ({
         // });
         // // publish for edit discount page
         // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //   listingUpdated: {
+        //   discountUpdated: {
         //     mutation: 'UPDATED',
         //     id: discount.id,
         //     node: discount
@@ -87,6 +131,31 @@ export default (pubsub: any) => ({
         return true;
       } catch (e) {
         return e;
+      }
+    }),
+    deleteDiscount: withAuth(async (obj: any, { id }: Identifier, context: any) => {
+      // const discount = await context.Discount.discount(id);
+      const isDeleted = await context.Discount.deleteDiscount(id);
+      if (isDeleted) {
+        //   // publish for discount list
+        //   pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
+        //     discountsUpdated: {
+        //       mutation: 'DELETED',
+        //       id,
+        //       node: discount
+        //     }
+        //   });
+        //   // publish for edit discount page
+        //   pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+        //     discountUpdated: {
+        //       mutation: 'DELETED',
+        //       id, // import { ONSHELF, ONRENT } from "../common/constants/DiscountStates";
+        //       node: discount
+        //     }
+        // });
+        return true;
+      } else {
+        return false;
       }
     })
   },

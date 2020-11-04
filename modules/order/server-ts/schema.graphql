@@ -67,6 +67,7 @@ type OrderStates {
 
 extend type Query {
   order(id: Int!): Order
+  allOrders(orderBy: OrderByListInput, filter: FilterOrderInput): [Order]
   orders(
     limit: Int!
     after: Int!

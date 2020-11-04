@@ -58,6 +58,7 @@ input FilterDiscountInput {
 extend type Mutation {
   addDiscount(input: AddDiscountInput!): Boolean
   editDiscount(input: EditDiscountInput!): Boolean
+  deleteDiscount(id: Int): Boolean
 }
 
 input AddDiscountInput {
