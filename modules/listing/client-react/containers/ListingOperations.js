@@ -1,6 +1,6 @@
 import { graphql } from 'react-apollo';
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
@@ -232,7 +232,7 @@ export const withListingsDeleting = Component =>
           //   });
           // }
         });
-        message.warning('Listing deleted.');
+        Message.warning('Listing deleted.');
       }
     })
   })(Component);
@@ -241,8 +241,8 @@ export const withAddListing = Component =>
   graphql(ADD_LISTING, {
     props: ({ ownProps: { history }, mutate }) => ({
       addListing: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           await mutate({
             variables: {
@@ -256,12 +256,12 @@ export const withAddListing = Component =>
               }
             }
           });
-          message.destroy();
-          message.success('Listing added.');
+          Message.destroy();
+          Message.success('Listing added.');
           history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -272,9 +272,9 @@ export const withDulicateListing = Component =>
   graphql(DUPLICATE_LISTING, {
     props: ({ mutate }) => ({
       duplicateListing: async id => {
-        message.loading('Please wait...', 0);
+        Message.loading('Please wait...', 0);
         try {
-          message.destroy();
+          Message.destroy();
           const {
             data: { duplicateListing }
           } = await mutate({
@@ -284,10 +284,10 @@ export const withDulicateListing = Component =>
           if (duplicateListing.errors) {
             return { errors: duplicateListing.errors };
           }
-          message.success('Duplicate listing created!');
+          Message.success('Duplicate listing created!');
           return duplicateListing;
         } catch (e) {
-          message.error("Couldn't perform the action");
+          Message.error("Couldn't perform the action");
           throw Error(e);
         }
       }
@@ -306,16 +306,16 @@ export const withEditListing = Component =>
     }) => ({
       editListing: async input => {
         try {
-          message.destroy();
-          message.loading('Please wait...', 0);
+          Message.destroy();
+          Message.loading('Please wait...', 0);
           // console.log('input', input);
           await mutate({
             variables: {
               input: input
             }
           });
-          message.destroy();
-          message.success('Changes Saved.');
+          Message.destroy();
+          Message.success('Changes Saved.');
           if (history) {
             if (role === 'admin') return history.push(`${ROUTES.adminPanel}`);
             else return history.push(`${ROUTES.myListing}`);
@@ -325,8 +325,8 @@ export const withEditListing = Component =>
             else return navigation.navigate('MyListings');
           }
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -337,8 +337,8 @@ export const withToogleListingBookmark = Component =>
   graphql(TOOGLE_LISTING_BOOKMARK, {
     props: ({ mutate }) => ({
       addOrRemoveListingBookmark: async (listingId, userId) => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           const {
             data: { addOrRemoveListingBookmark }
@@ -346,11 +346,11 @@ export const withToogleListingBookmark = Component =>
             variables: { listingId, userId }
           });
 
-          message.destroy();
-          message.success(addOrRemoveListingBookmark);
+          Message.destroy();
+          Message.success(addOrRemoveListingBookmark);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
@@ -54,17 +54,17 @@ const ListingDetail = props => {
     try {
       await shareListingByEmail(values);
     } catch (e) {
-      message.destroy();
-      message.error('Message sending failed');
+      Message.destroy();
+      Message.error('Message sending failed');
       throw new Error('Message sending failed', e);
     }
-    message.destroy();
-    message.success('Email sent!');
+    Message.destroy();
+    Message.success('Email sent!');
   };
   const handleDelete = id => {
     try {
       deleteOrderDetail(id);
-      message.error('Removed from Cart.');
+      Message.error('Removed from Cart.');
     } catch (e) {
       throw Error(e);
     }

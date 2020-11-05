@@ -21,7 +21,7 @@ const OrderStatusMailView = props => {
         size="sm"
         modalTitle={`Mail details for order id: ${displayDataCheck(props.orderId)}`}
         height="auto"
-        style={{ width: '0px' }}
+        block={false}
       >
         <Form onSubmit={handleSubmit}>
           <Field

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, Skeleton } from 'antd';
-import { Row, Col } from '@gqlapp/look-client-react';
+import { Row, Col, Card, Skeleton } from '@gqlapp/look-client-react';
 
 const RelatedCardSkeleton = () => {
   return (

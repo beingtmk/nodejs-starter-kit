@@ -9,8 +9,6 @@ import { Row, Col, Card } from '@gqlapp/look-client-react';
 import { TotalPrice } from './CheckoutCartView';
 import ROUTES from '../routes';
 
-// const { Meta } = Card;
-
 const Price = styled(Row)`
   height: 100%;
   color: white;

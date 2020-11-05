@@ -13,8 +13,6 @@ import {
   Pagination,
   ViewIcon,
   DeleteIcon,
-  Col,
-  Row,
   Empty
 } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
@@ -142,31 +140,31 @@ const OrderListComponent = props => {
       title: t('orders.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <div align="center">
-          <Row type="flex">
-            <Col>
-              {record.orderState.state !== ORDER_STATES.STALE && (
-                <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
-                  <ViewIcon />
-                </Link>
-              )}
+        <div align="center" style={{ display: 'flex', justifyContent: 'center' }}>
+          {/* <Row type="flex"> */}
+          {/* <Col> */}
+          {record.orderState.state !== ORDER_STATES.STALE && (
+            <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
+              <ViewIcon />
+            </Link>
+          )}
+          <Divider type="vertical" />
+          {/* </Col> */}
+          {record.orderState.state === ORDER_STATES.DISPATCHED && (
+            <>
+              {/* <Col> */}
+              <OrderStatusMail orderId={record.id} />
+              {/* <Divider type="vertical" /> */}
+              {/* </Col> */}
+              {/* <Col> */}
               <Divider type="vertical" />
-            </Col>
-            {record.orderState.state === ORDER_STATES.DISPATCHED && (
-              <>
-                <Col>
-                  <OrderStatusMail orderId={record.id} />
-                  {/* <Divider type="vertical" /> */}
-                </Col>
-                <Col>
-                  <Divider type="vertical" />
-                </Col>
-              </>
-            )}
-            <Col>
-              <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
-            </Col>
-          </Row>
+              {/* </Col> */}
+            </>
+          )}
+          {/* <Col> */}
+          <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
+          {/* </Col> */}
+          {/* </Row> */}
         </div>
       )
     }

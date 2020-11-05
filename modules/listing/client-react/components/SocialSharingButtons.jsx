@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Col, message, Card } from 'antd';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 
-import { Icon, Form, RenderField, Alert, ModalDrawer } from '@gqlapp/look-client-react';
+import { Icon, Form, RenderField, Alert, Card, ModalDrawer, Col, Message, Button } from '@gqlapp/look-client-react';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
@@ -26,7 +25,7 @@ const SocialSharingButtons = props => {
   const sharingMenu = (
     <Card bodyStyle={{ padding: '5px' }}>
       <a href={`http://www.facebook.com/share.php?u=${link}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170780/ypoeagxzxrcwfnhxydir.svg'}
             height="30"
@@ -40,7 +39,7 @@ const SocialSharingButtons = props => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170934/lfibgc3woiwkbeubo6w5.svg'}
             height="30"
@@ -54,7 +53,7 @@ const SocialSharingButtons = props => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170822/ieq0oplvvympjnwqdhvm.svg'}
             height="30"
@@ -64,7 +63,7 @@ const SocialSharingButtons = props => {
         </Button>
       </a>
       <a href={`https://web.whatsapp.com/send?text=${whatsappMessage}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171220/gtd0x3gg3vcmirxdwr19.jpg'}
             height="30"
@@ -74,7 +73,7 @@ const SocialSharingButtons = props => {
         </Button>
       </a>
       <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${link}`} target="_blank" rel="noopener noreferrer">
-        <Button shape="circle" type="link" ghost size="large" style={{ fontSize: '22px' }}>
+        <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
           <Img
             src={'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170837/q0hfnknlfdrsnlfq6chx.svg'}
             height="30"
@@ -127,7 +126,7 @@ const SocialSharingButtons = props => {
               <Card>{whatsappMessage}</Card>
               <br />
               <div align="right">
-                <Button disabled={submitting} type="primary" onClick={() => handleSubmit(values)}>
+                <Button disabled={submitting} color="primary" onClick={() => handleSubmit(values)}>
                   {t('socialSharingButton.btn.share')}
                 </Button>
               </div>
@@ -140,7 +139,10 @@ const SocialSharingButtons = props => {
   );
   return (
     <Col span={24} style={{ height: '50px' }}>
-      <DropDown content={<Button shape="circle" type="primary" ghost icon={<Icon type="ShareAltOutlined" />} />} noicon>
+      <DropDown
+        content={<Button shape="circle" color="primary" ghost icon={<Icon type="ShareAltOutlined" />} />}
+        noicon
+      >
         {sharingMenu}
       </DropDown>
     </Col>
@@ -168,18 +170,18 @@ const SocialSharingButtonsWithFormik = withFormik({
   validate: values => validate(values, SocialSharingButtonsSchema),
   async handleSubmit(values, { props: { onShare, emailMessage } }) {
     if (!values.inviteVal.number && !values.inviteVal.email) {
-      message.warn('No One to Share with!');
+      Message.warn('No One to Share with!');
     }
 
     if (values.inviteVal.number) {
       let x = values.inviteVal.number.toString();
-      x.length >= 10 ? message.warn('Function not defined yet!') : message.warn('Enter a valid Phone Number');
+      x.length >= 10 ? Message.warn('Function not defined yet!') : Message.warn('Enter a valid Phone Number');
     }
 
     if (values.inviteVal.email) {
       // delete values["inviteVal"];
-      onShare({ email: values.inviteVal.email, message: emailMessage });
-      message.warn('Sending email!');
+      onShare({ email: values.inviteVal.email, Message: emailMessage });
+      Message.warn('Sending email!');
     }
     console.log(values);
   },
