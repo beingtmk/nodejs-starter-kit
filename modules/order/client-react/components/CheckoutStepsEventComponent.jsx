@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
-import { Card, Rate, Avatar, Divider, Tooltip } from 'antd';
-import { Row, Col } from '@gqlapp/look-client-react';
+import { Row, Col, Card, Rate, Avatar, Divider, Tooltip } from '@gqlapp/look-client-react';
 
 const OrderCard = styled(Card)`
   margin: 0px 0px 15px 0px !important;

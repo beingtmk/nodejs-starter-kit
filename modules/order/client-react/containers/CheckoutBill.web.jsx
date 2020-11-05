@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 
 import { compose, removeTypename } from '@gqlapp/core-common';
@@ -36,7 +36,7 @@ const CheckoutBill = props => {
       if (history && addressMutation) {
         return history.push(`${ROUTES.checkoutOrderLink}${props.getCart.id}`);
       } else {
-        message.error('Try again!!');
+        Message.error('Try again!!');
       }
     } catch (e) {
       throw Error(e);
@@ -102,8 +102,8 @@ export default compose(
   graphql(ADD_OR_EDIT_ADDRESS, {
     props: ({ mutate, ownProps: { currentUser } }) => ({
       addOrEditAddresses: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           values.userId = currentUser && currentUser.id;
           values.pinCode = Number(values.pinCode);
@@ -122,13 +122,13 @@ export default compose(
               }
             }
           });
-          message.destroy();
+          Message.destroy();
           if (addOrEditAddress) {
-            message.success('Address added!!');
+            Message.success('Address added!!');
           }
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -159,7 +159,7 @@ export default compose(
           //   });
           // }
         });
-        message.error('Address deleted.');
+        Message.error('Address deleted.');
       }
     })
   })

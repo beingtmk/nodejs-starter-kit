@@ -1,11 +1,8 @@
 import React from 'react';
-import { Steps, Card } from 'antd';
 import PropTypes from 'prop-types';
 
 import { ORDER_STATES } from '@gqlapp/order-common';
-import { Icon } from '@gqlapp/look-client-react';
-
-const { Step } = Steps;
+import { Icon, Steps, Card, Step } from '@gqlapp/look-client-react';
 
 const OrderTrackCardComponent = props => {
   const { t, orderStatus } = props;

@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Empty, Divider, Button } from 'antd';
+import { Button } from 'antd';
 
-import { Icon, PageLayout, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, Heading, MetaTags, Row, Col, Divider, Empty } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 // eslint-disable-next-line import/no-named-default

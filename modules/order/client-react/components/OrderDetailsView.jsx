@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageLayout, MetaTags, Row, Col } from '@gqlapp/look-client-react';
-import { Divider, Card } from 'antd';
+import { PageLayout, MetaTags, Row, Col, Card, Divider, Spinner } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';

@@ -1,5 +1,5 @@
 import { graphql } from 'react-apollo';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
@@ -227,8 +227,8 @@ export const withPatchAddress = Component =>
             addressId
           }
         });
-        message.destroy();
-        return patchAddress && message.success('Address updated') && patchAddress;
+        Message.destroy();
+        return patchAddress && Message.success('Address updated') && patchAddress;
       }
     })
   })(Component);
@@ -246,8 +246,8 @@ export const withOrderStatusMail = Component =>
             note
           }
         });
-        message.destroy();
-        return orderStatusMail ? message.success('Mail sent.') : message.error('Please try again.');
+        Message.destroy();
+        return orderStatusMail ? Message.success('Mail sent.') : Message.error('Please try again.');
       }
     })
   })(Component);
