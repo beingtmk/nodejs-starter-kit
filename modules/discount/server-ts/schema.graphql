@@ -85,6 +85,12 @@ input EditDiscountDurationInput {
   endDate: String
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  discountUpdated(id: Int): UpdateDiscountPayload
+}
+
+type UpdateDiscountPayload {
+  mutation: String!
+  id: Int
+  node: Discount
+}

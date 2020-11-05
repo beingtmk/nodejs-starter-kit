@@ -1,9 +1,13 @@
-import { Discount as Discounts, Identifier } from './sql';
 import withAuth from 'graphql-auth';
 import schedule from 'node-schedule';
+import { withFilter } from 'graphql-subscriptions';
 
 import { ORDER_STATES } from '@gqlapp/order-common';
 import { ORDER_SUBSCRIPTION, ORDERS_SUBSCRIPTION } from '@gqlapp/order-server-ts/resolvers';
+
+import { Discount as Discounts, Identifier } from './sql';
+
+export const DISCOUNT_SUBSCRIPTION = 'discount_subscription';
 
 interface Edges {
   cursor: number;
@@ -54,15 +58,6 @@ export default (pubsub: any) => ({
     addDiscount: withAuth(async (obj: any, { input }: DiscountInput, { Discount, Order, Listing }: any) => {
       try {
         const res = await Discount.addDiscount(input);
-        // const discount = await Discount.discount(id);
-        // // publish for discount list
-        // pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
-        //   discountUpdated: {
-        //     mutation: 'CREATED',
-        //     id,
-        //     node: discount
-        //   }
-        // });
         if (res) {
           schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
             // console.log('job initialed', res.discountDuration.endDate);
@@ -111,23 +106,15 @@ export default (pubsub: any) => ({
     editDiscount: withAuth(async (obj: any, { input }: DiscountInputWithId, { Discount, Order, Listing }: any) => {
       try {
         const res = await Discount.editDiscount(input);
-        // const discount = await Discount.discount(input.id);
-        // // publish for discount list
-        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //   discountsUpdated: {
-        //     mutation: 'UPDATED',
-        //     id: discount.id,
-        //     node: discount
-        //   }
-        // });
-        // // publish for edit discount page
-        // pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //   discountUpdated: {scheduler = {};
-        //     mutation: 'UPDATED',
-        //     id: discount.id,
-        //     node: discount
-        //   }
-        // });
+        const discount = await Discount.discount(input.id);
+        // publish for edit discount page
+        pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+          discountUpdated: {
+            mutation: 'UPDATED',
+            id: discount.id,
+            node: discount
+          }
+        });
         if (res) {
           const filter = { state: ORDER_STATES.STALE };
           const orders = await Order.orders({}, filter);
@@ -209,30 +196,30 @@ export default (pubsub: any) => ({
       }
     }),
     deleteDiscount: withAuth(async (obj: any, { id }: Identifier, context: any) => {
-      // const discount = await context.Discount.discount(id);
+      const discount = await context.Discount.discount(id);
       const isDeleted = await context.Discount.deleteDiscount(id);
       if (isDeleted) {
-        //   // publish for discount list
-        //   pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
-        //     discountsUpdated: {
-        //       mutation: 'DELETED',
-        //       id,
-        //       node: discount
-        //     }
-        //   });
-        //   // publish for edit discount page
-        //   pubsub.publish(DISCOUNT_SUBSCRIPTION, {
-        //     discountUpdated: {
-        //       mutation: 'DELETED',
-        //       id, // import { ONSHELF, ONRENT } from "../common/constants/DiscountStates";
-        //       node: discount
-        //     }
-        // });
+        pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+          discountUpdated: {
+            mutation: 'DELETED',
+            id: discount.id,
+            node: discount
+          }
+        });
         return true;
       } else {
         return false;
       }
     })
   },
-  Subscription: {}
+  Subscription: {
+    discountUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(DISCOUNT_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.discountUpdated.id === variables.id;
+        }
+      )
+    }
+  }
 });

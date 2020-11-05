@@ -1,0 +1,11 @@
+#import "./Discount.graphql"
+
+subscription onDiscountUpdated($id: Int) {
+  discountUpdated(id: $id) {
+    mutation
+    id
+    node {
+      ...DiscountInfo
+    }
+  }
+}
