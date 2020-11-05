@@ -16,10 +16,10 @@ import {
   SubmitButton,
   RenderUpload,
   Row,
-  Col
+  Col,
+  ModalDrawer
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import ModalDrawer from './ModalDrawer';
 
 const userFormSchema = {
   username: [required, minLength(3)],

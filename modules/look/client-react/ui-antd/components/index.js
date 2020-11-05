@@ -88,5 +88,6 @@ export { default as RenderMentions } from './RenderMentions';
 export { default as Tree } from './Tree';
 export { default as TreeNode } from './TreeNode';
 export { default as TreeSelect } from './TreeSelect';
+export { default as ModalDrawer } from './ModalDrawer';
 
 export { onAppCreate } from './NavBar';

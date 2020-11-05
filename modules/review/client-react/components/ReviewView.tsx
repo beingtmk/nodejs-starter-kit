@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Checkbox } from 'antd';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-// import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import { MetaTags, Heading, Row, Col, Empty, Button, Spin, SuggestedListComponent } from '@gqlapp/look-client-react';
+import { Heading, Row, Col, Empty, Button, Spin, SuggestedListComponent, ModalDrawer } from '@gqlapp/look-client-react';
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import AvgRatingComponent from './AvgRatingComponent';
-import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';
 import ReviewFormComponent from './ReviewFormComponent';
 interface ReviewViewProps {
   t: TranslateFunction;

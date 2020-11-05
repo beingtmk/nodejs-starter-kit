@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 // To Do Abstract Out
+import { ModalDrawer } from '@gqlapp/look-client-react';
 import VerificationIconComponent from './VerificationIconComponent';
-import ModalDrawer from '../ModalDrawer';
 
 class VerificationModalComponent extends React.Component {
   constructor(props) {

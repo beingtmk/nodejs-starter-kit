@@ -1,9 +1,8 @@
 import React from 'react';
-import { Card } from 'antd';
 import PropTypes from 'prop-types';
 import { FieldArray, withFormik } from 'formik';
 
-import { MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
+import { MetaTags, PageLayout, Row, Col, Card } from '@gqlapp/look-client-react';
 import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 

@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Steps, Col, Row } from 'antd';
 import { PropTypes } from 'prop-types';
 
-import { Heading } from '@gqlapp/look-client-react';
+import { Heading, Col, Row, Step, Steps } from '@gqlapp/look-client-react';
 
 const CheckoutSteps = styled.div`
   text-align: center;
@@ -12,7 +11,7 @@ const CheckoutSteps = styled.div`
   margin-bottom: 19px;
 `;
 
-const Step = Steps.Step;
+// const Step = Steps.Step;
 
 const CheckoutStepsComponent = props => {
   const { t, step } = props;

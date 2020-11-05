@@ -152,14 +152,17 @@ const OrderListComponent = props => {
               )}
               <Divider type="vertical" />
             </Col>
-            <Col>
-              {record.orderState.state === ORDER_STATES.DISPATCHED && (
-                <>
+            {record.orderState.state === ORDER_STATES.DISPATCHED && (
+              <>
+                <Col>
                   <OrderStatusMail orderId={record.id} />
+                  {/* <Divider type="vertical" /> */}
+                </Col>
+                <Col>
                   <Divider type="vertical" />
-                </>
-              )}
-            </Col>
+                </Col>
+              </>
+            )}
             <Col>
               <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
             </Col>

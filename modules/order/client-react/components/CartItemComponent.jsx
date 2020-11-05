@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card } from 'antd';
 import { Link } from 'react-router-dom';
-import { DeleteIcon, Row, Col } from '@gqlapp/look-client-react';
+import { DeleteIcon, Row, Col, Card } from '@gqlapp/look-client-react';
 
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';

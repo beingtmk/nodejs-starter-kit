@@ -1,11 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
-import { Button } from 'antd';
 import * as Yup from 'yup';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Form, RenderField, Row, Col } from '@gqlapp/look-client-react';
+import { Form, RenderField, Row, Col, Button } from '@gqlapp/look-client-react';
 
 import AddToCartFormBtns from './AddToCartFormBtns';
 
@@ -52,12 +51,12 @@ const AddToCartForm = props => {
         <div align="right">
           <Row type="flex">
             <Col lg={24} md={24} xs={0}>
-              <Button type={'primary'} onClick={handleSubmit}>
+              <Button color={'primary'} onClick={handleSubmit}>
                 {t('addToCart.form.btn.save')}
               </Button>
             </Col>
             <Col lg={0} md={0} xs={24}>
-              <Button block type={'primary'} onClick={handleSubmit}>
+              <Button block color={'primary'} onClick={handleSubmit}>
                 {t('addToCart.form.btn.save')}
               </Button>
             </Col>

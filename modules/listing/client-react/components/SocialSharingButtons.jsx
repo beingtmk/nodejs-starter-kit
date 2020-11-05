@@ -4,11 +4,10 @@ import { Button, Col, message, Card } from 'antd';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 
-import { Icon, Form, RenderField, Alert } from '@gqlapp/look-client-react';
+import { Icon, Form, RenderField, Alert, ModalDrawer } from '@gqlapp/look-client-react';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';
 
 const SocialSharingButtonsSchema = {
   inviteVal: [required]

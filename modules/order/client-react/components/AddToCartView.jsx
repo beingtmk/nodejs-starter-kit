@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Card } from 'antd';
+import { Card } from '@gqlapp/look-client-react';
 
 import AddToCartForm from './AddToCartForm';
 
