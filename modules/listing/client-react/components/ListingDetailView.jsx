@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import {
-  Breadcrumb,
-  Divider, // Card,
-  Badge,
-  Descriptions, // Avatar,
-  Carousel, // Tooltip,
-  Tabs
-} from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
+import {
+  MetaTags,
+  PageLayout,
+  Row,
+  Col,
+  Tabs,
+  TabPane,
+  Carousel,
+  Badge,
+  Descriptions,
+  Divider,
+  BreadcrumbItem,
+  Breadcrumb
+} from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
@@ -29,9 +34,8 @@ import BookmarkComponent from './BookmarkComponent';
 import SocialSharingButtons from './SocialSharingButtons';
 import { displayDataCheck } from './functions';
 
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 // const { Meta } = Card;
-const BreadCrumbItem = Breadcrumb.Item;
 
 // const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
@@ -141,12 +145,12 @@ const ListingDetailView = props => {
                   marginBottom: '5px'
                 }}
               >
-                <BreadCrumbItem key="home">
+                <BreadcrumbItem key="home">
                   <NavLink to={`${HOME_ROUTES.home}`}>
                     <Icon type="HomeOutlined" />
                   </NavLink>
-                </BreadCrumbItem>
-                <BreadCrumbItem key="listing-title">{listing && displayDataCheck(listing.title)}</BreadCrumbItem>
+                </BreadcrumbItem>
+                <BreadcrumbItem key="listing-title">{listing && displayDataCheck(listing.title)}</BreadcrumbItem>
               </Breadcrumb>
             </Col>
 

@@ -178,7 +178,7 @@
           "user": "user",
           "admin": "admin"
         },
-        "active": "Is Active",
+        "active": " Is Active",
         "firstName": "First Name",
         "lastName": "Last Name",
         "serial": "Serial",
@@ -214,7 +214,7 @@
           "user": "user",
           "admin": "admin"
         },
-        "active": "Is Active"
+        "active": " Is Active"
       }
     },
     "select": {

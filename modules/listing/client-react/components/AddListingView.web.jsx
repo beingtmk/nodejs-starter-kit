@@ -1,14 +1,11 @@
 import React from 'react';
-import { Steps } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
-import { PageLayout, MetaTags, Col, Row } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Col, Row, Steps, Step } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ListingFormComponent from './ListingFormComponent.web';
-
-const { Step } = Steps;
 
 const AddListingView = ({ t, loading, onSubmit, currentUser }) => {
   const [step, setStep] = React.useState(0);

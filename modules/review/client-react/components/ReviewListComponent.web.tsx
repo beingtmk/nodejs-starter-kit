@@ -1,10 +1,9 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Divider, Empty, Button } from 'antd';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import { EditIcon, Table, Pagination, DeleteIcon } from '@gqlapp/look-client-react';
+import { EditIcon, Table, Pagination, DeleteIcon, Divider, Empty, Button } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 import settings from '@gqlapp/config';
@@ -19,9 +18,9 @@ const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
     <br />
     <br />
     <br />
-    <Empty description={t('listing.noListingsMsg')}>
+    <Empty description={t('adminPanel.noReviewsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">{t('listing.noListingsMsg')}</Button>
+        <Button color="primary">{t('adminPanel.noReviewsMsg')}</Button>
       </Link>
     </Empty>
   </div>
@@ -150,7 +149,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
           hasNextPage={reviews.pageInfo.hasNextPage}
           pagination={type}
           total={reviews.totalCount}
-          loadMoreText={t('list.btn.more')}
+          loadMoreText={t('adminPanel.btn.more')}
           defaultPageSize={itemsNumber}
         />
       </div>
@@ -159,7 +158,7 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   );
 
   return (
-    <div>
+    <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} />}
       {/* Render main review content */}

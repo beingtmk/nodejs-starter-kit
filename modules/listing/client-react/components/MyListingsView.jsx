@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Empty, Button } from 'antd';
 
-import { Icon, Row, Col, PageLayout, Heading, MetaTags } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import {
+  Icon,
+  Row,
+  Col,
+  PageLayout,
+  Heading,
+  MetaTags,
+  Empty,
+  Button,
+  SuggestedListComponent,
+  Spinner
+} from '@gqlapp/look-client-react';
 
 import settings from '@gqlapp/config';
 import ROUTES from '../routes';
@@ -35,7 +43,7 @@ const MyListingsView = props => {
         </Col>
         <Col span={12} align="right">
           <Link to={`${ROUTES.add}`}>
-            <Button type="primary">
+            <Button color="primary">
               <Icon type="PlusOutlined" /> {t('myListings.btn.add')}
             </Button>
           </Link>
@@ -85,7 +93,7 @@ const NoListingsMessage = ({ t }) => (
     <br />
     <Empty description={t('listing.noListingsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">Add</Button>
+        <Button color="primary">Add</Button>
       </Link>
     </Empty>
   </div>

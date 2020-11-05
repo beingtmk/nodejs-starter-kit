@@ -3,10 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, message } from 'antd';
-
+import { Card } from 'antd';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
+import { Message } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
@@ -77,7 +77,7 @@ const RelatedCardComponent = props => {
     }
 
     if ((currentUser && currentUser.id) === (listing && listing.user && listing.user.id)) {
-      return message.error('Listing owned!');
+      return Message.error('Listing owned!');
     }
 
     const input = {
@@ -103,12 +103,12 @@ const RelatedCardComponent = props => {
         history.push(`${ORDER_ROUTES.checkoutCart}`);
       }
     } catch (e) {
-      message.error('Failed!');
+      Message.error('Failed!');
       throw new Error(e);
     }
 
     // Add Message
-    message.success('Success! Complete your Order.');
+    Message.success('Success! Complete your Order.');
   };
   const bookmarkListing = async (id, userId) => {
     try {

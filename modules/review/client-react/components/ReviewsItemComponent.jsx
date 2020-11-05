@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { compose } from '@gqlapp/core-common';
 import { PropTypes } from 'prop-types';
-import { Card, Rate, Menu, Button } from 'antd';
-
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
+import { Menu } from 'antd';
+import { Icon, Row, Col, Card, Rate, Button } from '@gqlapp/look-client-react';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
@@ -77,12 +76,12 @@ const ReviewsItemComponent = props => {
     return (
       <>
         <Menu.Item key="0">
-          <Button style={{ color: 'black' }} type="link" href={`${ROUTES.editLink}/${review.id}`}>
+          <Button style={{ color: 'black' }} color="link" href={`${ROUTES.editLink}/${review.id}`}>
             {t('reviewItem.btn.edit')}
           </Button>
         </Menu.Item>
         <Menu.Item key="1">
-          <Button style={{ color: 'black' }} type="link" onClick={() => deleteReview(review.id)}>
+          <Button style={{ color: 'black' }} color="link" onClick={() => deleteReview(review.id)}>
             {t('reviewItem.btn.delete')}
           </Button>
         </Menu.Item>
@@ -108,7 +107,7 @@ const ReviewsItemComponent = props => {
       )}
       <HelpfulPosition>
         {handleHelpful && (
-          <Button type="link" onClick={foundHelpful} style={{ color: 'black' }}>
+          <Button color="link" onClick={foundHelpful} style={{ color: 'black' }}>
             <strong>
               {!status ? (
                 <>

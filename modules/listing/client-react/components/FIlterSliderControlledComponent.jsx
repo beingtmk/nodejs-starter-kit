@@ -1,5 +1,7 @@
 import React from 'react';
-import { Slider } from 'antd';
+import PropTypes from 'prop-types';
+
+import { Slider } from '@gqlapp/look-client-react';
 
 class SliderControlled extends React.Component {
   constructor(props) {
@@ -10,6 +12,11 @@ class SliderControlled extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidUpdate(prevProps /* prevState */) {
+    if (prevProps !== this.props) {
+      this.setState({ value: this.props.value });
+    }
+  }
   handleChange(e) {
     this.setState({ value: e });
   }
@@ -19,12 +26,6 @@ class SliderControlled extends React.Component {
     setTimeout(function() {
       handleSliderChange(e);
     }, 500);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
-      this.setState({ value: this.props.value });
-    }
   }
 
   render() {
@@ -41,5 +42,8 @@ class SliderControlled extends React.Component {
     );
   }
 }
-
+SliderControlled.propTypes = {
+  handleSliderChange: PropTypes.func,
+  value: PropTypes.object
+};
 export default SliderControlled;

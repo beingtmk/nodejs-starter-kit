@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Card } from 'antd';
 
-import { PageLayout, MetaTags, Heading } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { PageLayout, MetaTags, Heading, Row, Card, Spinner } from '@gqlapp/look-client-react';
 
 import ReviewFormComponent from './ReviewFormComponent';
 
@@ -12,9 +10,6 @@ const EditReviewView = props => {
   return (
     <PageLayout type="forms">
       <MetaTags title={t('title')} description={t('meta')} />
-
-      <br />
-      <br />
       <br />
       <br />
       <br />

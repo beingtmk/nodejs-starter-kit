@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Button, Empty, Divider } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, MetaTags, PageLayout, Heading } from '@gqlapp/look-client-react';
+import { Icon, MetaTags, PageLayout, Heading, Empty, Divider, Button } from '@gqlapp/look-client-react';
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import settings from '@gqlapp/config';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
@@ -98,7 +97,7 @@ const NoListingsMessage = ({ t, emptyLink }) => (
     <br />
     <Empty description={t('listing.noListingsMsg')}>
       <Link to={`${emptyLink}`}>
-        <Button type="primary">Add</Button>
+        <Button color="primary">Add</Button>
       </Link>
     </Empty>
   </div>

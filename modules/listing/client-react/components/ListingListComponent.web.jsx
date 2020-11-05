@@ -2,10 +2,21 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Empty, Divider, Tooltip, Button } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, Select, Option, Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import {
+  Icon,
+  Select,
+  Option,
+  Table,
+  Pagination,
+  EditIcon,
+  DeleteIcon,
+  Empty,
+  Divider,
+  Tooltip,
+  Button
+} from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
 
@@ -21,7 +32,7 @@ const NoListingsMessage = ({ t }) => (
     <br />
     <Empty description={t('listing.noListingsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">Add</Button>
+        <Button color="primary">Add</Button>
       </Link>
     </Empty>
   </div>
@@ -251,7 +262,7 @@ const ListingListComponent = props => {
           </Link>
           <Divider type="vertical" />
           <Tooltip title="Duplicate Listing">
-            <Button type="primary" shape="circle" size="sm" onClick={() => onDuplicate(record.id)}>
+            <Button color="primary" shape="circle" onClick={() => onDuplicate(record.id)}>
               <Icon type="CopyOutlined" />
             </Button>
           </Tooltip>
@@ -292,12 +303,12 @@ const ListingListComponent = props => {
   );
 
   return (
-    <>
+    <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}
       {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
-    </>
+    </div>
   );
 };
 

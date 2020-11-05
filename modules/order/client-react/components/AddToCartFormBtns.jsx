@@ -1,9 +1,8 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Button, Tooltip } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, Button, Tooltip } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 
@@ -33,11 +32,11 @@ const AddToCartFormBtns = props => {
         <Row type="flex" gutter={24}>
           <Col {...customGridLG}>
             <Button
-              size="large"
+              size="lg"
               block
               onClick={onSubmit}
               disabled={loading || disabled}
-              type="primary"
+              color="primary"
               ghost
               loading={loading}
             >
@@ -47,9 +46,9 @@ const AddToCartFormBtns = props => {
           </Col>
           <Col {...customGridLG}>
             <Button
-              type="primary"
+              color="primary"
               block
-              size="large"
+              size="lg"
               onClick={onSubmitRedirect}
               disabled={loading || disabled}
               loading={loading}
@@ -61,17 +60,17 @@ const AddToCartFormBtns = props => {
           <Col {...customGridXS}>
             <Button
               block
-              size="large"
+              size="lg"
               onClick={onSubmit}
               disabled={loading || disabled}
-              type="primary"
+              color="primary"
               ghost
               loading={loading}
             >
               <Icon type="ShoppingOutlined" />
               {t('addToCart.form.btn.add')}
             </Button>
-            <Button block type="primary" size="large" onClick={onSubmitRedirect} disabled={disabled}>
+            <Button block color="primary" size="lg" onClick={onSubmitRedirect} disabled={disabled}>
               <Icon type="ShoppingCartOutlined" />
               {t('addToCart.form.btn.book')}
             </Button>
@@ -81,7 +80,7 @@ const AddToCartFormBtns = props => {
         <Row type="flex" gutter={24}>
           {onDelete && (
             <Col {...customGridLG}>
-              <Button size="large" onClick={onDelete} block disabled={disabled} type="danger" ghost>
+              <Button size="lg" onClick={onDelete} block disabled={disabled} type="danger" ghost>
                 <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
@@ -89,7 +88,7 @@ const AddToCartFormBtns = props => {
           )}
           <Col {...customGridLG}>
             <a href={`${ROUTES.checkoutCart}`}>
-              <Button type="primary" size="large" block disabled={disabled}>
+              <Button color="primary" size="lg" block disabled={disabled}>
                 {t('addToCart.form.btn.go')}
                 <Icon type="ShoppingCartOutlined" />
               </Button>
@@ -97,13 +96,13 @@ const AddToCartFormBtns = props => {
           </Col>
           <Col {...customGridXS}>
             {onDelete && (
-              <Button block size="large" onClick={onDelete} disabled={disabled} type="danger" ghost>
+              <Button block size="lg" onClick={onDelete} disabled={disabled} type="danger" ghost>
                 <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
             )}
             <a href={`${ROUTES.checkoutCart}`}>
-              <Button block type="primary" size="large" disabled={disabled}>
+              <Button block color="primary" size="lg" disabled={disabled}>
                 {t('addToCart.form.btn.go')}
                 <Icon type="ShoppingCartOutlined" />
               </Button>

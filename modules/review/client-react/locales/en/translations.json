@@ -14,7 +14,8 @@
     "btn": {
       "add": "Add review",
       "del": "Delete",
-      "more": "Load more ..."
+      "more": "Load more ...",
+      "noReviewsMsg":"There are no Reviews yet."
     },
     "filter": {
       "field1": "UserName",

@@ -26,17 +26,18 @@ const DynamicCarouselView = props => {
       />
 
       <Row>
-        <Col span={12}>
+        <Col lg={21} md={20} xs={24}>
           <Heading type="2">
             <Title>{t('dynamicCarousel.heading')}</Title>
           </Heading>
         </Col>
-        <Col span={12}>
-          <Row type="flex" justify="end">
-            <Link to={ROUTES.add}>
-              <AddButton>{t('dynamicCarousel.btn.add')}</AddButton>
-            </Link>
-          </Row>
+        <Col lg={0} md={0} xs={24}>
+          <br />
+        </Col>
+        <Col lg={3} md={4} xs={24} align="right">
+          <Link to={ROUTES.add}>
+            <AddButton>{t('dynamicCarousel.btn.add')}</AddButton>
+          </Link>
         </Col>
       </Row>
       <hr />

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Empty, Button, Checkbox, Spin } from 'antd';
-
+import { Checkbox } from 'antd';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import { MetaTags, Heading, Row, Col } from '@gqlapp/look-client-react';
+import { Heading, Row, Col, Empty, Button, Spin, SuggestedListComponent, ModalDrawer } from '@gqlapp/look-client-react';
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import AvgRatingComponent from './AvgRatingComponent';
-import ModalDrawer from '@gqlapp/user-client-react/components/ModalDrawer';
 import ReviewFormComponent from './ReviewFormComponent';
 interface ReviewViewProps {
   t: TranslateFunction;
@@ -43,7 +40,7 @@ export const NoReviews: React.FC = ({ t }: { t: TranslateFunction }) => (
     <br />
     <Empty description={'No Review'}>
       <Link to={`${LISTING_ROUTES.add}`}>
-        <Button type="primary">{'Review listings'}</Button>
+        <Button color="primary">{'Review listings'}</Button>
       </Link>
     </Empty>
   </div>
@@ -94,7 +91,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
   const { modalName, modalId } = filter;
   return (
     <>
-      <MetaTags title={t('title')} description={t('meta')} />
+      {/* <MetaTags title={t('title')} description={t('meta')} /> */}
       <Row type="flex" align="middle">
         <Col lg={17} md={17} sm={15} xs={14}>
           <Heading type="1"> {t('review.heading')}</Heading>

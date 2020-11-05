@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Row, Col, Rate, Button } from 'antd';
 import { withFormik, FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
@@ -13,7 +12,11 @@ import {
   Select,
   Option,
   FormItem,
-  SubmitButton
+  SubmitButton,
+  Row,
+  Col,
+  Rate,
+  Button
 } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
@@ -138,6 +141,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
       <FormItem label={t('reviewForm.rate')}>
         <Rating
           // allowHalf
+          // tslint:disable-next-line:radix
           defaultValue={parseInt(values.rating)}
           onChange={e => setFieldValue('rating', String(e))}
         />
@@ -158,7 +162,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
             </Col>
             <Col span={6} align="right">
               <FormItem>
-                <Button type="primary" onClick={add}>
+                <Button color="primary" onClick={add}>
                   <Icon type="VideoCameraOutlined" />
                   {t('reviewForm.btn.add')}
                 </Button>
@@ -212,8 +216,12 @@ const ReviewWithFormik = withFormik({
         type: (reviewImg && reviewImg.type) || '',
         isActive: (reviewImg && reviewImg.isActive) || true
       };
-      obj.type === 'image' && reviewMedia.image.push(obj);
-      obj.type === 'video' && reviewMedia.image.push(obj);
+      if (obj.type === 'image') {
+        reviewMedia.image.push(obj);
+      }
+      if (obj.type === 'video') {
+        reviewMedia.image.push(obj);
+      }
     }
     return {
       id: (props.review && props.review.id) || null,
@@ -254,7 +262,9 @@ const ReviewWithFormik = withFormik({
     }
     // console.log(input);
     onSubmit(input);
-    hideModal && hideModal();
+    if (hideModal) {
+      hideModal();
+    }
   },
   validate: values => validate(values, ReviewFormSchema),
   displayName: 'Review Form' // helps with React DevTools

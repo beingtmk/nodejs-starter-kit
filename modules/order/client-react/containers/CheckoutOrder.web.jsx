@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { ORDER_STATES } from '@gqlapp/order-common';
@@ -83,21 +83,21 @@ const CheckoutOrder = props => {
     // console.log('paymmmmmmm', finalObj);
 
     try {
-      message.destroy();
-      message.warning('Processing.');
+      Message.destroy();
+      Message.warning('Processing.');
       const output = await patchOrderState(getCart.id, ORDER_STATES.INITIATED);
       // console.log(output);
       if (output) {
-        message.destroy();
-        message.success(`State change to ${ORDER_STATES.INITIATED}`);
+        Message.destroy();
+        Message.success(`State change to ${ORDER_STATES.INITIATED}`);
         if (history) {
           return history.push(`${ROUTES.myOrder}`);
         }
       }
     } catch (e) {
-      message.destroy();
-      e.message.replace('GraphQL error:', '');
-      message.error(e.message.replace('GraphQL error:', ''));
+      Message.destroy();
+      e.Message.replace('GraphQL error:', '');
+      Message.error(e.Message.replace('GraphQL error:', ''));
       throw new Error(e);
     }
   }

@@ -1,11 +1,20 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Button, Divider, Select, Option, Table, Pagination, ViewIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import {
+  Button,
+  Divider,
+  Select,
+  Option,
+  Table,
+  Pagination,
+  ViewIcon,
+  DeleteIcon,
+  Empty
+} from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
@@ -23,9 +32,9 @@ const NoOrdersMessage = ({ t }) => (
     <br />
     <br />
     <br />
-    <Empty description={t('listing.noListingsMsg')}>
+    <Empty description={t('noOrdersMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button color="primary">{t('order.noOrdersMsg')}</Button>
+        <Button color="primary">{t('noOrdersMsg')}</Button>
       </Link>
     </Empty>
   </div>
@@ -66,7 +75,8 @@ const OrderListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'id')} href="#">
-          Order id {renderOrderByArrow('id')}
+          {t('orders.column.orderId')}
+          {renderOrderByArrow('id')}
         </a>
       ),
       dataIndex: 'id',
@@ -76,7 +86,7 @@ const OrderListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'consumer.username')} href="#">
-          Consumer {renderOrderByArrow('consumer.username')}
+          {t('orders.column.consumer')} {renderOrderByArrow('consumer.username')}
         </a>
       ),
       dataIndex: 'consumer',
@@ -94,7 +104,7 @@ const OrderListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'order_state.state')} href="#">
-          {t('State')} {renderOrderByArrow('order_state.state')}
+          {t('orders.column.state')} {renderOrderByArrow('order_state.state')}
         </a>
       ),
       dataIndex: 'state',
@@ -118,7 +128,8 @@ const OrderListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'createdAt')} href="#">
-          Created at - (en-IN) {renderOrderByArrow('createdAt')}
+          {t('orders.column.createdAt')}
+          {renderOrderByArrow('createdAt')}
         </a>
       ),
       dataIndex: 'createdAt',
@@ -126,23 +137,34 @@ const OrderListComponent = props => {
       render: (text, record) => <>{displayDateCheck(record.createdAt)}</>
     },
     {
-      title: t('order.column.actions'),
+      title: t('orders.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <div align="center">
+        <div align="center" style={{ display: 'flex', justifyContent: 'center' }}>
+          {/* <Row type="flex"> */}
+          {/* <Col> */}
           {record.orderState.state !== ORDER_STATES.STALE && (
             <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
               <ViewIcon />
             </Link>
           )}
           <Divider type="vertical" />
+          {/* </Col> */}
           {record.orderState.state === ORDER_STATES.DISPATCHED && (
             <>
+              {/* <Col> */}
               <OrderStatusMail orderId={record.id} />
+              {/* <Divider type="vertical" /> */}
+              {/* </Col> */}
+              {/* <Col> */}
               <Divider type="vertical" />
+              {/* </Col> */}
             </>
           )}
+          {/* <Col> */}
           <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
+          {/* </Col> */}
+          {/* </Row> */}
         </div>
       )
     }
@@ -166,7 +188,7 @@ const OrderListComponent = props => {
           hasNextPage={orders.pageInfo.hasNextPage}
           pagination={type}
           total={orders.totalCount}
-          loadMoreText={t('list.btn.more')}
+          loadMoreText={t('orders.btn.more')}
           defaultPageSize={itemsNumber}
         />
       </div>
@@ -174,12 +196,12 @@ const OrderListComponent = props => {
   );
 
   return (
-    <>
+    <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} />}
       {/* Render main order content */}
       {orders && orders.totalCount ? <RenderOrders /> : !loading && <NoOrdersMessage t={t} />}
-    </>
+    </div>
   );
 };
 

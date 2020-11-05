@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -41,7 +41,7 @@ const AddToCart = props => {
     }
 
     if (values.quantity > max || values.quantity <= 0) {
-      message.error('Invalid quantity!');
+      Message.error('Invalid quantity!');
       return null;
     }
     if (values.quantity <= max && values.quantity > 0) {
@@ -68,19 +68,19 @@ const AddToCart = props => {
           history.push(`${ROUTES.checkoutCart}`);
         }
       } catch (e) {
-        message.error('Failed!');
+        Message.error('Failed!');
         throw new Error(e);
       }
 
       // Add Message
-      message.success('Success! Complete your Order.');
+      Message.success('Success! Complete your Order.');
     }
   };
 
   const handleDelete = id => {
     try {
       deleteOrderDetail(id);
-      message.error('Removed from Cart.');
+      Message.error('Removed from Cart.');
     } catch (e) {
       throw Error(e);
     }

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, Card, Avatar, Divider, Popconfirm, message, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
-
+import { Card } from 'antd';
 import { NO_IMG } from '@gqlapp/listing-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, Avatar, Divider, Tooltip, Message, Button, Popconfirm } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 
@@ -41,12 +40,13 @@ const BorderListzero = styled(Button)`
   border: 0 !important;
   padding: 0 !important;
   padding-right: 20px !important;
-  z-index: 9;
+  z-index: 9;import { PropTypes } from 'prop-types';
+
 `;
 
 const ListingItemComponent = props => {
   const cancel = () => {
-    message.error('Click on No');
+    Message.error('Click on No');
   };
 
   const { item, history, loading, deleteProduct, t } = props;

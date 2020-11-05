@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 
 // eslint-disable-next-line import/no-named-default
@@ -45,9 +45,9 @@ function onEditListing(prev, node) {
 }
 
 const onDeleteListing = history => {
-  message.info('This listing has been deleted!');
+  Message.info('This listing has been deleted!');
   if (history) {
-    message.warn('Redirecting to my listings');
+    Message.warn('Redirecting to my listings');
     return history.push(`${ROUTES.myListing}`);
   } else {
     return history.push(`${HOME_ROUTES.home}`);

@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
-import { Badge } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Badge } from '@gqlapp/look-client-react';
 
 import { withCurrentUser, withGetCart } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';

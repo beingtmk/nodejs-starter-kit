@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -33,7 +33,7 @@ const ListingsCatalogue = props => {
   const handleDelete = id => {
     try {
       deleteOrderDetail(id);
-      message.error('Removed from Cart.');
+      Message.error('Removed from Cart.');
     } catch (e) {
       throw Error(e);
     }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 import { Redirect } from 'react-router-dom';
 
@@ -42,8 +42,8 @@ function onEditCart(prev, node) {
 }
 
 const onDeleteCart = history => {
-  message.info('This cart has been deleted!');
-  message.warn('Redirecting to my orders');
+  Message.info('This cart has been deleted!');
+  Message.warn('Redirecting to my orders');
   if (history) {
     return history.push(`${ROUTES.myOrder}`);
   } else {
@@ -85,8 +85,8 @@ function onEditOrder(prev, node) {
 }
 
 const onDeleteOrder = history => {
-  message.info('This cart has been deleted!');
-  message.warn('Redirecting to my orders');
+  Message.info('This cart has been deleted!');
+  Message.warn('Redirecting to my orders');
   if (history) {
     return history.push(`${ROUTES.myOrder}`);
   } else {

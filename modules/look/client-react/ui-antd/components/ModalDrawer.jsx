@@ -22,7 +22,8 @@ const ModalDrawer = props => {
     type = 'primary',
     shape = 'default',
     style,
-    size
+    size,
+    block = true
   } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
@@ -35,7 +36,7 @@ const ModalDrawer = props => {
           shape={shape}
           size={size}
           style={style}
-          block
+          block={block}
           onClick={() => setVisibleModal(true)}
         >
           {buttonText}
@@ -78,6 +79,8 @@ const ModalDrawer = props => {
             <br />
             <br />
             <br />
+            {/* {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })} */}
+
             {children}
           </Drawer>
         </div>
@@ -94,6 +97,7 @@ ModalDrawer.propTypes = {
   type: PropTypes.string,
   shape: PropTypes.string,
   style: PropTypes.object,
-  size: PropTypes.string
+  size: PropTypes.string,
+  block: PropTypes.bool
 };
 export default ModalDrawer;

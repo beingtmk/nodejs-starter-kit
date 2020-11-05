@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
 
 import { compose } from '@gqlapp/core-common';
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Button } from '@gqlapp/look-client-react';
 
 import { withListingBookmarkStatus } from '../containers/ListingOperations';
 
@@ -35,7 +34,7 @@ const BookmarkComponent = props => {
 
   return (
     <BookmarkStyle right={right}>
-      <Button shape="circle" type={'primary'} ghost onClick={handleClick}>
+      <Button shape="circle" color={'primary'} ghost onClick={handleClick}>
         {status && status ? (
           <Icon type="StarFilled" style={{ fontSize: '15px' }} />
         ) : (

@@ -1,16 +1,12 @@
 import React from 'react';
-import { Steps } from 'antd';
 import { PropTypes } from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+import { PageLayout, MetaTags, Spinner, Steps, Step } from '@gqlapp/look-client-react';
+import settings from '@gqlapp/config';
 
 import ListingFormComponent from './ListingFormComponent.web';
-
-const { Step } = Steps;
 
 const EditListingView = props => {
   const { t, listing, loading, onSubmit, currentUser, modalDiscount } = props;

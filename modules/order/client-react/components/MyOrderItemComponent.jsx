@@ -1,16 +1,13 @@
 import React from 'react';
-import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
-import { Row, Col } from '@gqlapp/look-client-react';
+import { Row, Col, Card } from '@gqlapp/look-client-react';
 import { TotalPrice } from './CheckoutCartView';
 import ROUTES from '../routes';
-
-// const { Meta } = Card;
 
 const Price = styled(Row)`
   height: 100%;

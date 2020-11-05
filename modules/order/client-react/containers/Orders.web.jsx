@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
@@ -30,11 +30,11 @@ const Orders = props => {
 
   const handlePatchOrderState = (orderId, state) => {
     try {
-      message.destroy();
-      message.error('Processing.');
+      Message.destroy();
+      Message.error('Processing.');
       patchOrderState(orderId, state);
-      message.destroy();
-      message.success(`State change to ${state}`);
+      Message.destroy();
+      Message.success(`State change to ${state}`);
     } catch (e) {
       throw new Error(e);
     }
@@ -42,11 +42,11 @@ const Orders = props => {
 
   const handleDelete = id => {
     try {
-      message.destroy();
-      message.error('Processing.');
+      Message.destroy();
+      Message.error('Processing.');
       deleteOrder(id);
-      message.destroy();
-      message.error('Order deleted.');
+      Message.destroy();
+      Message.error('Order deleted.');
     } catch (e) {
       throw Error(e);
     }

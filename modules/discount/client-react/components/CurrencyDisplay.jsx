@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Statistic } from 'antd';
+import { Statistic } from '@gqlapp/look-client-react';
 
 const symbols = {
   INR: <>&#8377;</>,
