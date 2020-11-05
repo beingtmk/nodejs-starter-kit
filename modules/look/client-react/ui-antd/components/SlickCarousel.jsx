@@ -92,6 +92,8 @@ export default class Carousel extends React.Component {
                   inCart={cartItemArray.length === 0}
                   onDelete={() => onDelete(cartItemArray[0].id)}
                   {...componentProps}
+                  modalName={'listing'}
+                  modalId={listing.id}
                   componentStyle={this.props.componentStyle}
                   listing={listing}
                   key={key}

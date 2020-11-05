@@ -3,17 +3,18 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Statistic, Card, message } from 'antd';
+import { Card, message } from 'antd';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
-import CurrencyDisplay from '@gqlapp/discount-client-react/components/CurrencyDisplay';
+import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
+import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+
 import { MODAL } from '@gqlapp/review-common';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
@@ -41,7 +42,7 @@ const ListingWraper = styled.div`
 
 const RelatedCardComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
-  const { currentUser, history, addToCart, componentStyle, inCart, loading, onDelete } = props;
+  const { currentUser, history, addToCart, componentStyle, inCart, loading, onDelete, modalDiscount } = props;
 
   let listing = props.listing;
   // console.log(props);
@@ -54,9 +55,15 @@ const RelatedCardComponent = props => {
     listing.listingMedia.filter(lM => lM.type === 'image');
   const listing_img = listing_media && listing_media.length > 0 ? listing_media[0].url : NO_IMG;
   const fixedQuantity = listing && listing.listingOptions && listing.listingOptions.fixedQuantity;
-  const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
+  const isDiscountTimeStamp = modalDiscount && modalDiscount.discountPercent > 0;
+  const discountTimeStamp = modalDiscount && modalDiscount.discountPercent;
+  const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountTimeStamp;
   const discount =
-    listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].discount;
+    (listing &&
+      listing.listingCostArray &&
+      listing.listingCostArray.length > 0 &&
+      listing.listingCostArray[0].discount) ||
+    discountTimeStamp;
   const cost =
     listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
   const max =
@@ -199,40 +206,14 @@ const RelatedCardComponent = props => {
                   </span>
                 }
                 description={
-                  <Row style={{ height: '75px' }}>
-                    <Col span={15}>
-                      {/* <h4>&#8377;{cost} per day</h4> */}
-                      {isDiscount && cost ? (
-                        <>
-                          <CurrencyDisplay
-                            style={{ display: 'inline' }}
-                            input={(cost - cost * (discount / 100)).toFixed(2)}
-                          />
-                          <CurrencyDisplay
-                            input={cost.toFixed(2)}
-                            valueStyle={{
-                              textDecoration: 'line-through',
-                              fontSize: '15px'
-                            }}
-                          />
-                        </>
-                      ) : (
-                        cost && <CurrencyDisplay input={cost.toFixed(2)} />
-                      )}
-                    </Col>
-                    {isDiscount && (
-                      <Col align="right" span={9}>
-                        <Statistic
-                          title=""
-                          precision={2}
-                          valueStyle={{ color: '#cf1322' }}
-                          value={discount && discount.toFixed(2)}
-                          suffix={'%'}
-                          prefix={<Icon type="ArrowDownOutlined" />}
-                        />
-                      </Col>
-                    )}
-                  </Row>
+                  <CurrencyCostDisplay
+                    isDiscount={isDiscount}
+                    cost={cost}
+                    discount={discount}
+                    span={[15, 9]}
+                    card={true}
+                    rowStyle={{ height: '75px' }}
+                  />
                 }
               />
               <br />
@@ -255,9 +236,10 @@ RelatedCardComponent.propTypes = {
   addOrRemoveListingBookmark: PropTypes.func,
   onDelete: PropTypes.func,
   currentUser: PropTypes.object,
+  modalDiscount: PropTypes.object,
   listingBookmarkStatus: PropTypes.bool,
   inCart: PropTypes.bool,
   loading: PropTypes.bool
 };
 
-export default compose(withAddToCart, withToogleListingBookmark)(RelatedCardComponent);
+export default compose(withAddToCart, withToogleListingBookmark, withModalDiscount)(RelatedCardComponent);

@@ -7,20 +7,30 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import CurrencyDisplay from './CurrencyDisplay';
 
-const DiscountComponent = props => {
-  const { loading, t, cost, isDiscount, discount, modalDiscount } = props;
-  const discountDuration = modalDiscount && modalDiscount.discountDuration;
-  return !loading ? (
-    <Row>
-      <Col span={12}>
+export const CurrencyCostDisplay = props => {
+  const { isDiscount, cost, discount, card = false, span = [12, 12], rowStyle } = props;
+  return (
+    <Row style={rowStyle}>
+      <Col span={span[0]}>
         {isDiscount
           ? cost && (
-              <CurrencyDisplay style={{ display: 'inline' }} input={(cost - cost * (discount / 100)).toFixed(2)} />
+              <>
+                <CurrencyDisplay style={{ display: 'inline' }} input={(cost - cost * (discount / 100)).toFixed(2)} />
+                {card && (
+                  <CurrencyDisplay
+                    input={cost.toFixed(2)}
+                    valueStyle={{
+                      textDecoration: 'line-through',
+                      fontSize: '15px'
+                    }}
+                  />
+                )}
+              </>
             )
           : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
       </Col>
       {isDiscount && (
-        <Col span={12}>
+        <Col span={span[1]}>
           <Statistic
             title=""
             precision={2}
@@ -31,6 +41,27 @@ const DiscountComponent = props => {
           />
         </Col>
       )}
+    </Row>
+  );
+};
+
+CurrencyCostDisplay.propTypes = {
+  isDiscount: PropTypes.bool,
+  cost: PropTypes.number,
+  discount: PropTypes.number,
+  card: PropTypes.bool,
+  span: PropTypes.array,
+  rowStyle: PropTypes.object
+};
+
+const DiscountComponent = props => {
+  const { loading, t, cost, isDiscount, discount, modalDiscount } = props;
+  const discountDuration = modalDiscount && modalDiscount.discountDuration;
+  return !loading ? (
+    <Row>
+      <Col span={24}>
+        <CurrencyCostDisplay isDiscount={isDiscount} cost={cost} discount={discount} />
+      </Col>
       <Col span={24}>
         {isDiscount && (
           <div style={{ display: 'flex' }}>
