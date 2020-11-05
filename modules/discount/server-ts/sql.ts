@@ -87,7 +87,7 @@ export default class DiscountDAO extends Model {
           this.where('discount_duration.start_date', '<=', now).andWhere('discount_duration.end_date', '>=', now);
         });
       }
-      if (has(filter, 'upComming') && filter.upComming !== false) {
+      if (has(filter, 'upComing') && filter.upComing !== false) {
         const now = new Date().toISOString();
         queryBuilder.where(function() {
           this.where('discount_duration.start_date', '>=', now).andWhere('discount_duration.end_date', '>=', now);

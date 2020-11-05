@@ -1,0 +1,22 @@
+#import "./Discount.graphql"
+
+query discounts(
+  $limit: Int!
+  $after: Int!
+  $orderBy: OrderByDiscountInput
+  $filter: FilterDiscountInput
+) {
+  discounts(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...DiscountInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

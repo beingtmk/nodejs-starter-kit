@@ -52,7 +52,7 @@ input FilterDiscountInput {
   isActive: Boolean
   isDiscount: Boolean
   onGoing: Boolean
-  upComming: Boolean
+  upComing: Boolean
 }
 
 extend type Mutation {

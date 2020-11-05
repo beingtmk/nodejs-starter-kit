@@ -1,0 +1,12 @@
+#import "./Listing.graphql"
+
+query listingsByIds($ids: [Int]) {
+  listingsByIds(ids: $ids) {
+    totalCount
+    edges {
+      node {
+        ...ListingInfo
+      }
+    }
+  }
+}

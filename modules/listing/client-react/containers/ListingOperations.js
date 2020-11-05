@@ -2,15 +2,16 @@ import { graphql } from 'react-apollo';
 import { PLATFORM, removeTypename } from '@gqlapp/core-common';
 import { message } from 'antd';
 
+import settings from '@gqlapp/config';
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
-import settings from '@gqlapp/config';
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
 import CAN_USER_REVIEW from '../graphql/CanUserReview.graphql';
 import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
+import LISTINGS_BY_IDS_QUERY from '../graphql/ListingsByIdsQuery.graphql';
 
 // Mutation
 import ADD_LISTING from '../graphql/AddListing.graphql';
@@ -103,6 +104,19 @@ export const withListing = Component =>
     props({ data: { loading, error, listing, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
       return { loading, listing, subscribeToMore, updateQuery };
+    }
+  })(Component);
+
+export const withListingByIds = Component =>
+  graphql(LISTINGS_BY_IDS_QUERY, {
+    options: props => {
+      return {
+        variables: { ids: props.ids }
+      };
+    },
+    props({ data: { loading, error, listingsByIds, subscribeToMore, updateQuery } }) {
+      if (error) throw new Error(error);
+      return { loading, listings: listingsByIds, subscribeToMore, updateQuery };
     }
   })(Component);
 

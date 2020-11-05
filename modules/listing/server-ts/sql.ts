@@ -451,6 +451,13 @@ export default class ListingDAO extends Model {
       return true;
     }
   }
+  public async listingsByIds(ids: number[]) {
+    return camelizeKeys(
+      await ListingDAO.query()
+        .eager(eager)
+        .whereIn('id', ids)
+    );
+  }
 }
 
 // ListingFlag model.

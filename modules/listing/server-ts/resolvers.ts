@@ -94,6 +94,19 @@ export default (pubsub: any) => ({
       } else {
         return false;
       }
+    },
+    async listingsByIds(obj: any, { ids }: { ids: number[] }, { Listing }: any) {
+      const edgesArray: Edges[] = [];
+      const listings = await Listing.listingsByIds(ids);
+
+      listings.map((listing: Listings & Identifier, index: number) => {
+        edgesArray.push({ node: listing });
+      });
+
+      return {
+        totalCount: listings.length,
+        edges: edgesArray
+      };
     }
   },
   Mutation: {
