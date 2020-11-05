@@ -1,7 +1,11 @@
-import { Listing as Listings, Identifier } from './sql';
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
+
 import settings from '@gqlapp/config';
+import { ORDER_STATES } from '@gqlapp/order-common';
+import { ORDER_SUBSCRIPTION, ORDERS_SUBSCRIPTION } from '@gqlapp/order-server-ts/resolvers';
+
+import { Listing as Listings, Identifier } from './sql';
 
 interface Edges {
   cursor: number;
@@ -143,26 +147,64 @@ export default (pubsub: any) => ({
       }
       return newListingid;
     }),
-    editListing: withAuth(async (obj: any, { input }: ListingInputWithId, context: any) => {
+    editListing: withAuth(async (obj: any, { input }: ListingInputWithId, { Listing, Order }: any) => {
       try {
-        await context.Listing.editListing(input);
-        const listing = await context.Listing.listing(input.id);
-        // publish for listing list
-        pubsub.publish(LISTINGS_SUBSCRIPTION, {
-          listingsUpdated: {
-            mutation: 'UPDATED',
-            id: listing.id,
-            node: listing
-          }
-        });
-        // publish for edit listing page
-        pubsub.publish(LISTING_SUBSCRIPTION, {
-          listingUpdated: {
-            mutation: 'UPDATED',
-            id: listing.id,
-            node: listing
-          }
-        });
+        const listing = await Listing.listing(input.id);
+        await Listing.editListing(input);
+        const newListing = await Listing.listing(input.id);
+        if (listing) {
+          // publish for listing list
+          pubsub.publish(LISTINGS_SUBSCRIPTION, {
+            listingsUpdated: {
+              mutation: 'UPDATED',
+              id: newListing.id,
+              node: newListing
+            }
+          });
+          // publish for edit listing page
+          pubsub.publish(LISTING_SUBSCRIPTION, {
+            listingUpdated: {
+              mutation: 'UPDATED',
+              id: newListing.id,
+              node: newListing
+            }
+          });
+        }
+        if (listing.listingCostArray[0].discount !== newListing.listingCostArray[0].discount) {
+          const filter = { state: ORDER_STATES.STALE };
+          const orders = await Order.orders({}, filter);
+          Promise.all(
+            orders.map(async order => {
+              await Promise.all(
+                order.orderDetails.map(async ordDtl => {
+                  if (ordDtl.modalName === 'listing' && ordDtl.modalId === newListing.id) {
+                    const cost = newListing.listingCostArray[0].cost;
+                    const discount = newListing.listingCostArray[0].discount;
+                    await Order.editOrderDetail({
+                      id: ordDtl.id,
+                      // tslint:disable-next-line:radix
+                      listingCost: parseInt(cost && (cost - cost * (discount / 100)).toFixed())
+                    });
+                  }
+                })
+              );
+              const newOrder = await Order.order(order.id);
+              pubsub.publish(ORDERS_SUBSCRIPTION, {
+                ordersUpdated: {
+                  mutation: 'UPDATED',
+                  node: newOrder
+                }
+              });
+              pubsub.publish(ORDER_SUBSCRIPTION, {
+                orderUpdated: {
+                  mutation: 'UPDATED',
+                  id: newOrder.id,
+                  node: newOrder
+                }
+              });
+            })
+          );
+        }
         return true;
       } catch (e) {
         return e;

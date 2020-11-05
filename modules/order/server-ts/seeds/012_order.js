@@ -59,9 +59,10 @@ exports.seed = async function(knex) {
     [...Array(20).keys()].map(async () => {
       const User2 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
       const addresses2 = await knex('user_address').where('user_id', '=', User2);
+      const orderState = Math.floor(Math.random() * (4 - 2 + 1) + 2);
       const order2 = await returnId(knex('order')).insert({
         consumer_id: User2,
-        order_state_id: Math.floor(Math.random() * (4 - 2 + 1) + 2),
+        order_state_id: orderState,
 
         tracking_id: Math.random()
           .toString(36)
@@ -105,7 +106,7 @@ exports.seed = async function(knex) {
             vendor_id: modal2[0].user_id,
             modal_name: MODAL[1].value,
             modal_id: id2,
-            order_detail_state_id: 2,
+            order_detail_state_id: orderState,
 
             image_url: MEDIA[Math.floor(Math.random() * (MEDIA.length - 2 - 0 + 1) + 0)].url,
             title: modal2[0].title,
