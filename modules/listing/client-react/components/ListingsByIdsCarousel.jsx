@@ -128,7 +128,7 @@ const ListingsByIdsCarousel = props => {
     };
   };
 
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <div {...props} {...dataSource.wrapper}>
       <div {...dataSource.page}>
@@ -157,15 +157,18 @@ const ListingsByIdsCarousel = props => {
             }}
           />
         ) : (
-          (!loading1 || !currentUserLoading) && (
-            <div align="center">
-              <Empty description={'No Listings.'}>
-                <Link to={`${ROUTES.add}`}>
-                  <Button color="primary">Add</Button>
-                </Link>
-              </Empty>
-            </div>
-          )
+          <>
+            {(loading1 || currentUserLoading) && <Spinner size="small" />}
+            {!loading1 && (
+              <div align="center">
+                <Empty description={'No Listings.'}>
+                  <Link to={`${ROUTES.add}`}>
+                    <Button color="primary">Add</Button>
+                  </Link>
+                </Empty>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

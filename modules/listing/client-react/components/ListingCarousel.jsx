@@ -155,7 +155,7 @@ const ListingCarousel = props => {
             }}
           />
         ) : (
-          (!loading1 || !currentUserLoading) && (
+          !loading1 && (
             <div align="center">
               <Empty description={'No Listings.'}>
                 <Link to={`${ROUTES.add}`}>

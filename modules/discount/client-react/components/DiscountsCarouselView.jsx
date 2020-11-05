@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import ListingsByIdsCarousel from '@gqlapp/listing-client-react/components/ListingsByIdsCarousel';
 
-const OnGoingDiscountsView = props => {
-  const { t, ids = [], currentUser, currentUserLoading, history, cartLoading, onDelete, getCart } = props;
+const DiscountsCarouselView = props => {
+  const { title, ids = [], currentUser, currentUserLoading, history, cartLoading, onDelete, getCart } = props;
 
   return (
     <ListingsByIdsCarousel
@@ -16,15 +16,15 @@ const OnGoingDiscountsView = props => {
       onDelete={onDelete}
       getCart={getCart}
       filter={{ isActive: true }}
-      title={t('listingCarousel.latestAdditions')}
+      title={title}
       style={{ backgroundColor: '#f7f7f7' }}
     />
   );
 };
 
-OnGoingDiscountsView.propTypes = {
+DiscountsCarouselView.propTypes = {
   ids: PropTypes.array,
-  t: PropTypes.func,
+  title: PropTypes.func,
   currentUser: PropTypes.object,
   currentUserLoading: PropTypes.bool,
   history: PropTypes.object,
@@ -33,4 +33,4 @@ OnGoingDiscountsView.propTypes = {
   getCart: PropTypes.object
 };
 
-export default OnGoingDiscountsView;
+export default DiscountsCarouselView;
