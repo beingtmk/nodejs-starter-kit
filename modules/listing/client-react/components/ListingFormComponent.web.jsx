@@ -99,7 +99,7 @@ const ListingFormComponent = props => {
   const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
-  const isDiscount = values.listingFlags.isDiscount || (values.isTimeStamp && true);
+  const isDiscount = values.listingFlags.isDiscount || values.listingCostArray[0].cost || (values.isTimeStamp && true);
   let formItemsVideos = null;
   let formItemsListingHighlight = null;
 
@@ -532,7 +532,9 @@ const ListingWithFormik = withFormik({
         id: (listingCost && listingCost.id) || null,
         cost: (listingCost && listingCost.cost) || '',
         discount:
-          (listingCost && listingCost.discount) || (props.modalDiscount && props.modalDiscount.discountPercent) || 0,
+          (listingCost && listingCost.discount !== 0 && listingCost.discount) ||
+          (props.modalDiscount && props.modalDiscount.discountPercent) ||
+          0,
         type: (listingCost && listingCost.type) || '',
         label: (listingCost && listingCost.label) || ''
       };
@@ -636,18 +638,21 @@ const ListingWithFormik = withFormik({
       const discountInput = {
         id: values.discountId,
         modalName: MODAL[1].value,
-        discountPercent: values.listingCostArray[0].discount,
-        discountDuration: {
+        discountPercent: values.listingCostArray[0].discount
+      };
+      if (values.isTimeStamp) {
+        discountInput.discountDuration = {
           id: values.discountDuration.id,
           startDate: values.discountDuration.startDate,
           endDate: values.discountDuration.endDate
-        }
-      };
+        };
+      }
       console.log(!values.isTimeStamp, values.listingCostArray[0].discount, values.listingFlags.isDiscount);
       input.listingCostArray = [];
       const cost = {
         cost: values.listingCostArray[0].cost,
-        discount: !values.isTimeStamp ? values.listingCostArray[0].discount : 0,
+        // discount: !values.isTimeStamp ? values.listingCostArray[0].discount : 0,
+        discount: 0,
         type: values.listingCostArray[0].type,
         label: values.listingCostArray[0].label
       };
@@ -656,7 +661,8 @@ const ListingWithFormik = withFormik({
         id: values.listingFlags.id,
         isFeatured: values.listingFlags.isFeatured,
         isNew: values.listingFlags.isNew,
-        isDiscount: !values.isTimeStamp && values.listingFlags.isDiscount
+        // isDiscount: !values.isTimeStamp && values.listingFlags.isDiscount
+        isDiscount: false
       };
       input.listingOptions = {
         id: values.listingOptions.id,

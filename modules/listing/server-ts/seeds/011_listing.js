@@ -16,6 +16,7 @@ exports.seed = async function(knex) {
 
   await Promise.all(
     [...Array(100).keys()].map(async ii => {
+      const isDiscount = false;
       // const isDiscount = Math.random() > 0.7;
       const isActive = Math.random() < 0.6 ? false : true;
       const listing = await returnId(knex('listing')).insert({
@@ -32,7 +33,7 @@ exports.seed = async function(knex) {
 
         is_featured: Math.random() < 0.6 ? false : true,
         is_new: Math.random() < 0.6 ? false : true,
-        // is_discount: isDiscount,
+        is_discount: isDiscount,
 
         is_active: isActive
       });
@@ -62,7 +63,7 @@ exports.seed = async function(knex) {
       await returnId(knex('listing_cost')).insert({
         listing_id: listing[0],
         cost: Math.floor(Math.random() * (999 - 100 + 1) + 100),
-        // discount: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1).toFixed(2) : 0,
+        discount: isDiscount ? Math.floor(Math.random() * (60 - 1 + 1) + 1).toFixed(2) : 0,
         type: '',
         label: '',
         is_active: isActive
