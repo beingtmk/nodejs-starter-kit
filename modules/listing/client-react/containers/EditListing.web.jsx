@@ -28,7 +28,7 @@ const EditListing = props => {
         delete discountValues.discountDuration.id;
       }
       editListing(values);
-      console.log(values, discountValues);
+      // console.log(values, discountValues);
       discountValues && editDiscount({ modalId: values.id, ...discountValues });
     } catch (e) {
       throw Error(e);

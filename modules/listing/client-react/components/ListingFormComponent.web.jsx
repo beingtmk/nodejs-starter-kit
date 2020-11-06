@@ -629,6 +629,7 @@ const ListingWithFormik = withFormik({
       if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
         return Message.error('Invalid Discount - Less than zero/more than 100');
       // if (< 0) return Message.error('Invalid - Less than zero');
+      const now = new Date().toISOString();
       const isDiscount =
         values.listingFlags.isDiscount ||
         (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
@@ -649,8 +650,8 @@ const ListingWithFormik = withFormik({
       if (values.isTimeStamp) {
         discountInput.discountDuration = {
           id: values.discountDuration.id,
-          startDate: values.discountDuration.startDate,
-          endDate: values.discountDuration.endDate
+          startDate: values.discountDuration.startDate || now,
+          endDate: values.discountDuration.endDate || now
         };
       }
       // console.log(!values.isTimeStamp, values.listingCostArray[0].discount, isDiscount);
@@ -693,7 +694,7 @@ const ListingWithFormik = withFormik({
       if (values.listingHighlight.length > 0) {
         input.listingHighlight = values.listingHighlight;
       }
-      console.log(input, discountInput);
+      // console.log(input, discountInput);
       await onSubmit(input, discountInput);
     } else {
       setTouched({});

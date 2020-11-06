@@ -130,7 +130,6 @@ export default (pubsub: any) => ({
                       // tslint:disable-next-line:radix
                       listingCost: parseInt(cost && (cost - cost * (res.discountPercent / 100)).toFixed())
                     });
-                    await Discount.deleteDiscount(res.id);
                   }
                 })
               );
