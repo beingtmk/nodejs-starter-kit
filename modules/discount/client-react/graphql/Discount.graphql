@@ -1,5 +1,7 @@
 fragment DiscountInfo on Discount {
   id
+  modalId
+  modalName
   discountPercent
   discountDuration {
     id

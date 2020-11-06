@@ -10,6 +10,13 @@ import DiscountComponentView from '../components/DiscountComponentView';
 
 const DiscountComponent = props => {
   const { modalDiscount, subscribeToMore } = props;
+  const now = new Date().toISOString();
+  const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
+  const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
+  const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+  const discountPercent = isDiscountPercent
+    ? modalDiscount && modalDiscount.discountPercent > 0 && modalDiscount.discountPercent
+    : null;
 
   useEffect(() => {
     const subscribe = subscribeToDiscount(subscribeToMore, modalDiscount && modalDiscount.id);
@@ -17,13 +24,7 @@ const DiscountComponent = props => {
   }, [subscribeToMore, modalDiscount]);
 
   // console.log('props', props);
-  return (
-    <DiscountComponentView
-      isDiscount={modalDiscount && modalDiscount.discountPercent > 0}
-      discount={modalDiscount && modalDiscount.discountPercent}
-      {...props}
-    />
-  );
+  return <DiscountComponentView isDiscount={isDiscountPercent} discount={discountPercent} {...props} />;
 };
 
 DiscountComponent.propTypes = {

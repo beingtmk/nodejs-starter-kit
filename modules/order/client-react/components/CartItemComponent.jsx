@@ -7,6 +7,7 @@ import { PropTypes } from 'prop-types';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
+import { MODAL } from '@gqlapp/review-common';
 
 import EditCart from './EditCart';
 
@@ -80,7 +81,14 @@ const CartItemComponent = props => {
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {onEdit && (
             <Col span={8}>
-              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} t={t} />
+              <EditCart
+                modalName={MODAL[1].value}
+                modalId={item.modalId}
+                currentUser={currentUser}
+                onEdit={onEdit}
+                item={item}
+                t={t}
+              />
             </Col>
           )}
 

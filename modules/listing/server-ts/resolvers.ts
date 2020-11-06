@@ -147,7 +147,7 @@ export default (pubsub: any) => ({
       }
       return newListingid;
     }),
-    editListing: withAuth(async (obj: any, { input }: ListingInputWithId, { Listing, Order }: any) => {
+    editListing: withAuth(async (obj: any, { input }: ListingInputWithId, { Listing, Order, Discount }: any) => {
       try {
         const listing = await Listing.listing(input.id);
         await Listing.editListing(input);
@@ -170,16 +170,30 @@ export default (pubsub: any) => ({
             }
           });
         }
-        if (listing.listingCostArray[0].discount !== newListing.listingCostArray[0].discount) {
+        if (
+          listing.listingCostArray[0].discount !== newListing.listingCostArray[0].discount ||
+          listing.listingCostArray[0].cost !== newListing.listingCostArray[0].cost
+        ) {
           const filter = { state: ORDER_STATES.STALE };
           const orders = await Order.orders({}, filter);
+          const now = new Date();
           Promise.all(
             orders.map(async order => {
               await Promise.all(
                 order.orderDetails.map(async ordDtl => {
                   if (ordDtl.modalName === 'listing' && ordDtl.modalId === newListing.id) {
                     const cost = newListing.listingCostArray[0].cost;
-                    const discount = newListing.listingCostArray[0].discount;
+                    const modalDiscount = Discount.modalDiscount('listing', newListing.id);
+                    const isDiscountPercent =
+                      modalDiscount.discountDuration.startDate <= now &&
+                      modalDiscount.discountDuration.endDate >= now &&
+                      modalDiscount.discountPercent > 0;
+                    const discountPercent = isDiscountPercent ? modalDiscount.discountPercent : null;
+                    const discount = isDiscountPercent
+                      ? discountPercent
+                      : newListing.listingFlags.isDiscount
+                      ? newListing.listingCostArray[0].discount
+                      : 0;
                     await Order.editOrderDetail({
                       id: ordDtl.id,
                       // tslint:disable-next-line:radix

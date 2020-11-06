@@ -8,6 +8,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import { MODAL } from '@gqlapp/review-common';
+import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart, withGetCart, withDeleteCartItem } from './OrderOperations';
@@ -16,7 +17,16 @@ import ROUTES from '../routes';
 import { subscribeToCart } from './OrderSubscriptions';
 
 const AddToCart = props => {
-  const { history, currentUser, listing, addToCart, deleteOrderDetail, subscribeToMore, getCart } = props;
+  const {
+    history,
+    currentUser,
+    listing,
+    addToCart,
+    deleteOrderDetail,
+    subscribeToMore,
+    getCart,
+    modalDiscount
+  } = props;
 
   useEffect(() => {
     const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, {});
@@ -26,12 +36,19 @@ const AddToCart = props => {
   const onSubmit = async (values, redirect = false) => {
     const max = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
     const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
-    const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
+    const now = new Date().toISOString();
+    const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
+    const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
+    const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+    const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
+    const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
     const discount =
-      listing &&
-      listing.listingCostArray &&
-      listing.listingCostArray.length > 0 &&
-      listing.listingCostArray[0].discount;
+      (listing &&
+        listing.listingCostArray &&
+        listing.listingCostArray.length > 0 &&
+        listing.listingCostArray[0].discount) ||
+      discountPercent;
+
     const image = listing && listing.listingMedia && listing.listingMedia.filter(lM => lM.type === 'image');
     const imageUrl = (image && image.length > 0 && image[0].url) || NO_IMG;
 
@@ -95,9 +112,16 @@ AddToCart.propTypes = {
   listing: PropTypes.object,
   currentUser: PropTypes.object,
   getCart: PropTypes.object,
+  modalDiscount: PropTypes.object,
   addToCart: PropTypes.func,
   deleteOrderDetail: PropTypes.func,
   subscribeToMore: PropTypes.func
 };
 
-export default compose(withAddToCart, withGetCart, withDeleteCartItem, translate('orders'))(AddToCart);
+export default compose(
+  withAddToCart,
+  withGetCart,
+  withDeleteCartItem,
+  withModalDiscount,
+  translate('orders')
+)(AddToCart);

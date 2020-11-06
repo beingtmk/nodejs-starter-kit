@@ -239,7 +239,13 @@ const ListingDetailView = props => {
               </Row>
               <Divider />
               <br />
-              <AddToCart listing={listing} history={history} currentUser={currentUser} />
+              <AddToCart
+                listing={listing}
+                history={history}
+                currentUser={currentUser}
+                modalId={listing && listing.id}
+                modalName={MODAL[1].value}
+              />
             </Col>
           </Row>
           <Divider style={{ marginBottom: '0' }} />

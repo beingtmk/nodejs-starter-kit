@@ -43,6 +43,7 @@ const ListingWraper = styled.div`
 const RelatedCardComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
   const { currentUser, history, addToCart, componentStyle, inCart, loading, onDelete, modalDiscount } = props;
+  const now = new Date().toISOString();
 
   let listing = props.listing;
   // console.log(props);
@@ -55,15 +56,17 @@ const RelatedCardComponent = props => {
     listing.listingMedia.filter(lM => lM.type === 'image');
   const listing_img = listing_media && listing_media.length > 0 ? listing_media[0].url : NO_IMG;
   const fixedQuantity = listing && listing.listingOptions && listing.listingOptions.fixedQuantity;
-  const isDiscountTimeStamp = modalDiscount && modalDiscount.discountPercent > 0;
-  const discountTimeStamp = modalDiscount && modalDiscount.discountPercent;
-  const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountTimeStamp;
+  const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
+  const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
+  const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+  const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
+  const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
   const discount =
     (listing &&
       listing.listingCostArray &&
       listing.listingCostArray.length > 0 &&
       listing.listingCostArray[0].discount) ||
-    discountTimeStamp;
+    discountPercent;
   const cost =
     listing && listing.listingCostArray && listing.listingCostArray.length > 0 && listing.listingCostArray[0].cost;
   const max =
@@ -216,7 +219,13 @@ const RelatedCardComponent = props => {
                   />
                 }
               />
-              <br />
+              {startDate <= now && endDate >= now ? (
+                <h4>Ends in: {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days</h4>
+              ) : startDate >= now && endDate >= now ? (
+                <h4>Starts in: {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days</h4>
+              ) : (
+                <br />
+              )}
               <br />
               <br />
               <br />
