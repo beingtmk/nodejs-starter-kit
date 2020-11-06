@@ -80,7 +80,7 @@ const AddToCartFormBtns = props => {
         <Row type="flex" gutter={24}>
           {onDelete && (
             <Col {...customGridLG}>
-              <Button size="lg" onClick={onDelete} block disabled={disabled} type="danger" ghost>
+              <Button size="lg" onClick={onDelete} block disabled={disabled} danger ghost>
                 <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
@@ -96,7 +96,7 @@ const AddToCartFormBtns = props => {
           </Col>
           <Col {...customGridXS}>
             {onDelete && (
-              <Button block size="lg" onClick={onDelete} disabled={disabled} type="danger" ghost>
+              <Button block size="lg" onClick={onDelete} disabled={disabled} danger ghost>
                 <Icon type="DeleteOutlined" />
                 {t('addToCart.form.btn.remove')}
               </Button>
