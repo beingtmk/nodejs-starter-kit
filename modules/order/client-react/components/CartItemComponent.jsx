@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { DeleteIcon, Row, Col, Card } from '@gqlapp/look-client-react';
+import { DeleteIcon, Row, Col, Card, ModalDrawer, Icon } from '@gqlapp/look-client-react';
 
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
@@ -80,7 +80,16 @@ const CartItemComponent = props => {
         <Row type="flex" justify="space-around" align="middle" gutter={12}>
           {onEdit && (
             <Col span={8}>
-              <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} t={t} />
+              <ModalDrawer
+                buttonText={<Icon type="EditOutlined" />}
+                modalTitle="Edit Item"
+                height="auto"
+                shape="circle"
+                size="large"
+                type="default"
+              >
+                <EditCart modalId={item.modalId} currentUser={currentUser} onEdit={onEdit} item={item} t={t} />
+              </ModalDrawer>
             </Col>
           )}
 
