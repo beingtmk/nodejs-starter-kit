@@ -106,7 +106,7 @@ export default (pubsub: any) => ({
     editDiscount: withAuth(async (obj: any, { input }: DiscountInputWithId, { Discount, Order, Listing }: any) => {
       try {
         const res = await Discount.editDiscount(input);
-        const discount = await Discount.discount(input.id);
+        const discount = await Discount.discount(res.id);
         // publish for edit discount page
         pubsub.publish(DISCOUNT_SUBSCRIPTION, {
           discountUpdated: {
@@ -151,44 +151,48 @@ export default (pubsub: any) => ({
             })
           );
           const discountSchedule = schedule.scheduledJobs[`discount_${res.id}`];
-          discountSchedule.cancel();
-          schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
-            // schedule.cancelJob(`discount_${res.id}`);
-            // console.log('job initialed', res.discountDuration.endDate);
-            Promise.all(
-              orders.map(async order => {
-                await Promise.all(
-                  order.orderDetails.map(async ordDtl => {
-                    if (
-                      res.modalName === 'listing' &&
-                      ordDtl.modalName === 'listing' &&
-                      ordDtl.modalId === res.modalId
-                    ) {
-                      const listing = await Listing.listing(ordDtl.modalId);
-                      const cost = listing.listingCostArray[0].cost;
-                      // tslint:disable-next-line:radix
-                      await Order.editOrderDetail({ id: ordDtl.id, listingCost: parseInt(cost.toFixed(2)) });
-                      await Discount.deleteDiscount(res.id);
+          if (discountSchedule) {
+            discountSchedule.cancel();
+          }
+          if (res.discountDuration && res.discountDuration.startDate && res.discountDuration.endDate) {
+            schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
+              // schedule.cancelJob(`discount_${res.id}`);
+              // console.log('job initialed', res.discountDuration.endDate);
+              Promise.all(
+                orders.map(async order => {
+                  await Promise.all(
+                    order.orderDetails.map(async ordDtl => {
+                      if (
+                        res.modalName === 'listing' &&
+                        ordDtl.modalName === 'listing' &&
+                        ordDtl.modalId === res.modalId
+                      ) {
+                        const listing = await Listing.listing(ordDtl.modalId);
+                        const cost = listing.listingCostArray[0].cost;
+                        // tslint:disable-next-line:radix
+                        await Order.editOrderDetail({ id: ordDtl.id, listingCost: parseInt(cost.toFixed(2)) });
+                        await Discount.deleteDiscount(res.id);
+                      }
+                    })
+                  );
+                  const newOrder = await Order.order(order.id);
+                  pubsub.publish(ORDERS_SUBSCRIPTION, {
+                    ordersUpdated: {
+                      mutation: 'UPDATED',
+                      node: newOrder
                     }
-                  })
-                );
-                const newOrder = await Order.order(order.id);
-                pubsub.publish(ORDERS_SUBSCRIPTION, {
-                  ordersUpdated: {
-                    mutation: 'UPDATED',
-                    node: newOrder
-                  }
-                });
-                pubsub.publish(ORDER_SUBSCRIPTION, {
-                  orderUpdated: {
-                    mutation: 'UPDATED',
-                    id: newOrder.id,
-                    node: newOrder
-                  }
-                });
-              })
-            );
-          });
+                  });
+                  pubsub.publish(ORDER_SUBSCRIPTION, {
+                    orderUpdated: {
+                      mutation: 'UPDATED',
+                      id: newOrder.id,
+                      node: newOrder
+                    }
+                  });
+                })
+              );
+            });
+          }
         }
         return true;
       } catch (e) {

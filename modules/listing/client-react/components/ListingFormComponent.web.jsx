@@ -99,7 +99,10 @@ const ListingFormComponent = props => {
   const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
-  const isDiscount = values.listingFlags.isDiscount || values.listingCostArray[0].cost || (values.isTimeStamp && true);
+  const isDiscount =
+    values.listingFlags.isDiscount ||
+    (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
+    (values.isTimeStamp && true);
   let formItemsVideos = null;
   let formItemsListingHighlight = null;
 
@@ -626,7 +629,10 @@ const ListingWithFormik = withFormik({
       if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
         return Message.error('Invalid Discount - Less than zero/more than 100');
       // if (< 0) return Message.error('Invalid - Less than zero');
-
+      const isDiscount =
+        values.listingFlags.isDiscount ||
+        (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
+        (values.isTimeStamp && true);
       const input = {
         id: values.id,
         userId: values.userId,
@@ -638,7 +644,7 @@ const ListingWithFormik = withFormik({
       const discountInput = {
         id: values.discountId,
         modalName: MODAL[1].value,
-        discountPercent: values.listingCostArray[0].discount
+        discountPercent: isDiscount ? values.listingCostArray[0].discount : 0
       };
       if (values.isTimeStamp) {
         discountInput.discountDuration = {
@@ -647,7 +653,7 @@ const ListingWithFormik = withFormik({
           endDate: values.discountDuration.endDate
         };
       }
-      console.log(!values.isTimeStamp, values.listingCostArray[0].discount, values.listingFlags.isDiscount);
+      // console.log(!values.isTimeStamp, values.listingCostArray[0].discount, isDiscount);
       input.listingCostArray = [];
       const cost = {
         cost: values.listingCostArray[0].cost,
@@ -688,7 +694,7 @@ const ListingWithFormik = withFormik({
         input.listingHighlight = values.listingHighlight;
       }
       console.log(input, discountInput);
-      values.isTimeStamp ? await onSubmit(input, discountInput) : await onSubmit(input, false);
+      await onSubmit(input, discountInput);
     } else {
       setTouched({});
       setSubmitting(false);

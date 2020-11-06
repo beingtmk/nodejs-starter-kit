@@ -21,11 +21,14 @@ const EditListing = props => {
 
   const handleSubmit = (values, discountValues) => {
     try {
-      editListing(values);
       if (!discountValues.id) {
         delete discountValues.id;
+      }
+      if (discountValues.discountDuration && !discountValues.discountDuration.id) {
         delete discountValues.discountDuration.id;
       }
+      editListing(values);
+      console.log(values, discountValues);
       discountValues && editDiscount({ modalId: values.id, ...discountValues });
     } catch (e) {
       throw Error(e);
