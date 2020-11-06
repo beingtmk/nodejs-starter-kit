@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, Avatar, Divider } from '@gqlapp/look-client-react';
 // import { CardGroup } from '@gqlapp/look-client-react';
-import { Avatar, Divider } from 'antd';
 import { ImgUser } from '../../constants/DefaultImages';
 
 const ProfileHeadComponent = ({ profile, description }) => {

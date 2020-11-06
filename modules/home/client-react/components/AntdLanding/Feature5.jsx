@@ -1,15 +1,11 @@
 import React from 'react';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-import { Tabs } from 'antd';
-import PropTypes from 'prop-types';
-
+import { Icon } from '@ant-design/compatible';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, Heading, Row, Col } from '@gqlapp/look-client-react';
-
+import PropTypes from 'prop-types';
+import { Heading, Row, Col, TabPane, Tabs } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
-
-const TabPane = Tabs.TabPane;
 
 class Content7 extends React.Component {
   constructor(props) {

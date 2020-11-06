@@ -34,13 +34,13 @@ const Users = props => {
     <PageLayout>
       <MetaTags title={t('users.title')} description={t('users.meta')} />
       <Row>
-        <Col lg={22} md={20} xs={24}>
+        <Col lg={21} md={20} xs={24}>
           <Heading type="2">{t('users.list.title')}</Heading>
         </Col>
         <Col lg={0} md={0} xs={24}>
           <br />
         </Col>
-        <Col lg={2} md={4} xs={24} align="right">
+        <Col lg={3} md={4} xs={24} align="right">
           <Link to={`${ROUTES.add}`}>
             <AddButton color="primary">{t('users.btn.add')}</AddButton>
           </Link>

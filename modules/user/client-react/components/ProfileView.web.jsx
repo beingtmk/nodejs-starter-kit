@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Divider, Spin as Loader } from 'antd';
-
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -17,7 +15,9 @@ import {
   Heading,
   EditIcon,
   Icon,
-  MetaTags
+  MetaTags,
+  Divider,
+  Spin as Loader
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button, Empty } from 'antd';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { LeftArrow, RightArrow, Icon } from '@gqlapp/look-client-react/ui-antd/components';
+import { LeftArrow, RightArrow, Icon, Button, Empty } from '@gqlapp/look-client-react/ui-antd/components';
 
 import ROUTES from '../../routes';
 
@@ -56,7 +55,7 @@ class Banner extends React.PureComponent {
           <div className={'HVCenter'}>
             <Empty description={'No Carousels to show.'}>
               <Link to={`${ROUTES.add}`}>
-                <Button type="primary">Add</Button>
+                <Button color="primary">Add</Button>
               </Link>
             </Empty>
           </div>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Alert, message } from 'antd';
+import { Alert, Message, Spinner } from '@gqlapp/look-client-react';
 import { graphql } from 'react-apollo';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import VerificationModalComponent from '../../components/verification/VerificationModalComponent';
 import MobileVerificationFormComponent from '../../components/verification/MobileVerificationFormComponent';
@@ -30,7 +29,7 @@ class MobileAdd extends Component {
 
   setMobile(mobile) {
     this.setState({ mobile: mobile });
-    message.info('Mobile number has been verified.');
+    Message.info('Mobile number has been verified.');
   }
 
   toggleLoading() {
@@ -45,7 +44,7 @@ class MobileAdd extends Component {
       if (mobileData.otpSent && typeof values.otp === 'undefined') {
         this.setState({ otp: true, mobileNo: values.mobile });
       } else if (!mobileData.otpSent) {
-        message.info('Unable to send OTP.');
+        Message.info('Unable to send OTP.');
         console.log('unable to send otp!');
       } else {
         // set error or verified
@@ -68,7 +67,7 @@ class MobileAdd extends Component {
     console.log(values);
     console.log('submit clicked!');
     // fix this
-    message.loading('Please wait...');
+    Message.loading('Please wait...');
     this.setState({ loading: true });
     await this.onSubmit(this.props.addMobile)(values);
     this.setState({ loading: false });
@@ -99,7 +98,7 @@ MobileAdd.propTypes = {
 };
 
 export default graphql(ADD_Mobile, {
-  props: ({ ownProps: { history, navigation }, mutate }) => ({
+  props: ({ mutate }) => ({
     addMobile: async (mobile, otp) => {
       let MobileData = await mutate({
         variables: { input: { mobile: mobile, otp: otp } }

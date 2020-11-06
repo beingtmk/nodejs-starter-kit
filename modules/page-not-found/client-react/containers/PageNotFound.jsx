@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import { Result } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
-  PageLayout
+  PageLayout,
+  Result
   // Button
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';

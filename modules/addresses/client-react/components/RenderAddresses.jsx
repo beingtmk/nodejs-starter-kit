@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { RenderField, Icon, FormItem, Row, Col } from '@gqlapp/look-client-react';
+import { RenderField, Icon, FormItem, Row, Col, Message, Button, Popconfirm } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 
-import { Button, Modal, Popconfirm, message } from 'antd';
+import { Modal } from 'antd';
 
 const AddressFormItem = styled.div`
   display: inline-block;
@@ -177,7 +177,7 @@ class RenderAddress extends React.Component {
     } = this.props;
     function cancel(e) {
       console.log(e);
-      message.error('Click on No');
+      Message.error('Click on No');
     }
     const isSelectable = this.props.isSelectable || false;
 
@@ -227,7 +227,7 @@ class RenderAddress extends React.Component {
               <Row type="flex" justify="center">
                 <Col xxl={20} lg={20} md={20} xs={20}>
                   <AddEditbtn>
-                    <Button shape="circle" size="large" onClick={() => this.modalControl(indexa, true)}>
+                    <Button shape="circle" size="lg" onClick={() => this.modalControl(indexa, true)}>
                       <Icon type="EditOutlined" />
                     </Button>
                   </AddEditbtn>
@@ -254,7 +254,7 @@ class RenderAddress extends React.Component {
                     cancelText="No"
                   >
                     <AddDelbtn>
-                      <Button type="danger" shape="circle" size="large">
+                      <Button color="danger" shape="circle" size="lg">
                         <Icon type="DeleteOutlined" />
                       </Button>
                     </AddDelbtn>

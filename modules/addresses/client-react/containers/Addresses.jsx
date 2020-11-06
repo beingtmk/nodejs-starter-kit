@@ -1,12 +1,11 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
-import { message } from 'antd';
 
 import { compose, removeTypename } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { PropTypes } from 'prop-types';
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, Message } from '@gqlapp/look-client-react';
 
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import ADDRESSES_QUERY from '../graphql/AddressesQuery.graphql';
@@ -48,8 +47,8 @@ export default compose(
   graphql(ADD_OR_EDIT_ADDRESS, {
     props: ({ mutate, ownProps: { currentUser } }) => ({
       addOrEditAddresses: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           values.userId = currentUser && currentUser.id;
           values.pinCode = Number(values.pinCode);
@@ -61,11 +60,11 @@ export default compose(
               input: input
             }
           });
-          message.destroy();
-          message.success(addOrEditAddress);
+          Message.destroy();
+          Message.success(addOrEditAddress);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -96,7 +95,7 @@ export default compose(
           //   });
           // }
         });
-        message.warning('Address deleted.');
+        Message.warning('Address deleted.');
       }
     })
   }),

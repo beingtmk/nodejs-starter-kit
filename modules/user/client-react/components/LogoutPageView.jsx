@@ -1,9 +1,8 @@
 /* eslint-disable import/no-named-default */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Result } from 'antd';
 
-import { PageLayout, Icon, Row, Col } from '@gqlapp/look-client-react';
+import { PageLayout, Icon, Row, Col, Button, Result } from '@gqlapp/look-client-react';
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
@@ -59,7 +58,7 @@ const LogoutPageView = props => {
                     <Col xs={24} sm={24} md={24} lg={12}>
                       <Row justify="center">
                         <Button
-                          type="primary"
+                          color="primary"
                           block={true}
                           key="console"
                           onClick={() => history.push(`${HOME_ROUTES.home}`)}

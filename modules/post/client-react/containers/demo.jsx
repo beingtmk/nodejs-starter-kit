@@ -22,9 +22,9 @@ import {
   PublishIcon,
   PublishButton,
   Row,
-  Col
+  Col,
+  Message
 } from '@gqlapp/look-client-react';
-import { message } from 'antd';
 
 class Demo extends Component {
   state = {
@@ -35,18 +35,18 @@ class Demo extends Component {
   };
   handleClick = item => {
     console.log(item);
-    message.info(item);
+    Message.info(item);
   };
   handleActive = item => {
     console.log(item);
-    message.info(item);
+    Message.info(item);
     if (this.state.active === 'false') {
       this.setState({ active: 'true', activeName: 'Active' });
     } else this.setState({ active: 'false', activeName: 'Deactive' });
   };
   handlePublish = item => {
     console.log(item);
-    message.info(item);
+    Message.info(item);
 
     if (this.state.publish === 'false') {
       this.setState({ publish: 'true', publishName: 'Published' });

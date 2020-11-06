@@ -1,10 +1,9 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
-import { Empty, Button } from 'antd';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Table, Pagination, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
+import { Table, Pagination, EditIcon, DeleteIcon, Button, Empty } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
@@ -19,7 +18,7 @@ const NodynaDicCarouselsMessage = ({ t }) => (
     <br />
     <Empty description={t('listing.noListingsMsg')}>
       <Link to={`${ROUTES.add}`}>
-        <Button type="primary">{t('dynamicCarousel.btn.add')}</Button>
+        <Button color="primary">{t('dynamicCarousel.btn.add')}</Button>
       </Link>
     </Empty>
   </div>

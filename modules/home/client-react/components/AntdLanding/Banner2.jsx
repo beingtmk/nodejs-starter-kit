@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import PropTypes from 'prop-types';
 import BannerAnim, { Element } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { Icon } from '@gqlapp/look-client-react';
+import { Icon, Button } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { isImg } from './utils';
 

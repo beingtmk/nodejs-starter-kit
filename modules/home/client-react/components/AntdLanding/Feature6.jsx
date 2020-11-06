@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
-import { Carousel as AntCarousel } from 'antd';
 import TweenOne from 'rc-tween-one';
-import { Row, Col } from '@gqlapp/look-client-react';
+import { Row, Col, Carousel as AntCarousel } from '@gqlapp/look-client-react';
 
 import Children from 'rc-tween-one/lib/plugin/ChildrenPlugin';
 

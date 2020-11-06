@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from '@gqlapp/look-client-react';
 import QueueAnim from 'rc-queue-anim';
 import { translate } from '@gqlapp/i18n-client-react';
 import PropTypes from 'prop-types';

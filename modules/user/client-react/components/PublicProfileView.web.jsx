@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Divider } from 'antd';
 
-import { Icon, Card, MetaTags, PageLayout, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, Card, MetaTags, PageLayout, Row, Col, Divider } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 // import UserListings from '@gqlapp/listing-client-react/containers/UserListings';

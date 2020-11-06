@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 
 import DISCOUNT_SUBSCRIPTION from '../graphql/DiscountSubscription.graphql';
@@ -38,7 +38,7 @@ function onEditDiscount(prev, node) {
 }
 
 const onDeleteDiscount = prev => {
-  message.info('This discount has been expired!');
+  Message.info('This discount has been expired!');
   return update(prev, {
     modalDiscount: {
       $set: null
