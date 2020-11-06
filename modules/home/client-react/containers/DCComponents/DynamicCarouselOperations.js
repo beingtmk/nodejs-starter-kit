@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 import update from 'immutability-helper';
 import { graphql } from 'react-apollo';
 
@@ -114,8 +114,8 @@ export const withDeleteDynamicCarousel = Component =>
             }
           }
         });
-        if (deleteDynamicCarousel) message.warning('Banner deleted.');
-        else message.warning('Try again!');
+        if (deleteDynamicCarousel) Message.warning('Banner deleted.');
+        else Message.warning('Try again!');
       }
     })
   })(Component);
@@ -124,8 +124,8 @@ export const withAddDynamicCarousel = Component =>
   graphql(ADD_DYNAMIC_CAROUSEL, {
     props: ({ ownProps: { history }, mutate }) => ({
       addDynamicCarousel: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           await mutate({
             variables: {
@@ -140,12 +140,12 @@ export const withAddDynamicCarousel = Component =>
             }
           });
 
-          message.destroy();
-          message.success('Banner added.');
+          Message.destroy();
+          Message.success('Banner added.');
           history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -156,8 +156,8 @@ export const withEditDynamicCarousel = Component =>
   graphql(EDIT_DYNAMIC_CAROUSEL, {
     props: ({ ownProps: { history }, mutate }) => ({
       editDynamicCarousel: async values => {
-        message.destroy();
-        message.loading('Please wait...', 0);
+        Message.destroy();
+        Message.loading('Please wait...', 0);
         try {
           // console.log('input', input);
           await mutate({
@@ -165,12 +165,12 @@ export const withEditDynamicCarousel = Component =>
               input: values
             }
           });
-          message.destroy();
-          message.success('Changes Saved.');
+          Message.destroy();
+          Message.success('Changes Saved.');
           history.push(`${ROUTES.adminPanel}`);
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -304,7 +304,7 @@ function onEditDynamicCarousel(prev, node) {
 
 const onDeleteDynamicCarousel = (prev, id, history) => {
   if (prev.dynamicCarousel.id === id) {
-    message.error('Banner was deleted');
+    Message.error('Banner was deleted');
     history.push(`${ROUTES.adminPanel}`);
   }
 };
