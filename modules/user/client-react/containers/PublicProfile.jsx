@@ -1,7 +1,7 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { Spin as Loader } from 'antd';
+import { Spin as Loader } from '@gqlapp/look-client-react';
 import { compose } from '@gqlapp/core-common';
 
 import USER_QUERY from '@gqlapp/user-client-react/graphql/UserQuery.graphql';

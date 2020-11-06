@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Card, Avatar } from 'antd';
+import React from 'react';
 
 const Mobile = ({ mobile }) => {
   if (mobile) {

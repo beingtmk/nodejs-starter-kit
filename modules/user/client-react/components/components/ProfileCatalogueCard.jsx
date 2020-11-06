@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'antd';
-import TweenOne from 'rc-tween-one';
 import { Link } from 'react-router-dom';
-
-import {
-  // CardText, Button,
-  Icon
-} from '@gqlapp/look-client-react';
 
 const { Meta } = Card;
 
@@ -41,7 +35,8 @@ ProfileCatalogueCard.propTypes = {
   address: PropTypes.object,
   item: PropTypes.object,
   subTitle: PropTypes.string,
-  index: PropTypes.number
+  index: PropTypes.number,
+  componentStyle: PropTypes.object
 };
 
 export default ProfileCatalogueCard;
