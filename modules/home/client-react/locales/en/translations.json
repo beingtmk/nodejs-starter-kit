@@ -623,6 +623,10 @@
     "featuredListings":"Featured Listings",
     "latestAdditions":"Our Latest Additions"
   },
+  "discountsCarousel":{
+    "onGoing":"On Going Deals",
+    "upComing":"Up Coming Deals"
+  },
   "dynamicCarousel":{
     "heading":"Dynamic Carousel",
     "btn":{

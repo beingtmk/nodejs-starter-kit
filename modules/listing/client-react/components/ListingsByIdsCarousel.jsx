@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Empty } from 'antd';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { Button } from '@gqlapp/look-client-react';
-import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Button, SlickCarousel, Spinner, Empty } from '@gqlapp/look-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 import ROUTES from '../routes';

@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Skeleton, Statistic } from 'antd';
 
-import { Icon, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, Skeleton, Statistic } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CurrencyDisplay from './CurrencyDisplay';

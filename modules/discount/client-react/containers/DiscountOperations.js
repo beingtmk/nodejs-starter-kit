@@ -1,6 +1,6 @@
 import { graphql } from 'react-apollo';
 import { PLATFORM } from '@gqlapp/core-common';
-import { message } from 'antd';
+import { Message } from '@gqlapp/look-client-react';
 
 import settings from '@gqlapp/config';
 
@@ -91,8 +91,8 @@ export const withAddDiscount = Component =>
           });
           return id;
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }
@@ -110,8 +110,8 @@ export const withEditDiscount = Component =>
             }
           });
         } catch (e) {
-          message.destroy();
-          message.error("Couldn't perform the action");
+          Message.destroy();
+          Message.error("Couldn't perform the action");
           console.error(e);
         }
       }

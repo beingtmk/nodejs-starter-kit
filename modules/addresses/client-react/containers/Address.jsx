@@ -1,8 +1,6 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
-import { message } from 'antd';
 
-import { compose, removeTypename } from '@gqlapp/core-common';
+import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { PropTypes } from 'prop-types';
