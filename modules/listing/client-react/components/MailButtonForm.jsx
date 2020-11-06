@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, RenderField, Alert, Card, Button } from '@gqlapp/look-client-react';
+import { Form, RenderField, Alert, Card, Button, Col } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 
 const MailButtonForm = props => {
@@ -37,9 +37,11 @@ const MailButtonForm = props => {
       <Card>{whatsappMessage}</Card>
       <br />
       <div align="right">
-        <Button disabled={submitting} color="primary" onClick={() => handleSubmit(values)}>
-          {t('socialSharingButton.btn.share')}
-        </Button>
+        <Col lg={4} md={5} sm={24} xs={24}>
+          <Button disabled={submitting} color="primary" onClick={() => handleSubmit(values)} block>
+            {t('socialSharingButton.btn.share')}
+          </Button>
+        </Col>
       </div>
       <div>{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
     </Form>

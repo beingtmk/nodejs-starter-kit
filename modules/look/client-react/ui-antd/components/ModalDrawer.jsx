@@ -10,7 +10,7 @@ const ModalBar = styled.div`
   height: 6px;
   background: #9b9b9b;
   border-radius: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 const ModalDrawer = props => {
   const {
