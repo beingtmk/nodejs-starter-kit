@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Alert, Message, Spinner } from '@gqlapp/look-client-react';
 import { graphql } from 'react-apollo';
 
-import VerificationModalComponent from '../../components/verification/VerificationModalComponent';
 import MobileVerificationFormComponent from '../../components/verification/MobileVerificationFormComponent';
 import Mobile from '../../components/verification/Mobile';
 
@@ -57,6 +56,7 @@ class MobileAdd extends Component {
             otp: false,
             form: false
           });
+          this.props.setvStatus(true);
           this.setMobile(mobileData);
         }
       }
@@ -79,22 +79,24 @@ class MobileAdd extends Component {
   // }
 
   render() {
+    console.log(this.props);
     return (
-      <VerificationModalComponent button="Mobile" title="Mobile Verification" vStatus={this.state.vStatus}>
+      <>
         {this.state.loading ? <Spinner size="small" /> : ''}
         {this.state.otp ? <Alert message={`An OTP has been sent to ${this.state.mobileNo}`} /> : ''}
         {this.state.error ? <Alert type="error" message={`Error Occurred: `} description={this.state.error} /> : ''}
         {this.state.form ? <MobileVerificationFormComponent otp={this.state.otp} onSubmit={this.onChange} /> : ''}
 
         {this.state.vStatus ? <Mobile mobile={this.state.mobile} /> : ''}
-      </VerificationModalComponent>
+      </>
     );
   }
 }
 MobileAdd.propTypes = {
   vStatus: PropTypes.bool,
   addMobile: PropTypes.func.isRequired,
-  mobile: PropTypes.object
+  mobile: PropTypes.object,
+  setvStatus: PropTypes.func
 };
 
 export default graphql(ADD_Mobile, {

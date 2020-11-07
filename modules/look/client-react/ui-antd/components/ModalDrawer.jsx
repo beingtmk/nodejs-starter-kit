@@ -10,7 +10,7 @@ const ModalBar = styled.div`
   height: 6px;
   background: #9b9b9b;
   border-radius: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 const ModalDrawer = props => {
   const {
@@ -27,6 +27,7 @@ const ModalDrawer = props => {
   } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
+  // console.log(children);
   return (
     <Row>
       <Col lg={24} md={24} sm={24} xs={0}>
@@ -42,8 +43,8 @@ const ModalDrawer = props => {
           {buttonText}
         </Button>
         <Modal centered title={modalTitle} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
-          {/* {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })} */}
-          {children}
+          {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })}
+          {/* {children} */}
         </Modal>
       </Col>
       <Col lg={0} md={0} sm={0} xs={24}>
@@ -79,9 +80,7 @@ const ModalDrawer = props => {
             <br />
             <br />
             <br />
-            {/* {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })} */}
-
-            {children}
+            {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })}
           </Drawer>
         </div>
       </Col>
@@ -89,9 +88,9 @@ const ModalDrawer = props => {
   );
 };
 ModalDrawer.propTypes = {
-  buttonText: PropTypes.string,
+  buttonText: PropTypes.object,
   height: PropTypes.string,
-  children: PropTypes.func,
+  children: PropTypes.array,
   ghost: PropTypes.bool,
   modalTitle: PropTypes.string,
   type: PropTypes.string,

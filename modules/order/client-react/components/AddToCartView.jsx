@@ -1,6 +1,5 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Card } from '@gqlapp/look-client-react';
 
 import AddToCartForm from './AddToCartForm';
 
@@ -10,27 +9,25 @@ const AddToCartView = props => {
   const cartItemArray = getCart ? getCart.orderDetails.filter(oD => oD.modalId === listing.id) : [];
   // console.log(listing, cartItemArray);
   return (
-    <Card>
-      <AddToCartForm
-        t={t}
-        currentUser={currentUser}
-        onSubmit={onSubmit}
-        max={
-          (listing &&
-            listing.listingOptions &&
-            listing.listingOptions.fixedQuantity !== -1 &&
-            listing.listingOptions.fixedQuantity) ||
-          (listing && listing.listingDetail && listing.listingDetail.inventoryCount)
-        }
-        // fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
-        listingOwned={listingOwned}
-        showBtn={showBtn}
-        item={item}
-        inCart={cartItemArray.length === 0}
-        loading={cartLoading}
-        onDelete={() => onDelete(cartItemArray[0].id)}
-      />
-    </Card>
+    <AddToCartForm
+      t={t}
+      currentUser={currentUser}
+      onSubmit={onSubmit}
+      max={
+        (listing &&
+          listing.listingOptions &&
+          listing.listingOptions.fixedQuantity !== -1 &&
+          listing.listingOptions.fixedQuantity) ||
+        (listing && listing.listingDetail && listing.listingDetail.inventoryCount)
+      }
+      // fixedQuantity={listing && listing.listingOptions && listing.listingOptions.fixedQuantity}
+      listingOwned={listingOwned}
+      showBtn={showBtn}
+      item={item}
+      inCart={cartItemArray.length === 0}
+      loading={cartLoading}
+      onDelete={() => onDelete(cartItemArray[0].id)}
+    />
   );
 };
 

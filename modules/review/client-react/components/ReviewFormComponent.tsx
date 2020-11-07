@@ -195,9 +195,13 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           </FormItem>
         </Col>
       </Row>
-      <SubmitButton type="submit" disabled={load && !dirty}>
-        {t('reviewForm.btn.submit')}
-      </SubmitButton>
+      <div align="right">
+        <Col lg={5} md={5} sm={24} xs={24}>
+          <SubmitButton type="submit" disabled={load && !dirty} block>
+            {t('reviewForm.btn.submit')}
+          </SubmitButton>
+        </Col>
+      </div>
     </Form>
   );
 };

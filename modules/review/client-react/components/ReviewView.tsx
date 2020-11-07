@@ -93,7 +93,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
     <>
       {/* <MetaTags title={t('title')} description={t('meta')} /> */}
       <Row type="flex" align="middle">
-        <Col lg={17} md={17} sm={15} xs={14}>
+        <Col lg={17} md={15} sm={15} xs={14}>
           <Heading type="1"> {t('review.heading')}</Heading>
         </Col>
         <Col lg={4} md={4} sm={4} xs={10}>
@@ -104,7 +104,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
         <Col lg={0} md={0} sm={0} xs={24}>
           <br />
         </Col>
-        <Col lg={3} md={3} sm={5} xs={24}>
+        <Col lg={3} md={5} sm={5} xs={24}>
           {showAdd && (
             <>
               <ModalDrawer buttonText={t('addReview')} modalTitle={t('addReview')} height="80%">

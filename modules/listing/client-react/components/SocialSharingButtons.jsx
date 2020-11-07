@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 
-import { Icon, Form, RenderField, Alert, Card, ModalDrawer, Col, Message, Button } from '@gqlapp/look-client-react';
+import { Icon, Card, ModalDrawer, Col, Message, Button } from '@gqlapp/look-client-react';
 import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
-import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
+import MailButtonForm from './MailButtonForm';
 
 const SocialSharingButtonsSchema = {
   inviteVal: [required]
@@ -19,8 +19,7 @@ const Img = styled.img`
 `;
 
 const SocialSharingButtons = props => {
-  const { values, handleSubmit, submitting, errors, twitterMessage, whatsappMessage, link, hideEmailButton, t } = props;
-  const inputForm = 'email';
+  const { twitterMessage, whatsappMessage, link, hideEmailButton, t } = props;
 
   const sharingMenu = (
     <Card bodyStyle={{ padding: '5px' }}>
@@ -107,42 +106,13 @@ const SocialSharingButtons = props => {
             style={{ fontSize: '22px' }}
             size="large"
           >
-            <Form name="invite" onShare={handleSubmit}>
-              {inputForm === 'email' ? (
-                <Field
-                  name="inviteVal.email"
-                  component={RenderField}
-                  type="email"
-                  placeholder={t('socialSharingButton.email')}
-                  label={t('socialSharingButton.email')}
-                  value={values.inviteVal.email}
-                />
-              ) : (
-                <Field
-                  name="inviteVal.number"
-                  component={RenderField}
-                  type="number"
-                  placeholder={t('socialSharingButton.number')}
-                  label={t('socialSharingButton.number')}
-                  value={values.inviteVal.number}
-                />
-              )}
-              <h3>{t('socialSharingButton.text')}</h3>
-              <br />
-              <Card>{whatsappMessage}</Card>
-              <br />
-              <div align="right">
-                <Button disabled={submitting} color="primary" onClick={() => handleSubmit(values)}>
-                  {t('socialSharingButton.btn.share')}
-                </Button>
-              </div>
-              <div>{errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}</div>
-            </Form>
+            <MailButtonForm {...props} />
           </ModalDrawer>
         </>
       )}
     </Card>
   );
+
   return (
     <Col span={24} style={{ height: '50px' }}>
       <DropDown

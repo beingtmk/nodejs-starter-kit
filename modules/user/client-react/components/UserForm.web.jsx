@@ -38,9 +38,10 @@ const updateUserFormSchema = {
   passwordConfirmation: [match('password'), minLength(settings.auth.password.minLength)]
 };
 
-const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
+const UserForm = props => {
+  const { values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive } = props;
   const [load, setLoad] = useState(false);
-  const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
+  const { username, email, role, isActive, profile, auth } = values;
 
   console.log('props', values);
   return (
@@ -129,23 +130,7 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       <Row type="flex" gutter={24}>
         <Col lg={12} md={12} xs={24}>
           <ModalDrawer buttonText="Reset password" modalTitle="Reset Password" height="auto" ghost={true}>
-            <Field
-              name="password"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.pass')}
-              value={password}
-            />
-            <Field
-              name="passwordConfirmation"
-              component={RenderField}
-              type="password"
-              label={t('userEdit.form.field.passConf')}
-              value={passwordConfirmation}
-            />
-            <SubmitButton type="submit" disabled={load} onClick={() => handleSubmit(values)}>
-              {t('userEdit.form.btnSubmit')}
-            </SubmitButton>
+            <ResetPasswordForm {...props} load={load} />
           </ModalDrawer>
         </Col>
         <Col lg={12} md={12} xs={24}>
@@ -156,6 +141,43 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
       </Row>
     </Form>
   );
+};
+
+const ResetPasswordForm = props => {
+  const { t, values, handleSubmit, load, hideModal } = props;
+  const { password, passwordConfirmation } = values;
+  const handleOnSubmit = () => {
+    handleSubmit(values);
+    hideModal();
+  };
+  return (
+    <>
+      <Field
+        name="password"
+        component={RenderField}
+        type="password"
+        label={t('userEdit.form.field.pass')}
+        value={password}
+      />
+      <Field
+        name="passwordConfirmation"
+        component={RenderField}
+        type="password"
+        label={t('userEdit.form.field.passConf')}
+        value={passwordConfirmation}
+      />
+      <SubmitButton type="submit" disabled={load} onClick={handleOnSubmit}>
+        {t('userEdit.form.btnSubmit')}
+      </SubmitButton>
+    </>
+  );
+};
+ResetPasswordForm.propTypes = {
+  t: PropTypes.func,
+  values: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  load: PropTypes.bool,
+  hideModal: PropTypes.func
 };
 
 UserForm.propTypes = {
