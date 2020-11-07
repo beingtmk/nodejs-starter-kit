@@ -1,3 +1,4 @@
+import category from '@gqlapp/category-client-react';
 import discount from '@gqlapp/discount-client-react';
 import pages from '@gqlapp/pages-client-react';
 import addresses from '@gqlapp/addresses-client-react';
@@ -27,6 +28,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  category,
   discount,
   pages,
   addresses,

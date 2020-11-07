@@ -55,6 +55,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@gqlapp/addresses-server-ts": "^1.0.0",
+    "@gqlapp/category-server-ts": "^1.0.0",
     "@gqlapp/core-common": "^0.1.0",
     "@gqlapp/database-server-ts": "^0.1.0",
     "@gqlapp/discount-server-ts": "^1.0.0",

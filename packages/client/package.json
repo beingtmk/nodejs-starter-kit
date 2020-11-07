@@ -44,6 +44,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@gqlapp/addresses-client-react": "^1.0.0",
+    "@gqlapp/category-client-react": "^1.0.0",
     "@gqlapp/chat-client-react": "^0.1.0",
     "@gqlapp/contact-client-react": "^0.1.0",
     "@gqlapp/core-client-react": "^0.1.0",
