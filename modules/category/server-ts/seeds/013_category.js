@@ -7,19 +7,19 @@ const CATEGORY = {
   description: `Category description 1`,
   imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1`,
 
-  category: [
+  subCategory: [
     {
       title: `Category 1.1`,
       description: `Category description 1.1`,
       imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1`,
 
-      category: [
+      subCategory: [
         {
           title: `Category 1.1.1`,
           description: `Category description 1.1.1`,
           imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1`,
 
-          category: [
+          subCategory: [
             {
               title: `Category 1.1.1.1`,
               description: `Category description 1.1.1.1`,
@@ -37,7 +37,7 @@ const CATEGORY = {
           description: `Category description 1.1.2`,
           imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1`,
 
-          category: [
+          subCategory: [
             {
               title: `Category 1.1.1.1`,
               description: `Category description 1.1.1.1`,
@@ -58,15 +58,15 @@ export async function seed(knex) {
 
   async function addCategory(parentCategory) {
     try {
-      const { title, description, imageUrl, category, parentCategoryId } = parentCategory;
+      const { title, description, imageUrl, subCategory, parentCategoryId } = parentCategory;
       const parentId = camelizeKeys(await add({ title, description, imageUrl, parentCategoryId }))[0];
-      category &&
-        category.map(async c => {
+      subCategory &&
+        subCategory.map(async c => {
           await addCategory({
             title: c.title,
             description: c.description,
             imageUrl: c.imageUrl,
-            category: c.category,
+            subCategory: c.subCategory,
             parentCategoryId: parentId
           });
         });
@@ -77,7 +77,7 @@ export async function seed(knex) {
   }
 
   await Promise.all(
-    [...Array(10).keys()].map(async () => {
+    [...Array(1).keys()].map(async () => {
       addCategory(CATEGORY);
     })
   );
