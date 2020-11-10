@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+// import { Carousel } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -26,7 +27,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-import { Icon, LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+import { Icon } from '@gqlapp/look-client-react/ui-antd/components';
 import { MODAL } from '@gqlapp/review-common';
 
 import ListingsCarousel from './ListingCarousel';
@@ -40,7 +41,6 @@ import { displayDataCheck } from './functions';
 // const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
 const ListingDetailView = props => {
-  let carousel = React.useRef();
   const {
     listing,
     loading,
@@ -48,19 +48,11 @@ const ListingDetailView = props => {
     currentUser,
     handleBookmark,
     listingBookmarkStatus,
-    showArrow = true,
+    showArrow,
     t,
     onShare,
     canUserReview
   } = props;
-
-  const prevSlide = () => {
-    carousel.prev();
-  };
-
-  const nextSlide = () => {
-    carousel.next();
-  };
 
   const isDiscount = listing && listing.listingFlags && listing.listingFlags.isDiscount;
   const discount =
@@ -163,8 +155,7 @@ const ListingDetailView = props => {
                     marginBottom: '30px'
                   }}
                 >
-                  {showArrow && <LeftArrow prevSlide={prevSlide} />}
-                  <Carousel ref={node => (carousel = node)} {...status}>
+                  <Carousel showArrow={showArrow} {...status}>
                     {youtubeUrl.length > 0 &&
                       youtubeUrl.map(yT => (
                         <div key="video">
@@ -185,7 +176,6 @@ const ListingDetailView = props => {
                         </div>
                       ))}
                   </Carousel>
-                  {showArrow && <RightArrow nextSlide={nextSlide} />}
                 </div>
                 <div align="left" style={{ padding: '5px' }}>
                   <h3>{t('listingDetail.details')}</h3>

@@ -7,18 +7,9 @@ import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/compone
 export default class Carousel extends React.Component {
   constructor(props) {
     super(props);
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
     this.carousel = React.createRef();
   }
 
-  next() {
-    this.carousel.next();
-  }
-
-  previous() {
-    this.carousel.prev();
-  }
   render() {
     // console.log('carousel', this.props);
     const { Compo, componentProps, showArrow = true, getCart, onDelete } = this.props;
