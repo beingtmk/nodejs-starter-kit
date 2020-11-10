@@ -1,0 +1,15 @@
+fragment CategoryFrag on Category {
+  id
+  title
+  imageUrl
+  description
+  isNavbar
+  isActive
+}
+
+fragment CategoryInfo on Category {
+  ...CategoryFrag
+  subCategory {
+    ...CategoryFrag
+  }
+}

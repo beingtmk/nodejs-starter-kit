@@ -1,6 +1,7 @@
-# GraphQL queries
-query queryNameQuery {
-  queryName {
-    typename
+#import "./Category.graphql"
+
+query category($id: Int!) {
+  category(id: $id) {
+    ...CategoryInfo
   }
 }

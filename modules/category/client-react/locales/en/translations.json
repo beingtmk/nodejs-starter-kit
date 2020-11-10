@@ -1,6 +1,15 @@
 {
-  "navLink": "Category nav link",
+  "navLink": "Category",
   "title": "Category module",
   "meta": "Category example",
-  "welcomeText": "Hello, This is the Category module"
+  "welcomeText": "Hello, This is the Category module",
+
+  "category": {
+    "btn": {
+      "add": "Add",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "subTitle": "Category List"
+  }
 }

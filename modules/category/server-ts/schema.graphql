@@ -30,8 +30,8 @@ type CategoryPageInfo {
 
 extend type Query {
   categories(
-    limit: Int
-    after: Int
+    limit: Int!
+    after: Int!
     orderBy: OrderByCategoryInput
     filter: FilterCategoryInput
   ): Categories
