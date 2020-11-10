@@ -1,16 +1,76 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Category {
+  id: Int
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+
+  subCategory: [Category]
+
+  isActive: Boolean
+}
+
+type Categories {
+  totalCount: Int
+  edges: [CategoryEdges]
+  pageInfo: CategoryPageInfo
+  rangeValues: RangeValues
+}
+
+type CategoryEdges {
+  node: Category
+  cursor: Int
+}
+
+type CategoryPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
 }
 
 extend type Query {
-  queryName: TypeName
+  categories(
+    limit: Int
+    after: Int
+    orderBy: OrderByCategoryInput
+    filter: FilterCategoryInput
+  ): Categories
+  category(id: Int): Category
+}
+
+input OrderByCategoryInput {
+  column: String
+  order: String
+}
+input FilterCategoryInput {
+  searchText: String
+  isActive: Boolean
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addCategory(input: AddCategoryInput): Boolean
+  editCategory(input: EditCategoryInput): Boolean
+  deleteCategory(id: Int): Boolean
 }
 
-extend type Subscription {
-  subscriptionName: TypeName
+input AddCategoryInput {
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+
+  subCategory: [AddCategoryInput]
 }
+
+input EditCategoryInput {
+  id: Int
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+  parentCategoryId: Int
+}
+
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }
