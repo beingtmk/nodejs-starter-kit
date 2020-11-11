@@ -10,9 +10,8 @@ import CATEGORIES_QUERY from '../graphql/CategoriesQuery.graphql';
 
 // Mutation
 import ADD_CATEGORY from '../graphql/AddCategory.graphql';
+import EDIT_CATEGORY from '../graphql/EditCategory.graphql';
 import DELETE_CATEGORY from '../graphql/DeleteCategory.graphql';
-
-import ROUTES from '../routes';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
@@ -122,6 +121,25 @@ export const withCategoryDeleting = Component =>
           }
         });
         Message.warning('Category deleted.');
+      }
+    })
+  })(Component);
+
+export const withEditCategory = Component =>
+  graphql(EDIT_CATEGORY, {
+    props: ({ mutate }) => ({
+      editCategory: async input => {
+        try {
+          await mutate({
+            variables: {
+              input: input
+            }
+          });
+        } catch (e) {
+          Message.destroy();
+          Message.error("Couldn't perform the action");
+          console.error(e);
+        }
       }
     })
   })(Component);

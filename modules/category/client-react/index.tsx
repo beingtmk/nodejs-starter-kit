@@ -32,6 +32,12 @@ export default new ClientModule({
       path={ROUTES.add}
       component={loadable(() => import('./containers/AddCategory').then(c => c.default), { fallback: <Spinner /> })}
     />,
+    <AuthRoute
+      exact
+      role={['admin']}
+      path={ROUTES.edit}
+      component={loadable(() => import('./containers/EditCategory').then(c => c.default), { fallback: <Spinner /> })}
+    />,
     <Route
       exact
       path={ROUTES.category}

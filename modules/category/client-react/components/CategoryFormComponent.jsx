@@ -14,7 +14,7 @@ const CategoryFormSchema = {
 };
 
 const CategoryFormComponent = props => {
-  const { cardTitle, handleSubmit, values, t } = props;
+  const { cardTitle, handleSubmit, values, t, showAdditional = false } = props;
   const [load, setLoad] = useState(false);
   return (
     <Card
@@ -62,18 +62,20 @@ const CategoryFormComponent = props => {
           label={'Image url'}
           value={values.imageUrl}
         />
-        <FieldArray
-          name={'subCategories'}
-          render={arrayHelpers => (
-            <RendersubCategories
-              name={'subCategories'}
-              arrayHelpers={arrayHelpers}
-              values={values.subCategories}
-              // label={"Add Choices"}
-              setload={setLoad}
-            />
-          )}
-        />
+        {showAdditional && (
+          <FieldArray
+            name={'subCategories'}
+            render={arrayHelpers => (
+              <RendersubCategories
+                name={'subCategories'}
+                arrayHelpers={arrayHelpers}
+                values={values.subCategories}
+                // label={"Add Choices"}
+                setload={setLoad}
+              />
+            )}
+          />
+        )}
         <Button color="primary" type="submit" disabled={load}>
           Submit
         </Button>
@@ -87,17 +89,19 @@ CategoryFormComponent.propTypes = {
   values: PropTypes.object,
   t: PropTypes.func,
   cardTitle: PropTypes.string,
+  showAdditional: PropTypes.bool,
 };
 
 const CategoryWithFormik = withFormik({
   enableReinitialize: true,
-  mapPropsToValues: () => {
+  mapPropsToValues: props => {
     return {
-      title: '',
-      description: '',
-      isNavbar: false,
-      imageUrl: '',
-      subCategories: [],
+      id: (props.category && props.category.id) || null,
+      title: (props.category && props.category.title) || '',
+      description: (props.category && props.category.description) || '',
+      isNavbar: (props.category && props.category.isNavbar) || false,
+      imageUrl: (props.category && props.category.imageUrl) || '',
+      subCategories: (props.category && props.category.subCategories) || [],
     };
   },
   async handleSubmit(values, { props: { onSubmit } }) {

@@ -7,17 +7,17 @@ import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import CategoryFormComponent from './CategoryFormComponent';
 
-const AddCategoryView = props => {
-  const { loading, t, onSubmit } = props;
+const EditCategoryView = props => {
+  const { loading, t, onSubmit, category } = props;
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('listAdd.title')} description={`${settings.app.name} - ${t('listAdd.meta')}`} />
+      <MetaTags title={t('listEdit.title')} description={`${settings.app.name} - ${t('listEdit.meta')}`} />
       {loading ? (
         <Spinner />
       ) : (
         <>
           <div align="center">
-            <CategoryFormComponent cardTitle={t('listAdd.cardTitle')} onSubmit={onSubmit} t={t} showAdditional={true} />
+            <CategoryFormComponent category={category} cardTitle={t('listEdit.cardTitle')} onSubmit={onSubmit} t={t} />
           </div>
         </>
       )}
@@ -25,10 +25,11 @@ const AddCategoryView = props => {
   );
 };
 
-AddCategoryView.propTypes = {
+EditCategoryView.propTypes = {
   loading: PropTypes.bool,
   t: PropTypes.func,
   onSubmit: PropTypes.func,
+  category: PropTypes.object,
 };
 
-export default AddCategoryView;
+export default EditCategoryView;

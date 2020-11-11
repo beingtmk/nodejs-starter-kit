@@ -18,7 +18,7 @@ const AddCategory = props => {
       Message.loading('Please wait...', 0);
       addCategory(values);
       Message.destroy();
-      Message.success('Listing added.');
+      Message.success('Category added.');
       history.push(`${ROUTES.adminPanel}`);
     } catch (e) {
       throw Error(e);
