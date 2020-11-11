@@ -6,7 +6,7 @@ import { Row, Col, Heading, Icon, PageLayout, MetaTags, AddButton } from '@gqlap
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
-// import CategoriesFilterComponent from './CategoriesFilterComponent';
+import CategoriesFilterComponent from './CategoriesFilterComponent';
 import CategoriesListComponent from './CategoriesListComponent';
 
 const CategoriesView = props => {
@@ -33,8 +33,8 @@ const CategoriesView = props => {
           </Link>
         </Col>
       </Row>
-      {/* <hr />
-      <CategoriesFilterComponent showIsActive={true} {...props} /> */}
+      <hr />
+      <CategoriesFilterComponent showIsActive={true} {...props} />
       <hr />
       <CategoriesListComponent {...props} />
     </PageLayout>

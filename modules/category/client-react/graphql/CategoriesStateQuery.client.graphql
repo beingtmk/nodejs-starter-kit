@@ -1,0 +1,7 @@
+#import "./CategoriesState.client.graphql"
+
+query CategoriesState {
+  categoriesState @client {
+    ...CategoriesStateInfo
+  }
+}

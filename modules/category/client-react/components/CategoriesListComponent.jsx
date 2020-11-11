@@ -87,7 +87,7 @@ const CategoryListComponent = props => {
       ),
       dataIndex: 'id',
       key: 'id',
-      render: (text, record) => (
+      render: (text /* , record */) => (
         <a
           href="#"
           // href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank"
@@ -171,14 +171,14 @@ const CategoryListComponent = props => {
     }
   ];
 
-  const expandedRowRender = (record, index) => {
+  const expandedRowRender = (record /* , index */) => {
     // const withLoadedCategory = Component => {
     //   const withLoadedCategory = ({ loading, ...props }) => (loading ? <Spinner size="small" /> : <Component {...props} />);
     //   return withCategory(withLoadedCategory);
     // };
     // console.log(record, index);
     // return withLoadedCategory(<Table columns={columns} dataSource={record.subCategories} />);
-    return <Table columns={columns} dataSource={record.subCategories} />;
+    return <Table /* showHeader={false} */ columns={columns} dataSource={record.subCategories} />;
   };
 
   const handlePageChange = (pagination, pageNumber) => {

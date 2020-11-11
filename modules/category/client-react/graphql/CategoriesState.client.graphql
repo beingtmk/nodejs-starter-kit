@@ -1,0 +1,11 @@
+fragment CategoriesStateInfo on CategoriesState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+
+    isActive
+  }
+}

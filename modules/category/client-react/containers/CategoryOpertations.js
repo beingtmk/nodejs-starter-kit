@@ -7,16 +7,29 @@ import settings from '@gqlapp/config';
 // Query
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import CATEGORIES_QUERY from '../graphql/CategoriesQuery.graphql';
+import CATEGORIES_STATE_QUERY from '../graphql/CategoriesStateQuery.client.graphql';
 
 // Mutation
 import ADD_CATEGORY from '../graphql/AddCategory.graphql';
 import EDIT_CATEGORY from '../graphql/EditCategory.graphql';
 import DELETE_CATEGORY from '../graphql/DeleteCategory.graphql';
 
+// Filter
+import UPDATE_ORDER_BY_CATEGORIES from '../graphql/UpdateOrderByCategories.client.graphql';
+import UPDATE_CATEGORIES_FILTER from '../graphql/UpdateCategoriesFilter.client.graphql';
+
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
     ? settings.pagination.web.itemsNumber
     : settings.pagination.mobile.itemsNumber;
+
+// Query
+export const withCategoriesState = Component =>
+  graphql(CATEGORIES_STATE_QUERY, {
+    props({ data: { categoriesState, loading } }) {
+      return { ...removeTypename(categoriesState), loadingState: loading };
+    }
+  })(Component);
 
 export const withCategories = Component =>
   graphql(CATEGORIES_QUERY, {
@@ -141,5 +154,26 @@ export const withEditCategory = Component =>
           console.error(e);
         }
       }
+    })
+  })(Component);
+
+export const withFilterUpdating = Component =>
+  graphql(UPDATE_CATEGORIES_FILTER, {
+    props: ({ mutate }) => ({
+      onSearchTextChange(searchText) {
+        // console.log("searchtext", searchText);
+        mutate({ variables: { filter: { searchText } } });
+      },
+      onIsActiveChange(isActive) {
+        mutate({ variables: { filter: { isActive } } });
+      }
+      // onFiltersRemove(filter, orderBy) {
+      //   mutate({
+      //     variables: {
+      //       filter,
+      //       orderBy
+      //     }
+      //   });
+      // }
     })
   })(Component);

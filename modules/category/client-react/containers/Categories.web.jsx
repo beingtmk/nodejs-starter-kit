@@ -3,12 +3,18 @@ import React from 'react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withCategories, withCategoryDeleting } from './CategoryOpertations';
+import { withCategoriesState, withCategories, withFilterUpdating, withCategoryDeleting } from './CategoryOpertations';
 import CategoriesView from '../components/CategoriesView.web';
 
 const Categories = props => {
   // console.log('props', props);
-  return <CategoriesView {...props} />;
+  return <CategoriesView filter={{}} {...props} />;
 };
 
-export default compose(withCategories, withCategoryDeleting, translate('category'))(Categories);
+export default compose(
+  withCategoriesState,
+  withCategories,
+  withFilterUpdating,
+  withCategoryDeleting,
+  translate('category')
+)(Categories);

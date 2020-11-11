@@ -1,0 +1,8 @@
+#import "./CategoriesState.client.graphql"
+
+mutation updateFilterCategories(
+  $filter: FilterCategoryInput!
+  $orderBy: OrderByCategoryInput
+) {
+  updateFilterCategories(filter: $filter, orderBy: $orderBy) @client
+}
