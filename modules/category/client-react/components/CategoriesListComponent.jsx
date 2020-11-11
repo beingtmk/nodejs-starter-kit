@@ -2,6 +2,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Card } from 'antd';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -14,18 +15,22 @@ import {
   DeleteIcon,
   Empty,
   Divider,
-  Tooltip,
-  Button,
+  /* Tooltip, */
+  // Card,
+  Avatar,
+  Button
 } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+// import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { NO_IMG } from '@gqlapp/listing-common';
 
 import ROUTES from '../routes';
-import { withCategory } from '../containers/CategoryOpertations';
+// import { withCategory } from '../containers/CategoryOpertations';
 
 const { itemsNumber, type } = settings.pagination.web;
+const { Meta } = Card;
 
 const NoCategoryMessage = ({ t }) => (
   <div align="center">
@@ -64,7 +69,7 @@ const CategoryListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: '',
+          order: ''
         });
       }
     }
@@ -74,13 +79,14 @@ const CategoryListComponent = props => {
   const columns = [
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'title')} href="#">
-          {t('list.column.listTitle')} {renderOrderByArrow('title')}
+        <a onClick={e => handleOrderBy(e, 'id')} href="#">
+          {/* {t('list.column.listTitle')} */}
+          {'Id'}
+          {renderOrderByArrow('id')}
         </a>
       ),
-      width: 100,
-      dataIndex: 'title',
-      key: 'title',
+      dataIndex: 'id',
+      key: 'id',
       render: (text, record) => (
         <a
           href="#"
@@ -88,7 +94,34 @@ const CategoryListComponent = props => {
         >
           {displayDataCheck(text)}
         </a>
+      )
+    },
+    {
+      title: (
+        <a onClick={e => handleOrderBy(e, 'title')} href="#">
+          {t('list.column.listTitle')} {renderOrderByArrow('title')}
+        </a>
       ),
+      dataIndex: 'title',
+      key: 'title',
+      render: (text, record) => (
+        <a
+          href="#"
+          // href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank"
+        >
+          <Card style={{ width: '200px', height: '60px' }} bodyStyle={{ padding: '10px' }}>
+            <Meta
+              title={
+                <>
+                  <div style={{ width: '100%', marginTop: '10px' }} />
+                  {displayDataCheck(text)}
+                </>
+              }
+              avatar={<Avatar size={46} src={record.imageUrl || NO_IMG} alt="" />}
+            />
+          </Card>
+        </a>
+      )
     },
     {
       title: (
@@ -96,11 +129,15 @@ const CategoryListComponent = props => {
           {t('list.column.active')} {renderOrderByArrow('is_active')}
         </a>
       ),
-      width: 120,
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <Select name="role" defaultValue={text} style={{ width: '90px' }} onChange={e => onToggle('isActive', e, record.id)}>
+        <Select
+          name="role"
+          defaultValue={text}
+          style={{ width: '90px' }}
+          onChange={e => onToggle('isActive', e, record.id)}
+        >
           <Option key={0} value={true}>
             Active
           </Option>
@@ -108,13 +145,12 @@ const CategoryListComponent = props => {
             In-active
           </Option>
         </Select>
-      ),
+      )
     },
 
     {
       title: t('list.column.actions'),
       key: 'actions',
-      width: 200,
       render: (text, record) => (
         <div
         // align="center"
@@ -131,8 +167,8 @@ const CategoryListComponent = props => {
           {/* <Divider type="vertical" /> */}
           <DeleteIcon onClick={() => deleteCategory(record.id)} title="Are you sure delete this listing?" />
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   const expandedRowRender = (record, index) => {
@@ -147,7 +183,7 @@ const CategoryListComponent = props => {
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor },
+      pageInfo: { endCursor }
     } = categories;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -165,7 +201,7 @@ const CategoryListComponent = props => {
             ) : (
               record.subCategories &&
               record.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
-            ),
+            )
         }}
         // loading={true}
       />
@@ -203,7 +239,7 @@ CategoryListComponent.propTypes = {
   onToggle: PropTypes.func,
   t: PropTypes.func,
   onDuplicate: PropTypes.func,
-  history: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default translate('category')(CategoryListComponent);

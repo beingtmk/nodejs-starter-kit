@@ -8,6 +8,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { MenuItem } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
+import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
@@ -42,14 +43,15 @@ export default new ClientModule({
       exact
       path={ROUTES.category}
       component={loadable(() => import('./containers/Category').then(c => c.default), { fallback: <Spinner /> })}
-    />,
+    />
   ],
   navItemAdmin: [
     <IfLoggedIn>
       <MenuItem key={ROUTES.adminPanel}>
         <NavLinkAdminWithI18n />
       </MenuItem>
-    </IfLoggedIn>,
+    </IfLoggedIn>
   ],
-  localization: [{ ns: 'category', resources }],
+  resolver: [resolvers],
+  localization: [{ ns: 'category', resources }]
 });

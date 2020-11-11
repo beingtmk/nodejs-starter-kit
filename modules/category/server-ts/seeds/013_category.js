@@ -77,7 +77,7 @@ export async function seed(knex) {
   }
 
   await Promise.all(
-    [...Array(1).keys()].map(async () => {
+    [...Array(12).keys()].map(async () => {
       addCategory(CATEGORY);
     })
   );
