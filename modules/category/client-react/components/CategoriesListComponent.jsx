@@ -15,7 +15,7 @@ import {
   Empty,
   Divider,
   Tooltip,
-  Button
+  Button,
 } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
@@ -42,7 +42,7 @@ const NoCategoryMessage = ({ t }) => (
 NoCategoryMessage.propTypes = { t: PropTypes.func };
 
 const CategoryListComponent = props => {
-  const { onToggle, orderBy, onOrderBy, loading, categories, t, loadData /* ,deleteListing, onDuplicate */ } = props;
+  const { onToggle, orderBy, onOrderBy, loading, categories, t, loadData, deleteCategory /*, onDuplicate */ } = props;
 
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
@@ -64,7 +64,7 @@ const CategoryListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: ''
+          order: '',
         });
       }
     }
@@ -88,7 +88,7 @@ const CategoryListComponent = props => {
         >
           {displayDataCheck(text)}
         </a>
-      )
+      ),
     },
     {
       title: (
@@ -100,12 +100,7 @@ const CategoryListComponent = props => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <Select
-          name="role"
-          defaultValue={text}
-          style={{ width: '90px' }}
-          onChange={e => onToggle('isActive', e, record.id)}
-        >
+        <Select name="role" defaultValue={text} style={{ width: '90px' }} onChange={e => onToggle('isActive', e, record.id)}>
           <Option key={0} value={true}>
             Active
           </Option>
@@ -113,7 +108,7 @@ const CategoryListComponent = props => {
             In-active
           </Option>
         </Select>
-      )
+      ),
     },
 
     {
@@ -134,10 +129,10 @@ const CategoryListComponent = props => {
             </Button>
           </Tooltip> */}
           {/* <Divider type="vertical" /> */}
-          {/* <DeleteIcon onClick={() => deleteListing(record.id)} title="Are you sure delete this listing?" /> */}
+          <DeleteIcon onClick={() => deleteCategory(record.id)} title="Are you sure delete this listing?" />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const expandedRowRender = (record, index) => {
@@ -146,13 +141,13 @@ const CategoryListComponent = props => {
     //   return withCategory(withLoadedCategory);
     // };
     // console.log(record, index);
-    // return withLoadedCategory(<Table columns={columns} dataSource={record.subCategory} />);
-    return <Table columns={columns} dataSource={record.subCategory} />;
+    // return withLoadedCategory(<Table columns={columns} dataSource={record.subCategories} />);
+    return <Table columns={columns} dataSource={record.subCategories} />;
   };
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor }
+      pageInfo: { endCursor },
     } = categories;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -168,9 +163,9 @@ const CategoryListComponent = props => {
             expanded ? (
               <Icon type="DownOutlined" onClick={e => onExpand(record, e)} />
             ) : (
-              record.subCategory &&
-              record.subCategory.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
-            )
+              record.subCategories &&
+              record.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
+            ),
         }}
         // loading={true}
       />
@@ -204,11 +199,11 @@ CategoryListComponent.propTypes = {
   categories: PropTypes.object,
   orderBy: PropTypes.object,
   onOrderBy: PropTypes.func.isRequired,
-  deleteListing: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
   onToggle: PropTypes.func,
   t: PropTypes.func,
   onDuplicate: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default translate('category')(CategoryListComponent);

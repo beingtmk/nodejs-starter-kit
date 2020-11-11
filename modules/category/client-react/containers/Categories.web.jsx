@@ -3,7 +3,7 @@ import React from 'react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withCategories } from './CategoryOpertations';
+import { withCategories, withCategoryDeleting } from './CategoryOpertations';
 import CategoriesView from '../components/CategoriesView.web';
 
 const Categories = props => {
@@ -11,4 +11,4 @@ const Categories = props => {
   return <CategoriesView {...props} />;
 };
 
-export default compose(withCategories, translate('category'))(Categories);
+export default compose(withCategories, withCategoryDeleting, translate('category'))(Categories);
