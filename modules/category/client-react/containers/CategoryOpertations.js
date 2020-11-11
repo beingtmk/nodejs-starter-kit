@@ -8,6 +8,10 @@ import settings from '@gqlapp/config';
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import CATEGORIES_QUERY from '../graphql/CategoriesQuery.graphql';
 
+// Mutation
+import ADD_CATEGORY from '../graphql/AddCategory.graphql';
+import DELETE_CATEGORY from '../graphql/DeleteCategory.graphql';
+
 import ROUTES from '../routes';
 
 const limit =
@@ -73,4 +77,51 @@ export const withCategory = Component =>
       if (error) throw new Error(error);
       return { loading, category, subscribeToMore, updateQuery };
     }
+  })(Component);
+
+// Mutation
+export const withAddCategory = Component =>
+  graphql(ADD_CATEGORY, {
+    props: ({ mutate }) => ({
+      addCategory: async values => {
+        try {
+          await mutate({
+            variables: {
+              input: values
+            },
+            optimisticResponse: {
+              __typename: 'Mutation',
+              addCategory: {
+                __typename: 'Category',
+                ...values
+              }
+            }
+          });
+          return true;
+        } catch (e) {
+          Message.destroy();
+          Message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withCategoryDeleting = Component =>
+  graphql(DELETE_CATEGORY, {
+    props: ({ mutate }) => ({
+      deleteCategory: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteCategory: {
+              id: id,
+              __typename: 'Category'
+            }
+          }
+        });
+        Message.warning('Category deleted.');
+      }
+    })
   })(Component);

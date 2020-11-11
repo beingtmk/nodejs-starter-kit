@@ -25,10 +25,10 @@ export interface CategoryInput {
   isNavbar: boolean;
   parentCategoryId: number;
 
-  subCategory: [CategoryInput] | undefined;
+  subCategories: [CategoryInput] | undefined;
 }
 
-const eager = '[sub_category]';
+const eager = '[sub_categories]';
 // const eager = '[category]';
 
 export default class CategoryDAO extends Model {
@@ -43,7 +43,7 @@ export default class CategoryDAO extends Model {
   }
   static get relationMappings() {
     return {
-      sub_category: {
+      sub_categories: {
         relation: Model.HasManyRelation,
         modelClass: CategoryDAO,
         join: {
@@ -77,13 +77,13 @@ export default class CategoryDAO extends Model {
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where('is_active', filter.isActive);
         });
       }
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function() {
+        queryBuilder.where(function () {
           this.where(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]));
         });
       }
@@ -119,7 +119,7 @@ export default class CategoryDAO extends Model {
   }
 
   public async addCategories(parentCategory: CategoryInput) {
-    const { title, description, isNavbar, imageUrl, subCategory, parentCategoryId } = parentCategory;
+    const { title, description, isNavbar, imageUrl, subCategories, parentCategoryId } = parentCategory;
     const parentId = await this.addCategory({
       title,
       description,
@@ -127,14 +127,14 @@ export default class CategoryDAO extends Model {
       isNavbar,
       parentCategoryId
     });
-    if (subCategory) {
-      subCategory.map(async c => {
+    if (subCategories) {
+      subCategories.map(async c => {
         await this.addCategories({
           title: c.title,
           description: c.description,
           imageUrl: c.imageUrl,
           isNavbar: c.isNavbar,
-          subCategory: c.subCategory,
+          subCategories: c.subCategories,
           parentCategoryId: parentId
         });
       });

@@ -6,7 +6,7 @@ type Category {
   description: String
   isNavbar: Boolean
 
-  subCategory: [Category]
+  subCategories: [Category]
 
   isActive: Boolean
 }
@@ -48,9 +48,9 @@ input FilterCategoryInput {
 }
 
 extend type Mutation {
-  addCategory(input: AddCategoryInput): Boolean
-  editCategory(input: EditCategoryInput): Boolean
-  deleteCategory(id: Int): Boolean
+  addCategory(input: AddCategoryInput!): Boolean
+  editCategory(input: EditCategoryInput!): Boolean
+  deleteCategory(id: Int!): Boolean
 }
 
 input AddCategoryInput {
@@ -59,7 +59,7 @@ input AddCategoryInput {
   description: String
   isNavbar: Boolean
 
-  subCategory: [AddCategoryInput]
+  subCategories: [AddCategoryInput]
 }
 
 input EditCategoryInput {

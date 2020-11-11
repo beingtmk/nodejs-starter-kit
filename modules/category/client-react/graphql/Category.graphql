@@ -9,7 +9,7 @@ fragment CategoryFrag on Category {
 
 fragment CategoryInfo on Category {
   ...CategoryFrag
-  subCategory {
+  subCategories {
     ...CategoryFrag
   }
 }

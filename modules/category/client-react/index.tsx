@@ -25,18 +25,25 @@ export default new ClientModule({
       path={ROUTES.adminPanel}
       component={loadable(() => import('./containers/Categories.web').then(c => c.default), { fallback: <Spinner /> })}
     />,
+
+    <AuthRoute
+      exact
+      role={['admin']}
+      path={ROUTES.add}
+      component={loadable(() => import('./containers/AddCategory').then(c => c.default), { fallback: <Spinner /> })}
+    />,
     <Route
       exact
       path={ROUTES.category}
       component={loadable(() => import('./containers/Category').then(c => c.default), { fallback: <Spinner /> })}
-    />
+    />,
   ],
   navItemAdmin: [
     <IfLoggedIn>
       <MenuItem key={ROUTES.adminPanel}>
         <NavLinkAdminWithI18n />
       </MenuItem>
-    </IfLoggedIn>
+    </IfLoggedIn>,
   ],
-  localization: [{ ns: 'category', resources }]
+  localization: [{ ns: 'category', resources }],
 });

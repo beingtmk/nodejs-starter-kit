@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { message } from 'antd';
 
+import { Message } from '@gqlapp/look-client-react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { withAddDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
@@ -14,8 +14,8 @@ const AddListing = props => {
   const { addListing, addDiscount, history } = props;
   const handleSubmit = async (values, discountValues) => {
     console.log(values);
-    message.destroy();
-    message.loading('Please wait...', 0);
+    Message.destroy();
+    Message.loading('Please wait...', 0);
     try {
       delete values.id;
       delete values.listingFlags.id;
@@ -28,8 +28,8 @@ const AddListing = props => {
         delete discountValues.discountDuration.id;
         await addDiscount({ modalId: id, ...discountValues });
       }
-      message.destroy();
-      message.success('Listing added.');
+      Message.destroy();
+      Message.success('Listing added.');
       history.push(`${ROUTES.adminPanel}`);
     } catch (e) {
       throw Error(e);
