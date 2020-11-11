@@ -41,8 +41,10 @@ export default new ClientModule({
     />,
     <Route
       exact
-      path={ROUTES.category}
-      component={loadable(() => import('./containers/Category').then(c => c.default), { fallback: <Spinner /> })}
+      path={ROUTES.categoryCatalogue}
+      component={loadable(() => import('./containers/CategoryCatalogue').then(c => c.default), {
+        fallback: <Spinner />
+      })}
     />
   ],
   navItemAdmin: [
