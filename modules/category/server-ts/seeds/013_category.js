@@ -3,45 +3,45 @@ import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 
 const CATEGORY = {
-  title: `Category 1`,
-  description: `Category description 1`,
-  imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1`,
+  title: `Category`,
+  description: `Category description`,
+  imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
 
   subCategories: [
     {
-      title: `Category 1.1`,
-      description: `Category description 1.1`,
-      imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1`,
+      title: `Category`,
+      description: `Category description`,
+      imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
 
       subCategories: [
         {
-          title: `Category 1.1.1`,
-          description: `Category description 1.1.1`,
-          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1`,
+          title: `Category`,
+          description: `Category description`,
+          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
 
           subCategories: [
             {
-              title: `Category 1.1.1.1`,
-              description: `Category description 1.1.1.1`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1.1`
+              title: `Category`,
+              description: `Category description`,
+              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
             },
             {
-              title: `Category 1.1.1.2`,
-              description: `Category description 1.1.1.2`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1.1`
+              title: `Category.2`,
+              description: `Category description.2`,
+              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
             }
           ]
         },
         {
-          title: `Category 1.1.2`,
-          description: `Category description 1.1.2`,
-          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1`,
+          title: `Category.2`,
+          description: `Category description.2`,
+          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
 
           subCategories: [
             {
-              title: `Category 1.1.1.1`,
-              description: `Category description 1.1.1.1`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C1.1.1.1`
+              title: `Category`,
+              description: `Category description`,
+              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
             }
           ]
         }
@@ -56,19 +56,30 @@ export async function seed(knex) {
     return await returnId(knex('category')).insert(decamelizeKeys(obj));
   }
 
-  async function addCategory(parentCategory) {
+  async function addCategory(parentCategory, i) {
     try {
       const { title, description, imageUrl, subCategories, parentCategoryId } = parentCategory;
-      const parentId = camelizeKeys(await add({ title, description, imageUrl, parentCategoryId }))[0];
+      const parentId = camelizeKeys(
+        await add({
+          title: `${title}${i}`,
+          description: `${description}${i}`,
+          imageUrl: `${imageUrl}${i}`,
+          parentCategoryId
+        })
+      )[0];
       subCategories &&
-        subCategories.map(async c => {
-          await addCategory({
-            title: c.title,
-            description: c.description,
-            imageUrl: c.imageUrl,
-            subCategories: c.subCategories,
-            parentCategoryId: parentId
-          });
+        subCategories.length > 0 &&
+        subCategories.map(async (c, ci) => {
+          await addCategory(
+            {
+              title: c.title,
+              description: c.description,
+              imageUrl: c.imageUrl,
+              subCategories: c.subCategories,
+              parentCategoryId: parentId
+            },
+            `${i}.${ci + 1}`
+          );
         });
       return true;
     } catch (e) {
@@ -77,8 +88,8 @@ export async function seed(knex) {
   }
 
   await Promise.all(
-    [...Array(12).keys()].map(async () => {
-      addCategory(CATEGORY);
+    [...Array(12).keys()].map(async i => {
+      addCategory(CATEGORY, i + 1);
     })
   );
 }
