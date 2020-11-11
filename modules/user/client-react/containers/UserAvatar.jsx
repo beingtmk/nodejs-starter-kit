@@ -3,14 +3,16 @@ import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { Avatar } from '@gqlapp/look-client-react/ui-antd/components';
+import { Avatar, Icon } from '@gqlapp/look-client-react';
 
 import CURRENT_USER_AVATAR_QUERY from '../graphql/CurrentUserQuery.graphql';
 
 const UserAvatar = props => {
   const profile = !props.currentUserLoading && props.currentUser && props.currentUser.profile;
 
-  return <Avatar size={props.size} shape={props.shape} src={profile && profile.avatar} icon="user" />;
+  return (
+    <Avatar size={props.size} shape={props.shape} src={profile && profile.avatar} icon={<Icon type="UserOutlined" />} />
+  );
 };
 
 UserAvatar.propTypes = {
