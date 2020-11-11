@@ -157,6 +157,7 @@ export const withEditCategory = Component =>
     })
   })(Component);
 
+// Filter
 export const withFilterUpdating = Component =>
   graphql(UPDATE_CATEGORIES_FILTER, {
     props: ({ mutate }) => ({
@@ -175,5 +176,15 @@ export const withFilterUpdating = Component =>
       //     }
       //   });
       // }
+    })
+  })(Component);
+
+export const withOrderByUpdating = Component =>
+  graphql(UPDATE_ORDER_BY_CATEGORIES, {
+    props: ({ mutate }) => ({
+      onOrderBy: orderBy => {
+        // console.log('orderby', mutate);
+        mutate({ variables: { orderBy } });
+      }
     })
   })(Component);

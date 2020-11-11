@@ -8,7 +8,9 @@ import Table from './Table';
 
 const { itemsNumber } = settings.pagination.web;
 
-const RenderTableLoading = ({ columns, tableProps }) => {
+const RenderTableLoading = ({ columns, tableProps = {} }) => {
+  const { expandable, ...restTableProps } = tableProps;
+  const renderSkeleton = () => <Skeleton title={{ width: '60%' }} paragraph={false} active />;
   const loadingColumn = columns.map(i => {
     return {
       title: i.title,
@@ -16,15 +18,25 @@ const RenderTableLoading = ({ columns, tableProps }) => {
       key: i.key,
       fixed: i.fixed,
       width: i.width,
-      render: () => <Skeleton title={{ width: '60%' }} paragraph={false} active />
+      render: renderSkeleton,
     };
   });
-  return <Table {...tableProps} dataSource={[...Array(itemsNumber).keys()]} columns={loadingColumn} />;
+  return (
+    <Table
+      expandable={{
+        ...expandable,
+        expandIcon: renderSkeleton,
+      }}
+      {...restTableProps}
+      dataSource={[...Array(itemsNumber).keys()]}
+      columns={loadingColumn}
+    />
+  );
 };
 
 RenderTableLoading.propTypes = {
   columns: PropTypes.array,
-  tableProps: PropTypes.object
+  tableProps: PropTypes.object,
 };
 
 export default RenderTableLoading;

@@ -18,7 +18,7 @@ import {
   /* Tooltip, */
   // Card,
   Avatar,
-  Button
+  Button,
 } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
@@ -69,7 +69,7 @@ const CategoryListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: ''
+          order: '',
         });
       }
     }
@@ -94,7 +94,7 @@ const CategoryListComponent = props => {
         >
           {displayDataCheck(text)}
         </a>
-      )
+      ),
     },
     {
       title: (
@@ -121,7 +121,7 @@ const CategoryListComponent = props => {
             />
           </Card>
         </a>
-      )
+      ),
     },
     {
       title: (
@@ -132,12 +132,7 @@ const CategoryListComponent = props => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <Select
-          name="role"
-          defaultValue={text}
-          style={{ width: '90px' }}
-          onChange={e => onToggle('isActive', e, record.id)}
-        >
+        <Select name="role" defaultValue={text} style={{ width: '90px' }} onChange={e => onToggle('isActive', e, record.id)}>
           <Option key={0} value={true}>
             Active
           </Option>
@@ -145,7 +140,7 @@ const CategoryListComponent = props => {
             In-active
           </Option>
         </Select>
-      )
+      ),
     },
 
     {
@@ -167,8 +162,8 @@ const CategoryListComponent = props => {
           {/* <Divider type="vertical" /> */}
           <DeleteIcon onClick={() => deleteCategory(record.id)} title="Are you sure delete this listing?" />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
   const expandedRowRender = (record /* , index */) => {
@@ -183,7 +178,7 @@ const CategoryListComponent = props => {
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor }
+      pageInfo: { endCursor },
     } = categories;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -201,7 +196,7 @@ const CategoryListComponent = props => {
             ) : (
               record.subCategories &&
               record.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
-            )
+            ),
         }}
         // loading={true}
       />
@@ -222,7 +217,9 @@ const CategoryListComponent = props => {
   return (
     <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
-      {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
+      {loading && (
+        <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 }, expandable: { expandedRowRender } }} />
+      )}
       {/* Render main category content */}
       {categories && categories.totalCount ? <RenderCategory /> : !loading && <NoCategoryMessage t={t} />}
     </div>
@@ -239,7 +236,7 @@ CategoryListComponent.propTypes = {
   onToggle: PropTypes.func,
   t: PropTypes.func,
   onDuplicate: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default translate('category')(CategoryListComponent);
