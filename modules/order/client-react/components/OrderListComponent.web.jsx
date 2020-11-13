@@ -140,31 +140,20 @@ const OrderListComponent = props => {
       title: t('orders.column.actions'),
       key: 'actions',
       render: (text, record) => (
-        <div align="center" style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* <Row type="flex"> */}
-          {/* <Col> */}
+        <div
+          style={{
+            display: 'flex'
+          }}
+        >
           {record.orderState.state !== ORDER_STATES.STALE && (
             <Link to={`${ROUTES.orderDetailLink}${record.id}`}>
               <ViewIcon />
             </Link>
           )}
           <Divider type="vertical" />
-          {/* </Col> */}
-          {record.orderState.state === ORDER_STATES.DISPATCHED && (
-            <>
-              {/* <Col> */}
-              <OrderStatusMail orderId={record.id} />
-              {/* <Divider type="vertical" /> */}
-              {/* </Col> */}
-              {/* <Col> */}
-              <Divider type="vertical" />
-              {/* </Col> */}
-            </>
-          )}
-          {/* <Col> */}
+          <OrderStatusMail orderId={record.id} disabled={record.orderState.state !== ORDER_STATES.DISPATCHED} />
+          <Divider type="vertical" />
           <DeleteIcon title="Are you sure delete this order?" onClick={() => onDelete(record.id)} />
-          {/* </Col> */}
-          {/* </Row> */}
         </div>
       )
     }

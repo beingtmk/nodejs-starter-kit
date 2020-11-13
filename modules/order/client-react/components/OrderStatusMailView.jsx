@@ -8,6 +8,7 @@ import { Form, Icon, RenderField, ModalDrawer, Button, Col } from '@gqlapp/look-
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 const OrderStatusMailView = props => {
+  const { disabled = false } = props;
   return (
     <>
       <ModalDrawer
@@ -21,6 +22,7 @@ const OrderStatusMailView = props => {
         modalTitle={`Mail details for order id: ${displayDataCheck(props.orderId)}`}
         height="auto"
         block={false}
+        disabled={disabled}
       >
         <StatusMailForm {...props} />
       </ModalDrawer>
@@ -63,7 +65,8 @@ StatusMailForm.propTypes = {
 OrderStatusMailView.propTypes = {
   orderId: PropTypes.number,
   values: PropTypes.object,
-  handleSubmit: PropTypes.func
+  handleSubmit: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 const OrderStatusMailWithFormik = withFormik({

@@ -23,7 +23,8 @@ const ModalDrawer = props => {
     shape = 'default',
     style,
     size,
-    block = true
+    block = true,
+    disabled
   } = props;
   const [visibleModal, setVisibleModal] = useState(false);
   const [visibleDrawer, setVisibleDrawer] = useState(false);
@@ -38,6 +39,7 @@ const ModalDrawer = props => {
           size={size}
           style={style}
           block={block}
+          disabled={disabled}
           onClick={() => setVisibleModal(true)}
         >
           {buttonText}
@@ -54,6 +56,7 @@ const ModalDrawer = props => {
           shape={shape}
           size={size}
           {...style}
+          disabled={disabled}
           block
           onClick={() => setVisibleDrawer(true)}
         >
@@ -97,6 +100,7 @@ ModalDrawer.propTypes = {
   shape: PropTypes.string,
   style: PropTypes.object,
   size: PropTypes.string,
-  block: PropTypes.bool
+  block: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 export default ModalDrawer;
