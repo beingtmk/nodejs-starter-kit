@@ -7,7 +7,8 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
-import RendersubCategories from './RendersubCategories';
+import CategoryTreeComponent from '../containers/CategoryTreeComponent';
+// import RendersubCategories from './RendersubCategories';
 
 const CategoryFormSchema = {
   title: [required],
@@ -36,6 +37,7 @@ const CategoryFormComponent = props => {
         </>
       }
     >
+      {/* {console.log(values.parentCategoryId)} */}
       <Form onSubmit={handleSubmit} align="left">
         <Field
           name="title"
@@ -55,6 +57,14 @@ const CategoryFormComponent = props => {
         />
         <Field name="isNavbar" component={RenderCheckBox} type="checkbox" label={'Is Navbar'} checked={values.isNavbar} />
         <Field
+          component={CategoryTreeComponent}
+          type="number"
+          name="parentCategoryId"
+          placeholder="category"
+          label="Select a category"
+          value={values.parentCategoryId}
+        />
+        <Field
           name="imageUrl"
           component={RenderUpload}
           type="text"
@@ -62,7 +72,7 @@ const CategoryFormComponent = props => {
           label={'Image url'}
           value={values.imageUrl}
         />
-        {showAdditional && (
+        {/* {showAdditional && (
           <FieldArray
             name={'subCategories'}
             render={arrayHelpers => (
@@ -75,7 +85,7 @@ const CategoryFormComponent = props => {
               />
             )}
           />
-        )}
+        )} */}
         <Button color="primary" type="submit" disabled={load}>
           Submit
         </Button>
@@ -98,10 +108,11 @@ const CategoryWithFormik = withFormik({
     return {
       id: (props.category && props.category.id) || null,
       title: (props.category && props.category.title) || '',
+      parentCategoryId: (props.category && props.category.parentCategoryId) || null,
       description: (props.category && props.category.description) || '',
       isNavbar: (props.category && props.category.isNavbar) || false,
       imageUrl: (props.category && props.category.imageUrl) || '',
-      subCategories: (props.category && props.category.subCategories) || [],
+      // subCategories: (props.category && props.category.subCategories) || [],
     };
   },
   async handleSubmit(values, { props: { onSubmit } }) {

@@ -21,11 +21,12 @@ import {
   Tooltip,
   Card,
   Button,
-  Message
+  Message,
 } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { MODAL } from '@gqlapp/review-common';
+
+import { displayDataCheck } from './functions';
 
 const VIDEO = 'video';
 const LAST_STEP = 3;
@@ -43,32 +44,30 @@ const ListingFormSchema = [
       Yup.object().shape({
         cost: Yup.number()
           .required()
-          .typeError('Cost is required field')
+          .typeError('Cost is required field'),
       })
     ),
     listingDetail: Yup.object().shape({
       inventoryCount: Yup.number()
         .min(1, 'Inventory count must be greater than or equal to 1')
-        .required()
+        .required(),
     }),
     listingOptions: Yup.object().shape({
       fixedQuantity: Yup.mixed()
         .required()
-        .test('lessThanInventoryCount', 'Fixed quantity must be less than or equal to "Inventory Count"', function(
-          value
-        ) {
+        .test('lessThanInventoryCount', 'Fixed quantity must be less than or equal to "Inventory Count"', function(value) {
           const inventoryCount = this.options.from[1].value.listingDetail.inventoryCount;
           if (value === 0) {
             return this.createError({ Message: 'Fixed quantity is required (Use -1)' });
           }
           return value <= inventoryCount ? true : false;
         })
-        .required()
-    })
+        .required(),
+    }),
   }),
   Yup.object().shape({
     listingFlags: Yup.object().shape({
-      isDiscount: Yup.boolean()
+      isDiscount: Yup.boolean(),
     }),
     listingCostArray: Yup.array().of(
       Yup.object().shape({
@@ -79,19 +78,19 @@ const ListingFormSchema = [
             : value < 100
             ? true
             : this.createError({ Message: 'Discount must be less than 100' });
-        })
+        }),
       })
-    )
+    ),
   }),
   Yup.object().shape({
     listingMedia: Yup.object().shape({
       video: Yup.array().of(
         Yup.object().shape({
-          url: Yup.string().required('Url is required or delete field')
+          url: Yup.string().required('Url is required or delete field'),
         })
-      )
-    })
-  })
+      ),
+    }),
+  }),
 ];
 
 const ListingFormComponent = props => {
@@ -179,13 +178,13 @@ const ListingFormComponent = props => {
   const addVideo = () => {
     const obj = {
       url: '',
-      type: VIDEO
+      type: VIDEO,
     };
     props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
   };
   const addHighlight = () => {
     const obj = {
-      highlight: ''
+      highlight: '',
     };
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
@@ -510,7 +509,7 @@ ListingFormComponent.propTypes = {
   handleSubmit: PropTypes.func,
   values: PropTypes.object,
   listing: PropTypes.object,
-  modalDiscount: PropTypes.object
+  modalDiscount: PropTypes.object,
 };
 
 const ListingWithFormik = withFormik({
@@ -518,14 +517,14 @@ const ListingWithFormik = withFormik({
   mapPropsToValues: props => {
     let listingMedia = {
       image: [],
-      video: []
+      video: [],
     };
     function getListingImage(listingMedium) {
       const obj = {
         id: (listingMedium && listingMedium.id) || null,
         url: (listingMedium && listingMedium.url) || '',
         type: (listingMedium && listingMedium.type) || '',
-        isActive: (listingMedium && listingMedium.isActive) || true
+        isActive: (listingMedium && listingMedium.isActive) || true,
       };
       obj.type === 'image' && listingMedia.image.push(obj);
       obj.type === 'video' && listingMedia.video.push(obj);
@@ -539,13 +538,13 @@ const ListingWithFormik = withFormik({
           (props.modalDiscount && props.modalDiscount.discountPercent) ||
           0,
         type: (listingCost && listingCost.type) || '',
-        label: (listingCost && listingCost.label) || ''
+        label: (listingCost && listingCost.label) || '',
       };
     }
     function getListingHighlight(listingHighlight) {
       return {
         id: (listingHighlight && listingHighlight.id) || null,
-        highlight: (listingHighlight && listingHighlight.highlight) || ''
+        highlight: (listingHighlight && listingHighlight.highlight) || '',
       };
     }
 
@@ -561,50 +560,41 @@ const ListingWithFormik = withFormik({
       sku: (props.listing && props.listing.sku) || '',
       isActive: props.listing && (props.listing.isActive ? true : false),
       listingHighlight:
-        (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) ||
-        [],
-      listingCostArray: (props.listing &&
-        props.listing.listingCostArray &&
-        props.listing.listingCostArray.map(getCost)) || [
+        (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) || [],
+      listingCostArray: (props.listing && props.listing.listingCostArray && props.listing.listingCostArray.map(getCost)) || [
         {
           id: null,
           cost: '',
           discount: 0,
           type: '',
-          label: ''
-        }
+          label: '',
+        },
       ],
 
       listingFlags: (props.listing && props.listing.listingFlags) || {
         id: null,
         isFeatured: false,
         isNew: true,
-        isDiscount: false
+        isDiscount: false,
       },
       discountId: (props.modalDiscount && props.modalDiscount.id) || null,
       isTimeStamp: props.modalDiscount && props.modalDiscount.discountDuration ? true : false,
       discountDuration: {
-        id:
-          (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.id) ||
-          null,
+        id: (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.id) || null,
         startDate:
-          (props.modalDiscount &&
-            props.modalDiscount.discountDuration &&
-            props.modalDiscount.discountDuration.startDate) ||
+          (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.startDate) ||
           null,
         endDate:
-          (props.modalDiscount &&
-            props.modalDiscount.discountDuration &&
-            props.modalDiscount.discountDuration.endDate) ||
-          null
+          (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.endDate) ||
+          null,
       },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
-        fixedQuantity: -1
+        fixedQuantity: -1,
       },
       listingDetail: (props.listing && props.listing.listingDetail) || {
         id: null,
-        inventoryCount: 1
+        inventoryCount: 1,
       },
 
       listingMedia: (props.listing &&
@@ -612,8 +602,8 @@ const ListingWithFormik = withFormik({
         props.listing.listingMedia.map(getListingImage) &&
         listingMedia) || {
         image: [],
-        video: []
-      }
+        video: [],
+      },
     };
   },
   async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
@@ -640,18 +630,18 @@ const ListingWithFormik = withFormik({
         title: values.title,
         description: values.description,
         sku: values.sku,
-        isActive: values.isActive
+        isActive: values.isActive,
       };
       const discountInput = {
         id: values.discountId,
         modalName: MODAL[1].value,
-        discountPercent: isDiscount ? values.listingCostArray[0].discount : 0
+        discountPercent: isDiscount ? values.listingCostArray[0].discount : 0,
       };
       if (values.isTimeStamp) {
         discountInput.discountDuration = {
           id: values.discountDuration.id,
           startDate: values.discountDuration.startDate || now,
-          endDate: values.discountDuration.endDate || now
+          endDate: values.discountDuration.endDate || now,
         };
       }
       // console.log(!values.isTimeStamp, values.listingCostArray[0].discount, isDiscount);
@@ -661,7 +651,7 @@ const ListingWithFormik = withFormik({
         // discount: !values.isTimeStamp ? values.listingCostArray[0].discount : 0,
         discount: 0,
         type: values.listingCostArray[0].type,
-        label: values.listingCostArray[0].label
+        label: values.listingCostArray[0].label,
       };
       input.listingCostArray.push(cost);
       input.listingFlags = {
@@ -669,15 +659,15 @@ const ListingWithFormik = withFormik({
         isFeatured: values.listingFlags.isFeatured,
         isNew: values.listingFlags.isNew,
         // isDiscount: !values.isTimeStamp && values.listingFlags.isDiscount
-        isDiscount: false
+        isDiscount: false,
       };
       input.listingOptions = {
         id: values.listingOptions.id,
-        fixedQuantity: values.listingOptions.fixedQuantity
+        fixedQuantity: values.listingOptions.fixedQuantity,
       };
       input.listingDetail = {
         id: values.listingDetail.id,
-        inventoryCount: values.listingDetail.inventoryCount
+        inventoryCount: values.listingDetail.inventoryCount,
       };
       input.listingMedia = [];
       if (values.listingMedia.image.length > 0) {
@@ -685,7 +675,7 @@ const ListingWithFormik = withFormik({
       } else {
         input.listingMedia.push({
           url: NO_IMG,
-          type: 'image'
+          type: 'image',
         });
       }
       if (values.listingMedia.video.length > 0) {
@@ -703,7 +693,7 @@ const ListingWithFormik = withFormik({
   },
   // validate: values => validate(values, ListingFormSchema),
   validationSchema: ({ step }) => ListingFormSchema[step],
-  displayName: 'Listing Form' // helps with React DevTools
+  displayName: 'Listing Form', // helps with React DevTools
 });
 
 export default ListingWithFormik(ListingFormComponent);
