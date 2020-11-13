@@ -220,9 +220,31 @@ const RelatedCardComponent = props => {
                 }
               />
               {startDate <= now && endDate >= now ? (
-                <h4>Ends in: {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days</h4>
+                <h4>
+                  Deal ends in:{' '}
+                  {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
+                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
+                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
+                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+                    ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
+                    : 'Deal has Ended!'}
+                </h4>
               ) : startDate >= now && endDate >= now ? (
-                <h4>Starts in: {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days</h4>
+                <h4>
+                  Deal starts in:
+                  {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
+                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
+                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
+                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+                    ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
+                    : 'Deal has Ended!'}
+                </h4>
               ) : (
                 <br />
               )}
