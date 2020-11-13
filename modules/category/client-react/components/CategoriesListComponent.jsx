@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Spin, Card } from 'antd';
+import { useQuery } from 'react-apollo';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -17,7 +18,7 @@ import {
   /* Tooltip, */
   // Card,
   Avatar,
-  Button
+  Button,
 } from '@gqlapp/look-client-react';
 import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
@@ -25,6 +26,7 @@ import { displayDataCheck } from '@gqlapp/listing-client-react/components/functi
 // import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import { NO_IMG } from '@gqlapp/listing-common';
 
+import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import ROUTES from '../routes';
 // import { withCategory } from '../containers/CategoryOpertations';
 
@@ -68,7 +70,7 @@ const CategoryListComponent = props => {
       } else if (orderBy.order === 'desc') {
         return onOrderBy({
           column: '',
-          order: ''
+          order: '',
         });
       }
     }
@@ -86,7 +88,7 @@ const CategoryListComponent = props => {
       ),
       dataIndex: 'id',
       key: 'id',
-      render: (text /* , record */) => displayDataCheck(text)
+      render: (text /* , record */) => displayDataCheck(text),
     },
     {
       title: (
@@ -115,7 +117,7 @@ const CategoryListComponent = props => {
             </Card>
           </a>
         </a>
-      )
+      ),
     },
     {
       title: (
@@ -126,12 +128,7 @@ const CategoryListComponent = props => {
       dataIndex: 'isActive',
       key: 'isActive',
       render: (text, record) => (
-        <Select
-          name="role"
-          defaultValue={text}
-          style={{ width: '90px' }}
-          onChange={e => onToggle('isActive', e, record.id)}
-        >
+        <Select name="role" defaultValue={text} style={{ width: '90px' }} onChange={e => onToggle('isActive', e, record.id)}>
           <Option key={0} value={true}>
             Active
           </Option>
@@ -139,7 +136,7 @@ const CategoryListComponent = props => {
             In-active
           </Option>
         </Select>
-      )
+      ),
     },
 
     {
@@ -161,23 +158,47 @@ const CategoryListComponent = props => {
           {/* <Divider type="vertical" /> */}
           <DeleteIcon onClick={() => deleteCategory(record.id)} title="Are you sure delete this listing?" />
         </div>
-      )
-    }
+      ),
+    },
   ];
 
-  const expandedRowRender = (record /* , index */) => {
-    // const withLoadedCategory = Component => {
-    //   const withLoadedCategory = ({ loading, ...props }) => (loading ? <Spinner size="small" /> : <Component {...props} />);
-    //   return withCategory(withLoadedCategory);
-    // };
-    // console.log(record, index);
-    // return withLoadedCategory(<Table columns={columns} dataSource={record.subCategories} />);
-    return <Table /* showHeader={false} */ columns={columns} dataSource={record.subCategories} />;
+  const ExpandedRowRender = ({ record /* , index */ }) => {
+    const { loading, data } = useQuery(CATEGORY_QUERY, {
+      variables: {
+        id: record.id,
+      },
+    });
+    const category = data && data.category;
+    return loading ? (
+      <div align="center">
+        <Spin size="small" />
+      </div>
+    ) : (
+      <Table
+        showHeader={false}
+        tableLayout={'auto'}
+        expandable={{
+          expandedRowRender: (record, index, indent, expanded) => (
+            <ExpandedRowRender record={record} index={index} indent={indent} expanded={expanded} />
+          ),
+          expandIcon: ({ expanded, onExpand, record }) =>
+            expanded ? (
+              <Icon type="DownOutlined" onClick={e => onExpand(record, e)} />
+            ) : (
+              category.subCategories &&
+              category.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
+            ),
+        }}
+        columns={columns}
+        dataSource={category.subCategories}
+      />
+    );
+    // return <h1>hello</h1>
   };
 
   const handlePageChange = (pagination, pageNumber) => {
     const {
-      pageInfo: { endCursor }
+      pageInfo: { endCursor },
     } = categories;
     pagination === 'relay' ? loadData(endCursor + 1, 'add') : loadData((pageNumber - 1) * itemsNumber, 'replace');
   };
@@ -187,15 +208,18 @@ const CategoryListComponent = props => {
       <Table
         dataSource={categories.edges.map(({ node }) => node)}
         columns={columns}
+        tableLayout={'auto'}
         expandable={{
-          expandedRowRender,
+          expandedRowRender: (record, index, indent, expanded) => (
+            <ExpandedRowRender record={record} index={index} indent={indent} expanded={expanded} />
+          ),
           expandIcon: ({ expanded, onExpand, record }) =>
             expanded ? (
               <Icon type="DownOutlined" onClick={e => onExpand(record, e)} />
             ) : (
               record.subCategories &&
               record.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
-            )
+            ),
         }}
         // loading={true}
       />
@@ -217,7 +241,17 @@ const CategoryListComponent = props => {
     <div style={{ overflowX: 'auto' }}>
       {/* Render loader */}
       {loading && (
-        <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 }, expandable: { expandedRowRender } }} />
+        <RenderTableLoading
+          columns={columns}
+          tableProps={{
+            scroll: { x: 1300 },
+            expandable: {
+              expandedRowRender: (record, index, indent, expanded) => (
+                <ExpandedRowRender record={record} index={index} indent={indent} expanded={expanded} />
+              ),
+            },
+          }}
+        />
       )}
       {/* Render main category content */}
       {categories && categories.totalCount ? <RenderCategory /> : !loading && <NoCategoryMessage t={t} />}
@@ -235,7 +269,7 @@ CategoryListComponent.propTypes = {
   onToggle: PropTypes.func,
   t: PropTypes.func,
   onDuplicate: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default translate('category')(CategoryListComponent);
