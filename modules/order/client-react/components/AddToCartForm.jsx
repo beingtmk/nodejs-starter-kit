@@ -104,7 +104,7 @@ const AddToCartWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
       inventoryCount: (props.max && props.max) || 0,
-      quantity: (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || props.max > 0 ? 1 : 0
+      quantity: (props.item && props.item.orderOptions && props.item.orderOptions.quantity) || (props.max > 0 ? 1 : 0)
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {
