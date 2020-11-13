@@ -27,9 +27,9 @@ const CategoryNavBarComponentView = props => {
         categories.totalCount > 0 &&
         categories.edges.map(c => (
           <Col span={24 / categories.totalCount}>
-            <div onMouseEnter={() => setDropDownMenu(c.node)}>
+            <a href="#" onMouseEnter={() => setDropDownMenu(c.node)}>
               <h1>{c.node.title}</h1>
-            </div>
+            </a>
           </Col>
         ))}
       <Col span={24}>
