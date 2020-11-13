@@ -10,6 +10,7 @@ import { Row, Col } from '@gqlapp/look-client-react';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import { CONTACT } from '@gqlapp/look-common/';
+import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 
 import Icon from './Icon';
 import MenuItem from './MenuItem';
@@ -89,7 +90,7 @@ class NavBar extends React.Component {
 
             <Col span={24}>
               <Row>
-                <Col align="left" xs={12} md={12} lg={6}>
+                <Col align="left" xs={12} md={12} lg={6} style={{ height: '50px' }}>
                   <NavLink to={`${HOME_ROUTES.home}`} className="nav-link">
                     <ScrollParallax
                       location="page-layout"
@@ -97,12 +98,12 @@ class NavBar extends React.Component {
                       animation={{
                         playScale: [1, 1.1],
                         scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-79px',
-                        translateY: isMobile ? '' : '20px'
+                        translateX: isMobile ? '' : '-60px',
+                        translateY: isMobile ? '' : '12px'
                       }}
                     >
                       <img
-                        height="100%"
+                        height="80px"
                         src={
                           'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
                         }
@@ -178,6 +179,12 @@ class NavBar extends React.Component {
                   </div>
                 </Col>
               </Row>
+            </Col>
+
+            <Col lg={24} xs={0}>
+              <div align="center" className="navbar-contact-menu">
+                <CategoryNavBarComponent />
+              </div>
             </Col>
 
             <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>

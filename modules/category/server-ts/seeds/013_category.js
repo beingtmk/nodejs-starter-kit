@@ -2,52 +2,26 @@
 import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 
+let CATEGORIES = {
+  title: `Category`,
+  description: `Category description`,
+  imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
+  isNavbar: true
+
+  // subCategories: [
+  // {
+  //   title: `Category`,
+  //   description: `Category description`,
+  //   imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
+  // }
+  // ]
+};
+
 const CATEGORY = {
   title: `Category`,
   description: `Category description`,
-  imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
-
-  subCategories: [
-    {
-      title: `Category`,
-      description: `Category description`,
-      imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
-
-      subCategories: [
-        {
-          title: `Category`,
-          description: `Category description`,
-          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
-
-          subCategories: [
-            {
-              title: `Category`,
-              description: `Category description`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
-            },
-            {
-              title: `Category.2`,
-              description: `Category description.2`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
-            }
-          ]
-        },
-        {
-          title: `Category.2`,
-          description: `Category description.2`,
-          imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`,
-
-          subCategories: [
-            {
-              title: `Category`,
-              description: `Category description`,
-              imageUrl: `https://via.placeholder.com/300x300/141c1f?text=C`
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
+  isNavbar: true
 };
 
 export async function seed(knex) {
@@ -88,8 +62,9 @@ export async function seed(knex) {
   }
 
   await Promise.all(
-    [...Array(12).keys()].map(async i => {
-      addCategory(CATEGORY, i + 1);
+    [...Array(6).keys()].map(async i => {
+      CATEGORIES['subCategories'] = [...Array(Math.floor(Math.random() * (15 - 5 + 1) + 5)).keys()].map(() => CATEGORY);
+      addCategory(CATEGORIES, i + 1);
     })
   );
 }

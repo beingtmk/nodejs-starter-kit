@@ -14,14 +14,20 @@ class DropDown extends React.Component {
   }
 
   render() {
-    const { children, onClick, ...props } = this.props;
+    const { children, onClick, className, ...props } = this.props;
     // return <Menu.Item {...props}>{children}</Menu.Item>;
 
     const menu = <Menu onClick={onClick}>{children}</Menu>;
 
     const content = props.content ? props.content : null;
     return (
-      <Dropdown overlay={menu} trigger={['click', 'hover']} placement="bottomCenter">
+      <Dropdown
+        overlayClassName={className}
+        overlay={menu}
+        trigger={['click', 'hover']}
+        placement="bottomCenter"
+        {...props}
+      >
         <a className="ant-dropdown-link" href="#">
           {content}
           {!props.noicon ? <Icon className="dropdown" type={props.type ? props.type : 'DownOutlined'} /> : null}
@@ -32,7 +38,8 @@ class DropDown extends React.Component {
 }
 
 DropDown.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default DropDown;
