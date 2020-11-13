@@ -58,8 +58,7 @@ input AddCategoryInput {
   imageUrl: String
   description: String
   isNavbar: Boolean
-
-  subCategories: [AddCategoryInput]
+  parentCategoryId: Int
 }
 
 input EditCategoryInput {

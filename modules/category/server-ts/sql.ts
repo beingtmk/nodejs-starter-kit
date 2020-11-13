@@ -10,14 +10,6 @@ export interface Identifier {
   id: number;
 }
 
-interface Category {
-  title: string;
-  imageUrl: string;
-  description: string;
-  isNavbar: boolean;
-  parentCategoryId: number;
-}
-
 export interface CategoryInput {
   title: string;
   imageUrl: string;
@@ -25,7 +17,7 @@ export interface CategoryInput {
   isNavbar: boolean;
   parentCategoryId: number;
 
-  subCategories: [CategoryInput] | undefined;
+  // subCategories: [CategoryInput] | undefined;
 }
 
 const eager = '[sub_categories]';
@@ -113,34 +105,33 @@ export default class CategoryDAO extends Model {
     return res;
   }
 
-  public async addCategory(obj: Category) {
-    const res = await CategoryDAO.query().insertGraph(decamelizeKeys(obj));
-    return res.id;
+  public addCategory(params: CategoryInput) {
+    return CategoryDAO.query().insertGraph(decamelizeKeys(params));
   }
 
-  public async addCategories(parentCategory: CategoryInput) {
-    const { title, description, isNavbar, imageUrl, subCategories, parentCategoryId } = parentCategory;
-    const parentId = await this.addCategory({
-      title,
-      description,
-      imageUrl,
-      isNavbar,
-      parentCategoryId
-    });
-    if (subCategories) {
-      subCategories.map(async c => {
-        await this.addCategories({
-          title: c.title,
-          description: c.description,
-          imageUrl: c.imageUrl,
-          isNavbar: c.isNavbar,
-          subCategories: c.subCategories,
-          parentCategoryId: parentId
-        });
-      });
-    }
-    return true;
-  }
+  // public async addCategories(parentCategory: CategoryInput) {
+  //   const { title, description, isNavbar, imageUrl, subCategories, parentCategoryId } = parentCategory;
+  //   const parentId = await this.addCategory({
+  //     title,
+  //     description,
+  //     imageUrl,
+  //     isNavbar,
+  //     parentCategoryId
+  //   });
+  //   if (subCategories) {
+  //     subCategories.map(async c => {
+  //       await this.addCategories({
+  //         title: c.title,
+  //         description: c.description,
+  //         imageUrl: c.imageUrl,
+  //         isNavbar: c.isNavbar,
+  //         subCategories: c.subCategories,
+  //         parentCategoryId: parentId
+  //       });
+  //     });
+  //   }
+  //   return true;
+  // }
 
   public async editCategory(params: CategoryInput) {
     const res = await CategoryDAO.query().upsertGraph(decamelizeKeys(params));

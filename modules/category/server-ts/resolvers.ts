@@ -35,7 +35,8 @@ export default (pubsub: any) => ({
   },
   Mutation: {
     async addCategory(obj: any, { input }: { input: CategoryInput }, { Category }: any) {
-      return Category.addCategories(input);
+      const res = await Category.addCategory(input);
+      return true;
     },
     async editCategory(obj: any, { input }: { input: CategoryInput }, { Category }: any) {
       return Category.editCategory(input);
