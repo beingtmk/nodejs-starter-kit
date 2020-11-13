@@ -3,6 +3,7 @@ fragment CategoryFrag on Category {
   title
   imageUrl
   description
+  parentCategoryId
   isNavbar
   isActive
 }

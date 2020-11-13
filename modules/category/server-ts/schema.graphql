@@ -5,6 +5,7 @@ type Category {
   imageUrl: String
   description: String
   isNavbar: Boolean
+  parentCategoryId: Int
 
   subCategories: [Category]
 
