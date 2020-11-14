@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withFormik, FieldArray } from 'formik';
+import { withFormik } from 'formik';
 
-import { Button, RenderCheckBox, RenderUpload, Icon, Card, RenderField, Form } from '@gqlapp/look-client-react';
+import {
+  FormItem,
+  Select,
+  Button,
+  RenderCheckBox,
+  Option,
+  RenderUpload,
+  Icon,
+  Card,
+  RenderField,
+  Form
+} from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { MODAL } from '@gqlapp/review-common';
 
 import CategoryTreeComponent from '../containers/CategoryTreeComponent';
 // import RendersubCategories from './RendersubCategories';
 
 const CategoryFormSchema = {
-  title: [required],
+  title: [required]
 };
 
 const CategoryFormComponent = props => {
-  const { cardTitle, handleSubmit, values, t, showAdditional = false } = props;
+  const { cardTitle, handleSubmit, values, t, setFieldValue } = props;
   const [load, setLoad] = useState(false);
   return (
     <Card
@@ -39,6 +51,20 @@ const CategoryFormComponent = props => {
     >
       {/* {console.log(values.parentCategoryId)} */}
       <Form onSubmit={handleSubmit} align="left">
+        <FormItem label={t('reviewForm.modal')}>
+          <Select
+            name="modal"
+            defaultValue={MODAL[0].value}
+            style={{ width: '100px' }}
+            onChange={e => setFieldValue('modalName', e)}
+          >
+            {MODAL.map((m, i) => (
+              <Option key={i} value={m.value}>
+                {m.label}
+              </Option>
+            ))}
+          </Select>
+        </FormItem>
         <Field
           name="title"
           component={RenderField}
@@ -55,7 +81,13 @@ const CategoryFormComponent = props => {
           label={t('categoryForm.description')}
           value={values.description}
         />
-        <Field name="isNavbar" component={RenderCheckBox} type="checkbox" label={'Is Navbar'} checked={values.isNavbar} />
+        <Field
+          name="isNavbar"
+          component={RenderCheckBox}
+          type="checkbox"
+          label={'Is Navbar'}
+          checked={values.isNavbar}
+        />
         <Field
           component={CategoryTreeComponent}
           type="number"
@@ -96,10 +128,11 @@ const CategoryFormComponent = props => {
 
 CategoryFormComponent.propTypes = {
   handleSubmit: PropTypes.func,
+  setFieldValue: PropTypes.func,
   values: PropTypes.object,
   t: PropTypes.func,
   cardTitle: PropTypes.string,
-  showAdditional: PropTypes.bool,
+  showAdditional: PropTypes.bool
 };
 
 const CategoryWithFormik = withFormik({
@@ -108,10 +141,11 @@ const CategoryWithFormik = withFormik({
     return {
       id: (props.category && props.category.id) || null,
       title: (props.category && props.category.title) || '',
+      modalName: '',
       parentCategoryId: (props.category && props.category.parentCategoryId) || null,
       description: (props.category && props.category.description) || '',
       isNavbar: (props.category && props.category.isNavbar) || false,
-      imageUrl: (props.category && props.category.imageUrl) || '',
+      imageUrl: (props.category && props.category.imageUrl) || ''
       // subCategories: (props.category && props.category.subCategories) || [],
     };
   },
@@ -119,7 +153,7 @@ const CategoryWithFormik = withFormik({
     await onSubmit(values);
   },
   validate: values => validate(values, CategoryFormSchema),
-  displayName: 'Category Form', // helps with React DevTools
+  displayName: 'Category Form' // helps with React DevTools
 });
 
 export default CategoryWithFormik(CategoryFormComponent);
