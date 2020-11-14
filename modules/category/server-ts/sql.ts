@@ -46,14 +46,10 @@ export default class CategoryDAO extends Model {
     };
   }
 
-  public categorys() {
-    return knex.select();
-  }
-
   public async categoriesPagination(limit: number, after: number, orderBy: any, filter: any, userId: number) {
     const queryBuilder = CategoryDAO.query()
       .eager(eager)
-      .where('parent_category_id', null);
+      .where('category.parent_category_id', null);
 
     if (orderBy && orderBy.column) {
       const column = orderBy.column;
@@ -64,26 +60,28 @@ export default class CategoryDAO extends Model {
 
       queryBuilder.orderBy(decamelize(column), order);
     } else {
-      queryBuilder.orderBy('id', 'desc');
+      queryBuilder.orderBy('category.id', 'desc');
     }
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
-        queryBuilder.where(function () {
-          this.where('is_active', filter.isActive);
+        queryBuilder.where(function() {
+          this.where('category.is_active', filter.isActive);
         });
       }
-
+      if (has(filter, 'modalName') && filter.modalName !== '') {
+        queryBuilder.where(function() {
+          this.where('modal_category.modal_name', filter.modalName);
+        });
+      }
       if (has(filter, 'searchText') && filter.searchText !== '') {
-        queryBuilder.where(function () {
-          this.where(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]));
+        queryBuilder.where(function() {
+          this.where(raw('LOWER(??) LIKE LOWER(?)', ['category.title', `%${filter.searchText}%`]));
         });
       }
     }
 
-    // queryBuilder
-    //   .from('category')
-    //   .leftJoin('user', 'user.id', 'category.user_id');
+    queryBuilder.from('category').leftJoin('modal_category', 'modal_category.category_id', 'category.id');
 
     const allcategories = camelizeKeys(await queryBuilder);
     const total = allcategories.length;
