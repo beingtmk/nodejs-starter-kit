@@ -51,12 +51,13 @@ const CategoryFormComponent = props => {
     >
       {/* {console.log(values.parentCategoryId)} */}
       <Form onSubmit={handleSubmit} align="left">
-        <FormItem label={t('reviewForm.modal')}>
+        <FormItem label={t('categoryForm.modal')}>
           <Select
             name="modal"
             defaultValue={MODAL[0].value}
             style={{ width: '100px' }}
             onChange={e => setFieldValue('modalName', e)}
+            value={values.modalName}
           >
             {MODAL.map((m, i) => (
               <Option key={i} value={m.value}>
@@ -141,7 +142,7 @@ const CategoryWithFormik = withFormik({
     return {
       id: (props.category && props.category.id) || null,
       title: (props.category && props.category.title) || '',
-      modalName: '',
+      modalName: (props.category && props.category.modalCategory && props.category.modalCategory.modalName) || '',
       parentCategoryId: (props.category && props.category.parentCategoryId) || null,
       description: (props.category && props.category.description) || '',
       isNavbar: (props.category && props.category.isNavbar) || false,

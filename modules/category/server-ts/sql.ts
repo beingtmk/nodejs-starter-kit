@@ -22,7 +22,7 @@ export interface CategoryInput {
   // subCategories: [CategoryInput] | undefined;
 }
 
-const eager = '[sub_categories]';
+const eager = '[sub_categories, modal_category]';
 // const eager = '[category]';
 
 export default class CategoryDAO extends Model {
@@ -115,6 +115,7 @@ export default class CategoryDAO extends Model {
       .orderBy('id', 'desc');
 
     const res = camelizeKeys(await queryBuilder);
+    // console.log(res);
     return res;
   }
 

@@ -6,10 +6,16 @@ type Category {
   description: String
   isNavbar: Boolean
   parentCategoryId: Int
+  modalCategory: ModalCategory
 
   subCategories: [Category]
 
   isActive: Boolean
+}
+
+type ModalCategory {
+  id: Int
+  modalName: String
 }
 
 type Categories {

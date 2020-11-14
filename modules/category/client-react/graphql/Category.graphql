@@ -5,6 +5,10 @@ fragment CategoryFrag on Category {
   description
   parentCategoryId
   isNavbar
+  modalCategory {
+    id
+    modalName
+  }
   isActive
 }
 
