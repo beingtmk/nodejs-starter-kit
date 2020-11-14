@@ -21,7 +21,6 @@ exports.up = function(knex) {
       .createTable('modal_category', table => {
         table.increments();
         table.string('modal_name');
-        table.integer('modal_id');
         table
           .integer('category_id')
           .unsigned()
