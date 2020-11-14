@@ -35,12 +35,13 @@ export async function seed(knex) {
 
   async function addCategory(parentCategory, i) {
     try {
-      const { title, description, imageUrl, subCategories, parentCategoryId } = parentCategory;
+      const { title, description, imageUrl, isNavbar, subCategories, parentCategoryId } = parentCategory;
       const parentId = camelizeKeys(
         await add({
           title: `${title}${i}`,
           description: `${description}${i}`,
           imageUrl: `${imageUrl}${i}`,
+          isNavbar,
           parentCategoryId
         })
       )[0];
@@ -52,6 +53,7 @@ export async function seed(knex) {
               title: c.title,
               description: c.description,
               imageUrl: c.imageUrl,
+              isNavbar,
               subCategories: c.subCategories,
               parentCategoryId: parentId
             },

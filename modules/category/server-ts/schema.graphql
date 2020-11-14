@@ -46,6 +46,7 @@ input OrderByCategoryInput {
 input FilterCategoryInput {
   searchText: String
   modalName: String
+  isNavbar: Boolean
   isActive: Boolean
 }
 

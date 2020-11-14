@@ -69,6 +69,11 @@ export default class CategoryDAO extends Model {
           this.where('category.is_active', filter.isActive);
         });
       }
+      if (has(filter, 'isNavbar') && filter.isNavbar !== '') {
+        queryBuilder.where(function() {
+          this.where('category.is_navbar', filter.isNavbar);
+        });
+      }
       if (has(filter, 'modalName') && filter.modalName !== '') {
         queryBuilder.where(function() {
           this.where('modal_category.modal_name', filter.modalName);
