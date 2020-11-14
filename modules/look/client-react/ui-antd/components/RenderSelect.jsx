@@ -24,7 +24,13 @@ const RenderSelect = props => {
   };
 
   return (
-    <FormItem label={label} validateStatus={validateStatus} help={error}>
+    <FormItem
+      label={label}
+      validateStatus={validateStatus}
+      help={error}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <div>
         <Select {...input} type={type} onChange={onChange}>
           {children}

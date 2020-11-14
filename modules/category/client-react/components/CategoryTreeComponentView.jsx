@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Spin, TreeSelect } from 'antd';
 import { useQuery } from 'react-apollo';
 
+import { FormItem } from '@gqlapp/look-client-react';
+
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const { TreeNode } = TreeSelect;
@@ -11,8 +13,8 @@ function RenderCategoryTreeComponentChildren(props) {
   const { modalId, categoryKey } = props;
   const { loading, data } = useQuery(CATEGORY_QUERY, {
     variables: {
-      id: modalId,
-    },
+      id: modalId
+    }
   });
   const category = data && data.category;
   // console.log(category);
@@ -36,6 +38,11 @@ function RenderCategoryTreeComponentChildren(props) {
   ) : null;
 }
 
+RenderCategoryTreeComponentChildren.propTypes = {
+  modalId: PropTypes.string,
+  categoryKey: PropTypes.number
+};
+
 const CategoryTreeComponentView = props => {
   const { categories, formik, name } = props;
   const onChange = value => {
@@ -44,8 +51,7 @@ const CategoryTreeComponentView = props => {
   };
 
   return (
-    <>
-      <h5 style={{ fontSize: '14px' }}>{props.label}:</h5>
+    <FormItem label={props.label} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <TreeSelect
         showSearch
         style={{ width: '100%' }}
@@ -58,17 +64,16 @@ const CategoryTreeComponentView = props => {
       >
         {categories.edges &&
           categories.totalCount > 0 &&
-          categories.edges.map((categoryItem, categoryKey) => (
-            <>
-              {RenderCategoryTreeComponentChildren({
+          categories.edges.map((categoryItem, categoryKey) => {
+            () =>
+              RenderCategoryTreeComponentChildren({
                 modalId: categoryItem.node.id,
                 category: categoryItem.node,
-                categoryKey: categoryKey,
-              })}
-            </>
-          ))}
+                categoryKey: categoryKey
+              });
+          })}
       </TreeSelect>
-    </>
+    </FormItem>
   );
 };
 
@@ -77,7 +82,7 @@ CategoryTreeComponentView.propTypes = {
   formik: PropTypes.object,
   name: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.number,
+  value: PropTypes.number
 };
 
 export default CategoryTreeComponentView;
