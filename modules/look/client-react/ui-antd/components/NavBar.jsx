@@ -10,8 +10,6 @@ import { Row, Col } from '@gqlapp/look-client-react';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import { CONTACT } from '@gqlapp/look-common/';
-import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
-import { MODAL } from '@gqlapp/review-common';
 
 import Icon from './Icon';
 import MenuItem from './MenuItem';
@@ -99,8 +97,8 @@ class NavBar extends React.Component {
                       animation={{
                         playScale: [1, 1.1],
                         scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-60px',
-                        translateY: isMobile ? '' : '12px'
+                        translateX: isMobile ? '' : '-79px',
+                        translateY: isMobile ? '' : '20px'
                       }}
                     >
                       <img
@@ -180,12 +178,6 @@ class NavBar extends React.Component {
                   </div>
                 </Col>
               </Row>
-            </Col>
-
-            <Col lg={24} xs={0}>
-              <div align="center" className="navbar-contact-menu">
-                <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
-              </div>
             </Col>
 
             <Drawer placement="right" onClose={this.onClose} visible={this.state.visible}>

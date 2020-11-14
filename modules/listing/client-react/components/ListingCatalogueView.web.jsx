@@ -7,6 +7,8 @@ import { Icon, MetaTags, PageLayout, Heading, Empty, Divider, Button } from '@gq
 import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
 import settings from '@gqlapp/config';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+import { MODAL } from '@gqlapp/review-common';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';
@@ -53,6 +55,7 @@ const ListingCatalogueView = props => {
 
   return (
     <PageLayout>
+      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <Heading type="2">
         <Icon type="SolutionOutlined" /> &nbsp; {title}
