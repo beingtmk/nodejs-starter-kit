@@ -57,6 +57,8 @@ extend type Mutation {
 }
 
 input AddCategoryInput {
+  modalName: String
+
   title: String
   imageUrl: String
   description: String
@@ -65,6 +67,8 @@ input AddCategoryInput {
 }
 
 input EditCategoryInput {
+  modalName: String
+
   id: Int
   title: String
   imageUrl: String

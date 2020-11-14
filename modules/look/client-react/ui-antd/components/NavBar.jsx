@@ -11,6 +11,7 @@ import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import { CONTACT } from '@gqlapp/look-common/';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+import { MODAL } from '@gqlapp/review-common';
 
 import Icon from './Icon';
 import MenuItem from './MenuItem';
@@ -183,7 +184,7 @@ class NavBar extends React.Component {
 
             <Col lg={24} xs={0}>
               <div align="center" className="navbar-contact-menu">
-                <CategoryNavBarComponent />
+                <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
               </div>
             </Col>
 

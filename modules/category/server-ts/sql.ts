@@ -11,6 +11,8 @@ export interface Identifier {
 }
 
 export interface CategoryInput {
+  modalName: string;
+
   title: string;
   imageUrl: string;
   description: string;
@@ -41,6 +43,14 @@ export default class CategoryDAO extends Model {
         join: {
           from: 'category.id',
           to: 'category.parent_category_id'
+        }
+      },
+      modal_category: {
+        relation: Model.HasOneRelation,
+        modelClass: ModalCategory,
+        join: {
+          from: 'category.id',
+          to: 'modal_category.category_id'
         }
       }
     };
@@ -108,8 +118,20 @@ export default class CategoryDAO extends Model {
     return res;
   }
 
-  public addCategory(params: CategoryInput) {
-    return CategoryDAO.query().insertGraph(decamelizeKeys(params));
+  public async addCategory(params: CategoryInput) {
+    const res = camelizeKeys(
+      await CategoryDAO.query().insertGraph(
+        decamelizeKeys({
+          title: params.title,
+          description: params.description,
+          imageUrl: params.imageUrl,
+          parentCategoryId: params.parentCategoryId,
+          isNavbar: params.isNavbar
+        })
+      )
+    );
+    await ModalCategory.query().insertGraph(decamelizeKeys({ modalName: params.modalName, categoryId: res.id }));
+    return res;
   }
 
   // public async addCategories(parentCategory: CategoryInput) {
@@ -136,8 +158,25 @@ export default class CategoryDAO extends Model {
   //   return true;
   // }
 
-  public async editCategory(params: CategoryInput) {
-    const res = await CategoryDAO.query().upsertGraph(decamelizeKeys(params));
+  public async editCategory(params: CategoryInput & Identifier) {
+    const res = camelizeKeys(
+      await CategoryDAO.query().upsertGraph(
+        decamelizeKeys({
+          id: params.id,
+          title: params.title,
+          description: params.description,
+          imageUrl: params.imageUrl,
+          parentCategoryId: params.parentCategoryId,
+          isNavbar: params.isNavbar
+        })
+      )
+    );
+    const modalCategory = camelizeKeys(await ModalCategory.query().where('category_id', res.id));
+    if (modalCategory && modalCategory.length > 0) {
+      await ModalCategory.query().upsertGraph(decamelizeKeys({ id: modalCategory[0].id, modalName: params.modalName }));
+    } else {
+      await ModalCategory.query().insertGraph(decamelizeKeys({ modalName: params.modalName, categoryId: res.id }));
+    }
     return res.id;
   }
 
@@ -145,5 +184,29 @@ export default class CategoryDAO extends Model {
     return knex('category')
       .where('id', '=', id)
       .del();
+  }
+}
+
+// ModalCategory model.
+class ModalCategory extends Model {
+  static get tableName() {
+    return 'modal_category';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+  static get relationMappings() {
+    return {
+      category: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: CategoryDAO,
+        join: {
+          from: 'modal_category.category_id',
+          to: 'category.id'
+        }
+      }
+    };
   }
 }

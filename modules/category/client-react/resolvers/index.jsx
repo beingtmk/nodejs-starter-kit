@@ -15,7 +15,9 @@ const defaults = {
     },
     filter: {
       searchText: '',
+      modalName: '',
 
+      isNavbar: '',
       isActive: true,
 
       __typename: TYPE_CATEGORIES_STATE_FILTER
