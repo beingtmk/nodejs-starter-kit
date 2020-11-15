@@ -86,11 +86,11 @@ input EditDiscountDurationInput {
 }
 
 extend type Subscription {
-  discountUpdated(id: Int): UpdateDiscountPayload
+  discountUpdated(modalId: Int): UpdateDiscountPayload
 }
 
 type UpdateDiscountPayload {
   mutation: String!
-  id: Int
+  modalId: Int
   node: Discount
 }

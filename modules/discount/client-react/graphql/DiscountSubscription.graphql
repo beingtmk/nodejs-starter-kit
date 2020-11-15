@@ -1,9 +1,9 @@
 #import "./Discount.graphql"
 
-subscription onDiscountUpdated($id: Int) {
-  discountUpdated(id: $id) {
+subscription onDiscountUpdated($modalId: Int) {
+  discountUpdated(modalId: $modalId) {
     mutation
-    id
+    modalId
     node {
       ...DiscountInfo
     }

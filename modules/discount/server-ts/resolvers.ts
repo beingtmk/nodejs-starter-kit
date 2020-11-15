@@ -58,6 +58,13 @@ export default (pubsub: any) => ({
     addDiscount: withAuth(async (obj: any, { input }: DiscountInput, { Discount, Order, Listing }: any) => {
       try {
         const res = await Discount.addDiscount(input);
+        pubsub.publish(DISCOUNT_SUBSCRIPTION, {
+          discountUpdated: {
+            mutation: 'UPDATED',
+            modalId: res.modalId,
+            node: res
+          }
+        });
         if (res) {
           schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
             // console.log('job initialed', res.discountDuration.endDate);
@@ -111,7 +118,7 @@ export default (pubsub: any) => ({
         pubsub.publish(DISCOUNT_SUBSCRIPTION, {
           discountUpdated: {
             mutation: 'UPDATED',
-            id: discount.id,
+            modalId: res.modalId,
             node: discount
           }
         });
@@ -205,7 +212,7 @@ export default (pubsub: any) => ({
         pubsub.publish(DISCOUNT_SUBSCRIPTION, {
           discountUpdated: {
             mutation: 'DELETED',
-            id: discount.id,
+            modalId: discount.modalId,
             node: discount
           }
         });
@@ -220,7 +227,7 @@ export default (pubsub: any) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(DISCOUNT_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.discountUpdated.id === variables.id;
+          return payload.discountUpdated.modalId === variables.modalId;
         }
       )
     }

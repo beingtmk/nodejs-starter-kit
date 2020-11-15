@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
@@ -6,18 +6,38 @@ import { compose } from '@gqlapp/core-common';
 import { Spinner } from '@gqlapp/look-client-react';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 
 import AddToCartView from './AddToCartView';
 
 const EditCart = props => {
-  const { t, loading, listing, currentUser, onEdit, item, hideModal, modalDiscount } = props;
+  const {
+    t,
+    loading,
+    listing,
+    currentUser,
+    modalId,
+    discountSubscribeToMore,
+    onEdit,
+    item,
+    hideModal,
+    modalDiscount
+  } = props;
+
+  useEffect(() => {
+    const subscribe = subscribeToDiscount(discountSubscribeToMore, modalId);
+    return () => subscribe();
+  }, [discountSubscribeToMore, modalId]);
 
   const handleSubmit = values => {
     const cost = listing && listing.listingCostArray && listing.listingCostArray[0].cost;
     const now = new Date().toISOString();
     const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
     const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
-    const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+    const isDiscountPercent =
+      startDate && endDate
+        ? startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0
+        : modalDiscount && modalDiscount.discountPercent > 0;
     const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
     const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
     const discount =
@@ -60,8 +80,10 @@ EditCart.propTypes = {
   modalDiscount: PropTypes.object,
   loading: PropTypes.bool,
   onEdit: PropTypes.func,
+  discountSubscribeToMore: PropTypes.func,
   t: PropTypes.func,
-  hideModal: PropTypes.func
+  hideModal: PropTypes.func,
+  modalId: PropTypes.number
 };
 
 export default compose(withListing, withModalDiscount)(EditCart);

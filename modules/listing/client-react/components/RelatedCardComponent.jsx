@@ -1,5 +1,5 @@
 /* eslint-disable import/no-named-default */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
 import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 
 import { MODAL } from '@gqlapp/review-common';
 
@@ -42,7 +43,25 @@ const ListingWraper = styled.div`
 
 const RelatedCardComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
-  const { currentUser, history, addToCart, componentStyle, inCart, loading, onDelete, modalDiscount } = props;
+  useEffect(
+    () => {
+      const subscribe = subscribeToDiscount(discountSubscribeToMore, modalId);
+      return () => subscribe();
+    } /* , [discountSubscribeToMore, modalDiscount] */
+  );
+
+  const {
+    modalId,
+    currentUser,
+    history,
+    addToCart,
+    discountSubscribeToMore,
+    componentStyle,
+    inCart,
+    loading,
+    onDelete,
+    modalDiscount
+  } = props;
   const now = new Date().toISOString();
 
   let listing = props.listing;
@@ -58,7 +77,10 @@ const RelatedCardComponent = props => {
   const fixedQuantity = listing && listing.listingOptions && listing.listingOptions.fixedQuantity;
   const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
   const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
-  const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+  const isDiscountPercent =
+    startDate && endDate
+      ? startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0
+      : modalDiscount && modalDiscount.discountPercent > 0;
   const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
   const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
   const discount =
@@ -269,8 +291,10 @@ RelatedCardComponent.propTypes = {
   currentUser: PropTypes.object,
   modalDiscount: PropTypes.object,
   listingBookmarkStatus: PropTypes.bool,
+  discountSubscribeToMore: PropTypes.func,
   inCart: PropTypes.bool,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  modalId: PropTypes.number
 };
 
 export default compose(withAddToCart, withToogleListingBookmark, withModalDiscount)(RelatedCardComponent);

@@ -9,6 +9,7 @@ import { NO_IMG } from '@gqlapp/listing-common';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import { MODAL } from '@gqlapp/review-common';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart, withGetCart, withDeleteCartItem } from './OrderOperations';
@@ -24,13 +25,19 @@ const AddToCart = props => {
     addToCart,
     deleteOrderDetail,
     subscribeToMore,
+    discountSubscribeToMore,
     getCart,
-    modalDiscount
+    modalDiscount,
+    modalId
   } = props;
 
   useEffect(() => {
+    const subscribeDiscount = subscribeToDiscount(discountSubscribeToMore, modalId);
     const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, {});
-    return () => subscribe();
+    return () => {
+      () => subscribe();
+      () => subscribeDiscount();
+    };
   });
 
   const onSubmit = async (values, redirect = false) => {
@@ -39,7 +46,10 @@ const AddToCart = props => {
     const now = new Date().toISOString();
     const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
     const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
-    const isDiscountPercent = startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0;
+    const isDiscountPercent =
+      startDate && endDate
+        ? startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0
+        : modalDiscount && modalDiscount.discountPercent > 0;
     const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
     const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
     const discount =
@@ -115,7 +125,9 @@ AddToCart.propTypes = {
   modalDiscount: PropTypes.object,
   addToCart: PropTypes.func,
   deleteOrderDetail: PropTypes.func,
-  subscribeToMore: PropTypes.func
+  subscribeToMore: PropTypes.func,
+  discountSubscribeToMore: PropTypes.func,
+  modalId: PropTypes.number
 };
 
 export default compose(

@@ -26,7 +26,7 @@ export const withModalDiscount = Component =>
     },
     props({ data: { loading, error, modalDiscount, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
-      return { loading, modalDiscount, subscribeToMore, updateQuery };
+      return { loading, modalDiscount, discountSubscribeToMore: subscribeToMore, updateQuery };
     }
   })(Component);
 
