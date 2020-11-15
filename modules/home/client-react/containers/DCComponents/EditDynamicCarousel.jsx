@@ -14,7 +14,7 @@ const EditDynamicCarousel = props => {
     return () => subscribe();
   });
 
-  console.log('props', props);
+  // console.log('props', props);
   return <EditDynamicCarouselView {...props} />;
 };
 

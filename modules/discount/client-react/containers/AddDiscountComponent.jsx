@@ -21,7 +21,7 @@ const AddDiscountComponent = forwardRef((props /* ref */) => {
   //   console.log('modalId1', modalId);
   // }, [modalId]);
 
-  console.log('props', props);
+  // console.log('props', props);
   return <AddDiscountComponentView {...props} />;
 });
 

@@ -6,7 +6,7 @@ import { withFilterUpdating, withUsersState, withUserList } from './UserOperatio
 import UsersProfileCatalogueView from '../components/UsersProfileCatalogueView';
 
 const UsersProfileCatalogue = props => {
-  console.log('props', props);
+  // console.log('props', props);
   return <UsersProfileCatalogueView {...props} />;
 };
 

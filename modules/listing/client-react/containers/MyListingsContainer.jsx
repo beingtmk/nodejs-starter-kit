@@ -23,7 +23,7 @@ const MyListingsContainer = props => {
     }
   };
 
-  console.log('props', props);
+  // console.log('props', props);
   return React.cloneElement(props.children, { ...props, onDelete: handleDelete });
 };
 

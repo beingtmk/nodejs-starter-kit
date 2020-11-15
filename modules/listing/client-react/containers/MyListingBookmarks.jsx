@@ -18,7 +18,7 @@ const MyListingsBookmark = props => {
     return () => subscribe();
   });
 
-  console.log('props', props);
+  // console.log('props', props);
   return (
     <ListingCatalogueView
       title={'My Bookmarks'}

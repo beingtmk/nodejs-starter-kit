@@ -17,7 +17,7 @@ const MyDeliveryContainer = compose(withOrders)(props => {
     return () => subscribe();
   }, [ordersSubscribeToMore, props.filter, refetch]);
 
-  console.log('props', props);
+  // console.log('props', props);
   return React.cloneElement(props.children, { ...props });
 });
 

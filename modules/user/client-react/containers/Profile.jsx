@@ -144,7 +144,7 @@ const Profile = props => {
     createdAt: currentUser.createdAt,
     updatedAt: currentUser.updatedAt
   };
-  console.log('props', props);
+  // console.log('props', props);
   return <ProfileView {...props} currentUser={profile_data} />;
 };
 

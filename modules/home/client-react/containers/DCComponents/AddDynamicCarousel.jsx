@@ -8,7 +8,7 @@ import AddDynamicCarouselView from '../../components/DCComponents/AddDynamicCaro
 import { withAddDynamicCarousel } from './DynamicCarouselOperations';
 
 const AddDynamicCarousel = props => {
-  console.log('props', props);
+  // console.log('props', props);
   return <AddDynamicCarouselView {...props} />;
 };
 

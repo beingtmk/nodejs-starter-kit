@@ -18,7 +18,7 @@ export const subscribeToDiscount = (subscribeToMore, modalId) =>
       }
     ) => {
       let newResult = prev;
-      console.log('mutation', mutation, node);
+      // console.log('mutation', mutation, node);
       if (mutation === 'UPDATED') {
         newResult = onEditDiscount(prev, node);
       } else if (mutation === 'DELETED') {
