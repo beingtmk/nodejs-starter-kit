@@ -64,14 +64,15 @@ const CategoryTreeComponentView = props => {
       >
         {categories.edges &&
           categories.totalCount > 0 &&
-          categories.edges.map((categoryItem, categoryKey) => {
-            () =>
-              RenderCategoryTreeComponentChildren({
+          categories.edges.map((categoryItem, categoryKey) => (
+            <>
+              {RenderCategoryTreeComponentChildren({
                 modalId: categoryItem.node.id,
                 category: categoryItem.node,
                 categoryKey: categoryKey
-              });
-          })}
+              })}
+            </>
+          ))}
       </TreeSelect>
     </FormItem>
   );
