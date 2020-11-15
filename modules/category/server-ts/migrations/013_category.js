@@ -31,9 +31,21 @@ exports.up = function(knex) {
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);
       })
+
+      .table('listing', table => {
+        table.integer('category_id');
+        // .unsigned()
+        // .references('id')
+        // .inTable('category')
+        // .onDelete('CASCADE');
+      })
   ]);
 };
 
 exports.down = function(knex) {
-  return Promise.all([knex.schema.dropTable('modal_category'), knex.schema.dropTable('category')]);
+  return Promise.all([
+    knex.schema.dropTable('modal_category'),
+    knex.schema.dropTable('category'),
+    knex.schema.dropTable('listing', table => table.dropColumn('category_id'))
+  ]);
 };
