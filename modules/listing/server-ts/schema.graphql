@@ -7,6 +7,8 @@ type Listing {
   description: String
   sku: String
 
+  category: Category
+
   listingFlags: ListingFlag
   listingHighlight: [ListingHighlight]
   listingOptions: ListingOption
@@ -135,6 +137,8 @@ input OrderByListInput {
 input FilterListInput {
   userId: Int
   searchText: String
+
+  categoryId: Int
 
   lowerCost: Float
   upperCost: Float

@@ -6,6 +6,7 @@ import { ORDER_STATES } from '@gqlapp/order-common';
 import { knex, returnId } from '@gqlapp/database-server-ts';
 import { User } from '@gqlapp/user-server-ts/sql';
 import OrderDAO, { OrderState } from '@gqlapp/order-server-ts/sql';
+import CategoryDAO from '@gqlapp/category-server-ts/sql';
 import Review from '@gqlapp/review-server-ts/sql';
 
 Model.knex(knex);
@@ -35,7 +36,7 @@ export interface Identifier {
 }
 
 const eager =
-  '[user, listing_flags, listing_options, listing_detail, listing_media, listing_cost_array, listing_highlight]';
+  '[user, category, listing_flags, listing_options, listing_detail, listing_media, listing_cost_array, listing_highlight]';
 
 export default class ListingDAO extends Model {
   private id: any;
@@ -56,6 +57,14 @@ export default class ListingDAO extends Model {
         join: {
           from: 'listing.user_id',
           to: 'user.id'
+        }
+      },
+      category: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: CategoryDAO,
+        join: {
+          from: 'listing.category_id',
+          to: 'category.id'
         }
       },
       listing_flags: {
@@ -157,6 +166,12 @@ export default class ListingDAO extends Model {
       if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
         queryBuilder.where(function() {
           this.whereNot('user.id', userId);
+        });
+      }
+
+      if (has(filter, 'categoryId') && filter.categoryId !== 0) {
+        queryBuilder.where(function() {
+          this.where('listing.category_id', filter.categoryId);
         });
       }
 
