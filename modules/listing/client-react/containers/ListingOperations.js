@@ -50,9 +50,14 @@ export const withCurrentUser = Component =>
 
 export const withListings = Component =>
   graphql(LISTINGS_QUERY, {
-    options: ({ orderBy, filter }) => {
+    options: ({ orderBy, filter, match, navigation }) => {
       return {
-        variables: { limit: limit, after: 0, orderBy, filter },
+        variables: {
+          limit: limit,
+          after: 0,
+          orderBy,
+          filter: { ...filter, categoryId: Number((match ? match.params.cid : navigation.state.params.cid) || 0) }
+        },
         fetchPolicy: 'network-only'
       };
     },

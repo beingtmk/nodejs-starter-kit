@@ -7,17 +7,21 @@ import { NavLink } from 'react-router-dom';
 // import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
 import { Icon, PageLayout, Divider } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
+import { MODAL } from '@gqlapp/review-common';
 
 import CategoryItemComponent from './CategoryItemComponent';
+import CategoryNavBarComponent from '../containers/CategoryNavBarComponent';
 
 const { Title, Paragraph } = Typography;
 const BreadCrumbItem = Breadcrumb.Item;
 
 const CategoryCatalogueView = props => {
-  const { loading, category } = props;
+  const { loading, category, navigation, match } = props;
 
   return (
     <PageLayout>
+      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       {loading && <Spinner />}
       {category && (
         <>
@@ -49,10 +53,7 @@ const CategoryCatalogueView = props => {
           ) : (
             <>
               <Divider />
-              <h1>hello</h1>
-              {/* {category && (
-            <CategoryPageListings history={history} categoryTitle={category && category.title} />
-          )} */}
+              <CategoryListingsCatalogue match={match} navigation={navigation} />
             </>
           )}
         </>
@@ -63,7 +64,9 @@ const CategoryCatalogueView = props => {
 
 CategoryCatalogueView.propTypes = {
   loading: PropTypes.bool,
-  category: PropTypes.object
+  category: PropTypes.object,
+  match: PropTypes.object,
+  navigation: PropTypes.object
 };
 
 export default CategoryCatalogueView;

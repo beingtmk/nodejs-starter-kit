@@ -8,6 +8,7 @@ import CategoryTreeComponentView from '../components/CategoryTreeComponentView';
 import { withCategories } from './CategoryOpertations';
 
 const CategoryTreeComponent = props => {
+  // console.log('props', props);
   return !props.loading && props.categories ? <CategoryTreeComponentView {...props} /> : <Spinner size="small" />;
 };
 

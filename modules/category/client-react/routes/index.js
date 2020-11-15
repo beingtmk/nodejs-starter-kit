@@ -4,7 +4,7 @@ const ROUTES = {
   adminPanel: base + '/admin-panel',
   category: base + '/category',
 
-  categoryCatalogue: base + '/catalogue/:id',
+  categoryCatalogue: base + '/catalogue/:cid',
   categoryCatalogueLink: base + '/catalogue/',
   categoryDetail: base + '/detail/:id',
   categoryDetailLink: base + '/detail/',
