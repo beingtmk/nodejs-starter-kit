@@ -8,7 +8,7 @@ import { FormItem } from '@gqlapp/look-client-react';
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const CategoryTreeComponentView = props => {
-  const { categories, formik, name, client } = props;
+  const { categories, formik, name, client, disableParent = false } = props;
   const [data, setData] = useState(
     categories.edges &&
       categories.totalCount > 0 &&
@@ -18,7 +18,8 @@ const CategoryTreeComponentView = props => {
           pId: c.node.parentCategoryId ? c.node.parentCategoryId : 0,
           title: c.node.title,
           value: c.node.id,
-          isLeaf: c.node.isLeaf
+          isLeaf: c.node.isLeaf,
+          disabled: disableParent && !c.node.isLeaf
         };
       })
   );
@@ -45,7 +46,8 @@ const CategoryTreeComponentView = props => {
               pId: sC.parentCategoryId,
               value: sC.id,
               title: sC.title,
-              isLeaf: sC.isLeaf
+              isLeaf: sC.isLeaf,
+              disabled: disableParent && !sC.isLeaf
             };
           })
         )
@@ -77,7 +79,8 @@ CategoryTreeComponentView.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.number,
-  client: PropTypes.object
+  client: PropTypes.object,
+  disableParent: PropTypes.bool
 };
 
 export default withApollo(CategoryTreeComponentView);
