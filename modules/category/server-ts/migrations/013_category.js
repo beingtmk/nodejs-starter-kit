@@ -13,6 +13,7 @@ exports.up = function(knex) {
           .references('id')
           .inTable('category')
           .onDelete('CASCADE');
+        table.boolean('is_leaf').defaultTo(true);
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);

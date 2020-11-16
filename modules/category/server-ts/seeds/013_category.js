@@ -7,7 +7,8 @@ let CATEGORIES = {
   title: `Category`,
   description: `Category description`,
   imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
-  isNavbar: true
+  isNavbar: true,
+  isLeaf: false
 
   // subCategories: [
   // {
@@ -18,11 +19,12 @@ let CATEGORIES = {
   // ]
 };
 
-const CATEGORY = {
+const LEAF_CATEGORY = {
   title: `Category`,
   description: `Category description`,
   imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
-  isNavbar: true
+  isNavbar: true,
+  isLeaf: true
 };
 
 export async function seed(knex) {
@@ -35,14 +37,15 @@ export async function seed(knex) {
 
   async function addCategory(parentCategory, i) {
     try {
-      const { title, description, imageUrl, isNavbar, subCategories, parentCategoryId } = parentCategory;
+      const { title, description, imageUrl, isNavbar, subCategories, parentCategoryId, isLeaf } = parentCategory;
       const parentId = camelizeKeys(
         await add({
           title: `${title}${i}`,
           description: `${description}${i}`,
           imageUrl: `${imageUrl}${i}`,
           isNavbar,
-          parentCategoryId
+          parentCategoryId,
+          isLeaf
         })
       )[0];
       subCategories &&
@@ -55,7 +58,8 @@ export async function seed(knex) {
               imageUrl: c.imageUrl,
               isNavbar,
               subCategories: c.subCategories,
-              parentCategoryId: parentId
+              parentCategoryId: parentId,
+              isLeaf: c.isLeaf
             },
             `${i}.${ci + 1}`
           );
@@ -68,7 +72,9 @@ export async function seed(knex) {
 
   await Promise.all(
     [...Array(6).keys()].map(async i => {
-      CATEGORIES['subCategories'] = [...Array(Math.floor(Math.random() * (15 - 5 + 1) + 5)).keys()].map(() => CATEGORY);
+      CATEGORIES['subCategories'] = [...Array(Math.floor(Math.random() * (15 - 5 + 1) + 5)).keys()].map(
+        () => LEAF_CATEGORY
+      );
       addCategory(CATEGORIES, i + 1);
     })
   );
