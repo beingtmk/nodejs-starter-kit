@@ -2,17 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
 import { Select, Option, Form, FormItem, Label, Input, Row, Col, Button } from '@gqlapp/look-client-react';
+import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
+import { MODAL } from '@gqlapp/review-common';
 
 import SliderControlled from './FIlterSliderControlledComponent';
 
 const ListingsFilterComponent = props => {
   // console.log('listings filter component', props);
   const {
-    filter: { searchText, lowerCost, upperCost, isActive },
+    filter: { searchText, lowerCost, upperCost, categoryId, isActive },
     onIsActiveChange,
+    onCategoryChange,
     onSearchTextChange,
     onLowerCostChange,
     onUpperCostChange,
@@ -56,7 +60,7 @@ const ListingsFilterComponent = props => {
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row>
-            <Col lg={16} xs={24} md={14}>
+            <Col lg={18} xs={24} md={14}>
               <Row gutter={24}>
                 <Col>
                   <FormItem label={'search'} style={{ width: '100%' }}>
@@ -85,10 +89,23 @@ const ListingsFilterComponent = props => {
                     </FormItem>
                   )}
                 </Col>
+                <Col>
+                  <Field
+                    component={CategoryTreeComponent}
+                    filter={{ modalName: MODAL[1].value }}
+                    disableParent={true}
+                    onChange={onCategoryChange}
+                    type="number"
+                    name="categoryId"
+                    placeholder="category"
+                    label="Select a category"
+                    value={categoryId}
+                  />
+                </Col>
               </Row>
             </Col>
             <Col
-              lg={8}
+              lg={6}
               xs={24}
               md={10}
               // align="right"
@@ -199,7 +216,9 @@ ListingsFilterComponent.propTypes = {
   filter: PropTypes.object.isRequired,
   onLowerCostChange: PropTypes.func.isRequired,
   onUpperCostChange: PropTypes.func.isRequired,
+  onCategoryChange: PropTypes.func.isRequired,
   onFiltersRemove: PropTypes.func.isRequired,
+  categoryId: PropTypes.number.isRequired,
   listings: PropTypes.object.isRequired,
   orderBy: PropTypes.object.isRequired,
   onSearchTextChange: PropTypes.func.isRequired,

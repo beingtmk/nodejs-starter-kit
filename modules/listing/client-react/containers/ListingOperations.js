@@ -413,6 +413,9 @@ export const withFilterUpdating = Component =>
       onIsActiveChange(isActive) {
         mutate({ variables: { filter: { isActive } } });
       },
+      onCategoryChange(categoryId) {
+        mutate({ variables: { filter: { categoryId } } });
+      },
       // onIsFeaturedChange(isFeatured) {
       //   mutate({ variables: { filter: { isFeatured } } });
       // },

@@ -16,6 +16,7 @@ const defaults = {
     filter: {
       // userId: 0,
       searchText: '',
+      categoryId: 0,
 
       lowerCost: 0,
       upperCost: 0,

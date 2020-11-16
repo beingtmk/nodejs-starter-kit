@@ -24,7 +24,12 @@ const CategoryTreeComponentView = props => {
       })
   );
   const onChange = value => {
-    formik.setFieldValue(name, value);
+    const { onChange } = props;
+    if (onChange) {
+      onChange(value);
+    } else {
+      formik.setFieldValue(name, value);
+    }
   };
 
   const LoadData = async treeNode => {
@@ -80,7 +85,8 @@ CategoryTreeComponentView.propTypes = {
   label: PropTypes.string,
   value: PropTypes.number,
   client: PropTypes.object,
-  disableParent: PropTypes.bool
+  disableParent: PropTypes.bool,
+  onChange: PropTypes.func
 };
 
 export default withApollo(CategoryTreeComponentView);

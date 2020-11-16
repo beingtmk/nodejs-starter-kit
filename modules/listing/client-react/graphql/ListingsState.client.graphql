@@ -6,6 +6,7 @@ fragment ListingsStateInfo on ListingsState {
   filter {
     # userId
     searchText
+    categoryId
 
     lowerCost
     upperCost
