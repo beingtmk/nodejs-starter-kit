@@ -10,7 +10,7 @@ const ROUTES = {
   categoryDetailLink: base + '/detail/',
 
   add: base + '/new',
-  edit: base + '/edit/:id',
+  edit: base + '/edit/:cid',
   editLink: base + '/edit/'
 };
 

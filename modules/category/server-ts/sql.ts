@@ -166,7 +166,30 @@ export default class CategoryDAO extends Model {
   //   return true;
   // }
 
+  // if pid is nt same as prev -> pId = null, nt-null
+  // if pid is same
   public async editCategory(params: CategoryInput & Identifier) {
+    const prevCategory = camelizeKeys(
+      await CategoryDAO.query()
+        .findById(params.id)
+        .eager(eager)
+    );
+    if (params.parentCategoryId !== prevCategory.parentCategoryId) {
+      // before edit, parentCategory if nt-null to isLeaf to true if has only 1 leaf
+      if (prevCategory.parentCategoryId !== null) {
+        const parentCategory = camelizeKeys(
+          await CategoryDAO.query()
+            .findById(params.parentCategoryId)
+            .eager(eager)
+        );
+        if (parentCategory.subCategories.length === 1) {
+          await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: parentCategory.id, isLeaf: true }));
+        }
+      }
+
+      // after edit, parentCategory to isLeaf to false since adding a leaf to it
+      await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: params.parentCategoryId, isLeaf: false }));
+    }
     const res = camelizeKeys(
       await CategoryDAO.query().upsertGraph(
         decamelizeKeys({
