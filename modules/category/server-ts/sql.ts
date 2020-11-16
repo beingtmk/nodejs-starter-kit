@@ -212,6 +212,21 @@ export default class CategoryDAO extends Model {
   }
 
   public async deleteCategory(id: number) {
+    const category = camelizeKeys(
+      await CategoryDAO.query()
+        .findById(id)
+        .eager(eager)
+    );
+    if (category.parentCategoryId !== null) {
+      const parentCategory = camelizeKeys(
+        await CategoryDAO.query()
+          .findById(category.parentCategoryId)
+          .eager(eager)
+      );
+      if (parentCategory.subCategories.length === 1) {
+        await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: parentCategory.id, isLeaf: true }));
+      }
+    }
     return knex('category')
       .where('id', '=', id)
       .del();
