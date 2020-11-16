@@ -1,58 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Spin, TreeSelect } from 'antd';
-import { useQuery } from 'react-apollo';
+import { TreeSelect } from 'antd';
+import { withApollo } from 'react-apollo';
 
 import { FormItem } from '@gqlapp/look-client-react';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
-const { TreeNode } = TreeSelect;
-
-function RenderCategoryTreeComponentChildren(props) {
-  const { modalId, categoryKey } = props;
-  const { loading, data } = useQuery(CATEGORY_QUERY, {
-    variables: {
-      id: modalId
-    }
-  });
-  const category = data && data.category;
-  // console.log(category);
-  return loading ? (
-    <TreeNode key={categoryKey} disabled>
-      <Spin size="small" />
-    </TreeNode>
-  ) : category ? (
-    <TreeNode
-      value={category.id}
-      title={category.title}
-      // key={categoryKey}
-      disabled={category.subCategories && category.subCategories.length > 0}
-    >
-      {category.subCategories &&
-        category.subCategories.length > 0 &&
-        category.subCategories.map((c, i) =>
-          RenderCategoryTreeComponentChildren({ modalId: c.id, categoryKey: `${i}${categoryKey}` })
-        )}
-    </TreeNode>
-  ) : null;
-}
-
-RenderCategoryTreeComponentChildren.propTypes = {
-  modalId: PropTypes.string,
-  categoryKey: PropTypes.number
-};
-
 const CategoryTreeComponentView = props => {
-  const { categories, formik, name } = props;
+  const { categories, formik, name, client } = props;
+  const [data, setData] = useState(
+    categories.edges &&
+      categories.totalCount > 0 &&
+      categories.edges.map(c => {
+        return {
+          id: c.node.id,
+          pId: c.node.parentCategoryId ? c.node.parentCategoryId : 0,
+          title: c.node.title,
+          value: c.node.id
+        };
+      })
+  );
   const onChange = value => {
-    // console.log(value);
     formik.setFieldValue(name, value);
+  };
+
+  const LoadData = async treeNode => {
+    const {
+      data: { category },
+      loading
+    } = await client.query({
+      query: CATEGORY_QUERY,
+      variables: {
+        id: treeNode.id
+      }
+    });
+    !loading &&
+      setData(
+        data.concat(
+          category.subCategories.map(sC => {
+            return {
+              id: sC.id,
+              pId: sC.parentCategoryId,
+              value: sC.id,
+              title: sC.title,
+              isLeaf: true
+            };
+          })
+        )
+      );
   };
 
   return (
     <FormItem label={props.label} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <TreeSelect
+        treeDataSimpleMode
         showSearch
         style={{ width: '100%' }}
         value={props.value}
@@ -61,19 +63,9 @@ const CategoryTreeComponentView = props => {
         allowClear
         treeDefaultExpandAll={false}
         onChange={onChange}
-      >
-        {categories.edges &&
-          categories.totalCount > 0 &&
-          categories.edges.map((categoryItem, categoryKey) => (
-            <>
-              {RenderCategoryTreeComponentChildren({
-                modalId: categoryItem.node.id,
-                category: categoryItem.node,
-                categoryKey: categoryKey
-              })}
-            </>
-          ))}
-      </TreeSelect>
+        loadData={LoadData}
+        treeData={data}
+      />
     </FormItem>
   );
 };
@@ -83,7 +75,8 @@ CategoryTreeComponentView.propTypes = {
   formik: PropTypes.object,
   name: PropTypes.string,
   label: PropTypes.string,
-  value: PropTypes.number
+  value: PropTypes.number,
+  client: PropTypes.object
 };
 
-export default CategoryTreeComponentView;
+export default withApollo(CategoryTreeComponentView);
