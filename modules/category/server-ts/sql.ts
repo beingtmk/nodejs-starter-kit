@@ -18,6 +18,7 @@ export interface CategoryInput {
   description: string;
   isNavbar: boolean;
   parentCategoryId: number;
+  isLeaf: boolean;
 
   // subCategories: [CategoryInput] | undefined;
 }
@@ -120,6 +121,11 @@ export default class CategoryDAO extends Model {
   }
 
   public async addCategory(params: CategoryInput) {
+    let isLeaf = false;
+    if (params.parentCategoryId !== null) {
+      await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: params.parentCategoryId, isLeaf: false }));
+      isLeaf = true;
+    }
     const res = camelizeKeys(
       await CategoryDAO.query().insertGraph(
         decamelizeKeys({
@@ -127,7 +133,8 @@ export default class CategoryDAO extends Model {
           description: params.description,
           imageUrl: params.imageUrl,
           parentCategoryId: params.parentCategoryId,
-          isNavbar: params.isNavbar
+          isNavbar: params.isNavbar,
+          isLeaf
         })
       )
     );

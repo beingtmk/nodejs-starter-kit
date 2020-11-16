@@ -4,11 +4,14 @@ fragment CategoryFrag on Category {
   imageUrl
   description
   parentCategoryId
-  isNavbar
+
   modalCategory {
     id
     modalName
   }
+
+  isNavbar
+  isLeaf
   isActive
 }
 

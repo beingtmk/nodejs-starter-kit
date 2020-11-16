@@ -7,6 +7,7 @@ type Category {
   isNavbar: Boolean
   parentCategoryId: Int
   modalCategory: ModalCategory
+  isLeaf: Boolean
 
   subCategories: [Category]
 
