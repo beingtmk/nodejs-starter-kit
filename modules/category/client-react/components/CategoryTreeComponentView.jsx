@@ -17,7 +17,8 @@ const CategoryTreeComponentView = props => {
           id: c.node.id,
           pId: c.node.parentCategoryId ? c.node.parentCategoryId : 0,
           title: c.node.title,
-          value: c.node.id
+          value: c.node.id,
+          isLeaf: c.node.isLeaf
         };
       })
   );
@@ -44,7 +45,7 @@ const CategoryTreeComponentView = props => {
               pId: sC.parentCategoryId,
               value: sC.id,
               title: sC.title,
-              isLeaf: true
+              isLeaf: sC.isLeaf
             };
           })
         )
