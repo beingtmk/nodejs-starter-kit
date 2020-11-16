@@ -25,6 +25,7 @@ import {
 } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
+import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
 
 import { displayDataCheck } from './functions';
 
@@ -260,6 +261,15 @@ const ListingFormComponent = props => {
                 label={t('listingForm.cost')}
                 min={0}
                 value={values.listingCostArray[0].cost}
+              />
+              <Field
+                component={CategoryTreeComponent}
+                filter={{ modalName: MODAL[1].value }}
+                type="number"
+                name="categoryId"
+                placeholder="category"
+                label="Select a category"
+                value={values.categoryId}
               />
             </Col>
             <Col md={12} xs={24} align="left">
@@ -593,6 +603,7 @@ const ListingWithFormik = withFormik({
           label: ''
         }
       ],
+      categoryId: (props.listing && props.listing.category && props.listing.category.id) || null,
 
       listingFlags: (props.listing && props.listing.listingFlags) || {
         id: null,
@@ -659,6 +670,7 @@ const ListingWithFormik = withFormik({
         title: values.title,
         description: values.description,
         sku: values.sku,
+        categoryId: values.categoryId,
         isActive: values.isActive
       };
       const discountInput = {

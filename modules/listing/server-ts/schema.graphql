@@ -152,6 +152,7 @@ input FilterListInput {
 
 input AddListingInput {
   userId: Int
+  categoryId: Int
 
   title: String
   description: String
@@ -210,6 +211,7 @@ input ListingCostInput {
 input EditListingInput {
   id: Int!
   userId: Int
+  categoryId: Int
 
   title: String
   description: String

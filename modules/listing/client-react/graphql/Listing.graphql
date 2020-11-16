@@ -1,4 +1,5 @@
 #import "@gqlapp/user-client-react/graphql/User.graphql"
+#import "@gqlapp/category-client-react/graphql/Category.graphql"
 
 fragment ListingInfo on Listing {
   id
@@ -9,6 +10,10 @@ fragment ListingInfo on Listing {
   title
   description
   sku
+
+  category {
+    ...CategoryInfo
+  }
 
   listingFlags {
     id
