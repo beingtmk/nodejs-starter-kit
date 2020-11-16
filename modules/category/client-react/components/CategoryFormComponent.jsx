@@ -93,6 +93,7 @@ const CategoryFormComponent = props => {
           <Col md={12} xs={24} align="left">
             <Field
               component={CategoryTreeComponent}
+              filter={{ modalName: values.modalName }}
               type="number"
               name="parentCategoryId"
               placeholder="category"

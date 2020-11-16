@@ -190,11 +190,18 @@ const ListingFormComponent = props => {
     };
     props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
   };
-  function disabledDate(current) {
+  function disabledStartDate(current) {
     // Can not select days before today and today
     return current && current < moment().startOf('day');
   }
-  console.log('props', props.modalDiscount);
+
+  function disabledEndDate(current) {
+    const startDate = moment(values.discountDuration.startDate ? moment(values.discountDuration.startDate) : moment());
+    // Can not select days before today and today
+    return current && current < startDate.startOf('day');
+  }
+
+  // console.log('props', props.modalDiscount);
   return (
     <Card
       title={
@@ -405,7 +412,7 @@ const ListingFormComponent = props => {
                   name={'discountDuration.startDate'}
                   component={RenderDatePicker}
                   // type="range"
-                  disabledDate={disabledDate}
+                  disabledDate={disabledStartDate}
                   showTime
                   label={t('listingForm.discountDuration.startDate')}
                   onChange={e => setFieldValue('discountDuration.startDate', e.toISOString())}
@@ -419,11 +426,17 @@ const ListingFormComponent = props => {
                   name={'discountDuration.endDate'}
                   component={RenderDatePicker}
                   // type="range"
-                  disabledDate={disabledDate}
+                  disabledDate={disabledEndDate}
                   showTime
                   label={t('listingForm.discountDuration.endDate')}
                   onChange={e => setFieldValue('discountDuration.endDate', e.toISOString())}
-                  value={values.discountDuration.endDate ? moment(values.discountDuration.endDate) : moment()}
+                  value={
+                    values.discountDuration.endDate
+                      ? moment(values.discountDuration.endDate)
+                      : values.discountDuration.startDate
+                      ? moment(values.discountDuration.startDate)
+                      : moment()
+                  }
                 />
               )}
             </Col>
