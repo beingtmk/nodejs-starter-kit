@@ -56,11 +56,13 @@ const ListingsFilterComponent = props => {
     [`${maxCostRangeValues}`]: maxCostRangeValues
   };
   return (
-    <Form layout="inline">
+    <Form
+    //  layout="inline"
+    >
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row>
-            <Col lg={18} xs={24} md={14}>
+            <Col lg={10} xs={24} md={14}>
               <Row gutter={24}>
                 <Col>
                   <FormItem label={'search'} style={{ width: '100%' }}>
@@ -76,7 +78,7 @@ const ListingsFilterComponent = props => {
                 </Col>
                 <Col>
                   {showIsActive && (
-                    <FormItem>
+                    <FormItem labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
                       <Label>
                         <Input
                           type="checkbox"
@@ -89,7 +91,16 @@ const ListingsFilterComponent = props => {
                     </FormItem>
                   )}
                 </Col>
-                <Col>
+              </Row>
+            </Col>
+            <Col
+              lg={14}
+              xs={24}
+              md={10}
+              // align="right"
+            >
+              <Row>
+                <Col lg={0} md={0} xs={24}>
                   <Field
                     component={CategoryTreeComponent}
                     filter={{ modalName: MODAL[1].value }}
@@ -101,17 +112,6 @@ const ListingsFilterComponent = props => {
                     label="Select a category"
                     value={categoryId}
                   />
-                </Col>
-              </Row>
-            </Col>
-            <Col
-              lg={6}
-              xs={24}
-              md={10}
-              // align="right"
-            >
-              <Row>
-                <Col lg={0} md={0} xs={24}>
                   <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
                     <Select
                       name="sortBy"
@@ -136,6 +136,17 @@ const ListingsFilterComponent = props => {
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
+                    <Field
+                      component={CategoryTreeComponent}
+                      filter={{ modalName: MODAL[1].value }}
+                      disableParent={true}
+                      onChange={onCategoryChange}
+                      type="number"
+                      name="categoryId"
+                      placeholder="category"
+                      label="Select a category"
+                      value={categoryId}
+                    />
                     {SORT_BY && SORT_BY.length !== 0 && (
                       <FormItem label={'Sort By'}>
                         <Select

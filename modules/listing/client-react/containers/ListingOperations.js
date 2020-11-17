@@ -56,7 +56,12 @@ export const withListings = Component =>
           limit: limit,
           after: 0,
           orderBy,
-          filter: { ...filter, categoryId: Number((match ? match.params.cid : navigation.state.params.cid) || 0) }
+          filter: {
+            ...filter,
+            categoryId: Number(
+              (match ? match.params.cid : navigation.state.params.cid) || (filter && filter.categoryId) || 0
+            )
+          }
         },
         fetchPolicy: 'network-only'
       };
