@@ -23,6 +23,7 @@ const ListingsFilterComponent = props => {
     onFiltersRemove,
     listings,
     showIsActive = false,
+    showCategoryFilter = false,
     orderBy,
     onOrderBy,
     t
@@ -101,17 +102,19 @@ const ListingsFilterComponent = props => {
             >
               <Row>
                 <Col lg={0} md={0} xs={24}>
-                  <Field
-                    component={CategoryTreeComponent}
-                    filter={{ modalName: MODAL[1].value }}
-                    disableParent={true}
-                    onChange={onCategoryChange}
-                    type="number"
-                    name="categoryId"
-                    placeholder="category"
-                    label="Select a category"
-                    value={categoryId}
-                  />
+                  {showCategoryFilter && (
+                    <Field
+                      component={CategoryTreeComponent}
+                      filter={{ modalName: MODAL[1].value }}
+                      disableParent={true}
+                      onChange={onCategoryChange}
+                      type="number"
+                      name="categoryId"
+                      placeholder="category"
+                      label="Select a category"
+                      value={categoryId}
+                    />
+                  )}
                   <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
                     <Select
                       name="sortBy"
@@ -136,17 +139,19 @@ const ListingsFilterComponent = props => {
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
-                    <Field
-                      component={CategoryTreeComponent}
-                      filter={{ modalName: MODAL[1].value }}
-                      disableParent={true}
-                      onChange={onCategoryChange}
-                      type="number"
-                      name="categoryId"
-                      placeholder="category"
-                      label="Select a category"
-                      value={categoryId}
-                    />
+                    {showCategoryFilter && (
+                      <Field
+                        component={CategoryTreeComponent}
+                        filter={{ modalName: MODAL[1].value }}
+                        disableParent={true}
+                        onChange={onCategoryChange}
+                        type="number"
+                        name="categoryId"
+                        placeholder="category"
+                        label="Select a category"
+                        value={categoryId}
+                      />
+                    )}
                     {SORT_BY && SORT_BY.length !== 0 && (
                       <FormItem label={'Sort By'}>
                         <Select
@@ -235,6 +240,7 @@ ListingsFilterComponent.propTypes = {
   onSearchTextChange: PropTypes.func.isRequired,
   onRoleChange: PropTypes.func.isRequired,
   showIsActive: PropTypes.bool.isRequired,
+  showCategoryFilter: PropTypes.bool.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
   onOrderBy: PropTypes.func.isRequired,
   t: PropTypes.func
