@@ -16,8 +16,12 @@ const userData = {
     "https://img.freepik.com/free-vector/white-smoke-rings-from-cigarette-pipe-vape_1441-4221.jpg?size=626&ext=jpg&ga=GA1.2.12280400.1601510400",
   avatarSrc:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
-  title: "Yashwanth Sambaraj",
-  description: "Web Developer STUDENT",
+    avatarTitle: "Yashwanth Sambaraj",
+  avatarDescription: "Web Developer STUDENT",
+  portfolioSrc: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",  
+  portfolioTitle: "Title",
+  portfolioDescription: "Description"
+  
 };
 
 class ProfileView extends Component {
@@ -48,7 +52,7 @@ class ProfileView extends Component {
           </Row>
 
           {/*Avatar description*/}
-          <Meta title={userData.title} description={userData.description} />
+          <Meta title={userData.avatarTitle} description={userData.avatarDescription} />
 
           <br></br>
 
@@ -123,7 +127,7 @@ class ProfileView extends Component {
                 cover={
                   <img
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={userData.portfolioSrc}
                   />
                 }
                 actions={[
@@ -131,7 +135,7 @@ class ProfileView extends Component {
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-                <Meta title="Title" description="description" />
+               <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
               </Card>
             </Col>
 
@@ -141,7 +145,7 @@ class ProfileView extends Component {
                 cover={
                   <img
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={userData.portfolioSrc}
                   />
                 }
                 actions={[
@@ -149,7 +153,7 @@ class ProfileView extends Component {
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-                <Meta title="Title" description="description" />
+               <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
               </Card>
             </Col>
 
@@ -159,7 +163,7 @@ class ProfileView extends Component {
                 cover={
                   <img
                     alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+                    src={userData.portfolioSrc}
                   />
                 }
                 actions={[
@@ -167,7 +171,7 @@ class ProfileView extends Component {
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-                <Meta title="Title" description="description" />
+                <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
               </Card>
             </Col>
           </Row>
