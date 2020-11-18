@@ -5,7 +5,7 @@ import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
 import { Row, Col, DropDown } from '@gqlapp/look-client-react';
 
-import ROUTES from '../routes';
+import ROUTES from '@gqlapp/listing-client-react/routes';
 
 const CategoryNavBarComponentView = props => {
   const [visible, setVisible] = useState(false);

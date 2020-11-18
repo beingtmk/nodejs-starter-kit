@@ -7,9 +7,8 @@ import { Icon, PageLayout, Divider } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
-
-import CategoryItemComponent from './CategoryItemComponent';
-import CategoryNavBarComponent from '../containers/CategoryNavBarComponent';
+import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
+import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 
 const { Title, Paragraph } = Typography;
 const BreadCrumbItem = Breadcrumb.Item;

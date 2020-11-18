@@ -85,6 +85,13 @@ export default new ClientModule({
         fallback: <Spinner />
       })}
     />,
+    <Route
+      exact
+      path={ROUTES.categoryCatalogue}
+      component={loadable(() => import('./containers/CategoryCatalogue').then(c => c.default), {
+        fallback: <Spinner />
+      })}
+    />,
     <AuthRoute
       redirect={USER_ROUTES.profile}
       role={['user', 'admin']}
