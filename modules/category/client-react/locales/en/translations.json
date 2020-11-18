@@ -10,6 +10,17 @@
       "del": "Delete",
       "more": "Load more ..."
     },
-    "subTitle": "Category List"
+    "subTitle": "Category List",
+    "column": {
+      "listTitle": "Title",
+      "active": "Active",
+      "actions": "Actions"
+    }
+  },
+  "categories": {
+    "filter": {
+      "search": "Search",
+      "isActive": "isActive"
+    }
   }
 }

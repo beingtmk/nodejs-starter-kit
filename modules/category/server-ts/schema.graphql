@@ -84,6 +84,15 @@ input EditCategoryInput {
   parentCategoryId: Int
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  categoriesUpdated(
+    endCursor: Int
+    filter: FilterCategoryInput
+  ): UpdateCategoryPayload
+}
+
+type UpdateCategoryPayload {
+  mutation: String!
+  id: Int
+  node: Category
+}

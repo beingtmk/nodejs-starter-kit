@@ -1,10 +1,11 @@
 import { CategoryInput, Identifier } from './sql';
+import { withFilter } from 'graphql-subscriptions';
 
 interface Edges {
   cursor: number;
   node: CategoryInput & Identifier;
 }
-
+export const CATEGORIES_SUBSCRIPTION = 'categories_subscription';
 export default (pubsub: any) => ({
   Query: {
     async categories(obj: any, { limit, after, orderBy, filter }: any, { Category, req: { identity } }: any) {
@@ -45,5 +46,18 @@ export default (pubsub: any) => ({
       return Category.deleteCategory(id);
     }
   },
-  Subscription: {}
+  Subscription: {
+    categoriesUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(CATEGORIES_SUBSCRIPTION),
+        (payload, variables) => {
+          if (variables.endCursor) {
+            return variables.endCursor <= payload.categoriesUpdated.id;
+          } else {
+            return true;
+          }
+        }
+      )
+    }
+  }
 });

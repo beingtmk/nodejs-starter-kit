@@ -7,7 +7,7 @@ import CategoryCatalogueView from '../components/CategoryCatalogueView';
 import { withCategory } from './CategoryOpertations';
 
 const CategoryCatalogue = props => {
-  console.log('props', props);
+  // console.log('props', props);
   return <CategoryCatalogueView {...props} />;
 };
 
