@@ -169,22 +169,24 @@ export default class ListingDAO extends Model {
         });
       }
 
-      if (has(filter, 'categoryId') && filter.categoryId !== 0) {
+      if (has(filter, 'categoryFilter') && filter.categoryFilter.categoryId !== 0) {
         const category = camelizeKeys(
           await CategoryDAO.query()
             .eager('[sub_categories.^]')
-            .findById(filter.categoryId)
+            .findById(filter.categoryFilter.categoryId)
         );
         const ids = [category.id];
-        const addIdForArrayExpression = function addIdForArray(cat) {
-          cat.subCategories.map(c => {
-            ids.push(c.id);
-            if (c.subCategories.length > 0) {
-              addIdForArray(c);
-            }
-          });
-        };
-        addIdForArrayExpression(category);
+        if (filter.categoryFilter.allSubCategory) {
+          const addIdForArrayExpression = function addIdForArray(cat) {
+            cat.subCategories.map(c => {
+              ids.push(c.id);
+              if (c.subCategories.length > 0) {
+                addIdForArray(c);
+              }
+            });
+          };
+          addIdForArrayExpression(category);
+        }
         queryBuilder.where(function() {
           this.whereIn('listing.category_id', ids);
         });

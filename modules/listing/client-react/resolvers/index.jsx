@@ -5,6 +5,7 @@ import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
 const TYPE_LISTINGS_STATE = 'ListingsState';
 const TYPE_LISTINGS_STATE_FILTER = 'FilterListInput';
 const TYPE_LISTINGS_STATE_ORDER_BY = 'OrderByListInput';
+const TYPE_LISTINGS_STATE_CATEGORY_FILTER = 'CategoryFilter';
 
 const defaults = {
   listingsState: {
@@ -16,7 +17,12 @@ const defaults = {
     filter: {
       // userId: 0,
       searchText: '',
-      categoryId: 0,
+
+      categoryFilter: {
+        categoryId: 0,
+        allSubCategory: true,
+        __typename: TYPE_LISTINGS_STATE_CATEGORY_FILTER
+      },
 
       lowerCost: 0,
       upperCost: 0,
@@ -36,7 +42,9 @@ const resolvers = {
   Mutation: {
     updateOrderByListing: (_, { orderBy }, { cache }) => {
       // console.log('updateOrderBy', orderBy);
-      const { listingsState } = cache.readQuery({ query: LISTINGS_STATE_QUERY });
+      const { listingsState } = cache.readQuery({
+        query: LISTINGS_STATE_QUERY
+      });
 
       const newListingsState = update(listingsState, {
         orderBy: { $merge: orderBy }
@@ -53,7 +61,9 @@ const resolvers = {
     },
     updateFilterListing: (_, { filter, orderBy }, { cache }) => {
       // console.log('updateFilter', filter, orderBy);
-      const { listingsState } = cache.readQuery({ query: LISTINGS_STATE_QUERY });
+      const { listingsState } = cache.readQuery({
+        query: LISTINGS_STATE_QUERY
+      });
 
       const newListingsState = update(listingsState, {
         filter: { $merge: filter },

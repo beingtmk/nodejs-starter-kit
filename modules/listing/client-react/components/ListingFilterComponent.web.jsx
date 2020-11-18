@@ -14,7 +14,7 @@ import SliderControlled from './FIlterSliderControlledComponent';
 const ListingsFilterComponent = props => {
   // console.log('listings filter component', props);
   const {
-    filter: { searchText, lowerCost, upperCost, categoryId, isActive },
+    filter: { searchText, lowerCost, upperCost, isActive, categoryFilter },
     onIsActiveChange,
     onCategoryChange,
     onSearchTextChange,
@@ -44,6 +44,11 @@ const ListingsFilterComponent = props => {
       searchText: '',
       lowerCost: 0,
       upperCost: 0,
+      categoryFilter: {
+        categoryId: 0,
+        allSubCategory: true,
+        __typename: 'CategoryFilter'
+      },
       isActive: true
     };
     const orderBy = { column: '', order: '' };
@@ -56,6 +61,21 @@ const ListingsFilterComponent = props => {
     [`${minCostRangeValues}`]: minCostRangeValues,
     [`${maxCostRangeValues}`]: maxCostRangeValues
   };
+
+  const CategoryTreeField = showCategoryFilter && (
+    <Field
+      component={CategoryTreeComponent}
+      filter={{ modalName: MODAL[1].value }}
+      // disableParent={true}
+      onChange={e => onCategoryChange({ categoryId: e, allSubCategory: false })}
+      type="number"
+      name="categoryId"
+      placeholder="category"
+      label="Select a category"
+      value={categoryFilter.categoryId}
+    />
+  );
+
   return (
     <Form
     //  layout="inline"
@@ -102,19 +122,7 @@ const ListingsFilterComponent = props => {
             >
               <Row>
                 <Col lg={0} md={0} xs={24}>
-                  {showCategoryFilter && (
-                    <Field
-                      component={CategoryTreeComponent}
-                      filter={{ modalName: MODAL[1].value }}
-                      // disableParent={true}
-                      onChange={onCategoryChange}
-                      type="number"
-                      name="categoryId"
-                      placeholder="category"
-                      label="Select a category"
-                      value={categoryId}
-                    />
-                  )}
+                  {CategoryTreeField}
                   <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
                     <Select
                       name="sortBy"
@@ -123,7 +131,10 @@ const ListingsFilterComponent = props => {
                       onChange={e =>
                         SORT_BY[e].sortBy === ''
                           ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
-                          : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
+                          : onOrderBy({
+                              order: SORT_BY[e].sortBy,
+                              column: SORT_BY[e].value
+                            })
                       }
                     >
                       <Option key={1} value="">
@@ -139,19 +150,8 @@ const ListingsFilterComponent = props => {
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
-                    {showCategoryFilter && (
-                      <Field
-                        component={CategoryTreeComponent}
-                        filter={{ modalName: MODAL[1].value }}
-                        disableParent={true}
-                        onChange={onCategoryChange}
-                        type="number"
-                        name="categoryId"
-                        placeholder="category"
-                        label="Select a category"
-                        value={categoryId}
-                      />
-                    )}
+                    {CategoryTreeField}
+
                     {SORT_BY && SORT_BY.length !== 0 && (
                       <FormItem label={'Sort By'}>
                         <Select
@@ -160,8 +160,14 @@ const ListingsFilterComponent = props => {
                           style={{ width: '170px' }}
                           onChange={e =>
                             SORT_BY[e].sortBy === ''
-                              ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
-                              : onOrderBy({ order: SORT_BY[e].sortBy, column: SORT_BY[e].value })
+                              ? onOrderBy({
+                                  order: SORT_BY[e].sortBy,
+                                  column: ''
+                                })
+                              : onOrderBy({
+                                  order: SORT_BY[e].sortBy,
+                                  column: SORT_BY[e].value
+                                })
                           }
                         >
                           <Option key={1} value="">
