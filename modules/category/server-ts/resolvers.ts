@@ -36,14 +36,55 @@ export default (pubsub: any) => ({
   },
   Mutation: {
     async addCategory(obj: any, { input }: { input: CategoryInput }, { Category }: any) {
-      const res = await Category.addCategory(input);
-      return true;
+      try {
+        const id = await Category.addCategory(input);
+        const category = await Category.category(id);
+        pubsub.publish(CATEGORIES_SUBSCRIPTION, {
+          categoriesUpdated: {
+            mutation: 'CREATED',
+            id,
+            node: category
+          }
+        });
+        return id;
+      } catch (e) {
+        return e;
+      }
     },
     async editCategory(obj: any, { input }: { input: CategoryInput }, { Category }: any) {
-      return Category.editCategory(input);
+      try {
+        const category = await Category.category(input.id);
+        await Category.editCategory(input);
+        if (category) {
+          pubsub.publish(CATEGORIES_SUBSCRIPTION, {
+            categoriesUpdated: {
+              mutation: 'UPDATED',
+              id: input.id,
+              node: category
+            }
+          });
+        }
+        return true;
+      } catch (e) {
+        return e;
+      }
     },
     async deleteCategory(obj: any, { id }: Identifier, { Category }: any) {
-      return Category.deleteCategory(id);
+      const category = await Category.category(id);
+
+      const isDeleted = Category.deleteCategory(id);
+      if (isDeleted) {
+        pubsub.publish(CATEGORIES_SUBSCRIPTION, {
+          categoriesUpdated: {
+            mutation: 'DELETED',
+            id,
+            node: category
+          }
+        });
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   Subscription: {

@@ -139,7 +139,7 @@ export default class CategoryDAO extends Model {
       )
     );
     await ModalCategory.query().insertGraph(decamelizeKeys({ modalName: params.modalName, categoryId: res.id }));
-    return res;
+    return res.id;
   }
 
   // public async addCategories(parentCategory: CategoryInput) {

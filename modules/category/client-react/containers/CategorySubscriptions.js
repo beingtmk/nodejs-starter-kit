@@ -83,7 +83,7 @@ function onEditCategories(prev, node) {
 }
 
 const onDeleteCategories = (prev, id) => {
-  // console.log('called', id);
+  console.log('called', id);
   const index = prev.categories.edges.findIndex(x => x.node.id === id);
 
   // ignore if not found
