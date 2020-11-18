@@ -106,7 +106,7 @@ const ListingsFilterComponent = props => {
                     <Field
                       component={CategoryTreeComponent}
                       filter={{ modalName: MODAL[1].value }}
-                      disableParent={true}
+                      // disableParent={true}
                       onChange={onCategoryChange}
                       type="number"
                       name="categoryId"
