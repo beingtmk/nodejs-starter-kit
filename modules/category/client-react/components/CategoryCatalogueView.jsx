@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Typography, Breadcrumb } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-// import { UrlMethod } from '@gqlapp/core-client-react';
-// import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
 import { Icon, PageLayout, Divider } from '@gqlapp/look-client-react';
 import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
@@ -43,19 +41,18 @@ const CategoryCatalogueView = props => {
             <Title level={2}>{category.title}</Title>
             <Paragraph>{category.description}</Paragraph>
           </Typography>
-          {category && category.subCategories && category.subCategories.length !== 0 ? (
+          {category && category.subCategories && category.subCategories.length !== 0 && (
             <>
               <Divider orientation="left">
                 <Title level={3}>Sub Categories</Title>
               </Divider>
               <CategoryItemComponent categories={category.subCategories} />
             </>
-          ) : (
-            <>
-              <Divider />
-              <CategoryListingsCatalogue match={match} navigation={navigation} />
-            </>
           )}
+          <>
+            <Divider />
+            <CategoryListingsCatalogue match={match} navigation={navigation} />
+          </>
         </>
       )}
     </PageLayout>

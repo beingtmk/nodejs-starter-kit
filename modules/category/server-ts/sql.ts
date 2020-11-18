@@ -24,6 +24,8 @@ export interface CategoryInput {
 }
 
 const eager = '[sub_categories, modal_category]';
+const allEager = '[sub_categories.^, modal_category]';
+const noneEager = '[modal_category]';
 // const eager = '[category]';
 
 export default class CategoryDAO extends Model {
@@ -57,9 +59,15 @@ export default class CategoryDAO extends Model {
     };
   }
 
-  public async categoriesPagination(limit: number, after: number, orderBy: any, filter: any, userId: number) {
+  public async categoriesPagination(
+    limit: number,
+    after: number,
+    orderBy: any,
+    filter: any,
+    childNode: string = 'single'
+  ) {
     const queryBuilder = CategoryDAO.query()
-      .eager(eager)
+      .eager(childNode === 'all' ? allEager : childNode === 'none' ? noneEager : eager)
       .where('category.parent_category_id', null);
 
     if (orderBy && orderBy.column) {
@@ -109,10 +117,10 @@ export default class CategoryDAO extends Model {
     };
   }
 
-  public async category(id: number) {
+  public async category(id: number, childNode: string = 'single') {
     const queryBuilder = CategoryDAO.query()
       .findById(id)
-      .eager(eager)
+      .eager(childNode === 'all' ? allEager : childNode === 'none' ? noneEager : eager)
       .orderBy('id', 'desc');
 
     const res = camelizeKeys(await queryBuilder);

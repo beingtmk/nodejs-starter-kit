@@ -42,8 +42,9 @@ extend type Query {
     after: Int!
     orderBy: OrderByCategoryInput
     filter: FilterCategoryInput
+    childNode: String
   ): Categories
-  category(id: Int): Category
+  category(id: Int, childNode: String): Category
 }
 
 input OrderByCategoryInput {
