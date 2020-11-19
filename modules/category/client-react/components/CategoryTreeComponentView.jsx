@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TreeSelect } from 'antd';
 import { withApollo } from 'react-apollo';
 
-import { FormItem } from '@gqlapp/look-client-react';
+import { FormItem, TreeSelect } from '@gqlapp/look-client-react';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 

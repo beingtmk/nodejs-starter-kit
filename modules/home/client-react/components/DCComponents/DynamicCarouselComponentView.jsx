@@ -5,7 +5,7 @@ import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { LeftArrow, RightArrow, Icon, Button, Empty } from '@gqlapp/look-client-react/ui-antd/components';
+import { LeftArrow, RightArrow, Icon, Button, Empty } from '@gqlapp/look-client-react';
 
 import ROUTES from '../../routes';
 

@@ -3,9 +3,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Table, Pagination, EditIcon, DeleteIcon, Button, Empty } from '@gqlapp/look-client-react';
+import { Table, Pagination, EditIcon, DeleteIcon, Button, Empty, RenderTableLoading } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 
 import ROUTES from '../../routes';
 

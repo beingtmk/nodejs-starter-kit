@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { compose } from '@gqlapp/core-common';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Spinner } from '@gqlapp/look-client-react';
 
 import { withDynamicCarousels } from './DynamicCarouselOperations';
 import DynamicCarouselComponentView from '../../components/DCComponents/DynamicCarouselComponentView';

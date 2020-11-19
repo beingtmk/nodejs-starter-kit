@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Spinner } from '@gqlapp/look-client-react';
 
 import CategoryTreeComponentView from '../components/CategoryTreeComponentView';
 import { withCategories } from './CategoryOpertations';

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Skeleton } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
-import { Row, Col, DropDown } from '@gqlapp/look-client-react';
+import { Row, Col, DropDown, Card, Skeleton } from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 

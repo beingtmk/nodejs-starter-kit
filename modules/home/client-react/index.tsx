@@ -7,8 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import loadable from '@loadable/component';
-import { MenuItem } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { MenuItem, Spinner } from '@gqlapp/look-client-react';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';

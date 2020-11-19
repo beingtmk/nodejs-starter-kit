@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Card } from 'antd';
+import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-import { Row, Col } from '@gqlapp/look-client-react';
+import { Row, Col, Card } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 
 import ROUTES from '../routes';

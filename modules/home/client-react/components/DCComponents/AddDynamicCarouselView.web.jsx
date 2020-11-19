@@ -1,8 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Row, PageLayout, MetaTags, Card, Heading } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Row, PageLayout, MetaTags, Card, Heading, Spinner } from '@gqlapp/look-client-react';
 
 import settings from '@gqlapp/config';
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';

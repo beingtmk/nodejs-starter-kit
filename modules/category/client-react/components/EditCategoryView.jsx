@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags, Spinner } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import CategoryFormComponent from './CategoryFormComponent';
 
@@ -29,7 +28,7 @@ EditCategoryView.propTypes = {
   loading: PropTypes.bool,
   t: PropTypes.func,
   onSubmit: PropTypes.func,
-  category: PropTypes.object,
+  category: PropTypes.object
 };
 
 export default EditCategoryView;

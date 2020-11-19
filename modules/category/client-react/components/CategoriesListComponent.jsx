@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Spin, Card } from 'antd';
+import { Card } from 'antd';
 import { useQuery } from 'react-apollo';
 
 import { translate } from '@gqlapp/i18n-client-react';
@@ -15,11 +15,10 @@ import {
   DeleteIcon,
   Empty,
   Divider,
-  /* Tooltip, */
-  // Card,
   Avatar,
   Button,
-  RenderTableLoading
+  RenderTableLoading,
+  Spin
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
@@ -272,7 +271,10 @@ CategoryListComponent.propTypes = {
   onToggle: PropTypes.func,
   t: PropTypes.func,
   onDuplicate: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  record: PropTypes.object,
+  expanded: PropTypes.func,
+  onExpand: PropTypes.func
 };
 
 export default translate('category')(CategoryListComponent);

@@ -3,7 +3,7 @@ import React from 'react';
 // import { Icon } from '@gqlapp/look-client-react';
 import { Route } from 'react-router-dom';
 import loadable from '@loadable/component';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Spinner } from '@gqlapp/look-client-react';
 
 // import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import ClientModule from '@gqlapp/module-client-react';
