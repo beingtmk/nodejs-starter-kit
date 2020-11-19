@@ -5,8 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 // import { UrlMethod } from '@gqlapp/core-client-react';
 // import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
-import { Icon, PageLayout, Divider } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Icon, PageLayout, Divider, Spinner } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
 

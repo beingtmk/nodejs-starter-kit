@@ -2,8 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 
 import settings from '@gqlapp/config';
-import { PageLayout, MetaTags, Col, Row, Steps, Step } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { PageLayout, MetaTags, Col, Row, Steps, Step, Spinner } from '@gqlapp/look-client-react';
 
 import ListingFormComponent from './ListingFormComponent.web';
 

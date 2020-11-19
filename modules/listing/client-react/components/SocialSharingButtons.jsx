@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 
-import { Icon, Card, ModalDrawer, Col, Message, Button } from '@gqlapp/look-client-react';
-import DropDown from '@gqlapp/look-client-react/ui-antd/components/Dropdown';
+import { Icon, Card, ModalDrawer, Col, Message, Button, DropDown } from '@gqlapp/look-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import MailButtonForm from './MailButtonForm';
 

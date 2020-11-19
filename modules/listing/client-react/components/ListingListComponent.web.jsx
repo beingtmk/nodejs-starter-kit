@@ -15,9 +15,9 @@ import {
   Empty,
   Divider,
   Tooltip,
-  Button
+  Button,
+  RenderTableLoading
 } from '@gqlapp/look-client-react';
-import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';

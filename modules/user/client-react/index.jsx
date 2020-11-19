@@ -4,11 +4,10 @@ import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, MenuItem } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
 import ClientModule from '@gqlapp/module-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';
@@ -135,21 +134,21 @@ export default new ClientModule({
       exact
       path={ROUTES.userList}
       component={loadable(() => import('./containers/UsersProfileCatalogue').then(c => c.default), {
-        fallback: <Spinner />,
+        fallback: <Spinner />
       })}
-    />,
+    />
   ],
   navItemAdmin: [
     <IfLoggedIn key={ROUTES.adminPanel} role="admin">
       <MenuItem>
         <NavLinkUsersWithI18n />
       </MenuItem>
-    </IfLoggedIn>,
+    </IfLoggedIn>
   ],
   navItemTest: [
     <MenuItem key={ROUTES.userList}>
       <NavLinkTestWithI18n />
-    </MenuItem>,
+    </MenuItem>
   ],
   navItemUser: [
     <IfLoggedIn key={ROUTES.profile}>
@@ -163,18 +162,18 @@ export default new ClientModule({
       <MenuItem>
         <LogoutLink />
       </MenuItem>
-    </IfLoggedIn>,
+    </IfLoggedIn>
   ],
   navItemRight: [
     <IfNotLoggedIn key={ROUTES.login}>
       <MenuItem>
         <NavLinkLoginWithI18n />
       </MenuItem>
-    </IfNotLoggedIn>,
+    </IfNotLoggedIn>
   ],
   resolver: [resolvers],
   localization: [{ ns: 'user', resources }],
   dataRootComponent: [DataRootComponent],
   // eslint-disable-next-line react/display-name
-  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)],
+  rootComponentFactory: [req => (req ? <CookiesProvider cookies={req.universalCookies} /> : <CookiesProvider />)]
 });

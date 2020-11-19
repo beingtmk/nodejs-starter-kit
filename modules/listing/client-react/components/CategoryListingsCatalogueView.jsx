@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Empty, Divider, Button } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { SuggestedListComponent, Spinner, Empty, Divider, Button } from '@gqlapp/look-client-react';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';

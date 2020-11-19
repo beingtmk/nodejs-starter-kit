@@ -6,10 +6,9 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 
 import { Route, NavLink } from 'react-router-dom';
-import { Icon, MenuItem } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 
 const { SubMenu } = Menu;
 

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-import { PageLayout, CatalogueWithInfiniteScroll, Row, Col } from '@gqlapp/look-client-react';
+import { PageLayout, CatalogueWithInfiniteScroll, Row, Col, Spinner } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ProfileCatalogueCard from './components/ProfileCatalogueCard';

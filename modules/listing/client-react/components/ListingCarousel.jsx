@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { Button, Empty, Spinner } from '@gqlapp/look-client-react';
-import { SlickCarousel } from '@gqlapp/look-client-react/ui-antd';
+import { Button, Empty, Spinner, SlickCarousel } from '@gqlapp/look-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 import ROUTES from '../routes';

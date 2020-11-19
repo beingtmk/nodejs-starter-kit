@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, PageLayout, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Icon, PageLayout, Heading, MetaTags, Row, Col, Spinner } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 // import ROUTES from '../routes';

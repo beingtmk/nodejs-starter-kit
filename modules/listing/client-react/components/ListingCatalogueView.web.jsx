@@ -3,10 +3,18 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { Icon, MetaTags, PageLayout, Heading, Empty, Divider, Button } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import {
+  Icon,
+  MetaTags,
+  PageLayout,
+  Heading,
+  Empty,
+  Divider,
+  Button,
+  SuggestedListComponent,
+  Spinner
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 import { MODAL } from '@gqlapp/review-common';
 

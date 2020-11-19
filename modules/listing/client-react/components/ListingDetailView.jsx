@@ -16,7 +16,9 @@ import {
   Divider,
   BreadcrumbItem,
   Breadcrumb,
-  Tooltip
+  Tooltip,
+  Spinner,
+  Icon
 } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
@@ -26,8 +28,6 @@ import DiscountComponentView from '@gqlapp/discount-client-react/components/Disc
 import { NO_IMG } from '@gqlapp/listing-common';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
-import { Icon } from '@gqlapp/look-client-react/ui-antd/components';
 import { MODAL } from '@gqlapp/review-common';
 
 import ListingsCarousel from './ListingCarousel';

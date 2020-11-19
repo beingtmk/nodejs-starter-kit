@@ -3,9 +3,18 @@ import PropTypes from 'prop-types';
 
 import { Button } from 'antd';
 
-import { Icon, PageLayout, Heading, MetaTags, Row, Col, Divider, Empty } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import {
+  Icon,
+  PageLayout,
+  Heading,
+  MetaTags,
+  Row,
+  Col,
+  Divider,
+  Empty,
+  SuggestedListComponent,
+  Spinner
+} from '@gqlapp/look-client-react';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 

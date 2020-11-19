@@ -8,7 +8,7 @@ import ClientModule from '@gqlapp/module-client-react';
 // import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 // import { MenuItem } from '@gqlapp/look-client-react';
-import Spinner from '@gqlapp/look-client-react/ui-antd/components/Spinner';
+import { Spinner } from '@gqlapp/look-client-react';
 
 import ROUTES from './routes';
 import resources from './locales';

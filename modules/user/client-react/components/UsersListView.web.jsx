@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Table, DeleteIcon, EditIcon } from '@gqlapp/look-client-react';
-import RenderTableLoading from '@gqlapp/look-client-react/ui-antd/components/RenderTableLoading';
+import { Table, DeleteIcon, EditIcon, RenderTableLoading } from '@gqlapp/look-client-react';
 
 const UsersView = ({ deleteUser, orderBy, onOrderBy, loading, users, t }) => {
   const [errors, setErrors] = useState([]);

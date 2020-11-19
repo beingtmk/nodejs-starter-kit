@@ -2,8 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { MODAL } from '@gqlapp/review-common';
-import { FormItem, Select, Option, Heading, MetaTags, Icon, Row, Col, Spin } from '@gqlapp/look-client-react';
-import SuggestedListComponent from '@gqlapp/look-client-react/ui-antd/components/SuggestedListComponent';
+import {
+  FormItem,
+  Select,
+  Option,
+  Heading,
+  MetaTags,
+  Icon,
+  Row,
+  Col,
+  Spin,
+  SuggestedListComponent
+} from '@gqlapp/look-client-react';
 
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import ReviewsItemComponent from './ReviewsItemComponent';
