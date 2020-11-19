@@ -1,7 +1,13 @@
 import update from 'immutability-helper';
+import { Message } from '@gqlapp/look-client-react';
+
+// eslint-disable-next-line import/no-named-default
+import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
 
 import CATEGORIES_SUBSCRIPTION from '../graphql/CategoriesSubscription.graphql';
-// eslint-disable-next-line import/prefer-default-export
+import CATEGORY_SUBSCRIPTION from '../graphql/CategorySubscription.graphql';
+import ROUTES from '../routes';
+
 export const subscribeToCategories = (subscribeToMore, filter) =>
   subscribeToMore({
     document: CATEGORIES_SUBSCRIPTION,
@@ -101,4 +107,46 @@ const onDeleteCategories = (prev, id) => {
       }
     }
   });
+};
+export const subscribeToCategory = (subscribeToMore, CategoryId, history) =>
+  subscribeToMore({
+    document: CATEGORY_SUBSCRIPTION,
+    variables: { id: CategoryId },
+    updateQuery: (
+      prev,
+      {
+        subscriptionData: {
+          data: {
+            categoryUpdated: { mutation, node }
+          }
+        }
+      }
+    ) => {
+      let newResult = prev;
+      // console.log('mutation', mutation, node);
+      if (mutation === 'UPDATED') {
+        newResult = onEditCategory(prev, node);
+      } else if (mutation === 'DELETED') {
+        newResult = onDeleteCategory(history);
+      }
+      return newResult;
+    }
+  });
+
+function onEditCategory(prev, node) {
+  return update(prev, {
+    listing: {
+      $set: node
+    }
+  });
+}
+
+const onDeleteCategory = history => {
+  Message.info('This Category has been deleted!');
+  if (history) {
+    Message.warn('Redirecting to Categories');
+    return history.push(`${ROUTES.adminPanel}`);
+  } else {
+    return history.push(`${HOME_ROUTES.home}`);
+  }
 };

@@ -6,6 +6,8 @@ interface Edges {
   node: CategoryInput & Identifier;
 }
 export const CATEGORIES_SUBSCRIPTION = 'categories_subscription';
+export const CATEGORY_SUBSCRIPTION = 'category_subscription';
+
 export default (pubsub: any) => ({
   Query: {
     async categories(obj: any, { limit, after, orderBy, filter }: any, { Category, req: { identity } }: any) {
@@ -63,6 +65,13 @@ export default (pubsub: any) => ({
               node: category
             }
           });
+          pubsub.publish(CATEGORY_SUBSCRIPTION, {
+            categoryUpdated: {
+              mutation: 'UPDATED',
+              id: input.id,
+              node: category
+            }
+          });
         }
         return true;
       } catch (e) {
@@ -76,6 +85,13 @@ export default (pubsub: any) => ({
       if (isDeleted) {
         pubsub.publish(CATEGORIES_SUBSCRIPTION, {
           categoriesUpdated: {
+            mutation: 'DELETED',
+            id,
+            node: category
+          }
+        });
+        pubsub.publish(CATEGORY_SUBSCRIPTION, {
+          categoryUpdated: {
             mutation: 'DELETED',
             id,
             node: category
@@ -97,6 +113,14 @@ export default (pubsub: any) => ({
           } else {
             return true;
           }
+        }
+      )
+    },
+    categoryUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(CATEGORY_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.categoryUpdated.id === variables.id;
         }
       )
     }

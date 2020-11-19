@@ -91,6 +91,8 @@ extend type Subscription {
     endCursor: Int
     filter: FilterCategoryInput
   ): UpdateCategoryPayload
+
+  categoryUpdated(id: Int): UpdateCategoryPayload
 }
 
 type UpdateCategoryPayload {
