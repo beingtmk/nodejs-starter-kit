@@ -71,6 +71,7 @@ input AddCategoryInput {
   description: String
   isNavbar: Boolean
   parentCategoryId: Int
+  isActive: Boolean
 }
 
 input EditCategoryInput {
@@ -82,6 +83,7 @@ input EditCategoryInput {
   description: String
   isNavbar: Boolean
   parentCategoryId: Int
+  isActive: Boolean
 }
 
 extend type Subscription {
