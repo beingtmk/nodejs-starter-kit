@@ -72,6 +72,7 @@ input AddCategoryInput {
   description: String
   isNavbar: Boolean
   parentCategoryId: Int
+  isActive: Boolean
 }
 
 input EditCategoryInput {
@@ -83,8 +84,20 @@ input EditCategoryInput {
   description: String
   isNavbar: Boolean
   parentCategoryId: Int
+  isActive: Boolean
 }
 
-# extend type Subscription {
-#   subscriptionName: TypeName
-# }
+extend type Subscription {
+  categoriesUpdated(
+    endCursor: Int
+    filter: FilterCategoryInput
+  ): UpdateCategoryPayload
+
+  categoryUpdated(id: Int): UpdateCategoryPayload
+}
+
+type UpdateCategoryPayload {
+  mutation: String!
+  id: Int
+  node: Category
+}

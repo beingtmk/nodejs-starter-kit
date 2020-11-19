@@ -8,9 +8,9 @@ const CategoriesFilterComponent = ({ filter: { searchText, isActive }, onSearchT
     <Row type="flex" align="middle">
       <Col span={24}>
         <Row>
-          <Col lg={16} xs={24} sm={24} md={14}>
+          <Col lg={16} xs={24} md={14} sm={24}>
             <Row gutter={24}>
-              <Col xs={24} md={24} sm={14} lg={16}>
+              <Col>
                 <FormItem label={t('categories.filter.search')} style={{ width: '100%' }}>
                   <DebounceInput
                     minLength={2}
@@ -22,7 +22,11 @@ const CategoriesFilterComponent = ({ filter: { searchText, isActive }, onSearchT
                   />
                 </FormItem>
               </Col>
-              <Col xs={24} md={24} sm={10} lg={8}>
+            </Row>
+          </Col>
+          <Col lg={8} xs={24} md={10} sm={24}>
+            <Row>
+              <Col lg={0} md={0} xs={24}>
                 <FormItem>
                   <Label>
                     <Input
@@ -33,6 +37,20 @@ const CategoriesFilterComponent = ({ filter: { searchText, isActive }, onSearchT
                     &nbsp; {t('categories.filter.isActive')}
                   </Label>
                 </FormItem>
+              </Col>
+              <Col xs={0} md={24} lg={24}>
+                <Row type="flex" justify="middle">
+                  <FormItem>
+                    <Label>
+                      <Input
+                        type="checkbox"
+                        defaultChecked={isActive}
+                        onChange={e => onIsActiveChange(e.target.checked)}
+                      />
+                      &nbsp; {t('categories.filter.isActive')}
+                    </Label>
+                  </FormItem>
+                </Row>
               </Col>
             </Row>
           </Col>

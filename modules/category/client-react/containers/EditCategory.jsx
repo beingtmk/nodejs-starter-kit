@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Message } from '@gqlapp/look-client-react';
@@ -8,9 +8,15 @@ import { translate } from '@gqlapp/i18n-client-react';
 import ROUTES from '../routes';
 import EditCategoryView from '../components/EditCategoryView';
 import { withEditCategory, withCategory } from './CategoryOpertations';
+import { subscribeToCategory } from './CategorySubscriptions';
 
 const EditCategory = props => {
-  const { editCategory, history } = props;
+  const { editCategory, history, subscribeToMore, category } = props;
+  useEffect(() => {
+    const subscribe = subscribeToCategory(subscribeToMore, category && category.id, history);
+    return () => subscribe();
+  });
+
   const handleSubmit = values => {
     try {
       Message.destroy();
@@ -34,7 +40,9 @@ const EditCategory = props => {
 
 EditCategory.propTypes = {
   editCategory: PropTypes.func,
+  subscribeToMore: PropTypes.func,
   history: PropTypes.object,
+  category: PropTypes.object
 };
 
 export default compose(withEditCategory, withCategory, translate('discount'))(EditCategory);

@@ -1,0 +1,13 @@
+#import "./Category.graphql"
+
+subscription onCategoriesUpdated(
+  $endCursor: Int
+  $filter: FilterCategoryInput
+) {
+  categoriesUpdated(endCursor: $endCursor, filter: $filter) {
+    mutation
+    node {
+      ...CategoryInfo
+    }
+  }
+}

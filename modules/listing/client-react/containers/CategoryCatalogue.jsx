@@ -7,7 +7,7 @@ import { withCategory } from '@gqlapp/category-client-react/containers/CategoryO
 import CategoryCatalogueView from '../components/CategoryCatalogueView';
 
 const CategoryCatalogue = props => {
-  console.log('props', props);
+  // console.log('props', props);
   return <CategoryCatalogueView {...props} />;
 };
 

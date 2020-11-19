@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-// import { Carousel } from 'antd';
-
+import { Image } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
   MetaTags,
@@ -16,7 +15,8 @@ import {
   Descriptions,
   Divider,
   BreadcrumbItem,
-  Breadcrumb
+  Breadcrumb,
+  Tooltip
 } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
@@ -172,7 +172,9 @@ const ListingDetailView = props => {
                     {images &&
                       images.map((item, id) => (
                         <div key={id} align="center">
-                          <img src={item.url} style={{ height: '300px' }} />
+                          <Tooltip title="click to zoom" placement="bottom">
+                            <Image src={item.url} style={{ height: '300px' }} />
+                          </Tooltip>
                         </div>
                       ))}
                   </Carousel>
