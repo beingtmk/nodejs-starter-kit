@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-// import { Carousel } from 'antd';
-
+import { Image } from 'antd';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
   MetaTags,
@@ -172,7 +171,7 @@ const ListingDetailView = props => {
                     {images &&
                       images.map((item, id) => (
                         <div key={id} align="center">
-                          <img src={item.url} style={{ height: '300px' }} />
+                          <Image src={item.url} style={{ height: '300px' }} />
                         </div>
                       ))}
                   </Carousel>
