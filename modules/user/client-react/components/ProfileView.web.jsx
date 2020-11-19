@@ -25,7 +25,7 @@ const userData = {
 class ProfileView extends Component {
   render() {
     return (
-      <PageLayout type="Home">
+      <PageLayout type="home">
         {/*Cover photo*/}
 
         <Card
