@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { PageLayout } from "@gqlapp/look-client-react";
+import { PageLayout, Tooltip } from "@gqlapp/look-client-react";
 import {
   Avatar,
   Card,
@@ -12,16 +12,14 @@ import {
 } from "antd";
 const { Meta } = Card;
 const userData = {
-  coverSrc:
-    "https://img.freepik.com/free-vector/white-smoke-rings-from-cigarette-pipe-vape_1441-4221.jpg?size=626&ext=jpg&ga=GA1.2.12280400.1601510400",
   avatarSrc:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
-    avatarTitle: "Yashwanth Sambaraj",
+  avatarTitle: "Yashwanth Sambaraj",
   avatarDescription: "Web Developer STUDENT",
-  portfolioSrc: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",  
+  portfolioSrc:
+    "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
   portfolioTitle: "Title",
-  portfolioDescription: "Description"
-  
+  portfolioDescription: "Description",
 };
 
 class ProfileView extends Component {
@@ -31,51 +29,96 @@ class ProfileView extends Component {
         {/*Cover photo*/}
 
         <Card
-          className="card-cover"
-          cover={<img alt="example" src={userData.coverSrc} />}
+          cover={<div className="card-cover"></div>}
+          className="card-style"
+          bodyStyle={{
+            maxWidth: "1200px",
+            margin: "auto",
+            position: "inherit",
+            paddingTop: "104px",
+          }}
         >
           {/*Avatar*/}
 
-          <Row>
-            <Avatar
-              className="avatar"
-              size={160}
-              icon="user"
-              src={userData.avatarSrc}
-            ></Avatar>
-
-            {/*edit and export buttons*/}
-            <div className="edit-export-buttons">
-              <Button size="large" shape="circle" icon="export" />{" "}
-              <Button size="large" type="primary" shape="circle" icon="edit" />
-            </div>
-          </Row>
+          <Avatar
+            className="avatar"
+            size={160}
+            icon="user"
+            src={userData.avatarSrc}
+          />
 
           {/*Avatar description*/}
-          <Meta title={userData.avatarTitle} description={userData.avatarDescription} />
+          <Meta
+            title={<h2>{userData.avatarTitle}</h2>}
+            description={<h4>{userData.avatarDescription}</h4>}
+          />
 
-          <br></br>
+          <br />
+
+          {/*edit and export buttons*/}
+          <div className="edit-export-buttons">
+            <Tooltip title="View Your Public Profile">
+              <Button
+                className="export-button"
+                size="large"
+                type="primary"
+                shape="circle-outline"
+                ghost
+              >
+                <Icon type="export" />
+              </Button>
+            </Tooltip>
+
+            <Button size="large" type="primary" shape="circle-outline">
+              <Icon type="edit" />
+            </Button>
+          </div>
 
           {/*about and socialmedia links*/}
-          <Row>
-            <Col span={20}>
-              <h2 style={{ fontSize: "15px" }}>
+          <Row gutter={24}>
+            <Col xs={24} md={16}>
+              <div className="profile-about">
                 About Me!? Haha U already know!
-              </h2>
+              </div>
             </Col>
 
-            <div className="icons-list">
-              <Icon type="facebook" /> <Icon type="instagram" />{" "}
-              <Icon type="linkedin" /> <Icon type="twitter" />{" "}
-              <Icon type="youtube" />
-            </div>
+            <Col md={8} xs={24}>
+              <Col span={4}>
+                <a>
+                  <Icon className="social-icons" type="facebook" />
+                </a>
+              </Col>
+
+              <Col span={4}>
+                <a>
+                  <Icon className="social-icons" type="instagram" />
+                </a>
+              </Col>
+
+              <Col span={4}>
+                <a>
+                  <Icon className="social-icons" type="linkedin" />
+                </a>
+              </Col>
+
+              <Col span={4}>
+                <a>
+                  <Icon className="social-icons" type="twitter" />
+                </a>
+              </Col>
+
+              <Col span={4}>
+                <a>
+                  <Icon className="social-icons" type="youtube" />
+                </a>
+              </Col>
+            </Col>
           </Row>
 
-          <br></br>
-
+          <Divider orientation="left" style={{ marginTop: "20px" }}>
+            info
+          </Divider>
           {/*intrests*/}
-
-          <Divider orientation="left">info</Divider>
 
           <Descriptions>
             <Descriptions.Item label="❤ Loves">-&gt; No One</Descriptions.Item>
@@ -124,54 +167,48 @@ class ProfileView extends Component {
             <Col span={7} className="portfolio-col">
               <Card
                 className="portfolio-card"
-                cover={
-                  <img
-                    alt="example"
-                    src={userData.portfolioSrc}
-                  />
-                }
+                cover={<img alt="example" src={userData.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-               <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
+                <Meta
+                  title={userData.portfolioTitle}
+                  description={userData.portfolioDescription}
+                />
               </Card>
             </Col>
 
             <Col span={7} className="portfolio-col">
               <Card
                 className="portfolio-card"
-                cover={
-                  <img
-                    alt="example"
-                    src={userData.portfolioSrc}
-                  />
-                }
+                cover={<img alt="example" src={userData.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-               <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
+                <Meta
+                  title={userData.portfolioTitle}
+                  description={userData.portfolioDescription}
+                />
               </Card>
             </Col>
 
             <Col span={7} className="portfolio-col">
               <Card
                 className="portfolio-card"
-                cover={
-                  <img
-                    alt="example"
-                    src={userData.portfolioSrc}
-                  />
-                }
+                cover={<img alt="example" src={userData.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
-                <Meta title={userData.portfolioTitle} description={userData.portfolioDescription} />
+                <Meta
+                  title={userData.portfolioTitle}
+                  description={userData.portfolioDescription}
+                />
               </Card>
             </Col>
           </Row>
