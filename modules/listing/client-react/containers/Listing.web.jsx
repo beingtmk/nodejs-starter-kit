@@ -48,7 +48,15 @@ const Listing = props => {
     }
   };
   // console.log('props', props);
-  return <ListingView onToggle={handleToggle} onDuplicate={handleDuplicate} filter={{}} orderBy={{}} {...props} />;
+  return (
+    <ListingView
+      onToggle={handleToggle}
+      onDuplicate={handleDuplicate}
+      filter={{ categoryFilter: {} }}
+      orderBy={{}}
+      {...props}
+    />
+  );
 };
 
 Listing.propTypes = {
