@@ -24,7 +24,8 @@ import CategoryTreeComponent from '../containers/CategoryTreeComponent';
 // import RendersubCategories from './RendersubCategories';
 
 const CategoryFormSchema = {
-  title: [required]
+  title: [required],
+  modalName: [required]
 };
 
 const CategoryFormComponent = props => {
