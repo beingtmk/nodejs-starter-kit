@@ -17,9 +17,6 @@ const AddCategory = props => {
       Message.destroy();
       Message.loading('Please wait...', 0);
       delete values.id;
-      if (values.parentCategoryId === null) {
-        delete values.parentCategoryId;
-      }
       addCategory(values);
       Message.destroy();
       Message.success('Category added.');
@@ -35,7 +32,7 @@ const AddCategory = props => {
 
 AddCategory.propTypes = {
   addCategory: PropTypes.func,
-  history: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default compose(withAddCategory, translate('discount'))(AddCategory);

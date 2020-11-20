@@ -3,6 +3,7 @@ import { Model, raw } from 'objection';
 import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 
 import { knex } from '@gqlapp/database-server-ts';
+import { clientStorage } from '../../../packages/common/utils';
 
 Model.knex(knex);
 
@@ -129,10 +130,9 @@ export default class CategoryDAO extends Model {
   }
 
   public async addCategory(params: CategoryInput) {
-    let isLeaf = false;
+    const isLeaf = true;
     if (params.parentCategoryId !== null) {
       await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: params.parentCategoryId, isLeaf: false }));
-      isLeaf = true;
     }
     const res = camelizeKeys(
       await CategoryDAO.query().insertGraph(
@@ -187,16 +187,17 @@ export default class CategoryDAO extends Model {
       if (prevCategory.parentCategoryId !== null) {
         const parentCategory = camelizeKeys(
           await CategoryDAO.query()
-            .findById(params.parentCategoryId)
+            .findById(prevCategory.parentCategoryId)
             .eager(eager)
         );
         if (parentCategory.subCategories.length === 1) {
           await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: parentCategory.id, isLeaf: true }));
         }
       }
-
       // after edit, parentCategory to isLeaf to false since adding a leaf to it
-      await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: params.parentCategoryId, isLeaf: false }));
+      if (params.parentCategoryId !== null) {
+        await CategoryDAO.query().upsertGraph(decamelizeKeys({ id: params.parentCategoryId, isLeaf: false }));
+      }
     }
     const res = camelizeKeys(
       await CategoryDAO.query().upsertGraph(
