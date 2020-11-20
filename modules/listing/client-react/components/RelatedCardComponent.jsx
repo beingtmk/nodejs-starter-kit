@@ -24,8 +24,6 @@ import RelatedCardSkeleton from './RelatedCardSkeleton';
 
 import BookmarkComponent from './BookmarkComponent';
 
-// const { Meta } = Card;
-
 const NewLabel = styled.div`
   position: absolute;
   top: 10px;
@@ -142,140 +140,132 @@ const RelatedCardComponent = props => {
     }
   };
 
-  // console.log('loaded', loaded);
-
-  const cardImg = (display = false) =>
-    listing_img && (
-      <img
-        ref={ref}
-        onLoad={onLoad}
-        src={listing_img}
-        style={{
-          height: '100%',
-          display: display && 'none'
-        }}
-      />
-    );
+  const cardImg = listing_img && (
+    <img
+      ref={ref}
+      onLoad={onLoad}
+      src={listing_img}
+      style={{
+        height: '100%'
+      }}
+    />
+  );
 
   return (
     <>
-      {cardImg(true)}
-      {!loaded ? (
-        <RelatedCardSkeleton />
-      ) : (
-        <ListingWraper style={componentStyle}>
-          <IfLoggedIn>
-            <BookmarkComponent
-              handleBookmark={() => bookmarkListing(listing.id, currentUser.id)}
-              listing={listing}
-              currentUser={currentUser}
-            />
-          </IfLoggedIn>
-          {listing_is_new && <NewLabel>{'New'}</NewLabel>}
-          <div
-            align="center"
-            style={{
-              padding: '20px',
-              zIndex: 1,
-              position: 'absolute',
-              bottom: 0,
-              width: '100%'
-            }}
+      {!loaded && <RelatedCardSkeleton />}
+      <ListingWraper style={{ ...componentStyle, display: !loaded && 'none' }}>
+        <IfLoggedIn>
+          <BookmarkComponent
+            handleBookmark={() => bookmarkListing(listing.id, currentUser.id)}
+            listing={listing}
+            currentUser={currentUser}
+          />
+        </IfLoggedIn>
+        {listing_is_new && <NewLabel>{'New'}</NewLabel>}
+        <div
+          align="center"
+          style={{
+            padding: '20px',
+            zIndex: 1,
+            position: 'absolute',
+            bottom: 0,
+            width: '100%'
+          }}
+        >
+          <AddToCartFormBtns
+            title={
+              !currentUser
+                ? 'SignIn To Continue'
+                : disabled
+                ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
+                : 'Continue to Booking'
+            }
+            inCart={inCart}
+            onSubmit={() => handleSubmit(false)}
+            onDelete={onDelete}
+            onSubmitRedirect={() => handleSubmit(true)}
+            loading={loading}
+            disabled={disabled}
+            catalogueCard={true}
+          />
+        </div>
+        <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
+          <Card
+            bodyStyle={{ margin: '0px' }}
+            hoverable
+            cover={
+              <div
+                style={{
+                  overflow: 'hidden',
+                  height: '230px',
+                  borderRadius: '8px 8px 0px 0px'
+                }}
+                align="center"
+              >
+                {cardImg}
+              </div>
+            }
           >
-            <AddToCartFormBtns
+            <CardMeta
               title={
-                !currentUser
-                  ? 'SignIn To Continue'
-                  : disabled
-                  ? (max <= 0 && 'Out of Stock') || (listingOwned && 'Listing owned')
-                  : 'Continue to Booking'
-              }
-              inCart={inCart}
-              onSubmit={() => handleSubmit(false)}
-              onDelete={onDelete}
-              onSubmitRedirect={() => handleSubmit(true)}
-              loading={loading}
-              disabled={disabled}
-              catalogueCard={true}
-            />
-          </div>
-          <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
-            <Card
-              bodyStyle={{ margin: '0px' }}
-              hoverable
-              cover={
-                <div
+                <span
                   style={{
+                    fontSize: '20px',
                     overflow: 'hidden',
-                    height: '230px',
-                    borderRadius: '8px 8px 0px 0px'
+                    lineClamp: 1,
+                    display: 'box'
                   }}
-                  align="center"
                 >
-                  {cardImg()}
-                </div>
+                  {listing && listing.title}
+                </span>
               }
-            >
-              <CardMeta
-                title={
-                  <span
-                    style={{
-                      fontSize: '20px',
-                      overflow: 'hidden',
-                      lineClamp: 1,
-                      display: 'box'
-                    }}
-                  >
-                    {listing && listing.title}
-                  </span>
-                }
-                description={
-                  <CurrencyCostDisplay
-                    isDiscount={isDiscount}
-                    cost={cost}
-                    discount={discount}
-                    span={[15, 9]}
-                    card={true}
-                    rowStyle={{ height: '75px' }}
-                  />
-                }
-              />
-              {startDate <= now && endDate >= now ? (
-                <h4>
-                  Deal ends in:{' '}
-                  {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
-                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
-                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
-                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-                    ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
-                    : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-                    ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
-                    : 'Deal has Ended!'}
-                </h4>
-              ) : startDate >= now && endDate >= now ? (
-                <h4>
-                  Deal starts in:
-                  {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
-                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
-                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
-                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-                    ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
-                    : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-                    ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
-                    : 'Deal has Ended!'}
-                </h4>
-              ) : (
-                <br />
-              )}
+              description={
+                <CurrencyCostDisplay
+                  isDiscount={isDiscount}
+                  cost={cost}
+                  discount={discount}
+                  span={[15, 9]}
+                  card={true}
+                  rowStyle={{ height: '75px' }}
+                />
+              }
+            />
+            {startDate <= now && endDate >= now ? (
+              <h4>
+                Deal ends in:{' '}
+                {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
+                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
+                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
+                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+                  ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
+                  : 'Deal has Ended!'}
+              </h4>
+            ) : startDate >= now && endDate >= now ? (
+              <h4>
+                Deal starts in:
+                {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
+                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
+                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
+                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+                  ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
+                  : 'Deal has Ended!'}
+              </h4>
+            ) : (
               <br />
-              <br />
-              <br />
-            </Card>
-          </Link>
-        </ListingWraper>
-      )}
+            )}
+            <br />
+            <br />
+            <br />
+          </Card>
+        </Link>
+      </ListingWraper>
     </>
   );
 };
