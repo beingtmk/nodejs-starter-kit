@@ -65,9 +65,8 @@ const CategoryTreeComponentView = props => {
       );
   };
 
-  console.log(data);
   return (
-    <FormItem label={props.label} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+    <FormItem label={props.label} style={{ width: '100%' }} /* labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} */>
       <TreeSelect
         treeDataSimpleMode
         showSearch
