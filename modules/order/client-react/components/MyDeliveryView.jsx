@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from 'antd';
-
 import {
   Icon,
   PageLayout,
@@ -13,12 +11,12 @@ import {
   Divider,
   Empty,
   SuggestedListComponent,
-  Spinner
+  Spinner,
+  Button,
+  ButtonGroup
 } from '@gqlapp/look-client-react';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
-
-const ButtonGroup = Button.Group;
 
 const MyDeliveriesView = props => {
   const [status, setStatus] = React.useState('');

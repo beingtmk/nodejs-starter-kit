@@ -89,5 +89,8 @@ export { default as Tree } from './Tree';
 export { default as TreeNode } from './TreeNode';
 export { default as TreeSelect } from './TreeSelect';
 export { default as ModalDrawer } from './ModalDrawer';
+export { default as CheckBox } from './CheckBox';
+export { default as ButtonGroup } from './ButtonGroup';
+export { default as CardMeta } from './CardMeta';
 
 export { onAppCreate } from './NavBar';

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Breadcrumb } from 'antd';
+import { Typography /* Breadcrumb */ } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 // import { UrlMethod } from '@gqlapp/core-client-react';
 // import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
-import { Icon, PageLayout, Divider, Spinner } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
 
@@ -13,7 +13,6 @@ import CategoryItemComponent from './CategoryItemComponent';
 import CategoryNavBarComponent from '../containers/CategoryNavBarComponent';
 
 const { Title, Paragraph } = Typography;
-const BreadCrumbItem = Breadcrumb.Item;
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match } = props;
@@ -25,17 +24,17 @@ const CategoryCatalogueView = props => {
       {category && (
         <>
           <Breadcrumb>
-            <BreadCrumbItem>
+            <BreadcrumbItem>
               <NavLink to="/">
                 <Icon type="HomeOutlined" />
               </NavLink>
-            </BreadCrumbItem>
+            </BreadcrumbItem>
             {category && (
-              <BreadCrumbItem>
+              <BreadcrumbItem>
                 {/* <NavLink to={`/category-item/${category.id}/${UrlMethod(category.title)}`}> */}
                 {category.title}
                 {/* </NavLink> */}
-              </BreadCrumbItem>
+              </BreadcrumbItem>
             )}
           </Breadcrumb>
           <Typography style={{ marginTop: '15px' }}>

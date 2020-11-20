@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
 import { useQuery } from 'react-apollo';
 
 import { translate } from '@gqlapp/i18n-client-react';
@@ -18,7 +17,9 @@ import {
   Avatar,
   Button,
   RenderTableLoading,
-  Spin
+  Spin,
+  CardMeta,
+  Card
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
@@ -29,7 +30,6 @@ import ROUTES from '../routes';
 // import { withCategory } from '../containers/CategoryOpertations';
 
 const { itemsNumber, type } = settings.pagination.web;
-const { Meta } = Card;
 
 const NoCategoryMessage = ({ t }) => (
   <div align="center">
@@ -103,7 +103,7 @@ const CategoryListComponent = props => {
         >
           <a href={`${ROUTES.categoryCatalogueLink}${record.id}`} rel="noopener noreferrer" target="_blank">
             <Card style={{ width: '200px', height: '60px' }} bodyStyle={{ padding: '10px' }}>
-              <Meta
+              <CardMeta
                 title={
                   <>
                     <div style={{ width: '100%', marginTop: '10px' }} />

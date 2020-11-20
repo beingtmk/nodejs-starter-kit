@@ -2,15 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
-import { Card } from 'antd';
 import { NO_IMG } from '@gqlapp/listing-common';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
-import { Icon, Row, Col, Avatar, Divider, Tooltip, Message, Button, Popconfirm } from '@gqlapp/look-client-react';
+import {
+  Icon,
+  Row,
+  Col,
+  Avatar,
+  Divider,
+  Tooltip,
+  Message,
+  Button,
+  Popconfirm,
+  Card,
+  CardMeta
+} from '@gqlapp/look-client-react';
 
 import ROUTES from '../routes';
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-const { Meta } = Card;
 
 const Align = styled.div`
   position: absolute;
@@ -109,7 +119,7 @@ const ListingItemComponent = props => {
               <br />
               <Link target="_blank" to={`${USER_ROUTES.userPublicProfileLink}${item.user.id}`}>
                 <Tooltip placement="topLeft" title={t('listingItem.tooltip')}>
-                  <Meta
+                  <CardMeta
                     avatar={<Avatar src={sellerAvatar} />}
                     title={
                       <h4>

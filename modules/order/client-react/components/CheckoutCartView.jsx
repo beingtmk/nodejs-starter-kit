@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Checkbox } from 'antd';
 
 import {
   Icon,
@@ -15,7 +14,8 @@ import {
   Card,
   Empty,
   Divider,
-  Spinner
+  Spinner,
+  CheckBox
 } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
@@ -112,7 +112,7 @@ const CheckoutCartView = props => {
                   </Col>
                   <Col lg={8} sm={24} xs={24}>
                     <Card>
-                      <Checkbox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</Checkbox>
+                      <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
                       <br />
                       <br />
                       <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>

@@ -7,8 +7,6 @@ import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import ListingItemComponent from './CartItemComponent';
 
-// const ButtonGroup = Button.Group;
-
 // const ALL = 'All';
 // const MYLISTING = 'My Delivery';
 // const MYORDERS = 'My orders';

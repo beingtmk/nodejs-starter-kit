@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Checkbox } from 'antd';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
-import { Heading, Row, Col, Empty, Button, Spin, SuggestedListComponent, ModalDrawer } from '@gqlapp/look-client-react';
+import {
+  Heading,
+  Row,
+  Col,
+  Empty,
+  Button,
+  Spin,
+  SuggestedListComponent,
+  ModalDrawer,
+  CheckBox
+} from '@gqlapp/look-client-react';
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { Reviews, Review } from '../containers/Reviews.web';
@@ -97,9 +106,9 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
           <Heading type="1"> {t('review.heading')}</Heading>
         </Col>
         <Col lg={4} md={4} sm={4} xs={10}>
-          <Checkbox onChange={() => setPhoto(!photo)}>
+          <CheckBox onChange={() => setPhoto(!photo)}>
             <strong>{t('review.withPhoto')}</strong>
-          </Checkbox>
+          </CheckBox>
         </Col>
         <Col lg={0} md={0} sm={0} xs={24}>
           <br />

@@ -3,10 +3,9 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card } from 'antd';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
-import { Message } from '@gqlapp/look-client-react';
+import { Message, Card, CardMeta } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
@@ -25,7 +24,7 @@ import RelatedCardSkeleton from './RelatedCardSkeleton';
 
 import BookmarkComponent from './BookmarkComponent';
 
-const { Meta } = Card;
+// const { Meta } = Card;
 
 const NewLabel = styled.div`
   position: absolute;
@@ -217,7 +216,7 @@ const RelatedCardComponent = props => {
                 </div>
               }
             >
-              <Meta
+              <CardMeta
                 title={
                   <span
                     style={{

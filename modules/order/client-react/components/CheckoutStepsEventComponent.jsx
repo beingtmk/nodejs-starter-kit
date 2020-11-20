@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { Card } from 'antd';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
-import { Row, Col, Rate, Avatar, Divider, Tooltip } from '@gqlapp/look-client-react';
+import { Row, Col, Rate, Avatar, Divider, Tooltip, Card, CardMeta } from '@gqlapp/look-client-react';
 
 const OrderCard = styled(Card)`
   margin: 0px 0px 15px 0px !important;
@@ -38,9 +37,7 @@ const Title = styled.span`
   margin-right: -5px;
 `;
 
-const { Meta } = Card;
-
-const RelCardMeta = styled(Meta)`
+const RelCardMeta = styled(CardMeta)`
   margin-top: 20px !important;
   padding: 0 !important;
 `;

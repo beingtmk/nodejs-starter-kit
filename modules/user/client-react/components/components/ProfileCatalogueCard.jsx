@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, CardMeta } from '@gqlapp/look-client-react';
 import { Link } from 'react-router-dom';
-
-const { Meta } = Card;
 
 const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
@@ -24,7 +22,7 @@ class ProfileCatalogueCard extends React.Component {
           className="catalogue-card profile-catalogue profile-catalogue-card"
           bodyStyle={{ padding: '0px 0px' }}
         >
-          <Meta title={<h1>{`${item.profile.firstName} ${item.profile.lastName}`}</h1>} />
+          <CardMeta title={<h1>{`${item.profile.firstName} ${item.profile.lastName}`}</h1>} />
         </Card>
       </Link>
     );
