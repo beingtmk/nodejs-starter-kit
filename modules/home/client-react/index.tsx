@@ -1,5 +1,4 @@
 import React from 'react';
-import { Menu } from 'antd';
 import { Route, NavLink } from 'react-router-dom';
 
 import ClientModule from '@gqlapp/module-client-react';
@@ -7,7 +6,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import loadable from '@loadable/component';
-import { MenuItem, Spinner } from '@gqlapp/look-client-react';
+import { MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';
@@ -24,8 +23,6 @@ const NavLinkDynamicCarouselWithI18n = translate('home')(({ t }: { t: TranslateF
     Dynamic Carousel
   </NavLink>
 ));
-
-const { SubMenu } = Menu;
 
 export default new ClientModule({
   route: [

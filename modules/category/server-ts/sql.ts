@@ -20,7 +20,7 @@ export interface CategoryInput {
   isNavbar: boolean;
   parentCategoryId: number;
   isLeaf: boolean;
-
+  isActive: boolean;
   // subCategories: [CategoryInput] | undefined;
 }
 
@@ -207,7 +207,8 @@ export default class CategoryDAO extends Model {
           description: params.description,
           imageUrl: params.imageUrl,
           parentCategoryId: params.parentCategoryId,
-          isNavbar: params.isNavbar
+          isNavbar: params.isNavbar,
+          isActive: params.isActive
         })
       )
     );

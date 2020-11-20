@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography /* Breadcrumb */ } from 'antd';
+import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 // import { UrlMethod } from '@gqlapp/core-client-react';

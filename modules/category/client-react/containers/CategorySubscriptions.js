@@ -35,7 +35,6 @@ export const subscribeToCategories = (subscribeToMore, filter) =>
   });
 
 function onAddCategories(prev, node) {
-  // console.log('prev', prev, node);
   if (prev.categories.edges.some(category => node.id === category.cursor)) {
     return update(prev, {
       categories: {
@@ -70,18 +69,18 @@ function onAddCategories(prev, node) {
 }
 
 function onEditCategories(prev, node) {
-  const index = prev.cateogires.edges.findIndex(x => x.node.id === node.id);
+  const index = prev.categories.edges.findIndex(x => x.node.id === node.id);
   const edge = {
     cursor: node.id,
     node: node,
     __typename: 'CategoryEdges'
   };
   if (index) {
-    prev.cateogires.edges.splice(index, 1, edge);
+    prev.categories.edges.splice(index, 1, edge);
     return update(prev, {
-      cateogires: {
+      categories: {
         edges: {
-          $set: [...prev.cateogires.edges]
+          $set: [...prev.categories.edges]
         }
       }
     });
