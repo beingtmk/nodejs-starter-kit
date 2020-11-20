@@ -13,15 +13,15 @@ import {
 } from "antd";
 const { Meta } = Card;
 const userData = {
-  coverSrc: "https://res.cloudinary.com/dpvrqxttb/image/upload/v1604566920/edgenus/image/nkzfil4lqjf556ipjwi5.png",
+  coverSrc:
+    "https://res.cloudinary.com/dpvrqxttb/image/upload/v1604566920/edgenus/image/nkzfil4lqjf556ipjwi5.png",
   avatarSrc:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
-  facebook: "www.facebook.com",
-  instagram: "www.instagram.com",
-  linkedin: "www.linkedin.com",
-  twitter: "www.twitter.com",
-  youtube: "www.youtube.com",
-  
+  facebook: "https://www.facebook.com",
+  instagram: "https://www.instagram.com",
+  linkedin: "https://www.linkedin.com",
+  twitter: "https://www.twitter.com",
+  youtube: "https://www.youtube.com",
   portfolioSrc:
     "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
   portfolioTitle: "Title",
@@ -33,23 +33,27 @@ const avatarTitle = {
   lastName: "Sambaraj",
 };
 
-const userType ={
+const userType = {
   type: "STUDENT",
-}
+};
 
 const skillDisplay = {
   skill: "Web Developer",
-}
+};
 
 class ProfileView extends Component {
-  
   render() {
     return (
       <PageLayout type="home">
         {/*Cover photo*/}
 
         <Card
-          cover={<div className="card-cover" style={{backgroundImage: `url(${userData.coverSrc})`,}}></div>}
+          cover={
+            <div
+              className="card-cover"
+              style={{ backgroundImage: `url(${userData.coverSrc})` }}
+            ></div>
+          }
           className="card-style"
           bodyStyle={{
             maxWidth: "1200px",
@@ -69,8 +73,16 @@ class ProfileView extends Component {
 
           {/*Avatar description*/}
           <Meta
-            title={<h2>{avatarTitle && avatarTitle.firstName && avatarTitle.lastName ? avatarTitle.firstName +' '+ avatarTitle.lastName : 'No Name Provided'}</h2>}
-            description={<h4>{`${skillDisplay.skill || ""} ${userType.type}`}</h4>}
+            title={
+              <h2>
+                {avatarTitle && avatarTitle.firstName && avatarTitle.lastName
+                  ? avatarTitle.firstName + " " + avatarTitle.lastName
+                  : "No Name Provided"}
+              </h2>
+            }
+            description={
+              <h4>{`${skillDisplay.skill || ""} ${userType.type}`}</h4>
+            }
           />
 
           <br />
@@ -237,6 +249,5 @@ class ProfileView extends Component {
     );
   }
 }
-
 
 export default ProfileView;
