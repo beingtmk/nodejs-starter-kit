@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { PageLayout, Tooltip } from "@gqlapp/look-client-react";
 import {
   Avatar,
@@ -12,24 +13,43 @@ import {
 } from "antd";
 const { Meta } = Card;
 const userData = {
+  coverSrc: "https://res.cloudinary.com/dpvrqxttb/image/upload/v1604566920/edgenus/image/nkzfil4lqjf556ipjwi5.png",
   avatarSrc:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
-  avatarTitle: "Yashwanth Sambaraj",
-  avatarDescription: "Web Developer STUDENT",
+  facebook: "www.facebook.com",
+  instagram: "www.instagram.com",
+  linkedin: "www.linkedin.com",
+  twitter: "www.twitter.com",
+  youtube: "www.youtube.com",
+  
   portfolioSrc:
     "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
   portfolioTitle: "Title",
   portfolioDescription: "Description",
 };
 
+const avatarTitle = {
+  firstName: "Yashwanth",
+  lastName: "Sambaraj",
+};
+
+const userType ={
+  type: "STUDENT",
+}
+
+const skillDisplay = {
+  skill: "Web Developer",
+}
+
 class ProfileView extends Component {
+  
   render() {
     return (
       <PageLayout type="home">
         {/*Cover photo*/}
 
         <Card
-          cover={<div className="card-cover"></div>}
+          cover={<div className="card-cover" style={{backgroundImage: `url(${userData.coverSrc})`,}}></div>}
           className="card-style"
           bodyStyle={{
             maxWidth: "1200px",
@@ -49,8 +69,8 @@ class ProfileView extends Component {
 
           {/*Avatar description*/}
           <Meta
-            title={<h2>{userData.avatarTitle}</h2>}
-            description={<h4>{userData.avatarDescription}</h4>}
+            title={<h2>{avatarTitle && avatarTitle.firstName && avatarTitle.lastName ? avatarTitle.firstName +' '+ avatarTitle.lastName : 'No Name Provided'}</h2>}
+            description={<h4>{`${skillDisplay.skill || ""} ${userType.type}`}</h4>}
           />
 
           <br />
@@ -84,31 +104,31 @@ class ProfileView extends Component {
 
             <Col md={8} xs={24}>
               <Col span={4}>
-                <a>
+                <a href={userData && userData.facebook}>
                   <Icon className="social-icons" type="facebook" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a>
+                <a href={userData && userData.instagram}>
                   <Icon className="social-icons" type="instagram" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a>
+                <a href={userData && userData.linkedin}>
                   <Icon className="social-icons" type="linkedin" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a>
+                <a href={userData && userData.twitter}>
                   <Icon className="social-icons" type="twitter" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a>
+                <a href={userData && userData.youtube}>
                   <Icon className="social-icons" type="youtube" />
                 </a>
               </Col>
@@ -217,5 +237,6 @@ class ProfileView extends Component {
     );
   }
 }
+
 
 export default ProfileView;
