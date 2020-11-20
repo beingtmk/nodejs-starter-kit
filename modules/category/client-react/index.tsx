@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import loadable from '@loadable/component';
 
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
@@ -37,13 +37,6 @@ export default new ClientModule({
       role={['admin']}
       path={ROUTES.edit}
       component={loadable(() => import('./containers/EditCategory').then(c => c.default), { fallback: <Spinner /> })}
-    />,
-    <Route
-      exact
-      path={ROUTES.categoryCatalogue}
-      component={loadable(() => import('./containers/CategoryCatalogue').then(c => c.default), {
-        fallback: <Spinner />
-      })}
     />
   ],
   navItemAdmin: [

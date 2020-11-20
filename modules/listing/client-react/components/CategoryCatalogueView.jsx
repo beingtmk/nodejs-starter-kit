@@ -8,9 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
-
-import CategoryItemComponent from './CategoryItemComponent';
-import CategoryNavBarComponent from '../containers/CategoryNavBarComponent';
+import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
+import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 
 const { Title, Paragraph } = Typography;
 
@@ -41,19 +40,18 @@ const CategoryCatalogueView = props => {
             <Title level={2}>{category.title}</Title>
             <Paragraph>{category.description}</Paragraph>
           </Typography>
-          {category && category.subCategories && category.subCategories.length !== 0 ? (
+          {category && category.subCategories && category.subCategories.length !== 0 && (
             <>
               <Divider orientation="left">
                 <Title level={3}>Sub Categories</Title>
               </Divider>
               <CategoryItemComponent categories={category.subCategories} />
             </>
-          ) : (
-            <>
-              <Divider />
-              <CategoryListingsCatalogue match={match} navigation={navigation} />
-            </>
           )}
+          <>
+            <Divider />
+            <CategoryListingsCatalogue match={match} navigation={navigation} />
+          </>
         </>
       )}
     </PageLayout>

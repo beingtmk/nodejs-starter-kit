@@ -138,7 +138,7 @@ input FilterListInput {
   userId: Int
   searchText: String
 
-  categoryId: Int
+  categoryFilter: CategoryFilter
 
   lowerCost: Float
   upperCost: Float
@@ -148,6 +148,11 @@ input FilterListInput {
   isNew: Boolean
   isDiscount: Boolean
   isActive: Boolean
+}
+
+input CategoryFilter {
+  categoryId: Int
+  allSubCategory: Boolean
 }
 
 input AddListingInput {

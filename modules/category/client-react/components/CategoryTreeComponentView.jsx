@@ -8,8 +8,15 @@ import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const CategoryTreeComponentView = props => {
   const { categories, formik, name, client, disableParent = false } = props;
-  const [data, setData] = useState(
-    categories.edges &&
+  const [data, setData] = useState([
+    {
+      id: 'abc',
+      pId: 0,
+      title: 'Parent Category',
+      value: 0,
+      isLeaf: true
+    },
+    ...(categories.edges &&
       categories.totalCount > 0 &&
       categories.edges.map(c => {
         return {
@@ -20,8 +27,8 @@ const CategoryTreeComponentView = props => {
           isLeaf: c.node.isLeaf,
           disabled: disableParent && !c.node.isLeaf
         };
-      })
-  );
+      }))
+  ]);
   const onChange = value => {
     const { onChange } = props;
     if (onChange) {
@@ -58,6 +65,7 @@ const CategoryTreeComponentView = props => {
       );
   };
 
+  console.log(data);
   return (
     <FormItem label={props.label} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <TreeSelect

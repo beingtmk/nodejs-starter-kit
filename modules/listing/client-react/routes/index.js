@@ -1,10 +1,13 @@
 const base = '/listing';
+const categoryBase = '/category';
 const myListing = '/my-listings';
 
 const ROUTES = {
   adminPanel: base + '/admin-panel',
   listing: base + '/listing',
 
+  categoryCatalogue: base + categoryBase + '/:cid',
+  categoryCatalogueLink: base + categoryBase + '/ ',
   listingCatalogue: base + '/catalogue',
   listingDetail: base + '/detail/:id',
   listingDetailLink: base + '/detail/',

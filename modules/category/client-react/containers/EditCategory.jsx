@@ -21,8 +21,8 @@ const EditCategory = props => {
     try {
       Message.destroy();
       Message.loading('Please wait...', 0);
-      if (values.parentCategoryId === null) {
-        delete values.parentCategoryId;
+      if (values.parentCategoryId === 0) {
+        values.parentCategoryId = null;
       }
       console.log(values);
       editCategory(values);

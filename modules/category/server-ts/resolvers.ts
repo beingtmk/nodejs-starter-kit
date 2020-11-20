@@ -10,9 +10,13 @@ export const CATEGORY_SUBSCRIPTION = 'category_subscription';
 
 export default (pubsub: any) => ({
   Query: {
-    async categories(obj: any, { limit, after, orderBy, filter }: any, { Category, req: { identity } }: any) {
+    async categories(
+      obj: any,
+      { limit, after, orderBy, filter, childNode }: any,
+      { Category, req: { identity } }: any
+    ) {
       const edgesArray: Edges[] = [];
-      const { total, categories } = await Category.categoriesPagination(limit, after, orderBy, filter);
+      const { total, categories } = await Category.categoriesPagination(limit, after, orderBy, filter, childNode);
       const hasNextPage = total > after + limit;
 
       categories.map((listing: CategoryInput & Identifier, index: number) => {
@@ -32,8 +36,8 @@ export default (pubsub: any) => ({
         }
       };
     },
-    async category(obj: any, { id }: Identifier, { Category }: any) {
-      return Category.category(id);
+    async category(obj: any, { id, childNode }: Identifier & { childNode: string }, { Category }: any) {
+      return Category.category(id, childNode);
     }
   },
   Mutation: {
