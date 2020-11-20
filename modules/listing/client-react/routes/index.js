@@ -7,7 +7,7 @@ const ROUTES = {
   listing: base + '/listing',
 
   categoryCatalogue: base + categoryBase + '/:cid',
-  categoryCatalogueLink: base + categoryBase + '/ ',
+  categoryCatalogueLink: base + categoryBase + '/',
   listingCatalogue: base + '/catalogue',
   listingDetail: base + '/detail/:id',
   listingDetailLink: base + '/detail/',

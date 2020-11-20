@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 // import { UrlMethod } from '@gqlapp/core-client-react';
 // import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
-import { Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
+import { Row, Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
 import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
@@ -45,7 +45,11 @@ const CategoryCatalogueView = props => {
               <Divider orientation="left">
                 <Title level={3}>Sub Categories</Title>
               </Divider>
-              <CategoryItemComponent categories={category.subCategories} />
+
+              <Row gutter={[24, 24]}>
+                {category.subCategories.length > 0 &&
+                  category.subCategories.map((c, idx) => <CategoryItemComponent category={c} idx={idx} />)}
+              </Row>
             </>
           )}
           <>

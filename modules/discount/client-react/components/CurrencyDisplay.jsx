@@ -19,7 +19,6 @@ const currencyDisplayComponent = props => {
   const currentCurrency = symbols['INR'];
   return (
     <Statistic
-      // style={style}
       title=""
       precision={2}
       valueStyle={valueStyle}
@@ -32,8 +31,8 @@ const currencyDisplayComponent = props => {
 };
 currencyDisplayComponent.propTypes = {
   input: PropTypes.number,
-  valueStyle: PropTypes.obj,
+  valueStyle: PropTypes.object,
   currency: PropTypes.number,
-  style: PropTypes.obj
+  style: PropTypes.object
 };
 export default currencyDisplayComponent;
