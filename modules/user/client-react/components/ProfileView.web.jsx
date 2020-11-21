@@ -12,11 +12,23 @@ import {
   Col,
 } from "antd";
 const { Meta } = Card;
-const userData = {
+
+const user = {
   coverSrc:
     "https://res.cloudinary.com/dpvrqxttb/image/upload/v1604566920/edgenus/image/nkzfil4lqjf556ipjwi5.png",
   avatarSrc:
     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
+  username: "username",
+  avatarTitle: {
+    firstName: "Yashwanth",
+    lastName: "Sambaraj",
+  },
+  userType: {
+    type: "STUDENT",
+  },
+  skillDisplay: {
+    skill: "Web Developer",
+  },
   facebook: "https://www.facebook.com",
   instagram: "https://www.instagram.com",
   linkedin: "https://www.linkedin.com",
@@ -28,19 +40,6 @@ const userData = {
   portfolioDescription: "Description",
 };
 
-const avatarTitle = {
-  firstName: "Yashwanth",
-  lastName: "Sambaraj",
-};
-
-const userType = {
-  type: "STUDENT",
-};
-
-const skillDisplay = {
-  skill: "Web Developer",
-};
-
 class ProfileView extends Component {
   render() {
     return (
@@ -50,11 +49,11 @@ class ProfileView extends Component {
         <Card
           cover={
             <div
-              className="card-cover"
-              style={{ backgroundImage: `url(${userData.coverSrc})` }}
+              className="profile-view-card-cover"
+              style={{ backgroundImage: `url(${user.coverSrc})` }}
             ></div>
           }
-          className="card-style"
+          className="profile-view-card-style"
           bodyStyle={{
             maxWidth: "1200px",
             margin: "auto",
@@ -65,33 +64,37 @@ class ProfileView extends Component {
           {/*Avatar*/}
 
           <Avatar
-            className="avatar"
+            className="profile-view-avatar"
             size={160}
             icon="user"
-            src={userData.avatarSrc}
+            src={user.avatarSrc}
           />
 
           {/*Avatar description*/}
           <Meta
             title={
               <h2>
-                {avatarTitle && avatarTitle.firstName && avatarTitle.lastName
-                  ? avatarTitle.firstName + " " + avatarTitle.lastName
+                {user.avatarTitle &&
+                user.avatarTitle.firstName &&
+                user.avatarTitle.lastName
+                  ? user.avatarTitle.firstName + " " + user.avatarTitle.lastName
                   : "No Name Provided"}
               </h2>
             }
             description={
-              <h4>{`${skillDisplay.skill || ""} ${userType.type}`}</h4>
+              <h4>{`${user.skillDisplay.skill || ""} ${
+                user.userType.type
+              }`}</h4>
             }
           />
 
           <br />
 
           {/*edit and export buttons*/}
-          <div className="edit-export-buttons">
+          <div className="profile-view-edit-export-buttons">
             <Tooltip title="View Your Public Profile">
               <Button
-                className="export-button"
+                className="profile-view-export-button"
                 size="large"
                 type="primary"
                 shape="circle-outline"
@@ -109,39 +112,42 @@ class ProfileView extends Component {
           {/*about and socialmedia links*/}
           <Row gutter={24}>
             <Col xs={24} md={16}>
-              <div className="profile-about">
+              <div className="profile-view-profile-about">
                 About Me!? Haha U already know!
               </div>
             </Col>
 
             <Col md={8} xs={24}>
               <Col span={4}>
-                <a href={userData && userData.facebook}>
-                  <Icon className="social-icons" type="facebook" />
+                <a href={user && user.facebook}>
+                  <Icon className="profile-view-social-icons" type="facebook" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={userData && userData.instagram}>
-                  <Icon className="social-icons" type="instagram" />
+                <a href={user && user.instagram}>
+                  <Icon
+                    className="profile-view-social-icons"
+                    type="instagram"
+                  />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={userData && userData.linkedin}>
-                  <Icon className="social-icons" type="linkedin" />
+                <a href={user && user.linkedin}>
+                  <Icon className="profile-view-social-icons" type="linkedin" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={userData && userData.twitter}>
-                  <Icon className="social-icons" type="twitter" />
+                <a href={user && user.twitter}>
+                  <Icon className="profile-view-social-icons" type="twitter" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={userData && userData.youtube}>
-                  <Icon className="social-icons" type="youtube" />
+                <a href={user && user.youtube}>
+                  <Icon className="profile-view-social-icons" type="youtube" />
                 </a>
               </Col>
             </Col>
@@ -180,10 +186,10 @@ class ProfileView extends Component {
 
           <Row>
             <Col span={20}>
-              <h2 className="portfolio-name">Portfolio</h2>
+              <h2 className="profile-view-portfolio-name">Portfolio</h2>
             </Col>
 
-            <div className="portfolio-add-button">
+            <div className="profile-view-portfolio-add-button">
               <Button>
                 <Icon type="plus" />
               </Button>
@@ -195,51 +201,51 @@ class ProfileView extends Component {
 
           {/*portfolios*/}
 
-          <Row className="portfolios">
-            <Col span={7} className="portfolio-col">
+          <Row className="profile-view-portfolios">
+            <Col span={7} className="profile-view-portfolio-col">
               <Card
-                className="portfolio-card"
-                cover={<img alt="example" src={userData.portfolioSrc} />}
+                className="profile-view-portfolio-card"
+                cover={<img alt="example" src={user.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
                 <Meta
-                  title={userData.portfolioTitle}
-                  description={userData.portfolioDescription}
+                  title={user.portfolioTitle}
+                  description={user.portfolioDescription}
                 />
               </Card>
             </Col>
 
-            <Col span={7} className="portfolio-col">
+            <Col span={7} className="profile-view-portfolio-col">
               <Card
-                className="portfolio-card"
-                cover={<img alt="example" src={userData.portfolioSrc} />}
+                className="profile-view-portfolio-card"
+                cover={<img alt="example" src={user.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
                 <Meta
-                  title={userData.portfolioTitle}
-                  description={userData.portfolioDescription}
+                  title={user.portfolioTitle}
+                  description={user.portfolioDescription}
                 />
               </Card>
             </Col>
 
-            <Col span={7} className="portfolio-col">
+            <Col span={7} className="profile-view-portfolio-col">
               <Card
-                className="portfolio-card"
-                cover={<img alt="example" src={userData.portfolioSrc} />}
+                className="profile-view-portfolio-card"
+                cover={<img alt="example" src={user.portfolioSrc} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
                 ]}
               >
                 <Meta
-                  title={userData.portfolioTitle}
-                  description={userData.portfolioDescription}
+                  title={user.portfolioTitle}
+                  description={user.portfolioDescription}
                 />
               </Card>
             </Col>
