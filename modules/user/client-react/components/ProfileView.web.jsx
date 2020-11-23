@@ -1,47 +1,14 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { PageLayout, Tooltip } from "@gqlapp/look-client-react";
-import {
-  Avatar,
-  Card,
-  Button,
-  Divider,
-  Descriptions,
-  Icon,
-  Row,
-  Col,
-} from "antd";
+import { Avatar, Card, Button, Divider, Icon, Row, Col } from "antd";
 const { Meta } = Card;
-
-const user = {
-  coverSrc:
-    "https://res.cloudinary.com/dpvrqxttb/image/upload/v1604566920/edgenus/image/nkzfil4lqjf556ipjwi5.png",
-  avatarSrc:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQV9IZZN1faELpjixZnAeYWoESqnPoIpFiPcw&usqp=CAU",
-  username: "username",
-  avatarTitle: {
-    firstName: "Yashwanth",
-    lastName: "Sambaraj",
-  },
-  userType: {
-    type: "STUDENT",
-  },
-  skillDisplay: {
-    skill: "Web Developer",
-  },
-  facebook: "https://www.facebook.com",
-  instagram: "https://www.instagram.com",
-  linkedin: "https://www.linkedin.com",
-  twitter: "https://www.twitter.com",
-  youtube: "https://www.youtube.com",
-  portfolioSrc:
-    "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-  portfolioTitle: "Title",
-  portfolioDescription: "Description",
-};
 
 class ProfileView extends Component {
   render() {
+    const user = this.props.user;
+
     return (
       <PageLayout type="home">
         {/*Cover photo*/}
@@ -50,8 +17,8 @@ class ProfileView extends Component {
           cover={
             <div
               className="profile-view-card-cover"
-              style={{ backgroundImage: `url(${user.coverSrc})` }}
-            ></div>
+              style={{ backgroundImage: `url("${user.profile.cover}")` }}
+            />
           }
           className="profile-view-card-style"
           bodyStyle={{
@@ -67,25 +34,19 @@ class ProfileView extends Component {
             className="profile-view-avatar"
             size={160}
             icon="user"
-            src={user.avatarSrc}
+            src={user.profile.avatar}
           />
 
           {/*Avatar description*/}
           <Meta
             title={
               <h2>
-                {user.avatarTitle &&
-                user.avatarTitle.firstName &&
-                user.avatarTitle.lastName
-                  ? user.avatarTitle.firstName + " " + user.avatarTitle.lastName
+                {user.profile && user.profile.firstName && user.profile.lastName
+                  ? user.profile.firstName + " " + user.profile.lastName
                   : "No Name Provided"}
               </h2>
             }
-            description={
-              <h4>{`${user.skillDisplay.skill || ""} ${
-                user.userType.type
-              }`}</h4>
-            }
+            //description={<h4>{`${user.skillDisplay.skill || ""} ${user.userType.type}`}</h4>}
           />
 
           <br />
@@ -112,20 +73,20 @@ class ProfileView extends Component {
           {/*about and socialmedia links*/}
           <Row gutter={24}>
             <Col xs={24} md={16}>
-              <div className="profile-view-profile-about">
+              <div className="profile-view-user-about">
                 About Me!? Haha U already know!
               </div>
             </Col>
-
+            {/*}
             <Col md={8} xs={24}>
               <Col span={4}>
-                <a href={user && user.facebook}>
+                <a href={this.props && user.facebook}>
                   <Icon className="profile-view-social-icons" type="facebook" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={user && user.instagram}>
+                <a href={this.props && user.instagram}>
                   <Icon
                     className="profile-view-social-icons"
                     type="instagram"
@@ -134,31 +95,32 @@ class ProfileView extends Component {
               </Col>
 
               <Col span={4}>
-                <a href={user && user.linkedin}>
+                <a href={this.props && user.linkedin}>
                   <Icon className="profile-view-social-icons" type="linkedin" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={user && user.twitter}>
+                <a href={this.props && user.twitter}>
                   <Icon className="profile-view-social-icons" type="twitter" />
                 </a>
               </Col>
 
               <Col span={4}>
-                <a href={user && user.youtube}>
+                <a href={this.props && user.youtube}>
                   <Icon className="profile-view-social-icons" type="youtube" />
                 </a>
               </Col>
             </Col>
+*/}
           </Row>
 
           <Divider orientation="left" style={{ marginTop: "20px" }}>
             info
           </Divider>
-          {/*intrests*/}
 
-          <Descriptions>
+          {/*   
+       <Descriptions>
             <Descriptions.Item label="❤ Loves">-&gt; No One</Descriptions.Item>
           </Descriptions>
 
@@ -182,7 +144,7 @@ class ProfileView extends Component {
 
           <Divider></Divider>
 
-          {/*Portfolio and add button*/}
+         
 
           <Row>
             <Col span={20}>
@@ -199,13 +161,13 @@ class ProfileView extends Component {
           <br />
           <br />
 
-          {/*portfolios*/}
+         
 
           <Row className="profile-view-portfolios">
             <Col span={7} className="profile-view-portfolio-col">
               <Card
                 className="profile-view-portfolio-card"
-                cover={<img alt="example" src={user.portfolioSrc} />}
+                cover={<img alt="example" src={user.portfolio} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
@@ -221,7 +183,7 @@ class ProfileView extends Component {
             <Col span={7} className="profile-view-portfolio-col">
               <Card
                 className="profile-view-portfolio-card"
-                cover={<img alt="example" src={user.portfolioSrc} />}
+                cover={<img alt="example" src={user.portfolio} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
@@ -237,7 +199,7 @@ class ProfileView extends Component {
             <Col span={7} className="profile-view-portfolio-col">
               <Card
                 className="profile-view-portfolio-card"
-                cover={<img alt="example" src={user.portfolioSrc} />}
+                cover={<img alt="example" src={user.portfolio} />}
                 actions={[
                   <Icon type="delete" key="delete" />,
                   <Icon type="edit" key="edit" />,
@@ -250,10 +212,24 @@ class ProfileView extends Component {
               </Card>
             </Col>
           </Row>
+*/}
         </Card>
       </PageLayout>
     );
   }
 }
+
+ProfileView.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string,
+    role: PropTypes.string,
+    profile: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      cover: PropTypes.string,
+      avatar: PropTypes.string,
+    }),
+  }),
+};
 
 export default ProfileView;
