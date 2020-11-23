@@ -69,6 +69,7 @@ function onAddCategories(prev, node) {
 }
 
 function onEditCategories(prev, node) {
+  // console.log(node, 'node');
   const index = prev.categories.edges.findIndex(x => x.node.id === node.id);
   const edge = {
     cursor: node.id,
@@ -134,7 +135,7 @@ export const subscribeToCategory = (subscribeToMore, CategoryId, history) =>
 
 function onEditCategory(prev, node) {
   return update(prev, {
-    listing: {
+    category: {
       $set: node
     }
   });

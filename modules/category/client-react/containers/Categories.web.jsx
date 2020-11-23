@@ -17,13 +17,11 @@ import { subscribeToCategories } from './CategorySubscriptions';
 
 const Categories = props => {
   const { subscribeToMore, editCategory } = props;
-  console.log(props);
   useEffect(() => {
     const subscribe = subscribeToCategories(subscribeToMore, props.filter);
     return () => subscribe();
   });
   const handleToggle = (field, value, id) => {
-    console.log(field, value, id);
     const input = {};
     input.id = id;
     _.set(input, field, value);

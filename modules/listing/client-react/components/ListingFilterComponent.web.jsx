@@ -83,7 +83,7 @@ const ListingsFilterComponent = props => {
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row>
-            <Col lg={10} xs={24} md={14}>
+            <Col lg={10} xs={24} md={12}>
               <Row gutter={24}>
                 <Col>
                   <FormItem label={'search'} style={{ width: '100%' }}>
@@ -117,7 +117,7 @@ const ListingsFilterComponent = props => {
             <Col
               lg={14}
               xs={24}
-              md={10}
+              md={12}
               // align="right"
             >
               <Row>
@@ -149,38 +149,44 @@ const ListingsFilterComponent = props => {
                   </FormItem>
                 </Col>
                 <Col xs={0} md={24} lg={24}>
-                  <Row type="flex" justify="end">
-                    {CategoryTreeField}
-
-                    {SORT_BY && SORT_BY.length !== 0 && (
-                      <FormItem label={'Sort By'}>
-                        <Select
-                          name="sortBy"
-                          defaultValue={orderBy.order}
-                          style={{ width: '170px' }}
-                          onChange={e =>
-                            SORT_BY[e].sortBy === ''
-                              ? onOrderBy({
-                                  order: SORT_BY[e].sortBy,
-                                  column: ''
-                                })
-                              : onOrderBy({
-                                  order: SORT_BY[e].sortBy,
-                                  column: SORT_BY[e].value
-                                })
-                          }
-                        >
-                          <Option key={1} value="">
-                            None
-                          </Option>
-                          {SORT_BY.map((sB, i) => (
-                            <Option key={i + 2} value={i}>
-                              {sB.label}
-                            </Option>
-                          ))}
-                        </Select>
-                      </FormItem>
-                    )}
+                  <Row type="flex">
+                    <Col lg={14} md={12}>
+                      {CategoryTreeField}
+                    </Col>
+                    <Col lg={0} md={2} xs={0}></Col>
+                    <Col lg={10} md={10}>
+                      <Row type="flex" justify="end">
+                        {SORT_BY && SORT_BY.length !== 0 && (
+                          <FormItem label={'Sort By'}>
+                            <Select
+                              name="sortBy"
+                              defaultValue={orderBy.order}
+                              style={{ width: '170px' }}
+                              onChange={e =>
+                                SORT_BY[e].sortBy === ''
+                                  ? onOrderBy({
+                                      order: SORT_BY[e].sortBy,
+                                      column: ''
+                                    })
+                                  : onOrderBy({
+                                      order: SORT_BY[e].sortBy,
+                                      column: SORT_BY[e].value
+                                    })
+                              }
+                            >
+                              <Option key={1} value="">
+                                None
+                              </Option>
+                              {SORT_BY.map((sB, i) => (
+                                <Option key={i + 2} value={i}>
+                                  {sB.label}
+                                </Option>
+                              ))}
+                            </Select>
+                          </FormItem>
+                        )}
+                      </Row>
+                    </Col>
                   </Row>
                 </Col>
               </Row>
