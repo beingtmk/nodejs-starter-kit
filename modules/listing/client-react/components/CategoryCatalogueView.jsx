@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-// import { UrlMethod } from '@gqlapp/core-client-react';
-// import CategoryPageListings from '@gqlapp/listing-client-react/containers/CategoryPageListings';
 import { Row, Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
-import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
+// import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+
+import CategoryCarousel from './CategoryCarousel';
 
 const { Title, Paragraph } = Typography;
 
@@ -28,13 +28,7 @@ const CategoryCatalogueView = props => {
                 <Icon type="HomeOutlined" />
               </NavLink>
             </BreadcrumbItem>
-            {category && (
-              <BreadcrumbItem>
-                {/* <NavLink to={`/category-item/${category.id}/${UrlMethod(category.title)}`}> */}
-                {category.title}
-                {/* </NavLink> */}
-              </BreadcrumbItem>
-            )}
+            {category && <BreadcrumbItem>{category.title}</BreadcrumbItem>}
           </Breadcrumb>
           <Typography style={{ marginTop: '15px' }}>
             <Title level={2}>{category.title}</Title>
@@ -47,8 +41,9 @@ const CategoryCatalogueView = props => {
               </Divider>
 
               <Row gutter={[24, 24]}>
-                {category.subCategories.length > 0 &&
-                  category.subCategories.map((c, idx) => <CategoryItemComponent category={c} idx={idx} />)}
+                {category.subCategories.length > 0 && <CategoryCarousel categories={category.subCategories} />}
+                {/* {category.subCategories.length > 0 &&
+                  category.subCategories.map((c, idx) => <CategoryItemComponent category={c} idx={idx} />)} */}
               </Row>
             </>
           )}

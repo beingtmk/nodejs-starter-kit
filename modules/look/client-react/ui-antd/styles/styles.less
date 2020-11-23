@@ -76,3 +76,20 @@
     transform: translateX(400px);
   }
 }
+
+
+
+// Category carousel 
+@categoryCarousel: category-carousel;
+.@{categoryCarousel}-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  .@{categoryCarousel} {
+    height: 100%;
+    max-width: 1200px;
+    position: relative;
+    margin: auto;
+    will-change: transform;
+  }
+}
