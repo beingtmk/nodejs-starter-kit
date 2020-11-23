@@ -3,7 +3,16 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Table, Pagination, EditIcon, DeleteIcon, Button, Empty, RenderTableLoading } from '@gqlapp/look-client-react';
+import {
+  Table,
+  Pagination,
+  EditIcon,
+  DeleteIcon,
+  Button,
+  Empty,
+  RenderTableLoading,
+  Divider
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ROUTES from '../../routes';
@@ -68,6 +77,7 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
           <Link to={`${ROUTES.editLink}${record.id}`}>
             <EditIcon shape="circle" size="large" />
           </Link>
+          <Divider type="vertical" />
           <DeleteIcon onClick={() => deleteDynamicCarousel(record.id)} title="Are you sure delete this listing?" />
         </div>
       )

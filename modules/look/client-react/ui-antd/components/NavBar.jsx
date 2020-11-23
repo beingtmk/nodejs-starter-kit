@@ -97,12 +97,12 @@ class NavBar extends React.Component {
                       animation={{
                         playScale: [1, 1.1],
                         scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-79px',
+                        translateX: isMobile ? '' : '-45px',
                         translateY: isMobile ? '' : '20px'
                       }}
                     >
                       <img
-                        height="80px"
+                        // height="80px"
                         src={
                           'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
                         }
