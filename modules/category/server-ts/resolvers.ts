@@ -18,11 +18,10 @@ export default (pubsub: any) => ({
       const edgesArray: Edges[] = [];
       const { total, categories } = await Category.categoriesPagination(limit, after, orderBy, filter, childNode);
       const hasNextPage = total > after + limit;
-
-      categories.map((listing: CategoryInput & Identifier, index: number) => {
+      categories.map((category: CategoryInput & Identifier, index: number) => {
         edgesArray.push({
           cursor: after + index,
-          node: listing
+          node: category
         });
       });
       const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
@@ -59,8 +58,8 @@ export default (pubsub: any) => ({
     },
     async editCategory(obj: any, { input }: { input: CategoryInput }, { Category }: any) {
       try {
-        const category = await Category.category(input.id);
         await Category.editCategory(input);
+        const category = await Category.category(input.id);
         if (category) {
           pubsub.publish(CATEGORIES_SUBSCRIPTION, {
             categoriesUpdated: {
