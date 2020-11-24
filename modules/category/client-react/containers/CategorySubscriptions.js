@@ -72,7 +72,7 @@ function onEditCategories(prev, node) {
   // console.log(node, 'node');
   const index = prev.categories.edges.findIndex(x => x.node.id === node.id);
   const edge = {
-    cursor: node.id,
+    cursor: prev.categories.edges.length - node.id,
     node: node,
     __typename: 'CategoryEdges'
   };

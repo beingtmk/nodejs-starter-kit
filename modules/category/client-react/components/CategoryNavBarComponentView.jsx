@@ -10,7 +10,7 @@ const CategoryNavBarComponentView = props => {
   const [visible, setVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState([]);
   const { loading, categories } = props;
-
+  console.log(categories);
   const setDropDownMenu = category => {
     if (category.subCategories && category.subCategories.length > 0) {
       setVisible(true);
@@ -37,13 +37,17 @@ const CategoryNavBarComponentView = props => {
         >
           {categories.edges &&
             categories.totalCount > 0 &&
-            categories.edges.map((c, i) => (
-              <Col key={i} span={24 / categories.totalCount}>
-                <a href="#" onMouseEnter={() => setDropDownMenu(c.node)}>
-                  <h1>{c.node.title}</h1>
-                </a>
-              </Col>
-            ))}
+            categories.edges.map((c, i) => {
+              if (c.node.isNavbar) {
+                return (
+                  <Col key={i} span={24 / categories.totalCount}>
+                    <a href="#" onMouseEnter={() => setDropDownMenu(c.node)}>
+                      <h1>{c.node.title}</h1>
+                    </a>
+                  </Col>
+                );
+              }
+            })}
           <Col span={24} style={{ visibility: 'collapse' }}>
             <DropDown visible={visible} content={'navbar-category-dropdown'} className="navbar-category-dropdown">
               <Row type="flex" justify="center" gutter={[24, 24]}>
