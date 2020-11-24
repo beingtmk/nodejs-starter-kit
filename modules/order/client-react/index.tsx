@@ -1,12 +1,11 @@
 import React from 'react';
-import { Menu } from 'antd';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 
 import { Route, NavLink } from 'react-router-dom';
-import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
@@ -15,8 +14,6 @@ import resources from './locales';
 import ROUTES from './routes';
 
 import NavItemCart from './containers/NavItemCart.web';
-
-const { SubMenu } = Menu;
 
 const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">

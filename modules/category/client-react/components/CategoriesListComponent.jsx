@@ -24,6 +24,7 @@ import {
 import settings from '@gqlapp/config';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { NO_IMG } from '@gqlapp/listing-common';
+import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import ROUTES from '../routes';
@@ -101,7 +102,7 @@ const CategoryListComponent = props => {
           href="#"
           // href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank"
         >
-          <a href={`${ROUTES.categoryCatalogueLink}${record.id}`} rel="noopener noreferrer" target="_blank">
+          <a href={`${LISTING_ROUTES.categoryCatalogueLink}${record.id}`} rel="noopener noreferrer" target="_blank">
             <Card style={{ width: '200px', height: '60px' }} bodyStyle={{ padding: '10px' }}>
               <CardMeta
                 title={

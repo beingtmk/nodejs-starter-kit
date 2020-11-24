@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { compose } from '@gqlapp/core-common';
 import { PropTypes } from 'prop-types';
-import { Menu } from 'antd';
-import { Icon, Row, Col, Card, Rate, Button, DropDown } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, Card, Rate, Button, DropDown, MenuItem } from '@gqlapp/look-client-react';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
 import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
@@ -74,16 +73,16 @@ const ReviewsItemComponent = props => {
   function dropDownOpts() {
     return (
       <>
-        <Menu.Item key="0">
+        <MenuItem key="0">
           <Button style={{ color: 'black' }} color="link" href={`${ROUTES.editLink}/${review.id}`}>
             {t('reviewItem.btn.edit')}
           </Button>
-        </Menu.Item>
-        <Menu.Item key="1">
+        </MenuItem>
+        <MenuItem key="1">
           <Button style={{ color: 'black' }} color="link" onClick={() => deleteReview(review.id)}>
             {t('reviewItem.btn.delete')}
           </Button>
-        </Menu.Item>
+        </MenuItem>
       </>
     );
   }
