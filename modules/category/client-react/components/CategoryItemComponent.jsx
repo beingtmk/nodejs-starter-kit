@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
-import { Col, Card } from '@gqlapp/look-client-react';
+import { Card } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 
 import ROUTES from '@gqlapp/listing-client-react/routes';
@@ -13,7 +13,7 @@ const { Text } = Typography;
 
 const CategoryItemComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
-  const { category, idx } = props;
+  const { category, componentStyle } = props;
 
   const cardImg = (
     <img
@@ -29,7 +29,7 @@ const CategoryItemComponent = props => {
   );
 
   return (
-    <Col lg={6} md={8} xs={12} key={idx}>
+    <div style={componentStyle}>
       <NavLink to={`${ROUTES.categoryCatalogueLink}${category.id}`}>
         <Card
           bordered={false}
@@ -54,13 +54,13 @@ const CategoryItemComponent = props => {
           <Text style={{ textAlign: 'left' }}>{category && category.title}</Text>
         </Card>
       </NavLink>
-    </Col>
+    </div>
   );
 };
 
 CategoryItemComponent.propTypes = {
   category: PropTypes.object,
-  idx: PropTypes.number
+  componentStyle: PropTypes.object
 };
 
 export default CategoryItemComponent;
