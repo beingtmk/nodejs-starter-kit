@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
-import { Row, Icon, PageLayout, Divider, Spinner, BreadcrumbItem, Breadcrumb } from '@gqlapp/look-client-react';
+import {
+  Row,
+  Icon,
+  PageLayout,
+  Divider,
+  Spinner,
+  BreadcrumbItem,
+  Breadcrumb,
+  Title,
+  Paragraph
+} from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
 // import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 
 import CategoryCarousel from './CategoryCarousel';
-
-const { Title, Paragraph } = Typography;
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match } = props;
@@ -30,10 +37,10 @@ const CategoryCatalogueView = props => {
             </BreadcrumbItem>
             {category && <BreadcrumbItem>{category.title}</BreadcrumbItem>}
           </Breadcrumb>
-          <Typography style={{ marginTop: '15px' }}>
+          <div style={{ marginTop: '15px' }}>
             <Title level={2}>{category.title}</Title>
             <Paragraph>{category.description}</Paragraph>
-          </Typography>
+          </div>
           {category && category.subCategories && category.subCategories.length !== 0 && (
             <>
               <Divider orientation="left">

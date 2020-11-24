@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
 
+import { Text, Card } from '@gqlapp/look-client-react';
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
-import { Card } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-
 import ROUTES from '@gqlapp/listing-client-react/routes';
 
-const { Text } = Typography;
+// const { Text } = Typography;
 
 const CategoryItemComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();

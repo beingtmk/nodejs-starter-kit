@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Drawer } from 'antd';
+import { Drawer } from '@gqlapp/look-client-react';
 import ListingItemComponent from './CartItemComponent';
 
 // const pStyle = {

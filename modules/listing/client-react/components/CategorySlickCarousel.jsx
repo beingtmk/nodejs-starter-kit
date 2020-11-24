@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Carousel as ADCarousel } from 'antd';
 
-import { LeftArrow, RightArrow } from '@gqlapp/look-client-react/ui-antd/components';
+import { LeftArrow, RightArrow, Carousel as ADCarousel } from '@gqlapp/look-client-react';
 
 export default class Carousel extends React.Component {
   constructor(props) {
