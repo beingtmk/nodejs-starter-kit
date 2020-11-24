@@ -28,7 +28,7 @@ export const subscribeToCategories = (subscribeToMore, filter) =>
       } else if (mutation === 'UPDATED') {
         newResult = onEditCategories(prev, node);
       } else if (mutation === 'DELETED') {
-        newResult = onDeleteCategories(prev, node.id);
+        newResult = onDeleteCategories(prev, node);
       }
       return newResult;
     }
@@ -88,25 +88,40 @@ function onEditCategories(prev, node) {
   }
 }
 
-const onDeleteCategories = (prev, id) => {
-  console.log('called', id);
-  const index = prev.categories.edges.findIndex(x => x.node.id === id);
+const onDeleteCategories = (prev, node) => {
+  if (node.parentCategoryId !== null) {
+    let parentCategory = prev.categories.edges.filter(x => x.node.id === node.parentCategoryId);
+    const index = prev.categories.edges.findIndex(x => x.node.id === node.parentCategoryId);
 
-  // ignore if not found
-  if (index < 0) {
-    return prev;
+    const subCategories = parentCategory[0].node.subCategories.filter(x => x.id !== node.id);
+    parentCategory[0].node.subCategories = subCategories;
+
+    prev.categories.edges.splice(index, 1, parentCategory[0]);
+    return update(prev, {
+      categories: {
+        edges: {
+          $set: [...prev.categories.edges]
+        }
+      }
+    });
   }
 
-  return update(prev, {
-    categories: {
-      totalCount: {
-        $set: prev.categories.totalCount - 1
-      },
-      edges: {
-        $splice: [[index, 1]]
+  // ignore if not found
+  const index = prev.categories.edges.findIndex(x => x.node.id === node.id);
+  if (index < 0) {
+    return prev;
+  } else {
+    return update(prev, {
+      categories: {
+        totalCount: {
+          $set: prev.categories.totalCount - 1
+        },
+        edges: {
+          $splice: [[index, 1]]
+        }
       }
-    }
-  });
+    });
+  }
 };
 export const subscribeToCategory = (subscribeToMore, CategoryId, history) =>
   subscribeToMore({

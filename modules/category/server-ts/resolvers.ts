@@ -83,8 +83,8 @@ export default (pubsub: any) => ({
     },
     async deleteCategory(obj: any, { id }: Identifier, { Category }: any) {
       const category = await Category.category(id);
-
       const isDeleted = Category.deleteCategory(id);
+
       if (isDeleted) {
         pubsub.publish(CATEGORIES_SUBSCRIPTION, {
           categoriesUpdated: {
