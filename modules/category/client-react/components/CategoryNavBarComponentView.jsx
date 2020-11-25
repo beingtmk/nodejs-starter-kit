@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+import { Menu } from 'antd';
 
-import { Row, Col, DropDown, Card, Skeleton } from '@gqlapp/look-client-react';
-
+import { Row, Col, DropDown, Card, Skeleton, Drawer, Icon, SubMenu, MenuItem, Button } from '@gqlapp/look-client-react';
 import ROUTES from '@gqlapp/listing-client-react/routes';
 
 const CategoryNavBarComponentView = props => {
   const [visible, setVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState([]);
-  const { loading, categories } = props;
-  console.log(categories);
+  const { mobile, loading, categories } = props;
+
   const setDropDownMenu = category => {
     if (category.subCategories && category.subCategories.length > 0) {
       setVisible(true);
@@ -18,6 +19,62 @@ const CategoryNavBarComponentView = props => {
     }
   };
 
+  const handleClose = () => {
+    setDrawerVisible(false);
+  };
+  const handleOpen = () => {
+    setDrawerVisible(true);
+    console.log('object');
+  };
+  // console.log(object)
+  if (mobile) {
+    return (
+      <>
+        <Row justify="center" type="flex">
+          <Button onClick={handleOpen}>
+            <Icon type="MenuOutlined" style={{ color: 'inherit', fontSize: '20px' }} />
+          </Button>
+        </Row>
+        <Drawer placement="left" closable={false} onClose={handleClose} visible={drawerVisible}>
+          {!loading ? (
+            <>
+              <Menu
+                mode="inline"
+                overflowedIndicator={<Icon type="MenuOutlined" />}
+                style={{ lineHeight: '40px', background: '#f7f7f7' }}
+              >
+                {categories.edges &&
+                  categories.totalCount > 0 &&
+                  categories.edges.map(c => {
+                    if (c.node.isNavbar) {
+                      return (
+                        <SubMenu key={c.node.title} title={c.node.title}>
+                          <MenuItem key="all">
+                            <a
+                              href={`${ROUTES.categoryCatalogueLink}${c.node.id}`}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                            >
+                              All
+                            </a>
+                          </MenuItem>
+                          {c.node.subCategories &&
+                            c.node.subCategories.map(sc => (
+                              <MenuItem key={sc.title}>
+                                <a href={`${ROUTES.categoryCatalogueLink}${sc.id}`}>{sc.title}</a>
+                              </MenuItem>
+                            ))}
+                        </SubMenu>
+                      );
+                    }
+                  })}
+              </Menu>
+            </>
+          ) : null}
+        </Drawer>
+      </>
+    );
+  }
   // console.log(visible);
   return (
     <ScrollParallax
@@ -57,7 +114,11 @@ const CategoryNavBarComponentView = props => {
                       <Card
                         bordered={false}
                         // style={{ border: '0px', borderRadius: '0px !important' }}
-                        bodyStyle={{ margin: '0px', padding: '0px', textAlign: 'center' }}
+                        bodyStyle={{
+                          margin: '0px',
+                          padding: '0px',
+                          textAlign: 'center'
+                        }}
                         hoverable
                         cover={<img alt="example" src={sC.imageUrl} />}
                       >
@@ -86,7 +147,8 @@ const CategoryNavBarComponentView = props => {
 CategoryNavBarComponentView.propTypes = {
   t: PropTypes.func,
   loading: PropTypes.bool,
-  categories: PropTypes.object
+  categories: PropTypes.object,
+  mobile: PropTypes.bool
 };
 
 export default CategoryNavBarComponentView;

@@ -11,7 +11,8 @@ import {
   BreadcrumbItem,
   Breadcrumb,
   Title,
-  Paragraph
+  Paragraph,
+  Col
 } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
@@ -25,7 +26,12 @@ const CategoryCatalogueView = props => {
 
   return (
     <PageLayout>
-      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
+      <Col xs={0} md={0} lg={24}>
+        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
+      </Col>
+      <Col xs={6} md={6} lg={0}>
+        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} mobile={true} />
+      </Col>
       {loading && <Spinner />}
       {category && (
         <>
