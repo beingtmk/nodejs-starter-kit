@@ -29,7 +29,7 @@ const CategoryNavBarComponentView = props => {
   if (mobile) {
     return (
       <>
-        <Row justify="start" type="flex">
+        <Row justify="start" type="flex" style={{ paddingTop: '10px' }}>
           <Button block color="primary" onClick={handleOpen}>
             <Icon type="MenuOutlined" style={{ color: 'inherit', fontSize: '15px' }} /> &nbsp;categories
           </Button>
