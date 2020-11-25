@@ -8,7 +8,7 @@ import { Row, Col, PageLayout, Heading, MetaTags, AddButton } from '@gqlapp/look
 import settings from '@gqlapp/config';
 import styled from 'styled-components';
 import ROUTES from '../../routes';
-import DynamicCarouselFilterView from './DynamicCarouselFilterView';
+import DynamicCarouselFilterComponent from './DynamicCarouselFilterComponent';
 import DynamicCarouselListView from './DynamicCarouselListView';
 
 const Title = styled.div`
@@ -41,7 +41,7 @@ const DynamicCarouselView = props => {
         </Col>
       </Row>
       <hr />
-      <DynamicCarouselFilterView {...props} filter={{ isActive: true }} />
+      <DynamicCarouselFilterComponent {...props} filter={{ isActive: true }} />
       <hr />
       <DynamicCarouselListView {...props} />
     </PageLayout>

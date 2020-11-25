@@ -1,32 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
+import { Form, FormItem, Select, Option, Label, Input, Row, Col } from '@gqlapp/look-client-react';
+import { LABEL } from '@gqlapp/home-common';
 
-import { MODAL } from '@gqlapp/review-common';
-import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Select, Option, Label, Input, Col, Row } from '@gqlapp/look-client-react';
-
-const ReviewsFilterView = ({
-  filter: { searchText, isActive },
+const DynamicCarouselFilterView = ({
+  filter: { searchText, label, isActive },
   onSearchTextChange,
+  onLabelChange,
   onIsActiveChange,
-  onModalNameChange,
   t
 }) => {
-  const ReviewSelectField = width => {
+  const CarouselLabelField = width => {
     return (
-      <FormItem label={t('adminPanel.filter.field2')} style={{ width: '100%' }}>
-        <Select
-          name="modal"
-          defaultValue={MODAL[0].value}
-          style={{ width: width }}
-          onChange={e => onModalNameChange(e)}
-        >
-          {MODAL.map((m, i) => (
-            <Option key={i} value={m.value}>
-              {m.label}
-            </Option>
-          ))}
+      <FormItem label={t('dynamicCarousel.filter.label')} style={{ width: '100%' }}>
+        <Select name="label" defaultValue={label} style={{ width: width }} onChange={e => onLabelChange(e)}>
+          <Option key={1} value={''}>
+            All
+          </Option>
+          {LABEL &&
+            LABEL.map((l, i) => (
+              <Option key={i + 2} value={l}>
+                {l}
+              </Option>
+            ))}
         </Select>
       </FormItem>
     );
@@ -39,11 +36,11 @@ const ReviewsFilterView = ({
             <Col lg={16} xs={24} sm={24} md={14}>
               <Row gutter={24}>
                 <Col xs={24} md={24} sm={14} lg={16}>
-                  <FormItem label={t('adminPanel.filter.field1')} style={{ width: '100%' }}>
+                  <FormItem label={t('dynamicCarousel.filter.search')} style={{ width: '100%' }}>
                     <DebounceInput
                       minLength={2}
                       debounceTimeout={300}
-                      placeholder={t('adminPanel.filter.field1')}
+                      placeholder={t('dynamicCarousel.filter.search')}
                       element={Input}
                       value={searchText}
                       onChange={e => onSearchTextChange(e.target.value)}
@@ -53,9 +50,12 @@ const ReviewsFilterView = ({
                 <Col xs={24} md={24} sm={10} lg={8}>
                   <FormItem>
                     <Label>
-                      <Input type="checkbox" defaultChecked={isActive} onChange={() => onIsActiveChange(!isActive)} />
-                      &nbsp; &nbsp;
-                      {t('adminPanel.filter.field3')}
+                      <Input
+                        type="checkbox"
+                        defaultChecked={isActive}
+                        onChange={e => onIsActiveChange(e.target.checked)}
+                      />
+                      &nbsp; {t('dynamicCarousel.filter.isActive')}
                     </Label>
                   </FormItem>
                 </Col>
@@ -64,11 +64,11 @@ const ReviewsFilterView = ({
             <Col lg={8} xs={24} sm={24} md={10}>
               <Row>
                 <Col lg={0} md={0} xs={24}>
-                  {ReviewSelectField('100%')}
+                  {CarouselLabelField('100%')}
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
-                    {ReviewSelectField('170px')}
+                    {CarouselLabelField('170px')}
                   </Row>
                 </Col>
               </Row>
@@ -79,13 +79,12 @@ const ReviewsFilterView = ({
     </Form>
   );
 };
-
-ReviewsFilterView.propTypes = {
+DynamicCarouselFilterView.propTypes = {
   filter: PropTypes.object.isRequired,
-  onIsActiveChange: PropTypes.func.isRequired,
   onSearchTextChange: PropTypes.func.isRequired,
-  onModalNameChange: PropTypes.func.isRequired,
+  onLabelChange: PropTypes.func.isRequired,
+  onIsActiveChange: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 
-export default translate('review')(ReviewsFilterView);
+export default DynamicCarouselFilterView;

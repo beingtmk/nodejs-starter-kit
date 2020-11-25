@@ -1,35 +1,32 @@
 @navbar-height-large: 84px;
 @navbar-height-small: 40px;
 
-.navbar-parallex{
+.navbar-parallex {
   z-index: 100;
-  position:fixed;
-  width:100vw;
+  position: fixed;
+  width: 100vw;
   height: @navbar-height-large !important;
   overflow: hidden;
 }
 
-
-
 .ant-layout-header {
   height: 100% !important;
   padding: 0 !important;
-  width:100%;
+  width: 100%;
   background: white;
-  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.10);
+  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
-.navbar-wrapper{
+.navbar-wrapper {
   position: relative;
   margin: auto;
   max-width: 1200px;
   padding: 0 24px;
 }
 
-
-.navbar-contact-menu{
-  background: #FFB836;
+.navbar-contact-menu {
+  background: #ffb836;
   color: white;
   border-radius: 5px;
   margin: 0 -50vw;
@@ -38,58 +35,56 @@
   font-size: 1em;
 }
 .navbar-logo-img {
-  height:80px;
+  height: 80px;
 }
 
-
 @media only screen and (max-width: 769px) {
+  .navbar-parallex {
+    height: @navbar-height-small !important;
+  }
   .ant-layout-header {
     height: @navbar-height-small !important;
     z-index: 100;
   }
-  .navbar-logo-lg{
-    height:@navbar-height-small !important;
+  .navbar-logo-lg {
+    height: @navbar-height-small !important;
     padding: 0 !important;
-    margin-top:-0px !important;
+    margin-top: -0px !important;
   }
-  .navbar-logo-img{
-    height:40px;
+  .navbar-logo-img {
+    height: 40px;
     margin-top: -25px;
   }
-  .navbar-wrapper{
+  .navbar-wrapper {
     padding: 0 5px;
   }
-  .content-layout{
-    margin:0;
-    padding: 5px ;
-    margin-top: @navbar-height-small; 
-
+  .content-layout {
+    margin: 0;
+    padding: 5px;
+    margin-top: @navbar-height-small;
   }
-  .navbar-drawer-logo{
-    height:@navbar-height-small;
+  .navbar-drawer-logo {
+    height: @navbar-height-small;
     color: @primary-color;
   }
-
-
-
 }
 
-.navbar-menu{
+.navbar-menu {
   line-height: 49px !important;
 }
 
-.navbar-logo-lg{
+.navbar-logo-lg {
   // border: 2px solid @primary-color;
-  background:transparent;
+  background: transparent;
   // border-radius: 10px;
   margin-top: -39px;
   height: @navbar-height-large;
   overflow: hidden;
-  padding-top:2px;
-  width: fit-content
+  padding-top: 2px;
+  width: fit-content;
 }
 
-.navbar-category-dropdown  {
+.navbar-category-dropdown {
   height: 40px;
   width: 1200px;
   top: 124px !important;
@@ -98,8 +93,8 @@
   }
 }
 
-.navbar-category-strip{
-  background: #FFB836;
+.navbar-category-strip {
+  background: #ffb836;
   color: white;
   border-radius: 5px;
   margin: 0 -50vw;
