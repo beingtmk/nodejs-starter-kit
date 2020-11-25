@@ -167,6 +167,9 @@ export const withFilterUpdating = Component =>
       },
       onIsActiveChange(isActive) {
         mutate({ variables: { filter: { isActive } } });
+      },
+      onModalNameChange(modalName) {
+        mutate({ variables: { filter: { modalName } } });
       }
       // onFiltersRemove(filter, orderBy) {
       //   mutate({

@@ -31,6 +31,7 @@ const Categories = props => {
       throw Error(e);
     }
   };
+  // console.log('props', props);
   return <CategoriesView onToggle={handleToggle} filter={{}} {...props} />;
 };
 Categories.propTypes = {

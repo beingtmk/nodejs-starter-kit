@@ -31,7 +31,7 @@ class FieldAdapter extends Component {
   onChange = e => {
     const { formik, onChange /* name */ } = this.props;
     if (onChange) {
-      onChange(e.target.value, e);
+      onChange(e.target ? e.target.value : e, e);
       // } else if (Array.isArray(e) && Array.isArray(name)) {
       //   formik.setFieldValue(name[0], e[0].toISOString());
       //   formik.setFieldValue(name[1], e[1].toISOString());

@@ -5,6 +5,7 @@ fragment CategoriesStateInfo on CategoriesState {
   }
   filter {
     searchText
+    modalName
 
     isActive
   }

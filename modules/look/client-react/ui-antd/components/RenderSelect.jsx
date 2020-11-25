@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormItem } from '@gqlapp/look-client-react';
-
+import FormItem from './FormItem';
 import Select from './Select';
 
 const RenderSelect = props => {
@@ -18,11 +17,6 @@ const RenderSelect = props => {
     validateStatus = 'error';
   }
 
-  const onChange = value => {
-    const { formik, name } = props;
-    formik.handleChange({ target: { value, name } });
-  };
-
   return (
     <FormItem
       label={label}
@@ -32,7 +26,7 @@ const RenderSelect = props => {
       wrapperCol={{ span: 24 }}
     >
       <div>
-        <Select {...input} type={type} onChange={onChange}>
+        <Select {...input} type={type}>
           {children}
         </Select>
       </div>
