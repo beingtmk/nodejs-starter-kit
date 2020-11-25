@@ -29,7 +29,7 @@ const CategoryCatalogueView = props => {
       <Col xs={0} md={0} lg={24}>
         <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       </Col>
-      <Col xs={6} md={6} lg={0}>
+      <Col xs={24} md={24} lg={0}>
         <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} mobile={true} />
       </Col>
       {loading && <Spinner />}

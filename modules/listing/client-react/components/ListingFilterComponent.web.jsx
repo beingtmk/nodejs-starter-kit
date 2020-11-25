@@ -75,7 +75,32 @@ const ListingsFilterComponent = props => {
       value={categoryFilter.categoryId}
     />
   );
-
+  const ListingSortBy = width => {
+    return (
+      <Select
+        name="sortBy"
+        defaultValue={orderBy.order}
+        style={{ width: width }}
+        onChange={e =>
+          SORT_BY[e].sortBy === ''
+            ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
+            : onOrderBy({
+                order: SORT_BY[e].sortBy,
+                column: SORT_BY[e].value
+              })
+        }
+      >
+        <Option key={1} value="">
+          None
+        </Option>
+        {SORT_BY.map((sB, i) => (
+          <Option key={i + 2} value={i}>
+            {sB.label}
+          </Option>
+        ))}
+      </Select>
+    );
+  };
   return (
     <Form
     //  layout="inline"
@@ -124,28 +149,7 @@ const ListingsFilterComponent = props => {
                 <Col lg={0} md={0} xs={24}>
                   {CategoryTreeField}
                   <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
-                    <Select
-                      name="sortBy"
-                      defaultValue={orderBy.order}
-                      style={{ width: '100%' }}
-                      onChange={e =>
-                        SORT_BY[e].sortBy === ''
-                          ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
-                          : onOrderBy({
-                              order: SORT_BY[e].sortBy,
-                              column: SORT_BY[e].value
-                            })
-                      }
-                    >
-                      <Option key={1} value="">
-                        None
-                      </Option>
-                      {SORT_BY.map((sB, i) => (
-                        <Option key={i + 2} value={i}>
-                          {sB.label}
-                        </Option>
-                      ))}
-                    </Select>
+                    {ListingSortBy('100%')}
                   </FormItem>
                 </Col>
                 <Col xs={0} md={24} lg={24}>
@@ -157,33 +161,7 @@ const ListingsFilterComponent = props => {
                     <Col lg={10} md={10}>
                       <Row type="flex" justify="end">
                         {SORT_BY && SORT_BY.length !== 0 && (
-                          <FormItem label={'Sort By'}>
-                            <Select
-                              name="sortBy"
-                              defaultValue={orderBy.order}
-                              style={{ width: '170px' }}
-                              onChange={e =>
-                                SORT_BY[e].sortBy === ''
-                                  ? onOrderBy({
-                                      order: SORT_BY[e].sortBy,
-                                      column: ''
-                                    })
-                                  : onOrderBy({
-                                      order: SORT_BY[e].sortBy,
-                                      column: SORT_BY[e].value
-                                    })
-                              }
-                            >
-                              <Option key={1} value="">
-                                None
-                              </Option>
-                              {SORT_BY.map((sB, i) => (
-                                <Option key={i + 2} value={i}>
-                                  {sB.label}
-                                </Option>
-                              ))}
-                            </Select>
-                          </FormItem>
+                          <FormItem label={t('listingFilter.sortBy')}>{ListingSortBy('170px')}</FormItem>
                         )}
                       </Row>
                     </Col>

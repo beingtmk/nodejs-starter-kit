@@ -24,16 +24,16 @@ const CategoryNavBarComponentView = props => {
   };
   const handleOpen = () => {
     setDrawerVisible(true);
-    console.log('object');
   };
   // console.log(object)
   if (mobile) {
     return (
       <>
-        <Row justify="center" type="flex">
-          <Button onClick={handleOpen}>
-            <Icon type="MenuOutlined" style={{ color: 'inherit', fontSize: '20px' }} />
+        <Row justify="start" type="flex">
+          <Button block color="primary" onClick={handleOpen}>
+            <Icon type="MenuOutlined" style={{ color: 'inherit', fontSize: '15px' }} /> &nbsp;categories
           </Button>
+          <hr />
         </Row>
         <Drawer placement="left" closable={false} onClose={handleClose} visible={drawerVisible}>
           {!loading ? (
