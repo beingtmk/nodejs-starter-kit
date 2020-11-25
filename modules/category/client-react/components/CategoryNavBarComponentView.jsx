@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
 import { Row, Col, DropDown, Card, Skeleton } from '@gqlapp/look-client-react';
+import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
 
 import ROUTES from '@gqlapp/listing-client-react/routes';
 
 const CategoryNavBarComponentView = props => {
+  const [ref, loaded, onLoad] = useImageLoaded();
   const [visible, setVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState([]);
   const { loading, categories } = props;
@@ -55,7 +57,29 @@ const CategoryNavBarComponentView = props => {
                         // style={{ border: '0px', borderRadius: '0px !important' }}
                         bodyStyle={{ margin: '0px', padding: '0px', textAlign: 'center' }}
                         hoverable
-                        cover={<img alt="example" src={sC.imageUrl} />}
+                        cover={
+                          <>
+                            {!loaded && (
+                              <div
+                                style={{
+                                  overflow: 'hidden',
+                                  height: '126px',
+                                  borderRadius: '8px 8px 0px 0px',
+                                  background: 'linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%)',
+                                  animation: 'ant-skeleton-loading 1.4s ease infinite'
+                                }}
+                                align="center"
+                              ></div>
+                            )}
+                            <img
+                              ref={ref}
+                              onLoad={onLoad}
+                              alt="example"
+                              src={sC.imageUrl}
+                              style={{ display: !loaded && 'none' }}
+                            />
+                          </>
+                        }
                       >
                         {sC.title}
                       </Card>
