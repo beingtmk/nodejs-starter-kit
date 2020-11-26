@@ -9,6 +9,7 @@ import { displayDataCheck } from '@gqlapp/listing-client-react/components/functi
 import ROUTES from '../routes';
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
+import { subscribeToListings } from '../containers/ListingSubscriptions';
 
 const isImg = /^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?/;
 
@@ -36,8 +37,15 @@ const ListingCarousel = props => {
     history,
     cartLoading,
     onDelete,
-    getCart
+    getCart,
+    filter,
+    name = ''
   } = props;
+
+  React.useEffect(() => {
+    const subscribe = subscribeToListings(props.subscribeToMore, filter);
+    return () => subscribe();
+  });
   const dataSource = {
     wrapper: { className: 'home-page-wrapper newArrivals-wrapper' },
     page: { className: 'home-page newArrivals' },
@@ -123,7 +131,6 @@ const ListingCarousel = props => {
       ]
     };
   };
-
   return (
     <div {...props} {...dataSource.wrapper}>
       <div {...dataSource.page}>
@@ -131,12 +138,12 @@ const ListingCarousel = props => {
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </div>
         {(loading1 || currentUserLoading) && <Spinner size="small" />}
-        {listings && listings.totalCount ? (
+        {listings && name && listings.totalCount ? (
           <SlickCarousel
             Compo={RelatedCardComponent}
             settings={carouselSettings(itemLength)}
             itemName={'listing'}
-            data={listings.edges}
+            data={listings.edges.filter(c => c.node.listingFlags[name] === true)}
             height={'500px'}
             node={true}
             getCart={getCart}
@@ -177,7 +184,10 @@ ListingCarousel.propTypes = {
   onDelete: PropTypes.func,
   cartLoading: PropTypes.bool,
   listings: PropTypes.object,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  subscribeToMore: PropTypes.func,
+  filter: PropTypes.object,
+  name: PropTypes.string
 };
 
 export default compose(withListings)(ListingCarousel);

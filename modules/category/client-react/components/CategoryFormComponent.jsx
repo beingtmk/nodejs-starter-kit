@@ -99,7 +99,7 @@ const CategoryFormComponent = props => {
               type="number"
               name="parentCategoryId"
               placeholder="category"
-              label="Select a category"
+              label={t('categoryForm.select')}
               value={values.parentCategoryId}
             />
             <Row type="flex">
@@ -108,7 +108,7 @@ const CategoryFormComponent = props => {
                   name="isNavbar"
                   component={RenderCheckBox}
                   type="checkbox"
-                  label={'Is Navbar'}
+                  label={t('categoryForm.isNavbar')}
                   checked={values.isNavbar}
                 />
               </Col>
@@ -118,7 +118,7 @@ const CategoryFormComponent = props => {
                   component={RenderUpload}
                   type="text"
                   setload={setLoad}
-                  label={'Image url'}
+                  label={t('categoryForm.imageUrl')}
                   value={values.imageUrl}
                 />
               </Col>
@@ -126,7 +126,7 @@ const CategoryFormComponent = props => {
           </Col>
           <Col span={24} align="right">
             <Button color="primary" type="submit" disabled={load}>
-              Submit
+              {t('categoryForm.btn.submit')}
             </Button>
           </Col>
         </Row>

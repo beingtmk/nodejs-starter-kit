@@ -12,7 +12,8 @@ import {
   Divider,
   Button,
   SuggestedListComponent,
-  Spinner
+  Spinner,
+  Col
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
@@ -63,7 +64,12 @@ const ListingCatalogueView = props => {
 
   return (
     <PageLayout>
-      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
+      <Col xs={0} md={0} lg={24}>
+        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
+      </Col>
+      <Col xs={24} md={24} lg={0}>
+        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} mobile={true} />
+      </Col>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <Heading type="2">
         <Icon type="SolutionOutlined" /> &nbsp; {title}

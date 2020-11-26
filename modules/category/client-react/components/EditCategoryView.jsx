@@ -10,13 +10,18 @@ const EditCategoryView = props => {
   const { loading, t, onSubmit, category } = props;
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('listEdit.title')} description={`${settings.app.name} - ${t('listEdit.meta')}`} />
+      <MetaTags title={t('categoryEdit.title')} description={`${settings.app.name} - ${t('categoryEdit.meta')}`} />
       {loading ? (
         <Spinner />
       ) : (
         <>
           <div align="center">
-            <CategoryFormComponent category={category} cardTitle={t('listEdit.cardTitle')} onSubmit={onSubmit} t={t} />
+            <CategoryFormComponent
+              category={category}
+              cardTitle={t('categoryEdit.cardTitle')}
+              onSubmit={onSubmit}
+              t={t}
+            />
           </div>
         </>
       )}

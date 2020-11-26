@@ -86,6 +86,10 @@ input EditDiscountDurationInput {
 }
 
 extend type Subscription {
+  discountsUpdated(
+    endCursor: Int
+    filter: FilterDiscountInput
+  ): UpdateDiscountPayload
   discountUpdated(modalId: Int): UpdateDiscountPayload
 }
 
