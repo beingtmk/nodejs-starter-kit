@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
@@ -28,18 +28,8 @@ const ListingsFilterComponent = props => {
     onOrderBy,
     t
   } = props;
-  const rangeValues = listings && listings.rangeValues;
-  const handleChangeSlider = e => {
-    onLowerCostChange(e[0]);
-    onUpperCostChange(e[1]);
-    console.log(e);
-  };
 
-  // const handleOrderBy = (order, name) => {
-  //   return onOrderBy({ column: name, order });
-  // };
-
-  const handleFiltersRemove = () => {
+  const handleFiltersRemove = useCallback(() => {
     const filter = {
       searchText: '',
       lowerCost: 0,
@@ -53,7 +43,22 @@ const ListingsFilterComponent = props => {
     };
     const orderBy = { column: '', order: '' };
     onFiltersRemove(filter, orderBy);
+  }, [onFiltersRemove]);
+
+  useEffect(() => {
+    return () => handleFiltersRemove();
+  }, [handleFiltersRemove]);
+
+  const rangeValues = listings && listings.rangeValues;
+  const handleChangeSlider = e => {
+    onLowerCostChange(e[0]);
+    onUpperCostChange(e[1]);
+    // console.log(e);
   };
+
+  // const handleOrderBy = (order, name) => {
+  //   return onOrderBy({ column: name, order });
+  // };
 
   const minCostRangeValues = Math.round(rangeValues && rangeValues.minCost);
   const maxCostRangeValues = Math.round(rangeValues && rangeValues.maxCost);
