@@ -98,23 +98,18 @@ const CategoryListComponent = props => {
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => (
-        <a
-          href="#"
-          // href={`${ROUTES.listingDetailLink}${record.id}`} rel="noopener noreferrer" target="_blank"
-        >
-          <a href={`${LISTING_ROUTES.categoryCatalogueLink}${record.id}`} rel="noopener noreferrer" target="_blank">
-            <Card style={{ width: '200px', height: '60px' }} bodyStyle={{ padding: '10px' }}>
-              <CardMeta
-                title={
-                  <>
-                    <div style={{ width: '100%', marginTop: '10px' }} />
-                    {displayDataCheck(text)}
-                  </>
-                }
-                avatar={<Avatar size={46} src={record.imageUrl || NO_IMG} alt="" />}
-              />
-            </Card>
-          </a>
+        <a href={`${LISTING_ROUTES.categoryCatalogueLink}${record.id}`} rel="noopener noreferrer" target="_blank">
+          <Card style={{ width: '200px', height: '60px' }} bodyStyle={{ padding: '10px' }}>
+            <CardMeta
+              title={
+                <>
+                  <div style={{ width: '100%', marginTop: '10px' }} />
+                  {displayDataCheck(text)}
+                </>
+              }
+              avatar={<Avatar size={46} src={record.imageUrl || NO_IMG} alt="" />}
+            />
+          </Card>
         </a>
       )
     },
@@ -179,7 +174,7 @@ const CategoryListComponent = props => {
       </div>
     ) : (
       <Table
-        showHeader={false}
+        // showHeader={false}
         tableLayout={'auto'}
         expandable={{
           expandedRowRender: (record, index, indent, expanded) => (
