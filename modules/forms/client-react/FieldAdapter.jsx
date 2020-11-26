@@ -16,6 +16,7 @@ class FieldAdapter extends Component {
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     defaultValue: PropTypes.string,
+    type: PropTypes.string,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -29,14 +30,14 @@ class FieldAdapter extends Component {
   }
 
   onChange = e => {
-    const { formik, onChange, name } = this.props;
+    const { formik, onChange, name, type } = this.props;
     if (onChange) {
       onChange(e.target ? e.target.value : e, e);
       // } else if (Array.isArray(e) && Array.isArray(name)) {
       //   formik.setFieldValue(name[0], e[0].toISOString());
       //   formik.setFieldValue(name[1], e[1].toISOString());
     } else {
-      formik.handleChange({ target: { value: e.target ? e.target.value : e, name } });
+      formik.handleChange({ target: { value: e.target ? e.target.value : e, name, type } });
       // formik.handleChange(e);
     }
   };
