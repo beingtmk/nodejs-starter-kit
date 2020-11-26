@@ -45,5 +45,8 @@
       "isActive": "isActive",
       "modalName":"Modal"
     }
+  },
+  "categoryCatalogue":{
+    "title":"Category Catalogue"
   }
 }
