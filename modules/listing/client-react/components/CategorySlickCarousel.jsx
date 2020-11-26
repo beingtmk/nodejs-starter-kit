@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { LeftArrow, RightArrow, Carousel as ADCarousel } from '@gqlapp/look-client-react';
+import { Carousel as ADCarousel } from '@gqlapp/look-client-react';
 
 export default class Carousel extends React.Component {
   constructor(props) {
@@ -11,14 +11,8 @@ export default class Carousel extends React.Component {
 
   render() {
     // console.log('carousel', this.props);
-    const { Compo, componentProps, showArrow = true } = this.props;
+    const { Compo, componentProps, showArrow } = this.props;
 
-    const prevSlide = () => {
-      this.carousel.prev();
-    };
-    const nextSlide = () => {
-      this.carousel.next();
-    };
     const status = {
       autoplay: this.props.autoplay,
       easing: 100000,
@@ -66,13 +60,11 @@ export default class Carousel extends React.Component {
     return (
       <>
         <div style={{ position: 'relative', height: this.props.height || '370px' }}>
-          {showArrow && <LeftArrow prevSlide={prevSlide} />}
-          <ADCarousel ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
+          <ADCarousel showArrow={showArrow} ref={node => (this.carousel = node)} {...(this.props.settings || status)}>
             {this.props.data.map((item, key) => {
               return <Compo {...componentProps} componentStyle={this.props.componentStyle} category={item} key={key} />;
             })}
           </ADCarousel>
-          {showArrow && <RightArrow nextSlide={nextSlide} />}
         </div>
       </>
     );

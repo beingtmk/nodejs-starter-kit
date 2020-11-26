@@ -100,7 +100,10 @@ const CategoryNavBarComponentView = props => {
               if (c.node.isNavbar) {
                 return (
                   <Col key={i} span={24 / categories.totalCount}>
-                    <a href="#" onMouseEnter={() => setDropDownMenu(c.node)}>
+                    <a
+                      href={`${ROUTES.categoryCatalogueLink}${c.node.id}`}
+                      onMouseEnter={() => setDropDownMenu(c.node)}
+                    >
                       <h1>{c.node.title}</h1>
                     </a>
                   </Col>
