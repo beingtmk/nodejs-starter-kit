@@ -67,6 +67,7 @@ const ListingsFilterComponent = props => {
       component={CategoryTreeComponent}
       filter={{ modalName: MODAL[1].value }}
       // disableParent={true}
+      nullable={true}
       onChange={e => onCategoryChange({ categoryId: e, allSubCategory: false })}
       type="number"
       name="categoryId"

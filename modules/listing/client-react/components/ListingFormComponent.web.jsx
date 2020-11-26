@@ -264,8 +264,9 @@ const ListingFormComponent = props => {
               />
               <Field
                 component={CategoryTreeComponent}
-                filter={{ modalName: MODAL[1].value }}
                 // disableParent={true}
+                nullable={false}
+                filter={{ modalName: MODAL[1].value }}
                 type="number"
                 name="categoryId"
                 placeholder="category"

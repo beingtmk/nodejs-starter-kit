@@ -7,9 +7,9 @@ import { FormItem, TreeSelect } from '@gqlapp/look-client-react';
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const CategoryTreeComponentView = props => {
-  const { categories, formik, name, client, disableParent = false } = props;
+  const { categories, nullable = true, formik, name, client, disableParent = false } = props;
   const [data, setData] = useState([
-    {
+    nullable && {
       id: 'abc',
       pId: 0,
       title: 'Parent Category',
@@ -92,6 +92,7 @@ CategoryTreeComponentView.propTypes = {
   value: PropTypes.number,
   client: PropTypes.object,
   disableParent: PropTypes.bool,
+  nullable: PropTypes.bool,
   onChange: PropTypes.func
 };
 

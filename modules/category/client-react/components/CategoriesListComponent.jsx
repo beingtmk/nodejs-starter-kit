@@ -174,7 +174,7 @@ const CategoryListComponent = props => {
       </div>
     ) : (
       <Table
-        // showHeader={false}
+        showHeader={false}
         tableLayout={'auto'}
         expandable={{
           expandedRowRender: (record, index, indent, expanded) => (
@@ -184,8 +184,7 @@ const CategoryListComponent = props => {
             expanded ? (
               <Icon type="DownOutlined" onClick={e => onExpand(record, e)} />
             ) : (
-              category.subCategories &&
-              category.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
+              !record.isLeaf && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
             )
         }}
         columns={columns}
@@ -216,8 +215,7 @@ const CategoryListComponent = props => {
             expanded ? (
               <Icon type="DownOutlined" onClick={e => onExpand(record, e)} />
             ) : (
-              record.subCategories &&
-              record.subCategories.length > 0 && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
+              !record.isLeaf && <Icon type="RightOutlined" onClick={e => onExpand(record, e)} />
             )
         }}
         // loading={true}
