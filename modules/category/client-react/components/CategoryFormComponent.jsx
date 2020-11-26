@@ -69,7 +69,7 @@ const CategoryFormComponent = props => {
               name="modalName"
               component={RenderSelect}
               placeholder={t('categoryForm.modalName')}
-              defaultValue={MODAL[0].value}
+              defaultValue={values.modalName}
               label={t('categoryForm.modalName')}
               style={{ width: '100px' }}
               value={values.modalName}
@@ -94,7 +94,8 @@ const CategoryFormComponent = props => {
           <Col md={12} xs={24} align="left">
             <Field
               component={CategoryTreeComponent}
-              disableParent={false}
+              nullable={true}
+              // disableParent={false}
               filter={{ modalName: values.modalName }}
               type="number"
               name="parentCategoryId"
