@@ -54,19 +54,19 @@ const CategoryNavBarComponentView = props => {
       if (catLength < 16) {
         setShowImg(true);
         if (catLength < 8) {
-          setColWidth([...Array(catLength).keys()].map(() => 24 / catLength));
+          setColWidth([...Array(catLength).keys()].map(() => parseInt(24 / catLength)));
         } else {
           setColWidth([
             ...[...Array(8).keys()].map(() => 3),
-            ...[...Array(catLength - 8).keys()].map(() => 24 / (catLength - 8))
+            ...[...Array(catLength - 8).keys()].map(() => parseInt(24 / (catLength - 8)))
           ]);
         }
       } else {
         setShowImg(false);
-        console.log([...Array(catLength % 8).keys()].map(() => 24 / (catLength % 8)));
+        console.log([...Array(catLength % 8).keys()].map(() => parseInt(24 / (catLength % 8))));
         setColWidth([
           ...[...Array(catLength - (catLength % 8)).keys()].map(() => 3),
-          ...[...Array(catLength % 8).keys()].map(() => 24 / (catLength % 8))
+          ...[...Array(catLength % 8).keys()].map(() => parseInt(24 / (catLength % 8)))
         ]);
       }
     }
