@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Affix,
+  Card,
   Icon,
   MetaTags,
   PageLayout,
@@ -13,7 +15,8 @@ import {
   Button,
   SuggestedListComponent,
   Spinner,
-  Col
+  Col,
+  Row
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
@@ -56,38 +59,91 @@ const ListingCatalogueView = props => {
       />
     );
   };
-  const RenderListings = () => (
+  const RenderListings = ({ layout }) => (
     <div>
-      <SuggestedListComponent {...props} items={listings} renderFunc={renderFunc} />
+      <SuggestedListComponent
+        {...props}
+        grid={
+          layout === 'vertical' && {
+            gutter: 24,
+            xs: 1,
+            sm: 1,
+            md: 2,
+            lg: 2,
+            xl: 3,
+            xxl: 3
+          }
+        }
+        items={listings}
+        renderFunc={renderFunc}
+      />
     </div>
   );
+  RenderListings.propTypes = { layout: PropTypes.string };
+
+  const renderChildren = (layout = 'horizontal') => {
+    const span =
+      layout === 'vertical'
+        ? {
+            spanFilter: { lg: 6, md: 6, sm: 24 },
+            spanContent: { lg: 18, md: 18, sm: 24 }
+          }
+        : {
+            spanFilter: { span: 24 },
+            spanContent: { span: 24 }
+          };
+    console.log(span);
+    return (
+      <Row gutter={24}>
+        <Col {...span.spanFilter}>
+          {layout !== 'vertical' && <br />}
+          {showFilter && (
+            <Affix offsetTop={75}>
+              <Card>
+                <ListingFilterComponent
+                  layout={layout}
+                  showIsActive={false}
+                  filter={{ isActive: true }}
+                  orderBy={{}}
+                  {...props}
+                />
+              </Card>
+            </Affix>
+          )}
+          {layout !== 'vertical' && <Divider />}
+        </Col>
+        <Col {...span.spanContent}>
+          {!loading && listings && listings.totalCount ? (
+            <RenderListings layout={layout} />
+          ) : !loading ? (
+            <NoListingsMessage t={t} emptyLink={emptyLink} />
+          ) : null}
+        </Col>
+      </Row>
+    );
+  };
 
   return (
     <PageLayout>
-      <Col xs={0} md={0} lg={24}>
-        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
-      </Col>
-      <Col xs={24} md={24} lg={0}>
-        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} mobile={true} />
-      </Col>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
+      <Row>
+        <Col xs={0} md={0} lg={24}>
+          <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
+        </Col>
+        <Col xs={24} md={24} lg={0}>
+          <CategoryNavBarComponent
+            filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }}
+            mobile={true}
+          />
+        </Col>
+      </Row>
       <Heading type="2">
         <Icon type="SolutionOutlined" /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
-      {showFilter && (
-        <>
-          <br />
-          <ListingFilterComponent showIsActive={false} filter={{ isActive: true }} orderBy={{}} {...props} />
-          <Divider />
-        </>
-      )}
       {loading && <Spinner />}
-      {!loading && listings && listings.totalCount ? (
-        <RenderListings />
-      ) : !loading ? (
-        <NoListingsMessage t={t} emptyLink={emptyLink} />
-      ) : null}
+      {!loading && renderChildren('vertical')}
+      {/* {!loading && renderChildren()} */}
     </PageLayout>
   );
 };

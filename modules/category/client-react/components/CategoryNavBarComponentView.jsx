@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
-import { Menu, Row, Col } from 'antd';
+import { Menu } from 'antd';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
-import {
-  /* Row, Col, */ DropDown,
-  Card,
-  Skeleton,
-  Drawer,
-  Icon,
-  SubMenu,
-  MenuItem,
-  Button
-} from '@gqlapp/look-client-react';
+import { Row, Col, DropDown, Card, Skeleton, Drawer, Icon, SubMenu, MenuItem, Button } from '@gqlapp/look-client-react';
 import ROUTES from '@gqlapp/listing-client-react/routes';
 
 const CategoryNavBarComponentView = props => {
