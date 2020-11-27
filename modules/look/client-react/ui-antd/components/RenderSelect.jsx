@@ -12,7 +12,9 @@ const RenderSelect = props => {
     type,
     children,
     meta: { touched, error },
-    onChange
+    onChange,
+    selectStyle,
+    inFilter
   } = props;
   let validateStatus = '';
   if (touched && error) {
@@ -27,18 +29,19 @@ const RenderSelect = props => {
       formik.handleChange({ target: { value, name } });
     }
   };
+  let labels = {
+    labelCol: { span: 24 },
+    wrapperCol: { span: 24 }
+  };
+  if (inFilter) {
+    labels = null;
+  }
 
-  console.log(props);
+  // console.log(props);
   return (
-    <FormItem
-      label={label}
-      validateStatus={validateStatus}
-      help={error}
-      labelCol={{ span: 24 }}
-      wrapperCol={{ span: 24 }}
-    >
+    <FormItem label={label} validateStatus={validateStatus} help={error} {...labels} style={{ width: '100%' }}>
       <div>
-        <Select type={type} {...input} onChange={handleChange}>
+        <Select type={type} style={selectStyle} {...input} onChange={handleChange}>
           {children}
         </Select>
       </div>
@@ -54,7 +57,9 @@ RenderSelect.propTypes = {
   meta: PropTypes.object,
   onChange: PropTypes.func,
   name: PropTypes.string.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node,
+  selectStyle: PropTypes.object,
+  inFilter: PropTypes.bool
 };
 
 export default RenderSelect;
