@@ -22,7 +22,7 @@ const CategoriesFilterComponent = ({
     </FormItem>
   );
   return (
-    <Form layout="inline">
+    <Form /* layout="inline" */>
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row>
@@ -57,6 +57,8 @@ const CategoriesFilterComponent = ({
                     label={t('categories.filter.modalName')}
                     style={{ width: '100px' }}
                     value={modalName}
+                    inFilter={true}
+                    selectStyle={{ width: '100%' }}
                   >
                     {MODAL.map((m, i) => (
                       <Option key={i} value={m.value}>
@@ -76,6 +78,8 @@ const CategoriesFilterComponent = ({
                       label={t('categories.filter.modalName')}
                       style={{ width: '100px' }}
                       value={modalName}
+                      inFilter={true}
+                      selectStyle={{ width: '170px' }}
                     >
                       {MODAL.map((m, i) => (
                         <Option key={i} value={m.value}>
