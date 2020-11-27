@@ -12,7 +12,7 @@ const UsersFilterView = ({
   onIsActiveChange,
   t
 }) => (
-  <Form layout="inline">
+  <Form /* layout="inline" */>
     <Row type="flex" align="middle">
       <Col span={24}>
         <Row>
