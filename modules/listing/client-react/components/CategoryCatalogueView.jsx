@@ -12,20 +12,27 @@ import {
   Breadcrumb,
   Title,
   Paragraph,
-  Col
+  Col,
+  MetaTags
 } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import { MODAL } from '@gqlapp/review-common';
 // import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+import settings from '@gqlapp/config';
 
 import CategoryCarousel from './CategoryCarousel';
 
 const CategoryCatalogueView = props => {
-  const { loading, category, navigation, match } = props;
+  const { loading, category, navigation, match, t } = props;
 
   return (
     <PageLayout>
+      <MetaTags
+        title={t('categoryCatalogue.title')}
+        description={`${settings.app.name} - ${t('categoryCatalogue.title')})}`}
+      />
+
       <Col xs={0} md={0} lg={24}>
         <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       </Col>
@@ -74,7 +81,8 @@ CategoryCatalogueView.propTypes = {
   loading: PropTypes.bool,
   category: PropTypes.object,
   match: PropTypes.object,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  t: PropTypes.fuc
 };
 
 export default CategoryCatalogueView;

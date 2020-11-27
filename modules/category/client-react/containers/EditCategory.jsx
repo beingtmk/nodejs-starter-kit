@@ -45,4 +45,4 @@ EditCategory.propTypes = {
   category: PropTypes.object
 };
 
-export default compose(withEditCategory, withCategory, translate('discount'))(EditCategory);
+export default compose(withEditCategory, withCategory, translate('category'))(EditCategory);

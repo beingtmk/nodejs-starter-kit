@@ -14,6 +14,7 @@ import {
   Divider
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 import ROUTES from '../../routes';
 
@@ -61,13 +62,13 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       title: t('dynamicCarousel.columns.label'),
       dataIndex: 'label',
       key: 'label',
-      render: (text, record) => <>{record.label}</>
+      render: (text, record) => <>{displayDataCheck(record.label)}</>
     },
     {
       title: t('dynamicCarousel.columns.link'),
       dataIndex: 'link',
       key: 'link',
-      render: (text, record) => <>{record.link}</>
+      render: (text, record) => <>{displayDataCheck(record.link)}</>
     },
     {
       title: t('dynamicCarousel.columns.actions'),

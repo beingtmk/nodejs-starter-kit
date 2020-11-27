@@ -8,7 +8,7 @@ import { ORDER_SUBSCRIPTION, ORDERS_SUBSCRIPTION } from '@gqlapp/order-server-ts
 import { Discount as Discounts, Identifier } from './sql';
 
 export const DISCOUNT_SUBSCRIPTION = 'discount_subscription';
-
+export const DISCOUNTS_SUBSCRIPTION = 'discounts_subscription';
 interface Edges {
   cursor: number;
   node: Discounts & Identifier;
@@ -228,6 +228,14 @@ export default (pubsub: any) => ({
         () => pubsub.asyncIterator(DISCOUNT_SUBSCRIPTION),
         (payload, variables) => {
           return payload.discountUpdated.modalId === variables.modalId;
+        }
+      )
+    },
+    discountsUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(DISCOUNTS_SUBSCRIPTION),
+        (payload, variables) => {
+          return payload.discountsUpdated.id === variables.id;
         }
       )
     }

@@ -67,6 +67,7 @@ class HomeView4 extends React.Component {
       />,
       <ListingsCarousel
         filter={{ isFeatured: true, isActive: true }}
+        name="isFeatured"
         currentUser={currentUser}
         title={t('listingCarousel.featuredListings')}
         history={history}
@@ -74,6 +75,7 @@ class HomeView4 extends React.Component {
       />,
       <ListingsCarousel
         filter={{ isNew: true, isActive: true }}
+        name="isNew"
         currentUser={currentUser}
         title={t('listingCarousel.latestAdditions')}
         history={history}

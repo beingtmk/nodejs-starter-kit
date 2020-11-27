@@ -35,4 +35,4 @@ AddCategory.propTypes = {
   history: PropTypes.object
 };
 
-export default compose(withAddCategory, translate('discount'))(AddCategory);
+export default compose(withAddCategory, translate('category'))(AddCategory);
