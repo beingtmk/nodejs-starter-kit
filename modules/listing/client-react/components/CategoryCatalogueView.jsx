@@ -12,7 +12,6 @@ import {
   Breadcrumb,
   Title,
   Paragraph,
-  Col,
   MetaTags
 } from '@gqlapp/look-client-react';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
@@ -32,13 +31,7 @@ const CategoryCatalogueView = props => {
         title={t('categoryCatalogue.title')}
         description={`${settings.app.name} - ${t('categoryCatalogue.title')})}`}
       />
-
-      <Col xs={0} md={0} lg={24}>
-        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
-      </Col>
-      <Col xs={24} md={24} lg={0}>
-        <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} mobile={true} />
-      </Col>
+      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       {loading && <Spinner />}
       {category && (
         <>

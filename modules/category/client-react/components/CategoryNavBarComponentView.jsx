@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
+import { enquireScreen } from 'enquire-js';
 import { Menu } from 'antd';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
@@ -14,8 +15,13 @@ const CategoryNavBarComponentView = props => {
   const [colWidth, setColWidth] = useState([]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState([]);
-  const { mobile, loading, categories } = props;
-
+  const [mobile, setMobile] = useState();
+  const { loading, categories } = props;
+  useEffect(() => {
+    enquireScreen(b => {
+      setMobile(!!b);
+    });
+  });
   const setDropDownMenu = category => {
     const catLength = category.subCategories.filter(sC => sC.isNavbar && sC).length;
     if (category.subCategories && catLength > 0) {

@@ -153,6 +153,7 @@
     }
   },
   "listingFilter":{
+    "search":"Search",
     "isActive":"Is Active",
     "costFilter":"Cost Filter",
     "btn":{
