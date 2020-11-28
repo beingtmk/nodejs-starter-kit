@@ -305,7 +305,7 @@ const ListingsFilterComponent = props => {
     >
       <Row>
         <Col lg={24} md={24} xs={0}>
-          <Affix offsetTop={75}>
+          <Affix offsetTop={110}>
             <Card>{filterItems}</Card>
           </Affix>
         </Col>
