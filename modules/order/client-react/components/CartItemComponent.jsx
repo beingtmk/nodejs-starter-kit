@@ -113,11 +113,12 @@ const CartItemComponent = props => {
         </Row>
       </Align>
       <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
-        <Ribbon bottom={props.mobile ? '70px' : '155px'} width="120px" color="#df0303">
+        <Ribbon bottom={props.mobile ? '105px' : '155px'} width="120px" color="#df0303">
           {item.orderOptions.quantity}
         </Ribbon>
-        <Ribbon bottom={props.mobile ? '15px' : '80px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
+        <Ribbon bottom={props.mobile ? '35px' : '80px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
         <Card
+          hoverable
           bodyStyle={{
             padding: '0px'
           }}
@@ -127,7 +128,7 @@ const CartItemComponent = props => {
               {...coverGrid}
               align="center"
               style={{
-                maxHeight: props.mobile ? '130px' : '250px',
+                maxHeight: '250px',
                 overflow: 'hidden'
               }}
             >
@@ -136,7 +137,7 @@ const CartItemComponent = props => {
             <Col {...infoGrid}>
               <Card
                 style={{
-                  height: props.mobile ? '180px' : '250px',
+                  height: '250px',
                   borderWidth: '0px'
                 }}
                 bodyStyle={{
