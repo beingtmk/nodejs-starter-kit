@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
@@ -30,7 +30,9 @@ const ListingsFilterComponent = props => {
     layout
   } = props;
 
-  const handleFiltersRemove = useCallback(() => {
+  const handleFiltersRemove = useRef(() => {});
+
+  handleFiltersRemove.current = () => {
     const filter = {
       searchText: '',
       lowerCost: 0,
@@ -44,11 +46,11 @@ const ListingsFilterComponent = props => {
     };
     const orderBy = { column: '', order: '' };
     onFiltersRemove(filter, orderBy);
-  }, [onFiltersRemove]);
+  };
 
   useEffect(() => {
-    return () => handleFiltersRemove();
-  }, [handleFiltersRemove]);
+    return () => handleFiltersRemove.current();
+  }, []);
 
   const rangeValues = listings && listings.rangeValues;
   const handleChangeSlider = e => {
@@ -107,6 +109,13 @@ const ListingsFilterComponent = props => {
       </Select>
     );
   };
+
+  const handleResetBtn = (
+    <Button color="primary" onClick={handleFiltersRemove}>
+      {t('listingFilter.btn.reset')}
+    </Button>
+  );
+
   return (
     <Form
     //  layout="inline"
@@ -283,17 +292,11 @@ const ListingsFilterComponent = props => {
                   <Row>
                     <Col lg={0} md={0} xs={24}>
                       <br />
-                      <Button block color="primary" onClick={handleFiltersRemove}>
-                        {t('listingFilter.btn.reset')}
-                      </Button>
+                      {handleResetBtn}
                     </Col>
                     <Col xs={0} md={24} lg={24}>
                       <br />
-                      <FormItem>
-                        <Button color="primary" onClick={handleFiltersRemove}>
-                          {t('listingFilter.btn.reset')}
-                        </Button>
-                      </FormItem>
+                      <FormItem>{handleResetBtn}</FormItem>
                     </Col>
                   </Row>
                 </Col>

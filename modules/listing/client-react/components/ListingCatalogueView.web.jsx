@@ -92,7 +92,6 @@ const ListingCatalogueView = props => {
             spanFilter: { span: 24 },
             spanContent: { span: 24 }
           };
-    console.log(span);
     return (
       <Row gutter={24}>
         <Col {...span.spanFilter}>
@@ -113,6 +112,7 @@ const ListingCatalogueView = props => {
           {layout !== 'vertical' && <Divider />}
         </Col>
         <Col {...span.spanContent}>
+          {loading && <Spinner />}
           {!loading && listings && listings.totalCount ? (
             <RenderListings layout={layout} />
           ) : !loading ? (
@@ -141,9 +141,8 @@ const ListingCatalogueView = props => {
         <Icon type="SolutionOutlined" /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
-      {loading && <Spinner />}
-      {!loading && renderChildren('vertical')}
-      {/* {!loading && renderChildren()} */}
+      {renderChildren('vertical')}
+      {/* {renderChildren()} */}
     </PageLayout>
   );
 };
