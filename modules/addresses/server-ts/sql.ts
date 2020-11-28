@@ -22,6 +22,7 @@ export interface Identifier {
 }
 
 export default class Addresses extends Model {
+  private id: any;
   static get tableName() {
     return 'user_address';
   }
