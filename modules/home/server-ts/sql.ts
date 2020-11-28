@@ -10,10 +10,14 @@ interface FilterDynamicCarousel {
   searchText: string;
   isActive: boolean;
 }
-
+interface OrderByDynamicCarousel {
+  column: string;
+  order: string;
+}
 export interface FilterDynamicCarouselInput {
   limit: number;
   after: number;
+  orderBy: OrderByDynamicCarousel;
   filter: FilterDynamicCarousel;
 }
 
@@ -37,8 +41,23 @@ export default class Home extends Model {
     return knex.select();
   }
 
-  public async dynamicCarousels(limit: number, after: number, filter: FilterDynamicCarousel) {
+  public async dynamicCarousels(
+    limit: number,
+    after: number,
+    orderBy: OrderByDynamicCarousel,
+    filter: FilterDynamicCarousel
+  ) {
     const queryBuilder = DynamicCarousel.query();
+    if (orderBy && orderBy.column) {
+      const column = orderBy.column;
+      let order = 'asc';
+      if (orderBy.order) {
+        order = orderBy.order;
+      }
+      queryBuilder.orderBy(decamelize(column), order);
+    } else {
+      queryBuilder.orderBy('id', 'desc');
+    }
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
         queryBuilder.where(function() {

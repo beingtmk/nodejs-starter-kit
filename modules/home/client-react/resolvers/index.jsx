@@ -4,15 +4,15 @@ import DYNAMIC_CAROUSEL_STATE_QUERY from '../graphql/DynamicCarouselStateQuery.c
 
 const TYPE_DYNAMIC_CAROUSEL_STATE = 'DynamicCarouselState';
 const TYPE_DYNAMIC_CAROUSEL_STATE_FILTER = 'FilterDynamicCarouselInput';
-// const TYPE_DYNAMIC_CAROUSEL_STATE_ORDER_BY = 'OrderByListInput';
+const TYPE_DYNAMIC_CAROUSEL_STATE_ORDER_BY = 'OrderByDynamicCarouselInput';
 
 const defaults = {
   dynamicCarouselState: {
-    // orderBy: {
-    //   column: '',
-    //   order: '',
-    //   __typename: TYPE_DYNAMIC_CAROUSEL_STATE_ORDER_BY,
-    // },
+    orderBy: {
+      column: '',
+      order: '',
+      __typename: TYPE_DYNAMIC_CAROUSEL_STATE_ORDER_BY
+    },
     filter: {
       searchText: '',
       label: '',
@@ -27,6 +27,7 @@ const defaults = {
 const resolvers = {
   Mutation: {
     updateOrderByDynamicCarousels: (_, { orderBy }, { cache }) => {
+      console.log(orderBy, 'bleh');
       const { dynamicCarouselState } = cache.readQuery({ query: DYNAMIC_CAROUSEL_STATE_QUERY });
 
       const newDynamicCarouselState = update(dynamicCarouselState, {

@@ -11,11 +11,11 @@ export default (pubsub: any) => ({
   Query: {
     async dynamicCarousels(
       obj: any,
-      { limit, after, filter }: FilterDynamicCarouselInput,
+      { limit, after, orderBy, filter }: FilterDynamicCarouselInput,
       { Home, req: { identity, t } }: any
     ) {
       const edgesArray: Edges[] = [];
-      const { dynamicCarousels, total } = await Home.dynamicCarousels(limit, after, filter);
+      const { dynamicCarousels, total } = await Home.dynamicCarousels(limit, after, orderBy, filter);
 
       const hasNextPage = total > after + limit;
 
@@ -44,7 +44,6 @@ export default (pubsub: any) => ({
   Mutation: {
     async addDynamicCarousel(obj: any, { input }: DynamicCarouselInput, { Home, req: { identity, t } }: any) {
       const res = await Home.addDynamicCarousel(input);
-      console.log('res', res);
       if (res) {
         const dCItem = await Home.dynamicCarousel(res.id);
         pubsub.publish(DYNAMIC_CAROUSEL_SUBSCRIPTION, {

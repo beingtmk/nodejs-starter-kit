@@ -3,9 +3,15 @@
 query dynamicCarousels(
   $limit: Int
   $after: Int
+  $orderBy: OrderByDynamicCarouselInput
   $filter: FilterDynamicCarouselInput
 ) {
-  dynamicCarousels(limit: $limit, after: $after, filter: $filter) {
+  dynamicCarousels(
+    limit: $limit
+    after: $after
+    orderBy: $orderBy
+    filter: $filter
+  ) {
     totalCount
     edges {
       cursor
