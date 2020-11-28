@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
-  Affix,
-  Card,
   Icon,
   MetaTags,
   PageLayout,
@@ -93,21 +91,17 @@ const ListingCatalogueView = props => {
             spanContent: { span: 24 }
           };
     return (
-      <Row gutter={24}>
+      <Row type="flex" gutter={[24, 24]}>
         <Col {...span.spanFilter}>
           {layout !== 'vertical' && <br />}
           {showFilter && (
-            <Affix offsetTop={75}>
-              <Card>
-                <ListingFilterComponent
-                  layout={layout}
-                  showIsActive={false}
-                  filter={{ isActive: true }}
-                  orderBy={{}}
-                  {...props}
-                />
-              </Card>
-            </Affix>
+            <ListingFilterComponent
+              layout={layout}
+              showIsActive={false}
+              filter={{ isActive: true }}
+              orderBy={{}}
+              {...props}
+            />
           )}
           {layout !== 'vertical' && <Divider />}
         </Col>
