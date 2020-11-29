@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
 
-import CategorySlickCarousel from './CategorySlickCarousel';
+import { SlickCarousel } from '@gqlapp/look-client-react';
 
 const ListingCarousel = props => {
   const { categories } = props;
@@ -62,9 +62,10 @@ const ListingCarousel = props => {
   return (
     <div className="category-carousel-wrapper">
       <div className="category-carousel ">
-        <CategorySlickCarousel
+        <SlickCarousel
           Compo={CategoryItemComponent}
           settings={carouselSettings(itemLength)}
+          itemName={'category'}
           data={categories}
           height={'285px'}
           componentStyle={{

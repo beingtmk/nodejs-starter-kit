@@ -24,7 +24,7 @@ const DiscountsCarouselView = props => {
 
 DiscountsCarouselView.propTypes = {
   ids: PropTypes.array,
-  title: PropTypes.func,
+  title: PropTypes.string,
   currentUser: PropTypes.object,
   currentUserLoading: PropTypes.bool,
   history: PropTypes.object,

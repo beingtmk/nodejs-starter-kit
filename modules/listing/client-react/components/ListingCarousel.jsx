@@ -148,6 +148,7 @@ const ListingCarousel = props => {
             node={true}
             getCart={getCart}
             onDelete={onDelete}
+            modalName="listing"
             componentProps={{
               currentUser,
               history,

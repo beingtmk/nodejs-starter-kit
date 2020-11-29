@@ -1,19 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import { LeftArrow, RightArrow } from './CarouselArrows';
 import Carousel from './Carousel';
 
 const SlickCarousel = props => {
-  // console.log('carousel', props);
-  const { Compo, componentProps, itemName, showArrow, getCart, onDelete } = props;
+  const {
+    data,
+    node,
+    componentStyle,
+    modalName = 'listing',
+    Compo,
+    height = '370px',
+    componentProps,
+    settings,
+    itemName,
+    showArrow,
+    getCart,
+    onDelete,
+    autoplay = true
+  } = props;
 
   const status = {
-    autoplay: props.autoplay,
-    easing: 100000,
+    autoplay: autoplay,
+    variableWidth: true,
+    easing: 1000,
     infinite: true,
     speed: 900,
-    // variableWidth: true,
+    autoplaySpeed: 2000,
     centerMode: true,
     className: 'slider variable-width',
     // slidesToScroll:3, // getSlides(props.data.length) === 0 ? '1' : getSlides(props.data.length),
@@ -57,27 +70,35 @@ const SlickCarousel = props => {
   };
   return (
     <>
-      <div style={{ position: 'relative', height: props.height || '370px' }}>
-        <Carousel {...(props.settings || status)} showArrow={showArrow}>
-          {props.data.map((item, key) => {
-            const listing = props.node ? item.node : item;
+      <div style={{ position: 'relative', height }}>
+        <Carousel {...(settings || status)} showArrow={showArrow}>
+          {data.map((item, key) => {
+            //
+            //
+            //
+            //
+            const listing = node ? item.node : item;
             const cartItemArray =
               getCart && getCart.orderDetails && getCart.orderDetails.length > 0
                 ? getCart.orderDetails.filter(oD => oD.modalId === listing.id)
                 : [];
             const obj = {};
-            obj[itemName] = props.node ? item.node : item;
+            obj[itemName] = node ? item.node : item;
+            //
+            //
+            //
+            //
+            // console.log(modalName);
             return (
               <Compo
+                key={key}
+                modalName={modalName}
+                modalId={listing.id}
                 inCart={cartItemArray.length === 0}
                 onDelete={() => onDelete(cartItemArray[0].id)}
+                componentStyle={componentStyle}
                 {...componentProps}
-                modalName={'listing'}
-                modalId={listing.id}
-                componentStyle={props.componentStyle}
                 {...obj}
-                // listing={listing}
-                key={key}
               />
             );
           })}
@@ -92,6 +113,7 @@ SlickCarousel.propTypes = {
   componentStyle: PropTypes.object,
   componentProps: PropTypes.object,
   node: PropTypes.object,
+  modalName: PropTypes.string,
   height: PropTypes.string,
   Compo: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
