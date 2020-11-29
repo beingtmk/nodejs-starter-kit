@@ -11,7 +11,6 @@ import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
 import CAN_USER_REVIEW from '../graphql/CanUserReview.graphql';
 import LISTINGS_STATE_QUERY from '../graphql/ListingsStateQuery.client.graphql';
-import LISTINGS_BY_IDS_QUERY from '../graphql/ListingsByIdsQuery.graphql';
 
 // Mutation
 import ADD_LISTING from '../graphql/AddListing.graphql';
@@ -50,8 +49,7 @@ export const withCurrentUser = Component =>
 
 export const withListings = Component =>
   graphql(LISTINGS_QUERY, {
-    options: ({ orderBy, filter, match, navigation }) => {
-      // console.log(filter);
+    options: ({ orderBy, filter, match, navigation, ids }) => {
       return {
         variables: {
           limit: limit,
@@ -61,13 +59,14 @@ export const withListings = Component =>
             ...filter,
             categoryFilter: {
               categoryId: Number(
-                (match ? match.params.cid : navigation.state.params.cid) ||
+                (match ? match.params.cid : navigation && navigation.state.params.cid) ||
                   (filter && filter.categoryFilter && filter.categoryFilter.categoryId) ||
                   0
               ),
               allSubCategory: filter && filter.categoryFilter && filter.categoryFilter.allSubCategory
             }
-          }
+          },
+          ids
         },
         fetchPolicy: 'network-only'
       };
@@ -120,19 +119,6 @@ export const withListing = Component =>
     props({ data: { loading, error, listing, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
       return { loading, listing, subscribeToMore, updateQuery };
-    }
-  })(Component);
-
-export const withListingByIds = Component =>
-  graphql(LISTINGS_BY_IDS_QUERY, {
-    options: props => {
-      return {
-        variables: { ids: props.ids }
-      };
-    },
-    props({ data: { loading, error, listingsByIds, subscribeToMore, updateQuery } }) {
-      if (error) throw new Error(error);
-      return { loading, listings: listingsByIds, subscribeToMore, updateQuery };
     }
   })(Component);
 
