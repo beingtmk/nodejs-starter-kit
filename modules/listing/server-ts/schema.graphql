@@ -92,8 +92,8 @@ extend type Query {
     after: Int!
     orderBy: OrderByListInput
     filter: FilterListInput
+    ids: [Int]
   ): Listings
-  listingsByIds(ids: [Int]): Listings
 
   #Bookmark
   myListingsBookmark(

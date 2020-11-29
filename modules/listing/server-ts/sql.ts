@@ -126,8 +126,20 @@ export default class ListingDAO extends Model {
     };
   }
 
-  public async listingsPagination(limit: number, after: number, orderBy: any, filter: any, userId: number) {
-    const queryBuilder = ListingDAO.query().eager(eager);
+  public async listingsPagination(
+    limit: number,
+    after: number,
+    orderBy: any,
+    filter: any,
+    userId: number,
+    ids: number[] = []
+  ) {
+    const queryBuilder =
+      ids.length > 0
+        ? ListingDAO.query()
+            .eager(eager)
+            .whereIn('listing.id', ids)
+        : ListingDAO.query().eager(eager);
 
     if (orderBy && orderBy.column) {
       const column = orderBy.column;
@@ -175,11 +187,11 @@ export default class ListingDAO extends Model {
             .eager('[sub_categories.^]')
             .findById(filter.categoryFilter.categoryId)
         );
-        const ids = [category.id];
+        const listingids = [category.id];
         if (filter.categoryFilter.allSubCategory) {
           const addIdForArrayExpression = function addIdForArray(cat) {
             cat.subCategories.map(c => {
-              ids.push(c.id);
+              listingids.push(c.id);
               if (c.subCategories.length > 0) {
                 addIdForArray(c);
               }
@@ -188,7 +200,7 @@ export default class ListingDAO extends Model {
           addIdForArrayExpression(category);
         }
         queryBuilder.where(function() {
-          this.whereIn('listing.category_id', ids);
+          this.whereIn('listing.category_id', listingids);
         });
       }
 
@@ -482,13 +494,6 @@ export default class ListingDAO extends Model {
       await ListingBookmark.query().insertGraph(decamelizeKeys({ listingId, userId }));
       return true;
     }
-  }
-  public async listingsByIds(ids: number[]) {
-    return camelizeKeys(
-      await ListingDAO.query()
-        .eager(eager)
-        .whereIn('id', ids)
-    );
   }
 }
 

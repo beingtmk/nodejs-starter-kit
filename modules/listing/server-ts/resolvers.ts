@@ -27,14 +27,15 @@ export const LISTING_REVIEW_SUBSCRIPTION = 'listing_review_subscription';
 
 export default (pubsub: any) => ({
   Query: {
-    async listings(obj: any, { limit, after, orderBy, filter }: any, { Listing, req: { identity } }: any) {
+    async listings(obj: any, { limit, after, orderBy, filter, ids }: any, { Listing, req: { identity } }: any) {
       const edgesArray: Edges[] = [];
       const { total, listings, rangeValues } = await Listing.listingsPagination(
         limit,
         after,
         orderBy,
         filter,
-        identity && identity.id
+        identity && identity.id,
+        ids
       );
 
       const hasNextPage = total > after + limit;
@@ -98,19 +99,6 @@ export default (pubsub: any) => ({
       } else {
         return false;
       }
-    },
-    async listingsByIds(obj: any, { ids }: { ids: number[] }, { Listing }: any) {
-      const edgesArray: Edges[] = [];
-      const listings = await Listing.listingsByIds(ids);
-
-      listings.map((listing: Listings & Identifier, index: number) => {
-        edgesArray.push({ node: listing });
-      });
-
-      return {
-        totalCount: listings.length,
-        edges: edgesArray
-      };
     }
   },
   Mutation: {
