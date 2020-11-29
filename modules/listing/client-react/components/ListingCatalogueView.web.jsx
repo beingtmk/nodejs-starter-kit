@@ -120,17 +120,7 @@ const ListingCatalogueView = props => {
   return (
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
-      <Row>
-        <Col xs={0} md={0} lg={24}>
-          <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
-        </Col>
-        <Col xs={24} md={24} lg={0}>
-          <CategoryNavBarComponent
-            filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }}
-            mobile={true}
-          />
-        </Col>
-      </Row>
+      <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
       <Heading type="2">
         <Icon type="SolutionOutlined" /> &nbsp; {title}
       </Heading>

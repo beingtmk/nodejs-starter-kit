@@ -1,0 +1,3 @@
+mutation updateOrderByDynamicCarousels($orderBy: OrderByDynamicCarouselInput!) {
+  updateOrderByDynamicCarousels(orderBy: $orderBy) @client
+}

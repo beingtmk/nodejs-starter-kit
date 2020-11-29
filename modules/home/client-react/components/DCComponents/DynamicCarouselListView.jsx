@@ -34,22 +34,65 @@ const NodynaDicCarouselsMessage = ({ t }) => (
 );
 NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
 
-const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCarousels, loadData }) => {
+const DynamicCarouselListView = props => {
+  const { loading, t, orderBy, onDynamicCarouselOrderBy, deleteDynamicCarousel, dynamicCarousels, loadData } = props;
+  console.log(props);
+  const renderOrderByArrow = name => {
+    if (orderBy && orderBy.column === name) {
+      if (orderBy.order === 'desc') {
+        return <span className="badge badge-primary">&#8595;</span>;
+      } else {
+        return <span className="badge badge-primary">&#8593;</span>;
+      }
+    } else {
+      return <span className="badge badge-secondary">&#8645;</span>;
+    }
+  };
+  const handleOrderBy = (e, name) => {
+    e.preventDefault();
+    let order = 'asc';
+    if (orderBy && orderBy.column === name) {
+      if (orderBy.order === 'asc') {
+        order = 'desc';
+      } else if (orderBy.order === 'desc') {
+        return onDynamicCarouselOrderBy({
+          column: '',
+          order: ''
+        });
+      }
+    }
+    return onDynamicCarouselOrderBy({ column: name, order });
+  };
   const columns = [
     {
-      title: t('dynamicCarousel.columns.carouselId'),
+      title: (
+        <a onClick={e => handleOrderBy(e, 'id')} href="#">
+          {t('dynamicCarousel.columns.carouselId')}
+          {renderOrderByArrow('id')}
+        </a>
+      ),
       dataIndex: 'id',
       key: 'id',
       render: (text, record) => <>{record.id}</>
     },
     {
-      title: t('dynamicCarousel.columns.title'),
+      title: (
+        <a onClick={e => handleOrderBy(e, 'title')} href="#">
+          {t('dynamicCarousel.columns.title')}
+          {renderOrderByArrow('title')}
+        </a>
+      ),
       dataIndex: 'title',
       key: 'title',
       render: (text, record) => <>{record.title}</>
     },
     {
-      title: t('dynamicCarousel.columns.image'),
+      title: (
+        <a onClick={e => handleOrderBy(e, 'image')} href="#">
+          {t('dynamicCarousel.columns.image')}
+          {renderOrderByArrow('image')}
+        </a>
+      ),
       dataIndex: 'imageUrl',
       key: 'imageUrl',
       render: (text, record) => (
@@ -59,13 +102,23 @@ const DynamicCarouselListView = ({ loading, t, deleteDynamicCarousel, dynamicCar
       )
     },
     {
-      title: t('dynamicCarousel.columns.label'),
+      title: (
+        <a onClick={e => handleOrderBy(e, 'label')} href="#">
+          {t('dynamicCarousel.columns.label')}
+          {renderOrderByArrow('label')}
+        </a>
+      ),
       dataIndex: 'label',
       key: 'label',
       render: (text, record) => <>{displayDataCheck(record.label)}</>
     },
     {
-      title: t('dynamicCarousel.columns.link'),
+      title: (
+        <a onClick={e => handleOrderBy(e, 'link')} href="#">
+          {t('dynamicCarousel.columns.link')}
+          {renderOrderByArrow('link')}
+        </a>
+      ),
       dataIndex: 'link',
       key: 'link',
       render: (text, record) => <>{displayDataCheck(record.link)}</>
@@ -125,7 +178,9 @@ DynamicCarouselListView.propTypes = {
   deleteDynamicCarousel: PropTypes.func,
   loadData: PropTypes.func,
   dynamicCarousels: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  orderBy: PropTypes.object,
+  onDynamicCarouselOrderBy: PropTypes.func
 };
 
 export default DynamicCarouselListView;

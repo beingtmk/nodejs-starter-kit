@@ -130,7 +130,9 @@ export const withMyListingsBookmark = Component =>
         variables: {
           userId: props.currentUser && props.currentUser.id,
           limit: limit,
-          after: 0
+          after: 0,
+          orderBy: props.orderBy && props.orderBy,
+          filter: props.filter && props.filter
         },
         fetchPolicy: 'network-only'
       };

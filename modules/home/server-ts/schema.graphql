@@ -27,11 +27,16 @@ type DynamicCarouselPageInfo {
   endCursor: Int
   hasNextPage: Boolean
 }
+input OrderByDynamicCarouselInput {
+  column: String
+  order: String
+}
 
 extend type Query {
   dynamicCarousels(
     limit: Int
     after: Int
+    orderBy: OrderByDynamicCarouselInput
     filter: FilterDynamicCarouselInput
   ): DynamicCarousels
   dynamicCarousel(id: Int!): DynamicCarousel

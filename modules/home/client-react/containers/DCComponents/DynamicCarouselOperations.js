@@ -20,6 +20,7 @@ import DYNAMIC_CAROUSEL_SUBSCRIPTION from '../../graphql/DynamicCarouselSubscrip
 // Filters
 import DYNAMIC_CAROUSEL_STATE_QUERY from '../../graphql/DynamicCarouselStateQuery.client.graphql';
 import DYNAMIC_CAROUSEL_UPDATE_FILTER from '../../graphql/DynamicCarouselUpdateFilter.client.graphql';
+import DYNAMIC_CAROUSEL_ORDER_BY from '../../graphql/UpdateOrderByDynamiceCarousel.client.graphql';
 
 import ROUTES from '../../routes';
 
@@ -329,6 +330,16 @@ export const withDynamicCarouselFilterUpdating = Component =>
       onIsActiveChange(isActive) {
         // console.log(isActive);
         mutate({ variables: { filter: { isActive } } });
+      }
+    })
+  })(Component);
+
+export const withDynamicCarouselOrderByUpdating = Component =>
+  graphql(DYNAMIC_CAROUSEL_ORDER_BY, {
+    props: ({ mutate }) => ({
+      onDynamicCarouselOrderBy: orderBy => {
+        console.log('orderBy', orderBy);
+        mutate({ variables: { orderBy } });
       }
     })
   })(Component);

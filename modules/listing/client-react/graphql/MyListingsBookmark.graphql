@@ -1,7 +1,19 @@
 #import "./Listing.graphql"
 
-query myListingsBookmark($userId: Int, $limit: Int, $after: Int) {
-  myListingsBookmark(userId: $userId, limit: $limit, after: $after) {
+query myListingsBookmark(
+  $userId: Int
+  $limit: Int
+  $after: Int
+  $orderBy: OrderByListInput
+  $filter: FilterListInput
+) {
+  myListingsBookmark(
+    userId: $userId
+    limit: $limit
+    after: $after
+    orderBy: $orderBy
+    filter: $filter
+  ) {
     totalCount
     edges {
       cursor
@@ -12,6 +24,10 @@ query myListingsBookmark($userId: Int, $limit: Int, $after: Int) {
     pageInfo {
       endCursor
       hasNextPage
+    }
+    rangeValues {
+      maxCost
+      minCost
     }
   }
 }

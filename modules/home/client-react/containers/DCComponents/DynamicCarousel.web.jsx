@@ -10,6 +10,7 @@ import {
   withDynamicCarouselState,
   withDynamicCarousels,
   withDeleteDynamicCarousel,
+  withDynamicCarouselOrderByUpdating,
   withDynamicCarouselFilterUpdating,
   subscribeToDynamicCarousels
 } from './DynamicCarouselOperations';
@@ -34,6 +35,7 @@ export default compose(
   withDynamicCarouselState,
   withDynamicCarousels,
   withDeleteDynamicCarousel,
+  withDynamicCarouselOrderByUpdating,
   withDynamicCarouselFilterUpdating,
   translate('home')
 )(DynamicCarousel);

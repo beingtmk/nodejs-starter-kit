@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { SuggestedListComponent, Spinner, Empty, Divider, Button } from '@gqlapp/look-client-react';
+import { SuggestedListComponent, Spinner, Empty, Divider, Button, Row, Col } from '@gqlapp/look-client-react';
 
 import RelatedCardComponent from './RelatedCardComponent';
 import ListingFilterComponent from './ListingFilterComponent.web';
@@ -30,29 +30,67 @@ const ListingCatalogueView = props => {
       />
     );
   };
-  const RenderListings = () => (
+  const RenderListings = ({ layout }) => (
     <div>
-      <SuggestedListComponent {...props} items={listings} renderFunc={renderFunc} />
+      <SuggestedListComponent
+        {...props}
+        grid={
+          layout === 'vertical' && {
+            gutter: 24,
+            xs: 1,
+            sm: 1,
+            md: 2,
+            lg: 2,
+            xl: 3,
+            xxl: 3
+          }
+        }
+        items={listings}
+        renderFunc={renderFunc}
+      />
     </div>
   );
+  RenderListings.propTypes = { layout: PropTypes.string };
 
-  return (
-    <>
-      {showFilter && (
-        <>
-          <br />
-          <ListingFilterComponent showIsActive={false} filter={{ isActive: true }} orderBy={{}} {...props} />
-          <Divider />
-        </>
-      )}
-      {loading && <Spinner />}
-      {!loading && listings && listings.totalCount ? (
-        <RenderListings />
-      ) : !loading ? (
-        <NoListingsMessage t={t} emptyLink={emptyLink} />
-      ) : null}
-    </>
-  );
+  const rednerChildren = (layout = 'horizontal') => {
+    const span =
+      layout === 'vertical'
+        ? {
+            spanFilter: { lg: 6, md: 6, sm: 24 },
+            spanContent: { lg: 18, md: 18, sm: 24 }
+          }
+        : {
+            spanFilter: { span: 24 },
+            spanContent: { span: 24 }
+          };
+    return (
+      <Row type="flex" gutter={[24, 24]}>
+        <Col {...span.spanFilter}>
+          {layout !== 'vertical' && <br />}
+          {showFilter && (
+            <ListingFilterComponent
+              layout={layout}
+              showIsActive={false}
+              filter={{ isActive: true }}
+              orderBy={{}}
+              {...props}
+            />
+          )}
+          {layout !== 'vertical' && <Divider />}
+        </Col>
+        <Col {...span.spanContent}>
+          {loading && <Spinner />}
+          {!loading && listings && listings.totalCount ? (
+            <RenderListings layout={layout} />
+          ) : !loading ? (
+            <NoListingsMessage t={t} emptyLink={emptyLink} />
+          ) : null}
+        </Col>
+      </Row>
+    );
+  };
+
+  return <>{rednerChildren('vertical')}</>;
 };
 
 ListingCatalogueView.propTypes = {
