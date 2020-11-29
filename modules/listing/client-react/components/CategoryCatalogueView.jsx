@@ -14,13 +14,11 @@ import {
   Paragraph,
   MetaTags
 } from '@gqlapp/look-client-react';
-import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
-import { MODAL } from '@gqlapp/review-common';
-// import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
-import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 import settings from '@gqlapp/config';
-
-import CategoryCarousel from './CategoryCarousel';
+import { MODAL } from '@gqlapp/review-common';
+import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
+import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+import CategoryCarousel from '@gqlapp/category-client-react/components/CategoryCarousel';
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match, t } = props;
