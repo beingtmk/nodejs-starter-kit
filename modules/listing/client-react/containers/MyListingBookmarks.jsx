@@ -6,7 +6,13 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ListingCatalogueView from '../components/ListingCatalogueView.web';
 
-import { withCurrentUser, withMyListingsBookmark } from './ListingOperations';
+import {
+  withCurrentUser,
+  withMyListingsBookmark,
+  withFilterUpdating,
+  withOrderByUpdating
+  // withListingsState
+} from './ListingOperations';
 import { subscribeToListingsBookmark } from './ListingSubscriptions';
 import ROUTES from '../routes';
 
@@ -14,7 +20,7 @@ const MyListingsBookmark = props => {
   const { subscribeToMore } = props;
 
   useEffect(() => {
-    const subscribe = subscribeToListingsBookmark(subscribeToMore);
+    const subscribe = subscribeToListingsBookmark(subscribeToMore, props.filter);
     return () => subscribe();
   });
 
@@ -36,4 +42,11 @@ MyListingsBookmark.propTypes = {
   updateQuery: PropTypes.func
 };
 
-export default compose(withCurrentUser, withMyListingsBookmark, translate('listing'))(MyListingsBookmark);
+export default compose(
+  withCurrentUser,
+  // withListingsState,
+  withMyListingsBookmark,
+  withFilterUpdating,
+  withOrderByUpdating,
+  translate('listing')
+)(MyListingsBookmark);
