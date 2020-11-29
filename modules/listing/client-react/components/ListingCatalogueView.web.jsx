@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
-  Affix,
-  Card,
   Icon,
   MetaTags,
   PageLayout,
@@ -92,27 +90,23 @@ const ListingCatalogueView = props => {
             spanFilter: { span: 24 },
             spanContent: { span: 24 }
           };
-    console.log(span);
     return (
-      <Row gutter={24}>
+      <Row type="flex" gutter={[24, 24]}>
         <Col {...span.spanFilter}>
           {layout !== 'vertical' && <br />}
           {showFilter && (
-            <Affix offsetTop={75}>
-              <Card>
-                <ListingFilterComponent
-                  layout={layout}
-                  showIsActive={false}
-                  filter={{ isActive: true }}
-                  orderBy={{}}
-                  {...props}
-                />
-              </Card>
-            </Affix>
+            <ListingFilterComponent
+              layout={layout}
+              showIsActive={false}
+              filter={{ isActive: true }}
+              orderBy={{}}
+              {...props}
+            />
           )}
           {layout !== 'vertical' && <Divider />}
         </Col>
         <Col {...span.spanContent}>
+          {loading && <Spinner />}
           {!loading && listings && listings.totalCount ? (
             <RenderListings layout={layout} />
           ) : !loading ? (
@@ -131,9 +125,8 @@ const ListingCatalogueView = props => {
         <Icon type="SolutionOutlined" /> &nbsp; {title}
       </Heading>
       <Divider style={{ margin: '5px 0px 10px' }} />
-      {loading && <Spinner />}
-      {!loading && renderChildren('vertical')}
-      {/* {!loading && renderChildren()} */}
+      {renderChildren('vertical')}
+      {/* {renderChildren()} */}
     </PageLayout>
   );
 };

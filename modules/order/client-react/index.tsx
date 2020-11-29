@@ -97,14 +97,14 @@ export default new ClientModule({
       })}
     />
   ],
-  navItemUser: [
+  navItem: [
     <IfLoggedIn key={ROUTES.checkoutCart}>
       <MenuItem>
-        <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
-          <NavItemCart />
-        </NavLink>
+        <NavItemCart />
       </MenuItem>
-    </IfLoggedIn>,
+    </IfLoggedIn>
+  ],
+  navItemUser: [
     <IfLoggedIn key={ROUTES.myOrder}>
       <SubMenu
         key={ROUTES.order}
