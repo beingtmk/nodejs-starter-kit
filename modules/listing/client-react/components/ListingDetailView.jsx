@@ -30,7 +30,7 @@ import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
 import { MODAL } from '@gqlapp/review-common';
 
-import ListingsCarousel from './ListingCarousel';
+import ListingCarousel from './ListingCarousel';
 import BookmarkComponent from './BookmarkComponent';
 import SocialSharingButtons from './SocialSharingButtons';
 import { displayDataCheck } from './functions';
@@ -265,8 +265,9 @@ const ListingDetailView = props => {
             </Tabs>
           </div>
           <>
-            <ListingsCarousel
+            <ListingCarousel
               filter={{ userId: listing.user.id }}
+              onFilter={c => c.node.user.id === listing.user.id}
               currentUser={currentUser}
               title={'Similar Listing (same user)'}
               history={history}

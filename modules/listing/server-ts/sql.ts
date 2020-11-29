@@ -135,7 +135,7 @@ export default class ListingDAO extends Model {
     ids: number[] = []
   ) {
     const queryBuilder =
-      ids.length > 0
+      ids && ids.length > 0
         ? ListingDAO.query()
             .eager(eager)
             .whereIn('listing.id', ids)

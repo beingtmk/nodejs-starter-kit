@@ -8,7 +8,7 @@ import { LABEL } from '@gqlapp/home-common';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 
 import DiscountsCarousel from '@gqlapp/discount-client-react/containers/DiscountsCarousel';
-import ListingsCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
+import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
 import DynamicCarousel from '../containers/DCComponents/DynamicCarouselComponent';
 import ImageBanner from '../containers/DCComponents/ImageBannerComponent';
 // import Banner0 from './AntdLanding/Banner0';
@@ -65,17 +65,17 @@ class HomeView4 extends React.Component {
         {...this.props}
         style={{ backgroundColor: '#f7f7f7' }}
       />,
-      <ListingsCarousel
+      <ListingCarousel
         filter={{ isFeatured: true, isActive: true }}
-        name="isFeatured"
+        onFilter={c => c.node.listingFlags.isFeatured === true}
         currentUser={currentUser}
         title={t('listingCarousel.featuredListings')}
         history={history}
         {...this.props}
       />,
-      <ListingsCarousel
+      <ListingCarousel
         filter={{ isNew: true, isActive: true }}
-        name="isNew"
+        onFilter={c => c.node.listingFlags.isNew === true}
         currentUser={currentUser}
         title={t('listingCarousel.latestAdditions')}
         history={history}
