@@ -56,7 +56,7 @@ export const subscribeToDiscounts = (subscribeToMore, filter) =>
       {
         subscriptionData: {
           data: {
-            listingsUpdated: { mutation, node }
+            discountsUpdated: { mutation, node }
           }
         }
       }

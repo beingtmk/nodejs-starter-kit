@@ -65,6 +65,13 @@ export default (pubsub: any) => ({
             node: res
           }
         });
+        pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
+          listingsUpdated: {
+            mutation: 'CREATED',
+            id: res.id,
+            node: res
+          }
+        });
         if (res) {
           schedule.scheduleJob(`discount_${res.id}`, res.discountDuration.endDate, async () => {
             // console.log('job initialed', res.discountDuration.endDate);
@@ -119,6 +126,13 @@ export default (pubsub: any) => ({
           discountUpdated: {
             mutation: 'UPDATED',
             modalId: res.modalId,
+            node: discount
+          }
+        });
+        pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
+          listingsUpdated: {
+            mutation: 'UPDATED',
+            id: discount.id,
             node: discount
           }
         });
@@ -209,6 +223,13 @@ export default (pubsub: any) => ({
       const discount = await context.Discount.discount(id);
       const isDeleted = await context.Discount.deleteDiscount(id);
       if (isDeleted) {
+        pubsub.publish(DISCOUNTS_SUBSCRIPTION, {
+          listingsUpdated: {
+            mutation: 'DELETED',
+            id,
+            node: discount
+          }
+        });
         pubsub.publish(DISCOUNT_SUBSCRIPTION, {
           discountUpdated: {
             mutation: 'DELETED',
@@ -235,7 +256,11 @@ export default (pubsub: any) => ({
       subscribe: withFilter(
         () => pubsub.asyncIterator(DISCOUNTS_SUBSCRIPTION),
         (payload, variables) => {
-          return payload.discountsUpdated.id === variables.id;
+          if (variables.endCursor) {
+            return variables.endCursor <= payload.discountsUpdated.id;
+          } else {
+            return true;
+          }
         }
       )
     }
