@@ -1,24 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Select, Option, Input, Col, Row } from '@gqlapp/look-client-react';
 
-const OrderFilterComponent = ({ filter: { searchText, state }, orderStates, onSearchTextChange, onStateChange, t }) => {
+import { translate } from '@gqlapp/i18n-client-react';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { Form, FormItem, Option, Input, Col, Row, RenderSelect } from '@gqlapp/look-client-react';
+
+const OrderFilterComponent = props => {
+  const {
+    filter: { searchText, state },
+    orderStates,
+    onSearchTextChange,
+    onStateChange,
+    t,
+    onFiltersRemove
+  } = props;
+  const handleFiltersRemove = useRef(() => {});
+
+  handleFiltersRemove.current = () => {
+    const filter = {
+      searchText: ''
+    };
+    const orderBy = { column: '', order: '' };
+    onFiltersRemove(filter, orderBy);
+  };
+
+  useEffect(() => {
+    return () => handleFiltersRemove.current();
+  }, []);
   const OrderSortByField = width => {
     return (
-      <FormItem label={t('orders.item.sortBy')} style={{ width: '100%' }}>
-        <Select name="role" defaultValue={state} style={{ width: width }} onChange={e => onStateChange(e)}>
-          <Option key={1} value="">
-            ALL
+      <Field
+        name="modalName"
+        component={RenderSelect}
+        placeholder={t('orders.item.sortBy')}
+        defaultValue={state}
+        onChange={e => onStateChange(e)}
+        label={t('orders.item.sortBy')}
+        style={{ width: '100px' }}
+        value={state}
+        inFilter={true}
+        selectStyle={{ width: width }}
+      >
+        <Option key={1} value="">
+          ALL
+        </Option>
+        {orderStates.map((oS, i) => (
+          <Option key={i + 2} value={oS.state}>
+            {oS.state}
           </Option>
-          {orderStates.map((oS, i) => (
-            <Option key={i + 2} value={oS.state}>
-              {oS.state}
-            </Option>
-          ))}
-        </Select>
-      </FormItem>
+        ))}
+      </Field>
     );
   };
   return (
@@ -66,6 +98,7 @@ OrderFilterComponent.propTypes = {
   onSearchTextChange: PropTypes.func.isRequired,
   onStateChange: PropTypes.func.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
+  onFiltersRemove: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 

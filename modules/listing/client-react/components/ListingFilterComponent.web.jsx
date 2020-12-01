@@ -5,7 +5,19 @@ import { DebounceInput } from 'react-debounce-input';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Affix, Card, Select, Option, Form, FormItem, Label, Input, Row, Col, Button } from '@gqlapp/look-client-react';
+import {
+  Affix,
+  Card,
+  Option,
+  Form,
+  FormItem,
+  Label,
+  Input,
+  Row,
+  Col,
+  Button,
+  RenderSelect
+} from '@gqlapp/look-client-react';
 import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
 import { MODAL } from '@gqlapp/review-common';
 
@@ -29,7 +41,7 @@ const ListingsFilterComponent = props => {
     t,
     layout
   } = props;
-
+  console.log(props.filter);
   const handleFiltersRemove = useRef(() => {});
 
   handleFiltersRemove.current = () => {
@@ -40,7 +52,7 @@ const ListingsFilterComponent = props => {
       categoryFilter: {
         categoryId: 0,
         allSubCategory: true,
-        __typename: 'CategoryFilter'
+        __typename: 'ListingFilter'
       },
       isActive: true
     };
@@ -83,12 +95,14 @@ const ListingsFilterComponent = props => {
       value={categoryFilter.categoryId}
     />
   );
+
   const ListingSortBy = width => {
+    const index = SORT_BY.findIndex(x => x.value === orderBy.column && x.sortBy === orderBy.order);
     return (
-      <Select
+      <Field
         name="sortBy"
-        defaultValue={orderBy.order}
-        style={{ width: width }}
+        component={RenderSelect}
+        // defaultValue={orderBy.order}
         onChange={e =>
           SORT_BY[e].sortBy === ''
             ? onOrderBy({ order: SORT_BY[e].sortBy, column: '' })
@@ -97,6 +111,10 @@ const ListingsFilterComponent = props => {
                 column: SORT_BY[e].value
               })
         }
+        style={{ width: '100px' }}
+        value={index > -1 && SORT_BY[index].label}
+        inFilter={true}
+        selectStyle={{ width: width }}
       >
         <Option key={1} value="">
           None
@@ -106,12 +124,12 @@ const ListingsFilterComponent = props => {
             {sB.label}
           </Option>
         ))}
-      </Select>
+      </Field>
     );
   };
 
   const handleResetBtn = (
-    <Button color="primary" onClick={handleFiltersRemove}>
+    <Button color="primary" onClick={handleFiltersRemove.current}>
       {t('listingFilter.btn.reset')}
     </Button>
   );
@@ -184,11 +202,7 @@ const ListingsFilterComponent = props => {
           <Row gutter={24}>
             <Col span={24}>
               <br />
-              <FormItem>
-                <Button block color="primary" onClick={handleFiltersRemove}>
-                  {t('listingFilter.btn.reset')}
-                </Button>
-              </FormItem>
+              <FormItem>{handleResetBtn}</FormItem>
             </Col>
           </Row>
         </Col>

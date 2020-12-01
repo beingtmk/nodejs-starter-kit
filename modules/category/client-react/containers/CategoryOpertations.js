@@ -170,15 +170,15 @@ export const withFilterUpdating = Component =>
       },
       onModalNameChange(modalName) {
         mutate({ variables: { filter: { modalName } } });
+      },
+      onFiltersRemove(filter, orderBy) {
+        mutate({
+          variables: {
+            filter,
+            orderBy
+          }
+        });
       }
-      // onFiltersRemove(filter, orderBy) {
-      //   mutate({
-      //     variables: {
-      //       filter,
-      //       orderBy
-      //     }
-      //   });
-      // }
     })
   })(Component);
 

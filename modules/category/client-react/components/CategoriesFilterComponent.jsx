@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
@@ -6,14 +6,25 @@ import { RenderSelect, Option, Form, FormItem, Label, Input, Row, Col } from '@g
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
-const CategoriesFilterComponent = ({
-  filter: { searchText, isActive, modalName = '' },
-  onSearchTextChange,
-  onIsActiveChange,
-  onModalNameChange,
-  t
-}) => {
-  const CategoryIsActiveFiled = (
+const CategoriesFilterComponent = props => {
+  const { filter, onSearchTextChange, onIsActiveChange, onFiltersRemove, onModalNameChange, t } = props;
+  const { searchText, isActive, modalName = '' } = filter;
+  const handleFiltersRemove = useRef(() => {});
+
+  handleFiltersRemove.current = () => {
+    const filter = {
+      searchText: '',
+      modalName: '',
+      isActive: true
+    };
+    const orderBy = { column: '', order: '' };
+    onFiltersRemove(filter, orderBy);
+  };
+
+  useEffect(() => {
+    return () => handleFiltersRemove.current();
+  }, []);
+  const CategoryIsActiveField = (
     <FormItem>
       <Label>
         <Input type="checkbox" defaultChecked={isActive} onChange={e => onIsActiveChange(e.target.checked)} />
@@ -21,6 +32,28 @@ const CategoriesFilterComponent = ({
       </Label>
     </FormItem>
   );
+  const CategorySortByField = width => {
+    return (
+      <Field
+        name="modalName"
+        component={RenderSelect}
+        placeholder={t('categories.filter.modalName')}
+        defaultValue={MODAL[0].value}
+        onChange={e => onModalNameChange(e)}
+        label={t('categories.filter.modalName')}
+        style={{ width: '100px' }}
+        value={modalName}
+        inFilter={true}
+        selectStyle={{ width: width }}
+      >
+        {MODAL.map((m, i) => (
+          <Option key={i} value={m.value}>
+            {m.label}
+          </Option>
+        ))}
+      </Field>
+    );
+  };
   return (
     <Form /* layout="inline" */>
       <Row type="flex" align="middle">
@@ -41,52 +74,18 @@ const CategoriesFilterComponent = ({
                   </FormItem>
                 </Col>
                 <Col xs={24} md={24} sm={10} lg={8}>
-                  {CategoryIsActiveFiled}
+                  {CategoryIsActiveField}
                 </Col>
               </Row>
             </Col>
             <Col lg={8} xs={24} sm={24} md={10}>
               <Row>
                 <Col lg={0} md={0} xs={24}>
-                  <Field
-                    name="modalName"
-                    component={RenderSelect}
-                    placeholder={t('categories.filter.modalName')}
-                    defaultValue={MODAL[0].value}
-                    onChange={e => onModalNameChange(e)}
-                    label={t('categories.filter.modalName')}
-                    style={{ width: '100px' }}
-                    value={modalName}
-                    inFilter={true}
-                    selectStyle={{ width: '100%' }}
-                  >
-                    {MODAL.map((m, i) => (
-                      <Option key={i} value={m.value}>
-                        {m.label}
-                      </Option>
-                    ))}
-                  </Field>
+                  {CategorySortByField('100%')}
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
-                    <Field
-                      name="modalName"
-                      component={RenderSelect}
-                      placeholder={t('categories.filter.modalName')}
-                      defaultValue={MODAL[0].value}
-                      onChange={e => onModalNameChange(e)}
-                      label={t('categories.filter.modalName')}
-                      style={{ width: '100px' }}
-                      value={modalName}
-                      inFilter={true}
-                      selectStyle={{ width: '170px' }}
-                    >
-                      {MODAL.map((m, i) => (
-                        <Option key={i} value={m.value}>
-                          {m.label}
-                        </Option>
-                      ))}
-                    </Field>
+                    {CategorySortByField('170px')}
                   </Row>
                 </Col>
               </Row>
@@ -104,6 +103,7 @@ CategoriesFilterComponent.propTypes = {
   onModalNameChange: PropTypes.func.isRequired,
   onLabelChange: PropTypes.func.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
+  onFiltersRemove: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 

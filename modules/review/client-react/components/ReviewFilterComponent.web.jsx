@@ -1,34 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Select, Option, Label, Input, Col, Row } from '@gqlapp/look-client-react';
+import { Form, FormItem, Option, Label, Input, Col, Row, RenderSelect } from '@gqlapp/look-client-react';
 
-const ReviewsFilterView = ({
-  filter: { searchText, isActive },
-  onSearchTextChange,
-  onIsActiveChange,
-  onModalNameChange,
-  t
-}) => {
+const ReviewsFilterView = props => {
+  const {
+    filter: { searchText, modalName = '', isActive },
+    onSearchTextChange,
+    onIsActiveChange,
+    onModalNameChange,
+    onFiltersRemove,
+    t
+  } = props;
+  const handleFiltersRemove = useRef(() => {});
+
+  handleFiltersRemove.current = () => {
+    const filter = {
+      searchText: '',
+      modalName: '',
+      isActive: true
+    };
+    const orderBy = { column: '', order: '' };
+    onFiltersRemove(filter, orderBy);
+  };
+
+  useEffect(() => {
+    return () => handleFiltersRemove.current();
+  }, []);
   const ReviewSelectField = width => {
     return (
-      <FormItem label={t('adminPanel.filter.field2')} style={{ width: '100%' }}>
-        <Select
-          name="modal"
-          defaultValue={MODAL[0].value}
-          style={{ width: width }}
-          onChange={e => onModalNameChange(e)}
-        >
-          {MODAL.map((m, i) => (
-            <Option key={i} value={m.value}>
-              {m.label}
-            </Option>
-          ))}
-        </Select>
-      </FormItem>
+      <Field
+        name="modal"
+        component={RenderSelect}
+        placeholder={t('adminPanel.filter.field2')}
+        defaultValue={MODAL[0].value}
+        onChange={e => onModalNameChange(e)}
+        label={t('adminPanel.filter.field2')}
+        style={{ width: '100px' }}
+        value={modalName}
+        inFilter={true}
+        selectStyle={{ width: width }}
+      >
+        {MODAL.map((m, i) => (
+          <Option key={i} value={m.value}>
+            {m.label}
+          </Option>
+        ))}
+      </Field>
     );
   };
   return (
@@ -85,6 +107,7 @@ ReviewsFilterView.propTypes = {
   onIsActiveChange: PropTypes.func.isRequired,
   onSearchTextChange: PropTypes.func.isRequired,
   onModalNameChange: PropTypes.func.isRequired,
+  onFiltersRemove: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 

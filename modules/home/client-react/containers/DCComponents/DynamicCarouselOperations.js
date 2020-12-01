@@ -330,6 +330,14 @@ export const withDynamicCarouselFilterUpdating = Component =>
       onIsActiveChange(isActive) {
         // console.log(isActive);
         mutate({ variables: { filter: { isActive } } });
+      },
+      onFiltersRemove(filter, orderBy) {
+        mutate({
+          variables: {
+            filter,
+            orderBy
+          }
+        });
       }
     })
   })(Component);

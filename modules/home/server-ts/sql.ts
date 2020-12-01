@@ -8,6 +8,7 @@ Model.knex(knex);
 
 interface FilterDynamicCarousel {
   searchText: string;
+  label: string;
   isActive: boolean;
 }
 interface OrderByDynamicCarousel {
