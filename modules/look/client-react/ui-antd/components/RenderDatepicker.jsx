@@ -11,7 +11,13 @@ const RenderDatePicker = ({ type, label, meta: { touched, error }, input, ...pro
 
   return (
     <>
-      <FormItem label={label} validateStatus={validateStatus} help={touched && error}>
+      <FormItem
+        label={label}
+        validateStatus={validateStatus}
+        help={touched && error}
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
+      >
         {type === 'range' && <ADDatePicker.RangePicker {...input} {...props} />}
         {type !== 'range' && <ADDatePicker {...input} {...props} />}
       </FormItem>

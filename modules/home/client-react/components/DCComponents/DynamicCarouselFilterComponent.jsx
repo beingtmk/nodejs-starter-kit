@@ -8,7 +8,7 @@ import { LABEL } from '@gqlapp/home-common';
 
 const DynamicCarouselFilterView = props => {
   const {
-    filter: { searchText, label, isActive },
+    filter: { searchText, label, isActive } = {},
     onSearchTextChange,
     onLabelChange,
     onIsActiveChange,
