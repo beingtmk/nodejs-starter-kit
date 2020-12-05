@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 // import { LeftArrow, RightArrow } from './CarouselArrows';
 import { Row, Col, Divider, Button } from '@gqlapp/look-client-react';
 import { TotalPrice } from '../components/CheckoutCartView';
+import ROUTES from '../routes/index';
 
 const SlickCarousel = props => {
   // console.log('carousel', props);
-  const { Compo, componentProps, itemName, height, width } = props;
+  const { Compo, itemName, height, width, onEdit, onDelete } = props;
 
   return (
     <>
@@ -18,7 +19,7 @@ const SlickCarousel = props => {
           return (
             <Row>
               <Col>
-                <Compo {...componentProps} componentStyle={props.componentStyle} {...obj} key={key} />
+                <Compo {...obj} key={key} onEdit={onEdit} onDelete={onDelete} />
               </Col>
               <Divider style={{ margin: '0px', width: '80%', minWidth: '80%' }} />
             </Row>
@@ -38,9 +39,9 @@ const SlickCarousel = props => {
                 </h3>
               </Col>
             </Row>
-            <Row style={{ padding: '24px' }}>
+            <Row style={{ padding: '14px 24px 24px 24px' }}>
               <Button block color="primary">
-                checkout
+                <Link to={ROUTES.checkoutCart}>checkout</Link>
               </Button>
             </Row>
           </Col>
@@ -51,19 +52,15 @@ const SlickCarousel = props => {
 };
 
 SlickCarousel.propTypes = {
-  settings: PropTypes.object.isRequired,
-  componentStyle: PropTypes.object,
-  componentProps: PropTypes.object,
   node: PropTypes.object,
   height: PropTypes.string,
   Compo: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
-  autoplay: PropTypes.bool,
-  showArrow: PropTypes.bool,
   onDelete: PropTypes.func,
   getCart: PropTypes.object,
   width: PropTypes.string,
-  itemName: PropTypes.string
+  itemName: PropTypes.string,
+  onEdit: PropTypes.func
 };
 
 export default SlickCarousel;

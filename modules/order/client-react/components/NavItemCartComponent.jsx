@@ -1,23 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { DeleteIcon, Row, Col, Card, ModalDrawer, Icon, Button, ButtonGroup } from '@gqlapp/look-client-react';
-
 import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { Row, Col, Card, Icon, Button, ButtonGroup } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-import { MODAL } from '@gqlapp/review-common';
 
-import EditCart from './EditCart';
-
-const Align = styled.div`
-  position: absolute;
-  right: 0;
-  z-index: 1;
-  padding-right: 10px;
-  margin: 16px 40px;
-`;
 const AlignButton = styled.div`
   position: absolute;
   right: 0;
@@ -26,8 +16,7 @@ const AlignButton = styled.div`
 `;
 
 const CartItemComponent = props => {
-  const { t, item, onEdit, onDelete, currentUser } = props;
-  // console.log('cart item', props);
+  const { item, onEdit, onDelete } = props;
   // var coverGrid = {
   //   xs: { span: 24 },
   //   md: { span: 9 },
@@ -48,51 +37,26 @@ const CartItemComponent = props => {
   //   coverGrid = { span: 24 };
   //   infoGrid = { span: 24 };
   // }
-
+  const handleQuantity = ele => {
+    let quantity = item.orderOptions.quantity;
+    if (ele === 'plus') quantity = quantity + 1;
+    if (ele === 'minus') quantity = quantity - 1;
+    console.log(quantity);
+    if (quantity === 0) {
+      onDelete(item.id);
+    } else {
+      onEdit(item.id, item.orderOptions && item.orderOptions.id, quantity);
+    }
+  };
   return (
     <div style={{ paddingRight: '10px' }}>
-      <Align>
-        <Row type="flex" justify="space-around" align="middle" gutter={12}>
-          {onEdit && (
-            <Col span={8}>
-              <ModalDrawer
-                buttonText={<Icon type="EditOutlined" />}
-                modalTitle="Edit Item"
-                height="auto"
-                shape="circle"
-                size="large"
-                type="default"
-              >
-                <EditCart
-                  modalId={item.modalId}
-                  currentUser={currentUser}
-                  modalName={MODAL[1].value}
-                  onEdit={onEdit}
-                  item={item}
-                  t={t}
-                />
-              </ModalDrawer>
-            </Col>
-          )}
-
-          <Col span={8}>
-            {onDelete && (
-              <DeleteIcon
-                title="Are you sure to delete this order?"
-                onClick={() => props.onDelete(item.id)}
-                size="lg"
-              />
-            )}
-          </Col>
-        </Row>
-      </Align>
       <AlignButton>
         <ButtonGroup>
-          <Button size="sm" icon={<Icon type="MinusOutlined" />} onClick={() => console.log('object')} />
+          <Button size="sm" icon={<Icon type="MinusOutlined" />} onClick={() => handleQuantity('minus')} />
           <Button size="sm" style={{ width: '24px', padding: '0px 0px' }}>
             {item.orderOptions.quantity}
           </Button>
-          <Button size="sm" icon={<Icon type="PlusOutlined" />} />
+          <Button size="sm" icon={<Icon type="PlusOutlined" />} onClick={() => handleQuantity('plus')} />
         </ButtonGroup>
       </AlignButton>
       <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
