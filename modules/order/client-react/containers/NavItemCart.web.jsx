@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 import { NavLink } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
-import { DropDown, Card, Icon, Badge /* , SlickCarousel */ } from '@gqlapp/look-client-react';
+import { DropDown, Card, Icon /* , SlickCarousel */ } from '@gqlapp/look-client-react';
 
 import { withCurrentUser, withGetCart } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
 import SlickCarousel from './SlickCarousel';
-import CartItemComponent from '../components/CartItemComponent';
+import CartItemComponent from '../components/NavItemCartComponent';
 import ROUTES from '../routes';
 
 const StyleCard = styled(Card)`
@@ -45,7 +45,7 @@ const NavItemCart = props => {
     };
   };
 
-  // console.log('props navCart', props);
+  console.log('props navCart', props);
   return (
     <>
       {!currentUserLoading && (
@@ -58,11 +58,8 @@ const NavItemCart = props => {
                   padding: '12px'
                 }}
               >
-                <Icon type="ShoppingCartOutlined" /> Cart{' '}
-                <Badge
-                  style={{ marginTop: '-5px' }}
-                  count={getCart && getCart.orderDetails && getCart.orderDetails.length}
-                />
+                <Icon type="ShoppingCartOutlined" />
+                &nbsp;&nbsp;{getCart && getCart.orderDetails && getCart.orderDetails.length}
               </StyleCard>
             </NavLink>
           }
@@ -75,7 +72,7 @@ const NavItemCart = props => {
               Compo={CartItemComponent}
               settings={carouselSettings(itemLength)}
               data={props.getCart.orderDetails}
-              height={'500px'}
+              // height={'500px'}
               width={'300px'}
               // node={true}
               itemName={'item'}
@@ -83,7 +80,7 @@ const NavItemCart = props => {
                 mobile: true,
                 t
               }}
-              componentStyle={{ margin: '0px', width: '300px' }}
+              // componentStyle={{ margin: '0px', width: '300px' }}
             />
           ) : (
             <h5>No Items in cart</h5>
