@@ -41,7 +41,7 @@ const DynamicCarouselView = props => {
         </Col>
       </Row>
       <hr />
-      <DynamicCarouselFilterComponent {...props} filter={{ isActive: true }} />
+      <DynamicCarouselFilterComponent {...props} />
       <hr />
       <DynamicCarouselListView {...props} />
     </PageLayout>

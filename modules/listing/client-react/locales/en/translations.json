@@ -97,7 +97,12 @@
     "finalPrice":"Final Price",
     "image":"Listing Image",
     "addVideo":"Add video url",
-    "videoUrl":"Video url"
+    "videoUrl":"Video url",
+    "isTimeStamp":"Is Time Stamp",
+    "discountDuration":{
+      "startDate":"Start Date",
+      "endDate":"End Date"
+    }
   },
   "listAdd":{
     "title":"Add listing",
@@ -127,6 +132,7 @@
       "discount":"Discount",
       "fixedQuantity":"Fixed Quantity",
       "inventoryCount":"Inventory Count"
+      
     },
     "btn": {
       "add": "Add",

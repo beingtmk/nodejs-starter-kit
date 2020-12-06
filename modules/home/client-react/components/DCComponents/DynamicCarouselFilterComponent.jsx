@@ -1,31 +1,59 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import { Form, FormItem, Select, Option, Label, Input, Row, Col } from '@gqlapp/look-client-react';
+
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { Form, FormItem, Option, Label, Input, Row, Col, RenderSelect } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 
-const DynamicCarouselFilterView = ({
-  filter: { searchText, label, isActive },
-  onSearchTextChange,
-  onLabelChange,
-  onIsActiveChange,
-  t
-}) => {
+const DynamicCarouselFilterView = props => {
+  const {
+    filter: { searchText, label, isActive } = {},
+    onSearchTextChange,
+    onLabelChange,
+    onIsActiveChange,
+    onFiltersRemove,
+    t
+  } = props;
+  const handleFiltersRemove = useRef(() => {});
+
+  handleFiltersRemove.current = () => {
+    const filter = {
+      searchText: '',
+      label: '',
+      isActive: true
+    };
+    const orderBy = { column: '', order: '' };
+    onFiltersRemove(filter, orderBy);
+  };
+
+  useEffect(() => {
+    return () => handleFiltersRemove.current();
+  }, []);
   const CarouselLabelField = width => {
     return (
-      <FormItem label={t('dynamicCarousel.filter.label')} style={{ width: '100%' }}>
-        <Select name="label" defaultValue={label} style={{ width: width }} onChange={e => onLabelChange(e)}>
-          <Option key={1} value={''}>
-            All
-          </Option>
-          {LABEL &&
-            LABEL.map((l, i) => (
-              <Option key={i + 2} value={l}>
-                {l}
-              </Option>
-            ))}
-        </Select>
-      </FormItem>
+      <Field
+        name="label"
+        component={RenderSelect}
+        placeholder={t('dynamicCarousel.filter.label')}
+        defaultValue={label}
+        onChange={e => onLabelChange(e)}
+        label={t('dynamicCarousel.filter.label')}
+        style={{ width: '100px' }}
+        value={label}
+        inFilter={true}
+        selectStyle={{ width: width }}
+      >
+        <Option key={1} value={''}>
+          All
+        </Option>
+        {LABEL &&
+          LABEL.map((l, i) => (
+            <Option key={i + 2} value={l}>
+              {l}
+            </Option>
+          ))}
+      </Field>
     );
   };
   return (
@@ -84,6 +112,7 @@ DynamicCarouselFilterView.propTypes = {
   onSearchTextChange: PropTypes.func.isRequired,
   onLabelChange: PropTypes.func.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
+  onFiltersRemove: PropTypes.func.isRequired,
   t: PropTypes.func
 };
 

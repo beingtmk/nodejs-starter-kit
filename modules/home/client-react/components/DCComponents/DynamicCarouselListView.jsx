@@ -36,7 +36,6 @@ NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
 
 const DynamicCarouselListView = props => {
   const { loading, t, orderBy, onDynamicCarouselOrderBy, deleteDynamicCarousel, dynamicCarousels, loadData } = props;
-  console.log(props);
   const renderOrderByArrow = name => {
     if (orderBy && orderBy.column === name) {
       if (orderBy.order === 'desc') {

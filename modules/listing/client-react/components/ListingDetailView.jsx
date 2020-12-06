@@ -173,7 +173,7 @@ const ListingDetailView = props => {
                       images.map((item, id) => (
                         <div key={id} align="center">
                           <Tooltip title="click to zoom" placement="bottom">
-                            <Image src={item.url} style={{ height: '300px' }} />
+                            <Image src={item.url} /* style={{ height: '300px' }} */ height={300} />
                           </Tooltip>
                         </div>
                       ))}

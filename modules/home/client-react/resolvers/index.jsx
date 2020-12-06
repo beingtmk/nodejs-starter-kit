@@ -27,7 +27,7 @@ const defaults = {
 const resolvers = {
   Mutation: {
     updateOrderByDynamicCarousels: (_, { orderBy }, { cache }) => {
-      console.log(orderBy, 'bleh');
+      // console.log(orderBy, 'bleh');
       const { dynamicCarouselState } = cache.readQuery({ query: DYNAMIC_CAROUSEL_STATE_QUERY });
 
       const newDynamicCarouselState = update(dynamicCarouselState, {

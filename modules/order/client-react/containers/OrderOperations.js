@@ -275,6 +275,14 @@ export const withFilterUpdating = Component =>
       onUserStateChange(consumerId, state) {
         // console.log('consumerId, state', consumerId, state);
         mutate({ variables: { filter: { consumerId, state } } });
+      },
+      onFiltersRemove(filter, orderBy) {
+        mutate({
+          variables: {
+            filter,
+            orderBy
+          }
+        });
       }
     })
   })(Component);
