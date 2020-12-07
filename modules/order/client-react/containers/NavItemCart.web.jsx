@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
+import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { NavLink } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
-import { DropDown, Card, Icon, Message /* , SlickCarousel */ } from '@gqlapp/look-client-react';
+import { DropDown, Card, Icon, Message, Empty, AddButton /* , SlickCarousel */ } from '@gqlapp/look-client-react';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { withCurrentUser, withGetCart, withEditOrderDetail, withDeleteCartItem } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
@@ -20,7 +22,16 @@ const StyleCard = styled(Card)`
 `;
 
 const NavItemCart = props => {
-  const { getCart, subscribeToMore, history, editOrderDetail, deleteOrderDetail, currentUserLoading, t } = props;
+  const {
+    loading,
+    getCart,
+    subscribeToMore,
+    history,
+    editOrderDetail,
+    deleteOrderDetail,
+    currentUserLoading,
+    t
+  } = props;
 
   useEffect(() => {
     const subscribe = subscribeToCart(subscribeToMore, getCart && getCart.id, history);
@@ -56,43 +67,55 @@ const NavItemCart = props => {
   // console.log('props navCart', props);
   return (
     <>
-      {!currentUserLoading && (
-        <DropDown
-          content={
-            <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
-              <StyleCard
-                hoverable
-                bodyStyle={{
-                  padding: '12px'
-                }}
-              >
-                <Icon type="ShoppingCartOutlined" />
-                &nbsp;&nbsp;{getCart && getCart.orderDetails && getCart.orderDetails.length}
-              </StyleCard>
-            </NavLink>
-          }
-          placement="bottomRight"
-          className="navbar-cart-dropdown"
-          noicon
-        >
-          {props.getCart && props.getCart.orderDetails && props.getCart.orderDetails.length !== 0 ? (
-            <SlickCarousel
-              Compo={CartItemComponent}
-              data={props.getCart.orderDetails}
-              width={'300px'}
-              // node={true}
-              itemName={'item'}
-              componentProps={{
-                mobile: true,
-                t
-              }}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ) : (
-            <h3 style={{ padding: '10px' }}>No Items in cart</h3>
+      {!loading && (
+        <>
+          {!currentUserLoading && (
+            <DropDown
+              content={
+                <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
+                  <StyleCard
+                    hoverable
+                    bodyStyle={{
+                      padding: '12px'
+                    }}
+                  >
+                    <Icon type="ShoppingCartOutlined" />
+                    &nbsp;&nbsp;{getCart && getCart.orderDetails && getCart.orderDetails.length}
+                  </StyleCard>
+                </NavLink>
+              }
+              placement="bottomRight"
+              className="navbar-cart-dropdown"
+              noicon
+            >
+              {props.getCart && props.getCart.orderDetails && props.getCart.orderDetails.length !== 0 ? (
+                <SlickCarousel
+                  Compo={CartItemComponent}
+                  data={props.getCart.orderDetails}
+                  width={'300px'}
+                  // node={true}
+                  itemName={'item'}
+                  componentProps={{
+                    mobile: true,
+                    t
+                  }}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ) : (
+                <div style={{ padding: '10px' }}>
+                  <div className="centerAlign marginT30">
+                    <Empty description="You have no items in your Cart" imageStyle={{ height: '80px' }}>
+                      <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
+                        <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>
+                      </Link>
+                    </Empty>
+                  </div>
+                </div>
+              )}
+            </DropDown>
           )}
-        </DropDown>
+        </>
       )}
     </>
   );
@@ -105,7 +128,8 @@ NavItemCart.propTypes = {
   editOrderDetail: PropTypes.func,
   deleteOrderDetail: PropTypes.func,
   subscribeToMore: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
+  loading: PropTypes.bool
 };
 
 export default compose(

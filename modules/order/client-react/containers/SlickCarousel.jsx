@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import { LeftArrow, RightArrow } from './CarouselArrows';
+
 import { Row, Col, Divider, Button } from '@gqlapp/look-client-react';
+
 import { TotalPrice } from '../components/CheckoutCartView';
 import ROUTES from '../routes/index';
 
+const ColorFloat = styled.strong`
+  color: #3f0869;
+`;
 const SlickCarousel = props => {
   // console.log('carousel', props);
   const { Compo, itemName, height, width, onEdit, onDelete } = props;
@@ -21,7 +26,7 @@ const SlickCarousel = props => {
               <Col>
                 <Compo {...obj} key={key} onEdit={onEdit} onDelete={onDelete} />
               </Col>
-              <Divider style={{ margin: '0px', width: '80%', minWidth: '80%' }} />
+              <Divider style={{ margin: '0px', borderWidth: '2px' }} />
             </Row>
           );
         })}
@@ -30,18 +35,18 @@ const SlickCarousel = props => {
             <Row>
               <Col span={16}>
                 <h3 style={{ padding: '15px 0px 0px 15px' }}>
-                  <strong>subtotal</strong>
+                  <strong>Subtotal</strong>
                 </h3>
               </Col>
               <Col span={8}>
                 <h3 style={{ padding: '15px 0px 0px 15px' }}>
-                  <strong>&#8377;{TotalPrice(props.data)}</strong>
+                  <ColorFloat>&#8377;&nbsp;{TotalPrice(props.data)}</ColorFloat>
                 </h3>
               </Col>
             </Row>
             <Row style={{ padding: '14px 24px 24px 24px' }}>
               <Button block color="primary">
-                <Link to={ROUTES.checkoutCart}>checkout</Link>
+                <Link to={ROUTES.checkoutCart}>Checkout</Link>
               </Button>
             </Row>
           </Col>
