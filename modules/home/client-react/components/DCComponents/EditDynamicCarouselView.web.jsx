@@ -7,7 +7,7 @@ import settings from '@gqlapp/config';
 import DynamicCarouselFormComponent from './DynamicCarouselFormComponent';
 
 const EditDynamicCarouselView = props => {
-  const { t, dynamicCarousel, loading, editDynamicCarousel, currentUser } = props;
+  const { t, dynamicCarousel, loading, onSubmit, currentUser } = props;
   return (
     <PageLayout type="forms">
       <MetaTags title={t('banner')} description={`${settings.app.name} - ${t('meta')}`} />
@@ -29,7 +29,7 @@ const EditDynamicCarouselView = props => {
               <DynamicCarouselFormComponent
                 t={t}
                 dynamicCarousel={dynamicCarousel}
-                onSubmit={editDynamicCarousel}
+                onSubmit={onSubmit}
                 currentUser={currentUser}
               />
             </Card>
@@ -47,7 +47,7 @@ EditDynamicCarouselView.propTypes = {
   loading: PropTypes.bool,
   dynamicCarousel: PropTypes.object,
   currentUser: PropTypes.object,
-  editDynamicCarousel: PropTypes.func
+  onSubmit: PropTypes.func
 };
 
 export default EditDynamicCarouselView;

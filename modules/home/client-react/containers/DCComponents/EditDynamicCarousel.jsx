@@ -8,21 +8,28 @@ import { withDynamicCarousel, withEditDynamicCarousel, subscribeToDynamicCarouse
 import EditDynamicCarouselView from '../../components/DCComponents/EditDynamicCarouselView.web';
 
 const EditDynamicCarousel = props => {
-  const { subscribeToMore, history } = props;
+  const { subscribeToMore, history, editDynamicCarousel } = props;
   useEffect(() => {
     const subscribe = subscribeToDynamicCarousel(subscribeToMore, history);
     return () => subscribe();
   });
-
+  const handleSubmit = values => {
+    try {
+      editDynamicCarousel(values);
+    } catch (e) {
+      throw Error(e);
+    }
+  };
   // console.log('props', props);
-  return <EditDynamicCarouselView {...props} />;
+  return <EditDynamicCarouselView onSubmit={handleSubmit} {...props} />;
 };
 
 EditDynamicCarousel.propTypes = {
   updateQuery: PropTypes.func,
   subscribeToMore: PropTypes.func,
   dynamicCarousel: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  editDynamicCarousel: PropTypes.func
 };
 
 export default compose(withDynamicCarousel, withEditDynamicCarousel, translate('home'))(EditDynamicCarousel);
