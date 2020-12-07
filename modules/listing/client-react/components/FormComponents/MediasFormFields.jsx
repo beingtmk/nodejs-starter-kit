@@ -10,7 +10,8 @@ import {
   Icon,
   SubmitButton,
   RenderField,
-  RenderUploadMultiple
+  /* RenderUploadMultiple, */
+  RenderUploadMultipleWithCrop
 } from '@gqlapp/look-client-react';
 import { FieldArray } from 'formik';
 
@@ -82,22 +83,22 @@ const MediasFormFields = props => {
         <Col span={24}>{formItemsVideos}</Col>
       </Col>
       <Col md={12} sm={24} xs={24} lg={12} align="left">
-        <FormItem label={'Add images'}>
-          <FieldArray
-            name="listingMedia.image"
-            label={t('listingForm.image')}
-            render={arrayHelpers => (
-              <RenderUploadMultiple
-                setload={load => setLoad(load)}
-                arrayHelpers={arrayHelpers}
-                values={values.listingMedia.image}
-                getType={true}
-                dictKey="url"
-                extraFields={[{ type: 'image' }]}
-              />
-            )}
-          />
-        </FormItem>
+        <FieldArray
+          name="listingMedia.image"
+          label={t('listingForm.image')}
+          render={arrayHelpers => (
+            <RenderUploadMultipleWithCrop
+              setload={load => setLoad(load)}
+              width={500}
+              height={500}
+              arrayHelpers={arrayHelpers}
+              values={values.listingMedia.image}
+              getType={true}
+              dictKey="url"
+              extraFields={[{ type: 'image' }]}
+            />
+          )}
+        />
       </Col>
       <Col span={24} align="right">
         <Row>
