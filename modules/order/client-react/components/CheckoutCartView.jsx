@@ -42,6 +42,7 @@ export function TotalPrice(cartArray) {
     cartArray.map(item => {
       totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
     });
+  totalCartPrice = totalCartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return totalCartPrice;
 }
 

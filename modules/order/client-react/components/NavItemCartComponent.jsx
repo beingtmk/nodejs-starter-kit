@@ -65,11 +65,13 @@ const CartItemComponent = props => {
             <Col span={8} offset={0}>
               <img alt="" src={item.imageUrl || NO_IMG} style={{ height: '100px', width: '100%' }} />
             </Col>
-            <Col offset={2} span={10}>
+            <Col span={10}>
               <h3>{item.title}</h3>
             </Col>
-            <Col span={4} offset={0}>
-              <strong>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</strong>
+            <Col span={6} offset={0}>
+              <Row justify="end">
+                <strong>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</strong>
+              </Row>
             </Col>
           </Row>
         </Card>
