@@ -8,7 +8,7 @@ import Modal from './Modal';
 import Icon from './Icon';
 
 const RenderUploadWithCrop = props => {
-  const { height, width, label, formik, name, setload, /* input, */ value } = props;
+  const { height, width, label, formik, name, setload, /* input, */ /* shape = 'rect', */ value } = props;
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState(
@@ -65,10 +65,16 @@ const RenderUploadWithCrop = props => {
   const cloudinary_data = { upload_preset: 'hycdtdxe' };
   let validateStatus = '';
 
+  // console.log('props', shape);
   return (
     <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
       <div className="clearfix">
-        <ImgCrop width={width} height={height} modalTitle={'Align image'} modalWidth={'fit-content'}>
+        <ImgCrop
+          width={width}
+          height={height}
+          /* shape={'round'} */ modalTitle={'Align image'}
+          modalWidth={'fit-content'}
+        >
           <Upload
             action={cloudinary_url}
             data={cloudinary_data}
@@ -96,7 +102,8 @@ RenderUploadWithCrop.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
   formik: PropTypes.object,
-  name: PropTypes.string
+  name: PropTypes.string,
+  shape: PropTypes.string
 };
 
 export default RenderUploadWithCrop;

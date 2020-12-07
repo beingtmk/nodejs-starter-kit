@@ -14,7 +14,8 @@ import {
   Option,
   Alert,
   SubmitButton,
-  RenderUpload,
+  // RenderUpload,
+  RenderUploadWithCrop,
   Row,
   Col,
   ModalDrawer
@@ -67,13 +68,24 @@ const UserForm = props => {
           &nbsp; &nbsp;
           <Col lg={3} xs={24} />
           <Col lg={18} xs={24}>
-            <Field
+            {/* <Field
               name={'avatar'}
               component={RenderUpload}
               type="text"
               setload={e => setLoad(e)}
               label={'Avatar'}
               value={values.profile.avatar}
+            /> */}
+            <Field
+              name="profile.avatar"
+              value={values.profile.avatar}
+              setload={e => setLoad(e)}
+              load={load}
+              shape="round"
+              height={500}
+              width={500}
+              component={RenderUploadWithCrop}
+              label={'Avatar'}
             />
           </Col>
         </Col>
