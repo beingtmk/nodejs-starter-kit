@@ -2,34 +2,18 @@ import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { PropTypes } from 'prop-types';
 
-import { withFormik, FieldArray } from 'formik';
-import moment from 'moment';
+import { withFormik } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
-import {
-  Form,
-  Row,
-  Col,
-  RenderField,
-  RenderUploadMultiple,
-  FormItem,
-  RenderCheckBox,
-  NextButton,
-  SubmitButton,
-  Icon,
-  RenderDatePicker,
-  Tooltip,
-  Card,
-  Button,
-  Message
-} from '@gqlapp/look-client-react';
-import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { Form, Icon, Card, Message } from '@gqlapp/look-client-react';
 import { MODAL } from '@gqlapp/review-common';
-import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
+
+import DetailsFormFields from './FormComponents/DetailsFormFields';
+import FlagsFormFields from './FormComponents/FlagsFormFields';
+import MediasFormFields from './FormComponents/MediasFormFields';
 
 import { displayDataCheck } from './functions';
 
-const VIDEO = 'video';
 const LAST_STEP = 3;
 
 const ListingFormSchema = [
@@ -105,102 +89,6 @@ const ListingFormComponent = props => {
     values.listingFlags.isDiscount ||
     (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
     (values.isTimeStamp && true);
-  let formItemsVideos = null;
-  let formItemsListingHighlight = null;
-
-  if (videos.length > 0) {
-    formItemsVideos = videos.map((v, index) => (
-      <FormItem required={false} key={index} style={{ margin: '0 5px' }}>
-        <Row type="flex" align="middle">
-          <Col span={20}>
-            <FormItem
-              //  style={{ display: 'inline-block', margin: '0px 5px' }}
-              key={index}
-            >
-              <Field
-                name={`listingMedia.video[${index}].url`}
-                component={RenderField}
-                placeholder={t('listingForm.videoUrl')}
-                type="text"
-                label={t('listingForm.videoUrl')}
-                value={v.url}
-                key={index}
-              />
-            </FormItem>
-          </Col>
-          <Col span={4} align="right">
-            <Button
-              color={'danger'}
-              shape="circle"
-              icon={<Icon type={'DeleteOutlined'} />}
-              onClick={() => setFieldValue('listingMedia.video', videos.splice(index, 1) && videos)}
-              style={{ marginBottom: '30px' }}
-            />
-          </Col>
-        </Row>
-      </FormItem>
-    ));
-  }
-
-  if (listingHighlight.length > 0) {
-    formItemsListingHighlight = listingHighlight.map((v, index) => (
-      <Col span={12}>
-        <FormItem required={false} key={index} style={{ margin: '0 5px' }}>
-          <Row type="flex" align="middle">
-            <Col span={20}>
-              <FormItem
-                //  style={{ display: 'inline-block', margin: '0px 5px' }}
-                key={index}
-              >
-                <Field
-                  name={`listingHighlight[${index}].highlight`}
-                  component={RenderField}
-                  placeholder={`Hightlight ${index + 1}`}
-                  type="text"
-                  label={`Hightlight ${index + 1}`}
-                  value={v.highlight}
-                  key={index}
-                />
-              </FormItem>
-            </Col>
-            <Col span={4} align="right">
-              <Button
-                color={'danger'}
-                shape="circle"
-                icon={<Icon type={'DeleteOutlined'} />}
-                onClick={() => setFieldValue('listingHighlight', listingHighlight.splice(index, 1) && listingHighlight)}
-                style={{ marginBottom: '25px' }}
-              />
-            </Col>
-          </Row>
-        </FormItem>
-      </Col>
-    ));
-  }
-
-  const addVideo = () => {
-    const obj = {
-      url: '',
-      type: VIDEO
-    };
-    props.setFieldValue('listingMedia.video', [...props.values.listingMedia.video, obj]);
-  };
-  const addHighlight = () => {
-    const obj = {
-      highlight: ''
-    };
-    props.setFieldValue('listingHighlight', [...props.values.listingHighlight, obj]);
-  };
-  function disabledStartDate(current) {
-    // Can not select days before today and today
-    return current && current < moment().startOf('day');
-  }
-
-  function disabledEndDate(current) {
-    const startDate = moment(values.discountDuration.startDate ? moment(values.discountDuration.startDate) : moment());
-    // Can not select days before today and today
-    return current && current < startDate.startOf('day');
-  }
 
   // console.log('props', props.modalDiscount);
   return (
@@ -225,307 +113,27 @@ const ListingFormComponent = props => {
     >
       <Form layout={'vertical'} onSubmit={handleSubmit}>
         {step === 0 && (
-          <Row type="flex" gutter={24}>
-            <Col md={12} xs={24} align="left">
-              <Field
-                name="title"
-                component={RenderField}
-                placeholder={t('listingForm.title')}
-                type="text"
-                label={t('listingForm.title')}
-                value={values.title}
-              />
-              <Field
-                name="description"
-                component={RenderField}
-                placeholder={t('listingForm.description')}
-                type="textarea"
-                label={t('listingForm.description')}
-                value={values.description}
-              />
-            </Col>
-            <Col md={12} xs={24} align="left">
-              <Field
-                name="sku"
-                component={RenderField}
-                placeholder={t('listingForm.SKU')}
-                type="text"
-                label={t('listingForm.SKU')}
-                value={values.sku}
-              />
-              <Field
-                name="listingCostArray[0].cost"
-                component={RenderField}
-                placeholder={t('listingForm.cost')}
-                type="number"
-                label={t('listingForm.cost')}
-                min={0}
-                value={values.listingCostArray[0].cost}
-              />
-              <Field
-                component={CategoryTreeComponent}
-                // disableParent={true}
-                nullable={false}
-                filter={{ modalName: MODAL[1].value }}
-                type="number"
-                name="categoryId"
-                placeholder="category"
-                label="Select a category"
-                value={values.categoryId}
-              />
-            </Col>
-            <Col md={12} xs={24} align="left">
-              <Field
-                name="listingDetail.inventoryCount"
-                component={RenderField}
-                placeholder={t('listingForm.invontoryCount')}
-                type="number"
-                label={t('listingForm.invontoryCount')}
-                min={0}
-                value={values.listingDetail.inventoryCount}
-              />
-            </Col>
-            <Col md={12} xs={24} align="left">
-              <Field
-                name="listingOptions.fixedQuantity"
-                component={RenderField}
-                placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
-                type="number"
-                // tooltip={{ title: t('listingForm.tooltip'), icon: <InfoCircleOutlined /> }}
-                label={
-                  <>
-                    {t('listingForm.fixedQuantity')}
-                    <Tooltip title={t('listingForm.tooltip')}>
-                      <Icon type="InfoCircleOutlined" />
-                    </Tooltip>
-                  </>
-                }
-                min={-1}
-                max={values.listingDetail.inventoryCount}
-                value={values.listingOptions.fixedQuantity}
-              />
-            </Col>
-            <Col span={24} align="left">
-              <Row>
-                <Col span={18}>
-                  <FormItem label={'Add Highlight'}></FormItem>
-                </Col>
-                <Col span={6} align="right">
-                  <FormItem>
-                    <Button color="primary" onClick={addHighlight}>
-                      <Icon type="VideoCameraOutlined" />
-                      Add
-                    </Button>
-                  </FormItem>
-                </Col>
-              </Row>
-              <Col span={24}>
-                <Row type="flex" gutter={24}>
-                  {formItemsListingHighlight}
-                </Row>
-              </Col>
-            </Col>
-
-            <Col span={24} align="right">
-              <br />
-              <NextButton style={{ width: 'auto' }} type="submit">
-                {t('listingForm.btn.next')}
-              </NextButton>
-            </Col>
-          </Row>
+          <DetailsFormFields values={values} listingHighlight={listingHighlight} t={t} setFieldValue={setFieldValue} />
         )}
         {step === 1 && (
-          <Row gutter={24}>
-            <Col md={8} xs={24} align="left">
-              <Col xs={12} lg={24}>
-                <Field
-                  name="listingFlags.isFeatured"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={t('listingForm.isFeatured')}
-                  checked={values.listingFlags.isFeatured}
-                />
-              </Col>
-              <Col xs={12} lg={24}>
-                <Field
-                  name="listingFlags.isDiscount"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={t('listingForm.isDiscount')}
-                  checked={isDiscount}
-                />
-              </Col>
-            </Col>
-            <Col md={8} xs={24} align="left">
-              <Col xs={12} lg={24}>
-                <Field
-                  name="isActive"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={t('listingForm.isActive')}
-                  checked={values.isActive}
-                />
-              </Col>
-              <Col xs={12} lg={24}>
-                {isDiscount && (
-                  <Field
-                    name="listingCostArray[0].discount"
-                    component={RenderField}
-                    placeholder={t('listingForm.discount')}
-                    type="number"
-                    label={t('listingForm.discount')}
-                    min={0}
-                    max={100}
-                    value={values.listingCostArray[0].discount}
-                  />
-                )}
-              </Col>
-            </Col>
-            <Col md={8} xs={24} align="left">
-              <Col xs={12} lg={24}>
-                <Field
-                  name="listingFlags.isNew"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={t('listingForm.isNew')}
-                  checked={values.listingFlags.isNew}
-                />
-              </Col>
-              <Col xs={12} lg={24}>
-                {isDiscount && values.listingCostArray[0].discount && (
-                  <Field
-                    name="finalPrice"
-                    component={RenderField}
-                    type="number"
-                    label={t('listingForm.finalPrice')}
-                    disabled={true}
-                    value={(
-                      values.listingCostArray[0].cost -
-                      values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
-                    ).toFixed(2)}
-                  />
-                )}
-              </Col>
-            </Col>
-            <Col md={8} xs={24} align="left">
-              {isDiscount && values.discountDuration && (
-                <Field
-                  name="isTimeStamp"
-                  component={RenderCheckBox}
-                  type="checkbox"
-                  label={t('listingForm.isTimeStamp')}
-                  checked={values.isTimeStamp}
-                />
-              )}
-            </Col>
-            <Col md={8} xs={24} align="left">
-              {values.isTimeStamp && (
-                <Field
-                  name={'discountDuration.startDate'}
-                  component={RenderDatePicker}
-                  // type="range"
-                  disabledDate={disabledStartDate}
-                  showTime
-                  label={t('listingForm.discountDuration.startDate')}
-                  onChange={e => setFieldValue('discountDuration.startDate', e.toISOString())}
-                  value={values.discountDuration.startDate ? moment(values.discountDuration.startDate) : moment()}
-                />
-              )}
-            </Col>
-            <Col md={8} xs={24} align="left">
-              {values.isTimeStamp && (
-                <Field
-                  name={'discountDuration.endDate'}
-                  component={RenderDatePicker}
-                  // type="range"
-                  disabledDate={disabledEndDate}
-                  showTime
-                  label={t('listingForm.discountDuration.endDate')}
-                  onChange={e => setFieldValue('discountDuration.endDate', e.toISOString())}
-                  value={
-                    values.discountDuration.endDate
-                      ? moment(values.discountDuration.endDate)
-                      : values.discountDuration.startDate
-                      ? moment(values.discountDuration.startDate)
-                      : moment()
-                  }
-                />
-              )}
-            </Col>
-            <Col span={24} align="right">
-              <Row>
-                <Col span={12} align="left">
-                  <br />
-                  <Button onClick={() => setStep(0)}>
-                    <Icon type="ArrowLeftOutlined" />
-                    {t('listingForm.btn.previous')}
-                  </Button>
-                </Col>
-                <Col span={12} align="right">
-                  <br />
-                  <NextButton style={{ width: 'auto' }} type="submit">
-                    {t('listingForm.btn.next')}
-                  </NextButton>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+          <FlagsFormFields
+            values={values}
+            t={t}
+            setFieldValue={setFieldValue}
+            isDiscount={isDiscount}
+            setStep={setStep}
+          />
         )}
         {step === 2 && (
-          <Row gutter={24}>
-            <Col md={12} sm={24} xs={24} lg={12} align="left">
-              <Row>
-                <Col span={18}>
-                  <FormItem label={t('listingForm.addVideo')}></FormItem>
-                </Col>
-                <Col span={6} align="right">
-                  <FormItem>
-                    <Button color="primary" onClick={addVideo}>
-                      <Icon type="VideoCameraOutlined" />
-                      {t('listingForm.btn.add')}
-                    </Button>
-                  </FormItem>
-                </Col>
-              </Row>
-              <Col span={24}>{formItemsVideos}</Col>
-            </Col>
-            <Col md={12} sm={24} xs={24} lg={12} align="left">
-              <FormItem label={'Add images'}>
-                <FieldArray
-                  name="listingMedia.image"
-                  label={t('listingForm.image')}
-                  render={arrayHelpers => (
-                    <RenderUploadMultiple
-                      setload={load => setLoad(load)}
-                      arrayHelpers={arrayHelpers}
-                      values={values.listingMedia.image}
-                      getType={true}
-                      dictKey="url"
-                      extraFields={[{ type: 'image' }]}
-                    />
-                  )}
-                />
-              </FormItem>
-            </Col>
-            <Col span={24} align="right">
-              <Row>
-                <Col span={12} align="left">
-                  <br />
-                  <Button onClick={() => setStep(1)}>
-                    <Icon type="ArrowLeftOutlined" />
-                    {t('listingForm.btn.previous')}
-                  </Button>
-                </Col>
-
-                <Col span={12} align="right">
-                  <br />
-                  <SubmitButton style={{ width: 'auto' }} disable={!load} type="submit">
-                    {t('listingForm.btn.submit')}
-                  </SubmitButton>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+          <MediasFormFields
+            values={values}
+            t={t}
+            setFieldValue={setFieldValue}
+            videos={videos}
+            load={load}
+            setLoad={setLoad}
+            setStep={setStep}
+          />
         )}
       </Form>
     </Card>
