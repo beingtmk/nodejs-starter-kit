@@ -41,7 +41,7 @@ export default pubsub => ({
     async currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
         const user = await User.getUser(identity.id);
-        console.log('user', user);
+        // console.log('user', user);
         return user;
       } else {
         return null;
@@ -51,7 +51,7 @@ export default pubsub => ({
       const UserItemOutput = await User.getUserItems(limit, after, orderBy, filter);
       const { userItems, total } = UserItemOutput;
       const hasNextPage = total > after + limit;
-      console.log('User items', UserItemOutput);
+      // console.log('User items', UserItemOutput);
       const edgesArray = [];
       userItems.map((UserItem, index) => {
         edgesArray.push({

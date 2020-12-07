@@ -12,6 +12,7 @@ export { default as RenderSelect } from './RenderSelect';
 export { default as SlickCarousel } from './SlickCarousel';
 export { default as RenderCheckBox } from './RenderCheckBox';
 export { default as RenderUpload } from './RenderUpload';
+export { default as RenderUploadWithCrop } from './RenderUploadWithCrop';
 export { default as RenderUploadMultiple } from './RenderUploadMultiple';
 export { default as Alert } from './Alert';
 export { default as NavBar } from './NavBar';
