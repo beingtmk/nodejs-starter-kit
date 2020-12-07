@@ -187,6 +187,7 @@ input EditUserInput {
 input ProfileInput {
   firstName: String
   lastName: String
+  avatar: String
 }
 
 # Input for Mobile Verificaton Mutation

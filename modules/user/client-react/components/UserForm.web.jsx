@@ -69,14 +69,6 @@ const UserForm = props => {
           &nbsp; &nbsp;
           <Col lg={3} xs={24} />
           <Col lg={18} xs={24}>
-            {/* <Field
-              name={'avatar'}
-              component={RenderUpload}
-              type="text"
-              setload={e => setLoad(e)}
-              label={'Avatar'}
-              value={values.profile.avatar}
-            /> */}
             <Field
               name="profile.avatar"
               value={values.profile.avatar}
@@ -85,8 +77,12 @@ const UserForm = props => {
               shape="round"
               height={IMG_ASPECT.medium.height}
               width={IMG_ASPECT.medium.width}
+              // component={RenderUpload}
               component={RenderUploadWithCrop}
               label={'Avatar'}
+              cropPropSettings={{
+                shape: 'round'
+              }}
             />
           </Col>
         </Col>

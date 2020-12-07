@@ -8,7 +8,7 @@ import { FormItem } from '@gqlapp/look-client-react';
 import Icon from './Icon';
 
 const RenderUploadMultipleWithCrop = props => {
-  const { width, height, values, label, setload, arrayHelpers, extraFields } = props;
+  const { width, height, values, label, setload, arrayHelpers, cropPropSettings = {}, extraFields } = props;
 
   const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
   const cloudinary_data = { upload_preset: 'hycdtdxe' };
@@ -55,16 +55,17 @@ const RenderUploadMultipleWithCrop = props => {
       arrayHelpers.remove(index);
     }
   };
-  // console.log(defaultFileList);
 
+  const cropSettings = {
+    aspect: width / height,
+    modalTitle: 'Align image',
+    ...cropPropSettings
+  };
+
+  // console.log(defaultFileList);
   return (
     <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
-      <ImgCrop
-        width={width}
-        height={height}
-        /* shape={'round'} */ modalTitle={'Align image'}
-        modalWidth={'fit-content'}
-      >
+      <ImgCrop {...cropSettings}>
         <Upload.Dragger
           defaultFileList={defaultFileList}
           name="file"
@@ -100,6 +101,7 @@ RenderUploadMultipleWithCrop.propTypes = {
     })
   ),
   arrayHelpers: PropTypes.object,
+  cropPropSettings: PropTypes.object,
   values: PropTypes.array,
   extraFields: PropTypes.array,
   height: PropTypes.number,
