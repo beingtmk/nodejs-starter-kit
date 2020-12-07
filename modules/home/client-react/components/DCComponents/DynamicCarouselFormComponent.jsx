@@ -17,6 +17,7 @@ import {
   SubmitButton
 } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
+import { IMG_ASPECT } from '@gqlapp/listing-common';
 
 const DynamicCarouselFormSchema = {
   imageUrl: [required]
@@ -26,7 +27,7 @@ const DynamicCarouselFormComponent = props => {
   const [load, setLoad] = useState(false);
   const { t, values, handleSubmit, setFieldValue } = props;
 
-  // console.log('props form component', props.values);
+  // console.log('props form component', props.values.imageUrl);
   return (
     <>
       <Field
@@ -90,8 +91,8 @@ const DynamicCarouselFormComponent = props => {
           value={values.imageUrl}
           setload={e => setLoad(e)}
           load={load}
-          height={500}
-          width={500}
+          height={IMG_ASPECT.medium.height}
+          width={IMG_ASPECT.medium.width}
           component={RenderUploadWithCrop}
           label={t('dynamicCarousel.form.imageUrl')}
         />

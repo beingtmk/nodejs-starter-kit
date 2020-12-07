@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { isEmpty } from 'lodash';
 
+import { IMG_ASPECT } from '@gqlapp/listing-common';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
@@ -82,8 +83,8 @@ const UserForm = props => {
               setload={e => setLoad(e)}
               load={load}
               shape="round"
-              height={500}
-              width={500}
+              height={IMG_ASPECT.medium.height}
+              width={IMG_ASPECT.medium.width}
               component={RenderUploadWithCrop}
               label={'Avatar'}
             />

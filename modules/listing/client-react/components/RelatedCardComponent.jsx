@@ -146,7 +146,7 @@ const RelatedCardComponent = props => {
       onLoad={onLoad}
       src={listing_img}
       style={{
-        height: '100%'
+        width: '100%'
       }}
     />
   );
@@ -198,7 +198,8 @@ const RelatedCardComponent = props => {
               <div
                 style={{
                   overflow: 'hidden',
-                  height: '230px',
+                  // height: '230px',
+                  height: 'fit-content',
                   borderRadius: '8px 8px 0px 0px'
                 }}
                 align="center"

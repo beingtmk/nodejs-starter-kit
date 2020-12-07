@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
+import { IMG_ASPECT } from '@gqlapp/listing-common';
 import {
   Row,
   Col,
@@ -13,7 +15,6 @@ import {
   /* RenderUploadMultiple, */
   RenderUploadMultipleWithCrop
 } from '@gqlapp/look-client-react';
-import { FieldArray } from 'formik';
 
 const VIDEO = 'video';
 
@@ -89,8 +90,8 @@ const MediasFormFields = props => {
           render={arrayHelpers => (
             <RenderUploadMultipleWithCrop
               setload={load => setLoad(load)}
-              width={500}
-              height={500}
+              height={IMG_ASPECT.medium.height}
+              width={IMG_ASPECT.medium.width}
               arrayHelpers={arrayHelpers}
               values={values.listingMedia.image}
               getType={true}
