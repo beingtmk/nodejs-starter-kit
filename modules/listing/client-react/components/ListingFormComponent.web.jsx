@@ -728,7 +728,7 @@ const ListingWithFormik = withFormik({
         input.listingHighlight = values.listingHighlight;
       }
       // console.log(input, discountInput);
-      await onSubmit(input, discountInput);
+      await onSubmit(input, isDiscount ? discountInput : false);
     } else {
       setTouched({});
       setSubmitting(false);

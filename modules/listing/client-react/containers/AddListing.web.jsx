@@ -24,6 +24,7 @@ const AddListing = props => {
       const id = await addListing(values);
       console.log(id, discountValues);
       if (id && discountValues) {
+        console.log(discountValues);
         delete discountValues.id;
         delete discountValues.discountDuration.id;
         await addDiscount({ modalId: id, ...discountValues });
