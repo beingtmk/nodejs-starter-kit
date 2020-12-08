@@ -20,3 +20,8 @@ export const useImageLoaded = () => {
   });
   return [ref, loaded, onLoad];
 };
+
+export const priceCommaSeparator = value => {
+  const price = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return price;
+};

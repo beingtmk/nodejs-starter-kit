@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { Row, Col, Divider, Button } from '@gqlapp/look-client-react';
+import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
 import { TotalPrice } from '../components/CheckoutCartView';
 import ROUTES from '../routes/index';
@@ -11,6 +12,7 @@ import ROUTES from '../routes/index';
 const ColorFloat = styled.strong`
   color: #3f0869;
 `;
+
 const SlickCarousel = props => {
   // console.log('carousel', props);
   const { Compo, itemName, height, width, onEdit, onDelete } = props;
@@ -34,17 +36,17 @@ const SlickCarousel = props => {
           <Col span={24}>
             <Row>
               <Col span={16}>
-                <h3 style={{ padding: '15px 0px 0px 15px' }}>
+                <h3 style={{ padding: '15px 0px 0px 12px' }}>
                   <strong>Subtotal</strong>
                 </h3>
               </Col>
               <Col span={8}>
                 <h3 style={{ padding: '15px 0px 0px 15px' }}>
-                  <ColorFloat>&#8377;&nbsp;{TotalPrice(props.data)}</ColorFloat>
+                  <ColorFloat>&#8377;&nbsp;{priceCommaSeparator(TotalPrice(props.data))}</ColorFloat>
                 </h3>
               </Col>
             </Row>
-            <Row style={{ padding: '14px 24px 24px 24px' }}>
+            <Row style={{ padding: '5px 12px' }}>
               <Button block color="primary">
                 <Link to={ROUTES.checkoutCart}>Checkout</Link>
               </Button>
