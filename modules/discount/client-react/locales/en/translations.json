@@ -4,6 +4,27 @@
   "meta": "Discount example",
   "welcomeText": "Hello, This is the Discount module",
 
+  "adminPanel": {
+    "title": "Discounts",
+    "btn": {
+      "add": "Add discount",
+      "del": "Delete",
+      "more": "Load more ...",
+      "noReviewsMsg":"There are no Discounts yet."
+    },
+    "filter": {
+      "field1": "UserName",
+      "field2": "Modal",
+      "field3": "Is active"
+    },
+    "list": {
+      "column1": "Id",
+      "column2": "Modal",
+      "column3": "Discount percent",
+      "column4": "Discount status",
+      "column5": "Actions"
+    }
+  },
   "discountComponent": {
     "savingAmount":"Saving Amount:",
     "includingGST":"*Including GST",
@@ -11,7 +32,13 @@
     "certified":"*certified"
   },
   "discountForm": {
-    "isTimeStamp": "Is TimeStamp",
+    "btn": {
+      "submit": "Submit"
+    },
+    "discountPercent": "Discount Percent",
+    "finalPrice": "Final Price",
+    "isActive": "Is Active",
+    "isTimeStamp": "Is Time Stamp",
     "discountDuration": {
       "startDate": "Start Date",
       "endDate": "End Date"
