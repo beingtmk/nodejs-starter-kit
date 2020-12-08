@@ -72,6 +72,7 @@ input EditDiscountInput {
   modalId: Int
   discountPercent: Int
   modalName: String
+  isActive: Boolean
   discountDuration: EditDiscountDurationInput
 }
 

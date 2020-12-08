@@ -11,6 +11,7 @@ import DISCOUNTS_QUERY from '../graphql/DiscountsQuery.graphql';
 // Mutation
 import ADD_DISCOUNT from '../graphql/AddDiscount.graphql';
 import EDIT_DISCOUNT from '../graphql/EditDiscount.graphql';
+import DELETE_DISCOUNT from '../graphql/DeleteDiscount.graphql';
 
 const limit =
   PLATFORM === 'web' || PLATFORM === 'server'
@@ -19,9 +20,12 @@ const limit =
 
 export const withModalDiscount = Component =>
   graphql(MODAL_DISCOUNT_QUERY, {
-    options: ({ modalId, modalName }) => {
+    options: ({ modalId, modalName, match, navigation }) => {
       return {
-        variables: { modalId, modalName }
+        variables: {
+          modalId: modalId || (match ? Number(match.params.id) : Number(navigation.state.params.id)),
+          modalName: modalName || (match ? match.params.modalName : navigation.state.params.modalName)
+        }
       };
     },
     props({ data: { loading, error, modalDiscount, subscribeToMore, updateQuery } }) {
@@ -114,6 +118,25 @@ export const withEditDiscount = Component =>
           Message.error("Couldn't perform the action");
           console.error(e);
         }
+      }
+    })
+  })(Component);
+
+export const withDiscountDeleting = Component =>
+  graphql(DELETE_DISCOUNT, {
+    props: ({ mutate }) => ({
+      deleteDiscount: id => {
+        mutate({
+          variables: { id },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteDiscount: {
+              id: id,
+              __typename: 'Discount'
+            }
+          }
+        });
+        Message.warning('Discount deleted.');
       }
     })
   })(Component);
