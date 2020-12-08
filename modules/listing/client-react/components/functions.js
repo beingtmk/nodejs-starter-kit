@@ -22,6 +22,5 @@ export const useImageLoaded = () => {
 };
 
 export const priceCommaSeparator = value => {
-  const price = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return price;
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };

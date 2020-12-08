@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 import { enquireScreen } from 'enquire-js';
-import { Menu } from 'antd';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
 import {
@@ -16,7 +15,8 @@ import {
   Icon,
   SubMenu,
   MenuItem,
-  Button
+  Button,
+  Menu
 } from '@gqlapp/look-client-react';
 import ROUTES from '@gqlapp/listing-client-react/routes';
 

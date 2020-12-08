@@ -149,7 +149,7 @@ const SocialSharingButtons = props => {
         </Col>
       </Row>
       <Row type="flex" justify="space-between" style={{ paddingTop: '15px' }}>
-        <Col span={24}>
+        <Col xs={0} lg={24}>
           <Row justify="space-between">
             <h5 align="center">FaceBook</h5>
             <h5 align="center" style={{ marginLeft: '5px' }}>
@@ -166,15 +166,19 @@ const SocialSharingButtons = props => {
       </Row>
       <Row type="flex" style={{ paddingTop: '15px' }}>
         <Col span={24}>
-          <Row>
-            <Col span={16}>
+          <Row type="flex" gutter={24}>
+            <Col lg={{ span: 16, offset: 0 }} xs={24}>
               <Input value={link} />
             </Col>
-            <Col offset={4} span={4}>
+            <Col xs={24} lg={0}>
+              <br />
+            </Col>
+            <Col lg={{ span: 4, offset: 4 }} xs={24}>
               <div>
                 <Button
                   color="primary"
                   ghost={true}
+                  block
                   onClick={async () => {
                     await window.navigator.clipboard.writeText(link);
                   }}
