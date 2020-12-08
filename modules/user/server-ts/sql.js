@@ -189,8 +189,8 @@ export class User extends Model {
 
   async register(params, passwordHash) {
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
+    delete params.password;
     if (passwordHash) {
-      delete params.password;
       params.passwordHash = passwordHash;
     }
     const res = await User.query()
