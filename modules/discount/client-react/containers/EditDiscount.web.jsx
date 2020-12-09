@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Message } from '@gqlapp/look-client-react';
@@ -7,6 +7,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 import ROUTES from '../routes';
 import EditDiscountView from '../components/EditDiscountView.web';
+import { subscribeToDiscount } from './DiscountSubscriptions';
 import { withModalDiscount, withEditDiscount } from './DiscountOperations';
 
 const removeEmpty = obj => {
@@ -24,19 +25,24 @@ const removeEmpty = obj => {
 };
 
 const EditDiscount = props => {
-  const { editDiscount, history, match, navigation } = props;
+  const { editDiscount, history, discountSubscribeToMore, match, navigation } = props;
+  let modalId = 0;
+  let modalName = '';
+  if (match) {
+    modalId = Number(match.params.id);
+    modalName = match.params.modalName;
+  } else if (navigation) {
+    modalId = Number(navigation.state.params.id);
+    modalName = navigation.state.params.modalName;
+  }
+
+  useEffect(() => {
+    const subscribe = subscribeToDiscount(discountSubscribeToMore, modalId);
+    return () => subscribe();
+  }, [discountSubscribeToMore, modalId]);
 
   const handleSubmit = async values => {
-    console.log(values);
-    let modalId = 0;
-    let modalName = '';
-    if (match) {
-      modalId = Number(match.params.id);
-      modalName = match.params.modalName;
-    } else if (navigation) {
-      modalId = Number(navigation.state.params.id);
-      modalName = navigation.state.params.modalName;
-    }
+    // console.log(values);
     Message.destroy();
     Message.loading('Please wait...', 0);
     try {
@@ -54,6 +60,7 @@ const EditDiscount = props => {
 };
 
 EditDiscount.propTypes = {
+  discountSubscribeToMore: PropTypes.func,
   editDiscount: PropTypes.func,
   history: PropTypes.object,
   match: PropTypes.object,

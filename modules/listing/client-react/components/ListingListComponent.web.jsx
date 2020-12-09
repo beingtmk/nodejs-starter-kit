@@ -19,6 +19,8 @@ import {
   RenderTableLoading
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
+import DiscountBtn from '@gqlapp/discount-client-react/containers/DiscountBtn';
+import { MODAL } from '@gqlapp/review-common';
 
 import ROUTES from '../routes';
 import { displayDataCheck } from './functions';
@@ -197,37 +199,37 @@ const ListingListComponent = props => {
         </>
       )
     },
-    {
-      title: (
-        <a onClick={e => handleOrderBy(e, 'listing_flag.isDiscount')} href="#">
-          {t('list.column.discount')} {renderOrderByArrow('listing_flag.isDiscount')}
-        </a>
-      ),
-      width: 120,
-      dataIndex: 'listingFlags.isDiscount',
-      key: 'listing_flag.isDiscount',
-      render: (text, record) => <>{record.listingFlags && displayDataCheck(record.listingFlags.isDiscount, true)}</>
-    },
-    {
-      title: (
-        <a onClick={e => handleOrderBy(e, 'listing_cost.discount')} href="#">
-          {t('list.column.discount')} {renderOrderByArrow('listing_cost.discount')}
-        </a>
-      ),
-      width: 100,
-      dataIndex: 'listingCostArray.discount',
-      key: 'listing_cost.discount',
-      render: (text, record) => (
-        <>
-          {record.listingFlags && record.listingFlags.isDiscount
-            ? record.listingCostArray &&
-              record.listingCostArray.length > 0 &&
-              record.listingCostArray[0].discount &&
-              displayDataCheck(record.listingCostArray[0].discount.toFixed(2))
-            : 'Not applicable'}
-        </>
-      )
-    },
+    // {
+    //   title: (
+    //     <a onClick={e => handleOrderBy(e, 'listing_flag.isDiscount')} href="#">
+    //       {t('list.column.discount')} {renderOrderByArrow('listing_flag.isDiscount')}
+    //     </a>
+    //   ),
+    //   width: 120,
+    //   dataIndex: 'listingFlags.isDiscount',
+    //   key: 'listing_flag.isDiscount',
+    //   render: (text, record) => <>{record.listingFlags && displayDataCheck(record.listingFlags.isDiscount, true)}</>
+    // },
+    // {
+    //   title: (
+    //     <a onClick={e => handleOrderBy(e, 'listing_cost.discount')} href="#">
+    //       {t('list.column.discount')} {renderOrderByArrow('listing_cost.discount')}
+    //     </a>
+    //   ),
+    //   width: 100,
+    //   dataIndex: 'listingCostArray.discount',
+    //   key: 'listing_cost.discount',
+    //   render: (text, record) => (
+    //     <>
+    //       {record.listingFlags && record.listingFlags.isDiscount
+    //         ? record.listingCostArray &&
+    //           record.listingCostArray.length > 0 &&
+    //           record.listingCostArray[0].discount &&
+    //           displayDataCheck(record.listingCostArray[0].discount.toFixed(2))
+    //         : 'Not applicable'}
+    //     </>
+    //   )
+    // },
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'listing_option.fixedQuantity')} href="#">
@@ -253,7 +255,7 @@ const ListingListComponent = props => {
     {
       title: t('list.column.actions'),
       key: 'actions',
-      width: 200,
+      width: 250,
       fixed: 'right',
       render: (text, record) => (
         <div align="center">
@@ -261,6 +263,7 @@ const ListingListComponent = props => {
             <EditIcon />
           </Link>
           <Divider type="vertical" />
+          <DiscountBtn modalName={MODAL[1].value} modalId={record.id} />
           <Tooltip title="Duplicate Listing">
             <Button color="primary" shape="circle" onClick={() => onDuplicate(record.id)}>
               <Icon type="CopyOutlined" />
