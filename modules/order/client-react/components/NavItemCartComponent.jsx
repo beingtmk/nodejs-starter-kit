@@ -13,7 +13,7 @@ const AlignButton = styled.div`
   position: absolute;
   right: 0;
   z-index: 1;
-  margin: 50px 110px;
+  margin: 80px 110px;
 `;
 
 const CartItemComponent = props => {

@@ -99,6 +99,7 @@ class HomeView4 extends React.Component {
         history={history}
         {...this.props}
         OnGoingDiscounts
+        style={{ backgroundColor: '#f7f7f7' }}
       />
       // <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       // <Feature0 id="Feature0_0" key="Feature0_0" isMobile={this.state.isMobile} />,
