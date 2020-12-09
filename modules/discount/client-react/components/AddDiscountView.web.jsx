@@ -9,7 +9,7 @@ import DiscountFormComponent from './DiscountFormComponent.web';
 const AddDiscountView = ({ t, loading, onSubmit }) => {
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('listAdd.title')} description={`${settings.app.name} - ${t('listAdd.meta')}`} />
+      <MetaTags title={t('discountAdd.title')} description={`${settings.app.name} - ${t('discountAdd.meta')}`} />
 
       {loading ? (
         <Spinner />
@@ -21,7 +21,7 @@ const AddDiscountView = ({ t, loading, onSubmit }) => {
           <br />
           <br />
           <div align="center">
-            <DiscountFormComponent cardTitle={t('listAdd.cardTitle')} t={t} onSubmit={onSubmit} />
+            <DiscountFormComponent cardTitle={t('discountAdd.cardTitle')} t={t} onSubmit={onSubmit} />
           </div>
         </>
       )}

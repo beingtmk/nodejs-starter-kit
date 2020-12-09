@@ -16,6 +16,7 @@
   
   "adminPanel": {
     "title": "Discounts",
+    "meta": "A List of All Discount page.",
     "btn": {
       "add": "Add discount",
       "del": "Delete",
@@ -27,13 +28,23 @@
       "field2": "Modal",
       "field3": "Is active"
     },
-    "list": {
+    "discount": {
       "column1": "Id",
       "column2": "Modal",
       "column3": "Discount percent",
       "column4": "Discount status",
       "column5": "Actions"
     }
+  },
+  "discountAdd":{
+    "title":"Add discount",
+    "meta":"Add Discount page.",
+    "cardTitle":"Add Discount"
+  },
+  "discountEdit":{
+    "title":"Edit discount",
+    "meta":"Edit Discount page.",
+    "cardTitle":"Edit Discount"
   },
   "discountComponent": {
     "savingAmount":"Saving Amount:",

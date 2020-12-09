@@ -72,7 +72,7 @@ const DiscountsListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'id')} href="#">
-          {t('adminPanel.list.column1')} &nbsp;
+          {t('adminPanel.discount.column1')} &nbsp;
           {renderOrderByArrow('id')}
         </a>
       ),
@@ -83,7 +83,7 @@ const DiscountsListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'modalId')} href="#">
-          {t('adminPanel.list.column2')} &nbsp;
+          {t('adminPanel.discount.column2')} &nbsp;
           {renderOrderByArrow('modalId')}
         </a>
       ),
@@ -94,7 +94,7 @@ const DiscountsListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'discountPercent')} href="#">
-          {t('adminPanel.list.column3')} &nbsp;
+          {t('adminPanel.discount.column3')} &nbsp;
           {renderOrderByArrow('discountPercent')}
         </a>
       ),
@@ -105,7 +105,7 @@ const DiscountsListComponent = props => {
     {
       title: (
         <a onClick={e => handleOrderBy(e, 'feedback')} href="#">
-          {t('adminPanel.list.column4')} &nbsp;
+          {t('adminPanel.discount.column4')} &nbsp;
           {renderOrderByArrow('feedback')}
         </a>
       ),
@@ -153,11 +153,11 @@ const DiscountsListComponent = props => {
       }
     },
     {
-      title: t('adminPanel.list.column5'),
+      title: t('adminPanel.discount.column5'),
       key: 'actions',
       render: (text, record) => (
         <div>
-          <Link className="discount-link" to={`${ROUTES.editLink}listing/${record.modalId}`}>
+          <Link className="discount-link" to={`${ROUTES.editLink}${record.modalName}/${record.modalId}`}>
             <EditIcon />
           </Link>
           <Divider type="vertical" />

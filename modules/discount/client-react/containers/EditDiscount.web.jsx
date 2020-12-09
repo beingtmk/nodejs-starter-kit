@@ -35,7 +35,7 @@ const EditDiscount = props => {
     try {
       await editDiscount(removeEmpty({ modalId, modalName, ...values }));
       Message.destroy();
-      Message.success('Discount added.');
+      Message.success('Discount edited.');
       history.push(`${ROUTES.adminPanel}`);
     } catch (e) {
       throw Error(e);

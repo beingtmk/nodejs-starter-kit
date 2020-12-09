@@ -116,7 +116,7 @@
   },
   "list": {
     "title": "Listings",
-    "meta": "A List of All Listings page example",
+    "meta": "A List of All Listings page",
     "column": {
       "description": "Description",
       "gearCategory": "Gear Category",

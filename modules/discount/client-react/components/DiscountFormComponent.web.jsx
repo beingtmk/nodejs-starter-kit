@@ -58,8 +58,8 @@ const DiscountFormComponent = props => {
       }
     >
       <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col xs={12} lg={24}>
+        <Row gutter={24}>
+          <Col lg={12} xs={24} align="left">
             <Field
               name="discountPercent"
               component={RenderField}
@@ -71,17 +71,26 @@ const DiscountFormComponent = props => {
               value={values.discountPercent}
             />
           </Col>
-          <Col xs={12} lg={24}>
+          {/* <Col xs={12} lg={24}>
             <Field
-              name="finalPrice"
+            name="finalPrice"
               component={RenderField}
               type="number"
               label={t('discountForm.finalPrice')}
               disabled={true}
               // value={(
-              //   values.listingCostArray[0].cost -
-              //   values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
-              // ).toFixed(2)}
+                //   values.listingCostArray[0].cost -
+                //   values.listingCostArray[0].cost * (values.listingCostArray[0].discount / 100)
+                // ).toFixed(2)}
+                />
+              </Col> */}
+          <Col lg={12} xs={24} align="left">
+            <Field
+              name="isActive"
+              component={RenderCheckBox}
+              type="checkbox"
+              label={t('discountForm.isActive')}
+              checked={values.isActive}
             />
           </Col>
           <Col md={8} xs={24} align="left">
@@ -91,15 +100,6 @@ const DiscountFormComponent = props => {
               type="checkbox"
               label={t('discountForm.isTimeStamp')}
               checked={values.isTimeStamp}
-            />
-          </Col>
-          <Col md={8} xs={24} align="left">
-            <Field
-              name="isActive"
-              component={RenderCheckBox}
-              type="checkbox"
-              label={t('discountForm.isActive')}
-              checked={values.isActive}
             />
           </Col>
           <Col md={8} xs={24} align="left">
@@ -124,14 +124,14 @@ const DiscountFormComponent = props => {
                 // type="range"
                 disabledDate={disabledEndDate}
                 showTime
-                label={t('discountForm.endDate')}
+                label={t('discountForm.discountDuration.endDate')}
                 onChange={e => setFieldValue('endDate', e.toISOString())}
                 value={values.endDate ? moment(values.endDate) : values.startDate ? moment(values.startDate) : moment()}
               />
             )}
           </Col>
-          <Col span={12} align="right">
-            <br />
+          <Col span={24} align="right">
+            {/* <br /> */}
             <SubmitButton style={{ width: 'auto' }} type="submit">
               {t('discountForm.btn.submit')}
             </SubmitButton>
@@ -172,13 +172,14 @@ const DiscountWithFormik = withFormik({
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {
+    const now = new Date().toISOString();
     const discountInput = {
       id: values.id,
       discountPercent: values.discountPercent,
       discountDuration: {
         id: values.discountDurationId,
-        startDate: values.startDate,
-        endDate: values.endDate
+        startDate: values.startDate || now,
+        endDate: values.endDate || now
       },
       isActive: values.isActive
     };

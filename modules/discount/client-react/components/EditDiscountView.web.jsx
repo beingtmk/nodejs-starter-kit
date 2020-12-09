@@ -9,7 +9,7 @@ import DiscountFormComponent from './DiscountFormComponent.web';
 const EditDiscountView = ({ t, loading, onSubmit, modalDiscount }) => {
   return (
     <PageLayout type="forms">
-      <MetaTags title={t('listEdit.title')} description={`${settings.app.name} - ${t('listEdit.meta')}`} />
+      <MetaTags title={t('discountEdit.title')} description={`${settings.app.name} - ${t('discountEdit.meta')}`} />
 
       {loading ? (
         <Spinner />
@@ -22,7 +22,7 @@ const EditDiscountView = ({ t, loading, onSubmit, modalDiscount }) => {
           <br />
           <div align="center">
             <DiscountFormComponent
-              cardTitle={t('listEdit.cardTitle')}
+              cardTitle={t('discountEdit.cardTitle')}
               t={t}
               onSubmit={onSubmit}
               modalDiscount={modalDiscount}
