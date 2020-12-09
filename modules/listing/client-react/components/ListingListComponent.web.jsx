@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -239,7 +239,14 @@ const ListingListComponent = props => {
       width: 180,
       dataIndex: 'listingOptions.fixedQuantity',
       key: 'listing_option.fixedQuantity',
-      render: (text, record) => <>{record.listingOptions && displayDataCheck(record.listingOptions.fixedQuantity)}</>
+      render: (text, record) => (
+        <>
+          {record.listingOptions &&
+            (record.listingOptions.fixedQuantity === -1
+              ? 'None'
+              : displayDataCheck(record.listingOptions.fixedQuantity))}
+        </>
+      )
     },
     {
       title: (
@@ -284,7 +291,7 @@ const ListingListComponent = props => {
   };
 
   const RenderListings = () => (
-    <Fragment>
+    <>
       <Table
         scroll={{ x: 1300 }}
         dataSource={listings.edges.map(({ node }) => node)}
@@ -302,7 +309,7 @@ const ListingListComponent = props => {
           defaultPageSize={itemsNumber}
         />
       </div>
-    </Fragment>
+    </>
   );
 
   return (
