@@ -31,7 +31,7 @@ const Discounts = props => {
   //   }
   // };
 
-  console.log('props', props);
+  // console.log('props', props);
   return <DiscountsView /* onToggle={handleToggle} */ filter={{}} {...props} />;
 };
 Discounts.propTypes = {

@@ -4,6 +4,16 @@
   "meta": "Discount example",
   "welcomeText": "Hello, This is the Discount module",
 
+  "discount": {
+    "title": "Discounts",
+    "btn": {
+      "add": "Add",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "subTitle": "Discounts List"
+  },
+  
   "adminPanel": {
     "title": "Discounts",
     "btn": {
