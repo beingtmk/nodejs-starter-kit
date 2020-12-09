@@ -1,0 +1,5 @@
+#import "./DiscountState.client.graphql"
+
+mutation updateOrderByDiscount($orderBy: OrderByDiscountInput!) {
+  updateOrderByDiscount(orderBy: $orderBy) @client
+}

@@ -6,7 +6,7 @@ import { Row, Col, Heading, Icon, PageLayout, MetaTags, AddButton } from '@gqlap
 import settings from '@gqlapp/config';
 
 import ROUTES from '../routes';
-// import DiscountsFilterComponent from './DiscountsFilterComponent';
+import DiscountsFilterComponent from './DiscountsFilterComponent';
 import DiscountsListComponent from './DiscountsListComponent';
 
 const DiscountsView = props => {
@@ -34,7 +34,7 @@ const DiscountsView = props => {
         </Col>
       </Row>
       <hr />
-      {/* <DiscountsFilterComponent showIsActive={true} {...props} /> */}
+      <DiscountsFilterComponent showIsActive={true} {...props} />
       <hr />
       <DiscountsListComponent {...props} />
     </PageLayout>

@@ -168,7 +168,7 @@ const DiscountWithFormik = withFormik({
       endDate:
         (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.endDate) ||
         null,
-      isActive: props.modalDiscount && (props.modalDiscount.isActive ? true : false)
+      isActive: props.modalDiscount ? (props.modalDiscount.isActive ? true : false) : true
     };
   },
   handleSubmit(values, { props: { onSubmit } }) {

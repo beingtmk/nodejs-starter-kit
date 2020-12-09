@@ -8,6 +8,7 @@ import { MenuItem, Spinner } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 
 import resources from './locales';
+import resolvers from './resolvers';
 import ROUTES from './routes';
 
 const NavLinkWithI18n = translate('discount')(({ t }: { t: TranslateFunction }) => (
@@ -47,5 +48,6 @@ export default new ClientModule({
       </MenuItem>
     </IfLoggedIn>
   ],
+  resolver: [resolvers],
   localization: [{ ns: 'discount', resources }]
 });

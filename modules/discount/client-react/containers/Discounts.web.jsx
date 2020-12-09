@@ -4,12 +4,12 @@ import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import {
-  // withDiscountsState,
+  withDiscountsState,
   withDiscounts,
-  // withFilterUpdating,
-  // withOrderByUpdating,
-  withDiscountDeleting,
-  withEditDiscount
+  withFilterUpdating,
+  withOrderByUpdating,
+  withDiscountDeleting
+  // withEditDiscount,
 } from './DiscountOperations';
 import DiscountsView from '../components/DiscountsView.web';
 import { subscribeToDiscounts } from './DiscountSubscriptions';
@@ -41,11 +41,11 @@ Discounts.propTypes = {
 };
 
 export default compose(
-  // withDiscountsState,
+  withDiscountsState,
   withDiscounts,
-  // withFilterUpdating,
-  // withOrderByUpdating,
+  withFilterUpdating,
+  withOrderByUpdating,
   withDiscountDeleting,
-  withEditDiscount,
+  // withEditDiscount,
   translate('discount')
 )(Discounts);
