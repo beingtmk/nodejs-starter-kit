@@ -69,6 +69,7 @@ const ReviewsFilterView = props => {
                       placeholder={t('adminPanel.filter.field1')}
                       element={Input}
                       value={searchText}
+                      disabled={true}
                       onChange={e => onSearchTextChange(e.target.value)}
                     />
                   </FormItem>
