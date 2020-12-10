@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import {
-  Icon,
+  Heading,
   PageLayout,
   NextButton,
   AddButton,
@@ -25,18 +25,14 @@ import ROUTES from '../routes';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
 
-const Rightfloat = styled.div`
-  float: right;
-`;
-
-const ColorFloat = styled.strong`
-  float: right;
-  color: #3f0869;
+const CustomBody = styled.div`
+  background: white;
+  margin: 0 -200%;
+  padding: 0 200%;
 `;
 
 export function TotalPrice(cartArray) {
   var totalCartPrice = 0;
-  // console.log('cart array', cartArray);
   cartArray &&
     cartArray.map(item => {
       totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
@@ -49,8 +45,6 @@ const CheckoutCartView = props => {
 
   const { t, history, cartLoading, onSubmit, getCart, onDelete, currentUser, onEdit } = props;
 
-  const cartLength = getCart && getCart.length;
-
   return (
     <PageLayout>
       <MetaTags title="Cart" description="meta" />
@@ -62,112 +56,114 @@ const CheckoutCartView = props => {
             <Row type="flex">
               <Col span={24} align="center">
                 <CheckoutStepsComponent step={0} t={t} />
-                <br />
-                <br />
               </Col>
               <Col span={24}>
-                <Row type="flex" justify="center" align="middle">
-                  <Col lg={8} md={8} xs={24}>
-                    <h2>
-                      <Icon type="ShoppingOutlined" />
-                      {t('checkoutCart.myCart')} {cartLength} items
-                    </h2>
-                  </Col>
-                  <Col lg={8} md={8} xs={24}>
-                    <h2>
-                      {t('checkoutCart.orderId')}
-                      {displayDataCheck(getCart.id)}
-                    </h2>
-                  </Col>
-                  <Col lg={8} md={8} xs={24}>
-                    <h2>
-                      {t('checkoutCart.totalPrice')}
-                      <strong>
-                        &#8377; {priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}{' '}
-                      </strong>
-                    </h2>
-                  </Col>
-                  <Col span={24}>
-                    <br />
-                  </Col>
-                </Row>
-                <Row gutter={24}>
-                  <Col xxl={16} lg={16} xs={24}>
-                    {getCart &&
-                      getCart.orderDetails.map(cartItem => (
-                        <Row>
-                          <Col span={24}>
-                            <CartItemComponent
-                              t={t}
-                              item={cartItem}
-                              edit={true}
-                              onSubmit={onSubmit}
-                              onDelete={onDelete}
-                              currentUser={currentUser}
-                              onEdit={onEdit}
-                            />
-                            <Divider />
-                          </Col>
-                        </Row>
-                      ))}
-                  </Col>
-                  <Col lg={8} sm={24} xs={24}>
-                    <Card>
-                      <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
-                      <br />
-                      <br />
-                      <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
-                        {t('checkoutCart.btn.checkout')}
-                      </NextButton>
-                      <br />
+                <CustomBody>
+                  <br />
+                  <Heading>Shopping Cart</Heading>
+                  <br />
+                  <Row gutter={24}>
+                    <Col xxl={16} lg={16} xs={24}>
+                      <Card
+                        type="inner"
+                        title={
+                          <Row type="flex">
+                            <Col span={12}>
+                              <h3 style={{ marginBottom: '0px' }}>Product Details</h3>
+                            </Col>
+                            <Col span={12} style={{ display: 'flex' }}>
+                              <Col span={7} align="center">
+                                <h3 style={{ marginBottom: '0px' }}>Quantity</h3>
+                              </Col>
+                              <Col span={1} align="center" />
+                              <Col span={8} align="center">
+                                <h3 style={{ marginBottom: '0px' }}>Price</h3>
+                              </Col>
+                              <Col span={8} align="center">
+                                <h3 style={{ marginBottom: '0px' }}>Total</h3>
+                              </Col>
+                            </Col>
+                          </Row>
+                        }
+                        bodyStyle={{
+                          padding: '0px'
+                        }}
+                      >
+                        <br />
+                        {getCart &&
+                          getCart.orderDetails.map((cartItem, i) => (
+                            <Row>
+                              <Col span={24}>
+                                <CartItemComponent
+                                  modalId={cartItem.modalId}
+                                  t={t}
+                                  item={cartItem}
+                                  edit={true}
+                                  onSubmit={onSubmit}
+                                  onDelete={onDelete}
+                                  currentUser={currentUser}
+                                  onEdit={onEdit}
+                                />
+                                {getCart.orderDetails.length - 1 !== i ? <Divider /> : <br />}
+                              </Col>
+                            </Row>
+                          ))}
+                      </Card>
                       <br />
                       <Link className="listing-link" to={`${LISTING_ROUTES.listingCatalogue}`} target="_blank">
                         <AddButton ghost block>
-                          {t('checkoutCart.btn.add')}
+                          Continue Shopping
                         </AddButton>
                       </Link>
-                      <br />
-                      <br />
-                      <hr />
-                      <br />
-                      <h2>
-                        <u>{t('checkoutCart.cartSummary')}</u>
-                      </h2>
-                      <br />
-                      <span>
-                        {getCart.orderDetails.map((item, key) => (
-                          <div key={key}>
-                            <strong>
-                              {t('checkoutCart.item')}
-                              {key + 1}:
-                            </strong>
-                            <p>
-                              {t('checkoutCart.price')}
-                              <Rightfloat>
-                                &#8377;{' '}
-                                {item.cost && item.cost !== '0'
-                                  ? `${item.cost} X ${item.orderOptions.quantity} = ${priceCommaSeparator(
-                                      item.cost * item.orderOptions.quantity
-                                    )}`
-                                  : 'Free'}
-                              </Rightfloat>
-                              <br />
-                            </p>
-                          </div>
-                        ))}
+                    </Col>
+                    <Col lg={8} sm={24} xs={24}>
+                      <Card type="inner" title={<h3 style={{ marginBottom: '0px' }}>ORDER SUMMARY</h3>}>
+                        <Row>
+                          <Col span={12} align="left">
+                            <h3>Items</h3>
+                          </Col>
+                          <Col span={12} align="end">
+                            {getCart && getCart.orderDetails.length}
+                          </Col>
+                          <Col span={12} align="left">
+                            <h3>Discount</h3>
+                          </Col>
+                          <Col span={12} align="end">
+                            &#8377; bleh
+                          </Col>
+                          <Col span={12} align="left">
+                            <h3>Shipping</h3>
+                          </Col>
+                          <Col span={12} align="end">
+                            <h3>FREE</h3>
+                          </Col>
+                          <Col span={24}>
+                            <br />
+                            <hr />
+                            <br />
+                          </Col>
+                          <Col span={12} align="left">
+                            <h2>TOTAL COST</h2>
+                          </Col>
+                          <Col span={12} align="end">
+                            <h3>
+                              &#8377; {` ${priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}`}
+                            </h3>
+                          </Col>
+                        </Row>
+                        <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
                         <br />
-                        <hr />
                         <br />
-                        <h3>
-                          {t('checkoutCart.totalAmount')}
-                          <ColorFloat>
-                            &#8377; {` ${priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}`}
-                          </ColorFloat>
-                        </h3>
-                      </span>
-                    </Card>
-                  </Col>
-                </Row>
+                        <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
+                          {t('checkoutCart.btn.checkout')}
+                        </NextButton>
+                      </Card>
+                    </Col>
+                  </Row>
+                  <br />
+                  <br />
+                  <br />
+                </CustomBody>
               </Col>
             </Row>
           </div>

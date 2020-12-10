@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-
 import { Spinner } from '@gqlapp/look-client-react';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';

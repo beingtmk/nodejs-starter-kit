@@ -59,8 +59,8 @@
   "checkoutSteps":{
     "heading":"Checkout",
     "step1":"Cart",
-    "step2":"Billing Address",
-    "step3":"Payment options"
+    "step2":"Select Address",
+    "step3": "Review & Pay"
   },
   "checkoutCart":{
     "myCart":" My cart - ",

@@ -1,174 +1,114 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { DeleteIcon, Row, Col, Card, ModalDrawer, Icon } from '@gqlapp/look-client-react';
-
-import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
+
+import { compose } from '@gqlapp/core-common';
+import { Badge, DeleteIcon, Row, Col, ModalDrawer, Icon } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
+import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
 
+import EditCartQuantity from './EditCartQuantity';
 import EditCart from './EditCart';
 
-const Position1 = styled.h4`
-  position: absolute;
-  bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
-  @media only screen and (max-width: 768px) {
-    bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
-  }
-`;
-const Position = styled.h4`
-  position: absolute;
-  bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
-  @media only screen and (max-width: 768px) {
-    bottom: ${props => props.bottom && `${parseInt(props.bottom)}px`};
-  }
-`;
-
-const Ribbon = styled.div`
-  width: ${props => (props.width ? props.width : '150px')};
-  bottom: ${props => props.bottom && props.bottom};
-  background: ${props => (props.color ? props.color : 'rgb(123, 159, 199)')};
-
-  position: absolute;
-  right: 0;
-  z-index: 1;
-  padding: 0.15em 0.5em;
-  font-size: 1.3em;
-  margin: 0 0 0 -0.625em;
-  line-height: 1.875em;
-  text-align: center;
-  color: #e6e2c8;
-  border-radius: 0 0.156em 0.156em 0;
-  box-shadow: -1px 2px 3px rgba(0, 0, 0, 0.5);
-`;
-const Align = styled.div`
-  position: absolute;
-  right: 0;
-  z-index: 1;
-  padding-right: 10px;
-  margin: 16px 40px;
-`;
-
 const CartItemComponent = props => {
-  const { t, item, onEdit, onDelete, currentUser } = props;
+  const { loading, listing, t, item, onEdit, onDelete, currentUser } = props;
+  const disable = listing && listing.listingOptions && listing.listingOptions.fixedQuantity !== -1;
+  const maxQuantity = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
   // console.log('cart item', props);
-  var coverGrid = {
-    xs: { span: 24 },
-    md: { span: 9 },
-    lg: { span: 6 },
-    xxl: { span: 6 }
-  };
-
-  var infoGrid = {
-    xs: { span: 24 },
-    md: { span: 15 },
-    lg: { span: 18 },
-    xxl: { span: 18 }
-  };
-
-  if (props.mobile) {
-    coverGrid = null;
-    infoGrid = null;
-    coverGrid = { span: 24 };
-    infoGrid = { span: 24 };
-  }
-
   return (
-    <div style={{ paddingRight: '10px' }}>
-      <Align>
-        <Row type="flex" justify="space-around" align="middle" gutter={12}>
-          {onEdit && (
-            <Col span={8}>
-              <ModalDrawer
-                buttonText={<Icon type="EditOutlined" />}
-                modalTitle="Edit Item"
-                height="auto"
-                shape="circle"
-                size="large"
-                type="default"
-              >
-                <EditCart
-                  modalId={item.modalId}
-                  currentUser={currentUser}
-                  modalName={MODAL[1].value}
-                  onEdit={onEdit}
-                  item={item}
-                  t={t}
-                />
-              </ModalDrawer>
-            </Col>
-          )}
-
-          <Col span={8}>
-            {onDelete && (
-              <DeleteIcon
-                title="Are you sure to delete this order?"
-                onClick={() => props.onDelete(item.id)}
-                size="lg"
-              />
-            )}
-          </Col>
-        </Row>
-      </Align>
-      <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
-        <Ribbon bottom={props.mobile ? '105px' : '155px'} width="120px" color="#df0303">
-          {item.orderOptions.quantity}
-        </Ribbon>
-        <Ribbon bottom={props.mobile ? '35px' : '80px'}>&#8377; {` ${item.cost * item.orderOptions.quantity}`}</Ribbon>
-        <Card
-          hoverable
-          bodyStyle={{
-            padding: '0px'
-          }}
-        >
-          <Row>
+    <Row align="middle">
+      <Col span={1} />
+      <Col span={11}>
+        <Link target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
+          <Row gutter={24} type="flex" align="middle">
             <Col
-              {...coverGrid}
+              span={9}
               align="center"
               style={{
-                maxHeight: '250px',
-                overflow: 'hidden'
+                height: 'fit-content'
               }}
             >
-              <img alt="" src={item.imageUrl || NO_IMG} height="100%" />
+              <img alt="" src={item.imageUrl || NO_IMG} width="100%" />
             </Col>
-            <Col {...infoGrid}>
-              <Card
-                style={{
-                  height: '250px',
-                  borderWidth: '0px'
-                }}
-                bodyStyle={{
-                  padding: '0px'
-                }}
-                title={<h3>{item.title}</h3>}
-              >
-                <h3>
-                  <Position1 bottom={'100'}>
-                    <span>&nbsp;&nbsp;{t('cartItem.quantity')}</span>
-                  </Position1>
-                </h3>
-
-                <br />
-                <br />
-                <Position bottom={'30'}>
-                  <strong>
-                    <span> &nbsp;&nbsp;{t('cartItem.amount')}</span> &#8377;{' '}
-                    {`${item.cost} X ${item.orderOptions.quantity}`}
-                  </strong>
-                </Position>
-              </Card>
+            <Col span={15}>
+              <h3>{item.title}</h3>
+              {listing &&
+                listing.listingHighlight &&
+                listing.listingHighlight.length > 0 &&
+                listing.listingHighlight.map(lH => (
+                  <>
+                    <Badge status="processing" text={lH.highlight} />
+                    <br />
+                  </>
+                ))}
             </Col>
           </Row>
-        </Card>
-      </Link>
-    </div>
+        </Link>
+      </Col>
+      <Col span={11} style={{ display: 'flex' }}>
+        <Col span={7} align="center">
+          {!loading && <EditCartQuantity item={item} disable={disable} maxQuantity={maxQuantity} t={t} />}
+        </Col>
+        <Col span={1} align="center">
+          x
+        </Col>
+        <Col span={8} align="center">
+          <h3 type="2" style={{ marginBottom: '0px' }}>
+            &#8377; {` ${item.cost}`}
+          </h3>
+        </Col>
+        <Col span={8} align="center">
+          <h3 type="2" style={{ marginBottom: '0px' }}>
+            &#8377; {` ${item.cost * item.orderOptions.quantity}`}
+          </h3>
+          <br />
+          <br />
+          <br />
+          <Col span={24}>
+            <div style={{ display: 'flex', float: 'right' }}>
+              {onEdit && (
+                <ModalDrawer
+                  buttonText={<Icon type="EditOutlined" />}
+                  modalTitle="Edit Item"
+                  block={false}
+                  height="auto"
+                  shape="circle"
+                  size="md"
+                  type="default"
+                >
+                  <EditCart
+                    modalId={item.modalId}
+                    currentUser={currentUser}
+                    modalName={MODAL[1].value}
+                    onEdit={onEdit}
+                    item={item}
+                    t={t}
+                  />
+                </ModalDrawer>
+              )}
+              &nbsp; &nbsp;
+              {onDelete && (
+                <DeleteIcon
+                  title="Are you sure to delete this order?"
+                  onClick={() => props.onDelete(item.id)}
+                  size="md"
+                />
+              )}
+            </div>
+          </Col>
+        </Col>
+      </Col>
+      <Col span={1} />
+    </Row>
   );
 };
 
 CartItemComponent.propTypes = {
+  loading: PropTypes.bool,
+  listing: PropTypes.object,
   item: PropTypes.object,
   currentUser: PropTypes.object,
   onDelete: PropTypes.func,
@@ -178,4 +118,4 @@ CartItemComponent.propTypes = {
   t: PropTypes.func
 };
 
-export default CartItemComponent;
+export default compose(withListing)(CartItemComponent);
