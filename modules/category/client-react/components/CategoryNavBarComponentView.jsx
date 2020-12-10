@@ -169,7 +169,11 @@ const CategoryNavBarComponentView = props => {
                           href={`${LISTING_ROUTES.categoryCatalogueLink}${c.node.id}`}
                           onMouseEnter={() => setDropDownMenu(c.node)}
                         >
-                          <h1>{c.node.title}</h1>
+                          <h2
+                          // className="primary-color"
+                          >
+                            {c.node.title}
+                          </h2>
                         </a>
                       </Col>
                     );
