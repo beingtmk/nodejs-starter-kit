@@ -10,8 +10,8 @@ import {
   Spinner,
   BreadcrumbItem,
   Breadcrumb,
-  Title,
-  Paragraph,
+  Menu,
+  MenuItem,
   MetaTags
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
@@ -19,6 +19,8 @@ import { MODAL } from '@gqlapp/review-common';
 import CategoryListingsCatalogue from '@gqlapp/listing-client-react/containers/CategoryListingsCatalogue';
 import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
 import CategoryCarousel from '@gqlapp/category-client-react/components/CategoryCarousel';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match, t } = props;
@@ -40,28 +42,32 @@ const CategoryCatalogueView = props => {
               </NavLink>
             </BreadcrumbItem>
             {category && <BreadcrumbItem>{category.title}</BreadcrumbItem>}
+            {category && category.subCategories && category.subCategories.length !== 0 && (
+              <BreadcrumbItem
+                overlay={() => (
+                  <Menu>
+                    {category.subCategories.map(sC => (
+                      <MenuItem>
+                        <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sC.id}`}>{sC.title}</a>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                )}
+              >
+                Sub Categories
+              </BreadcrumbItem>
+            )}
           </Breadcrumb>
-          <div style={{ marginTop: '15px' }}>
-            <Title level={2}>{category.title}</Title>
-            <Paragraph>{category.description}</Paragraph>
-          </div>
           {category && category.subCategories && category.subCategories.length !== 0 && (
             <>
-              <Divider orientation="left">
-                <Title level={3}>Sub Categories</Title>
-              </Divider>
-
+              <br />
               <Row gutter={[24, 24]}>
                 {category.subCategories.length > 0 && <CategoryCarousel categories={category.subCategories} />}
-                {/* {category.subCategories.length > 0 &&
-                  category.subCategories.map((c, idx) => <CategoryItemComponent category={c} idx={idx} />)} */}
               </Row>
+              <Divider />
             </>
           )}
-          <>
-            <Divider />
-            <CategoryListingsCatalogue match={match} navigation={navigation} />
-          </>
+          <CategoryListingsCatalogue match={match} navigation={navigation} />
         </>
       )}
     </PageLayout>

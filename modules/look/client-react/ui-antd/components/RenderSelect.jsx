@@ -37,7 +37,7 @@ const RenderSelect = props => {
     labels = null;
   }
 
-  console.log(props);
+  // console.log(props);
   return (
     <FormItem label={label} validateStatus={validateStatus} help={error} {...labels} style={{ width: '100%' }}>
       <div>

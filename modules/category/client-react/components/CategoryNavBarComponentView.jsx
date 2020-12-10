@@ -18,7 +18,8 @@ import {
   Button,
   Menu
 } from '@gqlapp/look-client-react';
-import ROUTES from '@gqlapp/listing-client-react/routes';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 const CategoryNavBarComponentView = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
@@ -113,7 +114,7 @@ const CategoryNavBarComponentView = props => {
                         <SubMenu key={c.node.title} title={c.node.title}>
                           <MenuItem key="all">
                             <a
-                              href={`${ROUTES.categoryCatalogueLink}${c.node.id}`}
+                              href={`${LISTING_ROUTES.categoryCatalogueLink}${c.node.id}`}
                               rel="noopener noreferrer"
                               target="_blank"
                             >
@@ -123,7 +124,7 @@ const CategoryNavBarComponentView = props => {
                           {c.node.subCategories &&
                             c.node.subCategories.map(sc => (
                               <MenuItem key={sc.title}>
-                                <a href={`${ROUTES.categoryCatalogueLink}${sc.id}`}>{sc.title}</a>
+                                <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sc.id}`}>{sc.title}</a>
                               </MenuItem>
                             ))}
                         </SubMenu>
@@ -165,7 +166,7 @@ const CategoryNavBarComponentView = props => {
                       <Col key={i} span={24 / parseInt(categories.edges.filter(c => c.node.isNavbar && c).length)}>
                         <a
                           // href="#"
-                          href={`${ROUTES.categoryCatalogueLink}${c.node.id}`}
+                          href={`${LISTING_ROUTES.categoryCatalogueLink}${c.node.id}`}
                           onMouseEnter={() => setDropDownMenu(c.node)}
                         >
                           <h1>{c.node.title}</h1>
@@ -181,7 +182,7 @@ const CategoryNavBarComponentView = props => {
                     (sC, idx) =>
                       sC.isNavbar && (
                         <Col span={colWidth[idx]} key={idx} align="center">
-                          <a href={`${ROUTES.categoryCatalogueLink}${sC.id}`}>
+                          <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sC.id}`}>
                             <Card
                               bodyStyle={{
                                 margin: '0px',

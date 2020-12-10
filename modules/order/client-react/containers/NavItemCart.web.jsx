@@ -88,7 +88,7 @@ const NavItemCart = props => {
                     }}
                   >
                     <Badge count={getCart && getCart.orderDetails && getCart.orderDetails.length} size="small">
-                      <Icon type="ShoppingCartOutlined" />
+                      <Icon type="ShoppingCartOutlined" style={{ fontSize: '20px' }} />
                     </Badge>
                   </StyleCard>
                 </NavLink>
