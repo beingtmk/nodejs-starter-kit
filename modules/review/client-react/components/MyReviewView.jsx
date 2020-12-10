@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { MODAL } from '@gqlapp/review-common';
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import {
-  FormItem,
-  Select,
   Option,
   Heading,
   MetaTags,
@@ -12,6 +11,7 @@ import {
   Row,
   Col,
   Spin,
+  RenderSelect,
   SuggestedListComponent
 } from '@gqlapp/look-client-react';
 
@@ -20,7 +20,7 @@ import ReviewsItemComponent from './ReviewsItemComponent';
 import { NoReviews } from './ReviewView';
 
 const MyReviewView = props => {
-  const { t, reviews, loading, setModalName, deleteReview, currentUser, history } = props;
+  const { t, reviews, loading, setModalName, deleteReview, currentUser, history, ModalName } = props;
 
   const renderFunc = (key, review) => (
     <ReviewsItemComponent
@@ -66,39 +66,43 @@ const MyReviewView = props => {
         </Col>
         <Col xs={24} md={12} lg={12} align="right">
           <Col lg={0} md={0}>
-            <FormItem
+            <Field
+              name="Modal"
+              component={RenderSelect}
+              placeholder={'Modal'}
+              inFilter={true}
+              defaultValue={ModalName}
+              onChange={e => setModalName(e)}
               label={'Modal'}
-              //  style={{ display: 'inline-flex' }}
+              value={ModalName}
+              selectStyle={{ width: '100%' }}
             >
-              <Select
-                name="modal"
-                defaultValue={MODAL[0].value}
-                style={{ width: '100%' }}
-                onChange={e => setModalName(e)}
-              >
-                {MODAL.map((m, i) => (
-                  <Option key={i} value={m.value}>
-                    {m.label}
-                  </Option>
-                ))}
-              </Select>
-            </FormItem>
+              {MODAL.map((m, i) => (
+                <Option key={i} value={m.value}>
+                  {m.label}
+                </Option>
+              ))}
+            </Field>
           </Col>
-          <Col xs={0} md={24} lg={24}>
-            <FormItem label={'Modal'} style={{ display: 'inline-flex' }}>
-              <Select
-                name="modal"
-                defaultValue={MODAL[0].value}
-                style={{ width: '100px' }}
-                onChange={e => setModalName(e)}
-              >
-                {MODAL.map((m, i) => (
-                  <Option key={i} value={m.value}>
-                    {m.label}
-                  </Option>
-                ))}
-              </Select>
-            </FormItem>
+          <Col xs={0} md={24} lg={7}>
+            <Field
+              name="Modal"
+              component={RenderSelect}
+              placeholder={'Modal'}
+              inFilter={true}
+              defaultValue={ModalName}
+              onChange={e => setModalName(e)}
+              label={'Modal'}
+              style={{ display: 'inline-flex' }}
+              value={ModalName}
+              selectStyle={{ width: '100px' }}
+            >
+              {MODAL.map((m, i) => (
+                <Option key={i} value={m.value}>
+                  {m.label}
+                </Option>
+              ))}
+            </Field>
           </Col>
         </Col>
       </Row>
@@ -127,6 +131,7 @@ MyReviewView.propTypes = {
   reviews: PropTypes.object,
   currentUser: PropTypes.object,
   history: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  ModalName: PropTypes.string
 };
 export default MyReviewView;

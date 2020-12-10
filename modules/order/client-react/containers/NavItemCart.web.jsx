@@ -5,7 +5,15 @@ import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { DropDown, Card, Icon, Message, Empty, AddButton /* , SlickCarousel */ } from '@gqlapp/look-client-react';
+import {
+  DropDown,
+  Card,
+  Icon,
+  Message,
+  Empty,
+  AddButton,
+  Badge /* , SlickCarousel */
+} from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
@@ -79,8 +87,9 @@ const NavItemCart = props => {
                       padding: '12px'
                     }}
                   >
-                    <Icon type="ShoppingCartOutlined" />
-                    &nbsp;&nbsp;{getCart && getCart.orderDetails && getCart.orderDetails.length}
+                    <Badge count={getCart && getCart.orderDetails && getCart.orderDetails.length} size="small">
+                      <Icon type="ShoppingCartOutlined" />
+                    </Badge>
                   </StyleCard>
                 </NavLink>
               }

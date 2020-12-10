@@ -19,10 +19,9 @@ import {
 } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { displayDataCheck, priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import ROUTES from '../routes';
-
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 import CartItemComponent from './CartItemComponent';
 
@@ -42,7 +41,6 @@ export function TotalPrice(cartArray) {
     cartArray.map(item => {
       totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
     });
-  totalCartPrice = totalCartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return totalCartPrice;
 }
 
@@ -84,7 +82,9 @@ const CheckoutCartView = props => {
                   <Col lg={8} md={8} xs={24}>
                     <h2>
                       {t('checkoutCart.totalPrice')}
-                      <strong>&#8377; {TotalPrice(displayDataCheck(getCart.orderDetails))} </strong>
+                      <strong>
+                        &#8377; {priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}{' '}
+                      </strong>
                     </h2>
                   </Col>
                   <Col span={24}>
@@ -146,8 +146,9 @@ const CheckoutCartView = props => {
                               <Rightfloat>
                                 &#8377;{' '}
                                 {item.cost && item.cost !== '0'
-                                  ? `${item.cost} X ${item.orderOptions.quantity} = ${item.cost *
-                                      item.orderOptions.quantity}`
+                                  ? `${item.cost} X ${item.orderOptions.quantity} = ${priceCommaSeparator(
+                                      item.cost * item.orderOptions.quantity
+                                    )}`
                                   : 'Free'}
                               </Rightfloat>
                               <br />
@@ -159,7 +160,9 @@ const CheckoutCartView = props => {
                         <br />
                         <h3>
                           {t('checkoutCart.totalAmount')}
-                          <ColorFloat>&#8377; {` ${TotalPrice(displayDataCheck(getCart.orderDetails))}`}</ColorFloat>
+                          <ColorFloat>
+                            &#8377; {` ${priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}`}
+                          </ColorFloat>
                         </h3>
                       </span>
                     </Card>

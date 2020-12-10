@@ -9,14 +9,15 @@ import {
   Icon,
   RenderUploadMultiple,
   RenderField,
-  Select,
   Option,
   FormItem,
   SubmitButton,
   Row,
   Col,
   Rate,
-  Button
+  Button,
+  Select,
+  RenderSelect
 } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
@@ -105,20 +106,23 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
     <Form layout="vertical" onSubmit={handleSubmit}>
       {showModal && (
         <>
-          <FormItem label={t('reviewForm.modal')}>
-            <Select
-              name="modal"
-              defaultValue={MODAL[0].value}
-              style={{ width: '100px' }}
-              onChange={(e: string) => setFieldValue('modalName', e)}
-            >
-              {MODAL.map((m, i) => (
-                <Option key={i} value={m.value}>
-                  {m.label}
-                </Option>
-              ))}
-            </Select>
-          </FormItem>
+          <Field
+            name="modal"
+            component={RenderSelect}
+            placeholder={t('reviewForm.modal')}
+            defaultValue={MODAL[0].value}
+            onChange={(e: string) => setFieldValue('modalName', e)}
+            label={t('reviewForm.modal')}
+            style={{ width: '100px' }}
+            value={values.modalName}
+            selectStyle={{ width: '100px' }}
+          >
+            {MODAL.map((m, i) => (
+              <Option key={i} value={m.value}>
+                {m.label}
+              </Option>
+            ))}
+          </Field>
           <Field
             name="modalId"
             component={RenderField}

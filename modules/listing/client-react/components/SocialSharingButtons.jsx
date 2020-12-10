@@ -19,14 +19,6 @@ const Img = styled.img`
 
 const SocialSharingButtons = props => {
   const { twitterMessage, whatsappMessage, link, hideEmailButton, t } = props;
-  const textAreaRef = React.useRef(null);
-
-  function copyToClipboard(e) {
-    textAreaRef.current.select();
-    console.log(textAreaRef);
-    document.execCommand('copy');
-    e.target.focus();
-  }
   const sharingMenu = (
     <div>
       <Row type="flex" justify="space-between">
@@ -157,10 +149,12 @@ const SocialSharingButtons = props => {
         </Col>
       </Row>
       <Row type="flex" justify="space-between" style={{ paddingTop: '15px' }}>
-        <Col span={24}>
+        <Col xs={0} lg={24}>
           <Row justify="space-between">
             <h5 align="center">FaceBook</h5>
-            <h5 align="center">Reddit</h5>
+            <h5 align="center" style={{ marginLeft: '5px' }}>
+              Reddit
+            </h5>
             <h5 align="center">Twitter</h5>
             <h5 align="center">Whatsapp</h5>
             <h5 align="center">Linkedin</h5>
@@ -170,20 +164,28 @@ const SocialSharingButtons = props => {
           </Row>
         </Col>
       </Row>
-      <Row type="flex">
+      <Row type="flex" style={{ paddingTop: '15px' }}>
         <Col span={24}>
-          <Row>
-            <Col span={20}>
-              <Input ref={textAreaRef} value="Some text to copy" />
+          <Row type="flex" gutter={24}>
+            <Col lg={{ span: 16, offset: 0 }} xs={24}>
+              <Input value={link} />
             </Col>
-            <Col span={4}>
-              {document.queryCommandSupported('copy') && (
-                <div>
-                  <Button color="primary" ghost={true} onClick={copyToClipboard}>
-                    Copy
-                  </Button>
-                </div>
-              )}
+            <Col xs={24} lg={0}>
+              <br />
+            </Col>
+            <Col lg={{ span: 4, offset: 4 }} xs={24}>
+              <div>
+                <Button
+                  color="primary"
+                  ghost={true}
+                  block
+                  onClick={async () => {
+                    await window.navigator.clipboard.writeText(link);
+                  }}
+                >
+                  Copy
+                </Button>
+              </div>
             </Col>
           </Row>
         </Col>
@@ -218,6 +220,7 @@ SocialSharingButtons.propTypes = {
   errors: PropTypes.object,
   hideEmailButton: PropTypes.bool,
   values: PropTypes.object,
+  history: PropTypes.object,
   t: PropTypes.func
 };
 

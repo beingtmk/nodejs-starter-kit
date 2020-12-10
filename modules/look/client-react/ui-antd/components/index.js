@@ -99,5 +99,7 @@ export { default as SubMenu } from './SubMenu';
 export { default as Text } from './Text';
 export { default as Title } from './Title';
 export { default as Paragraph } from './Paragraph';
+export { default as Menu } from './Menu';
+export { default as Image } from './Image';
 
 export { onAppCreate } from './NavBar';

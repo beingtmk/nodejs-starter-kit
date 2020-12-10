@@ -9,12 +9,11 @@ import {
   Col,
   Form,
   RenderCheckBox,
-  FormItem,
-  Select,
   Option,
   RenderField,
   RenderUploadWithCrop,
-  SubmitButton
+  SubmitButton,
+  RenderSelect
 } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 import { IMG_ASPECT } from '@gqlapp/listing-common';
@@ -49,24 +48,27 @@ const DynamicCarouselFormComponent = props => {
       <Form onSubmit={handleSubmit}>
         <Row type="flex" gutter={24}>
           <Col span={12}>
-            <FormItem label={t('dynamicCarousel.form.label')}>
-              <Select
-                name="label"
-                defaultValue={values.label}
-                style={{ width: '130px' }}
-                onChange={e => setFieldValue('label', e)}
-              >
-                <Option key={1} value={''}>
-                  All
-                </Option>
-                {LABEL &&
-                  LABEL.map((l, i) => (
-                    <Option key={i + 2} value={l}>
-                      {l}
-                    </Option>
-                  ))}
-              </Select>
-            </FormItem>
+            <Field
+              name="label"
+              component={RenderSelect}
+              placeholder={t('dynamicCarousel.form.label')}
+              defaultValue={values.label}
+              onChange={e => setFieldValue('label', e)}
+              label={t('dynamicCarousel.form.label')}
+              style={{ width: '100px' }}
+              value={values.label}
+              selectStyle={{ width: '130px' }}
+            >
+              <Option key={1} value={''}>
+                All
+              </Option>
+              {LABEL &&
+                LABEL.map((l, i) => (
+                  <Option key={i + 2} value={l}>
+                    {l}
+                  </Option>
+                ))}
+            </Field>
           </Col>
           <Col span={12}>
             <Field

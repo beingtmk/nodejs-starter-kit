@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Image } from 'antd';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import {
   MetaTags,
@@ -18,7 +18,8 @@ import {
   Breadcrumb,
   Tooltip,
   Spinner,
-  Icon
+  Icon,
+  Image
 } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
@@ -206,7 +207,7 @@ const ListingDetailView = props => {
                     </IfLoggedIn>
                   )}
                 </Col>
-                <Col lg={1} xs={3} align="right">
+                <Col lg={1} xs={1} align="right">
                   <SocialSharingButtons {...message} onShare={onShare} t={t} />
                 </Col>
               </Row>

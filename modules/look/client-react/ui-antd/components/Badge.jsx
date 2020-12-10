@@ -7,11 +7,6 @@ const Badge = ({ children, ...props }) => {
 };
 
 Badge.propTypes = {
-  children: PropTypes.node,
-  count: PropTypes.number,
-  dot: PropTypes.bool,
-  status: PropTypes.string,
-  text: PropTypes.string,
-  color: PropTypes.string
+  children: PropTypes.node
 };
 export default Badge;
