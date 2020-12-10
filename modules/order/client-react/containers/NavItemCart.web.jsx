@@ -5,22 +5,14 @@ import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import {
-  DropDown,
-  Card,
-  Icon,
-  Message,
-  Empty,
-  AddButton,
-  Badge /* , SlickCarousel */
-} from '@gqlapp/look-client-react';
+import { DropDown, Card, Icon, Message, Empty, AddButton, Badge } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { withCurrentUser, withGetCart, withEditOrderDetail, withDeleteCartItem } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';
-import SlickCarousel from './SlickCarousel';
-import CartItemComponent from '../components/NavItemCartComponent';
+import NavItemCartLayout from '../components/NavItemCartLayout';
+import NavItemCartComponent from '../components/NavItemCartComponent';
 import ROUTES from '../routes';
 
 const StyleCard = styled(Card)`
@@ -98,8 +90,8 @@ const NavItemCart = props => {
               noicon
             >
               {props.getCart && props.getCart.orderDetails && props.getCart.orderDetails.length !== 0 ? (
-                <SlickCarousel
-                  Compo={CartItemComponent}
+                <NavItemCartLayout
+                  Compo={NavItemCartComponent}
                   data={props.getCart.orderDetails}
                   width={'300px'}
                   // node={true}

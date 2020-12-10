@@ -29,7 +29,7 @@ export default class RenderUpload extends React.Component {
 
   onChangeHandler = ({ file, fileList }) => {
     // console.log(file.status);
-    console.log(fileList);
+    // console.log(fileList);
     // console.log(file.response.secure_url);
     // const arrayHelpers = this.props.arrayHelpers;
 

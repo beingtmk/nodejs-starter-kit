@@ -1,8 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { enquireScreen } from 'enquire-js';
 
 import Icon from './Icon';
+import Button from './Button';
+
+const BgIcon = styled(Icon)`
+  font-size: 25px;
+`;
 
 let isMobile;
 enquireScreen(b => {
@@ -11,9 +17,9 @@ enquireScreen(b => {
 
 export const LeftArrow = ({ prevSlide }) => {
   return !isMobile ? (
-    <div className="carousel-arrow carousel-arrow-left" onClick={prevSlide}>
-      <Icon type="LeftOutlined" className="carousel-arrow-icon" />
-    </div>
+    <Button onClick={prevSlide} shape="circle" color="primary" size={'lg'}>
+      <BgIcon type="LeftOutlined" className="carousel-arrow-icon" />
+    </Button>
   ) : null;
 };
 
@@ -23,9 +29,9 @@ LeftArrow.propTypes = {
 
 export const RightArrow = ({ nextSlide }) => {
   return !isMobile ? (
-    <div className="carousel-arrow carousel-arrow-right" onClick={nextSlide}>
-      <Icon type="RightOutlined" className="carousel-arrow-icon" />
-    </div>
+    <Button onClick={nextSlide} shape="circle" color="primary" size={'lg'}>
+      <BgIcon type="RightOutlined" className="carousel-arrow-icon" />
+    </Button>
   ) : null;
 };
 

@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Divider, Button } from '@gqlapp/look-client-react';
 import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
-import { TotalPrice } from '../components/CheckoutCartView';
+import { TotalPrice } from './CheckoutCartView';
 import ROUTES from '../routes/index';
 
 const ColorFloat = styled.strong`
   color: #3f0869;
 `;
 
-const SlickCarousel = props => {
+const NavItemCartLayout = props => {
   // console.log('carousel', props);
   const { Compo, itemName, height, width, onEdit, onDelete } = props;
 
@@ -58,7 +58,7 @@ const SlickCarousel = props => {
   );
 };
 
-SlickCarousel.propTypes = {
+NavItemCartLayout.propTypes = {
   node: PropTypes.object,
   height: PropTypes.string,
   Compo: PropTypes.func.isRequired,
@@ -70,4 +70,4 @@ SlickCarousel.propTypes = {
   onEdit: PropTypes.func
 };
 
-export default SlickCarousel;
+export default NavItemCartLayout;

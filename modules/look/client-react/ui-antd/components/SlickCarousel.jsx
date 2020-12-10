@@ -84,11 +84,6 @@ const SlickCarousel = props => {
                 : [];
             const obj = {};
             obj[itemName] = node ? item.node : item;
-            //
-            //
-            //
-            //
-            // console.log(modalName);
             return (
               <Compo
                 key={key}

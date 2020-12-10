@@ -31,6 +31,8 @@ const CategoryFormSchema = {
 const CategoryFormComponent = props => {
   const { cardTitle, handleSubmit, values, t } = props;
   const [load, setLoad] = useState(false);
+
+  // console.log('props form component', props.values.imageUrl);
   return (
     <Card
       title={

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Carousel as ADCarousel } from 'antd';
 
+import Row from './Row';
+import Col from './Col';
 import { LeftArrow, RightArrow } from './CarouselArrows';
 
 const Carousel = props => {
@@ -17,13 +19,19 @@ const Carousel = props => {
   };
 
   return (
-    <>
-      {showArrow && <LeftArrow prevSlide={prevSlide} />}
-      <ADCarousel ref={node => (carousel = node)} {...rest}>
-        {children}
-      </ADCarousel>
-      {showArrow && <RightArrow nextSlide={nextSlide} />}
-    </>
+    <Row type="flex" justify="center" align="middle">
+      <Col span={1} align="center">
+        {showArrow && <LeftArrow prevSlide={prevSlide} />}
+      </Col>
+      <Col span={22} align="center">
+        <ADCarousel ref={node => (carousel = node)} {...rest}>
+          {children}
+        </ADCarousel>
+      </Col>
+      <Col span={1} align="center">
+        {showArrow && <RightArrow nextSlide={nextSlide} />}
+      </Col>
+    </Row>
   );
 };
 Carousel.propTypes = {
