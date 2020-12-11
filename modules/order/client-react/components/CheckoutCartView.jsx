@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PageLayout, MetaTags, Row, Col, Card, Divider, Spinner } from '@gqlapp/look-client-react';
+import {
+  NextButton,
+  CheckBox,
+  PageLayout,
+  MetaTags,
+  Row,
+  Col,
+  Card,
+  Divider,
+  Spinner
+} from '@gqlapp/look-client-react';
 
 import OrderSummary from './OrderSummary';
 import CheckoutLayout from './CheckoutLayout';
 import CartItemComponent from './CartItemComponent';
+import ROUTES from '../routes';
 
 const CheckoutCartView = props => {
+  const [checkout, setCheckout] = React.useState(false);
   const { t, history, cartLoading, onSubmit, getCart, onDelete, currentUser, onEdit } = props;
 
   return (
@@ -68,7 +80,23 @@ const CheckoutCartView = props => {
             </Card>
           </>
         }
-        Col2={<OrderSummary t={t} getCart={getCart} history={history} />}
+        Col2={
+          <OrderSummary
+            t={t}
+            getCart={getCart}
+            history={history}
+            btn={
+              <>
+                <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
+                <br />
+                <br />
+                <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
+                  {t('checkoutCart.btn.checkout')}
+                </NextButton>
+              </>
+            }
+          />
+        }
       />
     </PageLayout>
   );

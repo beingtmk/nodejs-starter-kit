@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { MetaTags, PageLayout, Row, Col, Spinner } from '@gqlapp/look-client-react';
+import { NextButton, MetaTags, PageLayout, Row, Col, Spinner } from '@gqlapp/look-client-react';
 import SelectAddress from '@gqlapp/addresses-client-react/containers/SelectAddress';
 import AddAddressBtn from '@gqlapp/addresses-client-react/containers/AddAddressBtn';
 
@@ -10,7 +10,7 @@ import CheckoutLayout from './CheckoutLayout';
 import OrderSummary from './OrderSummary';
 
 const CheckoutBillView = props => {
-  const { t, onSelect, cartLoading, currentUser, /* btnDisabled, */ history } = props;
+  const { t, onSelect, onSubmit, cartLoading, currentUser, btnDisabled, history } = props;
   const getCart = !props.loading && props.getCart;
 
   return (
@@ -32,7 +32,18 @@ const CheckoutBillView = props => {
               </Col>
             </Row>
           }
-          Col2={<OrderSummary t={t} getCart={getCart} history={history} />}
+          Col2={
+            <OrderSummary
+              t={t}
+              getCart={getCart}
+              history={history}
+              btn={
+                <NextButton onClick={onSubmit} disabled={btnDisabled} size="lg">
+                  Continue
+                </NextButton>
+              }
+            />
+          }
         />
       )}
     </PageLayout>

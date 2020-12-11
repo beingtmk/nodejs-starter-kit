@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Row, Col, NextButton, CheckBox } from '@gqlapp/look-client-react';
+import { Card, Row, Col } from '@gqlapp/look-client-react';
 import { displayDataCheck, priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
-import ROUTES from '../routes';
 import { TotalPrice } from './function';
 
 const OrderSummary = props => {
-  const [checkout, setCheckout] = React.useState(false);
-  const { t, getCart, history } = props;
+  const { getCart, btn } = props;
 
   return (
     <Card type="inner" title={<h3 style={{ marginBottom: '0px' }}>ORDER SUMMARY</h3>}>
@@ -44,20 +42,14 @@ const OrderSummary = props => {
           <h3>&#8377; {` ${priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}`}</h3>
         </Col>
       </Row>
-      <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
-      <br />
-      <br />
-      <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
-        {t('checkoutCart.btn.checkout')}
-      </NextButton>
+      {btn}
     </Card>
   );
 };
 
 OrderSummary.propTypes = {
-  t: PropTypes.func,
   getCart: PropTypes.object,
-  history: PropTypes.object
+  btn: PropTypes.node
 };
 
 export default OrderSummary;
