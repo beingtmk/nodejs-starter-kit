@@ -5,12 +5,6 @@ import { Message } from '@gqlapp/look-client-react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import {
-  withAddresses,
-  withAddOrEditAddress,
-  withDeleteAddress
-} from '@gqlapp/addresses-client-react/containers/AddressOperations';
-
 import ROUTES from '../routes';
 import CheckoutBillView from '../components/CheckoutBillView';
 import { withCurrentUser, withGetCart, withPatchAddress } from './OrderOperations';
@@ -55,11 +49,4 @@ CheckoutBill.propTypes = {
   history: PropTypes.object
 };
 
-export default compose(
-  withCurrentUser,
-  withGetCart,
-  withPatchAddress,
-  withAddresses,
-  withAddOrEditAddress,
-  withDeleteAddress
-)(translate('order')(CheckoutBill));
+export default compose(withCurrentUser, withGetCart, withPatchAddress)(translate('order')(CheckoutBill));
