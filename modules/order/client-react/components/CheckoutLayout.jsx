@@ -15,7 +15,7 @@ const CustomBody = styled.div`
   padding: 0 200%;
 `;
 const CheckoutLayout = props => {
-  const { loading, t, title, Col1, Col2 } = props;
+  const { loading, t, title, extra, Col1, Col2 } = props;
   return loading ? (
     <>
       <Row type="flex">
@@ -25,7 +25,12 @@ const CheckoutLayout = props => {
         <Col span={24}>
           <CustomBody>
             <br />
-            <Heading>{title}</Heading>
+            <Row>
+              <Col span={12}>
+                <Heading>{title}</Heading>
+              </Col>
+              <Col span={12}>{extra}</Col>
+            </Row>
             <br />
             <Row gutter={24}>
               <Col xxl={16} lg={16} xs={24}>
@@ -63,6 +68,7 @@ CheckoutLayout.propTypes = {
   loading: PropTypes.bool,
   t: PropTypes.func,
   title: PropTypes.string,
+  extra: PropTypes.node,
   Col1: PropTypes.node,
   Col2: PropTypes.node
 };

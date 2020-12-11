@@ -1,88 +1,92 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FieldArray, withFormik } from 'formik';
 
-import { MetaTags, PageLayout, Row, Col, Card, Spinner } from '@gqlapp/look-client-react';
-import RenderAddress from '@gqlapp/addresses-client-react/components/RenderAddresses';
+import {
+  Divider,
+  Icon,
+  ModalDrawer,
+  MetaTags,
+  PageLayout,
+  Row,
+  Col,
+  /* Card, */ Spinner
+} from '@gqlapp/look-client-react';
+import AddressItemComponent from '@gqlapp/addresses-client-react/components/AddressItemComponent';
+import AddressForm from '@gqlapp/addresses-client-react/components/AddressForm';
 
 import settings from '@gqlapp/config';
-import CheckoutCardComponent from './CheckoutCardComponent';
-import CheckoutStepsComponent from './CheckoutStepsComponent';
+import CheckoutLayout from './CheckoutLayout';
+import OrderSummary from './OrderSummary';
 
 const CheckoutBillView = props => {
-  // const addresses = getAddresses();
-  const { t, values, onSelect, deleteAddress, cartLoading, btnDisabled } = props;
-  const { addresses: address } = values;
-  const addresses = [...address];
+  const {
+    t,
+    addresses,
+    /* onSelect, */ deleteAddress,
+    addOrEditAddresses,
+    cartLoading,
+    /* btnDisabled, */ history
+  } = props;
   const getCart = !props.loading && props.getCart;
+
   return (
     <PageLayout>
       <MetaTags title="Bill" description={`${settings.app.name} - ${'meta'}`} />
       {cartLoading && <Spinner />}
-      {getCart && (
-        <div className="checkoutDiv">
-          <Row type="flex" style={{ alignContent: 'center' }} gutter={24}>
-            <Col lg={{ span: 24, offset: 0 }} xs={{ span: 24, offset: 0 }} align="center">
-              <CheckoutStepsComponent step={1} t={t} />
-            </Col>
-            <Col span={24}>
-              <h3 className="billingAddress">{t('checkoutBill.billingAddress')}</h3>
-              <br />
-            </Col>
 
-            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
-              {addresses && (
-                <Card style={{ height: '100%' }}>
-                  <h3 className="billingAddress">{t('checkoutBill.shippingAddress')}</h3>
-                  <br />
-                  <hr />
-                  <br />
-                  <h4>{t('checkoutBill.selectAddress')}</h4>
-                  <FieldArray
-                    name="addresses"
-                    render={arrayHelpers => (
-                      <RenderAddress
-                        name="addresses"
-                        addresses={addresses}
-                        handleDeleteAddress={deleteAddress}
-                        arrayHelpers={arrayHelpers}
-                        label="addresses"
+      {!cartLoading && (
+        <CheckoutLayout
+          t={t}
+          title={'Select Address'}
+          extra={
+            <ModalDrawer
+              buttonText={
+                <>
+                  <Icon type="PlusOutlined" /> Add new address
+                </>
+              }
+              modalTitle="Edit Address"
+              block={false}
+              height="auto"
+              // shape="circle"
+              size="md"
+              type="default"
+            >
+              <AddressForm t={t} onSubmit={addOrEditAddresses} />
+            </ModalDrawer>
+            // <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>
+          }
+          loading={getCart && getCart.orderDetails.length > 0}
+          Col1={
+            <Row>
+              <Col span={1} />
+              <Col span={23}>
+                {addresses &&
+                  addresses.map((a, i) => (
+                    <>
+                      <AddressItemComponent
+                        address={a}
                         t={t}
-                        onSubmit={props.addOrEditAddresses}
-                        isSelectable={true}
-                        onSelect={onSelect}
+                        onEdit={addOrEditAddresses}
+                        onDelete={() => deleteAddress(a.id)}
                       />
-                    )}
-                  />
-                </Card>
-              )}
-            </Col>
-            <Col lg={{ span: 12, offset: 0 }} xs={{ span: 24, offset: 0 }} style={{ paddingBottom: '5%' }}>
-              <CheckoutCardComponent
-                t={t}
-                onSubmit={() => {
-                  // console.log('Working!');
-                  props.onSubmit();
-                }}
-                showState={false}
-                getCart={getCart}
-                btnDisabled={btnDisabled}
-                showBtn={true}
-                paid={false}
-                buttonText={'Continue'}
-              />
-            </Col>
-          </Row>
-        </div>
+                      {addresses.length - 1 !== i ? <Divider /> : <br />}
+                    </>
+                  ))}
+              </Col>
+            </Row>
+          }
+          Col2={<OrderSummary t={t} getCart={getCart} history={history} />}
+        />
       )}
     </PageLayout>
   );
 };
 
 CheckoutBillView.propTypes = {
+  addresses: PropTypes.object,
   currentUser: PropTypes.object,
   addOrEditAddresses: PropTypes.func,
-  values: PropTypes.object,
   onSubmit: PropTypes.func,
   cartLoading: PropTypes.bool,
   deleteAddress: PropTypes.func,
@@ -90,33 +94,8 @@ CheckoutBillView.propTypes = {
   loading: PropTypes.bool,
   t: PropTypes.func,
   onSelect: PropTypes.func,
-  getCart: PropTypes.object
+  getCart: PropTypes.object,
+  history: PropTypes.object
 };
 
-const CheckoutBillWithFormik = withFormik({
-  enableReinitialize: true,
-  mapPropsToValues: props => {
-    const addresses = props && props.addresses;
-
-    function getAddresses(address) {
-      return {
-        id: address.id || null,
-        streetAddress1: address.streetAddress1,
-        streetAddress2: address.streetAddress2,
-        city: address.city,
-        state: address.state,
-        pinCode: address.pinCode
-      };
-    }
-
-    return {
-      addresses: addresses && addresses.length !== 0 ? addresses.map(getAddresses) : []
-    };
-  },
-  async handleSubmit() {
-    // onSubmit();
-  },
-  displayName: 'CheckoutBill ' // helps with React DevTools
-});
-
-export default CheckoutBillWithFormik(CheckoutBillView);
+export default CheckoutBillView;
