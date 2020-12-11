@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Spinner, Divider } from '@gqlapp/look-client-react';
@@ -6,7 +6,14 @@ import { Spinner, Divider } from '@gqlapp/look-client-react';
 import AddressItemComponent from './AddressItemComponent';
 
 const SelectAddressView = props => {
-  const { loading, addresses, t, addOrEditAddresses, deleteAddress } = props;
+  const [active, setActive] = useState(0);
+  const { onSelect, loading, addresses, t, addOrEditAddresses, deleteAddress } = props;
+
+  const handleSelect = id => {
+    setActive(id);
+    onSelect(id);
+  };
+
   return (
     <>
       {loading && <Spinner />}
@@ -14,7 +21,14 @@ const SelectAddressView = props => {
         addresses &&
         addresses.map((a, i) => (
           <>
-            <AddressItemComponent address={a} t={t} onEdit={addOrEditAddresses} onDelete={() => deleteAddress(a.id)} />
+            <AddressItemComponent
+              active={active}
+              address={a}
+              t={t}
+              setActive={handleSelect}
+              onEdit={addOrEditAddresses}
+              onDelete={() => deleteAddress(a.id)}
+            />
             {addresses.length - 1 !== i ? <Divider /> : <br />}
           </>
         ))}
@@ -27,7 +41,8 @@ SelectAddressView.propTypes = {
   addresses: PropTypes.object,
   t: PropTypes.func,
   addOrEditAddresses: PropTypes.func,
-  deleteAddress: PropTypes.func
+  deleteAddress: PropTypes.func,
+  onSelect: PropTypes.func
 };
 
 export default SelectAddressView;

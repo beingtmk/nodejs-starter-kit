@@ -10,7 +10,7 @@ import CheckoutLayout from './CheckoutLayout';
 import OrderSummary from './OrderSummary';
 
 const CheckoutBillView = props => {
-  const { t, /* onSelect, */ cartLoading, currentUser, /* btnDisabled, */ history } = props;
+  const { t, onSelect, cartLoading, currentUser, /* btnDisabled, */ history } = props;
   const getCart = !props.loading && props.getCart;
 
   return (
@@ -28,7 +28,7 @@ const CheckoutBillView = props => {
             <Row>
               <Col span={1} />
               <Col span={23}>
-                <SelectAddress currentUser={currentUser} />
+                <SelectAddress onSelect={onSelect} currentUser={currentUser} />
               </Col>
             </Row>
           }
