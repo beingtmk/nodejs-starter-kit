@@ -1,0 +1,11 @@
+#import "./Address.graphql"
+
+subscription onAddressUpdated($userId: Int) {
+  addressesUpdated(userId: $userId) {
+    mutation
+    id
+    node {
+      ...AddressInfo
+    }
+  }
+}
