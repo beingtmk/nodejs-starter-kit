@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import {
   Heading,
   PageLayout,
-  NextButton,
   AddButton,
   MetaTags,
   Row,
@@ -14,15 +13,13 @@ import {
   Card,
   Empty,
   Divider,
-  Spinner,
-  CheckBox
+  Spinner
 } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
-import { displayDataCheck, priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
-import ROUTES from '../routes';
 import CheckoutStepsComponent from './CheckoutStepsComponent';
+import OrderSummary from './OrderSummary';
 import CartItemComponent from './CartItemComponent';
 
 const CustomBody = styled.div`
@@ -31,18 +28,7 @@ const CustomBody = styled.div`
   padding: 0 200%;
 `;
 
-export function TotalPrice(cartArray) {
-  var totalCartPrice = 0;
-  cartArray &&
-    cartArray.map(item => {
-      totalCartPrice += item.cost * (item.orderOptions && item.orderOptions.quantity);
-    });
-  return totalCartPrice;
-}
-
 const CheckoutCartView = props => {
-  const [checkout, setCheckout] = React.useState(false);
-
   const { t, history, cartLoading, onSubmit, getCart, onDelete, currentUser, onEdit } = props;
 
   return (
@@ -117,47 +103,7 @@ const CheckoutCartView = props => {
                       </Link>
                     </Col>
                     <Col lg={8} sm={24} xs={24}>
-                      <Card type="inner" title={<h3 style={{ marginBottom: '0px' }}>ORDER SUMMARY</h3>}>
-                        <Row>
-                          <Col span={12} align="left">
-                            <h3>Items</h3>
-                          </Col>
-                          <Col span={12} align="end">
-                            {getCart && getCart.orderDetails.length}
-                          </Col>
-                          <Col span={12} align="left">
-                            <h3>Discount</h3>
-                          </Col>
-                          <Col span={12} align="end">
-                            &#8377; bleh
-                          </Col>
-                          <Col span={12} align="left">
-                            <h3>Shipping</h3>
-                          </Col>
-                          <Col span={12} align="end">
-                            <h3>FREE</h3>
-                          </Col>
-                          <Col span={24}>
-                            <br />
-                            <hr />
-                            <br />
-                          </Col>
-                          <Col span={12} align="left">
-                            <h2>TOTAL COST</h2>
-                          </Col>
-                          <Col span={12} align="end">
-                            <h3>
-                              &#8377; {` ${priceCommaSeparator(TotalPrice(displayDataCheck(getCart.orderDetails)))}`}
-                            </h3>
-                          </Col>
-                        </Row>
-                        <CheckBox onChange={e => setCheckout(e.target.checked)}>{t('checkoutCart.checkbox')}</CheckBox>
-                        <br />
-                        <br />
-                        <NextButton onClick={() => history.push(`${ROUTES.checkoutBill}`)} block disabled={!checkout}>
-                          {t('checkoutCart.btn.checkout')}
-                        </NextButton>
-                      </Card>
+                      <OrderSummary t={t} getCart={getCart} history={history} />
                     </Col>
                   </Row>
                   <br />

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Divider, Button } from '@gqlapp/look-client-react';
 import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 
-import { TotalPrice } from './CheckoutCartView';
+import { TotalPrice } from './function';
 import ROUTES from '../routes/index';
 
 const ColorFloat = styled.strong`
