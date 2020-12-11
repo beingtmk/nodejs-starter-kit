@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
-import { Select, Option, Row, Col, Card, MetaTags } from '@gqlapp/look-client-react';
-import { FieldArray, withFormik } from 'formik';
+import { Select, Option, Row, Col, MetaTags } from '@gqlapp/look-client-react';
+import { withFormik } from 'formik';
 
 import settings from '@gqlapp/config';
 
-import RenderAddress from './RenderAddresses';
+// import RenderAddress from './RenderAddresses';
+import AddressItemComponent from './AddressItemComponent';
 
 const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
   const [type, setType] = useState(false);
-  const [id, setId] = useState(0);
+  // const [id, setId] = useState(0);
   const { addresses: address } = values;
   const addresses = [...address];
 
-  const onSelect = addressId => {
-    console.log('address id', addressId);
-    setId(addressId);
-  };
+  // const onSelect = addressId => {
+  //   console.log('address id', addressId);
+  //   setId(addressId);
+  // };
 
   return (
     <>
@@ -28,7 +29,11 @@ const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
       </Select>
       <Row>
         <Col xl={16} lg={15} md={13} sm={24}>
-          <FieldArray
+          {addresses.map(a => (
+            <AddressItemComponent address={a} t={t} onEdit={addOrEditAddresses} onDelete={() => deleteAddress(a.id)} />
+          ))}
+
+          {/* <FieldArray
             name="addresses"
             render={arrayHelpers => (
               <RenderAddress
@@ -43,11 +48,11 @@ const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
                 onSelect={onSelect}
               />
             )}
-          />
+          /> */}
         </Col>
         {type && (
           <Col xl={8} lg={9} md={11} sm={24}>
-            <Card style={{ margin: '30px' }}>
+            {/* <Card style={{ margin: '30px' }}>
               <h1>Selected address : </h1>
               <h4>
                 {addresses[id].streetAddress1}
@@ -58,7 +63,7 @@ const AddressesView = ({ t, values, addOrEditAddresses, deleteAddress }) => {
                 <br />
                 {addresses[id].pinCode}
               </h4>
-            </Card>
+            </Card> */}
           </Col>
         )}
       </Row>

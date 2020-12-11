@@ -59,13 +59,12 @@ export default class Addresses extends Model {
   public async addOrEditAddress(params: Address) {
     if (params.id) {
       // const status = await this.addressStatus(params);
-      const res = await Addresses.query().upsertGraph(decamelizeKeys(params));
-      return this.address(res.id);
+      return camelizeKeys(await Addresses.query().upsertGraph(decamelizeKeys(params)));
     } else {
       // perform address add
       delete params.id;
-      const res = await Addresses.query().insertGraph(decamelizeKeys(params));
-      return this.address(res.id);
+      return camelizeKeys(await Addresses.query().insertGraph(decamelizeKeys(params)));
+      // return this.address(res.id);
     }
   }
 
