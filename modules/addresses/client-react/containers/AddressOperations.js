@@ -14,9 +14,9 @@ export const withAddresses = Component =>
     options: props => {
       return { variables: { id: props.currentUser && props.currentUser.id } };
     },
-    props({ data: { loading, error, addresses } }) {
+    props({ data: { loading, error, addresses, subscribeToMore } }) {
       if (error) throw new Error(error);
-      return { loading, addresses };
+      return { loading, addresses, subscribeToMore };
     }
   })(Component);
 
