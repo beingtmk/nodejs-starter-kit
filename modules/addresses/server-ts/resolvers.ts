@@ -1,6 +1,10 @@
 import withAuth from 'graphql-auth';
+import { withFilter } from 'graphql-subscriptions';
+
 import { Address } from './sql';
 import { Identifier } from './sql';
+
+export const ADDRESSES_SUBSCRIPTION = 'addresses_subscription';
 
 interface AddressInput {
   input: Address;
@@ -20,6 +24,13 @@ export default (pubsub: any) => ({
           input.userId = context.req.identity.id;
         }
         const address = await context.Addresses.addAddress(input);
+        pubsub.publish(ADDRESSES_SUBSCRIPTION, {
+          addressesUpdated: {
+            mutation: 'CREATED',
+            id: address.id,
+            node: address
+          }
+        });
         return address;
       } catch (e) {
         return e;
@@ -27,16 +38,44 @@ export default (pubsub: any) => ({
     }),
     addOrEditAddress: withAuth(async (obj: any, { input }: AddressInput, context: any) => {
       const address = await context.Addresses.addOrEditAddress(input);
+      pubsub.publish(ADDRESSES_SUBSCRIPTION, {
+        addressesUpdated: {
+          mutation: !input.id ? 'CREATED' : 'UPDATED',
+          id: address.id,
+          node: address
+        }
+      });
       return address;
     }),
     deleteAddress: withAuth(async (obj: any, { id }: Identifier, context: any) => {
       try {
+        const address = await context.Addresses.address(id);
         await context.Addresses.deleteAddress(id);
+        pubsub.publish(ADDRESSES_SUBSCRIPTION, {
+          addressesUpdated: {
+            mutation: 'DELETED',
+            id: address.id,
+            node: address
+          }
+        });
         return true;
       } catch (e) {
         return e;
       }
     })
   },
-  Subscription: {}
+  Subscription: {
+    addressesUpdated: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(ADDRESSES_SUBSCRIPTION),
+        (payload, variables) => {
+          if (variables.userId) {
+            return variables.userId <= payload.addressesUpdated.node.userId;
+          } else {
+            return true;
+          }
+        }
+      )
+    }
+  }
 });

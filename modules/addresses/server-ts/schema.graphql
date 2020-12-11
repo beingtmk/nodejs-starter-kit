@@ -18,9 +18,6 @@ extend type Mutation {
   deleteAddress(id: Int): Boolean!
 }
 
-# extend type Subscription {
-# }
-
 input AddressInput {
   id: Int
   userId: Int!
@@ -29,4 +26,14 @@ input AddressInput {
   city: String!
   state: String!
   pinCode: Int!
+}
+
+extend type Subscription {
+  addressesUpdated(userId: Int): UpdateAddressPayload
+}
+
+type UpdateAddressPayload {
+  mutation: String!
+  id: Int
+  node: Address
 }
