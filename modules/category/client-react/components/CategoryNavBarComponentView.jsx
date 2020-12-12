@@ -196,6 +196,7 @@ const CategoryNavBarComponentView = props => {
                             <Col span={colWidth[idx]} key={idx} align="center">
                               <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sC.id}`}>
                                 <Card
+                                  // style={{ height: '145px' }}
                                   bodyStyle={{
                                     margin: '0px',
                                     padding: '0px'
@@ -204,7 +205,11 @@ const CategoryNavBarComponentView = props => {
                                 >
                                   <Card
                                     bordered={false}
-                                    style={{ width: 'fit-content' /* border: '0px', borderRadius: '0px !important' */ }}
+                                    style={{
+                                      width: '120px'
+                                      /* height: 'fit-content' */
+                                      /* border: '0px', borderRadius: '0px !important' */
+                                    }}
                                     bodyStyle={{
                                       // margin: showImg && '0px',
                                       padding: showImg && '0px',
