@@ -1,10 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Row, Col, Card, Skeleton } from '@gqlapp/look-client-react';
 
-const RelatedCardSkeleton = () => {
+const RelatedCardSkeleton = props => {
+  const { componentStyle } = props;
   return (
     <Card
       align="left"
+      style={componentStyle}
       bodyStyle={{ margin: '0px' }}
       hoverable
       cover={
@@ -36,6 +40,10 @@ const RelatedCardSkeleton = () => {
       </Row>
     </Card>
   );
+};
+
+RelatedCardSkeleton.propTypes = {
+  componentStyle: PropTypes.object
 };
 
 export default RelatedCardSkeleton;

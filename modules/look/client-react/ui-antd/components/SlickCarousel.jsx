@@ -70,7 +70,7 @@ const SlickCarousel = props => {
   };
   return (
     <>
-      <div style={{ position: 'relative', height }}>
+      <div style={{ position: 'relative', height, overflow: 'hidden' }}>
         <Carousel {...(settings || status)} showArrow={showArrow}>
           {data.map((item, key) => {
             //
@@ -102,7 +102,6 @@ const SlickCarousel = props => {
     </>
   );
 };
-
 SlickCarousel.propTypes = {
   settings: PropTypes.object.isRequired,
   componentStyle: PropTypes.object,
@@ -118,5 +117,4 @@ SlickCarousel.propTypes = {
   getCart: PropTypes.object,
   itemName: PropTypes.string
 };
-
 export default SlickCarousel;
