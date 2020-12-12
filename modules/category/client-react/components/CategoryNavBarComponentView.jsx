@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 import { enquireScreen } from 'enquire-js';
@@ -20,6 +21,11 @@ import {
 } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+
+const WhiteDiv = styled.div`
+  background: white;
+  padding: 5px;
+`;
 
 const CategoryNavBarComponentView = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
@@ -181,65 +187,75 @@ const CategoryNavBarComponentView = props => {
                 })}
             <Col span={24} style={{ visibility: 'collapse' }}>
               <DropDown visible={visible} content={'navbar-category-dropdown'} className="navbar-category-dropdown">
-                <Row type="flex" justify="center" gutter={[6, 6]}>
-                  {activeCategory.map(
-                    (sC, idx) =>
-                      sC.isNavbar && (
-                        <Col span={colWidth[idx]} key={idx} align="center">
-                          <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sC.id}`}>
-                            <Card
-                              bodyStyle={{
-                                margin: '0px',
-                                padding: '0px'
-                              }}
-                              hoverable
-                            >
-                              <Card
-                                bordered={false}
-                                style={{ width: 'fit-content' /* border: '0px', borderRadius: '0px !important' */ }}
-                                bodyStyle={{
-                                  // margin: showImg && '0px',
-                                  padding: showImg && '0px',
-                                  textAlign: 'center'
-                                }}
-                                // hoverable
-                                cover={
-                                  showImg && (
-                                    <>
-                                      {!loaded && (
-                                        <div
-                                          style={{
-                                            overflow: 'hidden',
-                                            height: '126px',
-                                            borderRadius: '8px 8px 0px 0px',
-                                            background: 'linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%)',
-                                            animation: 'ant-skeleton-loading 1.4s ease infinite'
-                                          }}
-                                          align="center"
-                                        ></div>
-                                      )}
-                                      <img
-                                        ref={ref}
-                                        onLoad={onLoad}
-                                        alt="example"
-                                        src={sC.imageUrl}
-                                        style={{
-                                          // width: 'fit-content',
-                                          display: !loaded && 'none'
-                                        }}
-                                      />
-                                    </>
-                                  )
-                                }
-                              >
-                                {sC.title}
-                              </Card>
-                            </Card>
-                          </a>
-                        </Col>
-                      )
-                  )}
-                </Row>
+                <Affix offsetTop={92}>
+                  <WhiteDiv>
+                    <Row type="flex" justify="center" gutter={[6, 6]}>
+                      {activeCategory.map(
+                        (sC, idx) =>
+                          sC.isNavbar && (
+                            <Col span={colWidth[idx]} key={idx} align="center">
+                              <a href={`${LISTING_ROUTES.categoryCatalogueLink}${sC.id}`}>
+                                <Card
+                                  // style={{ height: '145px' }}
+                                  bodyStyle={{
+                                    margin: '0px',
+                                    padding: '0px'
+                                  }}
+                                  hoverable
+                                >
+                                  <Card
+                                    bordered={false}
+                                    style={{
+                                      width: '120px'
+                                      /* height: 'fit-content' */
+                                      /* border: '0px', borderRadius: '0px !important' */
+                                    }}
+                                    bodyStyle={{
+                                      // margin: showImg && '0px',
+                                      padding: showImg && '0px',
+                                      textAlign: 'center'
+                                    }}
+                                    // hoverable
+                                    cover={
+                                      showImg && (
+                                        <>
+                                          {!loaded && (
+                                            <div
+                                              style={{
+                                                overflow: 'hidden',
+                                                height: '126px',
+                                                borderRadius: '8px 8px 0px 0px',
+                                                background:
+                                                  'linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%)',
+                                                animation: 'ant-skeleton-loading 1.4s ease infinite'
+                                              }}
+                                              align="center"
+                                            ></div>
+                                          )}
+                                          <img
+                                            ref={ref}
+                                            onLoad={onLoad}
+                                            alt="example"
+                                            src={sC.imageUrl}
+                                            style={{
+                                              // width: 'fit-content',
+                                              display: !loaded && 'none'
+                                            }}
+                                          />
+                                        </>
+                                      )
+                                    }
+                                  >
+                                    {sC.title}
+                                  </Card>
+                                </Card>
+                              </a>
+                            </Col>
+                          )
+                      )}
+                    </Row>
+                  </WhiteDiv>
+                </Affix>
               </DropDown>
             </Col>
           </Row>

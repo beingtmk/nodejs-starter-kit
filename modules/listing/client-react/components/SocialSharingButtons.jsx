@@ -167,13 +167,13 @@ const SocialSharingButtons = props => {
       <Row type="flex" style={{ paddingTop: '15px' }}>
         <Col span={24}>
           <Row type="flex" gutter={24}>
-            <Col lg={{ span: 16, offset: 0 }} xs={24}>
+            <Col lg={20} xs={24}>
               <Input value={link} />
             </Col>
             <Col xs={24} lg={0}>
               <br />
             </Col>
-            <Col lg={{ span: 4, offset: 4 }} xs={24}>
+            <Col lg={4} xs={24}>
               <div>
                 <Button
                   color="primary"

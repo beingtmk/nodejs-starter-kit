@@ -19,7 +19,7 @@ const CategoryCarousel = props => {
       infinite: true,
       speed: 500,
       autoplaySpeed: 2000,
-      slidesToShow: 8,
+      slidesToShow: itemLength >= 8 ? 8 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
       lazyLoad: true,
@@ -30,28 +30,28 @@ const CategoryCarousel = props => {
         {
           breakpoint: 1440,
           settings: {
-            slidesToShow: 8,
+            slidesToShow: itemLength >= 8 ? 8 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 7,
+            slidesToShow: itemLength >= 7 ? 7 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: 6,
+            slidesToShow: itemLength >= 6 ? 6 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: itemLength >= 3 ? 3 : itemLength,
             slidesToScroll: 1
           }
         }
@@ -69,8 +69,8 @@ const CategoryCarousel = props => {
           data={categories}
           height={'144px'}
           componentStyle={{
-            margin: '0 10px'
-            // width: '265px'
+            margin: '0 10px',
+            width: '115px'
           }}
         />
       </div>
