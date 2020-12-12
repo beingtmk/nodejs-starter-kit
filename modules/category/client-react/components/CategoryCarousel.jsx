@@ -66,7 +66,6 @@ const CategoryCarousel = props => {
           Compo={CategoryItemComponent}
           settings={carouselSettings(itemLength)}
           itemName={'category'}
-          restrict={itemLength >= 8}
           data={categories}
           height={'144px'}
           componentStyle={{

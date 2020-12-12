@@ -17,8 +17,7 @@ const SlickCarousel = props => {
     showArrow,
     getCart,
     onDelete,
-    autoplay = true,
-    restrict
+    autoplay = true
   } = props;
 
   const status = {
@@ -72,7 +71,11 @@ const SlickCarousel = props => {
   return (
     <>
       <div style={{ position: 'relative', height }}>
-        <Carousel {...(settings || status)} showArrow={showArrow} height={!restrict && height}>
+        <Carousel
+          {...(settings || status)}
+          showArrow={showArrow}
+          height={!data.length >= settings.slidesToShow && height}
+        >
           {data.map((item, key) => {
             //
             //
@@ -114,7 +117,6 @@ SlickCarousel.propTypes = {
   Compo: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
   autoplay: PropTypes.bool,
-  restrict: PropTypes.bool,
   showArrow: PropTypes.bool,
   onDelete: PropTypes.func,
   getCart: PropTypes.object,
