@@ -24,7 +24,6 @@ import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match, t } = props;
-
   return (
     <PageLayout>
       <MetaTags
@@ -54,7 +53,7 @@ const CategoryCatalogueView = props => {
                   </Menu>
                 )}
               >
-                Sub Categories
+                <a href="#">Sub Categories</a>
               </BreadcrumbItem>
             )}
           </Breadcrumb>

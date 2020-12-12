@@ -8,11 +8,14 @@ const Breadcrumb = ({ children, ...props }) => {
   return (
     <ADBreadcrumb {...props}>
       {children.map((item, i) => {
-        const { children: itemChildren, ...itemProps } = item.props;
         return (
-          <ADBreadcrumbItem key={i} {...itemProps}>
-            {itemChildren}
-          </ADBreadcrumbItem>
+          item &&
+          item.props &&
+          item.props.children && (
+            <ADBreadcrumbItem key={i} {...item.props}>
+              {item.props.children}
+            </ADBreadcrumbItem>
+          )
         );
       })}
     </ADBreadcrumb>
