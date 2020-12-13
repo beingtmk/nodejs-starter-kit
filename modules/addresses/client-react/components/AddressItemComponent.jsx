@@ -31,12 +31,11 @@ const AddressItemComponent = props => {
         <Col span={23}>
           {`${address.streetAddress1}, ${address.streetAddress2}`}
           <br />
-          {`${address.city}, ${address.state}`}
+          {`${address.city}, ${address.state}, ${address.country}`}
           <br />
           {`${address.pinCode}`}
           <br />
-          {/* {`Mobile: ${address.user.mobile}`} */}
-          {`Mobile: `}
+          {`Mobile: ${address.mobile}`}
           <div style={{ display: 'flex', float: 'right' }}>
             {onEdit && (
               <ModalDrawer

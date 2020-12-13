@@ -1,11 +1,19 @@
 type Address {
   id: Int
   userId: Int!
-  streetAddress1: String!
-  streetAddress2: String!
-  city: String!
-  state: String!
-  pinCode: Int!
+
+  streetAddress1: String
+  streetAddress2: String
+  city: String
+  state: String
+  country: String
+  pinCode: Int
+
+  firstName: String
+  lastName: String
+  mobile: String
+
+  isDefault: Boolean
 }
 
 extend type Query {
@@ -13,19 +21,27 @@ extend type Query {
 }
 
 extend type Mutation {
-  addAddress(input: AddressInput!): Address!
-  addOrEditAddress(input: AddressInput!): Address!
-  deleteAddress(id: Int): Boolean!
+  addAddress(input: AddressInput!): Boolean
+  addOrEditAddress(input: AddressInput!): Boolean
+  deleteAddress(id: Int): Boolean
 }
 
 input AddressInput {
   id: Int
-  userId: Int!
-  streetAddress1: String!
-  streetAddress2: String!
-  city: String!
-  state: String!
-  pinCode: Int!
+  userId: Int
+
+  streetAddress1: String
+  streetAddress2: String
+  city: String
+  state: String
+  country: String
+  pinCode: Int
+
+  firstName: String
+  lastName: String
+  mobile: String
+
+  isDefault: Boolean
 }
 
 extend type Subscription {

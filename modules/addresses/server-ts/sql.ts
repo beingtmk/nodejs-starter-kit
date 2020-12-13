@@ -48,7 +48,11 @@ export default class Addresses extends Model {
     return camelizeKeys(await Addresses.query().findById(id));
   }
   public async addresses(id: number) {
-    return camelizeKeys(await Addresses.query().where('user_id', '=', id));
+    return camelizeKeys(
+      await Addresses.query()
+        .where('user_id', '=', id)
+        .orderBy('id', 'desc')
+    );
   }
 
   public async addAddress(params: Address) {

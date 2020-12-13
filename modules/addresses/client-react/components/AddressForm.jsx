@@ -23,6 +23,14 @@ const AddressFormComponent = props => {
       <Row type="flex" gutter={24}>
         <Col md={12} xs={24} align="left">
           <Field
+            name="firstName"
+            component={RenderField}
+            placeholder={t('addressForm.firstName')}
+            type="text"
+            label={t('addressForm.firstName')}
+            value={values.firstName}
+          />
+          <Field
             name="streetAddress1"
             component={RenderField}
             placeholder={t('addressForm.streetAddress')}
@@ -46,8 +54,24 @@ const AddressFormComponent = props => {
             label={t('addressForm.pinCode')}
             value={values.pinCode}
           />
+          <Field
+            name="mobile"
+            component={RenderField}
+            placeholder={t('addressForm.mobile')}
+            type="text"
+            label={t('addressForm.mobile')}
+            value={values.mobile}
+          />
         </Col>
         <Col md={12} xs={24} align="left">
+          <Field
+            name="lastName"
+            component={RenderField}
+            placeholder={t('addressForm.lastName')}
+            type="text"
+            label={t('addressForm.lastName')}
+            value={values.lastName}
+          />
           <Field
             name="streetAddress2"
             component={RenderField}
@@ -63,6 +87,14 @@ const AddressFormComponent = props => {
             type="text"
             label={t('addressForm.state')}
             value={values.state}
+          />
+          <Field
+            name="country"
+            component={RenderField}
+            placeholder={t('addressForm.country')}
+            type="text"
+            label={t('addressForm.country')}
+            value={values.country}
           />
         </Col>
         <Col span={24} align="right">
@@ -91,7 +123,12 @@ const AddressWithFormik = withFormik({
       streetAddress2: (props.address && props.address.streetAddress2) || '',
       city: (props.address && props.address.city) || '',
       state: (props.address && props.address.state) || '',
-      pinCode: (props.address && props.address.pinCode) || ''
+      country: (props.address && props.address.country) || '',
+      pinCode: (props.address && props.address.pinCode) || '',
+
+      firstName: (props.address && props.address.firstName) || '',
+      lastName: (props.address && props.address.lastName) || '',
+      mobile: (props.address && props.address.mobile) || ''
     };
   },
   async handleSubmit(values, { props: { onSubmit, hideModal } }) {

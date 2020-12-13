@@ -8,8 +8,12 @@
     "city": "City",
     "state": "State",
     "pinCode": "Pin Code",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "country": "Country",
+    "mobile": "Mobile",
     "btn": {
-      "submit": "Submit"
+      "submit": "SAVE & CONTINUE"
     }
   }
 }

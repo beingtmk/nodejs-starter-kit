@@ -31,7 +31,7 @@ export default (pubsub: any) => ({
             node: address
           }
         });
-        return address;
+        return true;
       } catch (e) {
         return e;
       }
@@ -45,7 +45,7 @@ export default (pubsub: any) => ({
           node: address
         }
       });
-      return address;
+      return true;
     }),
     deleteAddress: withAuth(async (obj: any, { id }: Identifier, context: any) => {
       try {
