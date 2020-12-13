@@ -19,11 +19,13 @@ const CustomCard = styled(Card)`
 `;
 
 const AddressItemComponent = props => {
-  const { address, onEdit, active, setActive, onDelete, t } = props;
+  const { address, onEdit, active, setActive, onDelete, t, setDefault } = props;
 
   return (
     <CustomCard active={active === address.id} backgroundColor={'#d6f2ff'} onClick={() => setActive(address.id)}>
-      <Button disabled={true}>DEFAULT ADDRESS</Button>
+      <Button onClick={() => setDefault(address.id)} disabled={address.isDefault}>
+        {address.isDefault ? 'DEFAULT ADDRESS' : 'OTHER ADDRESS'}
+      </Button>
       <br />
       <br />
       <Row>
@@ -66,7 +68,8 @@ AddressItemComponent.propTypes = {
   t: PropTypes.func,
   onDelete: PropTypes.func,
   active: PropTypes.number,
-  setActive: PropTypes.func
+  setActive: PropTypes.func,
+  setDefault: PropTypes.func
 };
 
 export default AddressItemComponent;

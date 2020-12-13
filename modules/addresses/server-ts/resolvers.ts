@@ -18,6 +18,25 @@ export default (pubsub: any) => ({
     }
   },
   Mutation: {
+    setDefaultAddress: withAuth(async (obj: any, { userId, id }: { id: number; userId: number }, context: any) => {
+      try {
+        const status = await context.Addresses.setDefaultAddress(userId || context.req.identity.id, id);
+        if (status) {
+          const address = await context.Addresses.address(id);
+          address.isDefault = true;
+          pubsub.publish(ADDRESSES_SUBSCRIPTION, {
+            addressesUpdated: {
+              mutation: 'UPDATED',
+              id: address.id,
+              node: address
+            }
+          });
+        }
+        return true;
+      } catch (e) {
+        return e;
+      }
+    }),
     addAddress: withAuth(async (obj: any, { input }: AddressInput, context: any) => {
       try {
         if (!input.userId) {

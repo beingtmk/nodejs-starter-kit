@@ -5,6 +5,7 @@ import { Message } from '@gqlapp/look-client-react';
 import ADDRESSES_QUERY from '../graphql/AddressesQuery.graphql';
 
 // Mutation
+import SET_DEFAULT_ADDRESS from '../graphql/SetDefaultAddress.graphql';
 import ADD_OR_EDIT_ADDRESS from '../graphql/AddOrEditAddress.graphql';
 import DELETE_ADDRESS from '../graphql/DeleteAddress.graphql';
 
@@ -39,6 +40,30 @@ export const withAddOrEditAddress = Component =>
           });
           Message.destroy();
           Message.success(addOrEditAddress);
+        } catch (e) {
+          Message.destroy();
+          Message.error("Couldn't perform the action");
+          console.error(e);
+        }
+      }
+    })
+  })(Component);
+
+export const withSetDefaultAddress = Component =>
+  graphql(SET_DEFAULT_ADDRESS, {
+    props: ({ mutate, ownProps: { currentUser } }) => ({
+      setDefaultAddress: async id => {
+        Message.destroy();
+        Message.loading('Please wait...', 0);
+        try {
+          await mutate({
+            variables: {
+              userId: currentUser && currentUser.id,
+              id
+            }
+          });
+          Message.destroy();
+          Message.success('Default Changed!');
         } catch (e) {
           Message.destroy();
           Message.error("Couldn't perform the action");

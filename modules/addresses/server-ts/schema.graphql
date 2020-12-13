@@ -21,6 +21,7 @@ extend type Query {
 }
 
 extend type Mutation {
+  setDefaultAddress(userId: Int, id: Int): Boolean
   addAddress(input: AddressInput!): Boolean
   addOrEditAddress(input: AddressInput!): Boolean
   deleteAddress(id: Int): Boolean

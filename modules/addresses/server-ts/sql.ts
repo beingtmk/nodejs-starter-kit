@@ -10,11 +10,18 @@ Model.knex(knex);
 export interface Address {
   id: number;
   userId: number;
+
   streetAddress1: string;
   streetAddress2: string;
   city: string;
   state: string;
   pinCode: number;
+
+  firstName: string;
+  lastName: string;
+  mobile: string;
+
+  isDefault: boolean;
 }
 
 export interface Identifier {
@@ -53,6 +60,16 @@ export default class Addresses extends Model {
         .where('user_id', '=', id)
         .orderBy('id', 'desc')
     );
+  }
+
+  public async setDefaultAddress(userId: number, id: number) {
+    const address = camelizeKeys(await Addresses.query().where('user_id', userId));
+    const ids = address.filter((a: Address) => a.isDefault);
+    if (ids.length > 0) {
+      this.addOrEditAddress({ id: ids[0].id, isDefault: false });
+    }
+    this.addOrEditAddress({ id, isDefault: true });
+    return true;
   }
 
   public async addAddress(params: Address) {

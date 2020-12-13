@@ -7,7 +7,7 @@ import AddressItemComponent from './AddressItemComponent';
 
 const SelectAddressView = props => {
   const [active, setActive] = useState(0);
-  const { onSelect, loading, addresses, t, addOrEditAddresses, deleteAddress } = props;
+  const { onSelect, loading, addresses, t, addOrEditAddresses, deleteAddress, onSubmit } = props;
 
   const handleSelect = id => {
     setActive(id);
@@ -28,6 +28,7 @@ const SelectAddressView = props => {
               setActive={handleSelect}
               onEdit={addOrEditAddresses}
               onDelete={() => deleteAddress(a.id)}
+              setDefault={onSubmit}
             />
             {addresses.length - 1 !== i ? <Divider /> : <br />}
           </>
@@ -42,7 +43,8 @@ SelectAddressView.propTypes = {
   t: PropTypes.func,
   addOrEditAddresses: PropTypes.func,
   deleteAddress: PropTypes.func,
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 export default SelectAddressView;
