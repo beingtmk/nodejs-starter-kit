@@ -11,7 +11,7 @@ import { withCurrentUser, withGetCart, withPatchAddress } from './OrderOperation
 import { subscribeToCart } from './OrderSubscriptions';
 
 const CheckoutBill = props => {
-  const { history, patchAddress, addresses, subscribeToMore, getCart } = props;
+  const { history, patchAddress, subscribeToMore, getCart } = props;
   const [addressId, setAddressId] = React.useState(0);
 
   React.useEffect(() => {
@@ -19,14 +19,9 @@ const CheckoutBill = props => {
     return () => subscribe();
   });
 
-  const handleSelect = id => {
-    // console.log('addresses id', id);
-    setAddressId(id);
-  };
-
   async function onSubmit() {
     try {
-      const addressMutation = await patchAddress(addressId === 0 ? addresses[0].id : addressId);
+      const addressMutation = await patchAddress(addressId);
       if (history && addressMutation) {
         return history.push(`${ROUTES.checkoutOrderLink}${props.getCart.id}`);
       } else {
@@ -38,7 +33,7 @@ const CheckoutBill = props => {
   }
 
   // console.log('props', props);
-  return <CheckoutBillView onSubmit={onSubmit} btnDisabled={addressId === 0} onSelect={handleSelect} {...props} />;
+  return <CheckoutBillView onSubmit={onSubmit} btnDisabled={addressId === 0} onSelect={setAddressId} {...props} />;
 };
 
 CheckoutBill.propTypes = {

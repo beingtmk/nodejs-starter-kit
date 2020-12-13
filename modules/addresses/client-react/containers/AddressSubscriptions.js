@@ -22,6 +22,8 @@ export const subscribeToAddresses = (subscribeToMore, userId) =>
         newResult = onAddAddresses(prev, node);
       } else if (mutation === 'UPDATED') {
         newResult = onEditAddresses(prev, node);
+      } else if (mutation === 'DEFAULT_UPDATED') {
+        newResult = onDefualtAddress(prev, node.id);
       } else if (mutation === 'DELETED') {
         newResult = onDeleteAddresses(prev, node.id);
       }
@@ -45,6 +47,24 @@ function onEditAddresses(prev, node) {
 
   if (index) {
     prev.addresses.edges.splice(index, 1, node);
+    return update(prev, {
+      addresses: {
+        $set: [...prev.addresses]
+      }
+    });
+  }
+}
+
+function onDefualtAddress(prev, node) {
+  const indexForTrue = prev.addresses.findIndex(x => x.id === node.id);
+  const indexForFalse = prev.addresses.findIndex(x => x.isDefault);
+
+  const falseNode = prev.addresses[indexForFalse];
+  falseNode.isDefault = false;
+
+  if (indexForTrue) {
+    prev.addresses.edges.splice(indexForTrue, 1, node);
+    prev.addresses.edges.splice(indexForFalse, 1, falseNode);
     return update(prev, {
       addresses: {
         $set: [...prev.addresses]

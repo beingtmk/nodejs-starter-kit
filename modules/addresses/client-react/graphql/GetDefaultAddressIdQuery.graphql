@@ -1,0 +1,3 @@
+query getDefaultAddressId($userId: Int) {
+  getDefaultAddressId(userId: $userId)
+}

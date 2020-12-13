@@ -12,6 +12,10 @@ interface AddressInput {
 
 export default (pubsub: any) => ({
   Query: {
+    async getDefaultAddressId(obj: any, { userId }: { userId: number }, context: any) {
+      const defaultId = await context.Addresses.getDefaultAddressId(userId || context.req.identity.id);
+      return defaultId;
+    },
     async addresses(obj: any, { id }: Identifier, context: any) {
       const addresses = await context.Addresses.addresses(id || context.req.identity.id);
       return addresses;
@@ -26,7 +30,7 @@ export default (pubsub: any) => ({
           address.isDefault = true;
           pubsub.publish(ADDRESSES_SUBSCRIPTION, {
             addressesUpdated: {
-              mutation: 'UPDATED',
+              mutation: 'DEFAULT_UPDATED',
               id: address.id,
               node: address
             }

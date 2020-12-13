@@ -93,7 +93,7 @@ const ModalDrawer = props => {
 ModalDrawer.propTypes = {
   buttonText: PropTypes.object,
   height: PropTypes.string,
-  children: PropTypes.array,
+  children: PropTypes.object,
   ghost: PropTypes.bool,
   modalTitle: PropTypes.string,
   type: PropTypes.string,

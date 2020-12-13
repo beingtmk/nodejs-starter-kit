@@ -17,6 +17,7 @@ type Address {
 }
 
 extend type Query {
+  getDefaultAddressId(userId: Int): Int
   addresses(id: Int): [Address]!
 }
 

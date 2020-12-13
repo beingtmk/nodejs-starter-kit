@@ -54,6 +54,17 @@ export default class Addresses extends Model {
   public async address(id: number) {
     return camelizeKeys(await Addresses.query().findById(id));
   }
+
+  public async getDefaultAddressId(id: number) {
+    const address = camelizeKeys(
+      await Addresses.query()
+        .where('user_id', '=', id)
+        .andWhere('is_default', true)
+        .orderBy('id', 'desc')
+    );
+    return address.length > 0 ? address[0].id : 0;
+  }
+
   public async addresses(id: number) {
     return camelizeKeys(
       await Addresses.query()

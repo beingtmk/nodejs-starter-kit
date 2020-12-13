@@ -38,7 +38,7 @@ const CheckoutBillView = props => {
               getCart={getCart}
               history={history}
               btn={
-                <NextButton onClick={onSubmit} disabled={btnDisabled} size="lg">
+                <NextButton onClick={onSubmit} loading={cartLoading} disabled={btnDisabled} size="lg">
                   Continue
                 </NextButton>
               }
