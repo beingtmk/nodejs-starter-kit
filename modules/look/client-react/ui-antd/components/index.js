@@ -21,6 +21,7 @@ export { default as SuggestedListComponent } from './SuggestedListComponent';
 export { default as Spinner } from './Spinner';
 export { default as RenderTableLoading } from './RenderTableLoading';
 export { default as DropDown } from './Dropdown';
+export { default as Space } from './Space';
 export * from './CarouselArrows';
 
 export { default as Container } from './Container';

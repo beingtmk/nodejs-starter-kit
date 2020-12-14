@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Space,
   Icon,
   MetaTags,
   PageLayout,
@@ -121,9 +122,12 @@ const ListingCatalogueView = props => {
     <PageLayout>
       <MetaTags title={t('list.title')} description={`${settings.app.name} - ${t('list.meta')}`} />
       <CategoryNavBarComponent filter={{ isActive: true, isNavbar: true, modalName: MODAL[1].value }} />
-      <Heading type="2">
-        <Icon type="SolutionOutlined" /> &nbsp; {title}
-      </Heading>
+      <Space align="center">
+        <Heading type="2">
+          <Icon type="SolutionOutlined" /> &nbsp; {title}
+        </Heading>{' '}
+        {listings && <h4>{`(showing 1 - ${listings.edges.length} products of ${listings.totalCount} products)`}</h4>}
+      </Space>
       <Divider style={{ margin: '5px 0px 10px' }} />
       {renderChildren('vertical')}
       {/* {renderChildren()} */}
