@@ -1,6 +1,7 @@
 import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 
+import { MODAL } from '@gqlapp/review-common';
 import settings from '@gqlapp/config';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import { ORDER_SUBSCRIPTION, ORDERS_SUBSCRIPTION } from '@gqlapp/order-server-ts/resolvers';
@@ -212,9 +213,9 @@ export default (pubsub: any) => ({
         return e;
       }
     }),
-    deleteListing: withAuth(async (obj: any, { id }: Identifier, context: any) => {
-      const listing = await context.Listing.listing(id);
-      const isDeleted = await context.Listing.deleteListing(id);
+    deleteListing: withAuth(async (obj: any, { id }: Identifier, { Listing, Order }: any) => {
+      const listing = await Listing.listing(id);
+      const isDeleted = await Listing.deleteListing(id);
       if (isDeleted) {
         // publish for listing list
         pubsub.publish(LISTINGS_SUBSCRIPTION, {
@@ -232,6 +233,36 @@ export default (pubsub: any) => ({
             node: listing
           }
         });
+        const staleOrder = await Order.orders({}, { state: ORDER_STATES.STALE });
+        Promise.all(
+          staleOrder.map(async ord => {
+            let deleted = false;
+            await Promise.all(
+              ord.orderDetails.map(async oD => {
+                if (oD.modalName === MODAL[1].value && oD.modalId === listing.id) {
+                  await Order.deleteOrderDetail(oD.id);
+                  deleted = true;
+                }
+              })
+            );
+            if (deleted) {
+              const newOrder = await Order.order(ord.id);
+              pubsub.publish(ORDERS_SUBSCRIPTION, {
+                ordersUpdated: {
+                  mutation: 'UPDATED',
+                  node: newOrder
+                }
+              });
+              pubsub.publish(ORDER_SUBSCRIPTION, {
+                orderUpdated: {
+                  mutation: 'UPDATED',
+                  id: newOrder.id,
+                  node: newOrder
+                }
+              });
+            }
+          })
+        );
         return true;
       } else {
         return false;
