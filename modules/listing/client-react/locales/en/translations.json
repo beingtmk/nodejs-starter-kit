@@ -142,6 +142,10 @@
     "subTitle": "Listing List"
     
   },
+  "listingReview": {
+    "title": "Review",
+    "meta": "Reviews of Listing"
+  },
   "listingDetail": {
     "title": "Listing Detail Page",
     "meta": "Detailed View of Listing",

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Message } from '@gqlapp/look-client-react';
 import PropTypes from 'prop-types';
 
+import { translate } from '@gqlapp/i18n-client-react';
 import { compose } from '@gqlapp/core-common';
 import { withGetCart, withDeleteCartItem } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { subscribeToCart } from '@gqlapp/order-client-react/containers/OrderSubscriptions';
@@ -97,5 +98,6 @@ export default compose(
   withCanUserReview,
   withShareListingByEmail,
   withGetCart,
-  withDeleteCartItem
+  withDeleteCartItem,
+  translate('listing')
 )(ListingDetail);
