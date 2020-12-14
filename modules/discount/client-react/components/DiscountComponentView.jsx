@@ -14,7 +14,13 @@ export const CurrencyCostDisplay = props => {
         {isDiscount
           ? cost && (
               <>
-                <CurrencyDisplay style={{ display: 'inline' }} input={(cost - cost * (discount / 100)).toFixed(2)} />
+                <CurrencyDisplay
+                  style={{ display: 'inline' }}
+                  input={(cost - cost * (discount / 100)).toFixed(2)}
+                  valueStyle={{
+                    fontSize: 'xx-large'
+                  }}
+                />
                 {card && (
                   <CurrencyDisplay
                     input={cost.toFixed(2)}
@@ -26,7 +32,14 @@ export const CurrencyCostDisplay = props => {
                 )}
               </>
             )
-          : cost && <CurrencyDisplay input={cost.toFixed(2)} />}
+          : cost && (
+              <CurrencyDisplay
+                input={cost.toFixed(2)}
+                valueStyle={{
+                  fontSize: 'xx-large'
+                }}
+              />
+            )}
       </Col>
       {isDiscount && (
         <Col span={span[1]}>

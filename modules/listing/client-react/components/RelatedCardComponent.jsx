@@ -163,7 +163,7 @@ const RelatedCardComponent = props => {
           title={
             <span
               style={{
-                fontSize: '20px',
+                fontSize: '18px',
                 overflow: 'hidden',
                 lineClamp: 1,
                 display: 'box'
