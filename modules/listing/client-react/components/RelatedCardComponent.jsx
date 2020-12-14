@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
-import { Message, Card, CardMeta } from '@gqlapp/look-client-react';
+import { Ribbon, Message, Card, CardMeta } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
@@ -22,16 +22,6 @@ import ROUTES from '../routes';
 import { useImageLoaded } from './functions';
 import RelatedCardSkeleton from './RelatedCardSkeleton';
 import BookmarkComponent from './BookmarkComponent';
-
-const NewLabel = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 0;
-  padding: 5px;
-  color: white;
-  background: #0985be;
-  z-index: 2;
-`;
 
 const ListingWraper = styled.div`
   position: relative;
@@ -150,6 +140,85 @@ const RelatedCardComponent = props => {
     />
   );
 
+  const listingCard = (
+    <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
+      <Card
+        bodyStyle={{ margin: '0px' }}
+        hoverable
+        cover={
+          <div
+            style={{
+              // overflow: 'hidden',
+              // height: '230px',
+              height: 'fit-content',
+              borderRadius: '8px 8px 0px 0px'
+            }}
+            align="center"
+          >
+            {cardImg}
+          </div>
+        }
+      >
+        <CardMeta
+          title={
+            <span
+              style={{
+                fontSize: '20px',
+                overflow: 'hidden',
+                lineClamp: 1,
+                display: 'box'
+              }}
+            >
+              {listing && listing.title}
+            </span>
+          }
+          description={
+            <CurrencyCostDisplay
+              isDiscount={isDiscount}
+              cost={cost}
+              discount={discount}
+              span={[15, 9]}
+              card={true}
+              rowStyle={{ height: '75px' }}
+            />
+          }
+        />
+        {startDate <= now && endDate >= now ? (
+          <h4>
+            Deal ends in:{' '}
+            {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
+              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
+              : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
+              : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
+              ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
+              : 'Deal has Ended!'}
+          </h4>
+        ) : startDate >= now && endDate >= now ? (
+          <h4>
+            Deal starts in:
+            {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
+              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
+              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
+              : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
+              : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
+              ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
+              : 'Deal has Ended!'}
+          </h4>
+        ) : (
+          <br />
+        )}
+        <br />
+        <br />
+        <br />
+      </Card>
+    </Link>
+  );
+
   return (
     <>
       {!loaded && <RelatedCardSkeleton />}
@@ -161,7 +230,7 @@ const RelatedCardComponent = props => {
             currentUser={currentUser}
           />
         </IfLoggedIn>
-        {listing_is_new && <NewLabel>{'New'}</NewLabel>}
+        {/* {listing_is_new && <NewLabel>{'New'}</NewLabel>} */}
         <div
           align="center"
           style={{
@@ -189,82 +258,13 @@ const RelatedCardComponent = props => {
             catalogueCard={true}
           />
         </div>
-        <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
-          <Card
-            bodyStyle={{ margin: '0px' }}
-            hoverable
-            cover={
-              <div
-                style={{
-                  // overflow: 'hidden',
-                  // height: '230px',
-                  height: 'fit-content',
-                  borderRadius: '8px 8px 0px 0px'
-                }}
-                align="center"
-              >
-                {cardImg}
-              </div>
-            }
-          >
-            <CardMeta
-              title={
-                <span
-                  style={{
-                    fontSize: '20px',
-                    overflow: 'hidden',
-                    lineClamp: 1,
-                    display: 'box'
-                  }}
-                >
-                  {listing && listing.title}
-                </span>
-              }
-              description={
-                <CurrencyCostDisplay
-                  isDiscount={isDiscount}
-                  cost={cost}
-                  discount={discount}
-                  span={[15, 9]}
-                  card={true}
-                  rowStyle={{ height: '75px' }}
-                />
-              }
-            />
-            {startDate <= now && endDate >= now ? (
-              <h4>
-                Deal ends in:{' '}
-                {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
-                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
-                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
-                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-                  ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
-                  : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-                  ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
-                  : 'Deal has Ended!'}
-              </h4>
-            ) : startDate >= now && endDate >= now ? (
-              <h4>
-                Deal starts in:
-                {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
-                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
-                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
-                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-                  ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
-                  : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-                  ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
-                  : 'Deal has Ended!'}
-              </h4>
-            ) : (
-              <br />
-            )}
-            <br />
-            <br />
-            <br />
-          </Card>
-        </Link>
+        {listing_is_new ? (
+          <Ribbon placement={'start'} text={'New'}>
+            {listingCard}
+          </Ribbon>
+        ) : (
+          listingCard
+        )}
       </ListingWraper>
     </>
   );

@@ -45,7 +45,7 @@ const NavItemCart = props => {
         id,
         orderOptions: {
           id: optionsId,
-          quantity: quantity
+          quantity
         }
       };
       // console.log(input);
@@ -94,7 +94,7 @@ const NavItemCart = props => {
                   Compo={NavItemCartComponent}
                   data={props.getCart.orderDetails}
                   width={'300px'}
-                  // node={true}
+                  height={'250px'}
                   itemName={'item'}
                   componentProps={{
                     mobile: true,

@@ -22,6 +22,7 @@ export { default as Spinner } from './Spinner';
 export { default as RenderTableLoading } from './RenderTableLoading';
 export { default as DropDown } from './Dropdown';
 export { default as Space } from './Space';
+export { default as Ribbon } from './Ribbon';
 export * from './CarouselArrows';
 
 export { default as Container } from './Container';
