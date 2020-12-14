@@ -189,19 +189,19 @@ export class User extends Model {
 
   async register(params, passwordHash) {
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
+    delete params.password;
     if (passwordHash) {
-      delete params.password;
       params.passwordHash = passwordHash;
     }
     const res = await User.query()
       .eager(user_eager)
       .insertGraph(decamelizeKeys(params));
-    console.log(res);
+    // console.log(res);
     // Add Profile
-    const profile_id = await returnId(knex('user_profile')).insert({
+    await returnId(knex('user_profile')).insert({
       user_id: res.id
     });
-    console.log(profile_id);
+    // console.log(profile_id);
     return res.id;
   }
 

@@ -41,7 +41,7 @@ const ListingsFilterComponent = props => {
     t,
     layout
   } = props;
-  console.log(props.filter);
+  // console.log(props.filter);
   const handleFiltersRemove = useRef(() => {});
 
   handleFiltersRemove.current = () => {

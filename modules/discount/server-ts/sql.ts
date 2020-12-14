@@ -72,6 +72,12 @@ export default class DiscountDAO extends Model {
           // .andWhere('discount_duration.is_active', filter.isActive);
         });
       }
+      if (has(filter, 'modalName') && filter.modalName !== '') {
+        queryBuilder.where(function() {
+          this.where('discount.modal_name', filter.modalName);
+          // .andWhere('discount_duration.is_active', filter.isActive);
+        });
+      }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
         queryBuilder.where(function() {
           if (filter.isDiscount) {

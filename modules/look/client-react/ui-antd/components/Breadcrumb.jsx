@@ -7,9 +7,17 @@ const ADBreadcrumbItem = ADBreadcrumb.Item;
 const Breadcrumb = ({ children, ...props }) => {
   return (
     <ADBreadcrumb {...props}>
-      {children.map(item => (
-        <ADBreadcrumbItem key={item.props.children}>{item.props.children}</ADBreadcrumbItem>
-      ))}
+      {children.map((item, i) => {
+        return (
+          item &&
+          item.props &&
+          item.props.children && (
+            <ADBreadcrumbItem key={i} {...item.props}>
+              {item.props.children}
+            </ADBreadcrumbItem>
+          )
+        );
+      })}
     </ADBreadcrumb>
   );
 };

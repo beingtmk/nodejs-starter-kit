@@ -49,6 +49,7 @@ input OrderByDiscountInput {
 }
 
 input FilterDiscountInput {
+  modalName: String
   isActive: Boolean
   isDiscount: Boolean
   onGoing: Boolean
@@ -65,6 +66,7 @@ input AddDiscountInput {
   modalId: Int
   discountPercent: Int
   modalName: String
+  isActive: Boolean
   discountDuration: AddDiscountDurationInput
 }
 input EditDiscountInput {
@@ -72,6 +74,7 @@ input EditDiscountInput {
   modalId: Int
   discountPercent: Int
   modalName: String
+  isActive: Boolean
   discountDuration: EditDiscountDurationInput
 }
 

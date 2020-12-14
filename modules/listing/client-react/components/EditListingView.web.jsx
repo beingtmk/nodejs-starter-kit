@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { PropTypes } from 'prop-types';
 
-import { compose } from '@gqlapp/core-common';
-import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
-import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 import { PageLayout, MetaTags, Spinner, Steps, Step } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import ListingFormComponent from './ListingFormComponent.web';
 
 const EditListingView = props => {
-  const { t, listing, loading, onSubmit, modalId, currentUser, modalDiscount, discountSubscribeToMore } = props;
+  const { t, listing, loading, onSubmit, currentUser } = props;
   const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    const subscribe = subscribeToDiscount(discountSubscribeToMore, modalId);
-    return () => subscribe();
-  }, [discountSubscribeToMore, modalId]);
 
   const steps = [
     {
@@ -56,7 +48,6 @@ const EditListingView = props => {
               listing={listing}
               onSubmit={onSubmit}
               currentUser={currentUser}
-              modalDiscount={modalDiscount}
             />
           </div>
         </>
@@ -70,10 +61,7 @@ EditListingView.propTypes = {
   loading: PropTypes.bool,
   listing: PropTypes.object,
   currentUser: PropTypes.object,
-  modalDiscount: PropTypes.object,
-  onSubmit: PropTypes.func,
-  discountSubscribeToMore: PropTypes.func,
-  modalId: PropTypes.number
+  onSubmit: PropTypes.func
 };
 
-export default compose(withModalDiscount)(EditListingView);
+export default EditListingView;

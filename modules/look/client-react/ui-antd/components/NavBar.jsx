@@ -23,7 +23,7 @@ const ref = { modules: null };
 const { Header } = Layout;
 
 const BannerLink = styled.a`
-  color: white;
+  color: black;
 `;
 
 export const onAppCreate = async modules => (ref.modules = modules);

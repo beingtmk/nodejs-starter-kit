@@ -5,8 +5,7 @@ import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
 import { NO_IMG } from '@gqlapp/listing-common';
-import { Form, Icon, Card, Message } from '@gqlapp/look-client-react';
-import { MODAL } from '@gqlapp/review-common';
+import { Form, Icon, Card } from '@gqlapp/look-client-react';
 
 import DetailsFormFields from './FormComponents/DetailsFormFields';
 import FlagsFormFields from './FormComponents/FlagsFormFields';
@@ -52,23 +51,7 @@ const ListingFormSchema = [
         .required()
     })
   }),
-  Yup.object().shape({
-    listingFlags: Yup.object().shape({
-      isDiscount: Yup.boolean()
-    }),
-    listingCostArray: Yup.array().of(
-      Yup.object().shape({
-        discount: Yup.mixed().test('hasDiscount', 'Discount is required (>0) or disable Is discount', function(value) {
-          const isDiscount = this.options.from[1].value.listingFlags.isDiscount;
-          return isDiscount && value <= 0
-            ? false
-            : value < 100
-            ? true
-            : this.createError({ Message: 'Discount must be less than 100' });
-        })
-      })
-    )
-  }),
+  Yup.object().shape({}),
   Yup.object().shape({
     listingMedia: Yup.object().shape({
       video: Yup.array().of(
@@ -85,10 +68,6 @@ const ListingFormComponent = props => {
   const { t, step, setStep, setFieldValue, cardTitle, values, handleSubmit } = props;
   const videos = values.listingMedia.video;
   const listingHighlight = values.listingHighlight;
-  const isDiscount =
-    values.listingFlags.isDiscount ||
-    (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
-    (values.isTimeStamp && true);
 
   // console.log('props', props.modalDiscount);
   return (
@@ -115,15 +94,7 @@ const ListingFormComponent = props => {
         {step === 0 && (
           <DetailsFormFields values={values} listingHighlight={listingHighlight} t={t} setFieldValue={setFieldValue} />
         )}
-        {step === 1 && (
-          <FlagsFormFields
-            values={values}
-            t={t}
-            setFieldValue={setFieldValue}
-            isDiscount={isDiscount}
-            setStep={setStep}
-          />
-        )}
+        {step === 1 && <FlagsFormFields values={values} t={t} setStep={setStep} />}
         {step === 2 && (
           <MediasFormFields
             values={values}
@@ -221,23 +192,6 @@ const ListingWithFormik = withFormik({
         isNew: true,
         isDiscount: false
       },
-      discountId: (props.modalDiscount && props.modalDiscount.id) || null,
-      isTimeStamp: props.modalDiscount && props.modalDiscount.discountDuration ? true : false,
-      discountDuration: {
-        id:
-          (props.modalDiscount && props.modalDiscount.discountDuration && props.modalDiscount.discountDuration.id) ||
-          null,
-        startDate:
-          (props.modalDiscount &&
-            props.modalDiscount.discountDuration &&
-            props.modalDiscount.discountDuration.startDate) ||
-          null,
-        endDate:
-          (props.modalDiscount &&
-            props.modalDiscount.discountDuration &&
-            props.modalDiscount.discountDuration.endDate) ||
-          null
-      },
       listingOptions: (props.listing && props.listing.listingOptions) || {
         id: null,
         fixedQuantity: -1
@@ -259,21 +213,6 @@ const ListingWithFormik = withFormik({
   async handleSubmit(values, { props: { onSubmit, step, setStep }, setTouched, setSubmitting }) {
     setStep(step + 1);
     if (step + 1 === LAST_STEP) {
-      if (values.listingDetail.inventoryCount < 0) return Message.error('Invalid Inventory Count - Less than zero');
-      if (values.listingCostArray[0].cost < 0) return Message.error('Invalid Listing Cost - Less than zero');
-      if (
-        values.listingOptions.fixedQuantity < -1 ||
-        values.listingOptions.fixedQuantity > values.listingDetail.inventoryCount
-      )
-        return Message.error('Invalid Fixed Quantity - Cannot be less than zero/more than Inventory Count');
-      if (values.listingCostArray[0].discount < 0 || values.listingCostArray[0].discount > 100)
-        return Message.error('Invalid Discount - Less than zero/more than 100');
-      // if (< 0) return Message.error('Invalid - Less than zero');
-      const now = new Date().toISOString();
-      const isDiscount =
-        values.listingFlags.isDiscount ||
-        (values.listingCostArray[0].discount !== 0 && values.listingCostArray[0].discount) ||
-        (values.isTimeStamp && true);
       const input = {
         id: values.id,
         userId: values.userId,
@@ -283,19 +222,7 @@ const ListingWithFormik = withFormik({
         categoryId: values.categoryId,
         isActive: values.isActive
       };
-      const discountInput = {
-        id: values.discountId,
-        modalName: MODAL[1].value,
-        discountPercent: isDiscount ? values.listingCostArray[0].discount : 0
-      };
-      if (values.isTimeStamp) {
-        discountInput.discountDuration = {
-          id: values.discountDuration.id,
-          startDate: values.discountDuration.startDate || now,
-          endDate: values.discountDuration.endDate || now
-        };
-      }
-      // console.log(!values.isTimeStamp, values.listingCostArray[0].discount, isDiscount);
+
       input.listingCostArray = [];
       const cost = {
         cost: values.listingCostArray[0].cost,
@@ -335,8 +262,7 @@ const ListingWithFormik = withFormik({
       if (values.listingHighlight.length > 0) {
         input.listingHighlight = values.listingHighlight;
       }
-      // console.log(input, discountInput);
-      await onSubmit(input, isDiscount ? discountInput : false);
+      await onSubmit(input);
     } else {
       setTouched({});
       setSubmitting(false);

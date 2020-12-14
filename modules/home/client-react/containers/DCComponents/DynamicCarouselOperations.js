@@ -240,14 +240,14 @@ function onAddDynamicCarousels(prev, node) {
 }
 
 function onEditDynamicCarousels(prev, node) {
-  const index = prev.dynamicCarousels.findIndex(x => x.id === node.id);
+  const index = prev.dynamicCarousels.edges.findIndex(x => x.node.id === node.id);
   const edge = {
     cursor: node.id,
     node: node,
     __typename: 'ListingEdges'
   };
   if (index) {
-    prev.dynamicCarousels.splice(index, 1, edge);
+    prev.dynamicCarousels.edges.splice(index, 1, edge);
     return update(prev, {
       dynamicCarousels: {
         edges: {
@@ -259,7 +259,7 @@ function onEditDynamicCarousels(prev, node) {
 }
 
 const onDeleteDynamicCarousels = (prev, id) => {
-  const index = prev.dynamicCarousels.findIndex(x => x.id === id);
+  const index = prev.dynamicCarousels.edges.findIndex(x => x.node.id === id);
 
   // ignore if not found
   if (index < 0) {
@@ -267,7 +267,9 @@ const onDeleteDynamicCarousels = (prev, id) => {
   }
   return update(prev, {
     dynamicCarousels: {
-      $splice: [[index, 1]]
+      edges: {
+        $splice: [[index, 1]]
+      }
     }
   });
 };

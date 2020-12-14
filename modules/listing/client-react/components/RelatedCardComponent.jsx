@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import { NO_IMG } from '@gqlapp/listing-common';
 import { compose } from '@gqlapp/core-common';
 import { Message, Card, CardMeta } from '@gqlapp/look-client-react';
@@ -14,14 +15,12 @@ import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFo
 import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
-
 import { MODAL } from '@gqlapp/review-common';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
 import ROUTES from '../routes';
 import { useImageLoaded } from './functions';
 import RelatedCardSkeleton from './RelatedCardSkeleton';
-
 import BookmarkComponent from './BookmarkComponent';
 
 const NewLabel = styled.div`
@@ -197,7 +196,7 @@ const RelatedCardComponent = props => {
             cover={
               <div
                 style={{
-                  overflow: 'hidden',
+                  // overflow: 'hidden',
                   // height: '230px',
                   height: 'fit-content',
                   borderRadius: '8px 8px 0px 0px'

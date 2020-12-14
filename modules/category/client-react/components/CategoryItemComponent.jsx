@@ -20,7 +20,8 @@ const CategoryItemComponent = props => {
       onLoad={onLoad}
       src={category.imageUrl || NO_IMG}
       style={{
-        height: '200px',
+        width: '100%',
+        // height: '200px',
         display: !loaded && 'none'
       }}
     />
@@ -31,8 +32,15 @@ const CategoryItemComponent = props => {
       <NavLink to={`${ROUTES.categoryCatalogueLink}${category.id}`}>
         <Card
           bordered={false}
+          bodyStyle={{
+            padding: '4px 0px'
+          }}
           cover={
-            <>
+            <div
+              style={{
+                height: 'fit-content'
+              }}
+            >
               {cardImg}
               {!loaded && (
                 <div
@@ -46,10 +54,12 @@ const CategoryItemComponent = props => {
                   align="center"
                 ></div>
               )}
-            </>
+            </div>
           }
         >
-          <Text style={{ textAlign: 'left' }}>{category && category.title}</Text>
+          <div align="center">
+            <Text>{category && category.title}</Text>
+          </div>
         </Card>
       </NavLink>
     </div>

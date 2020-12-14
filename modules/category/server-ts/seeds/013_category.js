@@ -105,7 +105,7 @@ let CATEGORIES = {
 const LEAF_CATEGORY = {
   title: `Category`,
   description: `Category description`,
-  imageUrl: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602334464/ptmv3x5mms7lqizjmflf.png',
+  imageUrl: 'http://res.cloudinary.com/nodejs-starter-kit/image/upload/v1607606932/zlj3vwpx898vwkfx7309.png',
   // imageUrl: `https://via.placeholder.com/90x90/141c1f?text=C`,
   isNavbar: true,
   isLeaf: true

@@ -88,8 +88,8 @@ const ListingCarousel = props => {
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',
-      variableWidth: true,
-      autoplay: true,
+      // variableWidth: true,
+      // autoplay: true,
       easing: 1000,
       infinite: true,
       speed: 500,
@@ -112,7 +112,7 @@ const ListingCarousel = props => {
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: itemLength >= 3 ? 3 : itemLength,
+            slidesToShow: itemLength >= 4 ? 4 : itemLength,
             slidesToScroll: 1
           }
         },
@@ -157,8 +157,8 @@ const ListingCarousel = props => {
               loading: cartLoading
             }}
             componentStyle={{
-              margin: '0 10px',
-              width: '265px'
+              margin: '0 4px',
+              width: '256px'
             }}
           />
         ) : (

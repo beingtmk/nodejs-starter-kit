@@ -1,19 +1,23 @@
 import { pick } from 'lodash';
+import { camelizeKeys } from 'humps';
 
 import { AuthModule } from '@gqlapp/authentication-server-ts';
 import settings from '@gqlapp/config';
 
 import { onAuthenticationSuccess } from '../shared';
-import User from '../../sql';
+// eslint-disable-next-line import/no-named-default
+import { default as User } from '../../sql';
 import resolvers from './resolvers';
 
 const registerUser = async ({ id, emails: [{ value }] }) => {
-  return User.register({
-    username: value,
-    email: value,
-    password: id,
-    isActive: true
-  });
+  return camelizeKeys(
+    User.register({
+      username: value,
+      email: value,
+      password: id,
+      isActive: true
+    })
+  )[0];
 };
 
 const createGoogleOAuth = async user => User.createGoogleOAuth(user);
