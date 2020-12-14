@@ -31,6 +31,9 @@ const AddressItemComponent = props => {
       <Row>
         <Col span={1} />
         <Col span={23}>
+          <h3>
+            <strong>{`${address.firstName} ${address.lastName}`}</strong>
+          </h3>
           {`${address.streetAddress1}, ${address.streetAddress2}`}
           <br />
           {`${address.city}, ${address.state}, ${address.country}`}
