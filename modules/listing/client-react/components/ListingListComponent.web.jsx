@@ -262,7 +262,7 @@ const ListingListComponent = props => {
     {
       title: t('list.column.actions'),
       key: 'actions',
-      width: 250,
+      width: 275,
       fixed: 'right',
       render: (text, record) => (
         <div align="center">
@@ -271,6 +271,14 @@ const ListingListComponent = props => {
           </Link>
           <Divider type="vertical" />
           <DiscountBtn modalName={MODAL[1].value} modalId={record.id} />
+          <Tooltip title="View listing review ">
+            <a href={`${ROUTES.listingReviewLink}${record.id}`}>
+              <Button shape="circle" color="primary">
+                <Icon type="BookOutlined" />
+              </Button>
+            </a>
+          </Tooltip>
+          <Divider type="vertical" />
           <Tooltip title="Duplicate Listing">
             <Button color="primary" shape="circle" onClick={() => onDuplicate(record.id)}>
               <Icon type="CopyOutlined" />

@@ -19,19 +19,21 @@ const NavItemCartLayout = props => {
 
   return (
     <>
-      <div style={{ position: 'relative', height, width }}>
-        {props.data.map((item, key) => {
-          const obj = {};
-          obj[itemName] = props.node ? item.node : item;
-          return (
-            <Row>
-              <Col>
-                <Compo {...obj} key={key} onEdit={onEdit} onDelete={onDelete} />
-              </Col>
-              <Divider style={{ margin: '0px', borderWidth: '2px' }} />
-            </Row>
-          );
-        })}
+      <div style={{ position: 'relative', width }}>
+        <div style={{ height, overflow: 'hidden', overflowY: 'auto' }}>
+          {props.data.map((item, key) => {
+            const obj = {};
+            obj[itemName] = props.node ? item.node : item;
+            return (
+              <Row>
+                <Col>
+                  <Compo {...obj} key={key} onEdit={onEdit} onDelete={onDelete} />
+                </Col>
+                <Divider style={{ margin: '0px', borderWidth: '2px' }} />
+              </Row>
+            );
+          })}
+        </div>
         <Row>
           <Col span={24}>
             <Row>
