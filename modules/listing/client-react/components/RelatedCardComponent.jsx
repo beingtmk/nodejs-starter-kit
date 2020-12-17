@@ -184,14 +184,16 @@ const RelatedCardComponent = props => {
                 rowStyle={{ height: '75px' }}
               />
               <br />
-              <ReviewStar
-                filter={{
-                  isActive: true,
-                  modalId: listing && listing.id,
-                  modalName: MODAL[1].value
-                }}
-                currentUser={currentUser}
-              />
+              <div align="center">
+                <ReviewStar
+                  filter={{
+                    isActive: true,
+                    modalId: listing && listing.id,
+                    modalName: MODAL[1].value
+                  }}
+                  currentUser={currentUser}
+                />
+              </div>
             </>
           }
         />
@@ -199,26 +201,26 @@ const RelatedCardComponent = props => {
           <h4>
             Deal ends in:{' '}
             {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
               : 'Deal has Ended!'}
           </h4>
         ) : startDate >= now && endDate >= now ? (
           <h4>
             Deal starts in:
             {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
               : 'Deal has Ended!'}
           </h4>
         ) : (

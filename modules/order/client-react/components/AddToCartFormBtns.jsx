@@ -44,15 +44,7 @@ const AddToCartFormBtns = props => {
             </Button>
           </Col>
           <Col {...customGridXS}>
-            <Button
-              block
-              size="lg"
-              onClick={onSubmit}
-              disabled={loading || disabled}
-              color="primary"
-              ghost
-              loading={loading}
-            >
+            <Button block size="lg" onClick={onSubmit} disabled={loading || disabled} loading={loading}>
               <Icon type="PlusCircleOutlined" />
               {t('addToCart.form.btn.add')}
             </Button>
@@ -62,15 +54,7 @@ const AddToCartFormBtns = props => {
             </Button>
           </Col>
           <Col {...customGridLG}>
-            <Button
-              size="lg"
-              block
-              onClick={onSubmit}
-              disabled={loading || disabled}
-              color="primary"
-              ghost
-              loading={loading}
-            >
+            <Button size="lg" block onClick={onSubmit} disabled={loading || disabled} loading={loading}>
               <Icon type="PlusCircleOutlined" />
               {t('addToCart.form.btn.add')}
             </Button>
