@@ -73,13 +73,13 @@ class NavBar extends React.Component {
                   <Col span={10} />
                   <Col span={6}>
                     <BannerLink href={`tel: ${CONTACT.phone}`}>
-                      <Icon type="PhoneOutlined" />
+                      <Icon type="PhoneOutlined" /> &nbsp;
                       {CONTACT.phone}
                     </BannerLink>
                   </Col>
                   <Col span={8}>
                     <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
-                      <Icon type="MailOutlined" />
+                      <Icon type="MailOutlined" /> &nbsp;
                       {CONTACT.mail}
                     </BannerLink>
                   </Col>

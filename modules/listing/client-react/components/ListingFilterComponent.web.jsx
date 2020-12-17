@@ -9,14 +9,14 @@ import {
   Affix,
   Card,
   Option,
-  Form,
   FormItem,
-  Label,
   Input,
   Row,
   Col,
   Button,
-  RenderSelect
+  RenderSelect,
+  Icon,
+  RenderCheckBox
 } from '@gqlapp/look-client-react';
 import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
 import { MODAL } from '@gqlapp/review-common';
@@ -81,11 +81,12 @@ const ListingsFilterComponent = props => {
     [`${minCostRangeValues}`]: minCostRangeValues,
     [`${maxCostRangeValues}`]: maxCostRangeValues
   };
-  const CategoryTreeField = showCategoryFilter && (
+  const categoryTreeField = showCategoryFilter && (
     <Field
       component={CategoryTreeComponent}
       filter={{ modalName: MODAL[1].value }}
       // disableParent={true}
+      inFilter={true}
       nullable={true}
       onChange={e => onCategoryChange({ categoryId: e, allSubCategory: false })}
       type="number"
@@ -96,12 +97,13 @@ const ListingsFilterComponent = props => {
     />
   );
 
-  const ListingSortBy = width => {
+  const listingSortBy = (width, inFilter = true) => {
     const index = SORT_BY.findIndex(x => x.value === orderBy.column && x.sortBy === orderBy.order);
     return (
       <Field
         name="sortBy"
         component={RenderSelect}
+        label={t('listingFilter.sortBy')}
         // defaultValue={orderBy.order}
         onChange={e =>
           SORT_BY[e].sortBy === ''
@@ -111,10 +113,10 @@ const ListingsFilterComponent = props => {
                 column: SORT_BY[e].value
               })
         }
-        style={{ width: '100px' }}
+        style={{ width: '100%' }}
         value={index > -1 && SORT_BY[index].label}
-        inFilter={true}
-        selectStyle={{ width: width }}
+        inFilter={inFilter}
+        selectStyle={{ width }}
       >
         <Option key={1} value="">
           None
@@ -129,9 +131,60 @@ const ListingsFilterComponent = props => {
   };
 
   const handleResetBtn = (
-    <Button color="primary" onClick={handleFiltersRemove.current}>
-      {t('listingFilter.btn.reset')}
+    <Button block color="primary" onClick={handleFiltersRemove.current}>
+      <Icon type={'UndoOutlined'} /> {t('listingFilter.btn.reset')}
     </Button>
+  );
+
+  const sliderControlled = inFilter => (
+    <SliderControlled
+      style={{
+        width: '100%',
+        background: 'white'
+      }}
+      label={t('listingFilter.costFilter')}
+      max={Math.round(rangeValues && rangeValues.maxCost + 1)}
+      min={Math.floor(rangeValues && rangeValues.minCost)}
+      marks={costMarks}
+      range
+      value={[lowerCost, upperCost]}
+      // disabled={false}
+      inFilter={inFilter}
+      handleSliderChange={e => handleChangeSlider(e)}
+    />
+  );
+
+  const searchField = isFilter => {
+    const obj = isFilter
+      ? {}
+      : {
+          labelCol: { span: 24 },
+          wrapperCol: { span: 24 }
+        };
+    return (
+      <FormItem label={t('listingFilter.search')} style={{ height: '60px', width: '100%' }} {...obj}>
+        <DebounceInput
+          minLength={2}
+          debounceTimeout={300}
+          placeholder={t('listingFilter.search')}
+          element={Input}
+          value={searchText}
+          onChange={e => onSearchTextChange(e.target.value)}
+        />
+      </FormItem>
+    );
+  };
+
+  const activeField = inFilter => (
+    <Field
+      name="isActive"
+      component={RenderCheckBox}
+      type="checkbox"
+      onChange={() => onIsActiveChange(!isActive)}
+      label={t('listingFilter.isActive')}
+      inFilter={inFilter}
+      checked={isActive}
+    />
   );
 
   const filterItems =
@@ -139,174 +192,44 @@ const ListingsFilterComponent = props => {
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row gutter={24}>
-            <Col span={24}>
-              <FormItem label={t('listingFilter.search')} style={{ width: '100%' }}>
-                <DebounceInput
-                  minLength={2}
-                  debounceTimeout={300}
-                  placeholder={t('listingFilter.search')}
-                  element={Input}
-                  value={searchText}
-                  onChange={e => onSearchTextChange(e.target.value)}
-                />
-              </FormItem>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={24}>
-              {showIsActive && (
-                <FormItem labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} style={{ width: '100%' }}>
-                  <Label>
-                    <Input
-                      type="checkbox"
-                      defaultChecked={isActive}
-                      checked={isActive}
-                      onChange={() => onIsActiveChange(!isActive)}
-                    />
-                    &nbsp;{t('listingFilter.isActive')}
-                  </Label>
-                </FormItem>
-              )}
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col>{CategoryTreeField}</Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={24}>
-              <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
-                {ListingSortBy('100%')}
-              </FormItem>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={24}>
-              <div style={{ display: 'block' }}>
-                <h5>{t('listingFilter.costFilter')}</h5>
-                <SliderControlled
-                  style={{
-                    width: '100%',
-                    background: 'white'
-                  }}
-                  max={Math.round(rangeValues && rangeValues.maxCost + 1)}
-                  min={Math.floor(rangeValues && rangeValues.minCost)}
-                  marks={costMarks}
-                  range
-                  value={[lowerCost, upperCost]}
-                  // disabled={false}
-                  handleSliderChange={e => handleChangeSlider(e)}
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row gutter={24}>
+            <Col span={24}>{searchField(false)}</Col>
+            <Col span={24}>{showIsActive && activeField(false)}</Col>
+            <Col>{categoryTreeField}</Col>
+            <Col span={24}>{listingSortBy('100%', false)}</Col>
+            <Col span={22}>{sliderControlled(false)}</Col>
             <Col span={24}>
               <br />
-              <FormItem>{handleResetBtn}</FormItem>
+              {handleResetBtn}
             </Col>
           </Row>
         </Col>
       </Row>
     ) : (
       <Row type="flex" align="middle">
-        <Col span={24}>
-          <Row>
-            <Col lg={10} xs={24} md={12}>
-              <Row gutter={24}>
-                <Col>
-                  <FormItem label={'search'} style={{ width: '100%' }}>
-                    <DebounceInput
-                      minLength={2}
-                      debounceTimeout={300}
-                      placeholder={'search'}
-                      element={Input}
-                      value={searchText}
-                      onChange={e => onSearchTextChange(e.target.value)}
-                    />
-                  </FormItem>
-                </Col>
-                <Col>
-                  {showIsActive && (
-                    <FormItem labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
-                      <Label>
-                        <Input
-                          type="checkbox"
-                          defaultChecked={isActive}
-                          checked={isActive}
-                          onChange={() => onIsActiveChange(!isActive)}
-                        />
-                        &nbsp;{t('listingFilter.isActive')}
-                      </Label>
-                    </FormItem>
-                  )}
-                </Col>
-              </Row>
+        <Col span={24} /* style={{ height: '60px' }} */>
+          <Row gutter={24}>
+            <Col>{searchField(true)}</Col>
+            <Col>{showIsActive && activeField(true)}</Col>
+          </Row>
+        </Col>
+        <Col lg={24} xs={24} md={12}>
+          <Row type="flex" gutter={24}>
+            <Col lg={16} md={16} xs={24}>
+              {categoryTreeField}
             </Col>
-            <Col
-              lg={14}
-              xs={24}
-              md={12}
-              // align="right"
-            >
-              <Row>
-                <Col lg={0} md={0} xs={24}>
-                  {CategoryTreeField}
-                  <FormItem label={t('listingFilter.sortBy')} style={{ width: '100%' }}>
-                    {ListingSortBy('100%')}
-                  </FormItem>
-                </Col>
-                <Col xs={0} md={24} lg={24}>
-                  <Row type="flex">
-                    <Col lg={14} md={12}>
-                      {CategoryTreeField}
-                    </Col>
-                    <Col lg={0} md={2} xs={0}></Col>
-                    <Col lg={10} md={10}>
-                      <Row type="flex" justify="end">
-                        {SORT_BY && SORT_BY.length !== 0 && (
-                          <FormItem label={t('listingFilter.sortBy')}>{ListingSortBy('170px')}</FormItem>
-                        )}
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+            <Col lg={8} md={8} xs={24}>
+              {listingSortBy('100%')}
             </Col>
           </Row>
         </Col>
         <Col span={24} align="right">
-          <Row>
-            <Col lg={0} md={0} xs={1} />
+          <Row type="flex" gutter={48}>
             <Col lg={20} md={18} xs={21} align="left">
-              <div style={{ display: 'block' }}>
-                <h5>{t('listingFilter.costFilter')}</h5>
-                <SliderControlled
-                  style={{
-                    width: '100%',
-                    background: 'white'
-                  }}
-                  max={Math.round(rangeValues && rangeValues.maxCost + 1)}
-                  min={Math.floor(rangeValues && rangeValues.minCost)}
-                  marks={costMarks}
-                  range
-                  value={[lowerCost, upperCost]}
-                  // disabled={false}
-                  handleSliderChange={e => handleChangeSlider(e)}
-                />
-              </div>
+              {sliderControlled(false)}
             </Col>
-            <Col lg={0} md={2} xs={2} />
-            <Col lg={4} md={4} xs={24}>
-              <Row>
-                <Col lg={0} md={0} xs={24}>
-                  <br />
-                  {handleResetBtn}
-                </Col>
-                <Col xs={0} md={24} lg={24}>
-                  <br />
-                  <FormItem>{handleResetBtn}</FormItem>
-                </Col>
-              </Row>
+            <Col lg={4} md={6} xs={24}>
+              <br />
+              <FormItem>{handleResetBtn}</FormItem>
             </Col>
           </Row>
         </Col>
@@ -314,20 +237,16 @@ const ListingsFilterComponent = props => {
     );
 
   return (
-    <Form
-    //  layout="inline"
-    >
-      <Row>
-        <Col lg={24} md={24} xs={0}>
-          <Affix offsetTop={110}>
-            <Card>{filterItems}</Card>
-          </Affix>
-        </Col>
-        <Col lg={0} md={0} xs={24}>
+    <Row>
+      <Col lg={24} md={24} xs={0}>
+        <Affix offsetTop={layout === 'vertical' ? 110 : 43}>
           <Card>{filterItems}</Card>
-        </Col>
-      </Row>
-    </Form>
+        </Affix>
+      </Col>
+      <Col lg={0} md={0} xs={24}>
+        <Card>{filterItems}</Card>
+      </Col>
+    </Row>
   );
 };
 
