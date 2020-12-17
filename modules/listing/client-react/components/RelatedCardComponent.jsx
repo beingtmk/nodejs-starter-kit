@@ -15,6 +15,7 @@ import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFo
 import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
+import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { MODAL } from '@gqlapp/review-common';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
@@ -173,18 +174,27 @@ const RelatedCardComponent = props => {
             </span>
           }
           description={
-            <CurrencyCostDisplay
-              isDiscount={isDiscount}
-              cost={cost}
-              discount={discount}
-              span={[16, 8]}
-              card={true}
-              rowStyle={{ height: '75px' }}
-            />
+            <>
+              <CurrencyCostDisplay
+                isDiscount={isDiscount}
+                cost={cost}
+                discount={discount}
+                span={[16, 8]}
+                card={true}
+                rowStyle={{ height: '75px' }}
+              />
+              <br />
+              <ReviewStar
+                filter={{
+                  isActive: true,
+                  modalId: listing && listing.id,
+                  modalName: MODAL[1].value
+                }}
+                currentUser={currentUser}
+              />
+            </>
           }
         />
-        <br />
-        <br />
         {startDate <= now && endDate >= now ? (
           <h4>
             Deal ends in:{' '}
@@ -214,6 +224,7 @@ const RelatedCardComponent = props => {
         ) : (
           <br />
         )}
+        <br />
         <br />
         <br />
         <br />
