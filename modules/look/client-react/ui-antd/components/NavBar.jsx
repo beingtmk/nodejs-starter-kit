@@ -62,7 +62,7 @@ class NavBar extends React.Component {
         className="navbar-parallex"
         animation={{
           playScale: [1, 1.1],
-          translateY: this.state.isMobile ? '' : '-40px'
+          translateY: isMobile ? '' : '-40px'
         }}
       >
         <Header className="no-print">
