@@ -143,7 +143,7 @@ const RelatedCardComponent = props => {
   const listingCard = (
     <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
       <Card
-        bodyStyle={{ margin: '0px' }}
+        bodyStyle={{ margin: '0px', padding: '14px' }}
         hoverable
         cover={
           <div
@@ -177,12 +177,14 @@ const RelatedCardComponent = props => {
               isDiscount={isDiscount}
               cost={cost}
               discount={discount}
-              span={[15, 9]}
+              span={[16, 8]}
               card={true}
               rowStyle={{ height: '75px' }}
             />
           }
         />
+        <br />
+        <br />
         {startDate <= now && endDate >= now ? (
           <h4>
             Deal ends in:{' '}
