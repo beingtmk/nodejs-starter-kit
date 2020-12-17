@@ -139,8 +139,8 @@ const CategoryNavBarComponentView = props => {
           ) : null}
         </Drawer>
       </Col>
-      <Affix offsetTop={68}>
-        <Col lg={24} md={24} xs={0}>
+      <Col lg={24} md={24} xs={0}>
+        <Affix offsetTop={68}>
           <ScrollParallax
             location="page-layout"
             animation={{
@@ -269,8 +269,8 @@ const CategoryNavBarComponentView = props => {
               </Row>
             )}
           </ScrollParallax>
-        </Col>
-      </Affix>
+        </Affix>
+      </Col>
     </Row>
   );
 };
