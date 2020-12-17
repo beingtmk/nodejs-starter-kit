@@ -44,7 +44,7 @@ const CategoryCarousel = props => {
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: itemLength >= 6 ? 6 : itemLength,
+            slidesToShow: itemLength >= 5 ? 5 : itemLength,
             slidesToScroll: 1
           }
         },
@@ -52,6 +52,13 @@ const CategoryCarousel = props => {
           breakpoint: 480,
           settings: {
             slidesToShow: itemLength >= 3 ? 3 : itemLength,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 380,
+          settings: {
+            slidesToShow: itemLength >= 2 ? 2 : itemLength,
             slidesToScroll: 1
           }
         }

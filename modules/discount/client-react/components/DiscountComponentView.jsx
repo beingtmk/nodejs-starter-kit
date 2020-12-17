@@ -1,59 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, Row, Col, Skeleton, Statistic } from '@gqlapp/look-client-react';
+import { Tag, Icon, Space, Row, Col, Skeleton } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CurrencyDisplay from './CurrencyDisplay';
 
 export const CurrencyCostDisplay = props => {
-  const { isDiscount, cost, discount, card = false, span = [12, 12], rowStyle } = props;
+  const { isDiscount, cost, discount, card = false } = props;
   return (
-    <Row style={rowStyle}>
-      <Col span={span[0]}>
-        {isDiscount
-          ? cost && (
-              <>
-                <CurrencyDisplay
-                  style={{ display: 'inline' }}
-                  input={(cost - cost * (discount / 100)).toFixed(2)}
-                  valueStyle={{
-                    fontSize: 'xx-large'
-                  }}
-                />
-                {card && (
-                  <CurrencyDisplay
-                    input={cost.toFixed(2)}
-                    valueStyle={{
-                      textDecoration: 'line-through',
-                      fontSize: '15px'
-                    }}
-                  />
-                )}
-              </>
-            )
-          : cost && (
+    <Space align="center" size="large">
+      {isDiscount
+        ? cost && (
+            <Space align="center">
               <CurrencyDisplay
-                input={cost.toFixed(2)}
+                style={{ display: 'inline' }}
+                precision={0}
+                input={(cost - cost * (discount / 100)).toFixed(2)}
                 valueStyle={{
-                  fontSize: 'xx-large'
+                  fontSize: '21px',
+                  fontWeight: 'bold'
                 }}
               />
-            )}
-      </Col>
+              {card && (
+                <span
+                  style={{
+                    textDecoration: 'line-through',
+                    fontSize: '17px'
+                  }}
+                >
+                  &#8377; {cost.toFixed(0)}
+                </span>
+              )}
+            </Space>
+          )
+        : cost && (
+            <CurrencyDisplay
+              input={cost.toFixed(2)}
+              precision={0}
+              valueStyle={{
+                fontSize: '21px',
+                fontWeight: 'bold'
+              }}
+            />
+          )}
       {isDiscount && (
-        <Col span={span[1]}>
-          <Statistic
-            title=""
-            precision={2}
-            valueStyle={{ color: '#cf1322' }}
-            value={discount && discount.toFixed(2) ? discount.toFixed(2) : 0}
-            suffix={'%'}
-            prefix={<Icon type="ArrowDownOutlined" />}
-          />
-        </Col>
+        <Tag color="success" icon={<Icon type="ArrowDownOutlined" />}>
+          {discount && discount.toFixed(2) ? discount.toFixed(2) : 0} &nbsp; %
+        </Tag>
       )}
-    </Row>
+    </Space>
   );
 };
 

@@ -15,6 +15,7 @@ import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFo
 import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
+import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { MODAL } from '@gqlapp/review-common';
 
 import { withToogleListingBookmark } from '../containers/ListingOperations';
@@ -143,7 +144,7 @@ const RelatedCardComponent = props => {
   const listingCard = (
     <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
       <Card
-        bodyStyle={{ margin: '0px' }}
+        bodyStyle={{ margin: '0px', padding: '14px' }}
         hoverable
         cover={
           <div
@@ -173,45 +174,59 @@ const RelatedCardComponent = props => {
             </span>
           }
           description={
-            <CurrencyCostDisplay
-              isDiscount={isDiscount}
-              cost={cost}
-              discount={discount}
-              span={[15, 9]}
-              card={true}
-              rowStyle={{ height: '75px' }}
-            />
+            <>
+              <CurrencyCostDisplay
+                isDiscount={isDiscount}
+                cost={cost}
+                discount={discount}
+                span={[16, 8]}
+                card={true}
+                rowStyle={{ height: '75px' }}
+              />
+              <br />
+              <div align="center">
+                <ReviewStar
+                  filter={{
+                    isActive: true,
+                    modalId: listing && listing.id,
+                    modalName: MODAL[1].value
+                  }}
+                  currentUser={currentUser}
+                />
+              </div>
+            </>
           }
         />
         {startDate <= now && endDate >= now ? (
           <h4>
             Deal ends in:{' '}
             {Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60 * 60))} hours`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / (1000 * 60))} minutes`
               : Math.round((new Date(endDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
+              ? ` ${Math.round((new Date(endDate) - new Date()) / 1000)} seconds`
               : 'Deal has Ended!'}
           </h4>
         ) : startDate >= now && endDate >= now ? (
           <h4>
             Deal starts in:
             {Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60 * 24))} days`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60 * 60))} hours`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / (1000 * 60))} minutes`
               : Math.round((new Date(startDate) - new Date()) / (1000 * 60)) !== 0
-              ? `${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
+              ? ` ${Math.round((new Date(startDate) - new Date()) / 1000)} seconds`
               : 'Deal has Ended!'}
           </h4>
         ) : (
           <br />
         )}
+        <br />
         <br />
         <br />
         <br />

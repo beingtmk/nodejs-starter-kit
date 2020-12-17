@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Slider } from '@gqlapp/look-client-react';
+import { Slider, FormItem } from '@gqlapp/look-client-react';
 
 class SliderControlled extends React.Component {
   constructor(props) {
@@ -32,13 +32,21 @@ class SliderControlled extends React.Component {
     var { ...currentProps } = this.props;
     delete currentProps.value;
     delete currentProps.handleSliderChange;
+    let labels = currentProps.inFilter
+      ? {}
+      : {
+          labelCol: { span: 24 },
+          wrapperCol: { span: 24 }
+        };
     return (
-      <Slider
-        {...currentProps}
-        value={this.state.value}
-        onChange={e => this.handleChange(e)}
-        onAfterChange={e => this.handleSubmit(e)}
-      />
+      <FormItem label={currentProps.label} style={{ height: '60px', width: '100%' }} {...labels}>
+        <Slider
+          {...currentProps}
+          value={this.state.value}
+          onChange={e => this.handleChange(e)}
+          onAfterChange={e => this.handleSubmit(e)}
+        />
+      </FormItem>
     );
   }
 }

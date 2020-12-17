@@ -7,7 +7,7 @@ import { FormItem, TreeSelect } from '@gqlapp/look-client-react';
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const CategoryTreeComponentView = props => {
-  const { categories, nullable = true, formik, name, client, disableParent = false } = props;
+  const { categories, nullable = true, formik, name, client, disableParent = false, inFilter = false } = props;
   const [data, setData] = useState([
     nullable && {
       id: 'abc',
@@ -65,8 +65,15 @@ const CategoryTreeComponentView = props => {
       );
   };
 
+  let labels = inFilter
+    ? {}
+    : {
+        labelCol: { span: 24 },
+        wrapperCol: { span: 24 }
+      };
+
   return (
-    <FormItem label={props.label} style={{ width: '100%' }} /* labelCol={{ span: 24 }} wrapperCol={{ span: 24 }} */>
+    <FormItem label={props.label} style={{ width: '100%' }} {...labels}>
       <TreeSelect
         treeDataSimpleMode
         showSearch
@@ -93,6 +100,7 @@ CategoryTreeComponentView.propTypes = {
   client: PropTypes.object,
   disableParent: PropTypes.bool,
   nullable: PropTypes.bool,
+  inFilter: PropTypes.bool,
   onChange: PropTypes.func
 };
 

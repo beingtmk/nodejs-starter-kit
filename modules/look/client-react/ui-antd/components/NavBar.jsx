@@ -9,7 +9,7 @@ import { Row, Col } from '@gqlapp/look-client-react';
 
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
-import { CONTACT } from '@gqlapp/look-common/';
+import { SOCIAL, CONTACT } from '@gqlapp/look-common/';
 
 import Icon from './Icon';
 import MenuItem from './MenuItem';
@@ -62,26 +62,38 @@ class NavBar extends React.Component {
         className="navbar-parallex"
         animation={{
           playScale: [1, 1.1],
-          translateY: this.state.isMobile ? '' : '-40px'
+          translateY: isMobile ? '' : '-40px'
         }}
       >
         <Header className="no-print">
           <Row className="navbar-wrapper">
             <Col lg={24} xs={0}>
               <div align="right" className="navbar-contact-menu">
-                <Row style={{ lineHeight: '37px' }}>
-                  <Col span={10} />
-                  <Col span={6}>
+                <Row style={{ lineHeight: '37px' }} justify="center" gutter={24}>
+                  <Col>
                     <BannerLink href={`tel: ${CONTACT.phone}`}>
-                      <Icon type="PhoneOutlined" />
+                      <Icon type="PhoneOutlined" /> &nbsp;
                       {CONTACT.phone}
                     </BannerLink>
                   </Col>
-                  <Col span={8}>
+                  <Col>
                     <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
-                      <Icon type="MailOutlined" />
+                      <Icon type="MailOutlined" /> &nbsp;
                       {CONTACT.mail}
                     </BannerLink>
+                  </Col>
+                  <Col>
+                    <a href={SOCIAL.twitter} target="_blank" rel="noopener noreferrer">
+                      <Icon type="TwitterSquareFilled" style={{ color: 'black', fontSize: '20px' }} />
+                    </a>
+                    &nbsp;
+                    <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">
+                      <Icon type="InstagramFilled" style={{ color: 'black', fontSize: '20px' }} />
+                    </a>
+                    &nbsp;
+                    <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer">
+                      <Icon type="FacebookFilled" style={{ color: 'black', fontSize: '20px' }} />
+                    </a>
                   </Col>
                 </Row>
               </div>
