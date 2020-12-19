@@ -73,10 +73,6 @@ const SlickCarousel = props => {
       <div style={{ position: 'relative', height, overflow: 'hidden' }}>
         <Carousel {...(settings || status)} showArrow={showArrow}>
           {data.map((item, key) => {
-            //
-            //
-            //
-            //
             const listing = node ? item.node : item;
             const cartItemArray =
               getCart && getCart.orderDetails && getCart.orderDetails.length > 0

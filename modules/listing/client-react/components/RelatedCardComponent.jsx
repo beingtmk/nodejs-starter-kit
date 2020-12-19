@@ -144,7 +144,7 @@ const RelatedCardComponent = props => {
   const listingCard = (
     <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
       <Card
-        bodyStyle={{ margin: '0px', padding: '14px' }}
+        bodyStyle={{ margin: '0px', padding: '14px', textAlign: 'left' }}
         hoverable
         cover={
           <div
