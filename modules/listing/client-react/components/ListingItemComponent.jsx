@@ -58,24 +58,34 @@ const ListingItemComponent = props => {
                 />
               </Col>
               <Col xs={{ span: 24 }} md={{ span: 15 }} xxl={{ span: 18 }}>
-                <br />
-                <h2>{item.title}</h2>
-                <ReviewStar
-                  filter={{
-                    isActive: true,
-                    modalId: item && item.id,
-                    modalName: MODAL[1].value
-                  }}
-                  currentUser={currentUser}
-                />
-                <br />
-                <br />
-                <br />
-                <DiscountComponent
-                  modalId={item && item.id}
-                  modalName={MODAL[1].value}
-                  cost={item.listingCostArray[0].cost}
-                />
+                <Col lg={0} md={0} xs={2} />
+                <Col lg={24} md={24} xs={22}>
+                  <br />
+                  <h2>{item.title}</h2>
+                  <ReviewStar
+                    filter={{
+                      isActive: true,
+                      modalId: item && item.id,
+                      modalName: MODAL[1].value
+                    }}
+                    currentUser={currentUser}
+                  />
+                  <Col lg={24} md={24} xs={0}>
+                    <br />
+                    <br />
+                    <br />
+                  </Col>
+                  <DiscountComponent
+                    modalId={item && item.id}
+                    modalName={MODAL[1].value}
+                    cost={item.listingCostArray[0].cost}
+                  />
+                </Col>
+                <Col lg={0} md={0} xs={24}>
+                  <br />
+                  <br />
+                  <br />
+                </Col>
               </Col>
             </Row>
           </Card>
