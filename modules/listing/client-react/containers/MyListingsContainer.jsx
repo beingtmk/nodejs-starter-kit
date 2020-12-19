@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 
-import { withListings, withListingsDeleting } from './ListingOperations';
+import {
+  withListings,
+  withFilterUpdating,
+  withListingsState,
+  withOrderByUpdating,
+  withListingsDeleting
+} from './ListingOperations';
 import { subscribeToListings } from './ListingSubscriptions';
 
 const MyListingsContainer = props => {
@@ -33,4 +39,11 @@ MyListingsContainer.propTypes = {
   filter: PropTypes.object.isRequired,
   children: PropTypes.node
 };
-export default compose(withListings, withListingsDeleting, translate('listing'))(MyListingsContainer);
+export default compose(
+  withListingsState,
+  withListings,
+  withFilterUpdating,
+  withOrderByUpdating,
+  withListingsDeleting,
+  translate('listing')
+)(MyListingsContainer);

@@ -11,7 +11,7 @@ const MyListings = props => {
   const { currentUser } = props;
 
   return (
-    <MyListingsContainer {...props} filter={{ userId: currentUser && currentUser.id }}>
+    <MyListingsContainer {...props} addFilter={{ userId: currentUser && currentUser.id }}>
       <MyListingsView />
     </MyListingsContainer>
   );

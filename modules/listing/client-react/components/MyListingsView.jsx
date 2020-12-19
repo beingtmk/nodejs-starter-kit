@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import {
+  Divider,
   Icon,
   Row,
   Col,
@@ -18,19 +19,23 @@ import {
 import settings from '@gqlapp/config';
 import ROUTES from '../routes';
 import ListingItemComponent from './ListingItemComponent';
+import ListingFilterComponent from './ListingFilterComponent';
 
 const MyListingsView = props => {
-  const { listings, loading, onDelete, history, t } = props;
+  const { listings, loading, onDelete, history, t, currentUser } = props;
 
   const renderFunc = (key, listing) => (
-    <ListingItemComponent
-      t={t}
-      key={key}
-      history={history}
-      item={listing}
-      deleteProduct={onDelete}
-      // currentUser={currentUser}
-    />
+    <>
+      <ListingItemComponent
+        t={t}
+        key={key}
+        history={history}
+        item={listing}
+        deleteProduct={onDelete}
+        currentUser={currentUser}
+      />
+      <Divider />
+    </>
   );
   const RenderListings = () => (
     <>
@@ -59,6 +64,7 @@ const MyListingsView = props => {
           xs: 1,
           md: 1,
           lg: 1,
+          xl: 1,
           xxl: 1
         }}
         {...props}
@@ -67,12 +73,51 @@ const MyListingsView = props => {
       />
     </>
   );
+
+  const renderChildren = (layout = 'horizontal') => {
+    const span =
+      layout === 'vertical'
+        ? {
+            spanFilter: { lg: 6, md: 8, sm: 24 },
+            spanContent: { lg: 18, md: 16, sm: 24 }
+          }
+        : {
+            spanFilter: { span: 24 },
+            spanContent: { span: 24 }
+          };
+    return (
+      <Row type="flex" gutter={[24, 24]}>
+        <Col {...span.spanFilter}>
+          {layout !== 'vertical' && <br />}
+          {true && (
+            <ListingFilterComponent
+              layout={layout}
+              showIsActive={false}
+              filter={{ isActive: true }}
+              orderBy={{}}
+              {...props}
+            />
+          )}
+          {layout !== 'vertical' && <Divider />}
+        </Col>
+        <Col {...span.spanContent}>
+          {loading && <Spinner />}
+          {!loading && listings && listings.totalCount ? (
+            <RenderListings layout={layout} />
+          ) : !loading ? (
+            <NoListingsMessage t={t} />
+          ) : null}
+        </Col>
+      </Row>
+    );
+  };
+
   return (
     <PageLayout>
       <MetaTags title={t('myListings.title')} description={`${settings.app.name} - ${t('myListings.title')})}`} />
 
-      {loading && <Spinner />}
-      {listings && listings.totalCount ? <RenderListings /> : !loading ? <NoListingsMessage t={t} /> : null}
+      {/* {loading && <Spinner />} */}
+      {renderChildren('vertical')}
     </PageLayout>
   );
 };
@@ -82,7 +127,8 @@ MyListingsView.propTypes = {
   loading: PropTypes.bool,
   onDelete: PropTypes.func,
   t: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 export default MyListingsView;
