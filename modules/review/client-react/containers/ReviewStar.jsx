@@ -9,7 +9,7 @@ import { withRating } from './ReviewOperations';
 import { avgRating } from '../components/AvgRatingComponent';
 
 const ReviewStar = props => {
-  const { loading, ratingAverage = {} } = props;
+  const { loading, ratingAverage = {}, suffix } = props;
   const one = ratingAverage && ratingAverage.one;
   const two = ratingAverage && ratingAverage.two;
   const three = ratingAverage && ratingAverage.three;
@@ -20,14 +20,15 @@ const ReviewStar = props => {
   return !loading ? (
     <>
       <Rate allowHalf defaultValue={avgRating(one, two, three, four, five, totalRatings)} /> &nbsp;{' '}
-      {`(${totalRatings})`}
+      {suffix ? `(${totalRatings} ${suffix})` : `(${totalRatings})`}
     </>
   ) : null;
 };
 
 ReviewStar.propTypes = {
   loading: PropTypes.bool,
-  ratingAverage: PropTypes.object
+  ratingAverage: PropTypes.object,
+  suffix: PropTypes.string
 };
 
 export default compose(withRating, translate('review'))(ReviewStar);

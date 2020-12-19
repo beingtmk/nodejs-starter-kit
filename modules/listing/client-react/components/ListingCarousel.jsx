@@ -94,7 +94,7 @@ const ListingCarousel = props => {
       infinite: true,
       speed: 500,
       autoplaySpeed: 2000,
-      slidesToShow: itemLength >= 4 ? 4 : itemLength,
+      slidesToShow: itemLength >= 4 ? 3.5 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
       lazyLoad: true,
@@ -105,28 +105,28 @@ const ListingCarousel = props => {
         {
           breakpoint: 1440,
           settings: {
-            slidesToShow: itemLength >= 4 ? 4 : itemLength,
+            slidesToShow: itemLength >= 4 ? 3.5 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: itemLength >= 4 ? 4 : itemLength,
+            slidesToShow: itemLength >= 4 ? 3.5 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: itemLength >= 2 ? 2 : itemLength,
+            slidesToShow: itemLength >= 2 ? 2.5 : itemLength,
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 1.5,
             slidesToScroll: 1
           }
         }
@@ -157,8 +157,8 @@ const ListingCarousel = props => {
               loading: cartLoading
             }}
             componentStyle={{
-              margin: '0 4px',
-              width: '232px'
+              margin: '0 4px'
+              // width: '232px',
             }}
           />
         ) : (

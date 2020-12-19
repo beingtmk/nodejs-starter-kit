@@ -201,6 +201,7 @@ const SocialSharingButtons = props => {
         height="auto"
         shape="circle"
         ghost={true}
+        block={false}
         type="primary"
       >
         {sharingMenu}

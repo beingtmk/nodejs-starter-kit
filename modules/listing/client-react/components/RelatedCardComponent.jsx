@@ -12,7 +12,7 @@ import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperat
 import { default as ORDER_ROUTES } from '@gqlapp/order-client-react/routes';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
-import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
+import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
@@ -175,7 +175,7 @@ const RelatedCardComponent = props => {
           }
           description={
             <>
-              <CurrencyCostDisplay
+              <DiscountComponentView
                 isDiscount={isDiscount}
                 cost={cost}
                 discount={discount}
@@ -183,7 +183,6 @@ const RelatedCardComponent = props => {
                 card={true}
                 rowStyle={{ height: '75px' }}
               />
-              <br />
               <div align="center">
                 <ReviewStar
                   filter={{

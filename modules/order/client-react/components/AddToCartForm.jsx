@@ -30,7 +30,8 @@ const AddToCartForm = props => {
     inCart = true,
     loading,
     onDelete,
-    t
+    t,
+    catalogueCard
   } = props;
   const disabled = max <= 0 || listingOwned || !currentUser;
 
@@ -78,6 +79,7 @@ const AddToCartForm = props => {
             onDelete={onDelete}
             onSubmitRedirect={() => onSubmit(values, true)}
             loading={loading}
+            catalogueCard={catalogueCard}
             disabled={disabled}
           />
         </div>
@@ -97,6 +99,7 @@ AddToCartForm.propTypes = {
   loading: PropTypes.bool,
   showBtn: PropTypes.bool,
   inCart: PropTypes.bool,
+  catalogueCard: PropTypes.bool,
   t: PropTypes.func
 };
 
