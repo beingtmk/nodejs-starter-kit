@@ -146,7 +146,7 @@ const ListingCarousel = props => {
             settings={carouselSettings(itemLength)}
             itemName={'listing'}
             data={listings.edges.filter(onFilter)}
-            height={'500px'}
+            height={'530px'}
             node={true}
             getCart={getCart}
             onDelete={onDelete}
