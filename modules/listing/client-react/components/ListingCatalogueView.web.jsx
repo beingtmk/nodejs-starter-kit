@@ -48,7 +48,7 @@ const ListingCatalogueView = props => {
         key={key}
         listing={listing}
         history={history}
-        modalName={'listing'}
+        modalName={MODAL[1].value}
         modalId={listing.id}
         currentUser={currentUser}
         inCart={cartItemArray.length === 0}
