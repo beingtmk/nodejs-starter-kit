@@ -181,6 +181,7 @@ const SocialSharingButtons = props => {
                   block
                   onClick={async () => {
                     await window.navigator.clipboard.writeText(link);
+                    Message.success('Copied to clipboard!');
                   }}
                 >
                   Copy

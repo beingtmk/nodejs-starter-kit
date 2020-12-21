@@ -44,7 +44,14 @@ const ModalDrawer = props => {
         >
           {buttonText}
         </Button>
-        <Modal centered title={modalTitle} visible={visibleModal} onCancel={() => setVisibleModal(false)} footer={null}>
+        <Modal
+          className={'curved-border'}
+          centered
+          title={modalTitle}
+          visible={visibleModal}
+          onCancel={() => setVisibleModal(false)}
+          footer={null}
+        >
           {React.cloneElement(children, { hideModal: () => setVisibleModal(false), showModal: false })}
           {/* {children} */}
         </Modal>

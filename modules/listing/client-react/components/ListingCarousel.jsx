@@ -89,7 +89,7 @@ const ListingCarousel = props => {
     return {
       className: 'slider variable-width',
       // variableWidth: true,
-      // autoplay: true,
+      autoplay: true,
       easing: 1000,
       infinite: true,
       speed: 500,
