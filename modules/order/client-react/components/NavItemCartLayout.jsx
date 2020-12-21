@@ -20,7 +20,7 @@ const NavItemCartLayout = props => {
   return (
     <>
       <div style={{ position: 'relative', width }}>
-        <div style={{ height, overflow: 'hidden', overflowY: 'auto' }}>
+        <div style={{ maxHeight: height, overflow: 'hidden', overflowY: 'auto' }}>
           {props.data.map((item, key) => {
             const obj = {};
             obj[itemName] = props.node ? item.node : item;

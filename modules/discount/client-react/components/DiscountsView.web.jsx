@@ -19,7 +19,7 @@ const DiscountsView = props => {
       <Row>
         <Col lg={22} md={20} xs={24}>
           <Heading type="2">
-            <Icon type="SolutionOutlined" />
+            <Icon type="PercentageOutlined" />
             &nbsp;
             {t('discount.subTitle')}
           </Heading>

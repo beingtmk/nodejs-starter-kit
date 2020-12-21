@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-import { Row, Col, PageLayout, Heading, MetaTags, AddButton } from '@gqlapp/look-client-react';
+import { Icon, Row, Col, PageLayout, Heading, MetaTags, AddButton } from '@gqlapp/look-client-react';
 
 import settings from '@gqlapp/config';
 import styled from 'styled-components';
@@ -28,7 +28,10 @@ const DynamicCarouselView = props => {
       <Row>
         <Col lg={21} md={20} xs={24}>
           <Heading type="2">
-            <Title>{t('dynamicCarousel.heading')}</Title>
+            <Title>
+              <Icon type="BuildOutlined" /> &nbsp;
+              {t('dynamicCarousel.heading')}
+            </Title>
           </Heading>
         </Col>
         <Col lg={0} md={0} xs={24}>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { /* Route, */ NavLink } from 'react-router-dom';
 
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
-import { MenuItem, Spinner } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 
 import resources from './locales';
@@ -13,6 +13,7 @@ import ROUTES from './routes';
 
 const NavLinkWithI18n = translate('discount')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="PercentageOutlined" />
     {t('discount:navLink')}
   </NavLink>
 ));

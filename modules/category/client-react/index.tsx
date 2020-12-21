@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
-import { MenuItem, Spinner } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
 
 import resolvers from './resolvers';
 import resources from './locales';
@@ -13,6 +13,7 @@ import ROUTES from './routes';
 
 const NavLinkAdminWithI18n = translate('category')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="ProfileOutlined" />
     {t('category:navLink')}
   </NavLink>
 ));

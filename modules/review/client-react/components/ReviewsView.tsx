@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { PageLayout, AddButton, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, AddButton, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 
 import ReviewFilterComponent from './ReviewFilterComponent.web';
@@ -26,7 +26,10 @@ const ReviewsView: React.FC<ReviewViewProps> = props => {
 
       <Row>
         <Col lg={21} md={20} xs={24}>
-          <Heading type="2">{t('adminPanel.title')}</Heading>
+          <Heading type="2">
+            <Icon type="BookOutlined" /> &nbsp;
+            {t('adminPanel.title')}
+          </Heading>
         </Col>
         <Col lg={0} md={0} xs={24}>
           <br />

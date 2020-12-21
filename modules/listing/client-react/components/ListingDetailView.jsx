@@ -239,7 +239,7 @@ const ListingDetailView = props => {
                     <br />
                     <Row gutter={24}>
                       <Col span={6}>
-                        <Icon type="DownSquareOutlined" /> &nbsp;
+                        <Icon type="SafetyOutlined" /> &nbsp;
                         <Text type="secondary">Availability</Text>
                       </Col>
                       <Col span={18}>
@@ -271,7 +271,7 @@ const ListingDetailView = props => {
                     <div style={{ paddingTop: '5px' }} />
                     <Row gutter={24}>
                       <Col span={6}>
-                        <Icon type="MenuOutlined" /> &nbsp;
+                        <Icon type="DownSquareOutlined" /> &nbsp;
                         <Text type="secondary">Description</Text>
                       </Col>
                       <Col span={18}>

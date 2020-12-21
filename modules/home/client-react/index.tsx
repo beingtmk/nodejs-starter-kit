@@ -4,9 +4,10 @@ import { Route, NavLink } from 'react-router-dom';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
+// eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 import loadable from '@loadable/component';
-import { MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
+import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 
 import ROUTES from './routes';
 import resolvers from './resolvers';
@@ -20,6 +21,7 @@ import resources from './locales';
 
 const NavLinkDynamicCarouselWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="BuildOutlined" />
     Dynamic Carousel
   </NavLink>
 ));
@@ -81,7 +83,14 @@ export default new ClientModule({
   // navItemTest: [],
   navItemAdmin: [
     <IfLoggedIn key="/home" role="admin">
-      <SubMenu title="Home">
+      <SubMenu
+        title={
+          <>
+            <Icon type="HomeOutlined" />
+            Home
+          </>
+        }
+      >
         <MenuItem key={ROUTES.adminPanel}>
           <NavLinkDynamicCarouselWithI18n />
         </MenuItem>

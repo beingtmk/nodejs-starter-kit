@@ -29,11 +29,13 @@ const CheckoutCartView = props => {
       {cartLoading && <Spinner />}
       <CheckoutLayout
         t={t}
+        step={0}
         title={'Shopping Cart'}
         loading={!cartLoading && getCart && getCart.orderDetails.length > 0}
         Col1={
-          <>
+          <div style={{ overflowX: 'auto' }}>
             <Card
+              style={{ width: '750px' }}
               type="inner"
               title={
                 <Row type="flex">
@@ -78,7 +80,7 @@ const CheckoutCartView = props => {
                   </Row>
                 ))}
             </Card>
-          </>
+          </div>
         }
         Col2={
           <OrderSummary

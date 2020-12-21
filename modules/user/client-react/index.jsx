@@ -49,6 +49,7 @@ export { default as LOGIN } from './graphql/Login.graphql';
 
 const NavLinkUsersWithI18n = translate('user')(({ t }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="UserOutlined" />
     {t('navLink.users')}
   </NavLink>
 ));
@@ -60,6 +61,7 @@ const NavLinkLoginWithI18n = translate('user')(({ t }) => (
 ));
 const NavLinkTestWithI18n = translate('user')(({ t }) => (
   <NavLink to={ROUTES.userList} className="nav-link" activeClassName="active">
+    <Icon type="UserOutlined" />
     {t('navLink.users')}
   </NavLink>
 ));

@@ -6,6 +6,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import ClientModule from '@gqlapp/module-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 import { MenuItem, Icon, Spinner } from '@gqlapp/look-client-react';
+// eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import resolvers from './resolvers';
@@ -14,10 +15,8 @@ import ROUTES from './routes';
 
 const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">
-    <div>
-      <Icon type="BookOutlined" />
-      {t('review:navLinkUser')}
-    </div>
+    <Icon type="BookOutlined" />
+    {t('review:navLinkUser')}
   </NavLink>
 ));
 
@@ -29,6 +28,7 @@ const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }
 
 const NavLinkAdminWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="BookOutlined" />
     {t('review:navLinkAdmin')}
   </NavLink>
 ));

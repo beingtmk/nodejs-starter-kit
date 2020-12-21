@@ -7,6 +7,7 @@ import loadable from '@loadable/component';
 import { Route, NavLink } from 'react-router-dom';
 import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
+// eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 import resolvers from './resolvers';
@@ -17,18 +18,21 @@ import NavItemCart from './containers/NavItemCart.web';
 
 const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="FileOutlined" />
     {'Orders'}
   </NavLink>
 ));
 
 const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myOrder} className="nav-link" activeClassName="active">
+    <Icon type="FileOutlined" />
     {'My Orders'}
   </NavLink>
 ));
 
 const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
+    <Icon type="ExportOutlined" />
     {'My Deliveries'}
   </NavLink>
 ));

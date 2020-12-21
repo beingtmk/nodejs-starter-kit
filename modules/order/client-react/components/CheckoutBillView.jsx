@@ -21,6 +21,7 @@ const CheckoutBillView = props => {
       {!cartLoading && (
         <CheckoutLayout
           t={t}
+          step={1}
           title={'Select Address'}
           extra={<AddAddressBtn currentUser={currentUser} t={t} />}
           loading={getCart && getCart.orderDetails.length > 0}

@@ -16,10 +16,8 @@ import ROUTES from './routes';
 const MyListingsNavItemAccount = () => {
   return (
     <NavLink to={ROUTES.myListing}>
-      <div>
-        <Icon type="SolutionOutlined" />
-        {'My Listings'}
-      </div>
+      <Icon type="SolutionOutlined" />
+      {'My Listings'}
     </NavLink>
   );
 };
@@ -27,10 +25,8 @@ const MyListingsNavItemAccount = () => {
 const NavLinkMyListingsBookmark = () => {
   return (
     <NavLink to={ROUTES.listingBookmark}>
-      <div>
-        <Icon type="StarOutlined" />
-        {'My Bookmarks'}
-      </div>
+      <Icon type="StarOutlined" />
+      {'My Bookmarks'}
     </NavLink>
   );
 };
@@ -38,10 +34,8 @@ const NavLinkMyListingsBookmark = () => {
 const NavLinkAddListings = () => {
   return (
     <NavLink to={ROUTES.add}>
-      <div>
-        <Icon type="SolutionOutlined" />
-        {'Create listing'}
-      </div>
+      <Icon type="SolutionOutlined" />
+      {'Create listing'}
     </NavLink>
   );
 };
@@ -55,12 +49,14 @@ const NavLinkAddListings = () => {
 
 const NavLinkTestWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.listingCatalogue} className="nav-link" activeClassName="active">
+    <Icon type="SolutionOutlined" />
     {t('listing:navLink')}
   </NavLink>
 ));
 
 const NavLinkAdminWithI18n = translate('listing')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
+    <Icon type="SolutionOutlined" />
     {t('listing:navLink')}
   </NavLink>
 ));

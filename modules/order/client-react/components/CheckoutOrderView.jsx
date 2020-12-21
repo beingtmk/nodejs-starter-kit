@@ -37,6 +37,7 @@ const CheckoutOrderView = props => {
       {!cartLoading && (
         <CheckoutLayout
           t={t}
+          step={2}
           title={'Select Address'}
           loading={getCart && getCart.orderDetails.length > 0}
           Col1={

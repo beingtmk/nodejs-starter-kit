@@ -18,7 +18,7 @@ const OrderView = props => {
       <Row>
         <Col span={12}>
           <Heading type="2">
-            <Icon type="SolutionOutlined" /> &nbsp;
+            <Icon type="FileOutlined" /> &nbsp;
             {t('orders.subTitle')}
           </Heading>
         </Col>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, AddButton, Row, Col, Heading, MetaTags } from '@gqlapp/look-client-react';
+import { Icon, PageLayout, AddButton, Row, Col, Heading, MetaTags } from '@gqlapp/look-client-react';
 import ROUTES from '../routes';
 
 import UsersFilterView from '../components/UsersFilterView';
@@ -35,7 +35,10 @@ const Users = props => {
       <MetaTags title={t('users.title')} description={t('users.meta')} />
       <Row>
         <Col lg={21} md={20} xs={24}>
-          <Heading type="2">{t('users.list.title')}</Heading>
+          <Heading type="2">
+            <Icon type="UserOutlined" /> &nbsp;
+            {t('users.list.title')}
+          </Heading>
         </Col>
         <Col lg={0} md={0} xs={24}>
           <br />
