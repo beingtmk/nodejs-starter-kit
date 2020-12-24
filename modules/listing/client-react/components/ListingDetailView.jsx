@@ -132,9 +132,9 @@ const ListingDetailView = props => {
           <div style={{ background: 'white', margin: '0 -200%', padding: '0 200%' }}>
             <br />
             <Row gutter={24}>
-              <Col span={11}>
+              <Col lg={11} md={11} xs={24}>
                 <Row gutter={4}>
-                  <Col span={4}>
+                  <Col lg={4} md={4} xs={0}>
                     {images &&
                       images.map((item, id) => (
                         <div key={id} style={{ marginBottom: '5px' }} align="center">
@@ -142,7 +142,7 @@ const ListingDetailView = props => {
                         </div>
                       ))}
                   </Col>
-                  <Col span={20}>
+                  <Col lg={20} md={20} xs={24}>
                     <div align="center">
                       <div
                         style={{
@@ -187,9 +187,9 @@ const ListingDetailView = props => {
                   </Col>
                 </Row>
               </Col>
-              <Col span={13}>
+              <Col lg={13} md={13} xs={24}>
                 <Row /*  type="flex" align="end" */>
-                  <Col span={20}>
+                  <Col lg={20} md={20} xs={21}>
                     <Breadcrumb separator=">">
                       <BreadcrumbItem key="home">
                         <NavLink to={`${HOME_ROUTES.home}`}>
@@ -238,11 +238,11 @@ const ListingDetailView = props => {
                   <Col span={24}>
                     <br />
                     <Row gutter={24}>
-                      <Col span={6}>
+                      <Col lg={6} md={6} xs={24}>
                         <Icon type="SafetyOutlined" /> &nbsp;
                         <Text type="secondary">Availability</Text>
                       </Col>
-                      <Col span={18}>
+                      <Col lg={{ span: 18, offset: 0 }} md={{ span: 18, offset: 0 }} xs={{ span: 24, offset: 2 }}>
                         {listing.listingDetail.inventoryCount > 0 && <Text type="success">In Stock</Text>}
                         {listing.listingDetail.inventoryCount > 0 && listing.listingDetail.inventoryCount < 10 && (
                           <Text type="warning">Only {listing.listingDetail.inventoryCount} left</Text>
@@ -252,11 +252,11 @@ const ListingDetailView = props => {
                     </Row>
                     <div style={{ paddingTop: '5px' }} />
                     <Row gutter={24}>
-                      <Col span={6}>
+                      <Col lg={6} md={6} xs={24}>
                         <Icon type="MenuOutlined" /> &nbsp;
                         <Text type="secondary">Highlights</Text>
                       </Col>
-                      <Col span={18}>
+                      <Col lg={{ span: 18, offset: 0 }} md={{ span: 18, offset: 0 }} xs={{ span: 24, offset: 2 }}>
                         {listing &&
                           listing.listingHighlight &&
                           listing.listingHighlight.length > 0 &&
@@ -270,11 +270,11 @@ const ListingDetailView = props => {
                     </Row>
                     <div style={{ paddingTop: '5px' }} />
                     <Row gutter={24}>
-                      <Col span={6}>
+                      <Col lg={6} md={6} xs={24}>
                         <Icon type="DownSquareOutlined" /> &nbsp;
                         <Text type="secondary">Description</Text>
                       </Col>
-                      <Col span={18}>
+                      <Col lg={{ span: 18, offset: 0 }} md={{ span: 18, offset: 0 }} xs={{ span: 24, offset: 2 }}>
                         <Text status="default">{listing.description}</Text>
                       </Col>
                     </Row>
