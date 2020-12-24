@@ -66,7 +66,8 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
     deleteReview,
     t,
     showAdd,
-    currentUser
+    currentUser,
+    listing
   } = props;
   const [photo, setPhoto] = useState(false);
   const renderFunc = (key: number, review: Review) => (
@@ -118,7 +119,7 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
           {showAdd && (
             <>
               <ModalDrawer buttonText={t('addReview')} modalTitle={t('addReview')} height="80%">
-                <ReviewFormComponent t={t} onSubmit={addReview} modalData={{ modalName, modalId }} />
+                <ReviewFormComponent listing={listing} t={t} onSubmit={addReview} modalData={{ modalName, modalId }} />
               </ModalDrawer>
             </>
           )}

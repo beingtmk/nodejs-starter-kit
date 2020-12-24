@@ -42,7 +42,7 @@ const CheckoutCardComponent = props => {
         getCart.orderDetails.map((item, key) => (
           <Row>
             <Col span={24}>
-              <CartItemComponent inner={true} key={key} item={item} t={t} />
+              <CartItemComponent inner={true} key={key} item={item} t={t} modalId={item.modalId} />
               <Divider />
             </Col>
           </Row>

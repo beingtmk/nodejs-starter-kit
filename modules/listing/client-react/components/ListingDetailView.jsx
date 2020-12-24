@@ -282,6 +282,10 @@ const ListingDetailView = props => {
                 </Row>
                 <Divider />
                 <Review
+                  listing={{
+                    title: listing.title,
+                    img: images[0]
+                  }}
                   filter={{
                     isActive: true,
                     modalId: listing && listing.id,

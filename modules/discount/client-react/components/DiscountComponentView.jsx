@@ -17,6 +17,7 @@ const DiscountComponent = props => {
       <Col span={24}>
         <Row gutter={8}>
           <Col span={17} style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+            <Icon type="TagTwoTone" style={{ fontSize: '20px', paddingRight: '5px' }} />
             {isDiscount
               ? cost && (
                   <Space align="center">
@@ -44,16 +45,18 @@ const DiscountComponent = props => {
                   </Space>
                 )
               : cost && (
-                  <Tooltip title={cost.toFixed(2)}>
-                    <CurrencyDisplay
-                      input={cost.toFixed(2)}
-                      precision={0}
-                      valueStyle={{
-                        fontSize: '21px',
-                        fontWeight: 'bold'
-                      }}
-                    />
-                  </Tooltip>
+                  <Space /* align="center" */>
+                    <Tooltip title={cost.toFixed(2)}>
+                      <CurrencyDisplay
+                        input={cost.toFixed(2)}
+                        precision={0}
+                        valueStyle={{
+                          fontSize: '21px',
+                          fontWeight: 'bold'
+                        }}
+                      />
+                    </Tooltip>
+                  </Space>
                 )}
           </Col>
           <Col span={7}>
