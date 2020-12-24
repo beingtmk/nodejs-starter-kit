@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Tag, Icon, Space, Row, Col, Skeleton } from '@gqlapp/look-client-react';
+import { Tag, Icon, Space, Row, Col, Skeleton, Tooltip } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import CurrencyDisplay from './CurrencyDisplay';
@@ -15,45 +15,55 @@ const DiscountComponent = props => {
   return !loading ? (
     <Row>
       <Col span={24}>
-        <Space align="center" size="large">
-          {isDiscount
-            ? cost && (
-                <Space align="center">
-                  <CurrencyDisplay
-                    style={{ display: 'inline' }}
-                    precision={0}
-                    input={(cost - cost * (discount / 100)).toFixed(2)}
-                    valueStyle={{
-                      fontSize: '21px',
-                      fontWeight: 'bold'
-                    }}
-                  />
-                  <span
-                    style={{
-                      textDecoration: 'line-through',
-                      fontSize: '17px'
-                    }}
-                  >
-                    &#8377; {cost.toFixed(0)}
-                  </span>
-                </Space>
-              )
-            : cost && (
-                <CurrencyDisplay
-                  input={cost.toFixed(2)}
-                  precision={0}
-                  valueStyle={{
-                    fontSize: '21px',
-                    fontWeight: 'bold'
-                  }}
-                />
-              )}
-          {isDiscount && (
-            <Tag color="success" icon={<Icon type="ArrowDownOutlined" />}>
-              {discount && discount.toFixed(2) ? discount.toFixed(2) : 0} &nbsp; %
-            </Tag>
-          )}
-        </Space>
+        <Row gutter={8}>
+          <Col span={17} style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+            {isDiscount
+              ? cost && (
+                  <Space align="center">
+                    <Tooltip title={(cost - cost * (discount / 100)).toFixed(2)}>
+                      <CurrencyDisplay
+                        style={{ display: 'inline' }}
+                        precision={0}
+                        input={(cost - cost * (discount / 100)).toFixed(2)}
+                        valueStyle={{
+                          fontSize: '21px',
+                          fontWeight: 'bold'
+                        }}
+                      />
+                    </Tooltip>
+                    <Tooltip title={cost.toFixed(2)}>
+                      <span
+                        style={{
+                          textDecoration: 'line-through',
+                          fontSize: '17px'
+                        }}
+                      >
+                        &#8377; {cost.toFixed(0)}
+                      </span>
+                    </Tooltip>
+                  </Space>
+                )
+              : cost && (
+                  <Tooltip title={cost.toFixed(2)}>
+                    <CurrencyDisplay
+                      input={cost.toFixed(2)}
+                      precision={0}
+                      valueStyle={{
+                        fontSize: '21px',
+                        fontWeight: 'bold'
+                      }}
+                    />
+                  </Tooltip>
+                )}
+          </Col>
+          <Col span={7}>
+            {isDiscount && (
+              <Tag color="success" icon={<Icon type="ArrowDownOutlined" />}>
+                {discount && discount.toFixed(0) ? discount.toFixed(0) : 0} %
+              </Tag>
+            )}
+          </Col>
+        </Row>
       </Col>
       {discountDuration && (
         <Col span={24}>

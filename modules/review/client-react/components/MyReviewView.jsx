@@ -36,6 +36,7 @@ const MyReviewView = props => {
   const RenderReviews = () => (
     <div>
       <SuggestedListComponent
+        endText={'reviews'}
         grid={{
           gutter: 24,
           xs: 1,

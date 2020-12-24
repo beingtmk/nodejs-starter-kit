@@ -62,6 +62,7 @@ const MyListingsView = props => {
       <br />
       {/* <Divider style={{ margin: '5px 0px 10px' }} /> */}
       <SuggestedListComponent
+        endText={'listing'}
         grid={{
           gutter: 24,
           xs: 1,

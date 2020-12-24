@@ -4,7 +4,7 @@ import { List, Spin, Divider } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const SuggestedListComponent = props => {
-  const { items, loadData, renderFunc } = props;
+  const { items, loadData, renderFunc, endText } = props;
   const [data, setData] = useState(items);
   // eslint-disable-next-line no-unused-vars
   const [load, setLoad] = useState(false);
@@ -42,7 +42,7 @@ const SuggestedListComponent = props => {
       endMessage={
         <Divider>
           <p style={{ textAlign: 'center', marginTop: '25px' }}>
-            <b>End</b>
+            <b>{endText ? `No more ${endText}` : 'END'}</b>
           </p>
         </Divider>
       }
@@ -70,7 +70,8 @@ SuggestedListComponent.propTypes = {
   items: PropTypes.array,
   grid: PropTypes.object,
   loadData: PropTypes.func,
-  renderFunc: PropTypes.func
+  renderFunc: PropTypes.func,
+  endText: PropTypes.string
 };
 
 export default SuggestedListComponent;

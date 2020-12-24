@@ -69,7 +69,7 @@ class NavBar extends React.Component {
           <Row className="navbar-wrapper">
             <Col lg={24} xs={0}>
               <div align="right" className="navbar-contact-menu">
-                <Row style={{ lineHeight: '37px' }} justify="center" gutter={24}>
+                <Row style={{ lineHeight: '37px' }} justify="end" gutter={24}>
                   <Col>
                     <BannerLink href={`tel: ${CONTACT.phone}`}>
                       <Icon type="PhoneOutlined" /> &nbsp;

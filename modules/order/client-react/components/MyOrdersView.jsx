@@ -63,7 +63,7 @@ const MyOrdersView = props => {
   const RenderMyOrders = () => (
     <div>
       {loading && <Spinner />}
-      {!loading && <SuggestedListComponent {...props} items={orders} renderFunc={renderFunc} />}
+      {!loading && <SuggestedListComponent endText={'orders'} {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
   return (

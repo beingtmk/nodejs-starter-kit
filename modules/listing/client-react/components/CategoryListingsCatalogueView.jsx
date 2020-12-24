@@ -34,6 +34,7 @@ const ListingCatalogueView = props => {
     <div>
       <SuggestedListComponent
         {...props}
+        endText={'listing'}
         grid={
           layout === 'vertical' && {
             gutter: 24,
