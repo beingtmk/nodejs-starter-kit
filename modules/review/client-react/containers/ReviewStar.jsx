@@ -19,7 +19,7 @@ const ReviewStar = props => {
 
   return !loading ? (
     <>
-      <Rate allowHalf defaultValue={avgRating(one, two, three, four, five, totalRatings)} /> &nbsp;{' '}
+      <Rate allowHalf defaultValue={avgRating(five, four, three, two, one, totalRatings)} /> &nbsp;{' '}
       {suffix ? `(${totalRatings} ${suffix})` : `(${totalRatings})`}
     </>
   ) : null;

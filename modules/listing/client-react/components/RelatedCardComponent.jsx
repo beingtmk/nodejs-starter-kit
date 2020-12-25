@@ -183,7 +183,7 @@ const RelatedCardComponent = props => {
       )}
       <Link className="listing-link" to={`${ROUTES.listingDetailLink}${listing_id}`}>
         {listing && listing.listingDetail && listing.listingDetail.inventoryCount <= 0 && (
-          <OutOfStock>
+          <>
             <div className={'HVCenter'}>
               <span
                 style={{
@@ -192,13 +192,15 @@ const RelatedCardComponent = props => {
                   fontWeight: 'bold',
                   fontSize: 'large',
                   borderRadius: '8px',
-                  color: 'red'
+                  color: 'red',
+                  zIndex: 2
                 }}
               >
                 Out Of Stock
               </span>
             </div>
-          </OutOfStock>
+            <OutOfStock />
+          </>
         )}
         <Card
           bodyStyle={{ margin: '0px', padding: '14px', textAlign: 'left' }}

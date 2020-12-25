@@ -101,16 +101,14 @@ const ListingItemComponent = props => {
                 card={true}
                 rowStyle={{ height: '75px' }}
               />
-              <div align="center">
-                <ReviewStar
-                  filter={{
-                    isActive: true,
-                    modalId: listing && listing.id,
-                    modalName: MODAL[1].value
-                  }}
-                  currentUser={currentUser}
-                />
-              </div>
+              <ReviewStar
+                filter={{
+                  isActive: true,
+                  modalId: listing && listing.id,
+                  modalName: MODAL[1].value
+                }}
+                currentUser={currentUser}
+              />
             </>
           }
         />

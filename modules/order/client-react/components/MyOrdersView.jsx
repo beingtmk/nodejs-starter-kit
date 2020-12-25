@@ -62,7 +62,6 @@ const MyOrdersView = props => {
   ];
   const RenderMyOrders = () => (
     <div>
-      {loading && <Spinner />}
       {!loading && <SuggestedListComponent endText={'orders'} {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
@@ -112,7 +111,8 @@ const MyOrdersView = props => {
         </Col>
       </Row>
       <Divider />
-      {orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />}
+      {loading && <Spinner />}
+      {!loading && (orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />)}
     </PageLayout>
   );
 };

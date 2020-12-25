@@ -8,6 +8,7 @@ import { User } from '@gqlapp/user-server-ts/sql';
 import OrderDAO, { OrderState } from '@gqlapp/order-server-ts/sql';
 import CategoryDAO from '@gqlapp/category-server-ts/sql';
 import Review from '@gqlapp/review-server-ts/sql';
+import { MODAL } from '@gqlapp/review-common';
 
 Model.knex(knex);
 
@@ -181,6 +182,16 @@ export default class ListingDAO extends Model {
         });
       }
 
+      // if (has(filter, 'popularity') && filter.popularity !== '') {
+      //   queryBuilder.where(function () {
+      //     this.where('average_rating.modal_name', MODAL[1].value).andWhere(`average_rating.${filter.popularity}`, '>', 0);
+      //     // this.where('average_rating.modal_name', MODAL[1].value).andWhere(
+      //     //   raw(`SUM(?, ?, ?, ?, ?)`, ['average_rating.five', 'average_rating.four', 'average_rating.three', 'average_rating.two', 'average_rating.one']),
+      //     //   '!=',
+      //     //   0);
+      //   });
+      // }
+
       if (has(filter, 'categoryFilter') && filter.categoryFilter.categoryId !== 0) {
         const category = camelizeKeys(
           await CategoryDAO.query()
@@ -257,6 +268,8 @@ export default class ListingDAO extends Model {
       .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
       .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
       .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
+    // .leftJoin('average_rating', 'average_rating.modal_id', 'listing.id')
+    // .groupBy('listing.id');
 
     const allListings = camelizeKeys(await queryBuilder);
     const total = allListings.length;
@@ -338,7 +351,7 @@ export default class ListingDAO extends Model {
 
   public async myListingBookmark(userId: number, limit: number, after: number, orderBy: any, filter: any) {
     const queryBuilder = ListingBookmark.query()
-      .where('user_id', userId)
+      .where('listing_bookmark.user_id', userId)
       .eager('[listing.[user, listing_media, listing_cost_array]]');
     if (orderBy && orderBy.column) {
       const column = orderBy.column;
@@ -349,32 +362,61 @@ export default class ListingDAO extends Model {
 
       queryBuilder.orderBy(decamelize(column), order);
     } else {
-      queryBuilder.orderBy('id', 'desc');
+      queryBuilder.orderBy('listing.id', 'desc');
     }
 
     if (filter) {
       if (has(filter, 'isActive') && filter.isActive !== '') {
         queryBuilder.where(function() {
           this.where('listing.is_active', filter.isActive);
+          // .andWhere('listing_cost.is_active', filter.isActive);
         });
       }
       if (has(filter, 'isFeatured') && filter.isFeatured !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_featured', filter.isFeatured);
+          this.where('listing_flag.is_featured', filter.isFeatured);
         });
       }
       if (has(filter, 'isNew') && filter.isNew !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_new', filter.isNew);
+          this.where('listing_flag.is_new', filter.isNew);
         });
       }
       if (has(filter, 'isDiscount') && filter.isDiscount !== '') {
         queryBuilder.where(function() {
-          this.where('listing.is_discount', filter.isDiscount);
+          this.where('listing_flag.is_discount', filter.isDiscount);
+        });
+      }
+      if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
+        queryBuilder.where(function() {
+          this.whereNot('user.id', userId);
         });
       }
 
-      if (has(filter, 'userId') && filter.userId !== '') {
+      if (has(filter, 'categoryFilter') && filter.categoryFilter.categoryId !== 0) {
+        const category = camelizeKeys(
+          await CategoryDAO.query()
+            .eager('[sub_categories.^]')
+            .findById(filter.categoryFilter.categoryId)
+        );
+        const listingids = [category.id];
+        if (filter.categoryFilter.allSubCategory) {
+          const addIdForArrayExpression = function addIdForArray(cat) {
+            cat.subCategories.map(c => {
+              listingids.push(c.id);
+              if (c.subCategories.length > 0) {
+                addIdForArray(c);
+              }
+            });
+          };
+          addIdForArrayExpression(category);
+        }
+        queryBuilder.where(function() {
+          this.whereIn('listing.category_id', listingids);
+        });
+      }
+
+      if (has(filter, 'userId') && filter.userId !== 0) {
         queryBuilder.where(function() {
           this.where('user.id', filter.userId);
         });
@@ -423,7 +465,18 @@ export default class ListingDAO extends Model {
     queryBuilder
       .from('listing_bookmark')
       .leftJoin('user', 'user.id', 'listing_bookmark.user_id')
-      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing_bookmark.listing_id');
+      .leftJoin('listing', 'listing.id', 'listing_bookmark.listing_id')
+      .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
+      .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
+      .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
+      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
+    // queryBuilder
+    // .from('listing')
+    // .leftJoin('user', 'user.id', 'listing.user_id')
+    // .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
+    // .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
+    // .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
+    // .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
 
     const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
 

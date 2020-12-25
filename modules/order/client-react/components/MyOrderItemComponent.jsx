@@ -38,7 +38,7 @@ const OrderItemComponent = props => {
         }}
       >
         <Row type="flex">
-          <Col span={24} align="center" style={{ maxHeight: '200px', overflow: 'hidden' }}>
+          <Col span={24} align="center" style={{ height: 'fit-content' /* , overflow: 'hidden' */ }}>
             <img
               alt=""
               src={(item.orderDetails && item.orderDetails[0] && item.orderDetails[0].imageUrl) || NO_IMG}

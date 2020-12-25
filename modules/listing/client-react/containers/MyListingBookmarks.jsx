@@ -10,8 +10,8 @@ import {
   withCurrentUser,
   withMyListingsBookmark,
   withFilterUpdating,
-  withOrderByUpdating
-  // withListingsState
+  withOrderByUpdating,
+  withListingsState
 } from './ListingOperations';
 import { subscribeToListingsBookmark } from './ListingSubscriptions';
 import ROUTES from '../routes';
@@ -28,6 +28,7 @@ const MyListingsBookmark = props => {
   return (
     <ListingCatalogueView
       title={'My Bookmarks'}
+      showFilter={true}
       emptyLink={`${ROUTES.listingCatalogue}`}
       listings={props.myListingsBookmark}
       {...props}
@@ -44,7 +45,7 @@ MyListingsBookmark.propTypes = {
 
 export default compose(
   withCurrentUser,
-  // withListingsState,
+  withListingsState,
   withMyListingsBookmark,
   withFilterUpdating,
   withOrderByUpdating,
