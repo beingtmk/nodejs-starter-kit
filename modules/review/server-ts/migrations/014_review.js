@@ -63,6 +63,7 @@ exports.up = function(knex) {
         table.integer('three').defaultTo(0);
         table.integer('four').defaultTo(0);
         table.integer('five').defaultTo(0);
+        table.float('rating').defaultTo(0);
         table.timestamps(false, true);
       })
       .createTable('review_helpful_user', table => {
