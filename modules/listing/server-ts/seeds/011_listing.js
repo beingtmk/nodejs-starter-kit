@@ -19,7 +19,7 @@ exports.seed = async function(knex) {
       const isDiscount = false;
       const category_id = Math.floor(Math.random() * (30 - 7 + 1) + 7);
       // const isDiscount = Math.random() > 0.7;
-      const isActive = Math.random() < 0.6 ? false : true;
+      const isActive = Math.random() > 0.6 ? false : true;
       const listing = await returnId(knex('listing')).insert({
         user_id: Math.random() < 0.7 ? 2 : 1,
 

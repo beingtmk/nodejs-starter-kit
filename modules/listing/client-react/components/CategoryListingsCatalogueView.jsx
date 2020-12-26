@@ -40,7 +40,7 @@ const ListingCatalogueView = props => {
             xs: 1,
             sm: 1,
             md: 2,
-            lg: 2,
+            lg: 3,
             xl: 3,
             xxl: 3
           }
@@ -56,8 +56,8 @@ const ListingCatalogueView = props => {
     const span =
       layout === 'vertical'
         ? {
-            spanFilter: { lg: 6, md: 6, sm: 24 },
-            spanContent: { lg: 18, md: 18, sm: 24 }
+            spanFilter: { lg: 6, md: 8, sm: 24 },
+            spanContent: { lg: 18, md: 16, sm: 24 }
           }
         : {
             spanFilter: { span: 24 },

@@ -158,7 +158,7 @@ const ListingCarousel = props => {
             }}
             componentStyle={{
               margin: '0 4px',
-              width: '256px'
+              width: '232px'
             }}
           />
         ) : (

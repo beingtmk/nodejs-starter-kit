@@ -88,6 +88,13 @@ export default new ClientModule({
         fallback: <Spinner />
       })}
     />,
+    <Route
+      exact
+      path={ROUTES.listingReview}
+      component={loadable(() => import('./containers/ListingReview').then(c => c.default), {
+        fallback: <Spinner />
+      })}
+    />,
     <AuthRoute
       redirect={USER_ROUTES.profile}
       role={['user', 'admin']}

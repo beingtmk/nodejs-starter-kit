@@ -14,13 +14,14 @@ const TotalRating = styled.h3`
   }
 `;
 
+export function avgRating(five, four, three, two, one, totalRatings) {
+  return ((5 * five + 4 * four + 3 * three + 2 * two + 1 * one) / totalRatings).toFixed(1);
+}
+
 const AvgRatingComponent = props => {
   const { t } = props;
   const { one, two, three, four, five } = props.rating;
   const totalRatings = one + two + three + four + five;
-  function avgRating() {
-    return ((5 * five + 4 * four + 3 * three + 2 * two + 1 * one) / totalRatings).toFixed(1);
-  }
   const comp = [
     {
       defaultValue: 5,
@@ -83,7 +84,7 @@ const AvgRatingComponent = props => {
         <Row>
           <Col span={24}>
             <Row type="flex" justify="center">
-              <h1>{avgRating()}</h1>
+              <h1>{avgRating(five, four, three, two, one, totalRatings)}</h1>
             </Row>
           </Col>
           <Col lg={{ offset: 0, span: 24 }} xs={{ offset: 6, span: 18 }}>

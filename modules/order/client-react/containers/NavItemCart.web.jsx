@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 import { Link, NavLink } from 'react-router-dom';
@@ -22,6 +22,7 @@ const StyleCard = styled(Card)`
 `;
 
 const NavItemCart = props => {
+  const [visible, setVisible] = useState(false);
   const {
     loading,
     getCart,
@@ -45,7 +46,7 @@ const NavItemCart = props => {
         id,
         orderOptions: {
           id: optionsId,
-          quantity: quantity
+          quantity
         }
       };
       // console.log(input);
@@ -72,15 +73,21 @@ const NavItemCart = props => {
           {!currentUserLoading && (
             <DropDown
               content={
-                <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active">
+                <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active" visible={visible}>
                   <StyleCard
                     hoverable
                     bodyStyle={{
                       padding: '12px'
                     }}
+                    onMouseEnter={() => setVisible(true)}
+                    onMouseLeave={() => setVisible(false)}
                   >
                     <Badge count={getCart && getCart.orderDetails && getCart.orderDetails.length} size="small">
-                      <Icon type="ShoppingCartOutlined" style={{ fontSize: '20px' }} />
+                      {visible ? (
+                        <Icon type="ShoppingFilled" style={{ fontSize: '20px' }} />
+                      ) : (
+                        <Icon type="ShoppingOutlined" style={{ fontSize: '20px' }} />
+                      )}
                     </Badge>
                   </StyleCard>
                 </NavLink>
@@ -94,7 +101,7 @@ const NavItemCart = props => {
                   Compo={NavItemCartComponent}
                   data={props.getCart.orderDetails}
                   width={'300px'}
-                  // node={true}
+                  height={'250px'}
                   itemName={'item'}
                   componentProps={{
                     mobile: true,
