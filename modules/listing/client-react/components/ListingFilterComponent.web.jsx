@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { SORT_BY } from '@gqlapp/listing-common/SortFilter';
+import { SORT_BY, DISCOUNT } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
   Affix,
@@ -26,13 +26,14 @@ import SliderControlled from './FIlterSliderControlledComponent';
 const ListingsFilterComponent = props => {
   // console.log('listings filter component', props);
   const {
-    filter: { searchText, lowerCost, upperCost, isActive, categoryFilter },
+    filter: { searchText, lowerCost, upperCost, isActive, categoryFilter, discount },
     onIsActiveChange,
     onCategoryChange,
     onSearchTextChange,
     onLowerCostChange,
     onUpperCostChange,
     onFiltersRemove,
+    onDiscountChange,
     listings,
     showIsActive = false,
     showCategoryFilter = false,
@@ -130,6 +131,32 @@ const ListingsFilterComponent = props => {
     );
   };
 
+  const listingDiscount = (width, inFilter = true) => {
+    return (
+      <Field
+        name="discount"
+        component={RenderSelect}
+        label={t('listingFilter.discount')}
+        onChange={e => {
+          e === '' ? onDiscountChange(0) : DISCOUNT[e] && onDiscountChange(DISCOUNT[e].value);
+        }}
+        style={{ width: '100%' }}
+        value={discount === 0 ? '' : discount}
+        inFilter={inFilter}
+        selectStyle={{ width }}
+      >
+        <Option key={1} value="">
+          None
+        </Option>
+        {DISCOUNT.map((d, i) => (
+          <Option key={i + 2} value={i}>
+            {d.label}
+          </Option>
+        ))}
+      </Field>
+    );
+  };
+
   const handleResetBtn = (
     <Button block color="primary" onClick={handleFiltersRemove.current}>
       <Icon type={'UndoOutlined'} /> {t('listingFilter.btn.reset')}
@@ -196,6 +223,7 @@ const ListingsFilterComponent = props => {
             <Col span={24}>{showIsActive && activeField(false)}</Col>
             <Col>{categoryTreeField}</Col>
             <Col span={24}>{listingSortBy('100%', false)}</Col>
+            <Col span={24}>{listingDiscount('100%', false)}</Col>
             <Col span={22}>{sliderControlled(false)}</Col>
             <Col span={24}>
               <br />
@@ -214,11 +242,14 @@ const ListingsFilterComponent = props => {
         </Col>
         <Col lg={24} xs={24} md={12}>
           <Row type="flex" gutter={24}>
-            <Col lg={16} md={16} xs={24}>
+            <Col lg={8} md={16} xs={24}>
               {categoryTreeField}
             </Col>
             <Col lg={8} md={8} xs={24}>
               {listingSortBy('100%')}
+            </Col>
+            <Col lg={8} md={8} xs={24}>
+              {listingDiscount('100%')}
             </Col>
           </Row>
         </Col>
@@ -264,6 +295,7 @@ ListingsFilterComponent.propTypes = {
   showIsActive: PropTypes.bool.isRequired,
   showCategoryFilter: PropTypes.bool.isRequired,
   onIsActiveChange: PropTypes.func.isRequired,
+  onDiscountChange: PropTypes.func.isRequired,
   onOrderBy: PropTypes.func.isRequired,
   t: PropTypes.func,
   layout: PropTypes.string

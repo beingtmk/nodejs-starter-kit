@@ -22,3 +22,22 @@ export const SORT_BY = [
     sortBy: 'desc'
   }
 ];
+
+export const DISCOUNT = [
+  {
+    label: '10% or more',
+    value: 10
+  },
+  {
+    label: '25 or more',
+    value: 25
+  },
+  {
+    label: '50 or more',
+    value: 50
+  },
+  {
+    label: '75 or more',
+    value: 75
+  }
+];

@@ -243,7 +243,7 @@ const ListingDetailView = props => {
                         <Text type="secondary">Availability</Text>
                       </Col>
                       <Col lg={{ span: 18, offset: 0 }} md={{ span: 18, offset: 0 }} xs={{ span: 24, offset: 2 }}>
-                        {listing.listingDetail.inventoryCount > 0 && <Text type="success">In Stock</Text>}
+                        {listing.listingDetail.inventoryCount > 0 && <Text type="success">In Stock &nbsp;</Text>}
                         {listing.listingDetail.inventoryCount > 0 && listing.listingDetail.inventoryCount < 10 && (
                           <Text type="warning">Only {listing.listingDetail.inventoryCount} left</Text>
                         )}

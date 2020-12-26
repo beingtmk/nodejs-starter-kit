@@ -169,7 +169,8 @@
     "btn":{
       "reset":"Reset Filters"
     },
-    "sortBy":"Sort By"
+    "sortBy":"Sort By",
+    "discount":"Discount"
   },
   "listingItem":{
     "tooltip":"Visit User's Profile",

@@ -18,6 +18,8 @@ const defaults = {
       // userId: 0,
       searchText: '',
 
+      discount: 0,
+
       categoryFilter: {
         categoryId: 0,
         allSubCategory: true,

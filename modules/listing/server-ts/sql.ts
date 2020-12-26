@@ -221,6 +221,12 @@ export default class ListingDAO extends Model {
         });
       }
 
+      if (has(filter, 'discount') && filter.discount !== 0) {
+        queryBuilder.where(function() {
+          this.where('discount.discount_percent', '>=', filter.discount);
+        });
+      }
+
       if (has(filter, 'lowerCost') && filter.lowerCost !== 0) {
         queryBuilder.where(function() {
           this.where('listing_cost.cost', '>', filter.lowerCost);
@@ -267,7 +273,8 @@ export default class ListingDAO extends Model {
       .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
       .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
       .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
-      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
+      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id')
+      .leftJoin('discount', 'discount.modal_id', 'listing.id');
     // .leftJoin('average_rating', 'average_rating.modal_id', 'listing.id')
     // .groupBy('listing.id');
 
@@ -387,6 +394,11 @@ export default class ListingDAO extends Model {
           this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
+      if (has(filter, 'discount') && filter.discount !== 0) {
+        queryBuilder.where(function() {
+          this.where('discount.discount_percent', '>=', filter.discount);
+        });
+      }
       if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
         queryBuilder.where(function() {
           this.whereNot('user.id', userId);
@@ -469,6 +481,7 @@ export default class ListingDAO extends Model {
       .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
       .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
       .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
+      .leftJoin('discount', 'discount.modal_id', 'listing.id')
       .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
     // queryBuilder
     // .from('listing')
