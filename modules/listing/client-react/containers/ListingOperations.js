@@ -420,6 +420,9 @@ export const withFilterUpdating = Component =>
       onIsActiveChange(isActive) {
         mutate({ variables: { filter: { isActive } } });
       },
+      onRatedChange(popularity) {
+        mutate({ variables: { filter: { popularity } } });
+      },
       onCategoryChange(categoryFilter) {
         // console.log(categoryFilter);
         mutate({

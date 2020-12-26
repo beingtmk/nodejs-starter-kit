@@ -8,6 +8,7 @@ fragment ListingsStateInfo on ListingsState {
     searchText
 
     discount
+    popularity
 
     categoryFilter {
       categoryId
