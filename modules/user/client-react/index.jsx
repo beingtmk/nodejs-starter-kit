@@ -1,8 +1,9 @@
 import React from 'react';
-
+import styled from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
 import { NavLink, withRouter, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
 import ClientModule from '@gqlapp/module-client-react';
@@ -15,6 +16,13 @@ import resources from './locales';
 import DataRootComponent from './containers/DataRootComponent';
 
 import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from './containers/Auth';
+
+const NavLinkSignIn = styled(NavLink)`
+  color: unset;
+  &:hover {
+    color: rgb(0, 98, 190);
+  }
+`;
 
 const ProfileName = withLoadedUser(({ currentUser }) => {
   return (
@@ -54,10 +62,10 @@ const NavLinkUsersWithI18n = translate('user')(({ t }) => (
   </NavLink>
 ));
 const NavLinkLoginWithI18n = translate('user')(({ t }) => (
-  <NavLink to={ROUTES.login} className="nav-link" activeClassName="active">
-    <Icon type="LoginOutlined" />
+  <NavLinkSignIn to={ROUTES.login}>
+    <Icon type="LoginOutlined" /> &nbsp;
     {t('navLink.signIn')}
-  </NavLink>
+  </NavLinkSignIn>
 ));
 const NavLinkTestWithI18n = translate('user')(({ t }) => (
   <NavLink to={ROUTES.userList} className="nav-link" activeClassName="active">

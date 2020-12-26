@@ -12,7 +12,7 @@ import {
   CardText,
   Button,
   Underline,
-  MetaTags,
+  MetaTags
 } from '@gqlapp/look-client-react';
 
 import LoginForm from './LoginForm';
@@ -40,7 +40,7 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal, history }) => {
         <Card className="form-card">
           <Underline>
             <CardTitle>
-              <Icon type="LoginOutlined" />
+              <Icon type="LoginOutlined" /> &nbsp;
               {t('login.form.title')}
             </CardTitle>
           </Underline>
@@ -77,7 +77,7 @@ LoginView.propTypes = {
   t: PropTypes.func,
   isRegistered: PropTypes.bool,
   history: PropTypes.object,
-  hideModal: PropTypes.func,
+  hideModal: PropTypes.func
 };
 
 export default LoginView;
