@@ -19,6 +19,7 @@ const defaults = {
       searchText: '',
 
       discount: 0,
+      popularity: 0,
 
       categoryFilter: {
         categoryId: 0,

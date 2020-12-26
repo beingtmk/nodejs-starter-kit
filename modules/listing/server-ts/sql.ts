@@ -182,15 +182,15 @@ export default class ListingDAO extends Model {
         });
       }
 
-      // if (has(filter, 'popularity') && filter.popularity !== '') {
-      //   queryBuilder.where(function () {
-      //     this.where('average_rating.modal_name', MODAL[1].value).andWhere(`average_rating.${filter.popularity}`, '>', 0);
-      //     // this.where('average_rating.modal_name', MODAL[1].value).andWhere(
-      //     //   raw(`SUM(?, ?, ?, ?, ?)`, ['average_rating.five', 'average_rating.four', 'average_rating.three', 'average_rating.two', 'average_rating.one']),
-      //     //   '!=',
-      //     //   0);
-      //   });
-      // }
+      if (has(filter, 'popularity') && filter.popularity !== 0) {
+        queryBuilder.where(function() {
+          this.where('average_rating.modal_name', MODAL[1].value).andWhere(
+            'average_rating.rating',
+            '>=',
+            filter.popularity
+          );
+        });
+      }
 
       if (has(filter, 'categoryFilter') && filter.categoryFilter.categoryId !== 0) {
         const category = camelizeKeys(
@@ -274,8 +274,8 @@ export default class ListingDAO extends Model {
       .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
       .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
       .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id')
-      .leftJoin('discount', 'discount.modal_id', 'listing.id');
-    // .leftJoin('average_rating', 'average_rating.modal_id', 'listing.id')
+      .leftJoin('discount', 'discount.modal_id', 'listing.id')
+      .leftJoin('average_rating', 'average_rating.modal_id', 'listing.id');
     // .groupBy('listing.id');
 
     const allListings = camelizeKeys(await queryBuilder);
@@ -404,7 +404,15 @@ export default class ListingDAO extends Model {
           this.whereNot('user.id', userId);
         });
       }
-
+      if (has(filter, 'popularity') && filter.popularity !== 0) {
+        queryBuilder.where(function() {
+          this.where('average_rating.modal_name', MODAL[1].value).andWhere(
+            'average_rating.rating',
+            '>=',
+            filter.popularity
+          );
+        });
+      }
       if (has(filter, 'categoryFilter') && filter.categoryFilter.categoryId !== 0) {
         const category = camelizeKeys(
           await CategoryDAO.query()
@@ -481,15 +489,9 @@ export default class ListingDAO extends Model {
       .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
       .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
       .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
+      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id')
       .leftJoin('discount', 'discount.modal_id', 'listing.id')
-      .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
-    // queryBuilder
-    // .from('listing')
-    // .leftJoin('user', 'user.id', 'listing.user_id')
-    // .leftJoin('listing_option', 'listing_option.listing_id', 'listing.id')
-    // .leftJoin('listing_detail', 'listing_detail.listing_id', 'listing.id')
-    // .leftJoin('listing_flag', 'listing_flag.listing_id', 'listing.id')
-    // .leftJoin('listing_cost', 'listing_cost.listing_id', 'listing.id');
+      .leftJoin('average_rating', 'average_rating.modal_id', 'listing.id');
 
     const res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
 
