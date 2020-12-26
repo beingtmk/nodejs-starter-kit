@@ -14,7 +14,7 @@ const DiscountsCarousel = props => {
     const subscribe = subscribeToDiscounts(subscribeToMore, filter);
     return () => subscribe();
   });
-  const ids = discounts && discounts.totalCount > 0 && discounts.edges.map(d => d.node.modalId);
+  const ids = (discounts && discounts.totalCount > 0 && discounts.edges.map(d => d.node.modalId)) || [];
 
   // console.log('props', props);
   return loading ? null : <DiscountsCarouselView title={title} ids={ids} {...props} />;

@@ -6,7 +6,7 @@ import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCaro
 const DiscountsCarouselView = props => {
   const { title, ids = [], currentUser, currentUserLoading, history, cartLoading, onDelete, getCart, style } = props;
 
-  return (
+  return ids.length > 0 ? (
     <ListingCarousel
       ids={ids}
       currentUser={currentUser}
@@ -19,7 +19,7 @@ const DiscountsCarouselView = props => {
       title={title}
       style={style}
     />
-  );
+  ) : null;
 };
 
 DiscountsCarouselView.propTypes = {
