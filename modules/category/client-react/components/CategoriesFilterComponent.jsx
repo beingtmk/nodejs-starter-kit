@@ -2,7 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
-import { RenderSelect, Option, Form, FormItem, Label, Input, Row, Col } from '@gqlapp/look-client-react';
+import {
+  Space,
+  Icon,
+  RenderCheckBox,
+  RenderSelect,
+  Option,
+  Form,
+  FormItem,
+  Input,
+  Row,
+  Col
+} from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
@@ -25,17 +36,22 @@ const CategoriesFilterComponent = props => {
     return () => handleFiltersRemove.current();
   }, []);
   const CategoryIsActiveField = (
-    <FormItem>
-      <Label>
-        <Input type="checkbox" defaultChecked={isActive} onChange={e => onIsActiveChange(e.target.checked)} />
-        &nbsp; {t('categories.filter.isActive')}
-      </Label>
-    </FormItem>
+    <Field
+      name="isActive"
+      icon={'CheckCircleOutlined'}
+      component={RenderCheckBox}
+      type="checkbox"
+      onChange={() => onIsActiveChange(!isActive)}
+      label={t('categories.filter.isActive')}
+      inFilter={true}
+      checked={isActive}
+    />
   );
   const CategorySortByField = width => {
     return (
       <Field
         name="modalName"
+        icon="SafetyCertificateOutlined"
         component={RenderSelect}
         placeholder={t('categories.filter.modalName')}
         defaultValue={MODAL[0].value}
@@ -62,7 +78,15 @@ const CategoriesFilterComponent = props => {
             <Col lg={16} xs={24} sm={24} md={14}>
               <Row gutter={24}>
                 <Col xs={24} md={24} sm={14} lg={16}>
-                  <FormItem label={t('categories.filter.search')} style={{ width: '100%' }}>
+                  <FormItem
+                    label={
+                      <Space align="center">
+                        <Icon type="SearchOutlined" />
+                        {t('categories.filter.search')}
+                      </Space>
+                    }
+                    style={{ width: '100%' }}
+                  >
                     <DebounceInput
                       minLength={2}
                       debounceTimeout={300}

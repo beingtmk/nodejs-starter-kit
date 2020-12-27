@@ -2,8 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
+import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Select, Option, Label, Input, Row, Col } from '@gqlapp/look-client-react';
+import {
+  Space,
+  Icon,
+  Form,
+  FormItem,
+  Select,
+  Option,
+  RenderCheckBox,
+  Input,
+  Row,
+  Col
+} from '@gqlapp/look-client-react';
 
 const UsersFilterView = props => {
   const {
@@ -22,7 +34,14 @@ const UsersFilterView = props => {
             <Col lg={16} xs={24} md={14}>
               <Row gutter={24}>
                 <Col>
-                  <FormItem label={t('users.list.item.filter')}>
+                  <FormItem
+                    label={
+                      <Space align="center">
+                        <Icon type="SearchOutlined" />
+                        {t('users.list.item.filter')}
+                      </Space>
+                    }
+                  >
                     <DebounceInput
                       minLength={2}
                       debounceTimeout={300}
@@ -34,16 +53,16 @@ const UsersFilterView = props => {
                   </FormItem>
                 </Col>
                 <Col>
-                  <FormItem>
-                    <Label>
-                      <Input
-                        type="checkbox"
-                        defaultChecked={isActive}
-                        onChange={e => onIsActiveChange(e.target.checked)}
-                      />
-                      {t('users.list.item.active')}
-                    </Label>
-                  </FormItem>
+                  <Field
+                    name="isActive"
+                    icon={'CheckCircleOutlined'}
+                    component={RenderCheckBox}
+                    type="checkbox"
+                    onChange={() => onIsActiveChange(!isActive)}
+                    label={t('users.list.item.active')}
+                    inFilter={true}
+                    checked={isActive}
+                  />
                 </Col>
               </Row>
             </Col>
@@ -66,13 +85,16 @@ const UsersFilterView = props => {
                 </Col>
                 <Col xs={0} md={24} lg={24}>
                   <Row type="flex" justify="end">
-                    <FormItem label={t('users.list.item.role.label')} style={{ width: '100%' }}>
-                      <Select
-                        name="role"
-                        defaultValue={role}
-                        style={{ width: '170px' }}
-                        onChange={e => onRoleChange(e)}
-                      >
+                    <FormItem
+                      label={
+                        <Space align="center">
+                          <Icon type="UserSwitchOutlined" />
+                          {t('users.list.item.role.label')}
+                        </Space>
+                      }
+                      style={{ width: '100%' }}
+                    >
+                      <Select name="role" defaultValue={''} style={{ width: '170px' }} onChange={e => onRoleChange(e)}>
                         <Option key={1} value="">
                           {t('users.list.item.role.all')}
                         </Option>

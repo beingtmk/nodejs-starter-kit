@@ -5,7 +5,18 @@ import { DebounceInput } from 'react-debounce-input';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Option, Label, Input, Col, Row, RenderSelect } from '@gqlapp/look-client-react';
+import {
+  Space,
+  Icon,
+  Form,
+  FormItem,
+  Option,
+  RenderCheckBox,
+  Input,
+  Col,
+  Row,
+  RenderSelect
+} from '@gqlapp/look-client-react';
 
 const ReviewsFilterView = props => {
   const {
@@ -35,6 +46,7 @@ const ReviewsFilterView = props => {
     return (
       <Field
         name="modal"
+        icon="SafetyCertificateOutlined"
         component={RenderSelect}
         placeholder={t('adminPanel.filter.field2')}
         defaultValue={MODAL[0].value}
@@ -54,14 +66,22 @@ const ReviewsFilterView = props => {
     );
   };
   return (
-    <Form layout="inline">
+    <Form>
       <Row type="flex" align="middle">
         <Col span={24}>
           <Row>
             <Col lg={16} xs={24} sm={24} md={14}>
               <Row gutter={24}>
                 <Col xs={24} md={24} sm={14} lg={16}>
-                  <FormItem label={t('adminPanel.filter.field1')} style={{ width: '100%' }}>
+                  <FormItem
+                    label={
+                      <Space align="center">
+                        <Icon type="UserOutlined" />
+                        {t('adminPanel.filter.field1')}
+                      </Space>
+                    }
+                    style={{ width: '100%' }}
+                  >
                     <DebounceInput
                       minLength={2}
                       debounceTimeout={300}
@@ -73,13 +93,16 @@ const ReviewsFilterView = props => {
                   </FormItem>
                 </Col>
                 <Col xs={24} md={24} sm={10} lg={8}>
-                  <FormItem>
-                    <Label>
-                      <Input type="checkbox" defaultChecked={isActive} onChange={() => onIsActiveChange(!isActive)} />
-                      &nbsp; &nbsp;
-                      {t('adminPanel.filter.field3')}
-                    </Label>
-                  </FormItem>
+                  <Field
+                    name="isActive"
+                    icon={'CheckCircleOutlined'}
+                    component={RenderCheckBox}
+                    type="checkbox"
+                    onChange={() => onIsActiveChange(!isActive)}
+                    label={t('adminPanel.filter.field3')}
+                    inFilter={true}
+                    checked={isActive}
+                  />
                 </Col>
               </Row>
             </Col>

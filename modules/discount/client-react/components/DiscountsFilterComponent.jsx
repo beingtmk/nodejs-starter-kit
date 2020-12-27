@@ -5,7 +5,17 @@ import { DebounceInput } from 'react-debounce-input';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { MODAL } from '@gqlapp/review-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Form, FormItem, Option, Label, Input, Col, Row, RenderSelect } from '@gqlapp/look-client-react';
+import {
+  RenderCheckBox,
+  Icon,
+  Space,
+  FormItem,
+  Option,
+  Input,
+  Col,
+  Row,
+  RenderSelect
+} from '@gqlapp/look-client-react';
 
 const ReviewsFilterView = props => {
   const {
@@ -32,10 +42,11 @@ const ReviewsFilterView = props => {
     return () => handleFiltersRemove.current();
   }, []);
 
-  const ReviewSelectField = width => {
+  const reviewSelectField = (width, inFilter) => {
     return (
       <Field
         name="modal"
+        icon="SafetyCertificateOutlined"
         component={RenderSelect}
         placeholder={t('adminPanel.filter.field2')}
         defaultValue={MODAL[0].value}
@@ -43,7 +54,7 @@ const ReviewsFilterView = props => {
         label={t('adminPanel.filter.field2')}
         style={{ width: '100px' }}
         value={modalName}
-        inFilter={true}
+        inFilter={inFilter}
         selectStyle={{ width: width }}
       >
         {MODAL.map((m, i) => (
@@ -55,52 +66,55 @@ const ReviewsFilterView = props => {
     );
   };
   return (
-    <Form layout="inline">
-      <Row type="flex" align="middle">
-        <Col span={24}>
-          <Row>
-            <Col lg={16} xs={24} sm={24} md={14}>
-              <Row gutter={24}>
-                <Col xs={24} md={24} sm={14} lg={16}>
-                  <FormItem label={t('adminPanel.filter.field1')} style={{ width: '100%' }}>
-                    <DebounceInput
-                      minLength={2}
-                      debounceTimeout={300}
-                      placeholder={t('adminPanel.filter.field1')}
-                      element={Input}
-                      value={searchText}
-                      disabled={true}
-                      onChange={e => onSearchTextChange(e.target.value)}
-                    />
-                  </FormItem>
-                </Col>
-                <Col xs={24} md={24} sm={10} lg={8}>
-                  <FormItem>
-                    <Label>
-                      <Input type="checkbox" defaultChecked={isActive} onChange={() => onIsActiveChange(!isActive)} />
-                      &nbsp; &nbsp;
-                      {t('adminPanel.filter.field3')}
-                    </Label>
-                  </FormItem>
-                </Col>
-              </Row>
-            </Col>
-            <Col lg={8} xs={24} sm={24} md={10}>
-              <Row>
-                <Col lg={0} md={0} xs={24}>
-                  {ReviewSelectField('100%')}
-                </Col>
-                <Col xs={0} md={24} lg={24}>
-                  <Row type="flex" justify="end">
-                    {ReviewSelectField('170px')}
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
+    <Row>
+      <Col lg={18} md={14} xs={24}>
+        <Row gutter={24}>
+          <Col lg={16} md={12} xs={24}>
+            <FormItem
+              label={
+                <Space align="center">
+                  <Icon type="SearchOutlined" />
+                  {t('adminPanel.filter.field1')}
+                </Space>
+              }
+              style={{ width: '100%' }}
+            >
+              <DebounceInput
+                minLength={2}
+                debounceTimeout={300}
+                placeholder={t('adminPanel.filter.field1')}
+                element={Input}
+                value={searchText}
+                disabled={true}
+                onChange={e => onSearchTextChange(e.target.value)}
+              />
+            </FormItem>
+          </Col>
+          <Col xs={24} md={12} lg={8}>
+            <Field
+              name="isActive"
+              icon={'CheckCircleOutlined'}
+              component={RenderCheckBox}
+              type="checkbox"
+              onChange={() => onIsActiveChange(!isActive)}
+              label={t('adminPanel.filter.field3')}
+              inFilter={true}
+              checked={isActive}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col lg={6} xs={24} md={10}>
+        <Col lg={0} md={0} xs={24}>
+          {reviewSelectField('100%', false)}
+        </Col>
+        <Col xs={0} md={24} lg={24}>
+          <Row type="flex" justify="end">
+            {reviewSelectField('170px', true)}
           </Row>
         </Col>
-      </Row>
-    </Form>
+      </Col>
+    </Row>
   );
 };
 
