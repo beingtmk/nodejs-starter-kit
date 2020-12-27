@@ -44,7 +44,8 @@ export default class RenderUpload extends React.Component {
         if (url) {
           // console.log(url);
           //set value in form
-          this.props.input.onChange(url);
+          this.props.formik.handleChange({ target: { value: url, name: this.props.name } });
+          // this.props.input.onChange(url);
         }
       }
     } else if (file.status == 'removed') {
@@ -131,6 +132,7 @@ RenderUpload.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   setload: PropTypes.func,
-
+  formik: PropTypes.func,
+  name: PropTypes.string,
   value: PropTypes.string
 };

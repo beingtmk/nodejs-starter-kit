@@ -176,7 +176,7 @@ DynamicCarouselListView.propTypes = {
   loading: PropTypes.bool.isRequired,
   deleteDynamicCarousel: PropTypes.func,
   loadData: PropTypes.func,
-  dynamicCarousels: PropTypes.array,
+  dynamicCarousels: PropTypes.object,
   t: PropTypes.func,
   orderBy: PropTypes.object,
   onDynamicCarouselOrderBy: PropTypes.func

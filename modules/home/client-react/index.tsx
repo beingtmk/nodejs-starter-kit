@@ -31,7 +31,7 @@ export default new ClientModule({
     <Route
       exact
       path={ROUTES.home}
-      component={loadable(() => import('./containers/Home4').then(c => c.default), { fallback: <Spinner /> })}
+      component={loadable(() => import('./containers/Home5').then(c => c.default), { fallback: <Spinner /> })}
     />,
     <Route
       exact
@@ -51,6 +51,11 @@ export default new ClientModule({
     <Route
       exact
       path={ROUTES.home4}
+      component={loadable(() => import('./containers/Home4').then(c => c.default), { fallback: <Spinner /> })}
+    />,
+    <Route
+      exact
+      path={ROUTES.home5}
       component={loadable(() => import('./containers/Home').then(c => c.default), { fallback: <Spinner /> })}
     />,
 

@@ -11,7 +11,7 @@ import {
   RenderCheckBox,
   Option,
   RenderField,
-  RenderUploadWithCrop,
+  RenderUpload,
   SubmitButton,
   RenderSelect
 } from '@gqlapp/look-client-react';
@@ -95,7 +95,7 @@ const DynamicCarouselFormComponent = props => {
           load={load}
           height={IMG_ASPECT.medium.height}
           width={IMG_ASPECT.medium.width}
-          component={RenderUploadWithCrop}
+          component={RenderUpload}
           label={t('dynamicCarousel.form.imageUrl')}
         />
         <SubmitButton color="primary" type="submit" disabled={load}>
