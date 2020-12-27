@@ -46,6 +46,9 @@ const OutOfStock = styled.div`
 
 const ListingWraper = styled.div`
   position: relative;
+  @media screen and (max-width: 767px) {
+    width: 280px;
+  }
 `;
 
 const RelatedCardComponent = props => {

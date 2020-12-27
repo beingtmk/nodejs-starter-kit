@@ -84,7 +84,7 @@ const ListingCarousel = props => {
 
   delete props.isMobile;
 
-  const itemLength = listings && listings.edges && displayDataCheck(listings.edges.length);
+  const itemLength = listings && listings.edges && displayDataCheck(listings.edges.filter(onFilter).length);
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',
@@ -157,8 +157,8 @@ const ListingCarousel = props => {
               loading: cartLoading
             }}
             componentStyle={{
-              margin: '0 4px'
-              // width: '232px',
+              margin: '0 4px',
+              width: listings.edges.filter(onFilter).length < 3.5 && '280px'
             }}
           />
         ) : (
