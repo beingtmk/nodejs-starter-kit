@@ -8,6 +8,7 @@ import settings from '@gqlapp/config';
 import { LABEL } from '@gqlapp/home-common';
 
 import BannerComponent from '../containers/DCComponents/BannerComponent';
+import ImageTabBannerComponent from '../containers/DCComponents/ImageTabBannerComponent';
 
 let isMobile;
 enquireScreen(b => {
@@ -48,6 +49,15 @@ class HomeView extends React.Component {
         filter={{ label: LABEL[2], isActive: true }}
         isMobile={this.state.isMobile}
         {...this.props}
+      />,
+      <ImageTabBannerComponent
+        t={t}
+        id="Banner_1"
+        key="Banner_1"
+        filter={{ label: LABEL[1], isActive: true }}
+        isMobile={this.state.isMobile}
+        {...this.props}
+        style={{ backgroundColor: '#f7f7f7' }}
       />
     ];
     return (
