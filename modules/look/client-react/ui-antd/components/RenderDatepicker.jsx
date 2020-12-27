@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DatePicker as ADDatePicker } from 'antd';
-import FormItem from './FormItem';
 
-const RenderDatePicker = ({ type, label, meta: { touched, error }, input, ...props }) => {
+import FormItem from './FormItem';
+import Space from './Space';
+import Icon from './Icon';
+
+const RenderDatePicker = ({ icon = 'CalendarOutlined', type, label, meta: { touched, error }, input, ...props }) => {
   let validateStatus = '';
   if (error) {
     validateStatus = 'error';
@@ -12,7 +15,12 @@ const RenderDatePicker = ({ type, label, meta: { touched, error }, input, ...pro
   return (
     <>
       <FormItem
-        label={label}
+        label={
+          <Space align="center">
+            {icon && <Icon type={icon} />}
+            {label}
+          </Space>
+        }
         validateStatus={validateStatus}
         help={touched && error}
         labelCol={{ span: 24 }}
@@ -28,6 +36,7 @@ RenderDatePicker.propTypes = {
   input: PropTypes.object,
   type: PropTypes.string,
   label: PropTypes.string,
+  icon: PropTypes.node,
   meta: PropTypes.object
 };
 export default RenderDatePicker;

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Upload } from 'antd';
 
-import { FormItem } from '@gqlapp/look-client-react';
-
+import Space from './Space';
+import FormItem from './FormItem';
 import Icon from './Icon';
 
 const RenderUploadMultiple = props => {
-  const { values, label, setload, arrayHelpers, extraFields } = props;
+  const { values, label, setload, arrayHelpers, icon = 'UploadOutlined', extraFields } = props;
 
   const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
   const cloudinary_data = { upload_preset: 'hycdtdxe' };
@@ -57,7 +57,17 @@ const RenderUploadMultiple = props => {
   // console.log(defaultFileList);
 
   return (
-    <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+    <FormItem
+      label={
+        <Space align="center">
+          {icon && <Icon type={icon} />}
+          {label}
+        </Space>
+      }
+      validateStatus={validateStatus}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <Upload.Dragger
         defaultFileList={defaultFileList}
         name="file"
@@ -93,6 +103,7 @@ RenderUploadMultiple.propTypes = {
   ),
   arrayHelpers: PropTypes.object,
   values: PropTypes.array,
+  icon: PropTypes.string,
   extraFields: PropTypes.array
 };
 export default RenderUploadMultiple;
