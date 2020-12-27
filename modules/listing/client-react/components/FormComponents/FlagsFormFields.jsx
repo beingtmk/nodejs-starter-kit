@@ -12,6 +12,7 @@ const FlagsFormFields = props => {
       <Col md={8} xs={24} align="left">
         <Col xs={12} lg={24}>
           <Field
+            icon="CrownOutlined"
             name="listingFlags.isFeatured"
             component={RenderCheckBox}
             type="checkbox"
@@ -35,6 +36,7 @@ const FlagsFormFields = props => {
         <Col xs={12} lg={24}>
           <Field
             name="listingFlags.isNew"
+            icon="TagOutlined"
             component={RenderCheckBox}
             type="checkbox"
             label={t('listingForm.isNew')}

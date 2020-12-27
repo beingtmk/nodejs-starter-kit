@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
-import { PageLayout, Row, Col, NextButton, Card, Divider, Spinner, EditIcon } from '@gqlapp/look-client-react';
+import { PageLayout, Row, Col, Button, Icon, Card, Divider, Spinner, EditIcon } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import CheckoutLayout from './CheckoutLayout';
@@ -94,9 +94,10 @@ const CheckoutOrderView = props => {
               getCart={getCart}
               history={history}
               btn={
-                <NextButton onClick={onSubmit} size="lg">
+                <Button onClick={onSubmit} size="lg">
+                  <Icon type="CreditCardOutlined" />
                   PAY NOw
-                </NextButton>
+                </Button>
               }
             />
           }

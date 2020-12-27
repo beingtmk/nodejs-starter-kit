@@ -59,6 +59,7 @@ const CategoryFormComponent = props => {
           <Col md={12} xs={24} align="left">
             <Field
               name="title"
+              icon="FontSizeOutlined"
               component={RenderField}
               placeholder={t('categoryForm.title')}
               type="text"
@@ -69,6 +70,7 @@ const CategoryFormComponent = props => {
           <Col md={12} xs={24} align="left">
             <Field
               name="modalName"
+              icon="SafetyCertificateOutlined"
               component={RenderSelect}
               placeholder={t('categoryForm.modalName')}
               defaultValue={values.modalName}
@@ -86,6 +88,7 @@ const CategoryFormComponent = props => {
           <Col md={12} xs={24} align="left">
             <Field
               name="description"
+              icon="FileOutlined"
               component={RenderField}
               placeholder={t('categoryForm.description')}
               type="textarea"

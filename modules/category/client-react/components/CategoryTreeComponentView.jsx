@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withApollo } from 'react-apollo';
 
-import { FormItem, TreeSelect } from '@gqlapp/look-client-react';
+import { FormItem, TreeSelect, Space, Icon } from '@gqlapp/look-client-react';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 
 const CategoryTreeComponentView = props => {
-  const { categories, nullable = true, formik, name, client, disableParent = false, inFilter = false } = props;
+  const {
+    icon = 'ProfileOutlined',
+    categories,
+    nullable = true,
+    formik,
+    name,
+    client,
+    disableParent = false,
+    inFilter = false
+  } = props;
   const [data, setData] = useState([
     nullable && {
       id: 'abc',
@@ -73,7 +82,16 @@ const CategoryTreeComponentView = props => {
       };
 
   return (
-    <FormItem label={props.label} style={{ width: '100%' }} {...labels}>
+    <FormItem
+      label={
+        <Space align="center">
+          {icon && <Icon type={icon} />}
+          {props.label}
+        </Space>
+      }
+      style={{ width: '100%' }}
+      {...labels}
+    >
       <TreeSelect
         treeDataSimpleMode
         showSearch
@@ -101,6 +119,7 @@ CategoryTreeComponentView.propTypes = {
   disableParent: PropTypes.bool,
   nullable: PropTypes.bool,
   inFilter: PropTypes.bool,
+  icon: PropTypes.string,
   onChange: PropTypes.func
 };
 
