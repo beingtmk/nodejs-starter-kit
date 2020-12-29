@@ -1,37 +1,49 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
-import { Row, Col, Card, Icon, Button, ButtonGroup } from '@gqlapp/look-client-react';
+import { Row, Col, Card } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
+// import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
+import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
+import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 
-const AlignButton = styled.div`
-  position: absolute;
-  right: 0;
-  z-index: 1;
-  margin: 80px 110px;
-`;
+// const AlignButton = styled.div`
+//   position: absolute;
+//   right: 0;
+//   z-index: 1;
+//   margin: 80px 110px;
+// `;
 
 const CartItemComponent = props => {
-  const { item, onEdit, onDelete } = props;
-  const handleQuantity = ele => {
-    let quantity = item.orderOptions.quantity;
-    if (ele === 'plus') quantity = quantity + 1;
-    if (ele === 'minus') quantity = quantity - 1;
-    console.log(quantity);
-    if (quantity === 0) {
-      onDelete(item.id);
-    } else {
-      onEdit(item.id, item.orderOptions && item.orderOptions.id, quantity);
-    }
-  };
+  const { item, /* onEdit, onDelete, */ modalDiscount } = props;
+  // const handleQuantity = ele => {
+  //   let quantity = item.orderOptions.quantity;
+  //   if (ele === 'plus') quantity = quantity + 1;
+  //   if (ele === 'minus') quantity = quantity - 1;
+  //   console.log(quantity);
+  //   if (quantity === 0) {
+  //     onDelete(item.id);
+  //   } else {
+  //     onEdit(item.id, item.orderOptions && item.orderOptions.id, quantity);
+  //   }
+  // };
+  const now = new Date().toISOString();
+  const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
+  const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
+  const isDiscountPercent =
+    startDate && endDate
+      ? startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0
+      : modalDiscount && modalDiscount.discountPercent > 0;
+  const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
+  const isDiscount = isDiscountPercent;
+  const discount = discountPercent;
   return (
-    <div style={{ paddingRight: '10px' }}>
-      <AlignButton>
+    <div /* style={{ paddingRight: '10px' }} */>
+      {/* <AlignButton>
         <ButtonGroup>
           <Button size="sm" icon={<Icon type="MinusOutlined" />} onClick={() => handleQuantity('minus')} />
           <Button size="sm" style={{ width: '24px', padding: '0px 0px' }}>
@@ -39,19 +51,45 @@ const CartItemComponent = props => {
           </Button>
           <Button size="sm" icon={<Icon type="PlusOutlined" />} onClick={() => handleQuantity('plus')} />
         </ButtonGroup>
-      </AlignButton>
+      </AlignButton> */}
       <Link className="navItemLink" target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
         <Card bordered={false}>
-          <Row gutter={24} style={{ paddingBottom: '0px' }}>
-            <Col span={9} offset={0}>
+          <Row gutter={12} style={{ paddingBottom: '0px' }}>
+            <Col span={9}>
               <img alt="" src={item.imageUrl || NO_IMG} style={{ height: '100px', width: '100%' }} />
             </Col>
-            <Col span={9}>
-              <h3>{item.title}</h3>
-            </Col>
-            <Col span={6} offset={0}>
-              <Row justify="end">
-                <strong>&#8377; {priceCommaSeparator(` ${item.cost * item.orderOptions.quantity}`)}</strong>
+            <Col span={13}>
+              <Row>
+                <Col span={24}>
+                  <h3>{item.title}</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={12}>
+                  <Row justify="start">Quantity:</Row>
+                </Col>
+                <Col span={12}>
+                  <Row justify="end">{item.orderOptions.quantity}</Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={6}>
+                  <Row justify="start">Price:</Row>
+                </Col>
+                <Col span={18}>
+                  <Row justify="end">
+                    <DiscountComponentView
+                      isDiscount={isDiscount}
+                      cost={item.cost}
+                      discount={discount}
+                      span={[16, 8]}
+                      card={true}
+                      rowStyle={{ height: '75px' }}
+                      NavitemCart={true}
+                    />
+                    {/* <strong>&#8377; {priceCommaSeparator(` ${item.cost * item.orderOptions.quantity}`)}</strong> */}
+                  </Row>
+                </Col>
               </Row>
             </Col>
           </Row>
@@ -60,6 +98,50 @@ const CartItemComponent = props => {
     </div>
   );
 };
+// const CartItemComponent = props => {
+//   const { item, onEdit, onDelete } = props;
+//   const handleQuantity = ele => {
+//     let quantity = item.orderOptions.quantity;
+//     if (ele === 'plus') quantity = quantity + 1;
+//     if (ele === 'minus') quantity = quantity - 1;
+//     console.log(quantity);
+//     if (quantity === 0) {
+//       onDelete(item.id);
+//     } else {
+//       onEdit(item.id, item.orderOptions && item.orderOptions.id, quantity);
+//     }
+//   };
+//   return (
+//     <div style={{ paddingRight: '10px' }}>
+//       <AlignButton>
+//         <ButtonGroup>
+//           <Button size="sm" icon={<Icon type="MinusOutlined" />} onClick={() => handleQuantity('minus')} />
+//           <Button size="sm" style={{ width: '24px', padding: '0px 0px' }}>
+//             {item.orderOptions.quantity}
+//           </Button>
+//           <Button size="sm" icon={<Icon type="PlusOutlined" />} onClick={() => handleQuantity('plus')} />
+//         </ButtonGroup>
+//       </AlignButton>
+//       <Link className="navItemLink" target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
+//         <Card bordered={false}>
+//           <Row gutter={24} style={{ paddingBottom: '0px' }}>
+//             <Col span={9} offset={0}>
+//               <img alt="" src={item.imageUrl || NO_IMG} style={{ height: '100px', width: '100%' }} />
+//             </Col>
+//             <Col span={9}>
+//               <h3>{item.title}</h3>
+//             </Col>
+//             <Col span={6} offset={0}>
+//               <Row justify="end">
+//                 <strong>&#8377; {priceCommaSeparator(` ${item.cost * item.orderOptions.quantity}`)}</strong>
+//               </Row>
+//             </Col>
+//           </Row>
+//         </Card>
+//       </Link>
+//     </div>
+//   );
+// };
 
 CartItemComponent.propTypes = {
   item: PropTypes.object,
@@ -67,8 +149,9 @@ CartItemComponent.propTypes = {
   onDelete: PropTypes.func,
   onEdit: PropTypes.func,
   onSubmit: PropTypes.func,
+  modalDiscount: PropTypes.object,
   mobile: PropTypes.func,
   t: PropTypes.func
 };
 
-export default CartItemComponent;
+export default withModalDiscount(CartItemComponent);

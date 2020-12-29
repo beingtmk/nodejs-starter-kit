@@ -7,7 +7,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import CurrencyDisplay from './CurrencyDisplay';
 
 const DiscountComponent = props => {
-  const { loading, cost, isDiscount, discount, modalDiscount } = props;
+  const { loading, cost, isDiscount, discount, modalDiscount, NavitemCart } = props;
   const now = new Date().toISOString();
   const discountDuration = modalDiscount && modalDiscount.discountDuration;
   const startDate = discountDuration && discountDuration.startDate;
@@ -16,8 +16,8 @@ const DiscountComponent = props => {
     <Row>
       <Col span={24}>
         <Row gutter={8}>
-          <Col span={17} style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-            <Icon type="TagTwoTone" style={{ fontSize: '20px', paddingRight: '5px' }} />
+          <Col span={17} style={{ whiteSpace: 'nowrap', overflow: NavitemCart ? 'visible' : 'hidden' }}>
+            {!NavitemCart && <Icon type="TagTwoTone" style={{ fontSize: '20px', paddingRight: '5px' }} />}
             {isDiscount
               ? cost && (
                   <Space align="center">
@@ -27,7 +27,7 @@ const DiscountComponent = props => {
                         precision={0}
                         input={(cost - cost * (discount / 100)).toFixed(2)}
                         valueStyle={{
-                          fontSize: '21px',
+                          fontSize: NavitemCart ? '14px' : '21px',
                           fontWeight: 'bold'
                         }}
                       />
@@ -36,7 +36,7 @@ const DiscountComponent = props => {
                       <span
                         style={{
                           textDecoration: 'line-through',
-                          fontSize: '17px'
+                          fontSize: NavitemCart ? '14px' : '17px'
                         }}
                       >
                         &#8377; {cost.toFixed(0)}
@@ -51,7 +51,7 @@ const DiscountComponent = props => {
                         input={cost.toFixed(2)}
                         precision={0}
                         valueStyle={{
-                          fontSize: '21px',
+                          fontSize: NavitemCart ? '14px' : '21px',
                           fontWeight: 'bold'
                         }}
                       />
@@ -59,13 +59,13 @@ const DiscountComponent = props => {
                   </Space>
                 )}
           </Col>
-          <Col span={7}>
-            {isDiscount && (
+          {isDiscount && !NavitemCart && (
+            <Col span={7}>
               <Tag color="success" icon={<Icon type="ArrowDownOutlined" />}>
                 {discount && discount.toFixed(0) ? discount.toFixed(0) : 0} %
               </Tag>
-            )}
-          </Col>
+            </Col>
+          )}
         </Row>
       </Col>
       {discountDuration && (
@@ -116,6 +116,7 @@ DiscountComponent.propTypes = {
   isDiscount: PropTypes.bool,
   discount: PropTypes.number,
   t: PropTypes.func,
+  NavitemCart: PropTypes.bool,
   cost: PropTypes.number
 };
 

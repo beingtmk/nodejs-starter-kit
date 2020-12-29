@@ -27,7 +27,14 @@ const NavItemCartLayout = props => {
             return (
               <Row>
                 <Col>
-                  <Compo {...obj} key={key} onEdit={onEdit} onDelete={onDelete} />
+                  <Compo
+                    {...obj}
+                    key={key}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                    modalName={item.modalName}
+                    modalId={item.modalId}
+                  />
                 </Col>
                 <Divider style={{ margin: '0px', borderWidth: '2px' }} />
               </Row>
