@@ -10,6 +10,7 @@ fragment ListingInfo on Listing {
   title
   description
   sku
+  brand
 
   category {
     ...CategoryInfo

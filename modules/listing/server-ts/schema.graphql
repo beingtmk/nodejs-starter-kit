@@ -6,6 +6,7 @@ type Listing {
   title: String!
   description: String
   sku: String
+  brand: String
 
   category: Category
 
@@ -165,6 +166,7 @@ input AddListingInput {
   title: String
   description: String
   sku: String
+  brand: String
 
   listingFlags: ListingFlagInput
   listingOptions: ListingOptionInput
@@ -224,6 +226,7 @@ input EditListingInput {
   title: String
   description: String
   sku: String
+  brand: String
 
   listingFlags: ListingFlagInput
   listingOptions: ListingOptionInput

@@ -13,6 +13,7 @@ exports.up = function(knex) {
         table.string('title');
         table.string('description', 5000);
         table.string('sku');
+        table.string('brand');
 
         table.boolean('is_active').defaultTo(true);
         table.timestamps(false, true);

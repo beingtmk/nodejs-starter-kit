@@ -117,7 +117,18 @@ const DetailsFormFields = props => {
           value={values.categoryId}
         />
       </Col>
-      <Col md={12} xs={24} align="left">
+      <Col md={8} xs={24} align="left">
+        <Field
+          name="brand"
+          icon="FireOutlined"
+          component={RenderField}
+          placeholder={t('listingForm.brand')}
+          type="text"
+          label={t('listingForm.brand')}
+          value={values.brand}
+        />
+      </Col>
+      <Col md={8} xs={24} align="left">
         <Field
           icon="ProjectOutlined"
           name="listingDetail.inventoryCount"
@@ -129,7 +140,7 @@ const DetailsFormFields = props => {
           value={values.listingDetail.inventoryCount}
         />
       </Col>
-      <Col md={12} xs={24} align="left">
+      <Col md={8} xs={24} align="left">
         <Field
           name="listingOptions.fixedQuantity"
           icon="NodeIndexOutlined"

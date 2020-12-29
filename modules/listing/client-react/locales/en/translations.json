@@ -81,6 +81,7 @@
     "SKU":"SKU",
     "cost":"Cost",
     "invontoryCount":"Invontory Count",
+    "brand":"Brand",
     "fixedQuantity":"Fixed Quantity",
     "tooltip":"Enter -1 for false",
     "btn":{

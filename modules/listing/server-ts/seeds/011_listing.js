@@ -27,6 +27,7 @@ exports.seed = async function(knex) {
 
         title: `Listing ${ii + 1}`,
         description: `This is listing ${ii + 1}`,
+        brand: `Brand ${ii + 1}`,
         sku: `${Math.floor(Math.random() * 2) + 1}`,
 
         is_active: isActive
