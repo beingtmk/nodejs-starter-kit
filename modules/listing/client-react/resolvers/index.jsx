@@ -17,6 +17,7 @@ const defaults = {
     filter: {
       // userId: 0,
       searchText: '',
+      brand: [],
 
       discount: 0,
       popularity: 0,

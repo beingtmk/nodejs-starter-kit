@@ -166,6 +166,7 @@
   "listingFilter":{
     "search":"Search",
     "isActive":"Is Active",
+    "brand":"Brand",
     "costFilter":"Cost Filter",
     "btn":{
       "reset":"Reset Filters"

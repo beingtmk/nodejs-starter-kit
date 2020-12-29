@@ -176,6 +176,11 @@ export default class ListingDAO extends Model {
           this.where('listing_flag.is_discount', filter.isDiscount);
         });
       }
+      if (has(filter, 'brand') && filter.brand.length > 0) {
+        queryBuilder.where(function() {
+          this.whereIn('listing.brand', filter.brand);
+        });
+      }
       if (has(filter, 'showOwned') && filter.showOwned !== false && userId) {
         queryBuilder.where(function() {
           this.whereNot('user.id', userId);
@@ -299,6 +304,14 @@ export default class ListingDAO extends Model {
         .eager(eager)
         .orderBy('id', 'desc')
     );
+    // console.log(res);
+    return res;
+  }
+
+  public async getBrandList() {
+    const res = knex('listing')
+      .distinct()
+      .pluck('brand');
     // console.log(res);
     return res;
   }

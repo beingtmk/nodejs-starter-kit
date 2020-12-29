@@ -6,6 +6,7 @@ import settings from '@gqlapp/config';
 // Query
 import CURRENT_USER_QUERY from '@gqlapp/user-client-react/graphql/CurrentUserQuery.graphql';
 import LISTING_QUERY from '../graphql/ListingQuery.graphql';
+import GET_LISTING_BRAND_LIST_QUERY from '../graphql/GetBrandListQuery.graphql';
 import LISTINGS_QUERY from '../graphql/ListingsQuery.graphql';
 import MY_LISTINGS_BOOKMARK_QUERY from '../graphql/MyListingsBookmark.graphql';
 import LISTING_BOOKMARK_STATUS from '../graphql/ListingBookmarkStatus.graphql';
@@ -35,7 +36,20 @@ const limit =
 export const withListingsState = Component =>
   graphql(LISTINGS_STATE_QUERY, {
     props({ data: { listingsState, loading } }) {
-      return { ...removeTypename(listingsState), loadingState: loading };
+      const brand = listingsState && listingsState.filter.brand;
+      if (listingsState && listingsState.filter) {
+        delete listingsState.filter.brand;
+      }
+      const state = {
+        ...removeTypename(listingsState)
+      };
+      if (state.filter) {
+        state.filter.brand = brand;
+      }
+      return {
+        ...state,
+        loadingState: loading
+      };
     }
   })(Component);
 
@@ -120,6 +134,14 @@ export const withListing = Component =>
     props({ data: { loading, error, listing, subscribeToMore, updateQuery } }) {
       if (error) throw new Error(error);
       return { loading, listing, subscribeToMore, updateQuery };
+    }
+  })(Component);
+
+export const withGetBrandList = Component =>
+  graphql(GET_LISTING_BRAND_LIST_QUERY, {
+    props({ data: { loading, error, getBrandList, subscribeToMore, updateQuery } }) {
+      if (error) throw new Error(error);
+      return { loading, getBrandList, subscribeToMore, updateQuery };
     }
   })(Component);
 
@@ -419,6 +441,9 @@ export const withFilterUpdating = Component =>
       },
       onIsActiveChange(isActive) {
         mutate({ variables: { filter: { isActive } } });
+      },
+      onBrandChange(brand) {
+        mutate({ variables: { filter: { brand } } });
       },
       onRatedChange(popularity) {
         mutate({ variables: { filter: { popularity } } });

@@ -106,6 +106,7 @@ extend type Query {
   ): Listings
   listingBookmarkStatus(listingId: Int, userId: Int): Boolean
   canUserReview(listingId: Int, userId: Int): Boolean
+  getBrandList: [String]
 }
 
 extend type Mutation {
@@ -138,6 +139,7 @@ input OrderByListInput {
 input FilterListInput {
   userId: Int
   searchText: String
+  brand: [String]
 
   categoryFilter: CategoryFilter
 

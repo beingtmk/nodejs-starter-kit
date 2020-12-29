@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY, DISCOUNT } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  CheckBox,
   Space,
   Affix,
   Card,
@@ -23,8 +24,10 @@ import {
 } from '@gqlapp/look-client-react';
 import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
 import { MODAL } from '@gqlapp/review-common';
+import { compose } from '@gqlapp/core-common';
 
 import SliderControlled from './FIlterSliderControlledComponent';
+import { withGetBrandList } from '../containers/ListingOperations';
 
 const RateDiv = styled.div`
   height: 22px;
@@ -37,9 +40,10 @@ const RateDiv = styled.div`
 `;
 
 const ListingsFilterComponent = props => {
-  // console.log('listings filter component', props);
   const {
-    filter: { searchText, lowerCost, upperCost, isActive, categoryFilter, discount },
+    loadingState,
+    filter: { searchText, lowerCost, upperCost, isActive, categoryFilter, discount, brand },
+    getBrandList,
     affix = true,
     onIsActiveChange,
     onCategoryChange,
@@ -48,6 +52,7 @@ const ListingsFilterComponent = props => {
     onUpperCostChange,
     onFiltersRemove,
     onDiscountChange,
+    onBrandChange,
     onRatedChange,
     listings,
     showIsActive = false,
@@ -57,7 +62,8 @@ const ListingsFilterComponent = props => {
     t,
     layout
   } = props;
-  // console.log(props.filter);
+  const [selectedBrand, setSelectedBrand] = useState(brand || []);
+  // console.log(selectedBrand);
   const handleFiltersRemove = useRef(() => {});
 
   handleFiltersRemove.current = () => {
@@ -146,6 +152,68 @@ const ListingsFilterComponent = props => {
             {sB.label}
           </Option>
         ))}
+      </Field>
+    );
+  };
+
+  const listingBrand = (width, inFilter = true) => {
+    return (
+      <Field
+        name="brand"
+        component={RenderSelect}
+        icon={'FireOutlined'}
+        label={t('listingFilter.brand')}
+        style={{ width: '100%' }}
+        inFilter={inFilter}
+        selectStyle={{ width }}
+        onChange={() => {}}
+      >
+        {(getBrandList || loadingState) && (
+          <>
+            <Option key={1} value="">
+              <CheckBox
+                checked={selectedBrand.length === 0}
+                onChange={e => {
+                  if (e.target.checked) {
+                    setSelectedBrand([]);
+                    onBrandChange([]);
+                  } else {
+                    setSelectedBrand([]);
+                    onBrandChange([]);
+                  }
+                }}
+              >
+                None
+              </CheckBox>
+            </Option>
+          </>
+        )}
+        {!loadingState && getBrandList ? (
+          getBrandList.map((sB, i) => (
+            <>
+              <Option key={i + 2} value={i}>
+                <CheckBox
+                  checked={selectedBrand.includes(sB)}
+                  onChange={e => {
+                    if (e.target.checked) {
+                      setSelectedBrand([...selectedBrand, sB]);
+                      onBrandChange([...selectedBrand, sB]);
+                    } else {
+                      setSelectedBrand(selectedBrand.filter(i => i !== sB));
+                      onBrandChange(selectedBrand.filter(i => i !== sB));
+                    }
+                  }}
+                >
+                  {sB}
+                </CheckBox>
+              </Option>
+            </>
+          ))
+        ) : (
+          <Option key={0} value="">
+            <Icon type="LoadingOutlined" />
+          </Option>
+        )}
       </Field>
     );
   };
@@ -275,6 +343,7 @@ const ListingsFilterComponent = props => {
             <Col>{categoryTreeField}</Col>
             <Col span={24}>{listingSortBy('100%', false)}</Col>
             <Col span={24}>{listingDiscount('100%', false)}</Col>
+            <Col span={24}>{listingBrand('100%', false)}</Col>
             <Col span={24}>{listingByRating(true)}</Col>
             <Col span={22}>{sliderControlled(false)}</Col>
             <Col span={24}>
@@ -294,13 +363,16 @@ const ListingsFilterComponent = props => {
                 <Col span={12}>{showIsActive && activeField(true)}</Col>
                 <Col lg={24} xs={24} md={12}>
                   <Row type="flex" gutter={24}>
-                    <Col lg={24} md={8} xs={24}>
+                    <Col lg={12} md={12} xs={24}>
                       {categoryTreeField}
                     </Col>
-                    <Col lg={12} md={8} xs={24}>
+                    <Col lg={12} md={12} xs={24}>
+                      {listingBrand('100%', true)}
+                    </Col>
+                    <Col lg={12} md={12} xs={24}>
                       {listingSortBy('100%')}
                     </Col>
-                    <Col lg={12} md={8} xs={24}>
+                    <Col lg={12} md={12} xs={24}>
                       {listingDiscount('100%')}
                     </Col>
                     <Col lg={24} md={24} xs={24} align="left">
@@ -344,6 +416,7 @@ const ListingsFilterComponent = props => {
 };
 
 ListingsFilterComponent.propTypes = {
+  loadingState: PropTypes.bool,
   filter: PropTypes.object.isRequired,
   onLowerCostChange: PropTypes.func.isRequired,
   onUpperCostChange: PropTypes.func.isRequired,
@@ -352,6 +425,8 @@ ListingsFilterComponent.propTypes = {
   categoryId: PropTypes.number.isRequired,
   listings: PropTypes.object.isRequired,
   orderBy: PropTypes.object.isRequired,
+  getBrandList: PropTypes.object.isRequired,
+  onBrandChange: PropTypes.func.isRequired,
   onSearchTextChange: PropTypes.func.isRequired,
   onRoleChange: PropTypes.func.isRequired,
   showIsActive: PropTypes.bool.isRequired,
@@ -365,4 +440,4 @@ ListingsFilterComponent.propTypes = {
   layout: PropTypes.string
 };
 
-export default translate('listing')(ListingsFilterComponent);
+export default compose(withGetBrandList, translate('listing'))(ListingsFilterComponent);

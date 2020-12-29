@@ -100,6 +100,9 @@ export default (pubsub: any) => ({
       } else {
         return false;
       }
+    },
+    async getBrandList(obj: any, arg: any, context: any) {
+      return context.Listing.getBrandList();
     }
   },
   Mutation: {

@@ -3,6 +3,8 @@ import { MEDIA } from '@gqlapp/listing-common';
 
 const HIGHLIGHT = ['High quality: Yes', 'Superhigh quality: Yes', 'Break resistance: Yes', 'Super light: Yes'];
 
+const BRANDS = ['', 'Brand 1', 'Brand 2', 'Brand 3', 'Brand 4', 'Brand 5', 'Brand 6', 'Brand 7', 'Brand 8'];
+
 exports.seed = async function(knex) {
   await truncateTables(knex, Promise, [
     'listing',
@@ -27,7 +29,7 @@ exports.seed = async function(knex) {
 
         title: `Listing ${ii + 1}`,
         description: `This is listing ${ii + 1}`,
-        brand: `Brand ${ii + 1}`,
+        brand: BRANDS[Math.floor(Math.random() * (8 - 1 + 1) + 1)],
         sku: `${Math.floor(Math.random() * 2) + 1}`,
 
         is_active: isActive
