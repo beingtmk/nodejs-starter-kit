@@ -169,6 +169,7 @@ const ListingWithFormik = withFormik({
       title: (props.listing && props.listing.title) || '',
       description: (props.listing && props.listing.description) || '',
       sku: (props.listing && props.listing.sku) || '',
+      brand: (props.listing && props.listing.brand) || '',
       isActive: props.listing && (props.listing.isActive ? true : false),
       listingHighlight:
         (props.listing && props.listing.listingHighlight && props.listing.listingHighlight.map(getListingHighlight)) ||
@@ -219,6 +220,7 @@ const ListingWithFormik = withFormik({
         title: values.title,
         description: values.description,
         sku: values.sku,
+        brand: values.brand,
         categoryId: values.categoryId,
         isActive: values.isActive
       };

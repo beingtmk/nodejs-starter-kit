@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Slider, FormItem } from '@gqlapp/look-client-react';
+import { Slider, FormItem, Space, Icon } from '@gqlapp/look-client-react';
 
 class SliderControlled extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class SliderControlled extends React.Component {
   }
 
   render() {
-    var { ...currentProps } = this.props;
+    var { icon, ...currentProps } = this.props;
     delete currentProps.value;
     delete currentProps.handleSliderChange;
     let labels = currentProps.inFilter
@@ -39,7 +39,16 @@ class SliderControlled extends React.Component {
           wrapperCol: { span: 24 }
         };
     return (
-      <FormItem label={currentProps.label} style={{ height: '60px', width: '100%' }} {...labels}>
+      <FormItem
+        label={
+          <Space align="center">
+            {icon ? <Icon type={icon} /> : <>&#8377;</>}
+            {currentProps.label}
+          </Space>
+        }
+        style={{ height: '60px', width: '100%' }}
+        {...labels}
+      >
         <Slider
           {...currentProps}
           value={this.state.value}
@@ -52,6 +61,7 @@ class SliderControlled extends React.Component {
 }
 SliderControlled.propTypes = {
   handleSliderChange: PropTypes.func,
-  value: PropTypes.object
+  value: PropTypes.object,
+  icon: PropTypes.string
 };
 export default SliderControlled;

@@ -76,11 +76,12 @@
     }
   },
   "listingForm":{
-    "title":"Listing Title",
+    "title":"Title",
     "description":"Description",
-    "SKU":"Listing SKU",
+    "SKU":"SKU",
     "cost":"Cost",
-    "invontoryCount":"Listing Invontory Count",
+    "invontoryCount":"Invontory Count",
+    "brand":"Brand",
     "fixedQuantity":"Fixed Quantity",
     "tooltip":"Enter -1 for false",
     "btn":{

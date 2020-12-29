@@ -3,12 +3,22 @@ import PropTypes from 'prop-types';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-import { FormItem } from '@gqlapp/look-client-react';
-
+import FormItem from './FormItem';
+import Space from './Space';
 import Icon from './Icon';
 
 const RenderUploadMultipleWithCrop = props => {
-  const { width, height, values, label, setload, arrayHelpers, cropPropSettings = {}, extraFields } = props;
+  const {
+    width,
+    height,
+    values,
+    label,
+    icon = 'UploadOutlined',
+    setload,
+    arrayHelpers,
+    cropPropSettings = {},
+    extraFields
+  } = props;
 
   const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
   const cloudinary_data = { upload_preset: 'hycdtdxe' };
@@ -64,7 +74,17 @@ const RenderUploadMultipleWithCrop = props => {
 
   // console.log(defaultFileList);
   return (
-    <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+    <FormItem
+      label={
+        <Space align="center">
+          {icon && <Icon type={icon} />}
+          {label}
+        </Space>
+      }
+      validateStatus={validateStatus}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <ImgCrop {...cropSettings}>
         <Upload.Dragger
           defaultFileList={defaultFileList}
@@ -105,6 +125,7 @@ RenderUploadMultipleWithCrop.propTypes = {
   values: PropTypes.array,
   extraFields: PropTypes.array,
   height: PropTypes.number,
+  icon: PropTypes.string,
   width: PropTypes.number
 };
 export default RenderUploadMultipleWithCrop;

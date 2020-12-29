@@ -31,6 +31,7 @@ const DynamicCarouselFormComponent = props => {
     <>
       <Field
         name="title"
+        icon="FontSizeOutlined"
         component={RenderField}
         placeholder={t('dynamicCarousel.form.title')}
         type="text"
@@ -39,6 +40,7 @@ const DynamicCarouselFormComponent = props => {
       />
       <Field
         name="description"
+        icon="FileOutlined"
         component={RenderField}
         placeholder={t('dynamicCarousel.form.description')}
         type="textarea"

@@ -32,7 +32,7 @@ const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunctio
 
 const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
-    <Icon type="ExportOutlined" />
+    <Icon type="CarOutlined" />
     {'My Deliveries'}
   </NavLink>
 ));

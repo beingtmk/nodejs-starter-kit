@@ -3,7 +3,18 @@ import PropTypes from 'prop-types';
 
 import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
-import { Tooltip, FormItem, NextButton, Button, Icon, Row, Col, RenderField } from '@gqlapp/look-client-react';
+import {
+  Space,
+  Tooltip,
+  FormItem,
+  NextButton,
+  AddButton,
+  Button,
+  Icon,
+  Row,
+  Col,
+  RenderField
+} from '@gqlapp/look-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 const DetailsFormFields = props => {
@@ -22,6 +33,7 @@ const DetailsFormFields = props => {
               >
                 <Field
                   name={`listingHighlight[${index}].highlight`}
+                  icon={'MenuOutlined'}
                   component={RenderField}
                   placeholder={`Hightlight ${index + 1}`}
                   type="text"
@@ -57,6 +69,7 @@ const DetailsFormFields = props => {
       <Col md={12} xs={24} align="left">
         <Field
           name="title"
+          icon="FontSizeOutlined"
           component={RenderField}
           placeholder={t('listingForm.title')}
           type="text"
@@ -64,6 +77,7 @@ const DetailsFormFields = props => {
           value={values.title}
         />
         <Field
+          icon="FileOutlined"
           name="description"
           component={RenderField}
           placeholder={t('listingForm.description')}
@@ -75,6 +89,7 @@ const DetailsFormFields = props => {
       <Col md={12} xs={24} align="left">
         <Field
           name="sku"
+          icon={'BarcodeOutlined'}
           component={RenderField}
           placeholder={t('listingForm.SKU')}
           type="text"
@@ -86,7 +101,7 @@ const DetailsFormFields = props => {
           component={RenderField}
           placeholder={t('listingForm.cost')}
           type="number"
-          label={t('listingForm.cost')}
+          label={<>&#8377;{t('listingForm.cost')}</>}
           min={0}
           value={values.listingCostArray[0].cost}
         />
@@ -102,8 +117,20 @@ const DetailsFormFields = props => {
           value={values.categoryId}
         />
       </Col>
-      <Col md={12} xs={24} align="left">
+      <Col md={8} xs={24} align="left">
         <Field
+          name="brand"
+          icon="FireOutlined"
+          component={RenderField}
+          placeholder={t('listingForm.brand')}
+          type="text"
+          label={t('listingForm.brand')}
+          value={values.brand}
+        />
+      </Col>
+      <Col md={8} xs={24} align="left">
+        <Field
+          icon="ProjectOutlined"
           name="listingDetail.inventoryCount"
           component={RenderField}
           placeholder={t('listingForm.invontoryCount')}
@@ -113,9 +140,10 @@ const DetailsFormFields = props => {
           value={values.listingDetail.inventoryCount}
         />
       </Col>
-      <Col md={12} xs={24} align="left">
+      <Col md={8} xs={24} align="left">
         <Field
           name="listingOptions.fixedQuantity"
+          icon="NodeIndexOutlined"
           component={RenderField}
           placeholder={`${t('listingForm.fixedQuantity')} ${t('listingForm.tooltip')}`}
           type="number"
@@ -136,15 +164,19 @@ const DetailsFormFields = props => {
       <Col span={24} align="left">
         <Row>
           <Col span={18}>
-            <FormItem label={'Add Highlight'}></FormItem>
+            <FormItem
+              label={
+                <Space align="center">
+                  <Icon type="MenuOutlined" />
+                  {'Add Highlight'}
+                </Space>
+              }
+            ></FormItem>
           </Col>
           <Col span={6} align="right">
-            <FormItem>
-              <Button color="primary" onClick={addHighlight}>
-                <Icon type="VideoCameraOutlined" />
-                Add
-              </Button>
-            </FormItem>
+            <AddButton color="primary" onClick={addHighlight} block={false}>
+              Add
+            </AddButton>
           </Col>
         </Row>
         <Col span={24}>

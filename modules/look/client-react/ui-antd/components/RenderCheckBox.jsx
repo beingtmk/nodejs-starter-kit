@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from 'antd';
 
-import { FormItem } from '@gqlapp/look-client-react';
+import Space from './Space';
+import Icon from './Icon';
+import FormItem from './FormItem';
 
-const RenderCheckBox = ({ input, label, meta: { touched, error }, inFilter = false }) => {
+const RenderCheckBox = ({ icon = 'CheckCircleOutlined', input, label, meta: { touched, error }, inFilter = false }) => {
   let validateStatus = '';
   if (touched && error) {
     validateStatus = 'error';
@@ -16,7 +18,17 @@ const RenderCheckBox = ({ input, label, meta: { touched, error }, inFilter = fal
         wrapperCol: { span: 24 }
       };
   return (
-    <FormItem label={label} validateStatus={validateStatus} help={error} {...labels}>
+    <FormItem
+      label={
+        <Space align="center">
+          {icon && <Icon type={icon} />}
+          {label}
+        </Space>
+      }
+      validateStatus={validateStatus}
+      help={error}
+      {...labels}
+    >
       <Checkbox {...input}>{label}</Checkbox>
     </FormItem>
   );
@@ -27,6 +39,7 @@ RenderCheckBox.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object,
+  icon: PropTypes.string,
   inFilter: PropTypes.bool
 };
 

@@ -7,6 +7,7 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY, DISCOUNT } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Space,
   Affix,
   Card,
   Option,
@@ -39,6 +40,7 @@ const ListingsFilterComponent = props => {
   // console.log('listings filter component', props);
   const {
     filter: { searchText, lowerCost, upperCost, isActive, categoryFilter, discount },
+    affix = true,
     onIsActiveChange,
     onCategoryChange,
     onSearchTextChange,
@@ -107,8 +109,9 @@ const ListingsFilterComponent = props => {
       onChange={e => onCategoryChange({ categoryId: e, allSubCategory: false })}
       type="number"
       name="categoryId"
-      placeholder="category"
-      label="Select a category"
+      placeholder="Category"
+      icon={'ProfileOutlined'}
+      label={'Category'}
       value={categoryFilter.categoryId}
     />
   );
@@ -119,6 +122,7 @@ const ListingsFilterComponent = props => {
       <Field
         name="sortBy"
         component={RenderSelect}
+        icon={'FilterOutlined'}
         label={t('listingFilter.sortBy')}
         // defaultValue={orderBy.order}
         onChange={e =>
@@ -151,6 +155,7 @@ const ListingsFilterComponent = props => {
       <Field
         name="discount"
         component={RenderSelect}
+        icon={'PercentageOutlined'}
         label={t('listingFilter.discount')}
         onChange={e => {
           e === '' ? onDiscountChange(0) : DISCOUNT[e] && onDiscountChange(DISCOUNT[e].value);
@@ -175,7 +180,12 @@ const ListingsFilterComponent = props => {
   const listingByRating = infilter => {
     return (
       <FormItem
-        label={'Avg. Customer Review'}
+        label={
+          <Space align="center">
+            <Icon type="SmileOutlined" />
+            {'Avg. Customer Review'}
+          </Space>
+        }
         labelCol={infilter && { span: 24 }}
         wrapperCol={infilter && { span: 24 }}
       >
@@ -220,7 +230,16 @@ const ListingsFilterComponent = props => {
           wrapperCol: { span: 24 }
         };
     return (
-      <FormItem label={t('listingFilter.search')} style={{ height: '60px', width: '100%' }} {...obj}>
+      <FormItem
+        label={
+          <Space align="center">
+            <Icon type="SearchOutlined" />
+            {t('listingFilter.search')}
+          </Space>
+        }
+        style={{ height: '60px', width: '100%' }}
+        {...obj}
+      >
         <DebounceInput
           minLength={2}
           debounceTimeout={300}
@@ -236,6 +255,7 @@ const ListingsFilterComponent = props => {
   const activeField = inFilter => (
     <Field
       name="isActive"
+      icon={'CheckCircleOutlined'}
       component={RenderCheckBox}
       type="checkbox"
       onChange={() => onIsActiveChange(!isActive)}
@@ -308,9 +328,13 @@ const ListingsFilterComponent = props => {
   return (
     <Row>
       <Col lg={24} md={24} xs={0}>
-        <Affix offsetTop={layout === 'vertical' ? 110 : 43}>
+        {affix ? (
+          <Affix offsetTop={layout === 'vertical' ? 110 : 43}>
+            <Card>{filterItems}</Card>
+          </Affix>
+        ) : (
           <Card>{filterItems}</Card>
-        </Affix>
+        )}
       </Col>
       <Col lg={0} md={0} xs={24}>
         <Card>{filterItems}</Card>
@@ -337,6 +361,7 @@ ListingsFilterComponent.propTypes = {
   onRatedChange: PropTypes.func.isRequired,
   onOrderBy: PropTypes.func.isRequired,
   t: PropTypes.func,
+  affix: PropTypes.bool,
   layout: PropTypes.string
 };
 

@@ -4,6 +4,7 @@ import { FieldArray } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import {
+  Space,
   Icon,
   Row,
   Col,
@@ -112,7 +113,7 @@ const RendersubCategories = props => {
   }
   return (
     <div>
-      <FormItem label={props.label}>
+      <FormItem label={<Space align="center">{props.label}</Space>}>
         {formItems}
         <FormItem>
           <Button style={{ width: '100%' }} onClick={add}>

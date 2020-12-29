@@ -39,7 +39,7 @@ const ListingView: React.FC<ListingViewProps> = props => {
         </Col>
       </Row>
       <hr />
-      <ListingFilterComponent showCategoryFilter={true} showIsActive={true} {...props} />
+      <ListingFilterComponent showCategoryFilter={true} showIsActive={true} affix={false} {...props} />
       <hr />
       <ListingListComponent {...props} />
     </PageLayout>

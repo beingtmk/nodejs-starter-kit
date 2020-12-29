@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
+import Space from './Space';
 import FormItem from './FormItem';
 import Modal from './Modal';
 import Icon from './Icon';
 
 const RenderUploadWithCrop = props => {
-  const { height, width, label, formik, name, setload, cropPropSettings = {}, value } = props;
+  const { height, width, label, formik, icon = 'UploadOutlined', name, setload, cropPropSettings = {}, value } = props;
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState(
@@ -73,7 +74,17 @@ const RenderUploadWithCrop = props => {
 
   // console.log('props', shape);
   return (
-    <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+    <FormItem
+      label={
+        <Space align="center">
+          {icon && <Icon type={icon} />}
+          {label}
+        </Space>
+      }
+      validateStatus={validateStatus}
+      labelCol={{ span: 24 }}
+      wrapperCol={{ span: 24 }}
+    >
       <div className="clearfix">
         <ImgCrop {...cropSettings}>
           <Upload
@@ -105,6 +116,7 @@ RenderUploadWithCrop.propTypes = {
   formik: PropTypes.object,
   cropPropSettings: PropTypes.object,
   name: PropTypes.string,
+  icon: PropTypes.string,
   shape: PropTypes.string
 };
 

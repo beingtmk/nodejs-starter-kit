@@ -62,6 +62,7 @@ const DiscountFormComponent = props => {
           <Col lg={12} xs={24} align="left">
             <Field
               name="discountPercent"
+              icon={'PercentageOutlined'}
               component={RenderField}
               placeholder={t('discountForm.discountPercent')}
               type="number"

@@ -205,7 +205,10 @@ const ListingDetailView = props => {
                     </Breadcrumb>
                     <Col span={24}>
                       <h2 style={{ marginBottom: '0px' }}>{listing.title}</h2>
-                      <h4>&nbsp;{listing.user.username}</h4>
+                      <div style={{ display: 'flex' }}>
+                        <h4>&nbsp;{listing.user.username}</h4> &nbsp;
+                        <h4>&nbsp;{listing.brand}</h4>
+                      </div>
                       {isDiscount && <Text type="success">Special Price</Text>}
                       <DiscountComponent modalId={listing && listing.id} modalName={MODAL[1].value} cost={cost} />
                       <ReviewStar

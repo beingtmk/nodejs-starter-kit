@@ -5,11 +5,13 @@ import { FieldArray } from 'formik';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { IMG_ASPECT } from '@gqlapp/listing-common';
 import {
+  Space,
   Row,
   Col,
   FormItem,
   Button,
   Icon,
+  AddButton,
   SubmitButton,
   RenderField,
   /* RenderUploadMultiple, */
@@ -34,6 +36,7 @@ const MediasFormFields = props => {
             >
               <Field
                 name={`listingMedia.video[${index}].url`}
+                icon={'VideoCameraOutlined'}
                 component={RenderField}
                 placeholder={t('listingForm.videoUrl')}
                 type="text"
@@ -70,14 +73,20 @@ const MediasFormFields = props => {
       <Col md={12} sm={24} xs={24} lg={12} align="left">
         <Row>
           <Col span={18}>
-            <FormItem label={t('listingForm.addVideo')}></FormItem>
+            <FormItem
+              label={
+                <Space align="center">
+                  <Icon type="VideoCameraOutlined" />
+                  {t('listingForm.addVideo')}
+                </Space>
+              }
+            ></FormItem>
           </Col>
           <Col span={6} align="right">
             <FormItem>
-              <Button color="primary" onClick={addVideo}>
-                <Icon type="VideoCameraOutlined" />
+              <AddButton color="primary" onClick={addVideo}>
                 {t('listingForm.btn.add')}
-              </Button>
+              </AddButton>
             </FormItem>
           </Col>
         </Row>
@@ -86,9 +95,9 @@ const MediasFormFields = props => {
       <Col md={12} sm={24} xs={24} lg={12} align="left">
         <FieldArray
           name="listingMedia.image"
-          label={t('listingForm.image')}
           render={arrayHelpers => (
             <RenderUploadMultipleWithCrop
+              label={t('listingForm.image')}
               setload={load => setLoad(load)}
               height={IMG_ASPECT.medium.height}
               width={IMG_ASPECT.medium.width}

@@ -5,6 +5,7 @@ import { withFormik, FieldArray } from 'formik';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
 import {
+  Space,
   Form,
   Icon,
   RenderUploadMultiple,
@@ -15,7 +16,7 @@ import {
   Row,
   Col,
   Rate,
-  Button,
+  AddButton,
   RenderSelect
 } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
@@ -106,6 +107,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
         <>
           <Field
             name="modal"
+            icon="SafetyCertificateOutlined"
             component={RenderSelect}
             placeholder={t('reviewForm.modal')}
             defaultValue={MODAL[0].value}
@@ -123,6 +125,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           </Field>
           <Field
             name="modalId"
+            icon="BorderlessTableOutlined"
             component={RenderField}
             label={t('reviewForm.modalId')}
             placeholder="Modal id"
@@ -147,7 +150,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           </Col>
           <Col span={18}>
             <h3>{listing.title}</h3>
-            <FormItem label={t('reviewForm.rate')}>
+            <FormItem
+              label={
+                <Space algn="center">
+                  <Icon type="StarOutlined" />
+                  {t('reviewForm.rate')}
+                </Space>
+              }
+            >
               <Rating
                 // allowHalf
                 // tslint:disable-next-line:radix
@@ -158,7 +168,14 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
           </Col>
         </Row>
       ) : (
-        <FormItem label={t('reviewForm.rate')}>
+        <FormItem
+          label={
+            <Space algn="center">
+              <Icon type="StarOutlined" />
+              {t('reviewForm.rate')}
+            </Space>
+          }
+        >
           <Rating
             // allowHalf
             // tslint:disable-next-line:radix
@@ -170,6 +187,7 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
 
       <Field
         name="feedback"
+        icon="FileOutlined"
         component={RenderField}
         placeholder="Your review"
         label={'Feedback'}
@@ -178,41 +196,46 @@ const ReviewFormComponent: React.FC<ReviewFormComponentProps> = props => {
       />
       <Row>
         <Col span={18}>
-          <FormItem label={t('reviewForm.addVideo')}></FormItem>
+          <FormItem
+            label={
+              <Space algn="center">
+                <Icon type="VideoCameraOutlined" />
+                {t('reviewForm.addVideo')}
+              </Space>
+            }
+          ></FormItem>
         </Col>
         <Col span={6} align="right">
           <FormItem>
-            <Button color="primary" onClick={add}>
-              <Icon type="VideoCameraOutlined" />
+            <AddButton color="primary" onClick={add} block={false}>
               {t('reviewForm.btn.add')}
-            </Button>
+            </AddButton>
           </FormItem>
         </Col>
         <Col span={24}>{formItems}</Col>
       </Row>
 
-      <FormItem label={t('reviewForm.addImages')} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
-        <FieldArray
-          name="reviewMedia.image"
-          label={'Review Image'}
-          render={arrayHelpers => (
-            <RenderUploadMultiple
-              setload={(e: boolean) => setLoad(e)}
-              arrayHelpers={arrayHelpers}
-              values={values.reviewMedia.image}
-              getType={true}
-              dictKey="url"
-            />
-          )}
-        />
-      </FormItem>
-      <div align="right">
-        <Col lg={5} md={5} sm={24} xs={24}>
+      <FieldArray
+        name="reviewMedia.image"
+        label={'Review Image'}
+        render={arrayHelpers => (
+          <RenderUploadMultiple
+            label={t('reviewForm.addImages')}
+            setload={(e: boolean) => setLoad(e)}
+            arrayHelpers={arrayHelpers}
+            values={values.reviewMedia.image}
+            getType={true}
+            dictKey="url"
+          />
+        )}
+      />
+      <Col span={24}>
+        <div align="right">
           <SubmitButton type="submit" disabled={load && !dirty} block>
             {t('reviewForm.btn.submit')}
           </SubmitButton>
-        </Col>
-      </div>
+        </div>
+      </Col>
     </Form>
   );
 };

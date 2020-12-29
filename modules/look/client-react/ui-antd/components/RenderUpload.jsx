@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Upload, Modal } from 'antd';
 
-import { FormItem } from '@gqlapp/look-client-react';
-
 import Icon from './Icon';
+import Space from './Space';
+import FormItem from './FormItem';
 
 export default class RenderUpload extends React.Component {
   constructor(props) {
@@ -99,7 +99,7 @@ export default class RenderUpload extends React.Component {
     //   }));
     // }
 
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { previewVisible, previewImage, icon = 'UploadOutlined', fileList } = this.state;
     const uploadButton = (
       <div>
         <Icon type="PlusOutlined" />
@@ -108,7 +108,17 @@ export default class RenderUpload extends React.Component {
     );
 
     return (
-      <FormItem label={label} validateStatus={validateStatus} labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+      <FormItem
+        label={
+          <Space align="center">
+            {icon && <Icon type={icon} />}
+            {label}
+          </Space>
+        }
+        validateStatus={validateStatus}
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
+      >
         <div>
           <Upload
             action={cloudinary_url}
@@ -134,5 +144,6 @@ RenderUpload.propTypes = {
   setload: PropTypes.func,
   formik: PropTypes.func,
   name: PropTypes.string,
+  icon: PropTypes.string,
   value: PropTypes.string
 };
