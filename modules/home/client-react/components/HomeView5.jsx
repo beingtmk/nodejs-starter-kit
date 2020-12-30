@@ -6,6 +6,7 @@ import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 import { LABEL } from '@gqlapp/home-common';
+import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
 
 import BannerComponent from '../containers/DCComponents/BannerComponent';
 import ImageTabBannerComponent from '../containers/DCComponents/ImageTabBannerComponent';
@@ -41,13 +42,21 @@ class HomeView extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { history, currentUser, t } = this.props;
     const children = [
       <BannerComponent
         id="Banner_0"
         key="Banner_0"
         filter={{ label: LABEL[2], isActive: true }}
         isMobile={this.state.isMobile}
+        {...this.props}
+      />,
+      <ListingCarousel
+        filter={{ isFeatured: true, isActive: true }}
+        onFilter={c => c.node.listingFlags.isFeatured === true}
+        currentUser={currentUser}
+        title={t('listingCarousel.featuredListings')}
+        history={history}
         {...this.props}
       />,
       <ImageTabBannerComponent
@@ -58,6 +67,15 @@ class HomeView extends React.Component {
         isMobile={this.state.isMobile}
         {...this.props}
         style={{ backgroundColor: '#f7f7f7' }}
+      />,
+      <ListingCarousel
+        filter={{ isNew: true, isActive: true }}
+        onFilter={c => c.node.listingFlags.isNew === true}
+        currentUser={currentUser}
+        title={t('listingCarousel.latestAdditions')}
+        history={history}
+        {...this.props}
+        // style={{ backgroundColor: '#f7f7f7' }}
       />
     ];
     return (
@@ -79,6 +97,8 @@ class HomeView extends React.Component {
   }
 }
 HomeView.propTypes = {
+  currentUser: PropTypes.object,
+  history: PropTypes.object,
   t: PropTypes.func
 };
 

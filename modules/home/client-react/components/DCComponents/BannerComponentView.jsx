@@ -15,15 +15,21 @@ const Title = styled.div`
   font-size: 5vw;
   font-weight: bold;
   color: black;
+  @media screen and (max-width: 468px) {
+    font-size: 8vw;
+  }
   @media screen and (min-width: 1440px) {
     font-size: 4vw;
   }
 `;
 
 const Text = styled.div`
+  font-size: 1.3vw;
   color: black;
   white-space: pre-line;
-  font-size: 1vw;
+  @media screen and (max-width: 468px) {
+    font-size: 2.8vw;
+  }
 
   @media screen and (min-width: 1440px) {
     font-size: 0.8vw;

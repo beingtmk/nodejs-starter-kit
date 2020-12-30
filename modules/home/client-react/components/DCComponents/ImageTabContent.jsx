@@ -1,11 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
 import { compose } from '@gqlapp/core-common';
-import { List, ListItem, Title } from '@gqlapp/look-client-react';
+import { List, ListItem } from '@gqlapp/look-client-react';
 
 import { withDynamicCarousels } from '../../containers/DCComponents/DynamicCarouselOperations';
+
+const Text = styled.span`
+  width: 65%;
+  color: white;
+  font-weight: bold;
+  font-size: 3vh;
+  @media screen and (min-width: 320px) {
+    width: 70%;
+  }
+`;
 
 const ImageTabContent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
@@ -15,9 +26,7 @@ const ImageTabContent = props => {
     <div style={{ position: 'relative' }}>
       <div className={'HVCenter'} style={{ background: 'black', opacity: '0.5' }} />
       <div className={'HVCenter'}>
-        <Title level={3} style={{ width: '65%', color: 'white' }}>
-          {item.title}
-        </Title>
+        <Text>{item.title}</Text>
       </div>
       {!loaded && (
         <div
@@ -44,7 +53,7 @@ const ImageTabContent = props => {
     </div>
   );
 
-  console.log('props', props);
+  // console.log('props', props);
   return (
     !loading &&
     dynamicCarousels &&
