@@ -42,7 +42,7 @@ const ReviewsFilterView = props => {
     return () => handleFiltersRemove.current();
   }, []);
 
-  const reviewSelectField = (width, inFilter) => {
+  const modalSelectField = (width, inFilter) => {
     return (
       <Field
         name="modal"
@@ -85,7 +85,6 @@ const ReviewsFilterView = props => {
                 placeholder={t('adminPanel.filter.field1')}
                 element={Input}
                 value={searchText}
-                disabled={true}
                 onChange={e => onSearchTextChange(e.target.value)}
               />
             </FormItem>
@@ -106,11 +105,11 @@ const ReviewsFilterView = props => {
       </Col>
       <Col lg={6} xs={24} md={10}>
         <Col lg={0} md={0} xs={24}>
-          {reviewSelectField('100%', false)}
+          {modalSelectField('100%', false)}
         </Col>
         <Col xs={0} md={24} lg={24}>
           <Row type="flex" justify="end">
-            {reviewSelectField('170px', true)}
+            {modalSelectField('170px', true)}
           </Row>
         </Col>
       </Col>
@@ -127,4 +126,4 @@ ReviewsFilterView.propTypes = {
   t: PropTypes.func
 };
 
-export default translate('review')(ReviewsFilterView);
+export default translate('discount')(ReviewsFilterView);

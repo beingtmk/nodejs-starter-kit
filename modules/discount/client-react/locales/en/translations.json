@@ -24,7 +24,7 @@
       "noReviewsMsg":"There are no Discounts yet."
     },
     "filter": {
-      "field1": "UserName",
+      "field1": "Search Title",
       "field2": "Modal",
       "field3": "Is active"
     },

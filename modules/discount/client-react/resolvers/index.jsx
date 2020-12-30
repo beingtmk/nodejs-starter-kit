@@ -14,6 +14,7 @@ const defaults = {
       __typename: TYPE_DISCOUNTS_STATE_ORDER_BY
     },
     filter: {
+      searchText: '',
       modalName: '',
       isActive: true,
 

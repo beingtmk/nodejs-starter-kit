@@ -49,6 +49,7 @@ input OrderByDiscountInput {
 }
 
 input FilterDiscountInput {
+  searchText: String
   modalName: String
   isActive: Boolean
   isDiscount: Boolean

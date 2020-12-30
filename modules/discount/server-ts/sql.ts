@@ -3,6 +3,7 @@ import { camelizeKeys, decamelizeKeys, decamelize } from 'humps';
 import { Model, raw } from 'objection';
 
 import { knex, returnId } from '@gqlapp/database-server-ts';
+import { MODAL } from '@gqlapp/review-common';
 
 Model.knex(knex);
 
@@ -99,17 +100,19 @@ export default class DiscountDAO extends Model {
           this.where('discount_duration.start_date', '>=', now).andWhere('discount_duration.end_date', '>=', now);
         });
       }
-      // if (has(filter, 'searchText') && filter.searchText !== '') {
-      //   queryBuilder.where(function() {
-      //     this.where(raw('LOWER(??) LIKE LOWER(?)', ['description', `%${filter.searchText}%`]))
-      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['title', `%${filter.searchText}%`]))
-      //       .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['user.username', `%${filter.searchText}%`]));
-      //     // .orWhere(raw('LOWER(??) LIKE LOWER(?)', ['discount_duration.duration', `%${filter.searchText}%`]));
-      //   });
-      // }
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where('discount.modal_name', MODAL[1].value).andWhere(
+            raw('LOWER(??) LIKE LOWER(?)', ['listing.title', `%${filter.searchText}%`])
+          );
+        });
+      }
     }
 
-    queryBuilder.from('discount').leftJoin('discount_duration', 'discount_duration.discount_id', 'discount.id');
+    queryBuilder
+      .from('discount')
+      .leftJoin('discount_duration', 'discount_duration.discount_id', 'discount.id')
+      .leftJoin('listing', 'listing.id', 'discount.modal_id');
 
     const allDiscount = camelizeKeys(await queryBuilder);
     const total = allDiscount.length;

@@ -4,6 +4,7 @@ fragment DiscountStateInfo on DiscountState {
     order
   }
   filter {
+    searchText
     modalName
     isActive
   }
