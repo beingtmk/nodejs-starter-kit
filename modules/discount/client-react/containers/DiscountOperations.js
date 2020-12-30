@@ -157,7 +157,7 @@ export const withDiscountDeleting = Component =>
 export const withOrderByUpdating = Component =>
   graphql(UPDATE_ORDER_BY_DISCOUNT, {
     props: ({ mutate }) => ({
-      onOrderBy: orderBy => {
+      onDiscountsOrderBy: orderBy => {
         mutate({ variables: { orderBy } });
       }
     })

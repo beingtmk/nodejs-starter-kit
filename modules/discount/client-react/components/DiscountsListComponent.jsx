@@ -73,7 +73,7 @@ const DiscountsListComponent = props => {
       title: (
         <a onClick={e => handleOrderBy(e, 'id')} href="#">
           {t('adminPanel.discount.column1')} &nbsp;
-          {renderOrderByArrow('id')}
+          {renderOrderByArrow('discount.id')}
         </a>
       ),
       dataIndex: 'id',
@@ -104,13 +104,13 @@ const DiscountsListComponent = props => {
     },
     {
       title: (
-        <a onClick={e => handleOrderBy(e, 'feedback')} href="#">
+        <a onClick={e => handleOrderBy(e, 'discountDuration.endDate')} href="#">
           {t('adminPanel.discount.column4')} &nbsp;
-          {renderOrderByArrow('feedback')}
+          {renderOrderByArrow('discountDuration.endDate')}
         </a>
       ),
-      dataIndex: 'feedback',
-      key: 'feedback',
+      dataIndex: 'endDate',
+      key: 'endDate',
       render: (text, record) => {
         const startDate = record.discountDuration && record.discountDuration.startDate;
         const endDate = record.discountDuration && record.discountDuration.endDate;
