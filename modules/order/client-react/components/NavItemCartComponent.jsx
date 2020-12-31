@@ -54,11 +54,11 @@ const CartItemComponent = props => {
       </AlignButton> */}
       <Link className="navItemLink" target="_blank" to={`${LISTING_ROUTES.listingDetailLink}${item.modalId}`}>
         <Card bordered={false}>
-          <Row gutter={12} style={{ paddingBottom: '0px' }}>
+          <Row gutter={24} style={{ paddingBottom: '0px' }}>
             <Col span={9}>
               <img alt="" src={item.imageUrl || NO_IMG} style={{ height: '100px', width: '100%' }} />
             </Col>
-            <Col span={13}>
+            <Col span={15}>
               <Row>
                 <Col span={24}>
                   <h3>{item.title}</h3>
@@ -66,15 +66,20 @@ const CartItemComponent = props => {
               </Row>
               <Row>
                 <Col span={12}>
-                  <Row justify="start">Quantity:</Row>
+                  <Row justify="start" style={{ color: 'gray' }}>
+                    Quantity:
+                  </Row>
                 </Col>
                 <Col span={12}>
                   <Row justify="end">{item.orderOptions.quantity}</Row>
                 </Col>
               </Row>
+              <br />
               <Row>
                 <Col span={6}>
-                  <Row justify="start">Price:</Row>
+                  <Row justify="start" style={{ color: 'gray' }}>
+                    Price:
+                  </Row>
                 </Col>
                 <Col span={18}>
                   <Row justify="end">

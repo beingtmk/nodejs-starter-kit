@@ -27,8 +27,9 @@ const DiscountComponent = props => {
                         precision={0}
                         input={(cost - cost * (discount / 100)).toFixed(2)}
                         valueStyle={{
-                          fontSize: NavitemCart ? '14px' : '21px',
-                          fontWeight: 'bold'
+                          fontSize: NavitemCart ? '17px' : '21px',
+                          fontWeight: 'bold',
+                          color: NavitemCart ? 'green' : ''
                         }}
                       />
                     </Tooltip>
@@ -36,7 +37,7 @@ const DiscountComponent = props => {
                       <span
                         style={{
                           textDecoration: 'line-through',
-                          fontSize: NavitemCart ? '14px' : '17px'
+                          fontSize: NavitemCart ? '12px' : '17px'
                         }}
                       >
                         &#8377; {cost.toFixed(0)}
@@ -51,8 +52,9 @@ const DiscountComponent = props => {
                         input={cost.toFixed(2)}
                         precision={0}
                         valueStyle={{
-                          fontSize: NavitemCart ? '14px' : '21px',
-                          fontWeight: 'bold'
+                          fontSize: NavitemCart ? '17px' : '21px',
+                          fontWeight: 'bold',
+                          color: NavitemCart ? 'green' : ''
                         }}
                       />
                     </Tooltip>
