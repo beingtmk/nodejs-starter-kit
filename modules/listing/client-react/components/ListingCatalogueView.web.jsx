@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
@@ -8,9 +7,8 @@ import {
   MetaTags,
   PageLayout,
   Heading,
-  Empty,
   Divider,
-  Button,
+  EmptyComponent,
   SuggestedListComponent,
   Spinner,
   Col,
@@ -111,7 +109,7 @@ const ListingCatalogueView = props => {
           {!loading && listings && listings.totalCount ? (
             <RenderListings layout={layout} />
           ) : !loading ? (
-            <NoListingsMessage t={t} emptyLink={emptyLink} />
+            <EmptyComponent description={t('listing.noListingsMsg')} emptyLink={emptyLink} />
           ) : null}
         </Col>
       </Row>
@@ -158,16 +156,3 @@ ListingCatalogueView.propTypes = {
 };
 
 export default translate('listing')(ListingCatalogueView);
-
-const NoListingsMessage = ({ t, emptyLink }) => (
-  <div align="center">
-    <br />
-    <br />
-    <Empty description={t('listing.noListingsMsg')}>
-      <Link to={`${emptyLink}`}>
-        <Button color="primary">Add</Button>
-      </Link>
-    </Empty>
-  </div>
-);
-NoListingsMessage.propTypes = { t: PropTypes.func, emptyLink: PropTypes.string };

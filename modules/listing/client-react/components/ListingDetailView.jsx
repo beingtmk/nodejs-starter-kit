@@ -210,7 +210,11 @@ const ListingDetailView = props => {
                         <h4>&nbsp;{listing.brand}</h4>
                       </div>
                       {isDiscount && <Text type="success">Special Price</Text>}
-                      <DiscountComponent modalId={listing && listing.id} modalName={MODAL[1].value} cost={cost} />
+                      <Row>
+                        <Col span={15}>
+                          <DiscountComponent modalId={listing && listing.id} modalName={MODAL[1].value} cost={cost} />
+                        </Col>
+                      </Row>
                       <ReviewStar
                         filter={{
                           isActive: true,
@@ -309,6 +313,7 @@ const ListingDetailView = props => {
             onFilter={c => c.node.user.id === listing.user.id}
             currentUser={currentUser}
             title={'Similar Listing (same user)'}
+            alignTitle="left"
             history={history}
             // style={{ backgroundColor: 'white' }}
             {...props}

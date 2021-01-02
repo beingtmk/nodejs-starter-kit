@@ -36,7 +36,7 @@ const DiscountComponent = props => {
                       <span
                         style={{
                           textDecoration: 'line-through',
-                          fontSize: '17px'
+                          fontSize: '16px'
                         }}
                       >
                         &#8377; {cost.toFixed(0)}

@@ -54,6 +54,9 @@ const ListingCarousel = props => {
     OverPack: { playScale: 0.3, className: '' },
     titleWrapper: {
       className: 'title-wrapper',
+      style: {
+        textAlign: props.alignTitle || 'center'
+      },
       children: [
         {
           name: 'title',
@@ -64,8 +67,12 @@ const ListingCarousel = props => {
           name: 'content',
           className: 'content-underline',
           children: (
-            <div align="center">
-              <div key="line" className="title-line-wrapper" align="left">
+            <div align={props.alignTitle || 'center'}>
+              <div
+                key="line"
+                className="title-line-wrapper"
+                // style={{ textAlign: props.alignTitle || 'center', maxWidth: props.alignTitle && '500px' }}
+              >
                 <div
                   className="title-line"
                   // style={{ transform: "translateX(-64px)" }}
@@ -190,7 +197,8 @@ ListingCarousel.propTypes = {
   isMobile: PropTypes.bool,
   subscribeToMore: PropTypes.func,
   onFilter: PropTypes.func,
-  filter: PropTypes.object
+  filter: PropTypes.object,
+  alignTitle: PropTypes.string
 };
 
 export default compose(withListings)(ListingCarousel);

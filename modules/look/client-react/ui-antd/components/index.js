@@ -58,6 +58,7 @@ export { default as Descriptions } from './Descriptions';
 export { default as DescriptionsItem } from './DescriptionsItem';
 export { default as Divider } from './Divider';
 export { default as Empty } from './Empty';
+export { default as EmptyComponent } from './EmptyComponent';
 export { default as InputNumber } from './InputNumber';
 export { default as List } from './List';
 export { default as CollapsePanel } from './CollapsePanel';
