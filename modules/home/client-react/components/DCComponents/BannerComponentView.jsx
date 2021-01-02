@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { LeftArrow, RightArrow, Icon, Button, Empty, Row, Col } from '@gqlapp/look-client-react';
+import { LeftArrow, RightArrow, Icon, Button, Row, Col, EmptyComponent } from '@gqlapp/look-client-react';
 
 import ROUTES from '../../routes';
 
@@ -42,24 +41,45 @@ class Banner extends React.PureComponent {
     const Banner10DataSource = {
       wrapper: { className: 'bannercomponent' },
       BannerAnim: {
-        children:
-          props.data &&
-          props.data.edges &&
-          props.data.edges.map((d, indx) => {
-            return {
-              name: `elem${indx}`,
-              BannerElement: { className: 'banner-user-elem' },
-              bg: {
-                className: `bg`,
-                title: d.node && d.node.title,
-                description: d.node && d.node.description,
-                image: d.node && d.node.imageUrl,
-                href: d.node && d.node.link,
-                component: d.node && d.node.link ? 'a' : 'div'
-              }
-            };
-          })
+        children: [
+          {
+            name: `elem${0}`,
+            BannerElement: { className: 'banner-user-elem' },
+            bg: {
+              className: `bg`,
+              title: 'Banner 1',
+              description: `#1 PREMIUM SMOKING ACCESSORIES SUBSCRIPTION BOX
+                $100+ VALUE FOR ONLY $39.99
+                
+                DISCOVER PREMIUM GLASS, DAILY ESSENTIALS, AND LIMITED
+                
+                EDITION SMOKING ACCESSORIES DELIVERED DISCREETLY TO YOUR DOOR`,
+              image: 'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1608990956/ntoxbrsiwajbutw6pn97.webp',
+              href: '/listing/catalogue,Catalogue;/listing/category/1,Category',
+              component: 'div'
+            }
+          }
+        ]
       }
+      // BannerAnim: {
+      //   children:
+      //     props.data &&
+      //     props.data.edges &&
+      //     props.data.edges.map((d, indx) => {
+      //       return {
+      //         name: `elem${indx}`,
+      //         BannerElement: { className: 'banner-user-elem' },
+      //         bg: {
+      //           className: `bg`,
+      //           title: d.node && d.node.title,
+      //           description: d.node && d.node.description,
+      //           image: d.node && d.node.imageUrl,
+      //           href: d.node && d.node.link,
+      //           component: d.node && d.node.link ? 'a' : 'div'
+      //         }
+      //       };
+      //     })
+      // }
     };
     const dataSource = Banner10DataSource;
     delete props.dataSource;
@@ -103,13 +123,10 @@ class Banner extends React.PureComponent {
         })
       ) : (
         <Element>
-          <div className={'HVCenter'}>
-            <Empty description={'No Carousels to show.'}>
-              <Link to={`${ROUTES.add}`}>
-                <Button color="primary">Add</Button>
-              </Link>
-            </Empty>
-          </div>
+          <EmptyComponent
+            description={props.t('dynamicCarousel.adminPanel.noBannersMsg')}
+            emptyLink={`${ROUTES.add}`}
+          />
         </Element>
       );
     return (
