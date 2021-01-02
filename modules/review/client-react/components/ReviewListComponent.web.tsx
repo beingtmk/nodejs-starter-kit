@@ -6,10 +6,10 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import {
   EditIcon,
   Table,
+  EmptyComponent,
   Pagination,
   DeleteIcon,
   Divider,
-  Empty,
   Button,
   RenderTableLoading
 } from '@gqlapp/look-client-react';
@@ -20,19 +20,6 @@ import ROUTES from '../routes/index';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const NoReviewsMessage = ({ t }: { t: TranslateFunction }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Empty description={t('adminPanel.noReviewsMsg')}>
-      <Link to={`${ROUTES.add}`}>
-        <Button color="primary">{t('adminPanel.noReviewsMsg')}</Button>
-      </Link>
-    </Empty>
-  </div>
-);
 
 export interface ReviewListComponentProps {
   loading: boolean;
@@ -166,11 +153,15 @@ const ReviewListComponent: React.FC<ReviewListComponentProps> = props => {
   );
 
   return (
-    <div style={{ overflowX: 'auto' }}>
+    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} />}
       {/* Render main review content */}
-      {reviews && reviews.totalCount ? <RenderReviews /> : <NoReviewsMessage t={t} />}
+      {reviews && reviews.totalCount ? (
+        <RenderReviews />
+      ) : (
+        <EmptyComponent description={t('adminPanel.noReviewsMsg')} emptyLink={`${ROUTES.add}`} />
+      )}
     </div>
   );
 };

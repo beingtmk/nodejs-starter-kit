@@ -11,8 +11,8 @@ import {
   Table,
   Pagination,
   EditIcon,
+  EmptyComponent,
   DeleteIcon,
-  Empty,
   Divider,
   Tooltip,
   Button,
@@ -26,20 +26,6 @@ import ROUTES from '../routes';
 import { displayDataCheck } from './functions';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const NoListingsMessage = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Empty description={t('listing.noListingsMsg')}>
-      <Link to={`${ROUTES.add}`}>
-        <Button color="primary">Add</Button>
-      </Link>
-    </Empty>
-  </div>
-);
-NoListingsMessage.propTypes = { t: PropTypes.func };
 
 const ListingListComponent = props => {
   const { onToggle, orderBy, onOrderBy, loading, listings, t, loadData, deleteListing, onDuplicate } = props;
@@ -321,11 +307,15 @@ const ListingListComponent = props => {
   );
 
   return (
-    <div style={{ overflowX: 'auto' }}>
+    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}
-      {listings && listings.totalCount ? <RenderListings /> : !loading && <NoListingsMessage t={t} />}
+      {listings && listings.totalCount ? (
+        <RenderListings />
+      ) : (
+        !loading && <EmptyComponent description={t('listing.noListingsMsg')} emptyLink={`${ROUTES.add}`} />
+      )}
     </div>
   );
 };

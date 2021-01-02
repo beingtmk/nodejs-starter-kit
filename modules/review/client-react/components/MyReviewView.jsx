@@ -10,14 +10,14 @@ import {
   Icon,
   Row,
   Col,
-  Spin,
   RenderSelect,
-  SuggestedListComponent
+  EmptyComponent,
+  SuggestedListComponent,
+  Spinner
 } from '@gqlapp/look-client-react';
 
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import ReviewsItemComponent from './ReviewsItemComponent';
-import { NoReviews } from './ReviewView';
+import ROUTES from '../routes/index';
 
 const MyReviewView = props => {
   const { t, reviews, loading, setModalName, deleteReview, currentUser, history, ModalName } = props;
@@ -61,9 +61,7 @@ const MyReviewView = props => {
             <Icon type="BookOutlined" />
             {t('myReview')}
           </Heading>
-          <h3>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${displayDataCheck(reviews.totalCount)} reviews`}
-          </h3>
+          <h3>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;{reviews && `${reviews.totalCount || 0} reviews`}</h3>
         </Col>
         <Col xs={24} md={12} lg={12} align="right">
           <Col lg={0} md={0}>
@@ -109,18 +107,19 @@ const MyReviewView = props => {
       </Row>
       <br />
 
+      {loading && <Spinner />}
       <Row>
         <Col span={24}>
-          {loading && (
-            <div align="center">
-              <br />
-              <br />
-              <br />
-              <Spin text={t('review.loadMsg')} />
-            </div>
+          {reviews && reviews.totalCount ? (
+            <RenderReviews />
+          ) : (
+            !loading && (
+              <div style={{ height: '100vh' }}>
+                <EmptyComponent description={t('adminPanel.noReviewsMsg')} emptyLink={`${ROUTES.add}`} />
+              </div>
+            )
           )}
         </Col>
-        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : <NoReviews />}</Col>
       </Row>
     </>
   );

@@ -31,6 +31,7 @@ const CheckoutCartView = props => {
         t={t}
         step={0}
         title={'Shopping Cart'}
+        cartLoading={cartLoading}
         loading={!cartLoading && getCart && getCart.orderDetails.length > 0}
         Col1={
           <div style={{ overflowX: 'auto' }}>

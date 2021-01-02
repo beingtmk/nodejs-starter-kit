@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Empty, AddButton, Heading, Row, Col } from '@gqlapp/look-client-react';
+import { EmptyComponent, AddButton, Heading, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
@@ -15,7 +15,7 @@ const CustomBody = styled.div`
   padding: 0 200%;
 `;
 const CheckoutLayout = props => {
-  const { loading, t, title, extra, step, Col1, Col2 } = props;
+  const { cartLoading, loading, t, title, extra, step, Col1, Col2 } = props;
   return loading ? (
     <>
       <Row type="flex">
@@ -54,17 +54,21 @@ const CheckoutLayout = props => {
       </Row>
     </>
   ) : (
-    <div className="centerAlign marginT30">
-      <Empty description="You have no items in your Cart">
-        <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
-          <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>
-        </Link>
-      </Empty>
-    </div>
+    !cartLoading && (
+      <div style={{ height: '100vh', position: 'relative' }}>
+        <EmptyComponent
+          description={'You have no items in your Cart'}
+          emptyLink={`${LISTING_ROUTES.listingCatalogue}`}
+          showAddBtn={true}
+          btnText={t('checkoutCart.btn.add')}
+        />
+      </div>
+    )
   );
 };
 
 CheckoutLayout.propTypes = {
+  cartLoading: PropTypes.bool,
   loading: PropTypes.bool,
   step: PropTypes.number,
   t: PropTypes.func,

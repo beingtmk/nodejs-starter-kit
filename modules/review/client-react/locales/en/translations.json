@@ -11,11 +11,11 @@
 
   "adminPanel": {
     "title": "Reviews",
+    "noReviewsMsg": "There are no reviews yet.",
     "btn": {
       "add": "Add review",
       "del": "Delete",
-      "more": "Load more ...",
-      "noReviewsMsg":"There are no Reviews yet."
+      "more": "Load more ..."
     },
     "filter": {
       "field1": "UserName",

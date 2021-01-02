@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -10,7 +9,7 @@ import {
   Row,
   Col,
   Divider,
-  Empty,
+  EmptyComponent,
   SuggestedListComponent,
   Spinner,
   Button,
@@ -37,18 +36,6 @@ const MyOrdersView = props => {
       return '';
     }
   }
-
-  const NoMyOrdersMessage = () => (
-    <div align="center">
-      <br />
-      <br />
-      <Empty description={t('noOrdersMsg')}>
-        <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
-          <Button type="primary">Add</Button>
-        </Link>
-      </Empty>
-    </div>
-  );
 
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
@@ -111,8 +98,22 @@ const MyOrdersView = props => {
         </Col>
       </Row>
       <Divider />
-      {loading && <Spinner />}
-      {!loading && (orders && orders.totalCount ? <RenderMyOrders /> : <NoMyOrdersMessage />)}
+
+      {loading && (
+        <div style={{ height: '100vh', position: 'relative' }}>
+          <Spinner />
+        </div>
+      )}
+      {!loading &&
+        (orders && orders.totalCount ? (
+          <RenderMyOrders />
+        ) : (
+          !loading && (
+            <div style={{ height: '100vh', position: 'relative' }}>
+              <EmptyComponent description={t('noOrdersMsg')} emptyLink={`${LISTING_ROUTES.listingCatalogue}`} />
+            </div>
+          )
+        ))}
     </PageLayout>
   );
 };

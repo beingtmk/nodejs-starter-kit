@@ -23,7 +23,6 @@ type Categories {
   totalCount: Int
   edges: [CategoryEdges]
   pageInfo: CategoryPageInfo
-  rangeValues: RangeValues
 }
 
 type CategoryEdges {

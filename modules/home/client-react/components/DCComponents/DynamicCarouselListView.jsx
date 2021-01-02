@@ -8,8 +8,7 @@ import {
   Pagination,
   EditIcon,
   DeleteIcon,
-  Button,
-  Empty,
+  EmptyComponent,
   RenderTableLoading,
   Divider
 } from '@gqlapp/look-client-react';
@@ -19,20 +18,6 @@ import { displayDataCheck } from '@gqlapp/listing-client-react/components/functi
 import ROUTES from '../../routes';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const NodynaDicCarouselsMessage = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Empty description={t('listing.noListingsMsg')}>
-      <Link to={`${ROUTES.add}`}>
-        <Button color="primary">{t('dynamicCarousel.btn.add')}</Button>
-      </Link>
-    </Empty>
-  </div>
-);
-NodynaDicCarouselsMessage.propTypes = { t: PropTypes.func };
 
 const DynamicCarouselListView = props => {
   const { loading, t, orderBy, onDynamicCarouselOrderBy, deleteDynamicCarousel, dynamicCarousels, loadData } = props;
@@ -158,17 +143,17 @@ const DynamicCarouselListView = props => {
   );
 
   return (
-    <>
-      <div style={{ overflowX: 'auto' }}>
-        {loading && <RenderTableLoading columns={columns} />}
-        {/* Render main listing content */}
-        {dynamicCarousels && dynamicCarousels.totalCount ? (
-          <RenderDynamicCarousels />
-        ) : (
-          <NodynaDicCarouselsMessage t={t} />
-        )}
-      </div>
-    </>
+    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
+      {loading && <RenderTableLoading columns={columns} />}
+      {/* Render main listing content */}
+      {dynamicCarousels && dynamicCarousels.totalCount ? (
+        <RenderDynamicCarousels />
+      ) : (
+        !loading && (
+          <EmptyComponent description={t('dynamicCarousel.adminPanel.noBannersMsg')} emptyLink={`${ROUTES.add}`} />
+        )
+      )}
+    </div>
   );
 };
 

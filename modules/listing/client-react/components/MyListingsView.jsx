@@ -10,7 +10,7 @@ import {
   PageLayout,
   Heading,
   MetaTags,
-  Empty,
+  EmptyComponent,
   Button,
   SuggestedListComponent,
   Spinner
@@ -110,7 +110,7 @@ const MyListingsView = props => {
           {!loading && listings && listings.totalCount ? (
             <RenderListings layout={layout} />
           ) : !loading ? (
-            <NoListingsMessage t={t} />
+            !loading && <EmptyComponent description={t('listing.noListingsMsg')} emptyLink={`${ROUTES.add}`} />
           ) : null}
         </Col>
       </Row>
@@ -137,16 +137,3 @@ MyListingsView.propTypes = {
 };
 
 export default MyListingsView;
-
-const NoListingsMessage = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <Empty description={t('listing.noListingsMsg')}>
-      <Link to={`${ROUTES.add}`}>
-        <Button color="primary">Add</Button>
-      </Link>
-    </Empty>
-  </div>
-);
-NoListingsMessage.propTypes = { t: PropTypes.func };

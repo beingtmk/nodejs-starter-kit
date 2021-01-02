@@ -53,7 +53,7 @@ const ImageTabBannerComponentView = props => {
                       key={indx}
                     >
                       <div style={{ maxWidth: '880px' }}>
-                        <ImageTabContent filter={{ label: tL, isActive: true }} />
+                        <ImageTabContent t={t} filter={{ label: tL, isActive: true }} />
                       </div>
                     </TabPane>
                   ))}

@@ -9,13 +9,22 @@ import { withCategories } from './CategoryOpertations';
 import { subscribeToCategories } from './CategorySubscriptions';
 
 const CategoryTreeComponent = props => {
-  const { subscribeToMore } = props;
+  const { subscribeToMore, categories, loading } = props;
 
   useEffect(() => {
     const subscribe = subscribeToCategories(subscribeToMore, props.filter);
     return () => subscribe();
   });
-  return !props.loading && props.categories ? <CategoryTreeComponentView {...props} /> : <Spinner size="small" />;
+  return (
+    <>
+      {loading && <Spinner size="small" />}
+      {!loading && categories && categories.totalCount > 0 ? (
+        <CategoryTreeComponentView {...props} />
+      ) : (
+        !loading && <div style={{ paddingTop: '10px' }}>Their are no categories!</div>
+      )}
+    </>
+  );
 };
 
 CategoryTreeComponent.propTypes = {

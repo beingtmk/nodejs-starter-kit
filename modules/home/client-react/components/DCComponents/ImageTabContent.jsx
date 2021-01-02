@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
 import { compose } from '@gqlapp/core-common';
-import { List, ListItem } from '@gqlapp/look-client-react';
+import { List, ListItem, Spinner, EmptyComponent } from '@gqlapp/look-client-react';
 
 import { withDynamicCarousels } from '../../containers/DCComponents/DynamicCarouselOperations';
 
@@ -20,7 +20,7 @@ const Text = styled.span`
 
 const ImageTabContent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
-  const { loading, dynamicCarousels } = props;
+  const { t, loading, dynamicCarousels } = props;
 
   const image = item => (
     <div style={{ position: 'relative' }}>
@@ -55,21 +55,27 @@ const ImageTabContent = props => {
 
   // console.log('props', props);
   return (
-    !loading &&
-    dynamicCarousels &&
-    dynamicCarousels.totalCount > 0 && (
-      <List
-        grid={{ /* gutter: 16, */ xs: 3, sm: 3, md: 3, lg: 4, xl: 4, xxl: 4 }}
-        dataSource={dynamicCarousels.edges.map(({ node }) => node)}
-        renderItem={item => <ListItem>{item.link ? <a href={item.link}>{image(item)}</a> : image(item)}</ListItem>}
-      />
-    )
+    <>
+      {loading && <Spinner size="small" />}
+      {!loading && dynamicCarousels && dynamicCarousels.totalCount > 0 ? (
+        <List
+          grid={{ /* gutter: 16, */ xs: 3, sm: 3, md: 3, lg: 4, xl: 4, xxl: 4 }}
+          dataSource={dynamicCarousels.edges.map(({ node }) => node)}
+          renderItem={item => <ListItem>{item.link ? <a href={item.link}>{image(item)}</a> : image(item)}</ListItem>}
+        />
+      ) : (
+        <div style={{ height: '60vh', position: 'relative' }}>
+          <EmptyComponent description={t('dynamicCarousel.adminPanel.noBannersMsg')} /* emptyLink={emptyLink} */ />
+        </div>
+      )}
+    </>
   );
 };
 
 ImageTabContent.propTypes = {
   loading: PropTypes.bool,
-  dynamicCarousels: PropTypes.object
+  dynamicCarousels: PropTypes.object,
+  t: PropTypes.func
 };
 
 export default compose(withDynamicCarousels)(ImageTabContent);

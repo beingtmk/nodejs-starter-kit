@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { TranslateFunction } from '@gqlapp/i18n-client-react';
 import {
   Heading,
   Row,
   Col,
-  Empty,
-  Button,
+  EmptyComponent,
   Spin,
   SuggestedListComponent,
   ModalDrawer,
   CheckBox
 } from '@gqlapp/look-client-react';
+// eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewsItemComponent from './ReviewsItemComponent';
 import AvgRatingComponent from './AvgRatingComponent';
 import ReviewFormComponent from './ReviewFormComponent';
+
 interface ReviewViewProps {
   t: TranslateFunction;
   filter: {
@@ -41,19 +41,6 @@ interface ReviewViewProps {
   deleteReview: (id: number) => null;
   handleHelpful: (id: number, value: number) => Promise<void>;
 }
-
-export const NoReviews: React.FC = ({ t }: { t: TranslateFunction }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Empty description={'No Review'}>
-      <Link to={`${LISTING_ROUTES.add}`}>
-        <Button color="primary">{'Review listings'}</Button>
-      </Link>
-    </Empty>
-  </div>
-);
 
 const ReviewView: React.FC<ReviewViewProps> = props => {
   const {
@@ -152,7 +139,18 @@ const ReviewView: React.FC<ReviewViewProps> = props => {
             </div>
           )}
         </Col>
-        <Col span={24}>{reviews && reviews.totalCount ? <RenderReviews /> : !loading && <NoReviews t={t} />}</Col>
+        <Col span={24}>
+          {reviews && reviews.totalCount ? (
+            <RenderReviews />
+          ) : (
+            !loading && (
+              <EmptyComponent
+                description={t('adminPanel.noReviewsMsg')}
+                emptyLink={`${LISTING_ROUTES.listingCatalogue}`}
+              />
+            )
+          )}
+        </Col>
       </Row>
     </>
   );

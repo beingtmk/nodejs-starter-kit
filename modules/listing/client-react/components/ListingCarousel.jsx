@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
-import { Button, Empty, Spinner, SlickCarousel } from '@gqlapp/look-client-react';
+import { Button, EmptyComponent, Spinner, SlickCarousel } from '@gqlapp/look-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { translate } from '@gqlapp/i18n-client-react';
 
-import ROUTES from '../routes';
 import { withListings } from '../containers/ListingOperations';
 import RelatedCardComponent from './RelatedCardComponent';
 import { subscribeToListings } from '../containers/ListingSubscriptions';
@@ -39,6 +38,7 @@ const ListingCarousel = props => {
     onDelete,
     getCart,
     filter,
+    t,
     onFilter = () => {
       return true;
     }
@@ -147,7 +147,8 @@ const ListingCarousel = props => {
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </div>
         {(loading1 || currentUserLoading) && <Spinner size="small" />}
-        {listings && listings.totalCount ? (
+        {console.log(listings && listings.totalCount > 0)}
+        {listings && listings.totalCount > 0 ? (
           <SlickCarousel
             Compo={RelatedCardComponent}
             settings={carouselSettings(itemLength)}
@@ -169,15 +170,9 @@ const ListingCarousel = props => {
             }}
           />
         ) : (
-          !loading1 && (
-            <div align="center">
-              <Empty description={'No Listings.'}>
-                <Link to={`${ROUTES.add}`}>
-                  <Button color="primary">Add</Button>
-                </Link>
-              </Empty>
-            </div>
-          )
+          <div style={{ height: '60vh', position: 'relative' }}>
+            <EmptyComponent description={t('listing.noListingsMsg')} /* emptyLink={emptyLink} */ />
+          </div>
         )}
       </div>
     </div>
@@ -197,8 +192,9 @@ ListingCarousel.propTypes = {
   isMobile: PropTypes.bool,
   subscribeToMore: PropTypes.func,
   onFilter: PropTypes.func,
+  t: PropTypes.func,
   filter: PropTypes.object,
   alignTitle: PropTypes.string
 };
 
-export default compose(withListings)(ListingCarousel);
+export default compose(withListings, translate('listing'))(ListingCarousel);

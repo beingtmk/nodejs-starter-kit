@@ -12,10 +12,9 @@ import {
   Pagination,
   EditIcon,
   DeleteIcon,
-  Empty,
+  EmptyComponent,
   Divider,
   Avatar,
-  Button,
   RenderTableLoading,
   Spin,
   CardMeta,
@@ -31,20 +30,6 @@ import ROUTES from '../routes';
 // import { withCategory } from '../containers/CategoryOpertations';
 
 const { itemsNumber, type } = settings.pagination.web;
-
-const NoCategoryMessage = ({ t }) => (
-  <div align="center">
-    <br />
-    <br />
-    <br />
-    <Empty description={t('category.noCategoryMsg')}>
-      <a href={`${ROUTES.add}`}>
-        <Button color="primary">Add</Button>
-      </a>
-    </Empty>
-  </div>
-);
-NoCategoryMessage.propTypes = { t: PropTypes.func };
 
 const CategoryListComponent = props => {
   const { onToggle, orderBy, onOrderBy, loading, categories, t, loadData, deleteCategory /*, onDuplicate */ } = props;
@@ -234,7 +219,7 @@ const CategoryListComponent = props => {
     </Fragment>
   );
   return (
-    <div style={{ overflowX: 'auto' }}>
+    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
       {/* Render loader */}
       {loading && (
         <RenderTableLoading
@@ -250,7 +235,11 @@ const CategoryListComponent = props => {
         />
       )}
       {/* Render main category content */}
-      {categories && categories.totalCount ? <RenderCategory /> : !loading && <NoCategoryMessage t={t} />}
+      {categories && categories.totalCount ? (
+        <RenderCategory />
+      ) : (
+        !loading && <EmptyComponent description={t('category.noCategoryMsg')} emptyLink={`${ROUTES.add}`} />
+      )}
     </div>
   );
 };

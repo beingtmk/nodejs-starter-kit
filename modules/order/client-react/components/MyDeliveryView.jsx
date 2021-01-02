@@ -9,12 +9,14 @@ import {
   Row,
   Col,
   Divider,
-  Empty,
+  EmptyComponent,
   SuggestedListComponent,
   Spinner,
   Button,
   ButtonGroup
 } from '@gqlapp/look-client-react';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 import MyOrderItemComponent from './MyOrderItemComponent';
 
@@ -35,14 +37,6 @@ const MyDeliveriesView = props => {
     }
   }
 
-  const NoMyDeliveriesMessage = () => (
-    <div align="center">
-      <br />
-      <br />
-      <Empty description={t('noOrdersMsg')} />
-    </div>
-  );
-
   const renderFunc = (key, item) => (
     <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
   );
@@ -54,7 +48,11 @@ const MyDeliveriesView = props => {
   ];
   const RenderMyDeliveries = () => (
     <div>
-      {loading && <Spinner />}
+      {loading && (
+        <div style={{ height: '100vh', position: 'relative' }}>
+          <Spinner />
+        </div>
+      )}
       {!loading && <SuggestedListComponent endText={'deliveries'} {...props} items={orders} renderFunc={renderFunc} />}
     </div>
   );
@@ -104,7 +102,15 @@ const MyDeliveriesView = props => {
         </Col>
       </Row>
       <Divider />
-      {orders && orders.totalCount ? <RenderMyDeliveries /> : <NoMyDeliveriesMessage />}
+      {orders && orders.totalCount ? (
+        <RenderMyDeliveries />
+      ) : (
+        !loading && (
+          <div style={{ height: '100vh', position: 'relative' }}>
+            <EmptyComponent description={t('noOrdersMsg')} emptyLink={`${LISTING_ROUTES.listingCatalogue}`} />
+          </div>
+        )
+      )}
     </PageLayout>
   );
 };

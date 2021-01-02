@@ -18,9 +18,5 @@ query categories(
       endCursor
       hasNextPage
     }
-    rangeValues {
-      maxCost
-      minCost
-    }
   }
 }

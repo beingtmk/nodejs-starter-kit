@@ -629,6 +629,11 @@
   },
   "dynamicCarousel":{
     "heading":"Dynamic Carousel",
+    "adminPanel": {
+      "title": "Discounts",
+      "meta": "A List of All Discount page.",
+      "noBannersMsg": "There are no banners yet"
+    },
     "btn":{
       "add":"Add",
       "submit":"Submit"

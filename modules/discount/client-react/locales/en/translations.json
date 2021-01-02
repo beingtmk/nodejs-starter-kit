@@ -17,11 +17,11 @@
   "adminPanel": {
     "title": "Discounts",
     "meta": "A List of All Discount page.",
+    "noDiscountsMsg": "There are no discounts yet",
     "btn": {
       "add": "Add discount",
       "del": "Delete",
-      "more": "Load more ...",
-      "noReviewsMsg":"There are no Discounts yet."
+      "more": "Load more ..."
     },
     "filter": {
       "field1": "Search Title",

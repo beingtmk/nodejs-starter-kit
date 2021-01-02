@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from '@gqlapp/core-common';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { DropDown, Card, Icon, Message, Empty, AddButton, Badge } from '@gqlapp/look-client-react';
+import { DropDown, Card, Icon, Message, Badge, EmptyComponent } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
@@ -112,13 +112,13 @@ const NavItemCart = props => {
                 />
               ) : (
                 <div style={{ padding: '10px' }}>
-                  <div className="centerAlign marginT30">
-                    <Empty description="You have no items in your Cart" imageStyle={{ height: '80px' }}>
-                      <Link to={`${LISTING_ROUTES.listingCatalogue}`}>
-                        <AddButton style={{ width: 'fit-content' }}>{t('checkoutCart.btn.add')}</AddButton>
-                      </Link>
-                    </Empty>
-                  </div>
+                  <EmptyComponent
+                    applyClass={false}
+                    description={'You have no items in your Cart'}
+                    emptyLink={`${LISTING_ROUTES.listingCatalogue}`}
+                    showAddBtn={true}
+                    btnText={t('checkoutCart.btn.add')}
+                  />
                 </div>
               )}
             </DropDown>
