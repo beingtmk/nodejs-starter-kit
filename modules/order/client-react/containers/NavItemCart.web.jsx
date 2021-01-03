@@ -72,6 +72,7 @@ const NavItemCart = props => {
         <>
           {!currentUserLoading && (
             <DropDown
+              style={{ backgroundColor: 'whitesmoke' }}
               content={
                 <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active" visible={visible}>
                   <StyleCard

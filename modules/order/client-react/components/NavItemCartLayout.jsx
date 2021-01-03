@@ -37,7 +37,7 @@ const NavItemCartLayout = props => {
             );
           })}
         </div>
-        <Row>
+        <Row style={{ backgroundColor: 'whitesmoke' }}>
           <Col span={24}>
             <Row style={{ padding: '12px 12px 0 12px' }}>
               <Col span={16}>
@@ -69,7 +69,7 @@ const NavItemCartLayout = props => {
             </Row>
             <Row style={{ padding: '5px 12px' }}>
               <Button block color="primary">
-                <Link to={ROUTES.checkoutCart}>Checkout</Link>
+                <Link to={ROUTES.checkoutCart}>CHECKOUT</Link>
               </Button>
             </Row>
           </Col>

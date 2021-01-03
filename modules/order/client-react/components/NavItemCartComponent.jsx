@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 
 // eslint-disable-next-line import/no-named-default
 import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
-import { Row, Col, Card } from '@gqlapp/look-client-react';
+import { Row, Col, Card, Tooltip } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 // import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
@@ -61,7 +61,23 @@ const CartItemComponent = props => {
             <Col span={15}>
               <Row>
                 <Col span={24}>
-                  <h3>{item.title}</h3>
+                  <Tooltip title={item && item.title}>
+                    <div className="ant-card-meta-title">
+                      <span
+                        style={{
+                          fontSize: '18px',
+                          overflow: 'hidden',
+                          lineClamp: 1,
+                          display: 'box',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis'
+                        }}
+                      >
+                        {item && item.title}
+                      </span>
+                    </div>
+                  </Tooltip>
+                  {/* <h3>{item.title}</h3> */}
                 </Col>
               </Row>
               <Row>

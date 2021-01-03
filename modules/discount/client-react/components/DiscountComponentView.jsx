@@ -16,47 +16,59 @@ const DiscountComponent = props => {
     <Row>
       <Col span={24}>
         <Row gutter={8}>
-          <Col span={17} style={{ whiteSpace: 'nowrap', overflow: NavitemCart ? 'visible' : 'hidden' }}>
+          <Col
+            span={17}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: NavitemCart ? 'visible' : 'hidden'
+            }}
+          >
             {!NavitemCart && <Icon type="TagTwoTone" style={{ fontSize: '20px', paddingRight: '5px' }} />}
             {isDiscount
               ? cost && (
                   <Space align="center">
                     <Tooltip title={(cost - cost * (discount / 100)).toFixed(2)}>
-                      <CurrencyDisplay
-                        style={{ display: 'inline' }}
-                        precision={0}
-                        input={(cost - cost * (discount / 100)).toFixed(2)}
-                        valueStyle={{
-                          fontSize: NavitemCart ? '17px' : '21px',
-                          fontWeight: 'bold',
-                          color: NavitemCart ? 'green' : ''
-                        }}
-                      />
+                      <div className="ant-card-meta-title">
+                        <CurrencyDisplay
+                          style={{ display: 'inline' }}
+                          precision={0}
+                          input={(cost - cost * (discount / 100)).toFixed(2)}
+                          valueStyle={{
+                            fontSize: NavitemCart ? '17px' : '21px',
+                            fontWeight: 'bold',
+                            color: NavitemCart ? 'green' : ''
+                          }}
+                        />
+                      </div>
                     </Tooltip>
                     <Tooltip title={cost.toFixed(2)}>
-                      <span
-                        style={{
-                          textDecoration: 'line-through',
-                          fontSize: NavitemCart ? '12px' : '17px'
-                        }}
-                      >
-                        &#8377; {cost.toFixed(0)}
-                      </span>
+                      <div className="ant-card-meta-title">
+                        <span
+                          style={{
+                            textDecoration: 'line-through',
+                            fontSize: NavitemCart ? '12px' : '17px'
+                          }}
+                        >
+                          &#8377; {cost.toFixed(0)}
+                        </span>
+                      </div>
                     </Tooltip>
                   </Space>
                 )
               : cost && (
                   <Space /* align="center" */>
                     <Tooltip title={cost.toFixed(2)}>
-                      <CurrencyDisplay
-                        input={cost.toFixed(2)}
-                        precision={0}
-                        valueStyle={{
-                          fontSize: NavitemCart ? '17px' : '21px',
-                          fontWeight: 'bold',
-                          color: NavitemCart ? 'green' : ''
-                        }}
-                      />
+                      <div className="ant-card-meta-title">
+                        <CurrencyDisplay
+                          input={cost.toFixed(2)}
+                          precision={0}
+                          valueStyle={{
+                            fontSize: NavitemCart ? '17px' : '21px',
+                            fontWeight: 'bold',
+                            color: NavitemCart ? 'green' : ''
+                          }}
+                        />
+                      </div>
                     </Tooltip>
                   </Space>
                 )}
