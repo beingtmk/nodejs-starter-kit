@@ -29,7 +29,6 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
-  setting,
   category,
   discount,
   pages,
@@ -50,6 +49,7 @@ const modules = new ClientModule(
   payments,
   order,
   user,
+  setting,
   i18n,
   reports,
   pageNotFound,

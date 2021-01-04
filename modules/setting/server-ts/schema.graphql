@@ -1,16 +1,36 @@
 # Entity
-type TypeName {
-  typeName: String!
+type Platform {
+  id: Int
+  logo: String
+  type: String
+  isActive: Boolean
+  platformInfo: PlatformInfo
+  platformSocial: PlatformSocial
+}
+type PlatformInfo {
+  id: Int
+  mobile: String
+  email: String
+  address: String
+  isActive: Boolean
+}
+type PlatformSocial {
+  id: Int
+  youtube: String
+  facebook: String
+  instagram: String
+  linkedIn: String
+  twitter: String
 }
 
 extend type Query {
-  queryName: TypeName
+  platform(id: Int!): Platform
 }
 
-extend type Mutation {
-  mutationName(varName: Int!): TypeName
-}
+# extend type Mutation {
+#   mutationName(varName: Int!): TypeName
+# }
 
-extend type Subscription {
-  subscriptionName: TypeName
-}
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }
