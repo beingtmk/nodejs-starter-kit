@@ -1,3 +1,4 @@
+import setting from '@gqlapp/setting-client-react';
 import category from '@gqlapp/category-client-react';
 import discount from '@gqlapp/discount-client-react';
 import pages from '@gqlapp/pages-client-react';
@@ -28,6 +29,7 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  setting,
   category,
   discount,
   pages,

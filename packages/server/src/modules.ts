@@ -1,3 +1,4 @@
+import setting from '@gqlapp/setting-server-ts';
 import category from '@gqlapp/category-server-ts';
 import discount from '@gqlapp/discount-server-ts';
 import addresses from '@gqlapp/addresses-server-ts';
@@ -27,6 +28,7 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  setting,
   category,
   discount,
   addresses,
