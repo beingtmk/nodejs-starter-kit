@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 import { Button, EmptyComponent, Spinner, SlickCarousel } from '@gqlapp/look-client-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { translate } from '@gqlapp/i18n-client-react';
 
 import { withListings } from '../containers/ListingOperations';
@@ -91,7 +90,7 @@ const ListingCarousel = props => {
 
   delete props.isMobile;
 
-  const itemLength = listings && listings.edges && displayDataCheck(listings.edges.filter(onFilter).length);
+  const itemLength = listings && listings.edges && listings.edges.filter(onFilter).length;
   const carouselSettings = itemLength => {
     return {
       className: 'slider variable-width',
@@ -101,7 +100,7 @@ const ListingCarousel = props => {
       infinite: true,
       speed: 500,
       autoplaySpeed: 2000,
-      slidesToShow: itemLength >= 4 ? 3.5 : itemLength,
+      slidesToShow: itemLength >= 5 ? 4.5 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
       lazyLoad: true,
@@ -112,7 +111,7 @@ const ListingCarousel = props => {
         {
           breakpoint: 1440,
           settings: {
-            slidesToShow: itemLength >= 4 ? 3.5 : itemLength,
+            slidesToShow: itemLength >= 5 ? 4.5 : itemLength,
             slidesToScroll: 1
           }
         },
@@ -147,7 +146,6 @@ const ListingCarousel = props => {
           {dataSource.titleWrapper.children.map(getChildrenToRender)}
         </div>
         {(loading1 || currentUserLoading) && <Spinner size="small" />}
-        {console.log(listings && listings.totalCount > 0)}
         {listings && listings.totalCount > 0 ? (
           <SlickCarousel
             Compo={RelatedCardComponent}
@@ -170,9 +168,11 @@ const ListingCarousel = props => {
             }}
           />
         ) : (
-          <div style={{ height: '60vh', position: 'relative' }}>
-            <EmptyComponent description={t('listing.noListingsMsg')} /* emptyLink={emptyLink} */ />
-          </div>
+          !(loading1 || currentUserLoading) && (
+            <div style={{ height: '60vh', position: 'relative' }}>
+              <EmptyComponent description={t('listing.noListingsMsg')} /* emptyLink={emptyLink} */ />
+            </div>
+          )
         )}
       </div>
     </div>

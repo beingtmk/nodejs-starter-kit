@@ -55,11 +55,11 @@ const ImageTabContent = props => {
 
   // console.log('props', props);
   return (
-    <>
+    <div align="center">
       {loading && <Spinner size="small" />}
       {!loading && dynamicCarousels && dynamicCarousels.totalCount > 0 ? (
         <List
-          grid={{ /* gutter: 16, */ xs: 3, sm: 3, md: 3, lg: 4, xl: 4, xxl: 4 }}
+          grid={{ /* gutter: 16, */ xs: 3, sm: 3, md: 3, lg: 4, xl: 5, xxl: 6 }}
           dataSource={dynamicCarousels.edges.map(({ node }) => node)}
           renderItem={item => <ListItem>{item.link ? <a href={item.link}>{image(item)}</a> : image(item)}</ListItem>}
         />
@@ -68,7 +68,7 @@ const ImageTabContent = props => {
           <EmptyComponent description={t('dynamicCarousel.adminPanel.noBannersMsg')} /* emptyLink={emptyLink} */ />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

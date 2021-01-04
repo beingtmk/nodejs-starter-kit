@@ -9,7 +9,7 @@ import { translate } from '@gqlapp/i18n-client-react';
 import {
   CheckBox,
   Space,
-  Affix,
+  /* Affix, */
   Card,
   Option,
   FormItem,
@@ -28,6 +28,10 @@ import { compose } from '@gqlapp/core-common';
 
 import SliderControlled from './FIlterSliderControlledComponent';
 import { withGetBrandList } from '../containers/ListingOperations';
+
+const Affix = styled.div`
+  transform: ${props => props.value && `translateY(${props.value}px)`};
+`;
 
 const RateDiv = styled.div`
   height: 22px;
@@ -63,6 +67,7 @@ const ListingsFilterComponent = props => {
     layout
   } = props;
   const [selectedBrand, setSelectedBrand] = useState(brand || []);
+  const [scroll, setScroll] = useState(0);
   // console.log(selectedBrand);
   const handleFiltersRemove = useRef(() => {});
 
@@ -85,6 +90,10 @@ const ListingsFilterComponent = props => {
   };
 
   useEffect(() => {
+    window.addEventListener('scroll', () => {
+      let scrollEvent = window.scrollY;
+      setScroll(scrollEvent);
+    });
     return () => handleFiltersRemove.current();
   }, []);
 
@@ -396,12 +405,34 @@ const ListingsFilterComponent = props => {
         </Col>
       </Row>
     );
-
+  const limit = Math.max(
+    document.body.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.clientHeight,
+    document.documentElement.scrollHeight,
+    document.documentElement.offsetHeight
+  );
+  console.log(scroll);
+  // const affixProps =
+  //   limit - scroll <= 1247
+  //     ? {
+  //         offsetBottom: 200,
+  //       }
+  //     : {
+  //         offsetTop: layout === 'vertical' ? 110 : 43,
+  //       };
+  // console.log(scroll > (layout === 'vertical' ? 110 : 43), parseInt(scroll));
   return (
     <Row>
       <Col lg={24} md={24} xs={0}>
         {affix ? (
-          <Affix offsetTop={layout === 'vertical' ? 110 : 43}>
+          <Affix
+            value={
+              limit - scroll > 1190
+                ? scroll > (layout === 'vertical' ? 110 : 43) && scroll - (layout === 'vertical' ? 110 : 43)
+                : scroll - ((layout === 'vertical' ? 110 : 43) + 339)
+            }
+          >
             <Card>{filterItems}</Card>
           </Affix>
         ) : (
