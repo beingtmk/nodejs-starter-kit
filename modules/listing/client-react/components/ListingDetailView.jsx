@@ -129,7 +129,13 @@ const ListingDetailView = props => {
       {loading && <Spinner />}
       {!loading && listing && (
         <>
-          <div style={{ background: 'white', margin: '0 -200%', padding: '0 200%' }}>
+          <div
+            style={{
+              background: 'white',
+              margin: '0 -200%',
+              padding: '0 200%'
+            }}
+          >
             <br />
             <Row gutter={24}>
               <Col lg={11} md={11} xs={24}>
@@ -223,19 +229,27 @@ const ListingDetailView = props => {
                     </Col>
                   </Col>
                   <Col span={3}>
-                    {currentUser && (
-                      <IfLoggedIn>
-                        <div style={{ marginTop: '4px' }}>
-                          <BookmarkComponent
-                            handleBookmark={() => handleBookmark(listing.id, listing.user.id)}
-                            bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
-                            listing={listing}
-                            right={'12%'}
-                          />
-                        </div>
-                      </IfLoggedIn>
-                    )}
-                    <SocialSharingButtons {...message} onShare={onShare} t={t} />
+                    <Row>
+                      <Col lg={12} xs={24}>
+                        {currentUser && (
+                          <IfLoggedIn>
+                            {/* <div style={{ marginTop: '4px' }}> */}
+                            <BookmarkComponent
+                              handleBookmark={() => handleBookmark(listing.id, listing.user.id)}
+                              bookmarkStatus={listingBookmarkStatus && listingBookmarkStatus}
+                              listing={listing}
+                              right={'12%'}
+                            />
+                            {/* </div> */}
+                          </IfLoggedIn>
+                        )}
+                      </Col>
+                      {/* </Row> */}
+                      {/* <Row> */}
+                      <Col lg={12} xs={24}>
+                        <SocialSharingButtons {...message} onShare={onShare} t={t} />
+                      </Col>
+                    </Row>
                   </Col>
 
                   <Col span={24}>
