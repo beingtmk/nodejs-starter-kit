@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PageLayout, MetaTags, Row, Col, Card, Divider, Spinner } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
-import AddressView from '@gqlapp/addresses-client-react/components/AddressView';
+import AddressItemComponent from '@gqlapp/addresses-client-react/components//AddressItemComponent';
 
 import CheckoutCardComponent from './CheckoutCardComponent';
 import OrderTrackCardComponent from './OrderTrackCardComponent';
@@ -56,7 +56,7 @@ const OrderDetailsView = props => {
                           <h4>{t('orderDetails.addressText')}</h4>
                           <hr />
                           <Row type="flex" justify="center" align="middle">
-                            {address && <AddressView addresses={[address]} addressId={address.id} />}
+                            {address && <AddressItemComponent address={address} t={t} />}
                           </Row>
                         </Card>
                       </Col>

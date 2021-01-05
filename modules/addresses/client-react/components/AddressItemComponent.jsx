@@ -23,11 +23,15 @@ const AddressItemComponent = props => {
 
   return (
     <CustomCard active={active === address.id} backgroundColor={'#d6f2ff'} onClick={() => setActive(address.id)}>
-      <Button onClick={() => setDefault(address.id)} disabled={address.isDefault}>
-        {address.isDefault ? 'DEFAULT ADDRESS' : 'OTHER ADDRESS'}
-      </Button>
-      <br />
-      <br />
+      {setDefault && (
+        <>
+          <Button onClick={() => setDefault(address.id)} disabled={address.isDefault}>
+            {address.isDefault ? 'DEFAULT ADDRESS' : 'OTHER ADDRESS'}
+          </Button>
+          <br />
+          <br />
+        </>
+      )}
       <Row>
         <Col span={1} />
         <Col span={23}>

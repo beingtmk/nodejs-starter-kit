@@ -38,7 +38,22 @@ const MyDeliveriesView = props => {
   }
 
   const renderFunc = (key, item) => (
-    <MyOrderItemComponent key={key} item={item} history={history} currentUser={currentUser} t={t} />
+    <MyOrderItemComponent
+      grid={{
+        gutter: 24,
+        xs: 1,
+        sm: 1,
+        md: 3,
+        lg: 4,
+        xl: 5,
+        xxl: 5
+      }}
+      key={key}
+      item={item}
+      history={history}
+      currentUser={currentUser}
+      t={t}
+    />
   );
   const Icons = [
     <Icon type="AppstoreOutlined" />,
