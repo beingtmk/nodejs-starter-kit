@@ -2,14 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
-
 import { Drawer, Menu, Layout } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
-import { Row, Col } from '@gqlapp/look-client-react';
 
+import { Row, Col } from '@gqlapp/look-client-react';
 import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
-import { SOCIAL, CONTACT } from '@gqlapp/look-common/';
 
 import Icon from './Icon';
 import MenuItem from './MenuItem';
@@ -55,6 +53,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const platform = this.props.platform;
     const isMobile = this.props && this.props.isMobile;
     return (
       <ScrollParallax
@@ -69,33 +68,39 @@ class NavBar extends React.Component {
           <Row className="navbar-wrapper">
             <Col lg={24} xs={0}>
               <div align="right" className="navbar-contact-menu">
-                <Row style={{ lineHeight: '37px' }} justify="end" gutter={24}>
-                  <Col>
-                    <BannerLink href={`tel: ${CONTACT.phone}`}>
-                      <Icon type="PhoneOutlined" /> &nbsp;
-                      {CONTACT.phone}
-                    </BannerLink>
-                  </Col>
-                  <Col>
-                    <BannerLink href={`mailto: ${CONTACT.mail}`} target="_blank" rel="noopener noreferrer">
-                      <Icon type="MailOutlined" /> &nbsp;
-                      {CONTACT.mail}
-                    </BannerLink>
-                  </Col>
-                  <Col>
-                    <a href={SOCIAL.twitter} target="_blank" rel="noopener noreferrer">
-                      <Icon type="TwitterSquareFilled" style={{ color: 'black', fontSize: '20px' }} />
-                    </a>
-                    &nbsp;
-                    <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer">
-                      <Icon type="InstagramFilled" style={{ color: 'black', fontSize: '20px' }} />
-                    </a>
-                    &nbsp;
-                    <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer">
-                      <Icon type="FacebookFilled" style={{ color: 'black', fontSize: '20px' }} />
-                    </a>
-                  </Col>
-                </Row>
+                {platform && (
+                  <Row style={{ lineHeight: '37px' }} justify="end" gutter={24}>
+                    <Col>
+                      <BannerLink href={`tel: ${platform.platformInfo.mobile}`}>
+                        <Icon type="PhoneOutlined" /> &nbsp;
+                        {platform.platformInfo.mobile}
+                      </BannerLink>
+                    </Col>
+                    <Col>
+                      <BannerLink
+                        href={`mailto: ${platform.platformInfo.email}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon type="MailOutlined" /> &nbsp;
+                        {platform.platformInfo.email}
+                      </BannerLink>
+                    </Col>
+                    <Col>
+                      <a href={platform.platformSocial.twitter} target="_blank" rel="noopener noreferrer">
+                        <Icon type="TwitterSquareFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                      &nbsp;
+                      <a href={platform.platformSocial.instagram} target="_blank" rel="noopener noreferrer">
+                        <Icon type="InstagramFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                      &nbsp;
+                      <a href={platform.platformSocial.facebook} target="_blank" rel="noopener noreferrer">
+                        <Icon type="FacebookFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                    </Col>
+                  </Row>
+                )}
               </div>
             </Col>
 
@@ -113,14 +118,14 @@ class NavBar extends React.Component {
                         translateY: isMobile ? '' : '20px'
                       }}
                     >
-                      <img
-                        // height="80px"
-                        src={
-                          'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
-                        }
-                        className="navbar-logo-img"
-                        alt="Mountain"
-                      />
+                      {platform && (
+                        <img
+                          // height="80px"
+                          src={platform.logo}
+                          className="navbar-logo-img"
+                          alt="Mountain"
+                        />
+                      )}
                     </ScrollParallax>
                   </NavLink>
                 </Col>
@@ -258,7 +263,8 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   location: PropTypes.object.isRequired,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  platform: PropTypes.object
 };
 
 export default withRouter(NavBar);
