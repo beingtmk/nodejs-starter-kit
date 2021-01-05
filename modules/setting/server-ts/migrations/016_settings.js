@@ -40,7 +40,7 @@ exports.up = function(knex) {
         table.string('youtube');
         table.string('facebook');
         table.string('instagram');
-        table.string('linkedIn');
+        table.string('linked_in');
         table.string('twitter');
 
         table.boolean('is_active').defaultTo(true);

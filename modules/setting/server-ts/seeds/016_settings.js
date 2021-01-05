@@ -21,7 +21,7 @@ exports.seed = async function(knex) {
         youtube: 'https://youtube.com',
         facebook: 'http://facebook.com/',
         instagram: 'https://www.instagram.com/',
-        linkedIn: 'https://www.linkedin.com/',
+        linked_in: 'https://www.linkedin.com/',
         twitter: 'https://twitter.com/'
       });
     })
