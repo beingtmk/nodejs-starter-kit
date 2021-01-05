@@ -12,16 +12,31 @@ const registerFormSchema = {
   username: [required, minLength(3)],
   email: [required, email],
   password: [required, minLength(settings.auth.password.minLength)],
-  passwordConfirmation: [match('password'), required, minLength(settings.auth.password.minLength)],
+  passwordConfirmation: [match('password'), required, minLength(settings.auth.password.minLength)]
 };
 
 const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
   return (
     <Form name="register" onSubmit={handleSubmit}>
-      <Field name="username" component={RenderField} type="text" label={t('reg.form.field.name')} value={values.username} />
-      <Field name="email" component={RenderField} type="text" label={t('reg.form.field.email')} value={values.email} />
+      <Field
+        name="username"
+        icon="UserOutlined"
+        component={RenderField}
+        type="text"
+        label={t('reg.form.field.name')}
+        value={values.username}
+      />
+      <Field
+        icon="MailOutlined"
+        name="email"
+        component={RenderField}
+        type="text"
+        label={t('reg.form.field.email')}
+        value={values.email}
+      />
       <Field
         name="password"
+        icon="KeyOutlined"
         component={RenderField}
         type="password"
         label={t('reg.form.field.pass')}
@@ -29,6 +44,7 @@ const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
       />
       <Field
         name="passwordConfirmation"
+        icon="KeyOutlined"
         component={RenderField}
         type="password"
         label={t('reg.form.field.passConf')}
@@ -49,7 +65,7 @@ RegisterForm.propTypes = {
   submitting: PropTypes.bool,
   errors: PropTypes.object,
   values: PropTypes.object,
-  t: PropTypes.func,
+  t: PropTypes.func
 };
 
 const RegisterFormWithFormik = withFormik({
@@ -65,7 +81,7 @@ const RegisterFormWithFormik = withFormik({
     });
   },
   enableReinitialize: true,
-  displayName: 'SignUpForm', // helps with React DevTools
+  displayName: 'SignUpForm' // helps with React DevTools
 });
 
 export default translate('user')(RegisterFormWithFormik(RegisterForm));
