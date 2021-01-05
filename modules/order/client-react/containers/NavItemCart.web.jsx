@@ -72,6 +72,7 @@ const NavItemCart = props => {
         <>
           {!currentUserLoading && (
             <DropDown
+              style={{ backgroundColor: 'whitesmoke' }}
               content={
                 <NavLink to={ROUTES.checkoutCart} className="nav-link" activeClassName="active" visible={visible}>
                   <StyleCard
@@ -101,7 +102,7 @@ const NavItemCart = props => {
                   Compo={NavItemCartComponent}
                   data={props.getCart.orderDetails}
                   width={'300px'}
-                  height={'250px'}
+                  height={'260px'}
                   itemName={'item'}
                   componentProps={{
                     mobile: true,

@@ -36,7 +36,7 @@ const CheckoutCartView = props => {
         Col1={
           <div style={{ overflowX: 'auto' }}>
             <Card
-              style={{ width: '750px' }}
+              // style={{ width: '750px' }}
               type="inner"
               title={
                 <Row type="flex">
