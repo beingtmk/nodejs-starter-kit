@@ -72,6 +72,7 @@ export default class RenderUpload extends React.Component {
     // { input, label, meta: { touched, error }, defaultFileList }) = this.props
     // const touched = this.props.meta.touched;
     // const error = this.props.meta.error;
+    const children = this.props.children;
     const label = this.props.label;
     // const input = this.props.input;
     // console.log(input);
@@ -123,16 +124,18 @@ export default class RenderUpload extends React.Component {
           <Upload
             action={cloudinary_url}
             data={cloudinary_data}
-            listType="picture-card"
-            fileList={fileList}
+            listType={!children && 'picture-card'}
+            fileList={!children && fileList}
             onPreview={this.handlePreview}
             onChange={this.onChangeHandler}
           >
-            {fileList.length >= 1 ? null : uploadButton}
+            {children ? children : fileList.length >= 1 ? null : uploadButton}
           </Upload>
-          <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-            <img alt="image" style={{ width: '100%' }} src={previewImage} />
-          </Modal>
+          {!children && (
+            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+              <img alt="image" style={{ width: '100%' }} src={previewImage} />
+            </Modal>
+          )}
         </div>
       </FormItem>
     );
@@ -145,5 +148,6 @@ RenderUpload.propTypes = {
   formik: PropTypes.func,
   name: PropTypes.string,
   icon: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  children: PropTypes.node
 };
