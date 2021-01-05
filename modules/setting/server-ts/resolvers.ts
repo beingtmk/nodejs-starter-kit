@@ -1,4 +1,9 @@
-import { Identifier } from './sql';
+import withAuth from 'graphql-auth';
+import { Platform, Identifier } from './sql';
+
+interface PlatformInputWithId {
+  input: Platform & Identifier;
+}
 
 export default (pubsub: any) => ({
   Query: {
@@ -6,6 +11,15 @@ export default (pubsub: any) => ({
       return context.Setting.platform(id);
     }
   },
-  Mutation: {},
+  Mutation: {
+    editPlatform: withAuth(async (obj: any, { input }: PlatformInputWithId, { Setting }: any) => {
+      try {
+        await Setting.editPlatform(input);
+        return true;
+      } catch (e) {
+        return e;
+      }
+    })
+  },
   Subscription: {}
 });

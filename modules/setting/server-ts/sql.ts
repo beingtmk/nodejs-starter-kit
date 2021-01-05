@@ -5,6 +5,31 @@ import { knex } from '@gqlapp/database-server-ts';
 
 Model.knex(knex);
 
+export interface Platform {
+  id: number;
+  logo: string;
+  type: string;
+  isActive: boolean;
+  platformInfo: PlatformInfos;
+  platformSocial: PlatformSocial;
+}
+
+interface PlatformInfos {
+  id: number;
+  mobile: string;
+  email: string;
+  address: string;
+  isActive: boolean;
+}
+interface PlatformSocial {
+  id: number;
+  youtube: string;
+  facebook: string;
+  instagram: string;
+  linkedIn: string;
+  twitter: string;
+}
+
 export interface Identifier {
   id: number;
 }
@@ -56,6 +81,10 @@ export default class Setting extends Model {
     );
     // console.log(res);
     return res;
+  }
+  public async editPlatform(params: Platform & Identifier) {
+    const res = await Setting.query().upsertGraph(decamelizeKeys(params));
+    return res.id;
   }
 }
 

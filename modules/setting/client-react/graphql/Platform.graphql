@@ -1,0 +1,21 @@
+fragment PlatformInfo on Platform {
+  id
+  logo
+  type
+  platformInfo {
+    id
+    mobile
+    email
+    address
+    isActive
+  }
+  platformSocial {
+    id
+    youtube
+    facebook
+    instagram
+    linkedIn
+    twitter
+  }
+  isActive
+}

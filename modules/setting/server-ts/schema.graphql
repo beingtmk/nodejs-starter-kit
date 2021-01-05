@@ -27,9 +27,34 @@ extend type Query {
   platform(id: Int!): Platform
 }
 
-# extend type Mutation {
-#   mutationName(varName: Int!): TypeName
-# }
+extend type Mutation {
+  editPlatform(input: EditPlatformInput!): Boolean
+}
+
+input EditPlatformInput {
+  id: Int!
+  logo: String
+  type: String
+  isActive: Boolean
+  platformInfo: PlatformInfoInput
+  platformSocial: PlatformSocialInput
+}
+input PlatformInfoInput {
+  id: Int!
+  mobile: String
+  email: String
+  address: String
+  isActive: Boolean
+}
+
+input PlatformSocialInput {
+  id: Int!
+  youtube: String
+  facebook: String
+  instagram: String
+  linkedIn: String
+  twitter: String
+}
 
 # extend type Subscription {
 #   subscriptionName: TypeName
