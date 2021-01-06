@@ -1,14 +1,17 @@
 import React from 'react';
-
-import ClientModule from '@gqlapp/module-client-react';
-import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
+import { Route, NavLink } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-import { Route, NavLink } from 'react-router-dom';
+import { compose } from '@gqlapp/core-common';
+import ClientModule from '@gqlapp/module-client-react';
+import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
 // eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { withPlatform } from '@gqlapp/setting-client-react/containers/SettingOperations';
+import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
+import { PLATFORM_TYPE } from '@gqlapp/setting-common';
 
 import resolvers from './resolvers';
 import resources from './locales';
@@ -16,24 +19,41 @@ import ROUTES from './routes';
 
 import NavItemCart from './containers/NavItemCart.web';
 
+const NavLinkUsertWithI18n = compose(
+  withCurrentUser,
+  withPlatform
+)(({ platform, currentUser }: { platform: any; currentUser: any }) => {
+  return (
+    <>
+      <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+        <NavLink to={ROUTES.myOrder} className="nav-link" activeClassName="active">
+          <Icon type="FileOutlined" />
+          {'My Orders'}
+        </NavLink>
+      </MenuItem>
+      {platform.type === PLATFORM_TYPE[1] ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
+            <Icon type="CarOutlined" />
+            {'My Deliveries'}
+          </NavLink>
+        </MenuItem>
+      ) : currentUser.role === 'admin' ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
+            <Icon type="CarOutlined" />
+            {'My Deliveries'}
+          </NavLink>
+        </MenuItem>
+      ) : null}
+    </>
+  );
+});
+
 const NavLinkOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     <Icon type="FileOutlined" />
     {'Orders'}
-  </NavLink>
-));
-
-const NavLinkMyOrdersWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to={ROUTES.myOrder} className="nav-link" activeClassName="active">
-    <Icon type="FileOutlined" />
-    {'My Orders'}
-  </NavLink>
-));
-
-const NavLinkMyDeliveriesWithI18n = translate('order')(({ t }: { t: TranslateFunction }) => (
-  <NavLink to={ROUTES.myDelivery} className="nav-link" activeClassName="active">
-    <Icon type="CarOutlined" />
-    {'My Deliveries'}
   </NavLink>
 ));
 
@@ -118,12 +138,7 @@ export default new ClientModule({
           </>
         }
       >
-        <MenuItem>
-          <NavLinkMyOrdersWithI18n />
-        </MenuItem>
-        <MenuItem>
-          <NavLinkMyDeliveriesWithI18n />
-        </MenuItem>
+        <NavLinkUsertWithI18n />
       </SubMenu>
     </IfLoggedIn>
   ],

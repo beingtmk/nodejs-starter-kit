@@ -4,41 +4,65 @@ import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 
+import { compose } from '@gqlapp/core-common';
 import { Route, NavLink } from 'react-router-dom';
 import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
+// eslint-disable-next-line import/no-named-default
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { withPlatform } from '@gqlapp/setting-client-react/containers/SettingOperations';
+import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
+import { PLATFORM_TYPE } from '@gqlapp/setting-common';
 
 import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
-const MyListingsNavItemAccount = () => {
+const NavLinkUsertWithI18n = compose(
+  withCurrentUser,
+  withPlatform
+)(({ platform, currentUser }: { platform: any; currentUser: any }) => {
   return (
-    <NavLink to={ROUTES.myListing}>
-      <Icon type="SolutionOutlined" />
-      {'My Listings'}
-    </NavLink>
+    <>
+      {platform.type === PLATFORM_TYPE[1] ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.add}>
+            <Icon type="SolutionOutlined" />
+            {'Create listing'}
+          </NavLink>
+        </MenuItem>
+      ) : currentUser.role === 'admin' ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.add}>
+            <Icon type="SolutionOutlined" />
+            {'Create listing'}
+          </NavLink>
+        </MenuItem>
+      ) : null}
+      <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+        <NavLink to={ROUTES.listingBookmark}>
+          <Icon type="StarOutlined" />
+          {'My Bookmarks'}
+        </NavLink>
+      </MenuItem>
+      {platform.type === PLATFORM_TYPE[1] ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.myListing}>
+            <Icon type="SolutionOutlined" />
+            {'My Listings'}
+          </NavLink>
+        </MenuItem>
+      ) : currentUser.role === 'admin' ? (
+        <MenuItem className="ant-dropdown-menu-item ant-dropdown-menu-item-only-child">
+          <NavLink to={ROUTES.myListing}>
+            <Icon type="SolutionOutlined" />
+            {'My Listings'}
+          </NavLink>
+        </MenuItem>
+      ) : null}
+    </>
   );
-};
-
-const NavLinkMyListingsBookmark = () => {
-  return (
-    <NavLink to={ROUTES.listingBookmark}>
-      <Icon type="StarOutlined" />
-      {'My Bookmarks'}
-    </NavLink>
-  );
-};
-
-const NavLinkAddListings = () => {
-  return (
-    <NavLink to={ROUTES.add}>
-      <Icon type="SolutionOutlined" />
-      {'Create listing'}
-    </NavLink>
-  );
-};
+});
 
 // const NavLinkMyListingsWithI18n = translate('listing')(({ t }) => (
 //   <NavLink to={ROUTES.myListing} className=" AccDetItem" activeClassName="AccDetItemSelected">
@@ -144,27 +168,17 @@ export default new ClientModule({
     </MenuItem>
   ],
   navItemUser: [
-    <IfLoggedIn>
-      <SubMenu
-        key="/listing"
-        title={
-          <>
-            <Icon type="SolutionOutlined" />
-            Listing
-          </>
-        }
-      >
-        <MenuItem>
-          <NavLinkAddListings />
-        </MenuItem>
-        <MenuItem>
-          <NavLinkMyListingsBookmark />
-        </MenuItem>
-        <MenuItem>
-          <MyListingsNavItemAccount />
-        </MenuItem>
-      </SubMenu>
-    </IfLoggedIn>
+    <SubMenu
+      key={ROUTES.listing}
+      title={
+        <>
+          <Icon type="SolutionOutlined" />
+          Listing
+        </>
+      }
+    >
+      <NavLinkUsertWithI18n />
+    </SubMenu>
   ],
   // navItemAccount: [
   //   <IfLoggedIn key={ROUTES.myListing}>

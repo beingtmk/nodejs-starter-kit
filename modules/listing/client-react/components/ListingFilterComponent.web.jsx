@@ -412,7 +412,7 @@ const ListingsFilterComponent = props => {
     document.documentElement.scrollHeight,
     document.documentElement.offsetHeight
   );
-  console.log(scroll);
+  // console.log(scroll);
   // const affixProps =
   //   limit - scroll <= 1247
   //     ? {

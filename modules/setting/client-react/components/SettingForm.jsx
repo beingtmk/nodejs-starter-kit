@@ -117,7 +117,7 @@ const SettingForm = props => {
             <Row gutter={24}>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="email"
+                  name="platformInfo.email"
                   icon="MailOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.email')}
@@ -128,7 +128,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="mobile"
+                  name="platformInfo.mobile"
                   icon="MobileOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.mobile')}
@@ -139,7 +139,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="address"
+                  name="platformInfo.address"
                   icon="HomeOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.address')}
@@ -171,7 +171,7 @@ const SettingForm = props => {
             <Row gutter={24}>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="youtube"
+                  name="platformSocial.youtube"
                   icon="YoutubeOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.youtube')}
@@ -182,7 +182,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="facebook"
+                  name="platformSocial.facebook"
                   icon="FacebookOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.facebook')}
@@ -193,7 +193,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="instagram"
+                  name="platformSocial.instagram"
                   icon="InstagramOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.instagram')}
@@ -204,7 +204,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="linkedIn"
+                  name="platformSocial.linkedIn"
                   icon="LinkedinOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.linkedIn')}
@@ -215,7 +215,7 @@ const SettingForm = props => {
               </Col>
               <Col md={12} xs={24} align="left">
                 <Field
-                  name="twitter"
+                  name="platformSocial.twitter"
                   icon="TwitterOutlined"
                   component={RenderField}
                   placeholder={t('settingForm.twitter')}
