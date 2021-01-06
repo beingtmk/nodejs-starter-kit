@@ -9,22 +9,18 @@ import {
   Row,
   Col,
   Text,
-  Carousel,
   Badge,
   Divider,
   BreadcrumbItem,
   Breadcrumb,
-  Tooltip,
   Spinner,
-  Icon,
-  Image
+  Icon
 } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
 import DiscountComponent from '@gqlapp/discount-client-react/containers/DiscountComponent';
 // import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
-import { NO_IMG } from '@gqlapp/listing-common';
 import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import HOME_ROUTES from '@gqlapp/home-client-react/routes';
@@ -32,6 +28,7 @@ import { MODAL } from '@gqlapp/review-common';
 
 import ROUTES from '../routes';
 import ListingCarousel from './ListingCarousel';
+import ListingDetailImgCarousel from './ListingDetailImgCarousel';
 import BookmarkComponent from './BookmarkComponent';
 import SocialSharingButtons from './SocialSharingButtons';
 import { displayDataCheck } from './functions';
@@ -70,48 +67,6 @@ const ListingDetailView = props => {
     listing.listingMedia &&
     listing.listingMedia.length > 0 &&
     listing.listingMedia.filter(lM => lM.type === 'video');
-  let carouselThumbnail = [];
-  carouselThumbnail = youtubeUrl && youtubeUrl.length !== 0 ? [...carouselThumbnail, ...youtubeUrl] : [];
-  carouselThumbnail =
-    images && images.length !== 0
-      ? [...carouselThumbnail, ...images]
-      : carouselThumbnail.length !== 0
-      ? [...carouselThumbnail]
-      : [{ url: NO_IMG, type: 'image' }];
-
-  const status = {
-    // eslint-disable-next-line react/display-name
-    customPaging: function(i) {
-      return (
-        <a>
-          <img
-            src={
-              (carouselThumbnail &&
-                carouselThumbnail.length !== 0 &&
-                carouselThumbnail[i] &&
-                carouselThumbnail[i].type === 'image' &&
-                carouselThumbnail[i].url) ||
-              'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
-            }
-            style={{ width: '30px', height: '30px', zIndex: '10' }}
-          />
-        </a>
-      );
-    },
-    // autoplay: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    dots: false
-  };
-
-  const getYoutubeUrl = url => {
-    // console.log('url', url);
-    const newUrl = url.replace('watch?v=', 'embed/');
-
-    return newUrl;
-  };
 
   const message = listing && ListingShareMessage(listing.id, listing.user.username, listing.title);
 
@@ -139,59 +94,17 @@ const ListingDetailView = props => {
             <br />
             <Row gutter={24}>
               <Col lg={11} md={11} xs={24}>
-                <Row gutter={4}>
-                  <Col lg={4} md={4} xs={0}>
-                    {images &&
-                      images.map((item, id) => (
-                        <div key={id} style={{ marginBottom: '5px' }} align="center">
-                          <Image src={item.url} width={80} />
-                        </div>
-                      ))}
-                  </Col>
-                  <Col lg={20} md={20} xs={24}>
-                    <div align="center">
-                      <div
-                        style={{
-                          height: '300px',
-                          position: 'relative',
-                          marginBottom: '30px'
-                        }}
-                      >
-                        <Carousel showArrow={false} {...status}>
-                          {images &&
-                            images.map((item, id) => (
-                              <div key={id} align="center">
-                                <Tooltip title="click to zoom" placement="bottom">
-                                  <Image src={item.url} height={300} />
-                                </Tooltip>
-                              </div>
-                            ))}
-                          {youtubeUrl.length > 0 &&
-                            youtubeUrl.map(yT => (
-                              <div key="video">
-                                <iframe
-                                  width="100%"
-                                  height="300px"
-                                  src={getYoutubeUrl(yT.url)}
-                                  frameBorder="0"
-                                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                  allowFullScreen
-                                ></iframe>
-                              </div>
-                            ))}
-                        </Carousel>
-                      </div>
-                    </div>
-                    <AddToCart
-                      listing={listing}
-                      history={history}
-                      currentUser={currentUser}
-                      modalId={listing && listing.id}
-                      modalName={MODAL[1].value}
-                      // catalogueCard={true}
-                    />
-                  </Col>
-                </Row>
+                <ListingDetailImgCarousel images={images} youtubeUrl={youtubeUrl} />
+                <Col span={24}>
+                  <AddToCart
+                    listing={listing}
+                    history={history}
+                    currentUser={currentUser}
+                    modalId={listing && listing.id}
+                    modalName={MODAL[1].value}
+                    // catalogueCard={true}
+                  />
+                </Col>
               </Col>
               <Col lg={13} md={13} xs={24}>
                 <Row /*  type="flex" align="end" */>
