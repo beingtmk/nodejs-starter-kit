@@ -94,8 +94,9 @@ const ListingDetailView = props => {
             <br />
             <Row gutter={24}>
               <Col lg={11} md={11} xs={24}>
-                <ListingDetailImgCarousel images={images} youtubeUrl={youtubeUrl} />
+                <ListingDetailImgCarousel images={images} youtubeUrl={youtubeUrl} carouselLayout={false} />
                 <Col span={24}>
+                  <Divider />
                   <AddToCart
                     listing={listing}
                     history={history}
