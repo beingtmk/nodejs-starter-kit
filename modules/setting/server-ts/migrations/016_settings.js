@@ -4,6 +4,7 @@ exports.up = function(knex) {
       .createTable('platform', table => {
         table.increments('id');
 
+        table.string('name');
         table.string('logo');
         table.string('type');
 

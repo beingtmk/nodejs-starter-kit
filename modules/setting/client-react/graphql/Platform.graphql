@@ -1,5 +1,6 @@
 fragment PlatformInfo on Platform {
   id
+  name
   logo
   type
   platformInfo {

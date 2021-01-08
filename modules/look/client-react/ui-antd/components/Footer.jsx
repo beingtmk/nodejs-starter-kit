@@ -73,6 +73,7 @@ class Footer extends React.Component {
   render() {
     const { ...props } = this.props;
     const platform = props.platform;
+    const year = new Date().getFullYear();
     const Footer10DataSource = {
       wrapper: { className: 'home-page-wrapper footer1-wrapper' },
       OverPack: { className: 'footer1', playScale: 0.2 },
@@ -225,11 +226,11 @@ class Footer extends React.Component {
       copyrightPage: { className: 'home-page' },
       copyright: {
         className: 'copyright',
-        children: (
+        children: platform && (
           <>
             <span>
               <a href="https://approxyma.com" target="_blank" rel="noopener noreferrer">
-                Approxyma &copy; 2020
+                {platform.name} &copy; {year}
               </a>
             </span>
           </>

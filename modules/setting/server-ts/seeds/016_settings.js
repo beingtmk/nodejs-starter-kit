@@ -7,6 +7,7 @@ exports.seed = async function(knex) {
   await Promise.all(
     [...Array(1).keys()].map(async () => {
       const platformId = await returnId(knex('platform')).insert({
+        name: 'Approxyma',
         logo: 'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg',
         type: PLATFORM_TYPE[1]
       });

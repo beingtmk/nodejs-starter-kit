@@ -5,6 +5,7 @@
   "welcomeText": "Hello, This is the Setting module",
 
   "settingForm": {
+    "name": "Platform Name",
     "logo": "logo",
     "type": "Type",
     "email": "Email",

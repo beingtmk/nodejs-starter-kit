@@ -1,6 +1,7 @@
 # Entity
 type Platform {
   id: Int
+  name: String
   logo: String
   type: String
   isActive: Boolean
@@ -33,6 +34,7 @@ extend type Mutation {
 
 input EditPlatformInput {
   id: Int!
+  name: String
   logo: String
   type: String
   isActive: Boolean

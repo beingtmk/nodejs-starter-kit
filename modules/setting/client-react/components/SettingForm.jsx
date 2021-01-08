@@ -68,6 +68,15 @@ const SettingForm = props => {
             }
           >
             <Field
+              name="name"
+              icon="LaptopOutlined"
+              component={RenderField}
+              placeholder={t('settingForm.name')}
+              type="text"
+              label={t('settingForm.name')}
+              value={values.name}
+            />
+            <Field
               name="type"
               icon="SubnodeOutlined"
               component={RenderSelect}
@@ -251,6 +260,7 @@ const SettingWithFormik = withFormik({
   mapPropsToValues: props => {
     return {
       id: (props.platform && props.platform.id) || null,
+      name: (props.platform && props.platform.name) || '',
       logo: (props.platform && props.platform.logo) || '',
       type: (props.platform && props.platform.type) || '',
       platformInfo: (props.platform && {
