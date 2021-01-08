@@ -33,7 +33,7 @@ const ListingDetailImgCarousel = props => {
                 carouselThumbnail[i].url) ||
               'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
             }
-            style={{ width: '30px', height: '30px', zIndex: '10' }}
+            style={{ width: '30px', height: '30px', zIndex: '1' }}
           />
         </a>
       );

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import {
@@ -94,18 +95,25 @@ const ListingDetailView = props => {
             <br />
             <Row gutter={24}>
               <Col lg={11} md={11} xs={24}>
-                <ListingDetailImgCarousel images={images} youtubeUrl={youtubeUrl} carouselLayout={false} />
-                <Col span={24}>
-                  <Divider />
-                  <AddToCart
-                    listing={listing}
-                    history={history}
-                    currentUser={currentUser}
-                    modalId={listing && listing.id}
-                    modalName={MODAL[1].value}
-                    // catalogueCard={true}
-                  />
-                </Col>
+                <StickyContainer style={{ height: '100%' /* , zIndex: '1' */ }}>
+                  <Sticky>
+                    {({ style, isSticky }) => (
+                      <div style={{ ...style }}>
+                        <div style={{ height: isSticky ? '60px' : '0px' }} />
+                        <ListingDetailImgCarousel images={images} youtubeUrl={youtubeUrl} carouselLayout={false} />
+                        <Divider />
+                        <AddToCart
+                          listing={listing}
+                          history={history}
+                          currentUser={currentUser}
+                          modalId={listing && listing.id}
+                          modalName={MODAL[1].value}
+                          // catalogueCard={true}
+                        />
+                      </div>
+                    )}
+                  </Sticky>
+                </StickyContainer>
               </Col>
               <Col lg={13} md={13} xs={24}>
                 <Row /*  type="flex" align="end" */>

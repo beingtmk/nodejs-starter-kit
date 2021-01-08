@@ -119,6 +119,7 @@
     "react-redux": "^7.1.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
+    "react-sticky": "^6.0.3",
     "react-stripe-elements": "^1.2.1",
     "react-sublime-video": "^0.2.5",
     "react-transition-group": "^2.3.0-beta.0",
