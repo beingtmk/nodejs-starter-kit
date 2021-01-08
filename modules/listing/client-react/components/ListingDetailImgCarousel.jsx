@@ -1,9 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactImageMagnify from 'react-image-magnify';
+import styled from 'styled-components';
 
 import { NO_IMG } from '@gqlapp/listing-common';
-import { Row, Col, Carousel } from '@gqlapp/look-client-react';
+import { Row, Col, Carousel, Spinner, Icon } from '@gqlapp/look-client-react';
+import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
+
+const Hover = styled.div`
+  position: relative;
+  margin-bottom: 7px;
+  border: 3px solid transparent;
+
+  &:hover {
+    border: 3px solid #1890ff;
+    width: fit-content;
+  }
+`;
+
+const getYoutubeUrl = url => {
+  // console.log('url', url);
+  const newUrl = url.replace('watch?v=', 'embed/');
+
+  return newUrl;
+};
 
 const ListingDetailImgCarousel = props => {
   const { images, youtubeUrl, carouselLayout = true } = props;
@@ -33,6 +53,9 @@ const ListingDetailImgCarousel = props => {
                 carouselThumbnail[i] &&
                 carouselThumbnail[i].type === 'image' &&
                 carouselThumbnail[i].url) ||
+              `https://img.youtube.com/vi/${
+                carouselThumbnail[i].url.split('/')[carouselThumbnail[i].url.split('/').length - 1]
+              }/sddefault.jpg` ||
               'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
             }
             style={{ width: '30px', height: '30px', zIndex: '1' }}
@@ -46,13 +69,6 @@ const ListingDetailImgCarousel = props => {
     slidesToShow: 1,
     slidesToScroll: 1,
     dots: false
-  };
-
-  const getYoutubeUrl = url => {
-    // console.log('url', url);
-    const newUrl = url.replace('watch?v=', 'embed/');
-
-    return newUrl;
   };
 
   const showImg = (type, idx) => {
@@ -107,19 +123,7 @@ const ListingDetailImgCarousel = props => {
                     />
                   </div>
                 ))}
-              {youtubeUrl.length > 0 &&
-                youtubeUrl.map(yT => (
-                  <div key="video">
-                    <iframe
-                      width="100%"
-                      height="300px"
-                      src={getYoutubeUrl(yT.url)}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                ))}
+              {youtubeUrl.length > 0 && youtubeUrl.map(yT => <VideoComponent yT={yT} />)}
             </Carousel>
           </div>
         </div>
@@ -129,20 +133,24 @@ const ListingDetailImgCarousel = props => {
           <Col lg={4} md={4} xs={0}>
             {images &&
               images.map((item, idx) => (
-                <div key={idx} style={{ marginBottom: '5px' }} align="center" onClick={() => showImg('img', idx)}>
+                <Hover key={idx} style={{ marginBottom: '5px' }} align="center" onMouseOver={() => showImg('img', idx)}>
                   <img src={item.url} width={80} />
-                </div>
+                </Hover>
               ))}
             {youtubeUrl.length > 0 &&
               youtubeUrl.map((i, idx) => (
-                <div key={idx} style={{ marginBottom: '5px' }} align="center" onClick={() => showImg('vid', idx)}>
+                <Hover key={idx} align="center" onMouseOver={() => showImg('vid', idx)}>
+                  <div className="HVCenter">
+                    <Icon type="PlayCircleFilled" style={{ fontSize: '30px', color: 'white' }} />
+                  </div>
                   <img
                     src={
+                      `https://img.youtube.com/vi/${i.url.split('/')[i.url.split('/').length - 1]}/sddefault.jpg` ||
                       'https://res.cloudinary.com/approxyma/image/upload/v1596703877/3721679-youtube_108064_ratbaa.png'
                     }
                     width={80}
                   />
-                </div>
+                </Hover>
               ))}
           </Col>
           <Col lg={20} md={20} xs={24}>
@@ -170,18 +178,7 @@ const ListingDetailImgCarousel = props => {
               ))}
             {youtubeUrl.length > 0 &&
               youtubeUrl.map((yT, idx) => (
-                <div key="video">
-                  {visibleVidIdx[idx] && (
-                    <iframe
-                      width="100%"
-                      height="300px"
-                      src={getYoutubeUrl(yT.url)}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  )}
-                </div>
+                <div key="video">{visibleVidIdx[idx] && <VideoComponent key={idx} yT={yT} />}</div>
               ))}
           </Col>
         </Row>
@@ -197,3 +194,30 @@ ListingDetailImgCarousel.propTypes = {
 };
 
 export default ListingDetailImgCarousel;
+
+const VideoComponent = ({ key, yT }) => {
+  const [ref, loaded, onLoad] = useImageLoaded();
+  return (
+    <>
+      {!loaded && <Spinner />}
+      <div key={key}>
+        <iframe
+          style={{ display: !loaded && 'none' }}
+          ref={ref}
+          onLoad={onLoad}
+          width="100%"
+          height="300px"
+          src={getYoutubeUrl(yT.url)}
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+    </>
+  );
+};
+
+VideoComponent.propTypes = {
+  key: PropTypes.number,
+  yT: PropTypes.object
+};
