@@ -19,7 +19,7 @@ const CategoryCarousel = props => {
       infinite: true,
       speed: 500,
       autoplaySpeed: 2000,
-      slidesToShow: itemLength >= 8 ? 8 : itemLength,
+      slidesToShow: itemLength >= 10 ? 10 : itemLength,
       slidesToScroll: 1,
       swipeToSlide: true,
       lazyLoad: true,
@@ -30,7 +30,7 @@ const CategoryCarousel = props => {
         {
           breakpoint: 1440,
           settings: {
-            slidesToShow: itemLength >= 8 ? 8 : itemLength,
+            slidesToShow: itemLength >= 10 ? 10 : itemLength,
             slidesToScroll: 1
           }
         },

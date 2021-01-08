@@ -20,7 +20,7 @@ export const MEDIA = [
     type: 'image'
   },
   {
-    url: 'https://www.youtube.com/watch?v=ScMzIvxBSi4&ab_channel=BenMarquezTX',
+    url: 'https://www.youtube.com/embed/ni5hRK1ehzk',
     type: 'video'
   }
 ];

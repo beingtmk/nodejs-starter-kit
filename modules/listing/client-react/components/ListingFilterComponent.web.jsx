@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 import styled from 'styled-components';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY, DISCOUNT } from '@gqlapp/listing-common/SortFilter';
@@ -9,7 +10,6 @@ import { translate } from '@gqlapp/i18n-client-react';
 import {
   CheckBox,
   Space,
-  /* Affix, */
   Card,
   Option,
   FormItem,
@@ -28,10 +28,6 @@ import { compose } from '@gqlapp/core-common';
 
 import SliderControlled from './FIlterSliderControlledComponent';
 import { withGetBrandList } from '../containers/ListingOperations';
-
-const Affix = styled.div`
-  transform: ${props => props.value && `translateY(${props.value}px)`};
-`;
 
 const RateDiv = styled.div`
   height: 22px;
@@ -67,7 +63,6 @@ const ListingsFilterComponent = props => {
     layout
   } = props;
   const [selectedBrand, setSelectedBrand] = useState(brand || []);
-  const [scroll, setScroll] = useState(0);
   // console.log(selectedBrand);
   const handleFiltersRemove = useRef(() => {});
 
@@ -90,10 +85,6 @@ const ListingsFilterComponent = props => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      let scrollEvent = window.scrollY;
-      setScroll(scrollEvent);
-    });
     return () => handleFiltersRemove.current();
   }, []);
 
@@ -405,44 +396,28 @@ const ListingsFilterComponent = props => {
         </Col>
       </Row>
     );
-  const limit = Math.max(
-    document.body.scrollHeight,
-    document.body.offsetHeight,
-    document.documentElement.clientHeight,
-    document.documentElement.scrollHeight,
-    document.documentElement.offsetHeight
-  );
-  // console.log(scroll);
-  // const affixProps =
-  //   limit - scroll <= 1247
-  //     ? {
-  //         offsetBottom: 200,
-  //       }
-  //     : {
-  //         offsetTop: layout === 'vertical' ? 110 : 43,
-  //       };
-  // console.log(scroll > (layout === 'vertical' ? 110 : 43), parseInt(scroll));
   return (
-    <Row>
-      <Col lg={24} md={24} xs={0}>
-        {affix ? (
-          <Affix
-            value={
-              limit - scroll > 1190
-                ? scroll > (layout === 'vertical' ? 110 : 43) && scroll - (layout === 'vertical' ? 110 : 43)
-                : scroll - ((layout === 'vertical' ? 110 : 43) + 339)
-            }
-          >
+    <>
+      {affix ? (
+        <StickyContainer style={{ height: '100%' /* , zIndex: '1' */ }}>
+          <Sticky>
+            {({ style, isSticky }) => (
+              <div style={{ ...style }}>
+                <div style={{ height: isSticky ? '90px' : '0px' }} />
+                <Col lg={24} md={24} xs={0}>
+                  <Card>{filterItems}</Card>
+                </Col>
+              </div>
+            )}
+          </Sticky>
+          <Col lg={0} md={0} xs={24}>
             <Card>{filterItems}</Card>
-          </Affix>
-        ) : (
-          <Card>{filterItems}</Card>
-        )}
-      </Col>
-      <Col lg={0} md={0} xs={24}>
+          </Col>
+        </StickyContainer>
+      ) : (
         <Card>{filterItems}</Card>
-      </Col>
-    </Row>
+      )}
+    </>
   );
 };
 

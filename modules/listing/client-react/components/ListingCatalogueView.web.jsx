@@ -93,17 +93,15 @@ const ListingCatalogueView = props => {
       <Row type="flex" gutter={[24, 24]}>
         <Col {...span.spanFilter}>
           {layout !== 'vertical' && <br />}
-          {showFilter &&
-            (typeof window !== 'undefined' ? (
-              <ListingFilterComponent
-                layout={layout}
-                showIsActive={false}
-                filter={{ isActive: true }}
-                orderBy={{}}
-                {...props}
-              />
-            ) : null)}
-          {layout !== 'vertical' && <Divider />}
+          {showFilter && (
+            <ListingFilterComponent
+              layout={layout}
+              showIsActive={false}
+              filter={{ isActive: true }}
+              orderBy={{}}
+              {...props}
+            />
+          )}
         </Col>
         <Col {...span.spanContent}>
           {loading && <Spinner />}

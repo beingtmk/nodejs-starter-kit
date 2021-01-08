@@ -46,6 +46,7 @@ const OutOfStock = styled.div`
 
 const ListingWraper = styled.div`
   position: relative;
+  margin: 0 auto;
   @media screen and (max-width: 767px) {
     width: 280px;
   }

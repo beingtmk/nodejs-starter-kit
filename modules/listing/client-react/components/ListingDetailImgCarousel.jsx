@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import ReactImageMagnify from 'react-image-magnify';
 
@@ -7,8 +7,10 @@ import { Row, Col, Carousel } from '@gqlapp/look-client-react';
 
 const ListingDetailImgCarousel = props => {
   const { images, youtubeUrl, carouselLayout = true } = props;
-  const [visibleImgIdx, setVisibleImgIdx] = useState([true]);
-  const [visibleVidIdx, setVisibleVidIdx] = useState([]);
+  const [visibleImgIdx, setVisibleImgIdx] = useState(images.length > 0 ? [true] : []);
+  const [visibleVidIdx, setVisibleVidIdx] = useState(images.length === 0 ? [true] : []);
+
+  useEffect(() => {});
 
   let carouselThumbnail = [];
   carouselThumbnail = youtubeUrl && youtubeUrl.length !== 0 ? [...carouselThumbnail, ...youtubeUrl] : [];
