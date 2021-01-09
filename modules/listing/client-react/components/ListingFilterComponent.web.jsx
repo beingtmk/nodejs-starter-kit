@@ -8,6 +8,8 @@ import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { SORT_BY, DISCOUNT } from '@gqlapp/listing-common/SortFilter';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Collapse,
+  CollapsePanel,
   CheckBox,
   Space,
   Card,
@@ -305,7 +307,7 @@ const ListingsFilterComponent = props => {
             {t('listingFilter.search')}
           </Space>
         }
-        style={{ height: '60px', width: '100%' }}
+        style={{ /* height: '60px', */ width: '100%', marginBottom: '0px' }}
         {...obj}
       >
         <DebounceInput
@@ -340,7 +342,7 @@ const ListingsFilterComponent = props => {
           <Row gutter={24}>
             <Col span={24}>{searchField(false)}</Col>
             <Col span={24}>{showIsActive && activeField(false)}</Col>
-            <Col>{categoryTreeField}</Col>
+            <Col span={24}>{categoryTreeField}</Col>
             <Col span={24}>{listingSortBy('100%', false)}</Col>
             <Col span={24}>{listingDiscount('100%', false)}</Col>
             <Col span={24}>{listingBrand('100%', false)}</Col>
@@ -354,45 +356,39 @@ const ListingsFilterComponent = props => {
         </Col>
       </Row>
     ) : (
-      <Row /* type="flex" */ /* align="middle" */>
-        <Col span={24} /* style={{ height: '60px' }} */>
+      <Row gutter={48}>
+        <Col span={19}>
           <Row gutter={24}>
-            <Col span={19}>
-              <Row gutter={24}>
-                <Col span={12}>{searchField(true)}</Col>
-                <Col span={12}>{showIsActive && activeField(true)}</Col>
-                <Col lg={24} xs={24} md={12}>
-                  <Row type="flex" gutter={24}>
-                    <Col lg={12} md={12} xs={24}>
-                      {categoryTreeField}
-                    </Col>
-                    <Col lg={12} md={12} xs={24}>
-                      {listingBrand('100%', true)}
-                    </Col>
-                    <Col lg={12} md={12} xs={24}>
-                      {listingSortBy('100%')}
-                    </Col>
-                    <Col lg={12} md={12} xs={24}>
-                      {listingDiscount('100%')}
-                    </Col>
-                    <Col lg={24} md={24} xs={24} align="left">
-                      {sliderControlled(false)}
-                    </Col>
-                  </Row>
+            <Col span={8}>{searchField(true)}</Col>
+            <Col span={8}>{categoryTreeField}</Col>
+            <Col span={8}>{showIsActive && activeField(true)}</Col>
+            <Col lg={24} xs={24} md={12}>
+              <Row type="flex" gutter={24}>
+                <Col lg={8} md={8} xs={24}>
+                  {listingBrand('100%', true)}
+                </Col>
+                <Col lg={8} md={8} xs={24}>
+                  {listingSortBy('100%')}
+                </Col>
+                <Col lg={8} md={8} xs={24}>
+                  {listingDiscount('100%')}
+                </Col>
+                <Col lg={24} md={24} xs={24} align="left">
+                  {sliderControlled(false)}
                 </Col>
               </Row>
             </Col>
-            <Col span={5}>
-              {listingByRating(true)}
-              <Col lg={24} md={24} xs={0}>
-                <br />
-                <br />
-                <br />
-                <br />
-              </Col>
-              {handleResetBtn}
-            </Col>
           </Row>
+        </Col>
+        <Col span={5}>
+          {listingByRating(true)}
+          {/* <Col lg={24} md={24} xs={0}>
+                <br />
+                <br />
+                <br />
+                <br />
+              </Col> */}
+          {handleResetBtn}
         </Col>
       </Row>
     );
@@ -415,7 +411,21 @@ const ListingsFilterComponent = props => {
           </Col>
         </StickyContainer>
       ) : (
-        <Card>{filterItems}</Card>
+        <Collapse>
+          <CollapsePanel
+            header={
+              <div style={{ position: 'absolute', top: '33%' }}>
+                <Space align="center">
+                  <Icon type="FilterOutlined" />
+                  Listing Filters
+                </Space>
+              </div>
+            }
+            extra={searchField(true)}
+          >
+            {filterItems}
+          </CollapsePanel>
+        </Collapse>
       )}
     </>
   );
