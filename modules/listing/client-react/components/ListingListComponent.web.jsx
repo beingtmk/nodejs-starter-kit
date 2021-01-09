@@ -307,7 +307,7 @@ const ListingListComponent = props => {
   );
 
   return (
-    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
+    <div style={{ overflowY: 'auto', minHeight: '100vh', position: 'relative' }}>
       {/* Render loader */}
       {loading && <RenderTableLoading columns={columns} tableProps={{ scroll: { x: 1300 } }} />}
       {/* Render main listing content */}

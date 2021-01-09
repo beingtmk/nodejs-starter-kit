@@ -143,7 +143,7 @@ const DynamicCarouselListView = props => {
   );
 
   return (
-    <div style={{ overflowX: 'auto', height: '100vh', position: 'relative' }}>
+    <div style={{ overflowY: 'auto', minHeight: '100vh', position: 'relative' }}>
       {loading && <RenderTableLoading columns={columns} />}
       {/* Render main listing content */}
       {dynamicCarousels && dynamicCarousels.totalCount ? (
