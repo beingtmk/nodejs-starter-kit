@@ -9,15 +9,36 @@ import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
+import { ORDER_STATES } from '@gqlapp/order-common';
+import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
+import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 
 import EditCartQuantity from './EditCartQuantity';
 import EditCart from './EditCart';
 
 const CartItemComponent = props => {
-  const { loading, listing, t, item, onEdit, onDelete, currentUser } = props;
-  const disable = listing && listing.listingOptions && listing.listingOptions.fixedQuantity !== -1;
+  const { loading, listing, t, item, onEdit, onDelete, currentUser, state, modalDiscount } = props;
+  const now = new Date().toISOString();
+
+  const disable =
+    state !== ORDER_STATES.STALE || (listing && listing.listingOptions && listing.listingOptions.fixedQuantity !== -1);
   const maxQuantity = listing && listing.listingDetail && listing.listingDetail.inventoryCount;
-  // console.log('cart item', props);
+
+  const startDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.startDate;
+  const endDate = modalDiscount && modalDiscount.discountDuration && modalDiscount.discountDuration.endDate;
+  const isDiscountPercent =
+    startDate && endDate
+      ? startDate <= now && endDate >= now && modalDiscount && modalDiscount.discountPercent > 0
+      : modalDiscount && modalDiscount.discountPercent > 0;
+  const discountPercent = isDiscountPercent ? modalDiscount && modalDiscount.discountPercent : null;
+  const isDiscount = (listing && listing.listingFlags && listing.listingFlags.isDiscount) || isDiscountPercent;
+  const discount =
+    (listing &&
+      listing.listingCostArray &&
+      listing.listingCostArray.length > 0 &&
+      listing.listingCostArray[0].discount) ||
+    discountPercent;
+  // console.log('cart item', disable);
   return (
     <Row align="middle">
       <Col span={1} />
@@ -48,58 +69,81 @@ const CartItemComponent = props => {
           </Row>
         </Link>
       </Col>
-      <Col span={11} style={{ display: 'flex' }}>
-        <Col span={7} align="center">
-          {!loading && <EditCartQuantity item={item} disable={disable} maxQuantity={maxQuantity} t={t} />}
-        </Col>
-        <Col span={1} align="center">
-          x
-        </Col>
-        <Col span={8} align="center">
-          <h3 type="2" style={{ marginBottom: '0px' }}>
-            &#8377; {` ${item.cost}`}
-          </h3>
-        </Col>
-        <Col span={8} align="center">
-          <h3 type="2" style={{ marginBottom: '0px' }}>
-            &#8377; {` ${item.cost * item.orderOptions.quantity}`}
-          </h3>
-          <br />
-          <br />
-          <br />
-          <Col span={24}>
-            <div style={{ display: 'flex', float: 'right' }}>
-              {onEdit && (
-                <ModalDrawer
-                  buttonText={<Icon type="EditOutlined" />}
-                  modalTitle="Edit Item"
-                  block={false}
-                  height="auto"
-                  shape="circle"
-                  size="md"
-                  type="default"
-                >
-                  <EditCart
-                    modalId={item.modalId}
-                    currentUser={currentUser}
-                    modalName={MODAL[1].value}
-                    onEdit={onEdit}
-                    item={item}
-                    t={t}
-                  />
-                </ModalDrawer>
-              )}
-              &nbsp; &nbsp;
-              {onDelete && (
-                <DeleteIcon
-                  title="Are you sure to delete this order?"
-                  onClick={() => props.onDelete(item.id)}
-                  size="md"
-                />
-              )}
-            </div>
+      <Col span={11} /* style={{ display: 'flex' }} */>
+        <Row type="flex" align="middle">
+          <Col span={7} align="center">
+            {!loading && <EditCartQuantity item={item} disable={disable} maxQuantity={maxQuantity} t={t} />}
+            <br />
+            <br />
+            <br />
           </Col>
-        </Col>
+          <Col span={1} align="center">
+            &nbsp;x
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
+          <Col span={8} align="center">
+            <DiscountComponentView
+              isDiscount={isDiscount}
+              cost={item.cost}
+              discount={discount}
+              span={[24, 0]}
+              card={true}
+              rowStyle={{ height: '75px' }}
+              NavitemCart={true}
+            />
+            {/* <h3 type="2" style={{ marginBottom: '0px' }}>
+              &#8377; {` ${item.cost}`}
+            </h3> */}
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
+          <Col span={8} align="center">
+            <h3 type="2" style={{ marginBottom: '0px' }}>
+              &#8377; {` ${item.cost * item.orderOptions.quantity}`}
+            </h3>
+            <br />
+            <br />
+            <br />
+            <Col span={24}>
+              <div style={{ display: 'flex', float: 'right' }}>
+                {onEdit && (
+                  <ModalDrawer
+                    buttonText={<Icon type="EditOutlined" />}
+                    modalTitle="Edit Item"
+                    block={false}
+                    height="auto"
+                    shape="circle"
+                    size="md"
+                    type="default"
+                  >
+                    <EditCart
+                      modalId={item.modalId}
+                      currentUser={currentUser}
+                      modalName={MODAL[1].value}
+                      onEdit={onEdit}
+                      item={item}
+                      t={t}
+                    />
+                  </ModalDrawer>
+                )}
+                &nbsp; &nbsp;
+                {onDelete && (
+                  <DeleteIcon
+                    title="Are you sure to delete this order?"
+                    onClick={() => props.onDelete(item.id)}
+                    size="md"
+                  />
+                )}
+              </div>
+            </Col>
+          </Col>
+        </Row>
       </Col>
       <Col span={1} />
     </Row>
@@ -115,7 +159,9 @@ CartItemComponent.propTypes = {
   onEdit: PropTypes.func,
   onSubmit: PropTypes.func,
   mobile: PropTypes.func,
-  t: PropTypes.func
+  t: PropTypes.func,
+  state: PropTypes.string,
+  modalDiscount: PropTypes.object
 };
 
-export default compose(withListing)(CartItemComponent);
+export default compose(withListing, withModalDiscount)(CartItemComponent);

@@ -96,7 +96,7 @@ const MyOrdersView = props => {
             </>
           )}
         </Col>
-        <Col lg={{ span: 16 }} md={{ span: 24 }} xs={0} align="center">
+        <Col lg={{ span: 16 }} md={{ span: 24 }} xs={0} align="right">
           {orderStates && orderStates.length !== 0 && (
             <ButtonGroup>
               <Button onClick={() => filterItems('')} type={classNamesgroup('')}>

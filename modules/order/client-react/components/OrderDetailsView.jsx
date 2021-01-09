@@ -55,9 +55,7 @@ const OrderDetailsView = props => {
                         <Card>
                           <h4>{t('orderDetails.addressText')}</h4>
                           <hr />
-                          <Row type="flex" justify="center" align="middle">
-                            {address && <AddressItemComponent address={address} t={t} />}
-                          </Row>
+                          {address && <AddressItemComponent active={address.id} address={address} t={t} />}
                         </Card>
                       </Col>
                     </Row>
@@ -69,7 +67,7 @@ const OrderDetailsView = props => {
                   <CheckoutCardComponent
                     t={t}
                     onSubmit={onSubmit}
-                    getCart={order}
+                    order={order}
                     product={3}
                     showState={true}
                     showBtn={false}

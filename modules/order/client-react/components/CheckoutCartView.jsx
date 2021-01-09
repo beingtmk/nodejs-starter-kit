@@ -12,6 +12,7 @@ import {
   Divider,
   Spinner
 } from '@gqlapp/look-client-react';
+import { MODAL } from '@gqlapp/review-common';
 
 import OrderSummary from './OrderSummary';
 import CheckoutLayout from './CheckoutLayout';
@@ -67,6 +68,7 @@ const CheckoutCartView = props => {
                   <Row>
                     <Col span={24}>
                       <CartItemComponent
+                        modalName={MODAL[1].value}
                         modalId={cartItem.modalId}
                         t={t}
                         item={cartItem}

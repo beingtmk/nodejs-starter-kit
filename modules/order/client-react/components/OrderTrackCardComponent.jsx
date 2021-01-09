@@ -30,7 +30,9 @@ const OrderTrackCardComponent = props => {
 
   const stepsText = [
     { id: 0, text: t('orderDetails.status.step1') },
-    { id: 2, text: t('orderDetails.status.step2') }
+    { id: 1, text: t('orderDetails.status.step2') },
+    { id: 2, text: t('orderDetails.status.step3') },
+    { id: 3, text: t('orderDetails.status.step4') }
   ];
 
   return (

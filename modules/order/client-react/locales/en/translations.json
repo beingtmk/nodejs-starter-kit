@@ -43,7 +43,9 @@
     "status":{
       "title":"Status",
       "step1":"Payment Done.",
-      "step2":"Event pass booked."
+      "step2":"Order confirmed.",
+      "step3":"Order dispatched.",
+      "step4":"Order completed."
     }
   },
   "checkoutCard":{

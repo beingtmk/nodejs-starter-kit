@@ -39,20 +39,18 @@ const RenderSelect = props => {
         wrapperCol: { span: 24 }
       };
 
-  // console.log(props);
-  return (
-    <FormItem
-      label={
-        <Space align="center">
-          {icon && <Icon type={icon} />}
-          {label}
-        </Space>
+  const labelObj = label
+    ? {
+        label: (
+          <Space align="center">
+            {icon && <Icon type={icon} />}
+            {label}
+          </Space>
+        )
       }
-      validateStatus={validateStatus}
-      help={error}
-      style={{ width: '100%' }}
-      {...labels}
-    >
+    : {};
+  return (
+    <FormItem {...labelObj} validateStatus={validateStatus} help={error} style={{ width: '100%' }} {...labels}>
       <Select type={type} style={selectStyle} {...input} onChange={handleChange}>
         {children}
       </Select>

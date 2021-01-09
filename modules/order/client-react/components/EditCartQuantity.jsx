@@ -24,7 +24,7 @@ const EditCartQuantity = props => {
       component={RenderSelect}
       placeholder={t('cartItem.quantity')}
       defaultValue={item.orderOptions.quantity}
-      disable={disable}
+      disabled={disable}
       onChange={e => handleEdit(e)}
       style={{ width: '100%' }}
       value={item.orderOptions.quantity}

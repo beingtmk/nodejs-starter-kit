@@ -17,7 +17,7 @@ const DiscountComponent = props => {
       <Col span={24}>
         <Row gutter={8}>
           <Col
-            span={17}
+            span={isDiscount && !NavitemCart ? 17 : 24}
             style={{
               whiteSpace: 'nowrap',
               overflow: NavitemCart ? 'visible' : 'hidden'
