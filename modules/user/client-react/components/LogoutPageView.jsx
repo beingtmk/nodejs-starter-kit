@@ -49,7 +49,7 @@ const LogoutPageView = props => {
               </Row>
             </>
           }
-          subTitle="Hey awesome manager, it was a pleasure having you here. And see you again soon! Go to HomeSignIn"
+          subTitle="It was a pleasure having you here. And see you again soon!"
           extra={
             <>
               <Row justify="center">
@@ -71,7 +71,7 @@ const LogoutPageView = props => {
                       <div style={{ width: '100%' }}>
                         <Button key="signIn" block={true} onClick={() => history.push(`${USER_ROUTES.login}`)}>
                           <Icon type="LoginOutlined" />
-                          SignIn
+                          Sign In
                         </Button>
                       </div>
                     </Col>

@@ -63,7 +63,7 @@ class Footer extends React.Component {
       return (
         <Col key={i.toString()} {...itemProps} title={null} content={null}>
           <Col lg={24} md={24} xs={0}>
-            <h2 {...title}>
+            <h2 style={{ color: 'white' }} {...title}>
               {typeof title.children === 'string' && title.children.match(isImg) ? (
                 <img src={title.children} width="100%" alt="img" />
               ) : (
