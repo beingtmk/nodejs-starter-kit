@@ -94,9 +94,9 @@ const CheckoutOrderView = props => {
               getCart={getCart}
               history={history}
               btn={
-                <Button onClick={onSubmit} size="lg">
+                <Button onClick={onSubmit} size="lg" block color="primary">
                   <Icon type="CreditCardOutlined" />
-                  PAY NOw
+                  PAY NOW
                 </Button>
               }
             />

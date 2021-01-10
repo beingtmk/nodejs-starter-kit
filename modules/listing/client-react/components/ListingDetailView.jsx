@@ -117,7 +117,7 @@ const ListingDetailView = props => {
               </Col>
               <Col lg={13} md={13} xs={24}>
                 <Row /*  type="flex" align="end" */>
-                  <Col lg={20} md={20} xs={21}>
+                  <Col lg={22} md={22} xs={21}>
                     <Breadcrumb separator=">">
                       <BreadcrumbItem key="home">
                         <NavLink to={`${HOME_ROUTES.home}`}>
@@ -154,9 +154,9 @@ const ListingDetailView = props => {
                       />
                     </Col>
                   </Col>
-                  <Col span={3}>
+                  <Col lg={2} md={2} xs={3}>
                     <Row>
-                      <Col lg={12} xs={24}>
+                      <Col lg={12} xs={24} align="right">
                         {currentUser && (
                           <IfLoggedIn>
                             {/* <div style={{ marginTop: '4px' }}> */}
@@ -172,7 +172,7 @@ const ListingDetailView = props => {
                       </Col>
                       {/* </Row> */}
                       {/* <Row> */}
-                      <Col lg={12} xs={24}>
+                      <Col lg={12} xs={24} align="right">
                         <SocialSharingButtons {...message} onShare={onShare} t={t} />
                       </Col>
                     </Row>

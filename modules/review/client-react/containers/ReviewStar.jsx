@@ -22,7 +22,9 @@ const ReviewStar = props => {
       <Rate disabled allowHalf defaultValue={avgRating(five, four, three, two, one, totalRatings)} /> &nbsp;{' '}
       {suffix ? `(${totalRatings} ${suffix})` : `(${totalRatings})`}
     </>
-  ) : null;
+  ) : (
+    <br />
+  );
 };
 
 ReviewStar.propTypes = {

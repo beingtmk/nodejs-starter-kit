@@ -4,10 +4,14 @@ import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Button } from 'antd';
-import { Row, Col } from '@gqlapp/look-client-react';
 
 // eslint-disable-next-line import/no-named-default
 import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';
+import Row from './Row';
+import Col from './Col';
+import Icon from './Icon';
+import Collapse from './Collapse';
+import CollapsePanel from './CollapsePanel';
 
 const Img = styled.img`
   &:hover {
@@ -58,14 +62,47 @@ class Footer extends React.Component {
       const { title, childWrapper, ...itemProps } = item;
       return (
         <Col key={i.toString()} {...itemProps} title={null} content={null}>
-          <h2 {...title}>
-            {typeof title.children === 'string' && title.children.match(isImg) ? (
-              <img src={title.children} width="100%" alt="img" />
+          <Col lg={24} md={24} xs={0}>
+            <h2 {...title}>
+              {typeof title.children === 'string' && title.children.match(isImg) ? (
+                <img src={title.children} width="100%" alt="img" />
+              ) : (
+                title.children
+              )}
+            </h2>
+            <ChildLink {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</ChildLink>
+          </Col>
+          <Col lg={0} md={0} xs={24}>
+            {item.name === 'dropdownable' ? (
+              <Collapse
+                expandIconPosition={'right'}
+                accordion
+                ghost
+                expandIcon={({ isActive }) =>
+                  isActive ? (
+                    <Icon type="CaretUpFilled" style={{ fontSize: '20px', color: 'white' }} />
+                  ) : (
+                    <Icon type="CaretDownFilled" style={{ fontSize: '20px', color: 'white' }} />
+                  )
+                }
+              >
+                <CollapsePanel header={<h2 style={{ color: 'white', margin: '0' }}>{title.children}</h2>}>
+                  <ChildLink {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</ChildLink>
+                </CollapsePanel>
+              </Collapse>
             ) : (
-              title.children
+              <>
+                <h2 {...title}>
+                  {typeof title.children === 'string' && title.children.match(isImg) ? (
+                    <img src={title.children} width="100%" alt="img" />
+                  ) : (
+                    title.children
+                  )}
+                </h2>
+                <ChildLink {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</ChildLink>
+              </>
             )}
-          </h2>
-          <ChildLink {...childWrapper}>{childWrapper.children.map(getChildrenToRender)}</ChildLink>
+          </Col>
         </Col>
       );
     });
@@ -177,7 +214,7 @@ class Footer extends React.Component {
             }
           },
           {
-            name: 'block1',
+            name: 'dropdownable',
             xs: 24,
             md: 6,
             lg: 6,
@@ -189,7 +226,7 @@ class Footer extends React.Component {
             }
           },
           {
-            name: 'block2',
+            name: 'dropdownable',
             xs: 24,
             md: 6,
             lg: 6,
@@ -205,7 +242,7 @@ class Footer extends React.Component {
             }
           },
           {
-            name: 'block3',
+            name: 'dropdownable',
             xs: 24,
             md: 6,
             lg: 6,

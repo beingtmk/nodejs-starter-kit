@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import TweenOne, { TweenOneGroup } from 'rc-tween-one';
+import { TweenOneGroup } from 'rc-tween-one';
 import BannerAnim, { Element, Arrow } from 'rc-banner-anim';
 import 'rc-banner-anim/assets/index.css';
 
-import { LeftArrow, RightArrow, Icon, Button, Row, Col, EmptyComponent } from '@gqlapp/look-client-react';
+import { LeftArrow, RightArrow, Button, Row, Col, EmptyComponent } from '@gqlapp/look-client-react';
 
 import ROUTES from '../../routes';
 
@@ -152,19 +152,6 @@ class Banner extends React.PureComponent {
             </BannerAnim>
           </div>
         </TweenOneGroup>
-        <TweenOne
-          animation={{
-            y: '-=20',
-            yoyo: true,
-            repeat: -1,
-            duration: 1000
-          }}
-          className="banner1-icon"
-          style={{ bottom: 40 }}
-          key="icon"
-        >
-          <Icon type="DownOutlined" />
-        </TweenOne>
       </div>
     );
   }
