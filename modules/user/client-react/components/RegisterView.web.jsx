@@ -12,13 +12,18 @@ import {
   CardTitle,
   CardText,
   Underline,
-  MetaTags,
+  MetaTags
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 import RegisterForm from './RegisterForm';
 
-const RegisterView = ({ t, onSubmit, isRegistered }) => {
+const RegisterView = ({ t, onSubmit, isRegistered, location, history }) => {
+  if (isRegistered && !settings.auth.password.requireEmailConfirmation && location.href.includes('?redirectBack=')) {
+    const pushUrl = location.href.split('?redirectBack=')[1];
+    history && history.push(pushUrl);
+  }
+
   const renderConfirmationModal = () => (
     <Card>
       <CardGroup style={{ textAlign: 'center' }}>
@@ -35,6 +40,7 @@ const RegisterView = ({ t, onSubmit, isRegistered }) => {
           <Icon type="UserAddOutlined" /> {t('reg.form.title')}
         </CardTitle>
       </Underline>
+      <br />
       {isRegistered && settings.auth.password.requireEmailConfirmation ? (
         renderConfirmationModal()
       ) : (
@@ -63,6 +69,8 @@ RegisterView.propTypes = {
   t: PropTypes.func,
   onSubmit: PropTypes.func,
   isRegistered: PropTypes.bool,
+  location: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default translate('user')(RegisterView);

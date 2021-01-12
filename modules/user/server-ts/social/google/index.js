@@ -33,7 +33,7 @@ async function verifyCallback(accessToken, refreshToken, profile, cb) {
     let user = await User.getUserByGoogleIdOrEmail(id, value);
 
     if (!user) {
-      const [createdUserId] = await registerUser(profile);
+      const createdUserId = await registerUser(profile);
 
       await createGoogleOAuth({ id, displayName, userId: createdUserId });
 
