@@ -1,5 +1,4 @@
 import { pick } from 'lodash';
-import { camelizeKeys } from 'humps';
 
 import { AuthModule } from '@gqlapp/authentication-server-ts';
 import settings from '@gqlapp/config';
@@ -10,14 +9,12 @@ import { default as User } from '../../sql';
 import resolvers from './resolvers';
 
 const registerUser = async ({ id, emails: [{ value }] }) => {
-  return camelizeKeys(
-    User.register({
-      username: value,
-      email: value,
-      password: id,
-      isActive: true
-    })
-  )[0];
+  return User.register({
+    username: value,
+    email: value,
+    password: id,
+    isActive: true
+  });
 };
 
 const createGoogleOAuth = async user => User.createGoogleOAuth(user);
@@ -34,6 +31,7 @@ async function verifyCallback(accessToken, refreshToken, profile, cb) {
 
     if (!user) {
       const createdUserId = await registerUser(profile);
+      console.log(createdUserId);
 
       await createGoogleOAuth({ id, displayName, userId: createdUserId });
 

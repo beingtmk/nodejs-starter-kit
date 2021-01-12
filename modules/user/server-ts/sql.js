@@ -140,6 +140,7 @@ export class User extends Model {
   }
 
   async getUser(id) {
+    // console.log('id', id);
     const queryBuilder = User.query()
       .findById(id)
       .eager(user_eager);
