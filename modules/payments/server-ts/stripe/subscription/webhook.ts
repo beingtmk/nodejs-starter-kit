@@ -3,7 +3,7 @@ import { TranslationFunction } from 'i18next';
 
 import { mailer } from '@gqlapp/mailer-server-ts';
 import settings from '@gqlapp/config';
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import StripeSubscriptionDAO from './sql';
 

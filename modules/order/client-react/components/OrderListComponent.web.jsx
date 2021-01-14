@@ -16,7 +16,7 @@ import {
   RenderTableLoading
 } from '@gqlapp/look-client-react';
 import { ORDER_STATES } from '@gqlapp/order-common';
-import USER_ROUTES from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { displayDateCheck } from '@gqlapp/review-client-react/components/functions';
 import settings from '@gqlapp/config';

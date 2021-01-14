@@ -7,7 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PLATFORM } from '@gqlapp/core-common';
 import { FormError } from '@gqlapp/forms-client-react';
 import settings from '@gqlapp/config';
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import UpdateCreditCardView from '../components/UpdateCreditCardView';
 

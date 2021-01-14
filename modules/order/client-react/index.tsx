@@ -6,9 +6,7 @@ import { compose } from '@gqlapp/core-common';
 import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
-import { AuthRoute, IfLoggedIn } from '@gqlapp/user-client-react';
-// eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { AuthRoute, IfLoggedIn, USER_ROUTES } from '@gqlapp/user-client-react';
 import { withPlatform } from '@gqlapp/setting-client-react/containers/SettingOperations';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 import { PLATFORM_TYPE } from '@gqlapp/setting-common';

@@ -7,9 +7,7 @@ import loadable from '@loadable/component';
 import { compose } from '@gqlapp/core-common';
 import { Route, NavLink } from 'react-router-dom';
 import { Icon, MenuItem, Spinner, SubMenu } from '@gqlapp/look-client-react';
-import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
-// eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { IfLoggedIn, AuthRoute, USER_ROUTES } from '@gqlapp/user-client-react/';
 import { withPlatform } from '@gqlapp/setting-client-react/containers/SettingOperations';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 import { PLATFORM_TYPE } from '@gqlapp/setting-common';

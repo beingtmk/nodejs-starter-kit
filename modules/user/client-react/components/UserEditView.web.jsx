@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { translate } from '@gqlapp/i18n-client-react';
 import { LayoutCenter, PageLayout, Card, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import UserForm from './UserForm';
 

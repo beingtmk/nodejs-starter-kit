@@ -7,7 +7,7 @@ import ClientModule from '@gqlapp/module-client-react';
 import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
 import { MenuItem, Icon, Spinner } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import resolvers from './resolvers';
 import resources from './locales';

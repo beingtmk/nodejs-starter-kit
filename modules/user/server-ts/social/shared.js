@@ -1,7 +1,8 @@
 import { access } from '@gqlapp/authentication-server-ts';
 // eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
+// eslint-disable-next-line import/no-named-as-default
 import User from '../sql';
 
 export async function onAuthenticationSuccess(req, res) {

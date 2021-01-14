@@ -21,6 +21,7 @@ import {
 import settings from '@gqlapp/config';
 import DiscountBtn from '@gqlapp/discount-client-react/containers/DiscountBtn';
 import { MODAL } from '@gqlapp/review-common';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import ROUTES from '../routes';
 import { displayDataCheck } from './functions';
@@ -68,7 +69,15 @@ const ListingListComponent = props => {
       fixed: 'left',
       dataIndex: 'user.username',
       key: 'user.username',
-      render: (text, record) => <div>{record.user && displayDataCheck(record.user.username)}</div>
+      render: (text, record) => (
+        <a
+          href={`${USER_ROUTES.userPublicProfileLink}${record.user && record.user.id}`}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {record.user && displayDataCheck(record.user.username)}
+        </a>
+      )
     },
     {
       title: (

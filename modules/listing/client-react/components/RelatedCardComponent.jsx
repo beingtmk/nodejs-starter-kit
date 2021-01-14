@@ -10,7 +10,7 @@ import { Icon, Button, Ribbon, Message, Card, CardMeta, Tooltip } from '@gqlapp/
 import { IfLoggedIn } from '@gqlapp/user-client-react/containers/Auth';
 import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperations';
 import { ORDER_ROUTES } from '@gqlapp/order-client-react';
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
 import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';

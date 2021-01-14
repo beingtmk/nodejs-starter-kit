@@ -6,9 +6,9 @@ import { UserInputError } from 'apollo-server-errors';
 import { access } from '@gqlapp/authentication-server-ts';
 import { log } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
-// eslint-disable-next-line import/no-named-default
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
+// eslint-disable-next-line import/no-named-as-default
 import User from '../sql';
 
 const createPasswordHash = password => bcrypt.hash(password, 12) || false;

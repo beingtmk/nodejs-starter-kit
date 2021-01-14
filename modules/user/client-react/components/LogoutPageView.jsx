@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { PageLayout, Icon, Row, Col, Button, Result } from '@gqlapp/look-client-react';
 import { HOME_ROUTES } from '@gqlapp/home-client-react';
-import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 const LOGOUT_PAGE_GIF =
   'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1601824605/cwy15kfennovwu6j4noe.webp';

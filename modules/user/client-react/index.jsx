@@ -17,6 +17,8 @@ import DataRootComponent from './containers/DataRootComponent';
 
 import { AuthRoute, IfLoggedIn, IfNotLoggedIn, withLoadedUser, withLogout } from './containers/Auth';
 
+export { default as USER_ROUTES } from './routes';
+
 const NavLinkSignIn = styled(NavLink)`
   color: unset;
   &:hover {
