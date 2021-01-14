@@ -7,7 +7,7 @@ import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import { LABEL } from '@gqlapp/home-common';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 
-import DiscountsCarousel from '@gqlapp/discount-client-react/containers/DiscountsCarousel';
+import { DiscountsCarousel } from '@gqlapp/discount-client-react';
 import { ListingCarousel } from '@gqlapp/listing-client-react';
 import DynamicCarousel from '../containers/DCComponents/DynamicCarouselComponent';
 import ImageBanner from '../containers/DCComponents/ImageBannerComponent';

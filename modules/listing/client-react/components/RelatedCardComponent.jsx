@@ -12,9 +12,7 @@ import { withAddToCart } from '@gqlapp/order-client-react/containers/OrderOperat
 import { ORDER_ROUTES } from '@gqlapp/order-client-react';
 import { USER_ROUTES } from '@gqlapp/user-client-react';
 import AddToCartFormBtns from '@gqlapp/order-client-react/components/AddToCartFormBtns';
-import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
-import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
-import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
+import { DiscountComponentView, withModalDiscount, subscribeToDiscount } from '@gqlapp/discount-client-react';
 import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { MODAL } from '@gqlapp/review-common';
 

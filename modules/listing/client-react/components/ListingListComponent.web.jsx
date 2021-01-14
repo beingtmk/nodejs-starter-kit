@@ -19,7 +19,7 @@ import {
   RenderTableLoading
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import DiscountBtn from '@gqlapp/discount-client-react/containers/DiscountBtn';
+import { DiscountBtn } from '@gqlapp/discount-client-react';
 import { MODAL } from '@gqlapp/review-common';
 import { USER_ROUTES } from '@gqlapp/user-client-react';
 

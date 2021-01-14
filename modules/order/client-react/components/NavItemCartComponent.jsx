@@ -6,8 +6,7 @@ import { PropTypes } from 'prop-types';
 import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import { Row, Col, Card, Tooltip } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
-import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
+import { DiscountComponentView, withModalDiscount } from '@gqlapp/discount-client-react';
 
 // const AlignButton = styled.div`
 //   position: absolute;

@@ -5,11 +5,9 @@ import { Message } from '@gqlapp/look-client-react';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-// eslint-disable-next-line import/no-named-default
 import { USER_ROUTES } from '@gqlapp/user-client-react';
 import { MODAL } from '@gqlapp/review-common';
-import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
-import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
+import { withModalDiscount, subscribeToDiscount } from '@gqlapp/discount-client-react';
 
 import AddToCartView from '../components/AddToCartView';
 import { withAddToCart, withGetCart, withDeleteCartItem } from './OrderOperations';

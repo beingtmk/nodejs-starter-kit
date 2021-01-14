@@ -5,13 +5,15 @@ import ClientModule from '@gqlapp/module-client-react';
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import loadable from '@loadable/component';
 import { Icon, MenuItem, Spinner } from '@gqlapp/look-client-react';
-import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
+import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react';
 
 import resources from './locales';
 import resolvers from './resolvers';
 import ROUTES from './routes';
 
 export { default as DISCOUNT_ROUTES } from './routes';
+export * from './containers';
+export * from './components';
 
 const NavLinkWithI18n = translate('discount')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">

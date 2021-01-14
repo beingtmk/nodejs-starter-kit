@@ -20,8 +20,7 @@ import {
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
 import Review from '@gqlapp/review-client-react/containers/Review';
-import DiscountComponent from '@gqlapp/discount-client-react/containers/DiscountComponent';
-// import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
+import { DiscountComponent } from '@gqlapp/discount-client-react';
 import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import { HOME_ROUTES } from '@gqlapp/home-client-react';
@@ -33,11 +32,6 @@ import ListingDetailImgCarousel from './ListingDetailImgCarousel';
 import BookmarkComponent from './BookmarkComponent';
 import SocialSharingButtons from './SocialSharingButtons';
 import { displayDataCheck } from './functions';
-
-// const { TabPane } = Tabs;
-// const { Meta } = Card;
-
-// const AVATAR = 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
 
 const ListingDetailView = props => {
   const {
