@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { PageLayout, Icon, Row, Col, Button, Result } from '@gqlapp/look-client-react';
-import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
+import { HOME_ROUTES } from '@gqlapp/home-client-react';
 import { default as USER_ROUTES } from '@gqlapp/user-client-react/routes';
 
 const LOGOUT_PAGE_GIF =

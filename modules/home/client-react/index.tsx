@@ -13,6 +13,8 @@ import ROUTES from './routes';
 import resolvers from './resolvers';
 import resources from './locales';
 
+export { default as HOME_ROUTES } from './routes';
+
 // const NavLinkWithI18n = translate('home')(({ t }: { t: TranslateFunction }) => (
 //   <NavLink to="/home" className="nav-link" activeClassName="active">
 //     {t('home:navLink')}

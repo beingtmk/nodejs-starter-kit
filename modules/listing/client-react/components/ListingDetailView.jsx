@@ -24,7 +24,7 @@ import DiscountComponent from '@gqlapp/discount-client-react/containers/Discount
 // import { CurrencyCostDisplay } from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
-import HOME_ROUTES from '@gqlapp/home-client-react/routes';
+import { HOME_ROUTES } from '@gqlapp/home-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import ROUTES from '../routes';

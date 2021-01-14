@@ -1,8 +1,7 @@
 import update from 'immutability-helper';
 import { Message } from '@gqlapp/look-client-react';
 
-// eslint-disable-next-line import/no-named-default
-import { default as HOME_ROUTES } from '@gqlapp/home-client-react/routes';
+import { HOME_ROUTES } from '@gqlapp/home-client-react';
 
 import CATEGORIES_SUBSCRIPTION from '../graphql/CategoriesSubscription.graphql';
 import CATEGORY_SUBSCRIPTION from '../graphql/CategorySubscription.graphql';
