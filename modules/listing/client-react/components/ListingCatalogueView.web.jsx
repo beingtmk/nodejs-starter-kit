@@ -15,7 +15,7 @@ import {
   Row
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
+import { CategoryNavBarComponent } from '@gqlapp/category-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import RelatedCardComponent from './RelatedCardComponent';

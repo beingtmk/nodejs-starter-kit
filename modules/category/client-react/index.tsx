@@ -12,6 +12,8 @@ import resources from './locales';
 import ROUTES from './routes';
 
 export { default as CATEGORY_ROUTES } from './routes';
+export * from './containers';
+export * from './components';
 
 const NavLinkAdminWithI18n = translate('category')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">

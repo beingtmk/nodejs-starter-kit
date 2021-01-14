@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
+import { CategoryTreeComponent } from '@gqlapp/category-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import {
   Space,

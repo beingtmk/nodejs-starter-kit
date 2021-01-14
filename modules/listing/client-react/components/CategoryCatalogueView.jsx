@@ -17,8 +17,7 @@ import {
 import settings from '@gqlapp/config';
 import { MODAL } from '@gqlapp/review-common';
 import { CategoryListingsCatalogue, LISTING_ROUTES } from '@gqlapp/listing-client-react';
-import CategoryNavBarComponent from '@gqlapp/category-client-react/containers/CategoryNavBarComponent';
-import CategoryCarousel from '@gqlapp/category-client-react/components/CategoryCarousel';
+import { CategoryCarousel, CategoryNavBarComponent } from '@gqlapp/category-client-react';
 
 const CategoryCatalogueView = props => {
   const { loading, category, navigation, match, t } = props;
@@ -55,6 +54,7 @@ const CategoryCatalogueView = props => {
               </BreadcrumbItem>
             )}
           </Breadcrumb>
+          <hr />
           {category && category.subCategories && category.subCategories.length !== 0 && (
             <>
               <br />

@@ -24,7 +24,7 @@ import {
   RenderCheckBox,
   Rate
 } from '@gqlapp/look-client-react';
-import CategoryTreeComponent from '@gqlapp/category-client-react/containers/CategoryTreeComponent';
+import { CategoryTreeComponent } from '@gqlapp/category-client-react';
 import { MODAL } from '@gqlapp/review-common';
 import { compose } from '@gqlapp/core-common';
 
