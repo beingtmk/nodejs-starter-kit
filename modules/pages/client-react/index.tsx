@@ -13,6 +13,8 @@ import { Spinner } from '@gqlapp/look-client-react';
 import ROUTES from './routes';
 import resources from './locales';
 
+export { default as PAGES_ROUTES } from './routes';
+
 // const NavLinkWithI18n = translate('pages')(({ t }: { t: TranslateFunction }) => (
 //   <NavLink to="/pages" className="nav-link" activeClassName="active">
 //     {t('pages:navLink')}

@@ -10,6 +10,8 @@ import { /* Route, */ NavLink } from 'react-router-dom';
 import resources from './locales';
 import ROUTES from './routes';
 
+export { default as SETTING_ROUTES } from './routes';
+
 const NavLinkAdminWithI18n = translate('setting')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     <Icon type="SettingOutlined" />

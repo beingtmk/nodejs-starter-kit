@@ -5,8 +5,8 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import QueueAnim from 'rc-queue-anim';
 import { Button } from 'antd';
 
-// eslint-disable-next-line import/no-named-default
-import { default as PAGES_ROUTES } from '@gqlapp/pages-client-react/routes';
+import { PAGES_ROUTES } from '@gqlapp/pages-client-react';
+
 import Row from './Row';
 import Col from './Col';
 import Icon from './Icon';

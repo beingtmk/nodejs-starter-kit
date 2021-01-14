@@ -16,8 +16,9 @@ import { PLATFORM_TYPE } from '@gqlapp/setting-common';
 import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
-
 import NavItemCart from './containers/NavItemCart.web';
+
+export { default as ORDER_ROUTES } from './routes';
 
 const NavLinkUsertWithI18n = compose(
   withCurrentUser,
