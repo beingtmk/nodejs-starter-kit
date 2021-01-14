@@ -11,6 +11,8 @@ import resources from './locales';
 import resolvers from './resolvers';
 import ROUTES from './routes';
 
+export { default as DISCOUNT_ROUTES } from './routes';
+
 const NavLinkWithI18n = translate('discount')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.adminPanel} className="nav-link" activeClassName="active">
     <Icon type="PercentageOutlined" />

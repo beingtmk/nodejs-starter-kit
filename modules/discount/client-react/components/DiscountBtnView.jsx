@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Divider, Tooltip, Icon, Button } from '@gqlapp/look-client-react';
-// eslint-disable-next-line import/no-named-default
-import { default as DISCOUNT_ROUTES } from '@gqlapp/discount-client-react/routes';
+import { DISCOUNT_ROUTES } from '@gqlapp/discount-client-react';
 
 const DiscountBtnView = props => {
   const { loading, modalDiscount, modalName, modalId } = props;

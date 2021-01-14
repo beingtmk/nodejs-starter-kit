@@ -13,6 +13,8 @@ import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
+export { default as REVIEW_ROUTES } from './routes';
+
 const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">
     <Icon type="BookOutlined" />
