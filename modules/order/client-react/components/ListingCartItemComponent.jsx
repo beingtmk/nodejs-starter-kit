@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import { Row, Col, Card, Button, Icon } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 // eslint-disable-next-line import/no-named-default
-import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import ROUTES from '../routes';
 

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { translate } from '@gqlapp/i18n-client-react';
 import { DropDown, Card, Icon, Message, Badge, EmptyComponent } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import { withCurrentUser, withGetCart, withEditOrderDetail, withDeleteCartItem } from './OrderOperations';
 import { subscribeToCart } from './OrderSubscriptions';

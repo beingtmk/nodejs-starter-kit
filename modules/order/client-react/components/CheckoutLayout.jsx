@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { EmptyComponent, AddButton, Heading, Row, Col } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import CheckoutStepsComponent from './CheckoutStepsComponent';
 

@@ -11,7 +11,7 @@ import {
   CheckBox
 } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import { Reviews, Review } from '../containers/Reviews.web';
 import ReviewsItemComponent from './ReviewsItemComponent';

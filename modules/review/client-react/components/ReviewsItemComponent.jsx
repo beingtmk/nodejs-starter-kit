@@ -5,7 +5,7 @@ import { compose } from '@gqlapp/core-common';
 import { PropTypes } from 'prop-types';
 import { Icon, Row, Col, Card, Rate, Button, DropDown, MenuItem } from '@gqlapp/look-client-react';
 import USER_ROUTES from '@gqlapp/user-client-react/routes';
-import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { withReviewHelpfulStatus } from '../containers/ReviewOperations';
 import ImagesSlickComponent from './ImagesSlickComponent';

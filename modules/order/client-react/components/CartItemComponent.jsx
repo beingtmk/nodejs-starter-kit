@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types';
 import { compose } from '@gqlapp/core-common';
 import { Badge, DeleteIcon, Row, Col, ModalDrawer, Icon } from '@gqlapp/look-client-react';
 // eslint-disable-next-line import/no-named-default
-import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
 import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';

@@ -18,6 +18,8 @@ import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
+export { default as LISTING_ROUTES } from './routes';
+
 const NavLinkUsertWithI18n = compose(
   withCurrentUser,
   withPlatform

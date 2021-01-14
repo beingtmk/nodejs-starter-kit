@@ -23,7 +23,7 @@ import {
 import settings from '@gqlapp/config';
 import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
 import { NO_IMG } from '@gqlapp/listing-common';
-import LISTING_ROUTES from '@gqlapp/listing-client-react/routes';
+import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import ROUTES from '../routes';

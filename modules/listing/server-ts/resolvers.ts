@@ -285,7 +285,7 @@ export default (pubsub: any) => ({
             node: list
           }
         });
-        return 'Added SuccessFully';
+        return 'Added Successfully';
       } else {
         pubsub.publish(LISTINGS_BOOKMARK_SUBSCRIPTION, {
           listingsBookmarkUpdated: {
@@ -294,7 +294,7 @@ export default (pubsub: any) => ({
             node: list
           }
         });
-        return 'Removed SuccessFully';
+        return 'Removed Successfully';
       }
     }),
     async shareListingByEmail(obj: any, { input }: any, { mailer }: any) {
