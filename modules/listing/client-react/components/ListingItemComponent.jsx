@@ -6,7 +6,7 @@ import { compose } from '@gqlapp/core-common';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { DeleteButton, EditButton, CardMeta, Ribbon, Row, Col, Card } from '@gqlapp/look-client-react';
-import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
+import { ReviewStar } from '@gqlapp/review-client-react';
 import { DiscountComponentView, withModalDiscount } from '@gqlapp/discount-client-react';
 import { MODAL } from '@gqlapp/review-common';
 

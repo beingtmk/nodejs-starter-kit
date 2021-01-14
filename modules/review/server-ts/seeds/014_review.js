@@ -2,7 +2,6 @@ import { returnId, truncateTables } from '@gqlapp/database-server-ts';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import { MEDIA } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
-// import { avgRating as averageRating } from '@gqlapp/review-client-react/components/AvgRatingComponent';
 
 function averageRating(five, four, three, two, one, totalRatings) {
   return ((5 * five + 4 * four + 3 * three + 2 * two + 1 * one) / totalRatings).toFixed(1);

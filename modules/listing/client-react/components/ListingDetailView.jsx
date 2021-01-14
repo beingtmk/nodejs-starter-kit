@@ -19,9 +19,8 @@ import {
 } from '@gqlapp/look-client-react';
 import { IfLoggedIn } from '@gqlapp/user-client-react';
 import AddToCart from '@gqlapp/order-client-react/containers/AddToCart';
-import Review from '@gqlapp/review-client-react/containers/Review';
+import { Review, ReviewStar } from '@gqlapp/review-client-react';
 import { DiscountComponent } from '@gqlapp/discount-client-react';
-import ReviewStar from '@gqlapp/review-client-react/containers/ReviewStar';
 import { ListingShareMessage } from '@gqlapp/listing-common/SocialSharingMessage';
 import { HOME_ROUTES } from '@gqlapp/home-client-react';
 import { MODAL } from '@gqlapp/review-common';

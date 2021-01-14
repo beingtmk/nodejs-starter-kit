@@ -18,7 +18,7 @@ import {
 import { ORDER_STATES } from '@gqlapp/order-common';
 import { USER_ROUTES } from '@gqlapp/user-client-react';
 import { displayDataCheck } from '@gqlapp/listing-client-react';
-import { displayDateCheck } from '@gqlapp/review-client-react/components/functions';
+import { displayDateCheck } from '@gqlapp/review-client-react';
 import settings from '@gqlapp/config';
 
 import OrderStatusMail from '../containers/OrderStatusMail';

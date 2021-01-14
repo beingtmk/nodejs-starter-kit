@@ -4,16 +4,16 @@ import loadable from '@loadable/component';
 
 import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import ClientModule from '@gqlapp/module-client-react';
-import { IfLoggedIn, AuthRoute } from '@gqlapp/user-client-react/';
+import { IfLoggedIn, AuthRoute, USER_ROUTES } from '@gqlapp/user-client-react';
 import { MenuItem, Icon, Spinner } from '@gqlapp/look-client-react';
-// eslint-disable-next-line import/no-named-default
-import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import resolvers from './resolvers';
 import resources from './locales';
 import ROUTES from './routes';
 
 export { default as REVIEW_ROUTES } from './routes';
+export * from './containers';
+export * from './components';
 
 const NavLinkUserWithI18n = translate('review')(({ t }: { t: TranslateFunction }) => (
   <NavLink to={ROUTES.myReview} className="nav-link" activeClassName="active">

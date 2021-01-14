@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Row, Col, Heading, Icon, PageLayout, Spinner, MetaTags } from '@gqlapp/look-client-react';
-import Review from '@gqlapp/review-client-react/containers/Review';
+import { Review } from '@gqlapp/review-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import RelatedCardComponent from './RelatedCardComponent';
