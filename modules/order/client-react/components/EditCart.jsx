@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 import { Spinner } from '@gqlapp/look-client-react';
-import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
+import { withListing } from '@gqlapp/listing-client-react';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import { subscribeToDiscount } from '@gqlapp/discount-client-react/containers/DiscountSubscriptions';
 

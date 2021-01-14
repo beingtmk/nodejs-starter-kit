@@ -6,7 +6,7 @@ import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import settings from '@gqlapp/config';
 import { LABEL } from '@gqlapp/home-common';
-import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
+import { ListingCarousel } from '@gqlapp/listing-client-react';
 import DiscountsCarousel from '@gqlapp/discount-client-react/containers/DiscountsCarousel';
 
 import BannerComponent from '../containers/DCComponents/BannerComponent';

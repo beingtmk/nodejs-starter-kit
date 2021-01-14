@@ -17,7 +17,7 @@ import {
 import settings from '@gqlapp/config';
 import { Reviews, Review } from '../containers/Reviews.web';
 import ROUTES from '../routes/index';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 
 const { itemsNumber, type } = settings.pagination.web;
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 import { Row, Col, Rate, Avatar, Divider, Tooltip, Card, CardMeta } from '@gqlapp/look-client-react';
 
 const OrderCard = styled(Card)`

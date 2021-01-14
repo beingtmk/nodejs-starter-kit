@@ -21,9 +21,8 @@ import {
   Card
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { LISTING_ROUTES, displayDataCheck } from '@gqlapp/listing-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 import CATEGORY_QUERY from '../graphql/CategoryQuery.graphql';
 import ROUTES from '../routes';

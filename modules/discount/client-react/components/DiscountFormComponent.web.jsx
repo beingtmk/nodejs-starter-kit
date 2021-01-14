@@ -16,7 +16,7 @@ import {
   RenderCheckBox,
   RenderField
 } from '@gqlapp/look-client-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 // import { LABEL } from '@gqlapp/home-common';
 
 const DiscountFormSchema = {

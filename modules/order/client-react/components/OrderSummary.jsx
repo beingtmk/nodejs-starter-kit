@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Card, Row, Col } from '@gqlapp/look-client-react';
-import { displayDataCheck, priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck, priceCommaSeparator } from '@gqlapp/listing-client-react';
 
 import { TotalPrice } from './function';
 

@@ -13,7 +13,7 @@ import {
   Divider
 } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 
 import ROUTES from '../../routes';
 

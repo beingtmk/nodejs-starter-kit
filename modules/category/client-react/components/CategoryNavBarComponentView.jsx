@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
-import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
+import { useImageLoaded, LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import {
   Affix,
   Row,
@@ -18,8 +18,6 @@ import {
   Button,
   Menu
 } from '@gqlapp/look-client-react';
-// eslint-disable-next-line import/no-named-default
-import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 
 const WhiteDiv = styled.div`
   background: white;

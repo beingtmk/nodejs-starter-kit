@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 import { Text, Card } from '@gqlapp/look-client-react';
-import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
+import { useImageLoaded, LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-import ROUTES from '@gqlapp/listing-client-react/routes';
-
-// const { Text } = Typography;
 
 const CategoryItemComponent = props => {
   const [ref, loaded, onLoad] = useImageLoaded();
@@ -29,7 +26,7 @@ const CategoryItemComponent = props => {
 
   return (
     <div style={componentStyle}>
-      <NavLink to={`${ROUTES.categoryCatalogueLink}${category.id}`}>
+      <NavLink to={`${LISTING_ROUTES.categoryCatalogueLink}${category.id}`}>
         <Card
           bordered={false}
           bodyStyle={{

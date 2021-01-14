@@ -17,6 +17,8 @@ import resources from './locales';
 import ROUTES from './routes';
 
 export { default as LISTING_ROUTES } from './routes';
+export * from './containers';
+export * from './components';
 
 const NavLinkUsertWithI18n = compose(
   withCurrentUser,

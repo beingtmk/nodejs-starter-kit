@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
 import { NO_IMG } from '@gqlapp/listing-common';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 import { Row, Col, Card } from '@gqlapp/look-client-react';
 import { TotalPrice } from './function';
 import ROUTES from '../routes';

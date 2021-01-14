@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { Form, Icon, RenderField, ModalDrawer, Button, Col } from '@gqlapp/look-client-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 
 const OrderStatusMailView = props => {
   const { disabled = false } = props;

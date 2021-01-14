@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 import CategoryItemComponent from '@gqlapp/category-client-react/components/CategoryItemComponent';
 
 import { SlickCarousel } from '@gqlapp/look-client-react';

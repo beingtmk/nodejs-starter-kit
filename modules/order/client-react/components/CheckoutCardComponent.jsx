@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { NextButton, Col, Row, Card, Divider } from '@gqlapp/look-client-react';
 import { MODAL } from '@gqlapp/review-common';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 
 import CartItemComponent from './CartItemComponent';
 import { TotalPrice } from './function';

@@ -28,7 +28,7 @@ import CategoryTreeComponent from '@gqlapp/category-client-react/containers/Cate
 import { MODAL } from '@gqlapp/review-common';
 import { compose } from '@gqlapp/core-common';
 
-import SliderControlled from './FIlterSliderControlledComponent';
+import SliderControlled from './FilterSliderControlledComponent';
 import { withGetBrandList } from '../containers/ListingOperations';
 
 const RateDiv = styled.div`

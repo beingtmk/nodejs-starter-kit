@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
+import { useImageLoaded } from '@gqlapp/listing-client-react';
 import { compose } from '@gqlapp/core-common';
 import { List, ListItem, Spinner, EmptyComponent } from '@gqlapp/look-client-react';
 

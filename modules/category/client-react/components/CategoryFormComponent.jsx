@@ -17,7 +17,7 @@ import {
 } from '@gqlapp/look-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 import { MODAL } from '@gqlapp/review-common';
 
 import CategoryTreeComponent from '../containers/CategoryTreeComponent';

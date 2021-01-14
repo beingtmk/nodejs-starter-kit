@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
+import { ListingCarousel } from '@gqlapp/listing-client-react';
 
 const DiscountsCarouselView = props => {
   const { title, ids = [], currentUser, currentUserLoading, history, cartLoading, onDelete, getCart, style } = props;

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 
 import { translate } from '@gqlapp/i18n-client-react';
 import { compose } from '@gqlapp/core-common';
-import { removeEmpty } from '@gqlapp/listing-client-react/components/functions';
+import { removeEmpty } from '@gqlapp/listing-client-react';
 
 import SettingView from '../components/SettingView';
 import { withEditPlatform, withPlatform } from './SettingOperations';

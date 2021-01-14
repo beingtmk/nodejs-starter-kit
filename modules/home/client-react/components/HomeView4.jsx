@@ -8,7 +8,7 @@ import { LABEL } from '@gqlapp/home-common';
 import { withCurrentUser } from '@gqlapp/user-client-react/containers/UserOperations';
 
 import DiscountsCarousel from '@gqlapp/discount-client-react/containers/DiscountsCarousel';
-import ListingCarousel from '@gqlapp/listing-client-react/components/ListingCarousel';
+import { ListingCarousel } from '@gqlapp/listing-client-react';
 import DynamicCarousel from '../containers/DCComponents/DynamicCarouselComponent';
 import ImageBanner from '../containers/DCComponents/ImageBannerComponent';
 // import Banner0 from './AntdLanding/Banner0';

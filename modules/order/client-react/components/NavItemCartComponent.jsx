@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 // import styled from 'styled-components';
 import { PropTypes } from 'prop-types';
 
-// eslint-disable-next-line import/no-named-default
 import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
 import { Row, Col, Card, Tooltip } from '@gqlapp/look-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
-// import { priceCommaSeparator } from '@gqlapp/listing-client-react/components/functions';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
 import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 

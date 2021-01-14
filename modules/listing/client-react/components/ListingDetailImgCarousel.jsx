@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { NO_IMG } from '@gqlapp/listing-common';
 import { Row, Col, Carousel, Spinner, Icon } from '@gqlapp/look-client-react';
-import { useImageLoaded } from '@gqlapp/listing-client-react/components/functions';
+import { useImageLoaded } from '@gqlapp/listing-client-react';
 
 const Hover = styled.div`
   position: relative;

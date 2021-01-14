@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { withFormik } from 'formik';
 
 import { validate, required } from '@gqlapp/validation-common-react';
-import { displayDataCheck } from '@gqlapp/listing-client-react/components/functions';
+import { displayDataCheck } from '@gqlapp/listing-client-react';
 import {
   Card,
   Icon,

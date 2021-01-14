@@ -4,11 +4,9 @@ import { PropTypes } from 'prop-types';
 
 import { compose } from '@gqlapp/core-common';
 import { Badge, DeleteIcon, Row, Col, ModalDrawer, Icon } from '@gqlapp/look-client-react';
-// eslint-disable-next-line import/no-named-default
-import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
+import { LISTING_ROUTES, withListing } from '@gqlapp/listing-client-react';
 import { NO_IMG } from '@gqlapp/listing-common';
 import { MODAL } from '@gqlapp/review-common';
-import { withListing } from '@gqlapp/listing-client-react/containers/ListingOperations';
 import { ORDER_STATES } from '@gqlapp/order-common';
 import DiscountComponentView from '@gqlapp/discount-client-react/components/DiscountComponentView';
 import { withModalDiscount } from '@gqlapp/discount-client-react/containers/DiscountOperations';
