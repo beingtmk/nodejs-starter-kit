@@ -29,10 +29,10 @@ const SocialSharingButtons = props => {
                 <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px', paddingTop: '-0px' }}>
                   <Img
                     src={
-                      'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170780/ypoeagxzxrcwfnhxydir.svg'
+                      'https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-2019-circle-64.png'
                     }
-                    height="60"
-                    width="60"
+                    height="50"
+                    width="50"
                     align="centre"
                     style={{ borderRadius: '90px' }}
                   />
@@ -48,7 +48,7 @@ const SocialSharingButtons = props => {
                 <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
                   <Img
                     src={
-                      'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170934/lfibgc3woiwkbeubo6w5.svg'
+                      'https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-reddit-circle-64.png'
                     }
                     height="50"
                     width="50"
@@ -67,7 +67,7 @@ const SocialSharingButtons = props => {
                 <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
                   <Img
                     src={
-                      'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170822/ieq0oplvvympjnwqdhvm.svg'
+                      'https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-twitter-circle-64.png'
                     }
                     height="50"
                     width="50"
@@ -80,15 +80,14 @@ const SocialSharingButtons = props => {
             <Col>
               <a
                 href={`https://api.whatsapp.com/send?text=${whatsappMessage}`}
-                // href={`https://api.whatsapp.com/send?phone=${phone_number}&text=${title}%20${url}`}
                 dataAction="share/whatsapp/share"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Button shape="circle" type="link" ghost size="lg" style={{ fontSize: '22px' }}>
+                <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
                   <Img
                     src={
-                      'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171220/gtd0x3gg3vcmirxdwr19.jpg'
+                      'https://cdn2.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-whatsapp-circle-64.png'
                     }
                     height="50"
                     width="50"
@@ -107,7 +106,7 @@ const SocialSharingButtons = props => {
                 <Button shape="circle" color="link" ghost size="lg" style={{ fontSize: '22px' }}>
                   <Img
                     src={
-                      'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602170837/q0hfnknlfdrsnlfq6chx.svg'
+                      'https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-linkedin-circle-64.png'
                     }
                     height="50"
                     width="50"
@@ -123,9 +122,7 @@ const SocialSharingButtons = props => {
                   <ModalDrawer
                     buttonText={
                       <Img
-                        src={
-                          'https://res.cloudinary.com/nodejs-starter-kit/image/upload/v1602171054/pueo2x3cpojocidoeou8.svg'
-                        }
+                        src={'https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Mail-64.png'}
                         height="50"
                         width="50"
                         align="centre"
@@ -151,16 +148,24 @@ const SocialSharingButtons = props => {
       <Row type="flex" justify="space-between" style={{ paddingTop: '15px' }}>
         <Col xs={0} lg={24}>
           <Row justify="space-between">
-            <h5 align="center">FaceBook</h5>
-            <h5 align="center" style={{ marginLeft: '5px' }}>
-              Reddit
-            </h5>
-            <h5 align="center">Twitter</h5>
-            <h5 align="center">Whatsapp</h5>
-            <h5 align="center">Linkedin</h5>
-            <h5 align="center" style={{ paddingRight: '15px' }}>
-              Mail
-            </h5>
+            <Col span={4}>
+              <h5>FaceBook</h5>
+            </Col>
+            <Col span={4}>
+              <h5 style={{ paddingLeft: '15px' }}>Reddit</h5>
+            </Col>
+            <Col span={4}>
+              <h5 style={{ paddingLeft: '20px' }}>Twitter</h5>
+            </Col>
+            <Col span={4}>
+              <h5 style={{ paddingLeft: '15px' }}>Whatsapp</h5>
+            </Col>
+            <Col span={4}>
+              <h5 style={{ paddingLeft: '25px' }}>Linkedin</h5>
+            </Col>
+            <Col span={4}>
+              <h5 style={{ paddingLeft: '40px' }}>Mail</h5>
+            </Col>
           </Row>
         </Col>
       </Row>
