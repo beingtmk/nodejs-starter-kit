@@ -1,4 +1,8 @@
 import { access } from '@gqlapp/authentication-server-ts';
+// eslint-disable-next-line import/no-named-default
+import { USER_ROUTES } from '@gqlapp/user-client-react';
+
+// eslint-disable-next-line import/no-named-as-default
 import User from '../sql';
 
 export async function onAuthenticationSuccess(req, res) {
@@ -9,7 +13,7 @@ export async function onAuthenticationSuccess(req, res) {
   if (redirectUrl) {
     res.redirect(redirectUrl + (tokens ? '?data=' + JSON.stringify({ tokens }) : ''));
   } else {
-    res.redirect('/profile');
+    res.redirect(`${USER_ROUTES.profile}`);
   }
 }
 

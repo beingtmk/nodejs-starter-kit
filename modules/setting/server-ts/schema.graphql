@@ -1,0 +1,63 @@
+# Entity
+type Platform {
+  id: Int
+  name: String
+  logo: String
+  type: String
+  isActive: Boolean
+  platformInfo: PlatformInfo
+  platformSocial: PlatformSocial
+}
+type PlatformInfo {
+  id: Int
+  mobile: String
+  email: String
+  address: String
+  isActive: Boolean
+}
+type PlatformSocial {
+  id: Int
+  youtube: String
+  facebook: String
+  instagram: String
+  linkedIn: String
+  twitter: String
+}
+
+extend type Query {
+  platform(id: Int!): Platform
+}
+
+extend type Mutation {
+  editPlatform(input: EditPlatformInput!): Boolean
+}
+
+input EditPlatformInput {
+  id: Int!
+  name: String
+  logo: String
+  type: String
+  isActive: Boolean
+  platformInfo: PlatformInfoInput
+  platformSocial: PlatformSocialInput
+}
+input PlatformInfoInput {
+  id: Int!
+  mobile: String
+  email: String
+  address: String
+  isActive: Boolean
+}
+
+input PlatformSocialInput {
+  id: Int!
+  youtube: String
+  facebook: String
+  instagram: String
+  linkedIn: String
+  twitter: String
+}
+
+# extend type Subscription {
+#   subscriptionName: TypeName
+# }

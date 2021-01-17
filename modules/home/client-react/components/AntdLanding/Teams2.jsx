@@ -1,267 +1,10 @@
 import React from 'react';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { translate } from '@gqlapp/i18n-client-react';
+import PropTypes from 'prop-types';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
-
-const Teams20DataSource = {
-  wrapper: { className: 'home-page-wrapper teams2-wrapper' },
-  page: { className: 'home-page teams2' },
-  OverPack: { playScale: 0.3, className: '' },
-  titleWrapper: {
-    className: 'title-wrapper',
-    children: [{ name: 'title', children: '团队成员' }]
-  },
-  block: {
-    className: 'block-wrapper',
-    gutter: 72,
-    children: [
-      {
-        name: 'block0',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block1',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '韩勇' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: '语雀是一款优雅高效的在线文档编辑与协同工具。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block2',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block3',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block4',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '韩勇' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: '语雀是一款优雅高效的在线文档编辑与协同工具。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block5',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block6',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block7',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '韩勇' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: '语雀是一款优雅高效的在线文档编辑与协同工具。'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block8',
-        className: 'block',
-        md: 8,
-        xs: 24,
-        image: {
-          name: 'image',
-          className: 'teams2-image',
-          children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
-        },
-        titleWrapper: {
-          className: 'teams2-textWrapper',
-          children: [
-            { name: 'title', className: 'teams2-title', children: '叶秀英' },
-            {
-              name: 'content',
-              className: 'teams2-job',
-              children: '公司+职位 信息暂缺'
-            },
-            {
-              name: 'content1',
-              className: 'teams2-content',
-              children: 'AntV 是蚂蚁金服全新一代数据可视化解决方案。'
-            }
-          ]
-        }
-      }
-    ]
-  }
-};
 
 class Teams2 extends React.PureComponent {
   getBlockChildren = data =>
@@ -286,7 +29,300 @@ class Teams2 extends React.PureComponent {
     });
 
   render() {
-    const { ...props } = this.props;
+    const { t, ...props } = this.props;
+    const Teams20DataSource = {
+      wrapper: { className: 'home-page-wrapper teams2-wrapper' },
+      page: { className: 'home-page teams2' },
+      OverPack: { playScale: 0.3, className: '' },
+      titleWrapper: {
+        className: 'title-wrapper',
+        children: [
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('teams2.titleWrapper.title')}
+                </Heading>
+              </>
+            )
+          }
+        ]
+      },
+      block: {
+        className: 'block-wrapper',
+        gutter: 72,
+        children: [
+          {
+            name: 'block0',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block0.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block0.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block0.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block1',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                { name: 'title', className: 'teams2-title', children: t('teams2.block.block1.title') },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block0.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block1.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block2',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block2.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block2.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block2.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block3',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block3.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block3.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block3.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block4',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                { name: 'title', className: 'teams2-title', children: t('teams2.block.block4.title') },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block4.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block4.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block5',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block5.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block5.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block5.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block6',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block6.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block6.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block6.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block7',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*njqxS5Ky7CQAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                { name: 'title', className: 'teams2-title', children: t('teams2.block.block7.title') },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block7.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block7.content1')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block8',
+            className: 'block',
+            md: 8,
+            xs: 24,
+            image: {
+              name: 'image',
+              className: 'teams2-image',
+              children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*--rVR4hclJYAAAAAAAAAAABjARQnAQ'
+            },
+            titleWrapper: {
+              className: 'teams2-textWrapper',
+              children: [
+                {
+                  name: 'title',
+                  className: 'teams2-title',
+                  children: t('teams2.block.block8.title')
+                },
+                {
+                  name: 'content',
+                  className: 'teams2-job',
+                  children: t('teams2.block.block8.content')
+                },
+                {
+                  name: 'content1',
+                  className: 'teams2-content',
+                  children: t('teams2.block.block8.content1')
+                }
+              ]
+            }
+          }
+        ]
+      }
+    };
     const dataSource = Teams20DataSource;
 
     delete props.isMobile;
@@ -307,5 +343,7 @@ class Teams2 extends React.PureComponent {
     );
   }
 }
-
-export default Teams2;
+Teams2.propTypes = {
+  t: PropTypes.func
+};
+export default translate('home')(Teams2);

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Upload, Modal } from 'antd';
 
-import { Form, Upload, Modal, Icon } from 'antd';
-
-const FormItem = Form.Item;
+import Icon from './Icon';
+import Space from './Space';
+import FormItem from './FormItem';
 
 export default class RenderUpload extends React.Component {
   constructor(props) {
@@ -43,7 +44,8 @@ export default class RenderUpload extends React.Component {
         if (url) {
           // console.log(url);
           //set value in form
-          this.props.input.onChange(url);
+          this.props.formik.handleChange({ target: { value: url, name: this.props.name } });
+          // this.props.input.onChange(url);
         }
       }
     } else if (file.status == 'removed') {
@@ -70,15 +72,18 @@ export default class RenderUpload extends React.Component {
     // { input, label, meta: { touched, error }, defaultFileList }) = this.props
     // const touched = this.props.meta.touched;
     // const error = this.props.meta.error;
+    const children = this.props.children;
     const label = this.props.label;
     // const input = this.props.input;
     // console.log(input);
     // const defaultFileList = this.props.defaultFileList;
 
-    const cloudinary_url = 'https://api.cloudinary.com/v1_1/www-lenshood-in/image/upload';
+    const cloudinary_url = 'https://api.cloudinary.com/v1_1/nodejs-starter-kit/image/upload';
+
+    //  'https://api.cloudinary.com/v1_1/da0hbv2bq/image/upload';
     // { upload_preset: 'nxzf2ip6' }
     // const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
-    const cloudinary_data = { upload_preset: 'nxzf2ip6' };
+    const cloudinary_data = { upload_preset: 'hycdtdxe' };
 
     let validateStatus = '';
     // if (touched && error) {
@@ -95,31 +100,43 @@ export default class RenderUpload extends React.Component {
     //   }));
     // }
 
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { previewVisible, previewImage, icon = 'UploadOutlined', fileList } = this.state;
     const uploadButton = (
       <div>
-        <Icon type="plus" />
+        <Icon type="PlusOutlined" />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
 
     return (
-      <FormItem label={label} validateStatus={validateStatus}>
-        <div className="clearfix">
+      <FormItem
+        label={
+          <Space align="center">
+            {icon && <Icon type={icon} />}
+            {label}
+          </Space>
+        }
+        validateStatus={validateStatus}
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
+      >
+        <div>
           <Upload
             action={cloudinary_url}
             data={cloudinary_data}
-            listType="picture-card"
-            fileList={fileList}
+            listType={!children && 'picture-card'}
+            fileList={!children && fileList}
             onPreview={this.handlePreview}
             onChange={this.onChangeHandler}
           >
-            {fileList.length >= 1 ? null : uploadButton}
+            {children ? children : fileList.length >= 1 ? null : uploadButton}
           </Upload>
-          <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-            <img alt="image" style={{ width: '100%' }} src={previewImage} />
-          </Modal>
-        </div>{' '}
+          {!children && (
+            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+              <img alt="image" style={{ width: '100%' }} src={previewImage} />
+            </Modal>
+          )}
+        </div>
       </FormItem>
     );
   }
@@ -128,6 +145,9 @@ RenderUpload.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   setload: PropTypes.func,
-
-  value: PropTypes.string
+  formik: PropTypes.func,
+  name: PropTypes.string,
+  icon: PropTypes.string,
+  value: PropTypes.string,
+  children: PropTypes.node
 };

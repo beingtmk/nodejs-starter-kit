@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'formik';
 import { get as getPath } from 'lodash';
+// import moment from 'moment';
 
 import { PLATFORM } from '@gqlapp/core-common';
 
@@ -17,7 +18,9 @@ class FieldAdapter extends Component {
     defaultValue: PropTypes.string,
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    min: PropTypes.number,
+    max: PropTypes.number
   };
 
   constructor(props) {
@@ -26,10 +29,12 @@ class FieldAdapter extends Component {
   }
 
   onChange = e => {
-    const { formik, onChange } = this.props;
-
+    const { formik, onChange /* name */ } = this.props;
     if (onChange) {
       onChange(e.target.value, e);
+      // } else if (Array.isArray(e) && Array.isArray(name)) {
+      //   formik.setFieldValue(name[0], e[0].toISOString());
+      //   formik.setFieldValue(name[1], e[1].toISOString());
     } else {
       formik.handleChange(e);
     }
@@ -60,7 +65,7 @@ class FieldAdapter extends Component {
   };
 
   render() {
-    const { formik, component, name, defaultValue, defaultChecked, disabled } = this.props;
+    const { formik, component, name, defaultValue, defaultChecked, disabled, min, max } = this.props;
     let { value, checked } = this.props;
     value = value || '';
     checked = checked || false;
@@ -76,7 +81,9 @@ class FieldAdapter extends Component {
       checked,
       defaultValue,
       defaultChecked,
-      disabled
+      disabled,
+      min,
+      max
     };
 
     const changeEventHandler = PLATFORM === 'mobile' ? 'onChangeText' : 'onChange';

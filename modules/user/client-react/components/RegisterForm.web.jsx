@@ -5,7 +5,7 @@ import { withFormik } from 'formik';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { match, email, minLength, required, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Button, Alert, Icon } from '@gqlapp/look-client-react';
+import { Icon, Form, RenderField, Button, Alert } from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const registerFormSchema = {
@@ -20,14 +20,23 @@ const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
     <Form name="register" onSubmit={handleSubmit}>
       <Field
         name="username"
+        icon="UserOutlined"
         component={RenderField}
         type="text"
         label={t('reg.form.field.name')}
         value={values.username}
       />
-      <Field name="email" component={RenderField} type="text" label={t('reg.form.field.email')} value={values.email} />
+      <Field
+        icon="MailOutlined"
+        name="email"
+        component={RenderField}
+        type="text"
+        label={t('reg.form.field.email')}
+        value={values.email}
+      />
       <Field
         name="password"
+        icon="KeyOutlined"
         component={RenderField}
         type="password"
         label={t('reg.form.field.pass')}
@@ -35,6 +44,7 @@ const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
       />
       <Field
         name="passwordConfirmation"
+        icon="KeyOutlined"
         component={RenderField}
         type="password"
         label={t('reg.form.field.passConf')}
@@ -43,7 +53,7 @@ const RegisterForm = ({ values, handleSubmit, submitting, errors, t }) => {
       <div className="text-center">
         {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
         <Button block color="primary" type="submit" disabled={submitting}>
-          <Icon type="user-add" /> {t('reg.form.btnSubmit')}
+          <Icon type="UserAddOutlined" /> {t('reg.form.btnSubmit')}
         </Button>
       </div>
     </Form>
@@ -61,13 +71,7 @@ RegisterForm.propTypes = {
 const RegisterFormWithFormik = withFormik({
   mapPropsToValues: () => ({ username: '', email: '', password: '', passwordConfirmation: '' }),
   validate: values => validate(values, registerFormSchema),
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit }
-    }
-  ) {
+  async handleSubmit(values, { setErrors, props: { onSubmit } }) {
     onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

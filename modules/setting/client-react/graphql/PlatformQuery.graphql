@@ -1,0 +1,7 @@
+#import "./Platform.graphql"
+
+query platform($id: Int!) {
+  platform(id: $id) {
+    ...PlatformInfo
+  }
+}

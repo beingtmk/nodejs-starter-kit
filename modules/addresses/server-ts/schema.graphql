@@ -1,0 +1,57 @@
+type Address {
+  id: Int
+  userId: Int!
+
+  streetAddress1: String
+  streetAddress2: String
+  city: String
+  state: String
+  country: String
+  pinCode: Int
+
+  firstName: String
+  lastName: String
+  mobile: String
+
+  isDefault: Boolean
+}
+
+extend type Query {
+  getDefaultAddressId(userId: Int): Int
+  addresses(id: Int): [Address]!
+}
+
+extend type Mutation {
+  setDefaultAddress(userId: Int, id: Int): Boolean
+  addAddress(input: AddressInput!): Boolean
+  addOrEditAddress(input: AddressInput!): Boolean
+  deleteAddress(id: Int): Boolean
+}
+
+input AddressInput {
+  id: Int
+  userId: Int
+
+  streetAddress1: String
+  streetAddress2: String
+  city: String
+  state: String
+  country: String
+  pinCode: Int
+
+  firstName: String
+  lastName: String
+  mobile: String
+
+  isDefault: Boolean
+}
+
+extend type Subscription {
+  addressesUpdated(userId: Int): UpdateAddressPayload
+}
+
+type UpdateAddressPayload {
+  mutation: String!
+  id: Int
+  node: Address
+}

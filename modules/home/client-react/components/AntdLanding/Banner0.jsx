@@ -1,26 +1,29 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
-import { isImg } from './utils';
+import PropTypes from 'prop-types';
 
-const Banner00DataSource = {
-  wrapper: { className: 'banner0' },
-  textWrapper: { className: 'banner0-text-wrapper' },
-  title: {
-    className: 'banner0-title',
-    children: 'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580223483/nodejs-starterkit/untitled_4.svg'
-  },
-  content: {
-    className: 'banner0-content',
-    children: 'An All JavaScript Solution For Your App Needs'
-  },
-  button: { className: 'banner0-button', children: 'Learn More' }
-};
+import { translate } from '@gqlapp/i18n-client-react';
+import { Icon, Button } from '@gqlapp/look-client-react';
+
+import { isImg } from './utils';
 
 class Banner extends React.PureComponent {
   render() {
-    const { ...currentProps } = this.props;
+    const { t, ...currentProps } = this.props;
+    const Banner00DataSource = {
+      wrapper: { className: 'banner0' },
+      textWrapper: { className: 'banner0-text-wrapper' },
+      title: {
+        className: 'banner0-title',
+        children: t('banner0.title')
+      },
+      content: {
+        className: 'banner0-content',
+        children: t('banner0.content')
+      },
+      button: { className: 'banner0-button', children: t('banner0.button') }
+    };
     const dataSource = Banner00DataSource;
     delete currentProps.isMobile;
     return (
@@ -50,10 +53,13 @@ class Banner extends React.PureComponent {
           className="banner0-icon"
           key="icon"
         >
-          <Icon type="down" />
+          <Icon type="DownOutlined" />
         </TweenOne>
       </div>
     );
   }
 }
-export default Banner;
+Banner.propTypes = {
+  t: PropTypes.func
+};
+export default translate('home')(Banner);

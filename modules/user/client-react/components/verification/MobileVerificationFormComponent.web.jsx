@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, phoneNumber, validate } from '@gqlapp/validation-common-react';
@@ -25,7 +26,7 @@ const MobileForm = ({ otp, values, handleSubmit, submitting, t }) => {
         <Field name="otp" component={RenderField} type="number" label={t('mobileOTP.field.otp')} value={values.otp} />
       )}
       <Button color="primary" type="submit" disabled={submitting}>
-        {t('mobileOTP.btn.submit')}
+        {t('mobileOTP.btn')}
       </Button>
     </Form>
   );
@@ -47,12 +48,7 @@ const MobileFormWithFormik = withFormik({
     otp: props.Mobile && props.Mobile.otp
   }),
   validate: values => validate(values, MobileFormSchema),
-  handleSubmit(
-    values,
-    {
-      props: { onSubmit }
-    }
-  ) {
+  handleSubmit(values, { props: { onSubmit } }) {
     onSubmit(values);
     // console.log(values);
   },

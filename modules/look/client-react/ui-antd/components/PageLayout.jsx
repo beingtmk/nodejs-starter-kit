@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { Layout, BackTop, Button, Tooltip } from 'antd';
 import { enquireScreen } from 'enquire-js';
 
+import { withPlatform } from '@gqlapp/setting-client-react/containers/SettingOperations';
+import { compose } from '@gqlapp/core-common';
+
+import Icon from './Icon';
 import NavBar from './NavBar';
 import Footer from './Footer';
 
@@ -59,7 +63,7 @@ class PageLayout extends React.Component {
     // }
   }
   render() {
-    const { children, navBar, type } = this.props;
+    const { children, navBar, type, platform } = this.props;
     const contentStyle = layoutTypes.filter(item => item.type === type);
 
     const renderContent = () => {
@@ -73,20 +77,30 @@ class PageLayout extends React.Component {
       );
     };
     return (
-      <Layout id="page-layout">
-        {navBar !== false && <NavBar isMobile={this.state.isMobile} />}
+      <Layout id="page-layout" className="hideOverflow">
+        {navBar !== false && <NavBar isMobile={this.state.isMobile} platform={platform} />}
         {__SERVER__ && __DEV__ && (
           <Helmet>
             <style type="text/css">{styles._getCss()}</style>
           </Helmet>
         )}
         {renderContent()}
+        <Tooltip title="Install app" placement="right">
+          <Button
+            shape="circle"
+            id="install-button"
+            // style={{ display: 'none' }}
+            size="large"
+            type="primary"
+            icon={<Icon type="PlusOutlined" />}
+          />
+        </Tooltip>
         <BackTop>
           <Tooltip placement="left" title="Back to Top" autoAdjustOverflow={true}>
-            <Button icon="arrow-up" type="primary" shape="circle-outline" size="large" />
+            <Button icon={<Icon type="ArrowUpOutlined" />} type="primary" shape="circle" size="large" />
           </Tooltip>
         </BackTop>
-        <Footer />
+        <Footer platform={platform} />
       </Layout>
     );
   }
@@ -95,7 +109,8 @@ class PageLayout extends React.Component {
 PageLayout.propTypes = {
   children: PropTypes.node,
   navBar: PropTypes.bool,
+  platform: PropTypes.object,
   type: PropTypes.string
 };
 
-export default PageLayout;
+export default compose(withPlatform)(PageLayout);

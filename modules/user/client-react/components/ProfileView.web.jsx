@@ -1,21 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+
 import { StripeSubscriptionProfile } from '@gqlapp/payments-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import {
+  Row,
+  Col,
   Card,
   //  CardGroup,
   CardText,
   //  CardTitle,
-  PageLayout
+  PageLayout,
+  Heading,
+  EditIcon,
+  Icon,
+  MetaTags,
+  Divider,
+  Spin as Loader
 } from '@gqlapp/look-client-react';
-import { Row, Col, Divider, Icon, Button, Spin as Loader } from 'antd';
+import settings from '@gqlapp/config';
+
+import ROUTES from '../routes';
 import UserVerificationsComponent from './verification/UserVerificationsComponent';
 import ProfileHeadComponent from './components/ProfileHeadComponent';
 // import UsersCardComponent from './UsersCardComponent';
-import settings from '../../../../settings';
 import AddressCardComponent from './components/AddressCardComponent';
 import userCardData from '../helpers/userCardData';
 
@@ -33,33 +42,21 @@ class ProfileView extends React.Component {
   };
 
   render() {
-    const renderMetaData = t => {
-      return (
-        <Helmet
-          title={`${settings.app.name} - ${t('profile.title')}`}
-          meta={[
-            {
-              name: 'description',
-              content: `${settings.app.name} - ${t('profile.meta')}`
-            }
-          ]}
-        />
-      );
-    };
     const { t } = this.props;
     const { currentUser, currentUserLoading } = this.props;
 
+    console.log('bleh', currentUser.profile && currentUser.profile);
     if (currentUserLoading && !currentUser) {
       return (
-        <PageLayout select="/profile">
-          {renderMetaData(t)}
+        <PageLayout select={ROUTES.profile}>
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
           <Loader text={t('profile.loadMsg')} />
         </PageLayout>
       );
     } else if (currentUser) {
       return (
-        <PageLayout select="/profile">
-          {renderMetaData(t)}
+        <PageLayout select={ROUTES.profile}>
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
 
           <Row gutter={5}>
             <Col xs={{ span: 24 }} lg={{ span: 16 }}>
@@ -73,12 +70,12 @@ class ProfileView extends React.Component {
                     position: 'relative'
                   }}
                 >
-                  <Icon type="user" /> My Profile
+                  <Heading type="2">
+                    <Icon type="UserOutlined" /> {t(`profile.card.title`)}
+                  </Heading>
                   <div align="right" style={{ position: 'absolute', top: '0px', right: '10px' }}>
-                    <Link to={`/users/${currentUser.id}`}>
-                      <Button shape="circle" size="large">
-                        <Icon type="edit" />
-                      </Button>
+                    <Link to={`${ROUTES.editLink}${currentUser.id}`}>
+                      <EditIcon />
                     </Link>
                   </div>
                 </h2>
@@ -92,13 +89,13 @@ class ProfileView extends React.Component {
                   <Col align="left" style={{ borderRight: '2px solid #23B195' }} span={12}>
                     <div>
                       <h2>
-                        <Icon type="user" /> {t('profile.card.group.name')}:
+                        <Icon type="UserOutlined" /> {t('profile.card.group.name')}:
                       </h2>
                       <CardText>{currentUser.username}</CardText>
                     </div>
                     <div>
                       <h2>
-                        <Icon type="solution" /> {t('profile.card.group.about')}:
+                        <Icon type="SolutionOutlined" /> {t('profile.card.group.about')}:
                       </h2>
 
                       <CardText>
@@ -108,15 +105,15 @@ class ProfileView extends React.Component {
 
                     <div>
                       <h2>
-                        <Icon type="team" /> {t('profile.card.group.role')}:
+                        <Icon type="TeamOutlined" />
+                        {t('profile.card.group.role')}:
                       </h2>
-
                       <CardText>{currentUser.role ? currentUser.role : 'Not Provided'}</CardText>
                     </div>
 
                     {/* Portfolios */}
                     <h2>
-                      <Icon type="paper-clip" /> {t('profile.card.group.portfolios.title')}
+                      <Icon type="PaperClipOutlined" /> {t('profile.card.group.portfolios.title')}
                     </h2>
                     {currentUser.portfolios && currentUser.portfolios.length !== 0
                       ? currentUser.portfolios.map((portfolio, key) => (
@@ -131,7 +128,7 @@ class ProfileView extends React.Component {
                   <Col align="right" span={12}>
                     <div>
                       <h2>
-                        <Icon type="mail" /> {t('profile.card.group.email')}:
+                        <Icon type="MailOutlined" /> {t('profile.card.group.email')}:
                       </h2>
 
                       <CardText>{currentUser.email ? currentUser.email : 'Not Provided'}</CardText>
@@ -139,7 +136,7 @@ class ProfileView extends React.Component {
 
                     <div>
                       <h2>
-                        <Icon type="shake" /> Mobile
+                        <Icon type="ShakeOutlined" /> Mobile
                       </h2>
                       <CardText>
                         {currentUser.profile && currentUser.profile.mobile
@@ -151,7 +148,7 @@ class ProfileView extends React.Component {
                 </Row>
                 <Divider />
                 <h2>
-                  <Icon type="contacts" /> {t('profile.card.group.addresses.title')}
+                  <Icon type="ContactsOutlined" /> {t('profile.card.group.addresses.title')}
                 </h2>
                 <Row gutter={10}>
                   {currentUser.addresses && currentUser.addresses.length !== 0
@@ -189,7 +186,8 @@ class ProfileView extends React.Component {
     } else {
       return (
         <PageLayout>
-          {renderMetaData(t)}
+          <MetaTags title={t('profile.title')} description={t('profile.meta')} />
+
           <h2>{t('profile.errorMsg')}</h2>
         </PageLayout>
       );

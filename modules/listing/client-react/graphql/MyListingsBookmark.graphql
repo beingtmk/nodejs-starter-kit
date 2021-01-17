@@ -1,0 +1,33 @@
+#import "./Listing.graphql"
+
+query myListingsBookmark(
+  $userId: Int
+  $limit: Int
+  $after: Int
+  $orderBy: OrderByListInput
+  $filter: FilterListInput
+) {
+  myListingsBookmark(
+    userId: $userId
+    limit: $limit
+    after: $after
+    orderBy: $orderBy
+    filter: $filter
+  ) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ListingInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    rangeValues {
+      maxCost
+      minCost
+    }
+  }
+}

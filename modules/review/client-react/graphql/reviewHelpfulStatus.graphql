@@ -1,0 +1,3 @@
+query reviewHelpfulStatus($reviewId: Int, $userId: Int) {
+  reviewHelpfulStatus(reviewId: $reviewId, userId: $userId)
+}

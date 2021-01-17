@@ -1,0 +1,44 @@
+#import "@gqlapp/user-client-react/graphql/User.graphql"
+#import "@gqlapp/addresses-client-react/graphql/Address.graphql"
+
+fragment OrderInfo on Order {
+  id
+  consumer {
+    ...UserInfo
+  }
+
+  trackingId
+
+  orderState {
+    id
+    state
+  }
+
+  orderDetails {
+    id
+    vendor {
+      ...UserInfo
+    }
+    modalName
+    modalId
+    title
+    imageUrl
+    cost
+    orderOptions {
+      id
+      quantity
+    }
+    orderDelivery {
+      id
+      address {
+        ...AddressInfo
+      }
+      type
+    }
+    orderState {
+      id
+      state
+    }
+  }
+  createdAt
+}

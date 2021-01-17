@@ -1,0 +1,7 @@
+#import "./Listing.graphql"
+
+query listing($id: Int!) {
+  listing(id: $id) {
+    ...ListingInfo
+  }
+}

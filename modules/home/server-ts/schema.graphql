@@ -1,16 +1,86 @@
 # Entity
-type TypeName {
-  typeName: String!
+type DynamicCarousel {
+  id: Int
+  title: String
+  description: String
+  label: String
+  link: String
+  imageUrl: String!
+
+  isActive: Boolean
+  createdAt: String
+  updatedAt: String
+}
+
+type DynamicCarousels {
+  totalCount: Int
+  edges: [DynamicCarouselEdges]
+  pageInfo: DynamicCarouselPageInfo
+}
+
+type DynamicCarouselEdges {
+  node: DynamicCarousel
+  cursor: Int
+}
+
+type DynamicCarouselPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+input OrderByDynamicCarouselInput {
+  column: String
+  order: String
 }
 
 extend type Query {
-  queryName: TypeName
+  dynamicCarousels(
+    limit: Int
+    after: Int
+    orderBy: OrderByDynamicCarouselInput
+    filter: FilterDynamicCarouselInput
+  ): DynamicCarousels
+  dynamicCarousel(id: Int!): DynamicCarousel
 }
 
 extend type Mutation {
-  mutationName(varName: Int!): TypeName
+  addDynamicCarousel(input: AddDynamicCarouselInput!): Boolean
+  editDynamicCarousel(input: EditDynamicCarouselInput!): Boolean
+  deleteDynamicCarousel(id: Int!): Boolean
+}
+
+# Input for filter
+input FilterDynamicCarouselInput {
+  searchText: String
+  label: String
+  isActive: Boolean
+}
+
+input AddDynamicCarouselInput {
+  id: Int
+  title: String
+  description: String
+  label: String
+  link: String
+  imageUrl: String!
+  isActive: Boolean
+}
+
+input EditDynamicCarouselInput {
+  id: Int!
+  title: String
+  description: String
+  label: String
+  link: String
+  imageUrl: String
+  isActive: Boolean
 }
 
 extend type Subscription {
-  subscriptionName: TypeName
+  dynamicCarouselUpdated(endCursor: Int): UpdateDynamicCarouselPayload
+}
+
+type UpdateDynamicCarouselPayload {
+  mutation: String!
+  id: Int
+  node: DynamicCarousel
 }

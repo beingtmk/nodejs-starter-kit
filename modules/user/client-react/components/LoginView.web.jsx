@@ -1,25 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 
-import { PageLayout, Card, CardGroup, CardTitle, CardText, Button, Icon } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import {
+  Row,
+  Icon,
+  Col,
+  PageLayout,
+  Card,
+  CardGroup,
+  CardTitle,
+  CardText,
+  Button,
+  Underline,
+  MetaTags
+} from '@gqlapp/look-client-react';
 
 import LoginForm from './LoginForm';
 
-const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('login.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('login.meta')}`
-        }
-      ]}
-    />
-  );
-
+const LoginView = ({ onSubmit, t, isRegistered, hideModal, history }) => {
   const renderConfirmationModal = () => (
     <Card>
       <CardGroup style={{ textAlign: 'center' }}>
@@ -40,10 +38,13 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
         renderConfirmationModal()
       ) : (
         <Card className="form-card">
-          <CardTitle>
-            <Icon type="login" /> {t('login.form.title')}
-          </CardTitle>
-          <LoginForm onSubmit={onSubmit} />
+          <Underline>
+            <CardTitle>
+              <Icon type="LoginOutlined" /> &nbsp;
+              {t('login.form.title')}
+            </CardTitle>
+          </Underline>
+          <LoginForm onSubmit={onSubmit} history={history} />
           <hr />
           <Card>
             <CardGroup>
@@ -59,8 +60,13 @@ const LoginView = ({ onSubmit, t, isRegistered, hideModal }) => {
 
   return (
     <PageLayout type="forms">
-      {renderMetaData()}
-
+      <MetaTags title={t('login.title')} description={t('login.meta')} />
+      <Row>
+        <Col lg={24} md={0} xs={0}>
+          <br />
+          <br />
+        </Col>
+      </Row>
       {renderContent()}
     </PageLayout>
   );
@@ -70,6 +76,7 @@ LoginView.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   t: PropTypes.func,
   isRegistered: PropTypes.bool,
+  history: PropTypes.object,
   hideModal: PropTypes.func
 };
 

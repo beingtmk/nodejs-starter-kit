@@ -1,35 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'antd';
-import Select from './Select';
 
-const FormItem = Form.Item;
+import FormItem from './FormItem';
+import Select from './Select';
+import Space from './Space';
+import Icon from './Icon';
 
 const RenderSelect = props => {
   const {
+    icon,
     input,
     label,
     type,
     children,
-    meta: { touched, error }
+    meta: { touched, error },
+    onChange,
+    selectStyle,
+    inFilter = false
   } = props;
   let validateStatus = '';
   if (touched && error) {
     validateStatus = 'error';
   }
 
-  const onChange = value => {
+  const handleChange = value => {
     const { formik, name } = props;
-    formik.handleChange({ target: { value, name } });
+    if (onChange) {
+      onChange(value);
+    } else {
+      formik.handleChange({ target: { value, name } });
+    }
   };
 
+  let labels = inFilter
+    ? {}
+    : {
+        labelCol: { span: 24 },
+        wrapperCol: { span: 24 }
+      };
+
+  const labelObj = label
+    ? {
+        label: (
+          <Space align="center">
+            {icon && <Icon type={icon} />}
+            {label}
+          </Space>
+        )
+      }
+    : {};
   return (
-    <FormItem label={label} validateStatus={validateStatus} help={error}>
-      <div>
-        <Select {...input} type={type} onChange={onChange}>
-          {children}
-        </Select>
-      </div>
+    <FormItem {...labelObj} validateStatus={validateStatus} help={error} style={{ width: '100%' }} {...labels}>
+      <Select type={type} style={selectStyle} {...input} onChange={handleChange}>
+        {children}
+      </Select>
     </FormItem>
   );
 };
@@ -40,8 +64,12 @@ RenderSelect.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object,
+  onChange: PropTypes.func,
   name: PropTypes.string.isRequired,
-  children: PropTypes.node
+  children: PropTypes.node,
+  selectStyle: PropTypes.object,
+  inFilter: PropTypes.bool,
+  icon: PropTypes.string
 };
 
 export default RenderSelect;

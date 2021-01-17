@@ -1,0 +1,33 @@
+#import "./Listing.graphql"
+
+query listings(
+  $limit: Int!
+  $after: Int!
+  $orderBy: OrderByListInput
+  $filter: FilterListInput
+  $ids: [Int]
+) {
+  listings(
+    limit: $limit
+    after: $after
+    orderBy: $orderBy
+    filter: $filter
+    ids: $ids
+  ) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ListingInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    rangeValues {
+      maxCost
+      minCost
+    }
+  }
+}

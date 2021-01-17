@@ -1,0 +1,150 @@
+# Entity
+type Reviews {
+  totalCount: Int
+  edges: [ReviewEdges]
+  pageInfo: ReviewPageInfo
+}
+type ReviewPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+type ReviewEdges {
+  node: Review
+  cursor: Int
+}
+# type Node {
+#   id: Int
+#   modalName: Modal
+#   review: Review
+# }
+type Review {
+  id: Int
+  user: User
+  rating: String
+  feedback: String
+  isActive: Boolean
+  helpful: Int
+  modalReview: ModalReview
+  reviewMedia: [ReviewMedium]
+  createdAt: String!
+  updatedAt: String!
+}
+
+type ModalReview {
+  modalName: String
+  modalId: Int
+}
+
+type ReviewMedium {
+  id: Int
+  url: String
+  type: String
+  isActive: Boolean
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Rating {
+  id: Int
+  modalName: String
+  modalId: Int
+  one: Int
+  two: Int
+  three: Int
+  four: Int
+  five: Int
+}
+
+# Input for ordering users
+input OrderByReviewInput {
+  # id | username | role | isActive | email
+  column: String
+  # asc | desc
+  order: String
+}
+
+# Input for filtering users
+input FilterReviewInput {
+  searchText: String
+  # filter by isActive
+  isActive: Boolean
+  modalName: String
+  # for review review
+  modalId: Int
+  # for myReview
+  userId: Int
+}
+
+extend type Query {
+  review(id: Int): Review
+  reviews(
+    limit: Int
+    after: Int
+    orderBy: OrderByReviewInput
+    filter: FilterReviewInput
+  ): Reviews
+
+  # Rating
+  ratingAverage(modalName: String!, modalId: Int!): Rating
+
+  reviewHelpfulStatus(reviewId: Int, userId: Int): Boolean
+}
+
+extend type Mutation {
+  # Create new Review
+  addReview(input: AddModalReviewInput!): Boolean
+  # Edit a review
+  editReview(input: EditReviewInput!): Boolean
+  # Delete a review
+  deleteReview(id: Int): Boolean
+  refresh: Boolean
+
+  addOrRemoveReviewHelpful(reviewId: Int, userId: Int): String
+}
+input AddModalReviewInput {
+  modalName: String
+  modalId: Int
+  # moduleId: Int
+  review: AddReviewInput
+}
+# input EditModalReviewInput {
+#   modalName: String
+#   modalId: Int!
+#   moduleId: Int
+#   review: EditReviewInput
+# }
+input AddReviewInput {
+  id: Int
+  userId: Int
+  rating: String
+  feedback: String
+  isActive: Boolean
+  reviewMedia: [ReviewMediumInput]
+}
+
+input EditReviewInput {
+  id: Int!
+  userId: Int
+  rating: String
+  feedback: String
+  isActive: Boolean
+  helpful: Int
+  reviewMedia: [ReviewMediumInput]
+}
+
+input ReviewMediumInput {
+  id: Int
+  url: String!
+  type: String
+  isActive: Boolean
+}
+
+extend type Subscription {
+  reviewUpdated(endCursor: Int): UpdateReviewPayload
+}
+
+type UpdateReviewPayload {
+  mutation: String!
+  id: Int
+  node: Review
+}

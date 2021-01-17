@@ -5,12 +5,13 @@ import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@gqlapp/look-client-react';
 
+// min-width: 320px;
 const StyledButton = styled(({ backgroundColor, hoverColor, ...other }) => <Button {...other} />)`
-  min-width: 320px;
   margin-top: 10px;
-  background-color: ${props => props.backgroundColor};
-  border-color: ${props => props.backgroundColor};
-  display: flex;
+  background-color: ${props => props.backgroundColor} !important;
+  border-color: ${props => props.backgroundColor} !important;
+  color: white !important;
+  display: flex !important;
   justify-content: flex-start;
   align-items: center;
 
@@ -37,7 +38,7 @@ const Separator = styled.div`
 const ButtonLabel = styled.div`
   display: flex;
   justify-content: flex-start;
-  flex: 5;
+  flex: 2.5;
 `;
 
 const ButtonIcon = styled(FontAwesomeIcon)`
@@ -60,7 +61,8 @@ const SocialAuthButton = ({ text, backgroundColor, hoverColor, icon, serverAuthU
     backgroundColor={backgroundColor}
     hoverColor={hoverColor}
     type="button"
-    size="lg"
+    // size="lg"
+    block
     onClick={() => redirectToSocialLogin(serverAuthUrl)}
   >
     <IconContainer>
@@ -96,7 +98,7 @@ interface IconProps {
 
 const Icon = styled(FontAwesomeIcon)`
   margin-top: 10px;
-  color: ${props => props.backgroundColor}
+  color: ${props => props.backgroundColor};
   font-size: 40px;
 `;
 

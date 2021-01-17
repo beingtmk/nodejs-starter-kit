@@ -1,0 +1,10 @@
+fragment DynamicCarouselStateInfo on DynamicCarouselState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    state
+  }
+}

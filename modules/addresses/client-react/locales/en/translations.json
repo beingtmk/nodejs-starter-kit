@@ -1,0 +1,19 @@
+{
+  "navLink": "Addresses",
+  "title": "Addresses module",
+  "meta": "Addresses example",
+  "welcomeText": "Hello, This is the Addresses module",
+  "addressForm": {
+    "streetAddress": "Street Address",
+    "city": "City",
+    "state": "State",
+    "pinCode": "Pin Code",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "country": "Country",
+    "mobile": "Mobile",
+    "btn": {
+      "submit": "SAVE & CONTINUE"
+    }
+  }
+}

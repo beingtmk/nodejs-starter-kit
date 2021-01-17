@@ -1,0 +1,7 @@
+#import "./OrderState.graphql"
+
+query orderStates {
+  orderStates {
+    ...OrderStateInfo
+  }
+}

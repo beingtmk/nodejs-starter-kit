@@ -4,7 +4,8 @@ import { AuthModule } from '@gqlapp/authentication-server-ts';
 import settings from '@gqlapp/config';
 
 import { onAuthenticationSuccess } from '../shared';
-import User from '../../sql';
+// eslint-disable-next-line import/no-named-default
+import { default as User } from '../../sql';
 import resolvers from './resolvers';
 
 const registerUser = async ({ id, emails: [{ value }] }) => {
@@ -29,7 +30,8 @@ async function verifyCallback(accessToken, refreshToken, profile, cb) {
     let user = await User.getUserByGoogleIdOrEmail(id, value);
 
     if (!user) {
-      const [createdUserId] = await registerUser(profile);
+      const createdUserId = await registerUser(profile);
+      console.log(createdUserId);
 
       await createGoogleOAuth({ id, displayName, userId: createdUserId });
 

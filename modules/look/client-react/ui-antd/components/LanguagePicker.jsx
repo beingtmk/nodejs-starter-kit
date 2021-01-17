@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Dropdown, Icon } from 'antd';
+import { Menu } from 'antd';
+
+import Icon from './Icon';
 import MenuItem from './MenuItem';
+import Dropdown from './Dropdown';
 
 export default class LanguagePicker extends React.Component {
   render() {
@@ -12,18 +15,21 @@ export default class LanguagePicker extends React.Component {
       <MenuItem className="ant-menu-item language-picker-nav">
         {languages.length > 1 && (
           <Dropdown
-            overlay={
-              <Menu onClick={({ key }) => this.props.i18n.changeLanguage(key)} mode="verticle" theme="dark">
-                {Object.keys(this.props.i18n.store.data).map(lang => (
-                  <Menu.Item key={lang}>{lang.slice(0, 2).toUpperCase()}</Menu.Item>
-                ))}
-              </Menu>
+            content={
+              <div style={{ marginLeft: '8px' }}>
+                <Icon type="ReadOutlined" />
+                {this.props.i18n.language.slice(0, 2).toUpperCase()}{' '}
+              </div>
             }
-            trigger={['hover']}
+            noicon
+            onClick={({ key }) => this.props.i18n.changeLanguage(key)}
           >
-            <div>
-              <Icon type="read" /> {this.props.i18n.language.slice(0, 2).toUpperCase()}{' '}
-            </div>
+            {/* {console.log(this.props.i18n)} */}
+            {/* <Menu onClick={({ key }) => this.props.i18n.changeLanguage(key)} mode="verticle" theme="dark"> */}
+            {Object.keys(this.props.i18n.store.data).map(lang => (
+              <Menu.Item key={lang}>{lang.slice(0, 2).toUpperCase()}</Menu.Item>
+            ))}
+            {/* </Menu> */}
           </Dropdown>
         )}
       </MenuItem>

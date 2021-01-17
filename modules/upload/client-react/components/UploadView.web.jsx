@@ -1,28 +1,11 @@
 import React from 'react';
-import Grid from 'hedron';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import Dropzone from 'react-dropzone';
 import filesize from 'filesize';
 
-import { PageLayout, Table, Button, Alert } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { Row, Col, PageLayout, Table, Alert, DeleteIcon, MetaTags } from '@gqlapp/look-client-react';
 
 const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile, t }) => {
-  const renderMetaData = () => {
-    return (
-      <Helmet
-        title={`${settings.app.name} - ${t('title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('meta')}`
-          }
-        ]}
-      />
-    );
-  };
-
   const columns = [
     {
       title: t('table.column.name'),
@@ -41,19 +24,14 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
       key: 'actions',
       width: 50,
       render(text, record) {
-        return (
-          <Button color="primary" size="sm" onClick={() => handleRemoveFile(record.id)}>
-            {t('table.btnDel')}
-          </Button>
-        );
+        return <DeleteIcon onClick={() => handleRemoveFile(record.id)} />;
       }
     }
   ];
 
   return (
     <PageLayout>
-      {/* {renderMetaData()}
-      <div className="text-center">
+      {/* <div className="text-center">
         <Row>
           <Col xs={4}>
             <Dropzone onDrop={handleUploadFiles}>
@@ -66,23 +44,21 @@ const UploadView = ({ files, error, loading, handleUploadFiles, handleRemoveFile
             {files && <Table dataSource={files} columns={columns} />}
           </Col>
         </Row>
-      </div> */}
+      </div>  */}
 
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="horizontal" valign="center" sm={{ direction: 'vertical' }} md={{ padding: '20px' }}>
-          {renderMetaData()}
-          <Grid.Box>
-            <Dropzone onDrop={handleUploadFiles}>
-              <p style={{ padding: '10px' }}>{t('message')}</p>
-            </Dropzone>
-          </Grid.Box>
-          <Grid.Box md={{ fill: true }} lg={{ fill: true }}>
-            {loading && <span>Loading...</span>}
-            {error && <Alert color="error">{error}</Alert>}
-            {files && <Table dataSource={files} columns={columns} />}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      <MetaTags title={t('title')} description={t('meta')} />
+      <Row justify="center">
+        <Col xs={24} sm={8} md={6} lg={4}>
+          <Dropzone onDrop={handleUploadFiles}>
+            <p style={{ padding: '10px' }}>{t('message')}</p>
+          </Dropzone>
+        </Col>
+        <Col xs={24} sm={{ span: 13, offset: 2 }} md={{ span: 17, offset: 1 }} lg={{ span: 19, offset: 1 }}>
+          {loading && <span>Loading...</span>}
+          {error && <Alert color="error">{error}</Alert>}
+          {files && <Table dataSource={files} columns={columns} />}
+        </Col>
+      </Row>
     </PageLayout>
   );
 };

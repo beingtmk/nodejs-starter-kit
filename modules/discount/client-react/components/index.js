@@ -1,0 +1,10 @@
+export { default as AddDiscountView } from './AddDiscountView.web';
+export { default as CurrencyDisplay } from './CurrencyDisplay';
+export { default as DiscountBtnView } from './DiscountBtnView';
+export { default as DiscountComponentView } from './DiscountComponentView';
+export { default as DiscountFormComponent } from './DiscountFormComponent.web';
+export { default as DiscountsCarouselView } from './DiscountsCarouselView';
+export { default as DiscountsFilterComponent } from './DiscountsFilterComponent';
+export { default as DiscountsListComponent } from './DiscountsListComponent';
+export { default as DiscountsView } from './DiscountsView.web';
+export { default as EditDiscountView } from './EditDiscountView.web';

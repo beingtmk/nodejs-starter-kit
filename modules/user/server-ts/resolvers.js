@@ -6,6 +6,8 @@ import withAuth from 'graphql-auth';
 import { withFilter } from 'graphql-subscriptions';
 import { UserInputError } from 'apollo-server-errors';
 
+// eslint-disable-next-line import/no-named-default
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 import { createTransaction } from '@gqlapp/database-server-ts';
 import { log } from '@gqlapp/core-common';
 import settings from '@gqlapp/config';
@@ -27,55 +29,73 @@ export default pubsub => ({
     users: withAuth(['user:view:all'], (obj, { orderBy, filter }, { User }) => {
       return User.getUsers(orderBy, filter);
     }),
-    user: withAuth(['user:view:self'], (obj, { id }, { User, req: { identity, t } }) => {
-      if (identity.id === id || identity.role === 'admin') {
+    user(obj, { id }, { User, req: { identity, t } }) {
+      if (id) {
         try {
           return { user: User.getUser(id) };
         } catch (e) {
           return { errors: e };
         }
       }
-
-      throw new Error(t('user:accessDenied'));
-    }),
-    currentUser(
-      obj,
-      args,
-      {
-        User,
-        req: { identity }
-      }
-    ) {
+    },
+    async currentUser(obj, args, { User, req: { identity } }) {
       if (identity) {
-        return User.getUser(identity.id);
+        const user = await User.getUser(identity.id);
+        // console.log('user', user);
+        return user;
       } else {
         return null;
       }
+    },
+    async userList(obj, { orderBy, filter, limit, after }, { User }) {
+      const UserItemOutput = await User.getUserItems(limit, after, orderBy, filter);
+      const { userItems, total } = UserItemOutput;
+      const hasNextPage = total > after + limit;
+      // console.log('User items', UserItemOutput);
+      const edgesArray = [];
+      userItems.map((UserItem, index) => {
+        edgesArray.push({
+          cursor: after + index,
+          node: UserItem
+        });
+      });
+      const endCursor = edgesArray.length > 0 ? edgesArray[edgesArray.length - 1].cursor : 0;
+      return {
+        totalCount: total,
+        edges: edgesArray,
+        pageInfo: {
+          endCursor,
+          hasNextPage
+        }
+      };
     }
   },
-  User: {
-    profile(obj) {
-      return obj;
-    },
-    auth(obj) {
-      return obj;
-    }
-  },
-  UserProfile: {
-    firstName(obj) {
-      return obj.firstName;
-    },
-    lastName(obj) {
-      return obj.lastName;
-    },
-    fullName(obj) {
-      if (obj.firstName && obj.lastName) {
-        return `${obj.firstName} ${obj.lastName}`;
-      } else {
-        return null;
-      }
-    }
-  },
+  // User: {
+  //   profile(obj) {
+  //     return obj;
+  //   },
+  //   auth(obj) {
+  //     return obj;
+  //   }
+  // },
+  // UserProfile: {
+  //   firstName(obj) {
+  //     return obj.firstName;
+  //   },
+  //   lastName(obj) {
+  //     return obj.lastName;
+  //   },
+  //   fullName(obj) {
+  //     if (obj.firstName && obj.lastName) {
+  //       return `${obj.firstName} ${obj.lastName}`;
+  //     } else {
+  //       return null;
+  //     }
+  //   },
+  //   avatar(obj) {
+  //     return obj.avatar;
+  //   }
+  // },
   Mutation: {
     addUser: withAuth(
       (obj, { input }, { req: { identity } }) => {
@@ -95,7 +115,9 @@ export default pubsub => ({
         }
 
         if (input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
@@ -110,8 +132,15 @@ export default pubsub => ({
             : !password.requireEmailConfirmation;
 
           [createdUserId] = await User.register({ ...input, isActive }, passwordHash).transacting(trx);
-          await User.editUserProfile({ id: createdUserId, ...input }).transacting(trx);
-          if (certificate.enabled) await User.editAuthCertificate({ id: createdUserId, ...input }).transacting(trx);
+          await User.editUserProfile({
+            id: createdUserId,
+            ...input
+          }).transacting(trx);
+          if (certificate.enabled)
+            await User.editAuthCertificate({
+              id: createdUserId,
+              ...input
+            }).transacting(trx);
           trx.commit();
         } catch (e) {
           trx.rollback();
@@ -172,7 +201,9 @@ export default pubsub => ({
         }
 
         if (input.password && input.password.length < password.minLength) {
-          errors.password = t('user:passwordLength', { length: password.minLength });
+          errors.password = t('user:passwordLength', {
+            length: password.minLength
+          });
         }
 
         if (!isEmpty(errors)) throw new UserInputError('Failed to get events due to validation errors', { errors });
@@ -180,15 +211,17 @@ export default pubsub => ({
         const userInfo = !isSelf() && isAdmin() ? input : pick(input, ['id', 'username', 'email', 'password']);
 
         const isProfileExists = await User.isUserProfileExists(input.id);
-        const passwordHash = await createPasswordHash(input.password);
+        const passwordHash = input.password && (await createPasswordHash(input.password));
 
         const trx = await createTransaction();
         try {
-          await User.editUser(userInfo, passwordHash).transacting(trx);
-          await User.editUserProfile(input, isProfileExists).transacting(trx);
+          await User.editUser(userInfo, passwordHash);
+          // .transacting(trx);
+          await User.editUserProfile(input, isProfileExists);
+          // .transacting(trx);
 
           if (mailer && input.password && password.sendPasswordChangesEmail) {
-            const url = `${__WEBSITE_URL__}/profile`;
+            const url = `${__WEBSITE_URL__}${USER_ROUTES.profile}`;
 
             mailer.sendMail({
               from: `${settings.app.name} <${process.env.EMAIL_USER}>`,

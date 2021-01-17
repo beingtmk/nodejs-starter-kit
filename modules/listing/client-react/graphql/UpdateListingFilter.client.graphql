@@ -1,0 +1,8 @@
+#import "./ListingsState.client.graphql"
+
+mutation updateFilterListing(
+  $filter: FilterListInput!
+  $orderBy: OrderByListInput
+) {
+  updateFilterListing(filter: $filter, orderBy: $orderBy) @client
+}

@@ -1,3 +1,10 @@
+import setting from '@gqlapp/setting-server-ts';
+import category from '@gqlapp/category-server-ts';
+import discount from '@gqlapp/discount-server-ts';
+import addresses from '@gqlapp/addresses-server-ts';
+import order from '@gqlapp/order-server-ts';
+import listing from '@gqlapp/listing-server-ts';
+import review from '@gqlapp/review-server-ts';
 import home from '@gqlapp/home-server-ts';
 import core from '@gqlapp/core-server-ts';
 import i18n from '@gqlapp/i18n-server-ts';
@@ -21,6 +28,13 @@ import ServerModule from '@gqlapp/module-server-ts';
 const user = require('@gqlapp/user-server-ts').default;
 
 const modules: ServerModule = new ServerModule(
+  setting,
+  category,
+  discount,
+  addresses,
+  order,
+  listing,
+  review,
   home,
   authentication,
   cookies,

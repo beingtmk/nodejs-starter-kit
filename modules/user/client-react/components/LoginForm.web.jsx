@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { NavLink, Link } from 'react-router-dom';
-import { Icon } from 'antd';
 
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { required, minLength, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Alert, Button } from '@gqlapp/look-client-react';
+import { Icon, Form, RenderField, Alert, Button } from '@gqlapp/look-client-react';
 import { LinkedInButton, GoogleButton, GitHubButton, FacebookButton } from '@gqlapp/authentication-client-react';
 import settings from '@gqlapp/config';
+
+import ROUTES from '../routes';
 
 const loginFormSchema = {
   usernameOrEmail: [required, minLength(3)],
@@ -24,7 +25,7 @@ const renderSocialButtons = (buttonsLength, t) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        minWidth: 200
+        width: '100%'
       }}
     >
       {facebook.enabled && (
@@ -49,7 +50,7 @@ const renderSocialButtons = (buttonsLength, t) => {
       )}
     </div>
   ) : (
-    <div>
+    <div style={{ width: '100%' }}>
       {facebook.enabled && (
         <div className="text-center">
           <FacebookButton text={t('login.fbBtn')} type={'button'} />
@@ -74,12 +75,13 @@ const renderSocialButtons = (buttonsLength, t) => {
   );
 };
 
-const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
+const LoginForm = ({ handleSubmit, submitting, errors, values, t, history }) => {
   const buttonsLength = [facebook.enabled, linkedin.enabled, google.enabled, github.enabled].filter(button => button)
     .length;
   return (
     <Form name="login" onSubmit={handleSubmit}>
       <Field
+        icon="MailOutlined"
         name="usernameOrEmail"
         component={RenderField}
         type="text"
@@ -88,6 +90,7 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
       />
       <Field
         name="password"
+        icon="KeyOutlined"
         component={RenderField}
         type="password"
         label={t('login.form.field.pass')}
@@ -103,20 +106,32 @@ const LoginForm = ({ handleSubmit, submitting, errors, values, t }) => {
         }}
       >
         <Button block={true} size="lg" color="primary" type="submit" disabled={submitting}>
-          <Icon type="login" /> {t('login.form.btnSubmit')}
+          <Icon type="LoginOutlined" /> {t('login.form.btnSubmit')}
         </Button>
 
         {renderSocialButtons(buttonsLength, t)}
       </div>
       <div className="text-center" style={{ marginTop: 10 }}>
-        <Link to="/forgot-password">{t('login.btn.forgotPass')}</Link>
+        <Link to={`${ROUTES.forgotPassword}`}>{t('login.btn.forgotPass')}</Link>
       </div>
       <hr />
       <div className="text-center" style={{ marginBottom: 16 }}>
         <span style={{ lineHeight: '58px' }}>{t('login.btn.notReg')}</span>
-        <NavLink className="btn btn-primary" to="/register" activeClassName="active" style={{ margin: 10 }}>
-          {t('login.btn.sign')}
-        </NavLink>
+        {window.location.search !== '' ? (
+          <NavLink to={`${ROUTES.register}${window.location.search}`}>{t('login.btn.sign')}</NavLink>
+        ) : (
+          <div>
+            <Button
+              block={true}
+              // ghost
+              size="lg"
+              color="primary"
+              onClick={() => history.push(`${ROUTES.register}`)}
+            >
+              <Icon type="LoginOutlined" /> {t('login.btn.sign')}
+            </Button>
+          </div>
+        )}
       </div>
     </Form>
   );
@@ -128,6 +143,7 @@ LoginForm.propTypes = {
   submitting: PropTypes.bool,
   errors: PropTypes.object,
   values: PropTypes.object,
+  history: PropTypes.object,
   t: PropTypes.func
 };
 
@@ -135,13 +151,7 @@ const LoginFormWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: () => ({ usernameOrEmail: '', password: '' }),
 
-  handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit }
-    }
-  ) {
+  handleSubmit(values, { setErrors, props: { onSubmit } }) {
     onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

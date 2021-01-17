@@ -1,0 +1,10 @@
+#import "./DynamicCarousel.graphql"
+
+subscription onDynamicCarouselUpdated {
+  dynamicCarouselUpdated {
+    mutation
+    node {
+      ...DynamicCarouselInfo
+    }
+  }
+}

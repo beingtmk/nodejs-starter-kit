@@ -1,0 +1,3 @@
+mutation patchAddress($cartId: Int, $addressId: Int) {
+  patchAddress(cartId: $cartId, addressId: $addressId)
+}

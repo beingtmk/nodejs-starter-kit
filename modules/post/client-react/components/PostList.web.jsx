@@ -2,11 +2,20 @@
 
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { translate } from '@gqlapp/i18n-client-react';
-import { PageLayout, Table, Button, Pagination } from '@gqlapp/look-client-react';
+import {
+  PageLayout,
+  Table,
+  Pagination,
+  DeleteIcon,
+  AddButton,
+  Row,
+  Col,
+  Heading,
+  MetaTags
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const { itemsNumber, type } = settings.pagination.web;
@@ -28,11 +37,9 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
     {
       title: t('list.column.actions'),
       key: 'actions',
-      width: 50,
+      width: 100,
       render: (text, record) => (
-        <Button color="primary" size="sm" onClick={() => deletePost(record.id)}>
-          {t('post.btn.del')}
-        </Button>
+        <DeleteIcon onClick={() => deletePost(record.id)}>{/* {t('post.btn.del')} */}</DeleteIcon>
       )
     }
   ];
@@ -61,10 +68,19 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   const renderContent = () => (
     <>
-      <h2>{t('list.subTitle')}</h2>
-      <Link to="/post/new">
-        <Button color="primary">{t('list.btn.add')}</Button>
-      </Link>
+      <Row>
+        <Col span={12}>
+          <Heading type="2">{t('list.subTitle')}</Heading>
+        </Col>
+        <Col span={12}>
+          <Row type="flex" justify="end">
+            <Link to="/post/new">
+              <AddButton color="primary">{t('list.btn.add')}</AddButton>
+            </Link>
+          </Row>
+        </Col>
+      </Row>
+      <br />
       {/* Render loader */}
       {loading && !posts && <Loading t={t} />}
       {/* Render main post content */}
@@ -74,18 +90,7 @@ const PostList = ({ loading, posts, t, loadData, deletePost }) => {
 
   return (
     <PageLayout>
-      {/* Render metadata */}
-
-      <Helmet
-        title={`${settings.app.name} - ${t('list.title')}`}
-        meta={[
-          {
-            name: 'description',
-            content: `${settings.app.name} - ${t('list.meta')}`
-          }
-        ]}
-      />
-
+      <MetaTags title={t('list.title')} description={t('list.meta')} />
       {renderContent()}
     </PageLayout>
   );

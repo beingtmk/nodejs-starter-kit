@@ -1,0 +1,5 @@
+#import "./DiscountState.client.graphql"
+
+mutation updateFilterDiscount($filter: FilterDiscountInput!) {
+  updateFilterDiscount(filter: $filter) @client
+}

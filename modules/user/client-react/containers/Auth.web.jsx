@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import ROUTES from '../routes';
 
 import { withLoadedUser } from './AuthBase';
 
 const AuthRoute = withLoadedUser(
-  ({ currentUser, role, redirect = '/login', redirectOnLoggedIn, component: Component, ...rest }) => {
+  ({ currentUser, role, redirect = `${ROUTES.login}`, redirectOnLoggedIn, component: Component, ...rest }) => {
     const RenderComponent = props => {
       const redirectBack =
         props.location.search || (props.location.pathname ? `?redirectBack=${props.location.pathname}` : '');

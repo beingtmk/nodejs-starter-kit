@@ -1,0 +1,197 @@
+{
+  "navLink": "Listing",
+  "title": "Listing module",
+  "meta": "Listing example",
+  "welcomeText": "Hello, This is the Listing module",
+  "navLinkAdmin": "Listings",
+  "navLinkMyListings": "My Listings",
+  "navLinkWatchList": "Watch List",
+  "navLinkListYourGear": "List Your Gear",
+  "comment": {
+    "title": "Comments",
+    "label": {
+      "field": "Comment",
+      "add": "Add",
+      "edit": "Edit",
+      "comment": "comment"
+    },
+    "btn": {
+      "edit": "Edit",
+      "submit": "Save",
+      "del": "Delete"
+    },
+    "column": {
+      "content": "Content",
+      "actions": "Actions"
+    }
+  },
+
+  "listing": {
+    "title": "Edit Listing",
+    "meta": "Edit Listing page",
+    "loadMsg": "Loading...",
+    "noListingsMsg": "There are no listings yet.",
+    "cardTitle":"Edit Listing",
+    "steps":{
+      "title1":"Details",
+      "title2":"Flags",
+      "title3":"Media"
+    },
+    "btn": {
+      "edit": "Edit",
+      "submit": "Save",
+      "del": "Delete",
+      "back": "Back",
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "label": {
+      "edit": "Edit",
+      "create": "Create",
+      "listing": "Listing"
+    },
+    "field": {
+      "username": "UserName",
+      "gearCategory": "Gear Category",
+      "gearSubcategory": "Gear Sub-Category",
+      "gearSubSubcategory": "Gear Sub-Subcategory",
+      "listingDamages": "Damages",
+      "description": "Description",
+      "status": "Status",
+      "isActive": "Active",
+      "gearComponents": "Gear Components",
+      "listingDetail": {
+        "condition": "Condition",
+        "repairHistory": "Repair History",
+        "age": "Age"
+      },
+      "listingRental": {
+        "perDay": "Rent per Day",
+        "perDayWithOperator": "Rent per Day (with Operator)",
+        "perDayWithoutOperator": "Rent per Day (without Operator)",
+        "perWeek": "Rent per Week",
+        "perMonth": "Rent per Month",
+        "replacementValue": "Replacement Value"
+      }
+    }
+  },
+  "listingForm":{
+    "title":"Title",
+    "description":"Description",
+    "SKU":"SKU",
+    "cost":"Cost",
+    "invontoryCount":"Invontory Count",
+    "brand":"Brand",
+    "fixedQuantity":"Fixed Quantity",
+    "tooltip":"Enter -1 for false",
+    "btn":{
+      "next":"Next",
+      "previous":"Previous",
+      "add":"Add",
+      "submit":"Submit"
+    },
+    "isFeatured":"Is Featured",
+    "isDiscount":"Is Discount",
+    "isActive":"Is Active",
+    "discount":"Discount",
+    "isNew":"Is New",
+    "finalPrice":"Final Price",
+    "image":"Listing Image",
+    "addVideo":"Add video url",
+    "videoUrl":"Video url",
+    "isTimeStamp":"Is Time Stamp",
+    "discountDuration":{
+      "startDate":"Start Date",
+      "endDate":"End Date"
+    }
+  },
+  "listAdd":{
+    "title":"Add listing",
+    "meta":"Add Listing page",
+    "cardTitle":"Add Listing",
+    "steps":{
+      "title1":"Details",
+      "title2":"Flags",
+      "title3":"Media"
+    }
+  },
+  "list": {
+    "title": "Listings",
+    "meta": "A List of All Listings page",
+    "column": {
+      "description": "Description",
+      "gearCategory": "Gear Category",
+      "gearSubcategory": "Gear Sub-Category",
+      "actions": "Actions",
+      "status": "Status",
+      "createdBy":"Created by",
+      "listTitle":"Title",
+      "active":"Active",
+      "cost":"Cost",
+      "featured":"Featured",
+      "new":"New",
+      "discount":"Discount",
+      "fixedQuantity":"Fixed Quantity",
+      "inventoryCount":"Inventory Count"
+      
+    },
+    "btn": {
+      "add": "Add",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "subTitle": "Listing List"
+    
+  },
+  "listingReview": {
+    "title": "Review",
+    "meta": "Reviews of Listing"
+  },
+  "listingDetail": {
+    "title": "Listing Detail Page",
+    "meta": "Detailed View of Listing",
+    "details":"Details:",
+    "availability":"Availability:",
+    "inStock":"In Stock",
+    "outOfStock":"Out of Stock",
+    "savingAmount":"Saving Amount:",
+    "includingGST":"*Including GST",
+    "freeShipping":"*free shipping",
+    "certified":"*certified",
+    "content": {
+      "cancellationPolicy": "Borrowers can cancel a rental request before it is accepted, or within 2 hours of rental acceptance for free. If the Borrower cancels within 48 hours of the rental pick-up date, they will receive a 50% refund. If the Borrower cancels within 24 hours of the rental pick-up date, the rental is non-refundable.",
+      "damagePolicy": "Borrower will liable for any damages that happen during the period of the rental. Please get in touch with the LensHood team and let them know what happened; also take photographs of the damage."
+    }
+  },
+  "listingFilter":{
+    "search":"Search",
+    "isActive":"Is Active",
+    "brand":"Brand",
+    "costFilter":"Cost Filter",
+    "btn":{
+      "reset":"Reset Filters"
+    },
+    "sortBy":"Sort By",
+    "discount":"Discount"
+  },
+  "listingItem":{
+    "tooltip":"Visit User's Profile",
+    "cost":"Cost"
+  },
+  "socialSharingButton":{
+    "title":"Share listing by mail",
+    "email":"Enter E-mail to invite",
+    "number":"Enter Number to invite",
+    "text":"Text:",
+    "btn":{
+      "share":"Share"
+    }
+  },
+  "myListings":{
+    "title":"My Listings",
+    "heading":"  My Listings",
+    "btn":{
+      "add":"Add"
+    }
+  }
+}

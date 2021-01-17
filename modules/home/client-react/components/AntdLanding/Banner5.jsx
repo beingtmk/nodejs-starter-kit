@@ -1,46 +1,56 @@
 import React from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
+import PropTypes from 'prop-types';
+import { translate } from '@gqlapp/i18n-client-react';
+import { Heading } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
-
-const Banner50DataSource = {
-  wrapper: { className: 'home-page-wrapper banner5' },
-  page: { className: 'home-page banner5-page' },
-  childWrapper: {
-    className: 'banner5-title-wrapper',
-    children: [
-      { name: 'title', children: '产品名', className: 'banner5-title' },
-      {
-        name: 'explain',
-        className: 'banner5-explain',
-        children: '产品标语介绍'
-      },
-      {
-        name: 'content',
-        className: 'banner5-content',
-        children: '产品的详细说明，如是什么东西之类的文字'
-      },
-      {
-        name: 'button',
-        className: 'banner5-button-wrapper',
-        children: {
-          href: '#',
-          className: 'banner5-button',
-          type: 'primary',
-          children: '开始使用'
-        }
-      }
-    ]
-  },
-  image: {
-    className: 'banner5-image',
-    children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ'
-  }
-};
 
 class Banner5 extends React.PureComponent {
   render() {
-    const { ...tagProps } = this.props;
+    const { t, ...tagProps } = this.props;
+    const Banner50DataSource = {
+      wrapper: { className: 'home-page-wrapper banner5' },
+      page: { className: 'home-page banner5-page' },
+      childWrapper: {
+        className: 'banner5-title-wrapper',
+        children: [
+          {
+            name: 'title',
+            children: (
+              <>
+                <Heading type="3">{t('banner5.title')}</Heading>
+              </>
+            ),
+            className: 'banner5-title'
+          },
+          {
+            name: 'explain',
+            className: 'banner5-explain',
+            children: t('banner5.explain')
+          },
+          {
+            name: 'content',
+            className: 'banner5-content',
+            children: t('banner5.content')
+          },
+          {
+            name: 'button',
+            className: 'banner5-button-wrapper',
+            children: {
+              href: '#',
+              className: 'banner5-button',
+              type: 'primary',
+              children: t('banner5.button')
+            }
+          }
+        ]
+      },
+      image: {
+        className: 'banner5-image',
+        children: 'https://gw.alipayobjects.com/mdn/rms_ae7ad9/afts/img/A*-wAhRYnWQscAAAAAAAAAAABkARQnAQ'
+      }
+    };
     const dataSource = Banner50DataSource;
     delete tagProps.isMobile;
     const animType = {
@@ -76,4 +86,7 @@ class Banner5 extends React.PureComponent {
     );
   }
 }
-export default Banner5;
+Banner5.propTypes = {
+  t: PropTypes.func
+};
+export default translate('home')(Banner5);

@@ -1,0 +1,7 @@
+#import "./Category.graphql"
+
+query category($id: Int!) {
+  category(id: $id) {
+    ...CategoryInfo
+  }
+}

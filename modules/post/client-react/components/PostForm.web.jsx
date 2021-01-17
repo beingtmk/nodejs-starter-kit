@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
+
 import { translate } from '@gqlapp/i18n-client-react';
 import { FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { required, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, Button } from '@gqlapp/look-client-react';
+import { Form, RenderField, SubmitButton } from '@gqlapp/look-client-react';
 
 const postFormSchema = {
   title: [required],
@@ -22,9 +23,9 @@ const PostForm = ({ values, handleSubmit, submitting, t }) => {
         label={t('post.field.content')}
         value={values.content}
       />
-      <Button color="primary" type="submit" disabled={submitting}>
+      <SubmitButton color="primary" type="submit" disabled={submitting} style={{ width: 'auto' }}>
         {t('post.btn.submit')}
-      </Button>
+      </SubmitButton>
     </Form>
   );
 };
@@ -44,12 +45,7 @@ const PostFormWithFormik = withFormik({
     content: props.post && props.post.content
   }),
   validate: values => validate(values, postFormSchema),
-  handleSubmit(
-    values,
-    {
-      props: { onSubmit }
-    }
-  ) {
+  handleSubmit(values, { props: { onSubmit } }) {
     onSubmit(values);
   },
   enableReinitialize: true,

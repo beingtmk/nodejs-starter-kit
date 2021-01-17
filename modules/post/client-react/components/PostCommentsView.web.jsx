@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Table, Button } from '@gqlapp/look-client-react';
+import { Table, EditIcon, DeleteIcon } from '@gqlapp/look-client-react';
 
 import PostCommentForm from './PostCommentForm';
 
@@ -28,18 +28,15 @@ const PostCommentsView = ({
       key: 'actions',
       width: 120,
       render: (text, record) => (
-        <div style={{ width: 120 }}>
-          <Button
+        <div style={{ width: 150 }}>
+          <EditIcon
             color="primary"
-            size="sm"
+            // size="sm"
             className="edit-comment"
             onClick={() => onCommentSelect({ id: record.id, content: record.content })}
-          >
-            {t('comment.btn.edit')}
-          </Button>{' '}
-          <Button color="primary" size="sm" className="delete-comment" onClick={() => handleDeleteComment(record.id)}>
-            {t('comment.btn.del')}
-          </Button>
+          />
+          &nbsp;&nbsp;
+          <DeleteIcon className="delete-comment" onClick={() => handleDeleteComment(record.id)} />
         </div>
       )
     }

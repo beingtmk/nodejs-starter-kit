@@ -1,0 +1,3 @@
+mutation editOrderDetail($input: EditOrderDetailInput) {
+  editOrderDetail(input: $input)
+}

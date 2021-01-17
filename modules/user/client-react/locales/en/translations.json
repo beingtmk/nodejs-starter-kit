@@ -178,7 +178,7 @@
           "user": "user",
           "admin": "admin"
         },
-        "active": "Is Active",
+        "active": " Is Active",
         "firstName": "First Name",
         "lastName": "Last Name",
         "serial": "Serial",
@@ -194,6 +194,8 @@
     "btnBack": "Back"
   },
   "userAdd": {
+    "title":"Add User",
+    "meta":"A Add User page example",
     "errorMsg": "Add user failed!"
   },
 
@@ -212,7 +214,7 @@
           "user": "user",
           "admin": "admin"
         },
-        "active": "Is Active"
+        "active": " Is Active"
       }
     },
     "select": {
@@ -248,5 +250,12 @@
       }
     },
     "logout": "Log out"
+  },
+  "mobileOTP":{
+    "field":{
+      "mobile":"Mobile",
+      "otp":"OTP"
+    },
+    "btn":"verify OTP"
   }
 }

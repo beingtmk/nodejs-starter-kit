@@ -1,0 +1,7 @@
+#import "./Discount.graphql"
+
+query modalDiscount($modalId: Int, $modalName: String) {
+  modalDiscount(modalId: $modalId, modalName: $modalName) {
+    ...DiscountInfo
+  }
+}

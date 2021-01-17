@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
-import { Button, PageLayout } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { Icon, PageLayout, AddButton, Row, Col, Heading, MetaTags } from '@gqlapp/look-client-react';
+import ROUTES from '../routes';
 
 import UsersFilterView from '../components/UsersFilterView';
 import UsersListView from '../components/UsersListView';
@@ -31,25 +30,25 @@ const Users = props => {
     }
   });
 
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('users.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('users.meta')}`
-        }
-      ]}
-    />
-  );
-
   return (
     <PageLayout>
-      {renderMetaData()}
-      <h2>{t('users.list.title')}</h2>
-      <Link to="/users/new">
-        <Button color="primary">{t('users.btn.add')}</Button>
-      </Link>
+      <MetaTags title={t('users.title')} description={t('users.meta')} />
+      <Row>
+        <Col lg={21} md={20} xs={24}>
+          <Heading type="2">
+            <Icon type="UserOutlined" /> &nbsp;
+            {t('users.list.title')}
+          </Heading>
+        </Col>
+        <Col lg={0} md={0} xs={24}>
+          <br />
+        </Col>
+        <Col lg={3} md={4} xs={24} align="right">
+          <Link to={`${ROUTES.add}`}>
+            <AddButton color="primary">{t('users.btn.add')}</AddButton>
+          </Link>
+        </Col>
+      </Row>
       <hr />
       <UsersFilterView {...props} filter={filter} />
       <hr />

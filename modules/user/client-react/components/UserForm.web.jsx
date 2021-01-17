@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withFormik } from 'formik';
 import { isEmpty } from 'lodash';
 
+import { IMG_ASPECT } from '@gqlapp/listing-common';
 import { isFormError, FieldAdapter as Field } from '@gqlapp/forms-client-react';
 import { translate } from '@gqlapp/i18n-client-react';
 import { email, minLength, required, match, validate } from '@gqlapp/validation-common-react';
-import { Form, RenderField, RenderSelect, RenderCheckBox, Option, Button, Alert } from '@gqlapp/look-client-react';
+import {
+  Form,
+  RenderField,
+  RenderSelect,
+  RenderCheckBox,
+  Option,
+  Alert,
+  SubmitButton,
+  // RenderUpload,
+  RenderUploadWithCrop,
+  Row,
+  Col,
+  ModalDrawer
+} from '@gqlapp/look-client-react';
 import settings from '@gqlapp/config';
 
 const userFormSchema = {
@@ -26,19 +40,54 @@ const updateUserFormSchema = {
   passwordConfirmation: [match('password'), minLength(settings.auth.password.minLength)]
 };
 
-const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive }) => {
-  const { username, email, role, isActive, profile, auth, password, passwordConfirmation } = values;
+const UserForm = props => {
+  const { values, handleSubmit, errors, setFieldValue, t, shouldDisplayRole, shouldDisplayActive } = props;
+  const [load, setLoad] = useState(false);
+  const { username, email, role, isActive, profile, auth } = values;
 
+  console.log('props', values);
   return (
     <Form name="user" onSubmit={handleSubmit}>
-      <Field
-        name="username"
-        component={RenderField}
-        type="text"
-        label={t('userEdit.form.field.name')}
-        value={username}
-      />
-      <Field name="email" component={RenderField} type="email" label={t('userEdit.form.field.email')} value={email} />
+      <Row type="flex" gutter={24}>
+        <Col lg={14} xs={24}>
+          <Field
+            name="username"
+            component={RenderField}
+            type="text"
+            label={t('userEdit.form.field.name')}
+            value={username}
+          />
+          <Field
+            name="email"
+            component={RenderField}
+            type="email"
+            label={t('userEdit.form.field.email')}
+            value={email}
+          />
+        </Col>
+        <Col lg={10} xs={24} align="center">
+          &nbsp; &nbsp;
+          <Col lg={3} xs={24} />
+          <Col lg={18} xs={24}>
+            <Field
+              name="profile.avatar"
+              value={values.profile.avatar}
+              setload={e => setLoad(e)}
+              load={load}
+              shape="round"
+              height={IMG_ASPECT.medium.height}
+              width={IMG_ASPECT.medium.width}
+              // component={RenderUpload}
+              component={RenderUploadWithCrop}
+              label={'Avatar'}
+              cropPropSettings={{
+                shape: 'round'
+              }}
+            />
+          </Col>
+        </Col>
+      </Row>
+
       {shouldDisplayRole && (
         <Field
           name="role"
@@ -86,6 +135,32 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
           onChange={value => setFieldValue('auth', { ...auth, certificate: { ...auth.certificate, serial: value } })}
         />
       )}
+      {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
+      <Row type="flex" gutter={24}>
+        <Col lg={12} md={12} xs={24}>
+          <ModalDrawer buttonText="Reset password" modalTitle="Reset Password" height="auto" ghost={true}>
+            <ResetPasswordForm {...props} load={load} />
+          </ModalDrawer>
+        </Col>
+        <Col lg={12} md={12} xs={24}>
+          <SubmitButton color="primary" type="submit" disabled={load}>
+            {t('userEdit.form.btnSubmit')}
+          </SubmitButton>
+        </Col>
+      </Row>
+    </Form>
+  );
+};
+
+const ResetPasswordForm = props => {
+  const { t, values, handleSubmit, load, hideModal } = props;
+  const { password, passwordConfirmation } = values;
+  const handleOnSubmit = () => {
+    handleSubmit(values);
+    hideModal();
+  };
+  return (
+    <>
       <Field
         name="password"
         component={RenderField}
@@ -100,12 +175,18 @@ const UserForm = ({ values, handleSubmit, errors, setFieldValue, t, shouldDispla
         label={t('userEdit.form.field.passConf')}
         value={passwordConfirmation}
       />
-      {errors && errors.errorMsg && <Alert color="error">{errors.errorMsg}</Alert>}
-      <Button color="primary" type="submit">
+      <SubmitButton type="submit" disabled={load} onClick={handleOnSubmit}>
         {t('userEdit.form.btnSubmit')}
-      </Button>
-    </Form>
+      </SubmitButton>
+    </>
   );
+};
+ResetPasswordForm.propTypes = {
+  t: PropTypes.func,
+  values: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  load: PropTypes.bool,
+  hideModal: PropTypes.func
 };
 
 UserForm.propTypes = {
@@ -136,20 +217,19 @@ const UserFormWithFormik = withFormik({
       passwordConfirmation: '',
       profile: {
         firstName: profile && profile.firstName,
-        lastName: profile && profile.lastName
+        lastName: profile && profile.lastName,
+        avatar: profile && profile.avatar
       },
       auth: {
         ...values.initialValues.auth
       }
     };
   },
-  async handleSubmit(
-    values,
-    {
-      setErrors,
-      props: { onSubmit }
+  async handleSubmit(values, { setErrors, props: { onSubmit } }) {
+    if (values.password === '' || values.passwordConfirmation === '') {
+      delete values.passwordConfirmation;
+      delete values.password;
     }
-  ) {
     await onSubmit(values).catch(e => {
       if (isFormError(e)) {
         setErrors(e.errors);

@@ -1,0 +1,60 @@
+{
+  "navLink": "Review",
+  "navLinkAdmin": "Review",
+  "navLinkTest": "Review",
+  "navLinkUser": "My Reviews",
+
+  "title": "Review module",
+  "meta": "Review example",
+  "welcomeText": "Hello, This is the Review module",
+  "loadMsg": "Loading",
+
+  "adminPanel": {
+    "title": "Reviews",
+    "noReviewsMsg": "There are no reviews yet.",
+    "btn": {
+      "add": "Add review",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "filter": {
+      "field1": "UserName",
+      "field2": "Modal",
+      "field3": "Is active"
+    },
+    "list": {
+      "column1": "Owner",
+      "column2": "Rating",
+      "column3": "Feedback",
+      "column4": "Actions"
+    }
+  },
+  "addReview":"Add Review",
+  "editReview":"Edit Review",
+  "myReview":" My Reviews",
+  "avgRating":"rating",
+  "reviewForm":{
+    "modal":"Modal",
+    "modalId":"Modal Id",
+    "username":"username",
+    "rate":"Rate",
+    "addVideo":"Add video url",
+    "btn":{
+      "add":"Add",
+      "submit":"Submit"
+    },
+    "addImages":"Add images"
+  },
+  "reviewItem":{
+    "btn":{
+      "edit":"Edit",
+      "delete":"Delete"
+    },
+    "helpful":"Found helpful ",
+    "unhelpful":"Found unhelpful "
+  },
+  "review":{
+    "heading":"Rating & Reviews",
+    "withPhoto":"With photo"
+  }
+}

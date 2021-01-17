@@ -1,0 +1,179 @@
+type Order {
+  id: Int
+
+  consumer: User
+
+  trackingId: String
+
+  orderState: OrderState
+  orderDetails: [OrderDetail]
+
+  createdAt: String
+  updatedAt: String
+}
+
+type OrderState {
+  id: Int
+  state: String
+}
+
+type OrderDetail {
+  id: Int!
+  vendor: User
+  modalName: String
+  modalId: Int
+
+  title: String
+  imageUrl: String
+  cost: Int
+
+  orderState: OrderState
+  orderOptions: OrderOption
+  orderDelivery: OrderDelivery
+}
+
+type OrderOption {
+  id: Int
+  quantity: Int
+}
+
+type OrderDelivery {
+  id: Int
+  address: Address
+  type: String
+}
+
+type OrderEdges {
+  node: Order
+  cursor: Int
+}
+
+type OrderPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+type Orders {
+  totalCount: Int
+  edges: [OrderEdges]
+  pageInfo: OrderPageInfo
+}
+
+type OrderStates {
+  id: Int
+  state: String
+  isActive: Boolean
+}
+
+extend type Query {
+  order(id: Int!): Order
+  allOrders(orderBy: OrderByListInput, filter: FilterOrderInput): [Order]
+  orders(
+    limit: Int!
+    after: Int!
+    orderBy: OrderByListInput
+    filter: FilterOrderInput
+  ): Orders
+  getCart(userId: Int): Order
+
+  orderStates: [OrderStates]
+  # userDeliveries(userId: Int): [Order]
+}
+
+input FilterOrderInput {
+  searchText: String
+  vendorId: Int
+  consumerId: Int
+  state: String
+}
+
+# Input for ordering orders
+input OrderByInput {
+  column: String
+  # asc | desc
+  order: String
+}
+
+extend type Mutation {
+  addToCart(input: AddToCartInput!): Boolean
+
+  # Create new order
+  addOrder(input: AddOrderInput!): Order
+  # Delete a order
+  deleteOrder(id: Int!): Boolean
+  # Edit a order
+  editOrderDetail(input: EditOrderDetailInput): Boolean
+  # Patch a order
+  patchOrderState(orderId: Int, state: String): Boolean
+
+  changeDateInCart(input: ChangeDateInCartInput!): Boolean
+
+  patchAddress(cartId: Int, addressId: Int): Boolean
+  deleteOrderDetail(id: Int!): Boolean
+
+  orderStatusMail(orderId: Int, note: String): Boolean
+}
+
+input ChangeDateInCartInput {
+  id: Int!
+  orderDetailId: Int!
+  date: String!
+}
+
+input AddToCartInput {
+  consumerId: Int
+  orderDetail: OrderDetailInput!
+}
+
+input OrderDetailInput {
+  id: Int
+
+  vendorId: Int
+  modalName: String
+  modalId: Int
+
+  title: String
+  imageUrl: String
+  cost: Int
+
+  orderOptions: OrderOptionsInput
+}
+
+input OrderOptionsInput {
+  id: Int
+  quantity: Int
+}
+
+input AddOrderInput {
+  consumerId: Int
+  vendorId: Int
+  state: String
+  orderDetails: [OrderDetailInput]
+}
+
+# Input for patchOrder Mutation
+input PatchOrderInput {
+  id: Int!
+  state: String
+}
+
+# Input for EditOrderDetailInput Mutation
+input EditOrderDetailInput {
+  id: Int
+  listingCost: Int
+  orderOptions: OrderOptionsInput
+}
+
+extend type Subscription {
+  # Subscription for when editing a order
+  orderUpdated(id: Int): UpdateOrderPayload
+  # Subscription for order list
+  ordersUpdated(endCursor: Int, filter: FilterOrderInput): UpdateOrderPayload
+}
+
+# Payload for ordersUpdated Subscription
+type UpdateOrderPayload {
+  mutation: String!
+  id: Int
+  node: Order
+}

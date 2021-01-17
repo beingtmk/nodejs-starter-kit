@@ -13,7 +13,8 @@ Model.knex(knex);
 const user_eager = `[
   verification,
   mobile,
-  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate
+  auth_linkedin, auth_github, auth_google, auth_facebook, auth_certificate,
+  profile
 ]`;
 
 // Actual query fetching and transformation in DB
@@ -125,18 +126,21 @@ export class User extends Model {
 
       if (has(filter, 'searchText') && filter.searchText !== '') {
         queryBuilder.where(function() {
-          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['first_name', `%${filter.searchText}%`]))
-            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['last_name', `%${filter.searchText}%`]));
+          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.username', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['u.email', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.first_name', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['up.last_name', `%${filter.searchText}%`]));
         });
       }
     }
+
+    queryBuilder.from('user as u').leftJoin('user_profile AS up', 'up.user_id', 'u.id');
 
     return camelizeKeys(await queryBuilder);
   }
 
   async getUser(id) {
+    // console.log('id', id);
     const queryBuilder = User.query()
       .findById(id)
       .eager(user_eager);
@@ -184,41 +188,65 @@ export class User extends Model {
     return res;
   }
 
-  async register(params) {
+  async register(params, passwordHash) {
     // return knex('user').insert(decamelizeKeys({ username, email, role, passwordHash, isActive }));
+    delete params.password;
+    if (passwordHash) {
+      params.passwordHash = passwordHash;
+    }
     const res = await User.query()
       .eager(user_eager)
       .insertGraph(decamelizeKeys(params));
-    console.log(res);
+    // console.log(res);
     // Add Profile
-    const profile_id = await returnId(knex('user_profile')).insert({
+    await returnId(knex('user_profile')).insert({
       user_id: res.id
     });
-    console.log(profile_id);
+    // console.log(profile_id);
     return res.id;
   }
 
   createFacebookAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_facebook')).insert({ fb_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_facebook')).insert({
+      fb_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createGithubAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_github')).insert({ gh_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_github')).insert({
+      gh_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createGoogleOAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_google')).insert({ google_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_google')).insert({
+      google_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
   createLinkedInAuth({ id, displayName, userId }) {
-    return returnId(knex('auth_linkedin')).insert({ ln_id: id, display_name: displayName, user_id: userId });
+    return returnId(knex('auth_linkedin')).insert({
+      ln_id: id,
+      display_name: displayName,
+      user_id: userId
+    });
   }
 
-  async editUser(params) {
+  async editUser(params, passwordHash) {
     // const localAuthInput = passwordHash ? { email, passwordHash } : { email };
     // return knex('user')
     //   .update(decamelizeKeys({ username, role, isActive, ...localAuthInput }))
     //   .where({ id });
+    if (passwordHash) {
+      delete params.password;
+      params.passwordHash = passwordHash;
+    }
     const userId = params.profile ? params.profile.referredId : null;
     const res = await User.query().upsertGraph(decamelizeKeys(params));
     if (userId)
@@ -231,10 +259,12 @@ export class User extends Model {
   }
 
   async isUserProfileExists(userId) {
-    return !!(await knex('user_profile')
-      .count('id as count')
-      .where(decamelizeKeys({ userId }))
-      .first()).count;
+    return !!(
+      await knex('user_profile')
+        .count('id as count')
+        .where(decamelizeKeys({ userId }))
+        .first()
+    ).count;
   }
 
   editUserProfile({ id, profile }, isExists) {
@@ -243,7 +273,10 @@ export class User extends Model {
         .update(decamelizeKeys(profile))
         .where({ user_id: id });
     } else {
-      return returnId(knex('user_profile')).insert({ ...decamelizeKeys(profile), user_id: id });
+      return returnId(knex('user_profile')).insert({
+        ...decamelizeKeys(profile),
+        user_id: id
+      });
     }
   }
 
@@ -261,7 +294,6 @@ export class User extends Model {
     const mobile = await user.$relatedQuery('mobile').insert(params);
     return camelizeKeys(mobile);
   }
-
 
   async updateUserMobile(id, params) {
     const mobile = await UserMobile.query().patchAndFetchById(id, params);
@@ -462,6 +494,80 @@ export class User extends Model {
         .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
         .first()
     );
+  }
+
+  async getUserItems(limit, after, orderBy, filter) {
+    const queryBuilder = knex
+      .select(
+        'u.id as id',
+        'u.username as username',
+        'u.role',
+        'u.is_active',
+        'u.email as email',
+        'up.first_name as first_name',
+        'up.last_name as last_name',
+        'ca.serial',
+        'fa.fb_id',
+        'fa.display_name AS fbDisplayName',
+        'lna.ln_id',
+        'lna.display_name AS lnDisplayName',
+        'gha.gh_id',
+        'gha.display_name AS ghDisplayName',
+        'ga.google_id',
+        'ga.display_name AS googleDisplayName'
+      )
+      .from('user AS u')
+      .leftJoin('user_profile AS up', 'up.user_id', 'u.id')
+      .leftJoin('auth_certificate AS ca', 'ca.user_id', 'u.id')
+      .leftJoin('auth_facebook AS fa', 'fa.user_id', 'u.id')
+      .leftJoin('auth_google AS ga', 'ga.user_id', 'u.id')
+      .leftJoin('auth_github AS gha', 'gha.user_id', 'u.id')
+      .leftJoin('auth_linkedin AS lna', 'lna.user_id', 'u.id');
+
+    console.log('sql filters', filter);
+
+    // add filter conditions
+    if (filter) {
+      if (has(filter, 'role') && filter.role !== '') {
+        queryBuilder.where(function() {
+          this.where('u.role', filter.role);
+        });
+      }
+
+      if (has(filter, 'isActive') && filter.isActive !== null) {
+        queryBuilder.where(function() {
+          this.where('u.is_active', filter.isActive);
+        });
+      }
+
+      if (has(filter, 'searchText') && filter.searchText !== '') {
+        queryBuilder.where(function() {
+          this.where(knex.raw('LOWER(??) LIKE LOWER(?)', ['username', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['email', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['first_name', `%${filter.searchText}%`]))
+            .orWhere(knex.raw('LOWER(??) LIKE LOWER(?)', ['last_name', `%${filter.searchText}%`]));
+        });
+      }
+    }
+
+    const allUserItems = camelizeKeys(await queryBuilder);
+    const total = allUserItems.length;
+    var res = {};
+
+    if (limit && after) {
+      res = camelizeKeys(await queryBuilder.limit(limit).offset(after));
+    } else if (limit && !after) {
+      res = camelizeKeys(await queryBuilder.limit(limit));
+    } else if (!limit && after) {
+      res = camelizeKeys(await queryBuilder.offset(after));
+    } else {
+      res = camelizeKeys(await queryBuilder);
+    }
+    console.log('sql userList', res);
+    return {
+      userItems: res,
+      total: total
+    };
   }
 }
 const userDAO = new User();

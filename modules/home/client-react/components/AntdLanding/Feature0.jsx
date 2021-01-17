@@ -1,112 +1,116 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { translate } from '@gqlapp/i18n-client-react';
 import QueueAnim from 'rc-queue-anim';
-import { Row, Col } from 'antd';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
+import { Heading, Row, Col } from '@gqlapp/look-client-react';
 import { getChildrenToRender } from './utils';
-
-const Feature00DataSource = {
-  wrapper: { className: 'home-page-wrapper content0-wrapper' },
-  page: { className: 'home-page content0' },
-  OverPack: { playScale: 0.3, className: '' },
-  titleWrapper: {
-    className: 'title-wrapper',
-    children: [
-      {
-        name: 'title',
-        className: 'title-text',
-        children: (
-          <>
-            产品与服务
-            {/* <div className="home-underline"></div> */}
-          </>
-        )
-      }
-    ]
-  },
-  childWrapper: {
-    className: 'content0-block-wrapper',
-    children: [
-      {
-        name: 'block0',
-        className: 'content0-block',
-        md: 8,
-        xs: 24,
-        children: {
-          className: 'content0-block-item',
-          children: [
-            {
-              name: 'image',
-              className: 'content0-block-icon',
-              children: 'https://zos.alipayobjects.com/rmsportal/WBnVOjtIlGWbzyQivuyq.png'
-            },
-            {
-              name: 'title',
-              className: 'content0-block-title',
-              children: '一站式业务接入'
-            },
-            { name: 'content', children: '支付、结算、核算接入产品效率翻四倍' }
-          ]
-        }
-      },
-      {
-        name: 'block1',
-        className: 'content0-block',
-        md: 8,
-        xs: 24,
-        children: {
-          className: 'content0-block-item',
-          children: [
-            {
-              name: 'image',
-              className: 'content0-block-icon',
-              children: 'https://zos.alipayobjects.com/rmsportal/YPMsLQuCEXtuEkmXTTdk.png'
-            },
-            {
-              name: 'title',
-              className: 'content0-block-title',
-              children: '一站式事中风险监控'
-            },
-            {
-              name: 'content',
-              children: '在所有需求配置环节事前风险控制和质量控制能力'
-            }
-          ]
-        }
-      },
-      {
-        name: 'block2',
-        className: 'content0-block',
-        md: 8,
-        xs: 24,
-        children: {
-          className: 'content0-block-item',
-          children: [
-            {
-              name: 'image',
-              className: 'content0-block-icon',
-              children: 'https://zos.alipayobjects.com/rmsportal/EkXWVvAaFJKCzhMmQYiX.png'
-            },
-            {
-              name: 'title',
-              className: 'content0-block-title',
-              children: '一站式数据运营'
-            },
-            {
-              name: 'content',
-              children: '沉淀产品接入效率和运营小二工作效率数据'
-            }
-          ]
-        }
-      }
-    ]
-  }
-};
 
 class Content extends React.PureComponent {
   render() {
-    const { isMobile, ...props } = this.props;
+    const { isMobile, t, ...props } = this.props;
+    const Feature00DataSource = {
+      wrapper: { className: 'home-page-wrapper content0-wrapper' },
+      page: { className: 'home-page content0' },
+      OverPack: { playScale: 0.3, className: '' },
+      titleWrapper: {
+        className: 'title-wrapper',
+        children: [
+          {
+            name: 'title',
+            className: 'title-text',
+            children: (
+              <>
+                <Heading type="3" align="center">
+                  {t('feature0.titleWrapper')}
+                </Heading>
+                {/* <div className="home-underline"></div> */}
+              </>
+            )
+          }
+        ]
+      },
+      childWrapper: {
+        className: 'content0-block-wrapper',
+        children: [
+          {
+            name: 'block0',
+            className: 'content0-block',
+            md: 8,
+            xs: 24,
+            children: {
+              className: 'content0-block-item',
+              children: [
+                {
+                  name: 'image',
+                  className: 'content0-block-icon',
+                  children: 'https://zos.alipayobjects.com/rmsportal/WBnVOjtIlGWbzyQivuyq.png'
+                },
+                {
+                  name: 'title',
+                  className: 'content0-block-title',
+                  children: t('feature0.childWrapper.block0.title')
+                },
+                {
+                  name: 'content',
+                  children: t('feature0.childWrapper.block0.content')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block1',
+            className: 'content0-block',
+            md: 8,
+            xs: 24,
+            children: {
+              className: 'content0-block-item',
+              children: [
+                {
+                  name: 'image',
+                  className: 'content0-block-icon',
+                  children: 'https://zos.alipayobjects.com/rmsportal/YPMsLQuCEXtuEkmXTTdk.png'
+                },
+                {
+                  name: 'title',
+                  className: 'content0-block-title',
+                  children: t('feature0.childWrapper.block1.title')
+                },
+                {
+                  name: 'content',
+                  children: t('feature0.childWrapper.block1.content')
+                }
+              ]
+            }
+          },
+          {
+            name: 'block2',
+            className: 'content0-block',
+            md: 8,
+            xs: 24,
+            children: {
+              className: 'content0-block-item',
+              children: [
+                {
+                  name: 'image',
+                  className: 'content0-block-icon',
+                  children: 'https://zos.alipayobjects.com/rmsportal/EkXWVvAaFJKCzhMmQYiX.png'
+                },
+                {
+                  name: 'title',
+                  className: 'content0-block-title',
+                  children: t('feature0.childWrapper.block2.title')
+                },
+                {
+                  name: 'content',
+                  children: t('feature0.childWrapper.block2.content')
+                }
+              ]
+            }
+          }
+        ]
+      }
+    };
     const dataSource = Feature00DataSource;
     const { wrapper, titleWrapper, page, OverPack: overPackData, childWrapper } = dataSource;
     return (
@@ -132,7 +136,8 @@ class Content extends React.PureComponent {
 }
 
 Content.propTypes = {
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  t: PropTypes.func
 };
 
-export default Content;
+export default translate('home')(Content);

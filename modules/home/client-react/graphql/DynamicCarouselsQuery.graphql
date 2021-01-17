@@ -1,0 +1,27 @@
+#import "./DynamicCarousel.graphql"
+
+query dynamicCarousels(
+  $limit: Int
+  $after: Int
+  $orderBy: OrderByDynamicCarouselInput
+  $filter: FilterDynamicCarouselInput
+) {
+  dynamicCarousels(
+    limit: $limit
+    after: $after
+    orderBy: $orderBy
+    filter: $filter
+  ) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...DynamicCarouselInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

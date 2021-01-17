@@ -7,6 +7,7 @@ import { translate, TranslateFunction } from '@gqlapp/i18n-client-react';
 import { PLATFORM } from '@gqlapp/core-common';
 import { FormError } from '@gqlapp/forms-client-react';
 import settings from '@gqlapp/config';
+import { USER_ROUTES } from '@gqlapp/user-client-react';
 
 import UpdateCreditCardView from '../components/UpdateCreditCardView';
 
@@ -37,7 +38,7 @@ const UpdateCreditCard = ({ t, history, navigation }: UpdateCreditCardProps) => 
       await updateCard({ variables: { input: preparedCreditCard } });
 
       setSubmitting(false);
-      history ? history.push('/profile') : navigation.navigate('Profile');
+      history ? history.push(`${USER_ROUTES.profile}`) : navigation.navigate('Profile');
     } catch (e) {
       setSubmitting(false);
 

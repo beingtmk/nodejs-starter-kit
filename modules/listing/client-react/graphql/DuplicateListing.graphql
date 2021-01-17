@@ -1,0 +1,3 @@
+mutation duplicateListing($id: Int!) {
+  duplicateListing(id: $id)
+}

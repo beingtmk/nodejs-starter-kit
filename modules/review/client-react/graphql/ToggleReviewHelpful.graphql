@@ -1,0 +1,3 @@
+mutation addOrRemoveReviewHelpful($reviewId: Int, $userId: Int) {
+  addOrRemoveReviewHelpful(reviewId: $reviewId, userId: $userId)
+}

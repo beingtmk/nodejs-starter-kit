@@ -1,0 +1,10 @@
+#import "./Order.graphql"
+
+subscription onOrdersUpdated($endCursor: Int, $filter: FilterOrderInput) {
+  ordersUpdated(endCursor: $endCursor, filter: $filter) {
+    mutation
+    node {
+      ...OrderInfo
+    }
+  }
+}

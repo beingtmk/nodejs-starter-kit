@@ -1,0 +1,52 @@
+{
+  "navLink": "Category",
+  "title": "Category module",
+  "meta": "Category example",
+  "welcomeText": "Hello, This is the Category module",
+
+  "category": {
+    "btn": {
+      "add": "Add",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "subTitle": "Category List",
+    "noCategoryMsg":"There are no categories yet.",
+    "column": {
+      "listTitle": "Title",
+      "active": "Active",
+      "actions": "Actions"
+    }
+  },
+  "categoryAdd":{
+    "title":"Add category",
+    "meta":"Add category page",
+    "cardTitle":"Add Category"
+  },
+  "categoryEdit":{
+    "title":"Edit category",
+    "meta":"Edit category page",
+    "cardTitle":"Edit Category"
+  },
+  "categoryForm":{
+    "title":"Category Title",
+    "modalName":"Modal",
+    "description":"Description",
+    "select":"Select a category",
+    "isNavbar":"Is Navbar",
+    "imageUrl":"Image url",
+    "btn":{
+      "submit":"Submit"
+    }
+  },
+  "categories": {
+    "filter": {
+      "search": "Search",
+      "isActive": "isActive",
+      "modalName":"Modal"
+    }
+  },
+  "categoryCatalogue":{
+    "title":"Category Catalogue"
+  }
+}

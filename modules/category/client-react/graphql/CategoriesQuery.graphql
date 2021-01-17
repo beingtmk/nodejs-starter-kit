@@ -1,0 +1,22 @@
+#import "./Category.graphql"
+
+query categories(
+  $limit: Int!
+  $after: Int!
+  $orderBy: OrderByCategoryInput
+  $filter: FilterCategoryInput
+) {
+  categories(limit: $limit, after: $after, orderBy: $orderBy, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...CategoryInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

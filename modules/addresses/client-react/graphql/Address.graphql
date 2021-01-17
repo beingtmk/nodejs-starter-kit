@@ -1,0 +1,17 @@
+fragment AddressInfo on Address {
+  id
+  userId
+
+  streetAddress1
+  streetAddress2
+  city
+  state
+  country
+  pinCode
+
+  firstName
+  lastName
+  mobile
+
+  isDefault
+}

@@ -1,0 +1,104 @@
+# Entity
+type Discount {
+  id: Int
+  modalId: Int
+  modalName: String
+  discountPercent: Int
+  isActive: Boolean
+  discountDuration: DiscountDuration
+}
+
+type DiscountDuration {
+  id: Int
+  startDate: String
+  endDate: String
+  isActive: Boolean
+}
+
+type Discounts {
+  totalCount: Int
+  edges: [DiscountEdges]
+  pageInfo: DiscountPageInfo
+  # rangeValues: RangeValues
+}
+
+type DiscountEdges {
+  node: Discount
+  cursor: Int
+}
+
+type DiscountPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+extend type Query {
+  discount(id: Int): Discount
+  modalDiscount(modalName: String, modalId: Int): Discount
+  discounts(
+    limit: Int!
+    after: Int!
+    orderBy: OrderByDiscountInput
+    filter: FilterDiscountInput
+  ): Discounts
+}
+
+input OrderByDiscountInput {
+  column: String
+  order: String
+}
+
+input FilterDiscountInput {
+  searchText: String
+  modalName: String
+  isActive: Boolean
+  isDiscount: Boolean
+  onGoing: Boolean
+  upComing: Boolean
+}
+
+extend type Mutation {
+  addDiscount(input: AddDiscountInput!): Boolean
+  editDiscount(input: EditDiscountInput!): Boolean
+  deleteDiscount(id: Int): Boolean
+}
+
+input AddDiscountInput {
+  modalId: Int
+  discountPercent: Int
+  modalName: String
+  isActive: Boolean
+  discountDuration: AddDiscountDurationInput
+}
+input EditDiscountInput {
+  id: Int
+  modalId: Int
+  discountPercent: Int
+  modalName: String
+  isActive: Boolean
+  discountDuration: EditDiscountDurationInput
+}
+
+input AddDiscountDurationInput {
+  startDate: String
+  endDate: String
+}
+input EditDiscountDurationInput {
+  id: Int
+  startDate: String
+  endDate: String
+}
+
+extend type Subscription {
+  discountsUpdated(
+    endCursor: Int
+    filter: FilterDiscountInput
+  ): UpdateDiscountPayload
+  discountUpdated(modalId: Int): UpdateDiscountPayload
+}
+
+type UpdateDiscountPayload {
+  mutation: String!
+  modalId: Int
+  node: Discount
+}

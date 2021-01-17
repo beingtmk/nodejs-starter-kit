@@ -1,10 +1,11 @@
 import React from 'react';
-// import Helmet from 'react-helmet';
 
-import { PageLayout } from '@gqlapp/look-client-react';
+import { PageLayout, MetaTags } from '@gqlapp/look-client-react';
 // import { TranslateFunction } from '@gqlapp/i18n-client-react';
-// import settings from '@gqlapp/config';
 import { enquireScreen } from 'enquire-js';
+import { translate } from '@gqlapp/i18n-client-react';
+import PropTypes from 'prop-types';
+import settings from '@gqlapp/config';
 
 import Banner0 from './AntdLanding/Banner0';
 import Banner1 from './AntdLanding/Banner1';
@@ -44,7 +45,7 @@ enquireScreen(b => {
   isMobile = b;
 });
 
-export default class HomeView extends React.Component {
+class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,12 +72,7 @@ export default class HomeView extends React.Component {
 
   render() {
     console.log(this.props);
-    // const renderMetaData = t => (
-    //   <Helmet
-    //     title={`${settings.app.name} - ${t('title')}`}
-    //     meta={[{ name: 'description', content: `${settings.app.name} - ${t('meta')}` }]}
-    //   />
-    // );
+    const { t } = this.props;
     const children = [
       <Banner0 id="Banner0_0" key="Banner0_0" isMobile={this.state.isMobile} />,
       <Banner1 id="Banner1_0" key="Banner1_0" isMobile={this.state.isMobile} />,
@@ -113,7 +109,8 @@ export default class HomeView extends React.Component {
     ];
     return (
       <PageLayout type="home">
-        {/* {renderMetaData(this.props.t)} */}
+        <MetaTags title={t('title')} description={`${settings.app.name} - ${t('meta')}`} />
+
         <div
           className="templates-wrapper"
           ref={d => {
@@ -128,3 +125,8 @@ export default class HomeView extends React.Component {
     );
   }
 }
+HomeView.propTypes = {
+  t: PropTypes.func
+};
+
+export default translate('home')(HomeView);

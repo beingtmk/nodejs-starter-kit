@@ -16,6 +16,7 @@ type UserProfile {
   lastName: String
   fullName: String
   mobile: String
+  avatar: String
 }
 
 type UserVerification {
@@ -67,6 +68,22 @@ type LinkedInAuth {
   displayName: String
 }
 
+type UserEdges {
+  node: User
+  cursor: Int
+}
+
+type UserList {
+  totalCount: Int
+  edges: [UserEdges]
+  pageInfo: UserPageInfo
+}
+
+type UserPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
 extend type Query {
   # Get all users ordered by: OrderByUserInput add filtered by: FilterUserInput
   users(orderBy: OrderByUserInput, filter: FilterUserInput): [User]
@@ -74,6 +91,7 @@ extend type Query {
   user(id: Int!): UserPayload
   # Get current user
   currentUser: User
+  userList(limit: Int, after: Int, filter: FilterUserInput): UserList
 }
 
 type UserPayload {
@@ -169,6 +187,7 @@ input EditUserInput {
 input ProfileInput {
   firstName: String
   lastName: String
+  avatar: String
 }
 
 # Input for Mobile Verificaton Mutation

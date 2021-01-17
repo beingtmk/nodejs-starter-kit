@@ -1,0 +1,27 @@
+fragment ListingsStateInfo on ListingsState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    # userId
+    searchText
+    brand
+
+    discount
+    popularity
+
+    categoryFilter {
+      categoryId
+      allSubCategory
+    }
+
+    lowerCost
+    upperCost
+
+    # isFeatured
+    # isNew
+    # isDiscount
+    isActive
+  }
+}

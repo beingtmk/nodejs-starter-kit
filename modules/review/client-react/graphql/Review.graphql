@@ -1,0 +1,23 @@
+#import "@gqlapp/user-client-react/graphql/User.graphql"
+
+fragment ReviewInfo on Review {
+  id
+  user {
+    ...UserInfo
+  }
+  rating
+  feedback
+  isActive
+  helpful
+  modalReview {
+    modalName
+    modalId
+  }
+  reviewMedia {
+    id
+    url
+    type
+  }
+  createdAt
+  updatedAt
+}

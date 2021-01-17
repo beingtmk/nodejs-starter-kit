@@ -1,0 +1,11 @@
+#import "./Discount.graphql"
+
+subscription onDiscountUpdated($modalId: Int) {
+  discountUpdated(modalId: $modalId) {
+    mutation
+    modalId
+    node {
+      ...DiscountInfo
+    }
+  }
+}

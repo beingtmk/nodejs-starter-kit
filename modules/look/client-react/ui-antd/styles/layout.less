@@ -1,23 +1,26 @@
-
 .form-layout-outer {
-  background-image: url("https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg");
+  background-image: url('https://res.cloudinary.com/www-lenshood-in/image/upload/v1579772693/nodejs-starterkit/xHxWkcvaIcuAdQl.jpg');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  width: 100%;
+  // width: 100%;
   min-height: 100vh;
   height: fit-content;
-  padding-top: 100px;
-  padding-bottom: 24px;
+  margin: 0 -200%;
+  padding: 100px 220% 24px 220%;
 }
 .content-layout {
   position: relative;
   margin: auto;
   margin-top: @navbar-height-large;
-  max-width: 1200px;
+  max-width: @navbar-max-width;
   padding: 24px;
   min-height: 100vh;
   width: 100%;
+}
+
+.home-content-layout {
+  margin-top: @navbar-height-large;
 }
 
 .form-card {
@@ -26,15 +29,54 @@
   margin: auto;
 }
 
-@media only screen and (max-width: 767px) {
+#install-button{
+  position: fixed;
+  z-index: 10;
+  left: 100px;
+  bottom: 50px;
+}
+@media only screen and (max-width: 768px) {
+  .content-layout {
+    margin-top: @navbar-height-small;
+    padding: 5px;
+  }
   .form-layout-outer {
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-top: @navbar-height-small;
+    padding: @navbar-height-small 202% @navbar-height-small 202%;
+  }
+  #install-button{
+    left: 60px;
+  }
+  .home-content-layout {
+    margin-top: @navbar-height-small;
   }
 }
 
 //Overriding antd
 .ant-card {
-  border-radius: 10px !important;
+  border-radius: 10px;
   overflow: hidden;
+}
+
+.hideOverflow {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  #install-button{
+    left: 20px;
+  }
+}
+
+.HVCenter {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary-color {
+  color: @primary-color
 }

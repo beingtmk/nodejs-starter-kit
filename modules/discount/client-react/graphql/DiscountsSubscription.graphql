@@ -1,0 +1,10 @@
+#import "./Discount.graphql"
+
+subscription onDiscountsUpdated($endCursor: Int, $filter: FilterDiscountInput) {
+  discountsUpdated(endCursor: $endCursor, filter: $filter) {
+    mutation
+    node {
+      ...DiscountInfo
+    }
+  }
+}

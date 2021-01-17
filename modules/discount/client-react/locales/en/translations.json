@@ -1,0 +1,68 @@
+{
+  "navLink": "Discount",
+  "title": "Discount",
+  "meta": "Discount example",
+  "welcomeText": "Hello, This is the Discount module",
+
+  "discount": {
+    "title": "Discounts",
+    "btn": {
+      "add": "Add",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "subTitle": "Discounts List"
+  },
+  
+  "adminPanel": {
+    "title": "Discounts",
+    "meta": "A List of All Discount page.",
+    "noDiscountsMsg": "There are no discounts yet",
+    "btn": {
+      "add": "Add discount",
+      "del": "Delete",
+      "more": "Load more ..."
+    },
+    "filter": {
+      "field1": "Search Title",
+      "field2": "Modal",
+      "field3": "Is active"
+    },
+    "discount": {
+      "column1": "Id",
+      "column2": "Modal",
+      "column3": "Discount percent",
+      "column4": "Discount status",
+      "column5": "Actions"
+    }
+  },
+  "discountAdd":{
+    "title":"Add discount",
+    "meta":"Add Discount page.",
+    "cardTitle":"Add Discount"
+  },
+  "discountEdit":{
+    "title":"Edit discount",
+    "meta":"Edit Discount page.",
+    "cardTitle":"Edit Discount"
+  },
+  "discountComponent": {
+    "savingAmount":"Saving Amount:",
+    "includingGST":"*Including GST",
+    "freeShipping":"*free shipping",
+    "certified":"*certified"
+  },
+  "discountForm": {
+    "btn": {
+      "submit": "Submit"
+    },
+    "discountPercent": "Discount Percent",
+    "finalPrice": "Final Price",
+    "isActive": "Is Active",
+    "isTimeStamp": "Is Time Stamp",
+    "discountDuration": {
+      "startDate": "Start Date",
+      "endDate": "End Date"
+    }
+  }
+}

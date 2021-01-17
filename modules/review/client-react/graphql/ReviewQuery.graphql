@@ -1,0 +1,7 @@
+#import "./Review.graphql"
+
+query review($id: Int!) {
+  review(id: $id) {
+    ...ReviewInfo
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "navLink": "Order nav link",
+  "title": "Order module",
+  "meta": "Order example",
+  "welcomeText": "Hello, This is the Order module",
+  "addToCart":{
+    "form":{
+      "btn":{
+        "save":"Save",
+        "add":"Add to cart",
+        "book":"Book now",
+        "remove":"Remove from Cart",
+        "go":"Go to Cart"
+      }
+    }
+  },
+  "noOrdersMsg":"There are no orders yet.",
+  "orders":{
+    "subTitle":"Orders",
+    "orderId":"Order Id: ",
+    "items":"Items ",
+    "total":"Total",
+    "item":{
+      "search":"Search",
+      "sortBy":"Sort By"
+    },
+    "btn":{
+      "more":"Load more..."
+    },
+    "column":{
+      "orderId":"Order Id ",
+      "consumer":"Consumer",
+      "state":"State",
+      "createdAt":"Created at - (en-IN) ",
+      "actions":"actions"
+    }
+  },
+  "myOrders":" My Orders",
+  "myDeliveries":" My Deliveries",
+  "orderDetails":{
+    "id":"Order id - ",
+    "addressText":"The order will be delivered to the address below:",
+    "status":{
+      "title":"Status",
+      "step1":"Payment Done.",
+      "step2":"Order confirmed.",
+      "step3":"Order dispatched.",
+      "step4":"Order completed."
+    }
+  },
+  "checkoutCard":{
+    "orderSummary":"Order summary",
+    "cartSummary":"Cart summary",
+    "total":"Total amount",
+    "youPaid":"You paid "
+  },
+  "cartItem":{
+    "quantity":"Quantity: ",
+    "amount":"Amount"
+  },
+  "checkoutSteps":{
+    "heading":"Checkout",
+    "step1":"Cart",
+    "step2":"Select Address",
+    "step3": "Review & Pay"
+  },
+  "checkoutCart":{
+    "myCart":" My cart - ",
+    "orderId":"Order Id - ",
+    "totalPrice":"Total price: ",
+    "checkbox":"I HAVE READ AND AGREE TO ALL THE PRIVACY POLICY.",
+    "btn":{
+      "checkout":"Checkout",
+      "add":"Add more products"
+    },
+    "cartSummary":"Cart summary",
+    "item":"Item ",
+    "price":"Price ",
+    "totalAmount":"Total amount"
+  },
+  "checkoutBill":{
+    "billingAddress":"Billing Address",
+    "shippingAddress":"Shipping Address",
+    "selectAddress":"Select the address you want the order to be delivered at:"
+  },
+  "checkoutOrder":{
+    "orderAddress":"The order will be delivered to the address below:"
+  }
+}

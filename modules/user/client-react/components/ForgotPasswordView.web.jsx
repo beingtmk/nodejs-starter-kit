@@ -1,31 +1,19 @@
 import React from 'react';
-import Grid from 'hedron';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
-
-import { LayoutCenter, PageLayout, Card, CardTitle, Icon } from '@gqlapp/look-client-react';
-import settings from '@gqlapp/config';
+import { PageLayout, Card, CardTitle, Icon, Heading, MetaTags, Row, Col } from '@gqlapp/look-client-react';
+// import { UndoOutlined } from '@ant-design/icons';
 
 import ForgotPasswordForm from './ForgotPasswordForm';
 
 const ForgotPasswordView = ({ onSubmit, t, sent }) => {
-  const renderMetaData = () => (
-    <Helmet
-      title={`${settings.app.name} - ${t('forgotPass.title')}`}
-      meta={[
-        {
-          name: 'description',
-          content: `${settings.app.name} - ${t('forgotPass.meta')}`
-        }
-      ]}
-    />
-  );
-
   const renderContent = () => (
     <>
       <Card>
         <CardTitle>
-          <Icon type="undo" /> {t('forgotPass.form.title')}
+          <Heading type="2">
+            <Icon type="UndoOutlined" />
+            {t('forgotPass.form.title')}
+          </Heading>
         </CardTitle>
         <h1 className="text-center"></h1>
         <ForgotPasswordForm onSubmit={onSubmit} sent={sent} />
@@ -35,17 +23,30 @@ const ForgotPasswordView = ({ onSubmit, t, sent }) => {
 
   return (
     <PageLayout type="forms">
-      <Grid.Provider breakpoints={{ sm: '-500', md: '501-768', lg: '+769' }}>
-        <Grid.Bounds direction="vertical">
-          {renderMetaData()}
-          <Grid.Box sm={{ hidden: 'true' }}>
-            <LayoutCenter>{renderContent()}</LayoutCenter>
-          </Grid.Box>
-          <Grid.Box md={{ hidden: 'true' }} lg={{ hidden: 'true' }}>
-            {renderContent()}
-          </Grid.Box>
-        </Grid.Bounds>
-      </Grid.Provider>
+      <MetaTags title={t('forgotPass.title')} description={t('forgotPass.meta')} />
+      <Row justify="center">
+        <Col xs={24} lg={12}>
+          <Col xs={24} md={24} lg={0}>
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
+          <Col xs={0} md={0} lg={24}>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Col>
+          {renderContent()}
+        </Col>
+      </Row>
     </PageLayout>
   );
 };

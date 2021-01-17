@@ -1,3 +1,11 @@
+import setting from '@gqlapp/setting-client-react';
+import category from '@gqlapp/category-client-react';
+import discount from '@gqlapp/discount-client-react';
+import pages from '@gqlapp/pages-client-react';
+import addresses from '@gqlapp/addresses-client-react';
+import order from '@gqlapp/order-client-react';
+import listing from '@gqlapp/listing-client-react';
+import review from '@gqlapp/review-client-react';
 import pwa from '@gqlapp/pwa-client-react';
 import home from '@gqlapp/home-client-react';
 import core from '@gqlapp/core-client-react';
@@ -21,6 +29,12 @@ const pagination = require('@gqlapp/pagination-client-react').default;
 const user = require('@gqlapp/user-client-react').default;
 
 const modules = new ClientModule(
+  category,
+  discount,
+  pages,
+  addresses,
+  listing,
+  review,
   pwa,
   home,
   look,
@@ -33,7 +47,9 @@ const modules = new ClientModule(
   pagination,
   chat,
   payments,
+  order,
   user,
+  setting,
   i18n,
   reports,
   pageNotFound,

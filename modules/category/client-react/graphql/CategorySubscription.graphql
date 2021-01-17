@@ -1,0 +1,11 @@
+#import "./Category.graphql"
+
+subscription onCategoryUpdated($id: Int) {
+  categoryUpdated(id: $id) {
+    mutation
+    id
+    node {
+      ...CategoryInfo
+    }
+  }
+}

@@ -1,0 +1,3 @@
+mutation addDiscount($input: AddDiscountInput!) {
+  addDiscount(input: $input)
+}

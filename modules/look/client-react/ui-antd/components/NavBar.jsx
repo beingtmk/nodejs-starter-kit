@@ -1,10 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Drawer, Menu, Icon, Row, Col, Layout } from 'antd';
-import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
+import { Drawer, Menu, Layout } from 'antd';
 import ScrollParallax from 'rc-scroll-anim/lib/ScrollParallax';
 
+import { Row, Col } from '@gqlapp/look-client-react';
+import UserAvatar from '@gqlapp/user-client-react/containers/UserAvatar';
+import HOME_ROUTES from '@gqlapp/home-client-react/routes';
+
+import Icon from './Icon';
 import MenuItem from './MenuItem';
 import LoggedIn from '../auth/LoggedIn';
 import DropDown from './Dropdown';
@@ -15,13 +20,17 @@ const ref = { modules: null };
 
 const { Header } = Layout;
 
+const BannerLink = styled.a`
+  color: black;
+`;
+
 export const onAppCreate = async modules => (ref.modules = modules);
 
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: '/'
+      current: `${HOME_ROUTES.home}`
     };
   }
 
@@ -44,6 +53,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    const platform = this.props.platform;
     const isMobile = this.props && this.props.isMobile;
     return (
       <ScrollParallax
@@ -51,50 +61,75 @@ class NavBar extends React.Component {
         className="navbar-parallex"
         animation={{
           playScale: [1, 1.1],
-          translateY: this.state.isMobile ? '' : '-40px'
+          translateY: isMobile ? '' : '-40px'
         }}
       >
         <Header className="no-print">
           <Row className="navbar-wrapper">
             <Col lg={24} xs={0}>
               <div align="right" className="navbar-contact-menu">
-                <Row style={{ lineHeight: '37px' }}>
-                  <Col span={10} />
-                  <Col span={6}>
-                    <Icon type="phone" /> +918888888888
-                  </Col>
-                  <Col span={8}>
-                    <Icon type="mail" /> nodejs-starterkit@approxyma.com
-                  </Col>
-                </Row>
+                {platform && (
+                  <Row style={{ lineHeight: '37px' }} justify="end" gutter={24}>
+                    <Col>
+                      <BannerLink href={`tel: ${platform.platformInfo.mobile}`}>
+                        <Icon type="PhoneOutlined" /> &nbsp;
+                        {platform.platformInfo.mobile}
+                      </BannerLink>
+                    </Col>
+                    <Col>
+                      <BannerLink
+                        href={`mailto: ${platform.platformInfo.email}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon type="MailOutlined" /> &nbsp;
+                        {platform.platformInfo.email}
+                      </BannerLink>
+                    </Col>
+                    <Col>
+                      <a href={platform.platformSocial.twitter} target="_blank" rel="noopener noreferrer">
+                        <Icon type="TwitterSquareFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                      &nbsp;
+                      <a href={platform.platformSocial.instagram} target="_blank" rel="noopener noreferrer">
+                        <Icon type="InstagramFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                      &nbsp;
+                      <a href={platform.platformSocial.facebook} target="_blank" rel="noopener noreferrer">
+                        <Icon type="FacebookFilled" style={{ color: 'black', fontSize: '20px' }} />
+                      </a>
+                    </Col>
+                  </Row>
+                )}
               </div>
             </Col>
+
             <Col span={24}>
               <Row>
-                <Col align="left" xs={12} md={12} lg={7}>
-                  <NavLink to="/" className="nav-link">
+                <Col align="left" xs={12} md={12} lg={6} style={{ height: '50px' }}>
+                  <NavLink to={`${HOME_ROUTES.home}`} className="nav-link">
                     <ScrollParallax
                       location="page-layout"
                       className="navbar-logo-lg"
                       animation={{
                         playScale: [1, 1.1],
                         scale: isMobile ? 1 : 0.5,
-                        translateX: isMobile ? '' : '-79px',
+                        translateX: isMobile ? '' : '-45px',
                         translateY: isMobile ? '' : '20px'
                       }}
                     >
-                      <img
-                        height="100%"
-                        src={
-                          'https://res.cloudinary.com/www-lenshood-in/image/upload/v1580224348/nodejs-starterkit/untitled_5.svg'
-                        }
-                        className="navbar-logo-img"
-                        alt="Mountain"
-                      />
+                      {platform && (
+                        <img
+                          // height="80px"
+                          src={platform.logo}
+                          className="navbar-logo-img"
+                          alt="Mountain"
+                        />
+                      )}
                     </ScrollParallax>
                   </NavLink>
                 </Col>
-                <Col xs={0} md={0} lg={2}>
+                <Col xs={0} md={0} lg={4}>
                   <Menu
                     onClick={this.handleClick}
                     selectedKeys={[this.props.location.pathname]}
@@ -104,7 +139,7 @@ class NavBar extends React.Component {
                   >
                     {__DEV__ && (
                       <MenuItem>
-                        <DropDown type="deployment-unit">
+                        <DropDown type="DeploymentUnitOutlined">
                           {ref.modules.navItemsTest}
                           <MenuItem>
                             <a href="/graphiql">GraphiQL</a>
@@ -112,39 +147,43 @@ class NavBar extends React.Component {
                         </DropDown>
                       </MenuItem>
                     )}
-
+                    <MenuItem>
+                      <DropDown type="ApartmentOutlined">{ref.modules.navItemsBrowse}</DropDown>
+                    </MenuItem>
                     <LoggedIn role="admin">
                       <MenuItem>
-                        <DropDown type="safety-certificate">{ref.modules.navItemsAdmin}</DropDown>
+                        <DropDown type="SafetyCertificateOutlined">{ref.modules.navItemsAdmin}</DropDown>
                       </MenuItem>
                     </LoggedIn>
                   </Menu>
                 </Col>
 
-                <Col xs={0} md={0} lg={15} align="right">
+                <Col xs={0} md={0} lg={14} align="right">
                   <Menu
                     onClick={this.handleClick}
                     selectedKeys={[this.props.location.pathname]}
                     mode="horizontal"
                     theme="light"
-                    style={{ lineHeight: '39px' }}
+                    className="navbar-menu"
                   >
-                    {ref.modules.navItems}
-                    {ref.modules.navItemsRight}
+                    <Row type="flex" justify="end">
+                      {ref.modules.navItems}
+                      {ref.modules.navItemsRight}
 
-                    <LoggedIn>
-                      <MenuItem>
-                        <DropDown content={<UserAvatar />} noicon>
-                          {ref.modules.navItemsUser}
-                        </DropDown>
-                      </MenuItem>
-                    </LoggedIn>
+                      <LoggedIn>
+                        <MenuItem>
+                          <DropDown content={<UserAvatar />} noicon>
+                            {ref.modules.navItemsUser}
+                          </DropDown>
+                        </MenuItem>
+                      </LoggedIn>
+                    </Row>
                   </Menu>
                 </Col>
                 <Col xs={12} md={12} lg={0}>
                   <div onClick={this.showDrawer} className="navbar-drawer-logo">
                     <Icon
-                      type="menu"
+                      type="MenuOutlined"
                       style={{
                         color: 'inherit',
                         fontSize: '20px',
@@ -163,7 +202,7 @@ class NavBar extends React.Component {
                 mode="inline"
                 selectedKeys={[this.props.location.pathname]}
                 theme="light"
-                style={{ lineHeight: '50px' }}
+                style={{ lineHeight: '50px', border: '0px' }}
               >
                 {ref.modules.navItemsRight}
                 <LoggedIn>
@@ -172,14 +211,14 @@ class NavBar extends React.Component {
                   </div>
                 </LoggedIn>
                 {ref.modules.navItemsUser}
-                {/* {this.NavLinkMyInvitesWithI18n()} */}
                 {__DEV__ && (
                   <SubMenu
                     key="test"
                     style={{ color: 'black !important' }}
                     title={
                       <MenuItem>
-                        <Icon type="deployment-unit" /> Dev
+                        <Icon type="DeploymentUnitOutlined" />
+                        Dev
                       </MenuItem>
                     }
                   >
@@ -189,12 +228,23 @@ class NavBar extends React.Component {
                     </MenuItem>
                   </SubMenu>
                 )}
+                <SubMenu
+                  key="admin"
+                  title={
+                    <MenuItem>
+                      <Icon type="ApartmentOutlined" /> Browse
+                    </MenuItem>
+                  }
+                >
+                  {ref.modules.navItemsBrowse}
+                </SubMenu>
                 <LoggedIn role="admin">
                   <SubMenu
                     key="admin"
                     title={
                       <MenuItem>
-                        <Icon type="safety-certificate" /> Admin
+                        <Icon type="SafetyCertificateOutlined" />
+                        Admin
                       </MenuItem>
                     }
                   >
@@ -213,7 +263,8 @@ class NavBar extends React.Component {
 
 NavBar.propTypes = {
   location: PropTypes.object.isRequired,
-  isMobile: PropTypes.bool
+  isMobile: PropTypes.bool,
+  platform: PropTypes.object
 };
 
 export default withRouter(NavBar);

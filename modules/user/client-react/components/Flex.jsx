@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from 'hedron';
 
 import { translate } from '@gqlapp/i18n-client-react';
+import { Row, Col } from '@gqlapp/look-client-react';
 
 // import { Page, Row, Column } from 'hedron';
 
@@ -11,18 +11,16 @@ import { translate } from '@gqlapp/i18n-client-react';
 
 const ProfileView = () => {
   return (
-    <Grid.Provider breakpoints={{ mobile: '-500', tablet: '501-750', wide: '+750' }}>
-      <Grid.Bounds direction="vertical">
-        <Grid.Box style={{ background: 'red', height: '45px' }} mobile={{ hidden: true }}>
-          Header
-        </Grid.Box>
-        <Grid.Box style={{ background: 'blue', minHeight: '100vh' }}>Content</Grid.Box>
-        <Grid.Bounds direction="vertical" wide={{ direction: 'horizontal' }}>
-          <Grid.Box>These boxes render side by side on wide screens</Grid.Box>
-          <Grid.Box>These boxes render side by side on wide screens</Grid.Box>
-        </Grid.Bounds>
-      </Grid.Bounds>
-    </Grid.Provider>
+    <>
+      <Col xs={0} lg={24}>
+        <Row style={{ backgroundColor: 'red', height: '45px' }}>Header</Row>
+      </Col>
+      <Col>
+        <Row style={{ backgroundColor: 'blue', minHeight: '100vh' }}>Centent</Row>
+      </Col>
+      <Row>These boxes render side by side on wide screens</Row>
+      <Row>These boxes render side by side on wide screens</Row>
+    </>
   );
 };
 

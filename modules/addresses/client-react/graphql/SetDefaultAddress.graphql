@@ -1,0 +1,3 @@
+mutation setDefaultAddress($userId: Int, $id: Int) {
+  setDefaultAddress(userId: $userId, id: $id)
+}

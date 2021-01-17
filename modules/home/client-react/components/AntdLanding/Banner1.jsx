@@ -1,69 +1,72 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
+import PropTypes from 'prop-types';
 import BannerAnim, { Element } from 'rc-banner-anim';
-import { isImg } from './utils';
 import 'rc-banner-anim/assets/index.css';
+
+import { Icon, Button } from '@gqlapp/look-client-react';
+import { translate } from '@gqlapp/i18n-client-react';
+
+import { isImg } from './utils';
 
 const { BgElement } = Element;
 
-const Banner10DataSource = {
-  wrapper: { className: 'banner1' },
-  BannerAnim: {
-    children: [
-      {
-        name: 'elem0',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'banner1-text-wrapper' },
-        bg: { className: 'bg bg0' },
-        title: {
-          className: 'banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem1',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'banner1-text-wrapper' },
-        bg: { className: 'bg bg1' },
-        title: {
-          className: 'banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'banner1-button', children: 'Learn More' }
-      },
-      {
-        name: 'elem2',
-        BannerElement: { className: 'banner-user-elem' },
-        textWrapper: { className: 'banner1-text-wrapper' },
-        bg: { className: 'bg bg1' },
-        title: {
-          className: 'banner1-title',
-          children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
-        },
-        content: {
-          className: 'banner1-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'banner1-button', children: 'Learn More' }
-      }
-    ]
-  }
-};
-
 class Banner extends React.PureComponent {
   render() {
-    const { ...props } = this.props;
+    const { t, ...props } = this.props;
+    const Banner10DataSource = {
+      wrapper: { className: 'banner1' },
+      BannerAnim: {
+        children: [
+          {
+            name: 'elem0',
+            BannerElement: { className: 'banner-user-elem' },
+            textWrapper: { className: 'banner1-text-wrapper' },
+            bg: { className: 'bg bg0' },
+            title: {
+              className: 'banner1-title',
+              children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+            },
+            content: {
+              className: 'banner1-content',
+              children: t('banner1.elem0.content')
+            },
+            button: { className: 'banner1-button', children: t('banner1.elem0.button') }
+          },
+          {
+            name: 'elem1',
+            BannerElement: { className: 'banner-user-elem' },
+            textWrapper: { className: 'banner1-text-wrapper' },
+            bg: { className: 'bg bg1' },
+            title: {
+              className: 'banner1-title',
+              children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+            },
+            content: {
+              className: 'banner1-content',
+              children: t('banner1.elem1.content')
+            },
+            button: { className: 'banner1-button', children: t('banner1.elem1.button') }
+          },
+          {
+            name: 'elem2',
+            BannerElement: { className: 'banner-user-elem' },
+            textWrapper: { className: 'banner1-text-wrapper' },
+            bg: { className: 'bg bg1' },
+            title: {
+              className: 'banner1-title',
+              children: 'https://zos.alipayobjects.com/rmsportal/HqnZZjBjWRbjyMr.png'
+            },
+            content: {
+              className: 'banner1-content',
+              children: t('banner1.elem2.content')
+            },
+            button: { className: 'banner1-button', children: t('banner1.elem2.button') }
+          }
+        ]
+      }
+    };
     const dataSource = Banner10DataSource;
     delete props.isMobile;
     const childrenToRender = dataSource.BannerAnim.children.map((item, i) => {
@@ -112,11 +115,13 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <Icon type="down" />
+          <Icon type="DownOutlined" />
         </TweenOne>
       </div>
     );
   }
 }
-
-export default Banner;
+Banner.propTypes = {
+  t: PropTypes.func
+};
+export default translate('home')(Banner);

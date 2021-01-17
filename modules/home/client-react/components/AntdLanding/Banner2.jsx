@@ -1,36 +1,38 @@
 import React from 'react';
-import { Button, Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne, { TweenOneGroup } from 'rc-tween-one';
+import PropTypes from 'prop-types';
 import BannerAnim, { Element } from 'rc-banner-anim';
-import { isImg } from './utils';
 import 'rc-banner-anim/assets/index.css';
 
-const Banner20DataSource = {
-  wrapper: { className: 'banner2' },
-  BannerAnim: {
-    children: [
-      {
-        name: 'elem0',
-        BannerElement: { className: 'banner-user-elem' },
-        page: { className: 'home-page banner2-page' },
-        textWrapper: { className: 'banner2-text-wrapper' },
-        bg: { className: 'bg bg0' },
-        title: { className: 'banner2-title', children: 'Ant Motion' },
-        content: {
-          className: 'banner2-content',
-          children: '一个高效的页面动画解决方案'
-        },
-        button: { className: 'banner2-button', children: 'Learn More' }
-      }
-    ]
-  }
-};
+import { Icon, Button } from '@gqlapp/look-client-react';
+import { translate } from '@gqlapp/i18n-client-react';
+import { isImg } from './utils';
 
 const BgElement = Element.BgElement;
 class Banner extends React.PureComponent {
   render() {
-    const { ...props } = this.props;
+    const { t, ...props } = this.props;
+    const Banner20DataSource = {
+      wrapper: { className: 'banner2' },
+      BannerAnim: {
+        children: [
+          {
+            name: 'elem0',
+            BannerElement: { className: 'banner-user-elem' },
+            page: { className: 'home-page banner2-page' },
+            textWrapper: { className: 'banner2-text-wrapper' },
+            bg: { className: 'bg bg0' },
+            title: { className: 'banner2-title', children: 'Ant Motion' },
+            content: {
+              className: 'banner2-content',
+              children: t('banner2.BannerAnim.content')
+            },
+            button: { className: 'banner2-button', children: t('banner2.BannerAnim.button') }
+          }
+        ]
+      }
+    };
     const { isMobile } = props;
     const dataSource = Banner20DataSource;
     delete props.isMobile;
@@ -99,11 +101,14 @@ class Banner extends React.PureComponent {
           style={{ bottom: 40 }}
           key="icon"
         >
-          <Icon type="down" />
+          <Icon type="DownOutlined" />
         </TweenOne>
       </div>
     );
   }
 }
+Banner.propTypes = {
+  t: PropTypes.func
+};
 
-export default Banner;
+export default translate('home')(Banner);

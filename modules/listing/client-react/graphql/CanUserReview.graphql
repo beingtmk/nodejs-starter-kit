@@ -1,0 +1,3 @@
+query canUserReview($listingId: Int, $userId: Int) {
+  canUserReview(listingId: $listingId, userId: $userId)
+}

@@ -1,0 +1,16 @@
+#import "./DynamicCarousel.client.graphql"
+
+query DynamicCarouselState {
+  dynamicCarouselState @client {
+    orderBy {
+      column
+      order
+    }
+    filter {
+      searchText
+      label
+      isActive
+    }
+    # ...DynamicCarouselStateInfo
+  }
+}

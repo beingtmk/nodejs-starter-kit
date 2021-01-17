@@ -1,0 +1,7 @@
+#import "./ReviewsState.client.graphql"
+
+query ReviewsState {
+  reviewsState @client {
+    ...ReviewsStateInfo
+  }
+}

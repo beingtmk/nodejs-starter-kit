@@ -1,0 +1,20 @@
+{
+  "navLink": "Setting",
+  "title": "Setting",
+  "meta": "Setting example",
+  "welcomeText": "Hello, This is the Setting module",
+
+  "settingForm": {
+    "name": "Platform Name",
+    "logo": "logo",
+    "type": "Type",
+    "email": "Email",
+    "mobile": "Mobile",
+    "address": "Address",
+    "youtube": "Youtube",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "linkedIn": "LinkedIn",
+    "twitter": "Twitter"
+  }
+}

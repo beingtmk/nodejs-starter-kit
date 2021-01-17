@@ -1,0 +1,23 @@
+fragment CategoryFrag on Category {
+  id
+  title
+  imageUrl
+  description
+  parentCategoryId
+
+  modalCategory {
+    id
+    modalName
+  }
+
+  isNavbar
+  isLeaf
+  isActive
+}
+
+fragment CategoryInfo on Category {
+  ...CategoryFrag
+  subCategories {
+    ...CategoryFrag
+  }
+}

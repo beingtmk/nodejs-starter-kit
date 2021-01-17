@@ -1,6 +1,665 @@
 {
   "navLink": "Home nav link",
   "title": "Home module",
+  "banner":"home Banner",
   "meta": "Home example",
-  "welcomeText": "Hello, This is the Home module"
+  "welcomeText": "Hello, This is the Home module",
+  "banner0": {
+    "title": "https://res.cloudinary.com/www-lenshood-in/image/upload/v1580223483/nodejs-starterkit/untitled_4.svg",
+    "content": "An All JavaScript Solution For Your App Needs",
+    "button": "Learn More"
+  },
+  "feature0": {
+    "titleWrapper": "products and services",
+    "childWrapper": {
+      "block0": {
+        "title": "One-stop business access",
+        "content": "Four times the efficiency of payment, settlement, and accounting access products"
+      },
+      "block1": {
+        "title": "One-stop in-event risk monitoring",
+        "content": "Prior risk control and quality control capabilities in all requirements configuration links"
+      },
+      "block2": {
+        "title": "One-stop data operation",
+        "content": "Accumulate product access efficiency and operational efficiency data"
+      }
+    }
+  },
+  "content5": {
+    "titleWrapper": {
+      "title": "Customer case",
+      "content": "Here is a paragraph to introduce the case of the service"
+    }
+  },
+  "feature3": {
+    "titleWrapper": {
+      "title": "Ant Financial Cloud provides professional services",
+      "content": "Based on Alibaba Cloud's powerful basic resources"
+    },
+    "block0": {
+      "title": "Enterprise Resource Management",
+      "content": "Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance."
+    },
+    "block1": {
+      "title": "Cloud security",
+      "content": "A complete cloud-based security system built in accordance with the security requirements of financial enterprises to fully protect financial applications and data security."
+    },
+    "block2": {
+      "title": "Cloud monitoring",
+      "content": "Distributed cloud environment centralized monitoring, unified resource and application status view, intelligent analysis and fault location."
+    },
+    "block3": {
+      "title": "mobile",
+      "content": "One-stop mobile financial APP development and comprehensive monitoring; abundant available components, dynamic release and fault hot repair."
+    },
+    "block4": {
+      "title": "Distributed middleware",
+      "content": "Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data."
+    },
+    "block5": {
+      "title": "Big Data",
+      "content": "One-stop, full-cycle big data collaborative work platform, PB-level data processing, millisecond-level data analysis tools."
+    }
+  },
+  "banner5": {
+    "title": "product name",
+    "explain": "Product slogan introduction",
+    "content": "A detailed description of the product, such as text",
+    "button": "start using"
+  },
+  "feature6": {
+    "block0": {
+      "title": "Service index",
+      "child0": {
+        "unit": "million",
+        "children": "Model data"
+      },
+      "child1": {
+        "unit": "billion",
+        "children": "Number of model iterations"
+      },
+      "child2": {
+        "unit": "billion",
+        "children": "Number of training samples"
+      }
+    },
+    "block1": {
+      "title": "Service index",
+      "child0": {
+        "unit": "million",
+        "children": "Model data"
+      },
+      "child1": {
+        "unit": "billion",
+        "children": "Number of model iterations"
+      },
+      "child2": {
+        "unit": "billion",
+        "children": "Number of training samples"
+      }
+    }
+  },
+  "feature7": {
+    "titleWrapper": {
+      "title": "Image online service",
+      "content": "You can directly and quickly access image capabilities"
+    },
+    "blockWrapper": {
+      "block0": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block1": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block2": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block3": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block4": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block5": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block6": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      },
+      "block7": {
+        "title": "ID card",
+        "content": "Identify the front and back of the ID card, ID card number, issuing authority and other relevant information"
+      }
+    }
+  },
+  "feature8": {
+    "titleWrapper": {
+      "title": "manual",
+      "content": "The process is simple and clear, and quickly respond to demand"
+    },
+    "childWrapper": {
+      "button": "Experience now"
+    },
+    "carousel": {
+      "block0": {
+        "title": "Platform independent training process",
+        "child0": {
+          "title": "Demand communication",
+          "content": "Communicate with business needs, match-maker: Chengfan, Yuncai"
+        },
+        "child1": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child2": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child3": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        }
+      },
+      "block1": {
+        "title": "Platform independent training process",
+        "child0": {
+          "title": "Demand communication",
+          "content": "Communicate with business needs, match-maker: Chengfan, Yuncai"
+        },
+        "child1": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child2": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        },
+        "child3": {
+          "title": "Demand communication",
+          "content": "Communicating business needs, docking person: Chengfan, Yuncai communicating business needs, docking person: Chengfan, Yuncai"
+        }
+      }
+    }
+  },
+  "banner3": {
+    "textWrapper": {
+      "slogan": "firstSessionantantgoldclothesbodyTestBranchSkillBigmeeting",
+      "name": "Explore the ultimate user experience and best engineering practices",
+      "button": "register now",
+      "time": "2018.01.06 / Hangzhou, China"
+    }
+  },
+  "content9": {
+    "titleWrapper": {
+      "title": "Meeting schedule"
+    },
+    "block": {
+      "block0": {
+        "name": "Name",
+        "post": "position in company",
+        "time": "09:00-10:00",
+        "title": "Opening speech",
+        "content": ""
+      },
+      "block1": {
+        "name": "Name",
+        "post": "position in company",
+        "time": "09:00-10:00",
+        "title": "Demo Title-XYZ",
+        "content": "After nearly 3 years of polishing, on the goal of helping Zhongtai product research and development efficiency improve, the Ant Zhongtai design system including design language, UI assets, visualization and product experience is gradually taking shape. This sharing consists of two parts. While introducing the ant design system, we will also share part of our exploration in the design language with you."
+      },
+      "block2": {
+        "name": "Name",
+        "post": "position in company",
+        "time": "09:00-10:00",
+        "title": "Demo Title-XYZ",
+        "content": "After nearly 3 years of polishing, on the goal of helping Zhongtai product research and development efficiency improve, the Ant Zhongtai design system including design language, UI assets, visualization and product experience is gradually taking shape. This sharing consists of two parts. While introducing the ant design system, we will also share part of our exploration in the design language with you."
+      },
+      "block3": {
+        "name": "Name",
+        "post": "position in company",
+        "time": "09:00-10:00",
+        "title": "Demo Title-XYZ",
+        "content": "After nearly 3 years of polishing, on the goal of helping Zhongtai product research and development efficiency improve, the Ant Zhongtai design system including design language, UI assets, visualization and product experience is gradually taking shape. This sharing consists of two parts. While introducing the ant design system, we will also share part of our exploration in the design language with you."
+      }
+    }
+  },
+  "teams4": {
+    "titleWrapper": {
+      "title": "Special Guest"
+    },
+    "block": {
+      "block0": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block1": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block2": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block3": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block4": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block5": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block6": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      },
+      "block7": {
+        "title": "Jack",
+        "content": "Company + job information temporarily unavailable"
+      }
+    }
+  },
+  "content11": {
+    "titleWrapper": {
+      "title": "Rich featured booth",
+      "content": "Featured booths include star products such as Ant Design, AntV, AntG, Egg, and product experts",
+      "content2": "On-site consultation, answering questions for you"
+    },
+    "button": "register now"
+  },
+  "content12": {
+    "titleWrapper": {
+      "title": "Special thanks"
+    }
+  },
+  "banner2": {
+    "BannerAnim": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    }
+  },
+  "banner1": {
+    "elem0": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    },
+    "elem1": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    },
+    "elem2": {
+      "content": "An efficient page animation solution",
+      "button": "Learn More"
+    }
+  },
+  "banner4": {
+    "childWrapper": {
+      "name": "Ant Design Pro",
+      "content": "Out-of-the-box mid-stage front-end/design solution",
+      "button": "start using"
+    }
+  },
+  "content4": {
+    "titleWrapper": {
+      "title": "Ant Financial Cloud provides professional services",
+      "content": "Scientific and technological imagination, financial creativity"
+    }
+  },
+  "content13": {
+    "titleWrapper": {
+      "title": "Rich featured booth",
+      "content": "Featured booths include star products such as Ant Design, AntV, AntG, and Egg, as well as product experts",
+      "content2": "On-site consultation, answering questions for you"
+    }
+  },
+  "feature1": {
+    "textWrapper": {
+      "title": "Enterprise Resource Management",
+      "content": "Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance. Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance. Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance."
+    }
+  },
+  "feature2": {
+    "textWrapper": {
+      "title": "Distributed middleware",
+      "content": "Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data. Financial-level online transaction processing middleware, large-scale distributed computers, and tens of thousands of transactions/second level concurrency, strictly guarantee the unity of transaction data."
+    }
+  },
+  "feature4": {
+    "titleWrapper": {
+      "title": "Ant Financial Cloud provides professional services",
+      "content": ""
+    },
+    "block": {
+      "block0": {
+        "title": "technology",
+        "content": "Abundant technical components, simple assembly can quickly build financial-level applications, rich technical components, simple assembly can quickly build financial-level applications."
+      },
+      "block1": {
+        "title": "Fusion",
+        "content": "Liberate business and technical productivity, promote bottom-level innovation in financial services, and promote bottom-level innovation in financial services. Free up business and technical productivity, and promote the underlying innovation of financial services."
+      },
+      "block2": {
+        "title": "Development",
+        "content": "Safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements, and safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements."
+      }
+    }
+  },
+  "feature5": {
+    "titleWrapper": {
+      "title": "Ant Financial Cloud provides professional services",
+      "content": "Based on the powerful basic resources of Alibaba Cloud Computing"
+    },
+    "block": {
+      "block0": {
+        "h31": "technology",
+        "p1": "Abundant technical components, simple assembly can quickly build financial-level applications, rich technical components, simple assembly can quickly build financial-level applications.",
+        "h32": "Fusion",
+        "p2": "Liberate business and technical productivity, promote bottom-level innovation in financial services, and promote bottom-level innovation in financial services. Free up business and technical productivity, and promote the underlying innovation of financial services.",
+        "h33": "open",
+        "p3": "Safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements, and safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements."
+      },
+      "block1": {
+        "h31": "technology",
+        "p1": "Abundant technical components, simple assembly can quickly build financial-level applications, rich technical components, simple assembly can quickly build financial-level applications.",
+        "h32": "Fusion",
+        "p2": "Liberate business and technical productivity, promote bottom-level innovation in financial services, and promote bottom-level innovation in financial services. Free up business and technical productivity, and promote the underlying innovation of financial services.",
+        "h33": "open",
+        "p3": "Safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements, and safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements."
+      },
+      "block2": {
+        "h31": "technology",
+        "p1": "Abundant technical components, simple assembly can quickly build financial-level applications, rich technical components, simple assembly can quickly build financial-level applications.",
+        "h32": "Fusion",
+        "p2": "Liberate business and technical productivity, promote bottom-level innovation in financial services, and promote bottom-level innovation in financial services. Free up business and technical productivity, and promote the underlying innovation of financial services.",
+        "h33": "open",
+        "p3": "Safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements, and safe, reliable, high-availability, and high-performance service capabilities that meet finance and requirements."
+      }
+    }
+  },
+  "pricing0": {
+    "childWrapper": {
+      "title": "OceanBase server",
+      "content": "Centralized orchestration of cloud resources, elastic scaling, continuous release and deployment, high availability and disaster tolerance. A complete cloud security system built in accordance with the security requirements of financial enterprises to fully guarantee financial applications and data security.500-5Gbps, 10 GB-50TB (inclusive), 1TB flow package, domestic peak value.",
+      "button": "Buy now"
+    }
+  },
+  "pricing1": {
+    "titleWrapper": {
+      "title": "Price list"
+    },
+    "block": {
+      "block0": {
+        "content": "140-500Mbps\n140 GB-50TB(inclusive)\n14500GB trafiic package\n14 dometic peck broadband bill\n14 elatic computing\n 14 cloud server ECS",
+        "button":"Free trial"
+      },
+      "block1": {
+        "content": "140-500Mbps\n140 GB-50TB(inclusive)\n14500GB trafiic package\n14 dometic peck broadband bill\n14 elatic computing\n cloud server ECS",
+        "button":"Buy now"
+      },
+      "block2": {
+        "content": "140-500Mbps\n140 GB-50TB(inclusive)\n14500GB trafiic package\n14 dometic peck broadband bill\n14 elatic computing\n 14cloud server ECS",
+        "button":"Buy now"
+      }
+    }
+  },
+  "pricing2": {
+    "title": "Price list",
+    "table": {
+      "columns": {
+        "button0": "Free trial",
+        "button1": "Buy now",
+        "button2": "Buy now",
+        "button3": "Buy now"
+      },
+      "datasource": {
+        "list0": "Example series 1",
+        "list1": "Example series 2",
+        "list2": "Fixed boradband billing",
+        "list3": "Idle load balancing",
+        "list4": "4 Nuclear",
+        "list5": "System disk(linear billing)"
+      }
+    }
+  },
+  "teams0": {
+    "elem0": {
+      "content": "SEE = Seeking Experience & Engineering, meaning to explore user experience and engineering practice, is held by Ant Financial Group 1-2 times a year,",
+      "title": "Han Yong",
+      "content2": "Company + job information temporarily unavailable"
+    },
+    "elem1": {
+      "content": "SEE = Seeking Experience & Engineering, meaning to explore user experience and engineering practice, is held by Ant Financial Group 1-2 times a year,",
+      "title": "Han Yong",
+      "content2": "Company + job information temporarily unavailable"
+    }
+  },
+  "teams2": {
+    "titleWrapper": {
+      "title": "team member"
+    },
+    "block": {
+      "block0": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block1": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block2": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block3": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block4": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block5": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block6": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block7": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block8": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      }
+    }
+  },
+  "teams1":{
+    "titleWrapper":{
+      "title":"team member"
+    },
+    "block":{
+      "block0":{
+        "title":"Ye Xiuying",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block1":{
+        "title":"Han Yong",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block2":{
+        "title":"Ye Xiuying",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      }
+    }
+  },
+  "teams3":{
+    "titleWrapper":{
+      "title":"team member"
+    },
+    "blocktop":{
+      "block0":{
+        "title":"Ye Xiuying",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block1":{
+        "title":"Han Yong",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block2":{
+        "title":"Ye Xiuying",
+        "content":"Company + job information temporarily unavailable",
+        "content1":"AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      }
+    },
+    "block":{
+      "block0": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block1": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block2": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block3": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block4": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block5": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block6": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      },
+      "block7": {
+        "title": "Han Yong",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "Yuque is an elegant and efficient online document editing and collaboration tool."
+      },
+      "block8": {
+        "title": "Ye Xiuying",
+        "content": "Company + job information temporarily unavailable",
+        "content1": "AntV is Ant Financial's next-generation data visualization solution. It is committed to providing a set of simple, convenient, professional and reliable data visualization best practices."
+      }
+    }
+  },
+  "footer1":{
+    "block0":{
+      "content0":"Animation specification and components of Ant Design."
+    },
+    "block1":{
+      "title":"product",
+      "link0":"Product update record",
+      "link1":"API documentation",
+      "link2":"Quick start",
+      "link3":"Reference guide"
+    },
+    "block2":{
+      "title":"on",
+      "link0":"FAQ",
+      "link1":"contact us"
+    },
+    "block3":{
+      "title":"resources",
+      "link0":"Ant Design",
+      "link1":"Ant Design"
+    }
+  },
+  "footer2":{
+    "group":"Ant Financial Experience Technology Conference",
+    "copyright":"Copyright © Ant Financial Services Group"
+  },
+  "imageBanner":{
+    "titleWrapper":{
+      "title":"Image Banner"
+    }
+  },
+  "listingCarousel":{
+    "featuredListings":"Featured Listings",
+    "latestAdditions":"Our Latest Additions"
+  },
+  "discountsCarousel":{
+    "onGoing":"On Going Deals",
+    "upComing":"Up Coming Deals"
+  },
+  "dynamicCarousel":{
+    "heading":"Dynamic Carousel",
+    "adminPanel": {
+      "title": "Discounts",
+      "meta": "A List of All Discount page.",
+      "noBannersMsg": "There are no banners yet"
+    },
+    "btn":{
+      "add":"Add",
+      "submit":"Submit"
+    },
+    "addBanner":"Add Banner",
+    "editBanner":"Edit home banner",
+    "filter":{
+      "search":"Search text",
+      "label":"Label",
+      "isActive":"Is active"
+    },
+    "columns":{
+      "carouselId":"Carousel Id",
+      "title":"Title",
+      "image":"Image",
+      "label":"Label",
+      "link":"Link",
+      "actions":"Actions"
+    },
+    "form":{
+      "title":"Title",
+      "description":"Description",
+      "label":"Label",
+      "isActive":"Is active",
+      "link":"Link",
+      "imageUrl":"Image Url"
+    }
+  }
 }

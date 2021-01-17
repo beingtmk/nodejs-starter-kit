@@ -1,0 +1,11 @@
+fragment DiscountStateInfo on DiscountState {
+  orderBy {
+    column
+    order
+  }
+  filter {
+    searchText
+    modalName
+    isActive
+  }
+}

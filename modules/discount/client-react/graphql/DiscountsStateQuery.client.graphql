@@ -1,0 +1,7 @@
+#import "./DiscountState.client.graphql"
+
+query DiscountState {
+  discountState @client {
+    ...DiscountStateInfo
+  }
+}

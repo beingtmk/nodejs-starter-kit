@@ -1,0 +1,102 @@
+# Entity
+type Category {
+  id: Int
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+  parentCategoryId: Int
+  modalCategory: ModalCategory
+  isLeaf: Boolean
+
+  subCategories: [Category]
+
+  isActive: Boolean
+}
+
+type ModalCategory {
+  id: Int
+  modalName: String
+}
+
+type Categories {
+  totalCount: Int
+  edges: [CategoryEdges]
+  pageInfo: CategoryPageInfo
+}
+
+type CategoryEdges {
+  node: Category
+  cursor: Int
+}
+
+type CategoryPageInfo {
+  endCursor: Int
+  hasNextPage: Boolean
+}
+
+extend type Query {
+  categories(
+    limit: Int!
+    after: Int!
+    orderBy: OrderByCategoryInput
+    filter: FilterCategoryInput
+    childNode: String
+  ): Categories
+  category(id: Int, childNode: String): Category
+}
+
+input OrderByCategoryInput {
+  column: String
+  order: String
+}
+input FilterCategoryInput {
+  searchText: String
+  modalName: String
+  isNavbar: Boolean
+  isActive: Boolean
+}
+
+extend type Mutation {
+  addCategory(input: AddCategoryInput!): Boolean
+  editCategory(input: EditCategoryInput!): Boolean
+  deleteCategory(id: Int!): Boolean
+}
+
+input AddCategoryInput {
+  modalName: String
+
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+  parentCategoryId: Int
+  isActive: Boolean
+}
+
+input EditCategoryInput {
+  modalName: String
+
+  id: Int
+  title: String
+  imageUrl: String
+  description: String
+  isNavbar: Boolean
+  parentCategoryId: Int
+  isActive: Boolean
+}
+
+extend type Subscription {
+  categoriesUpdated(
+    endCursor: Int
+    filter: FilterCategoryInput
+  ): UpdateCategoryPayload
+
+  categoryUpdated(id: Int): UpdateCategoryPayload
+}
+
+type UpdateCategoryPayload {
+  mutation: String!
+  id: Int
+  node: Category
+}

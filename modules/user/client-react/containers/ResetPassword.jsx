@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 import { compose } from '@gqlapp/core-common';
 import { translate } from '@gqlapp/i18n-client-react';
 import { FormError } from '@gqlapp/forms-client-react';
+import ROUTES from '../routes';
 
 import ResetPasswordView from '../components/ResetPasswordView';
 
@@ -19,7 +20,7 @@ const ResetPassword = props => {
     } catch (e) {
       throw new FormError(t('resetPass.errorMsg'), e);
     }
-    history.push('/login');
+    history.push(`${ROUTES.login}`);
   };
 
   return <ResetPasswordView {...props} onSubmit={onSubmit} />;

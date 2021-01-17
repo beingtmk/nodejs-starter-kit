@@ -1,0 +1,3 @@
+mutation addReview($input: AddModalReviewInput!) {
+  addReview(input: $input)
+}

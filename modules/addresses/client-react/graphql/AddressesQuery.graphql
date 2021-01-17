@@ -1,0 +1,7 @@
+#import "./Address.graphql"
+
+query addresses($id: Int) {
+  addresses(id: $id) {
+    ...AddressInfo
+  }
+}
