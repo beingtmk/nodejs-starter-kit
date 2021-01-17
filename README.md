@@ -232,6 +232,8 @@ Starter Kit.
 - [Frequently Asked Questions]
 - [Project Structure]
 - [Importing Modules]
+- [E-commerce Features]
+  - [Adding/Removing features]
 
 Tools
 
@@ -295,6 +297,8 @@ Modules
 [mobile chat]: /docs/modules/Mobile%20Chat.md
 [project structure]: /docs/Project%20Structure.md
 [importing modules]: /docs/Importing%20Modules.md
+[E-commerce Features]: /docs/Ecommerce%20Features/E-commerce%20Features.md
+[Adding/Removing features]: /docs/Ecommerce%20Features/AddingOrRemoving%20features.md
 [frequently asked questions]: /docs/FAQ.md
 [sysgears (cyprus) limited]: http://sysgears.com
 [gitter channel]: https://gitter.im/sysgears/apollo-fullstack-starter-kit
