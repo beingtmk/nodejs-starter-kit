@@ -18,14 +18,14 @@ const RenderTableLoading = ({ columns, tableProps = {} }) => {
       key: i.key,
       fixed: i.fixed,
       width: i.width,
-      render: renderSkeleton,
+      render: renderSkeleton
     };
   });
   return (
     <Table
       expandable={{
-        ...expandable,
-        expandIcon: renderSkeleton,
+        ...expandable
+        // expandIcon: renderSkeleton,
       }}
       {...restTableProps}
       dataSource={[...Array(itemsNumber).keys()]}
@@ -36,7 +36,7 @@ const RenderTableLoading = ({ columns, tableProps = {} }) => {
 
 RenderTableLoading.propTypes = {
   columns: PropTypes.array,
-  tableProps: PropTypes.object,
+  tableProps: PropTypes.object
 };
 
 export default RenderTableLoading;
