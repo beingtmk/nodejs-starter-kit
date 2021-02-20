@@ -1,5 +1,3 @@
-<p align="center"><a href="#"><img width="150" src="https://rawgit.com/sysgears/nodejs-starter-kit/master/logo.svg"></a></p>
-
 # Nodejs Starter Kit
 
 ## Official Website
