@@ -122,7 +122,7 @@ Verify if you use Node.js 6.x or higher (Node.js ^10 is recommended) before runn
 1. Clone the stable branch of Nodejs Starter Kit.
 
 ```
-git clone -b stable https://github.com/beingtmk/nodejs-starter-kit.git
+git clone -b master https://github.com/beingtmk/nodejs-starter-kit.git
 cd nodejs-starter-kit
 ```
 
