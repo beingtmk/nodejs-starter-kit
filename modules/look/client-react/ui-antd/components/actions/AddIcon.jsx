@@ -6,7 +6,7 @@ import Icon from '../Icon';
 
 class AddIcon extends React.Component {
   render() {
-    const { color = 'primary', type, size, ...props } = this.props;
+    const { color = 'primary', shape = 'circle', type, size, ...props } = this.props;
 
     let buttonSize = 'default';
 
@@ -22,7 +22,7 @@ class AddIcon extends React.Component {
         htmlType={type}
         size={buttonSize}
         icon={<Icon type="PlusOutlined" />}
-        shape="circle"
+        shape={shape}
         {...props}
       />
     );
@@ -32,7 +32,8 @@ class AddIcon extends React.Component {
 AddIcon.propTypes = {
   color: PropTypes.string,
   type: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  shape: PropTypes.string
 };
 
 export default AddIcon;

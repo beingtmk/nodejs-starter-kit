@@ -17,9 +17,9 @@ class ActiveIcon extends React.Component {
       buttonSize = 'large';
     }
 
-    let icon = 'close';
+    let icon = 'CloseOutlined';
     if (active !== 'false') {
-      icon = 'check';
+      icon = 'CheckOutlined';
     } else color = 'danger';
     return (
       <Popconfirm
