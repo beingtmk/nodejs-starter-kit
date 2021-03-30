@@ -16,9 +16,9 @@ class PublishButton extends React.Component {
       buttonSize = 'large';
     }
 
-    let icon = 'stop';
+    let icon = 'StopOutlined';
     if (publish !== 'false') {
-      icon = 'export';
+      icon = 'ExportOutlined';
     } else color = 'danger';
     return (
       <Popconfirm
