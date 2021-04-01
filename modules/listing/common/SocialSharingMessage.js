@@ -1,4 +1,5 @@
-import { LISTING_ROUTES } from '@gqlapp/listing-client-react';
+// eslint-disable-next-line import/no-named-default
+import { default as LISTING_ROUTES } from '@gqlapp/listing-client-react/routes';
 
 // eslint-disable-next-line import/prefer-default-export
 export function ListingShareMessage(id, username, title) {
